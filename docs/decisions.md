@@ -1,5 +1,33 @@
 # Experimental decisions
 
+## R5.41 — Shared optional-boundary composition support
+
+Retain optional membership and nullable value alternatives as distinct existing
+semantics. Nullable decoding composes around the underlying decoder; transport
+admission must follow that decoder's representation availability. Do not infer a
+JSON-only representation from the nullable shape's dictionary encoding. Text
+never gains an implicit null spelling; JSON provides explicit null. Unsupported
+underlying decoders and text Boolean remain unsupported.
+
+Finite durable domains validate present values. Structural membership permits
+optional absence without converting it to null/default/empty. Required absence,
+present invalid values and null excluded by either type or domain still reject.
+Stage prospective public calls and validate their declared post-state alternative
+and domains before committing generated attempted writes. This enforces declared
+boundary invariants without synthesizing defaults/migrations or claiming crash
+atomicity.
+
+Share decoder/domain composition rules across admission/runtime/static inspection,
+and share complete compatible-path assessment across readiness and supplemental
+audit. Readiness predicts handling, including invalid-value rejection, rather than
+asserting all future values valid. Preserve historical implementations and wire
+schemas; explicitly select and seal the prospective bundle. No new core semantic
+is needed; count remains 30. Independent multi-type/negative/public evidence closes
+the known gaps without a frozen-request reevaluation. Recommend separately
+authorized R5.42 locked static support transfer; Phase 5C stays paused.
+See [R5.41 policy](optional-boundary-support-r5.41.md) and
+[evidence](../benchmark/results/phase5c/R5_41-INDEPENDENT-OPTIONAL-BOUNDARY-SUPPORT-COHERENCE.md).
+
 ## R5.40 — Complete public profile admission and configuration integrity
 
 Version prospective aggregate admission separately from the preserved R5.39

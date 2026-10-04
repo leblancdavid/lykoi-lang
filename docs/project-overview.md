@@ -69,6 +69,27 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.41 independent optional-boundary support review](../benchmark/results/phase5c/R5_41-INDEPENDENT-OPTIONAL-BOUNDARY-SUPPORT-COHERENCE.md)
+ends **`R5_41_SUPPORT_COHERENCE_READY`**. The existing nullable scalar binder was
+already compositional; prospective transport admission now follows its underlying
+decoder's representation support. Durable finite domains distinguish absent
+optional membership from present values, including explicit null. A sealed
+prospective public bundle validates staged post-state before committing writes.
+Readiness and supplemental audit consume one compatible boundary-path assessment.
+Historical implementation/profile/evidence bytes remain preserved.
+
+Independent evidence: 16 profile configurations (14 supported, two Boolean/text
+rejected) agree across readiness/audit/admission; 84 value-state probes; 15 grounded
+conformant public calls over integer/string/instant; 14 focused tests. Verification:
+400 harness discovered, 364 pass, 36 prohibited-B02 skips; 31/31 application/compiler;
+validation/safety/structural/99-leaf traceability/contamination pass; historical
+678-file authority preserved; prospective 695-file lock and diff check pass.
+Zero B02 static passes, generation, execution or acceptance. Core 30/no #31,
+Phase 5C paused, B03 prospectively untouched, B17 unexposed/unclassified. Next:
+R5.42 separately authorized, locked whole-contract static support transfer review.
+Policy: [R5.41 optional-boundary support](optional-boundary-support-r5.41.md).
+Earlier records retain their historical conclusions below.
+
 The [R5.40 boundary-profile admission and B02 configuration review](../benchmark/results/phase5c/R5_40-BOUNDARY-PROFILE-ADMISSION-B02-CONFIGURATION.md)
 ends **`R5_40_GENERIC_CAPABILITY_GAP`**. A prospective aggregate admission policy
 rejects silently unmapped optional invocation inputs on independent seed-bank

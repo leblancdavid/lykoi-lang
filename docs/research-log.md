@@ -1,5 +1,48 @@
 # Lykoi research log
 
+## R5.41 independent optional-boundary support coherence (2026-10-04)
+
+Observed: the historical scalar binder already decodes nullable non-null text
+through its underlying decoder; transport admission incorrectly requires JSON
+for any dictionary-shaped element. Independently, the durable population-domain
+runtime indexes absent optional fields after the structural codec admits them.
+Readiness v2 checks declared content-rule coverage without establishing that
+runtime composition. These are infrastructure composition defects expressible
+with the existing 30 semantics, not evidence requiring #31.
+
+Prospective admission/runtime use shared decoder-representation and present-domain
+rules. A shared compatible-path assessment feeds both readiness and supplemental
+audit. The prospective public bundle preserves absent/null/present distinctions
+and validates staged post-state before commit. Invalid text, type failures,
+required omission, unsupported decoder combinations and present invalid domains
+remain rejected. Historical R5.39/R5.40 implementations and authority are preserved.
+
+Evidence: 16 generic scalar/optionality/representation profiles agree across
+readiness, supplemental audit and aggregate admission (14 support, two Boolean/text
+reject); 84 raw/value-state rows; 15 independently grounded and semantically
+conformant standalone public calls across integer/string/instant; 14 focused tests
+including rejection/byte preservation, finite public string domains, nullable
+collections, state alternatives, identity/nonblank constraints and corrupt support
+bytes. Readiness is support prediction, not per-value acceptance: a supported
+profile correctly rejects an invalid supplied or durable value. Explicit null
+uses JSON; text-profile null probes are scoped to the raw binder, not mislabeled
+as a public null spelling.
+
+Final verification: 400 harness discovered/364 pass/36 prohibited-B02 skips;
+31/31 application/compiler; historical evidence 5 pass/one historical live-lock
+skip; validation/safety/structural schema/99-leaf source trace/contamination pass;
+all 678 historical lock members and 681 tracked authority files unchanged;
+695-file prospective lock and diff check pass. A first 120-second invocation timed
+out; completed recorded reruns supply the results. Zero B02 static reevaluations,
+generation, execution or acceptance. B03 has no prospective exposure; B17 remains
+unexposed/unclassified.
+
+Result R5_41_SUPPORT_COHERENCE_READY, bounded independent support closure, not
+full frozen-contract readiness or universal correctness. Core 30/no #31, Phase 5C
+paused. Recommend separately authorized R5.42 locked whole-contract static support
+transfer with no post-pass repair. See
+[R5.41 evidence](../benchmark/results/phase5c/R5_41-INDEPENDENT-OPTIONAL-BOUNDARY-SUPPORT-COHERENCE.md).
+
 ## R5.40 boundary-profile admission and B02 configuration (2026-10-04)
 
 Observed: a one-operation non-task profile with its sole optional input unmapped
