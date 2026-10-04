@@ -1,5 +1,48 @@
 # Lykoi research log
 
+## R5.48 execution identity and AI independence (2026-10-04)
+
+Observed **`R5_48_PROTOCOL_HALT`** at the dependency-inventory gate: 71/74 receipts,
+70 PASS before quarantine, one failed inventory. The AST import-root screen omitted
+standalone deployment resolution and one explicit copied-file alias, misclassifying
+seven repository-owned runtime/helper names as external packages. The failure is
+preserved and all receipts are non-reusable. Stopped adjudication records local
+implementation hashes; no frozen-stage correction/retry occurred. The final
+validation/safety/diff qualification stages were not reached; independent read-only
+stopped diagnostics pass those checks without replacing the missing stages.
+
+Fresh v2 identity code and 52 independent tests cover deterministic/canonical capture,
+physical/committed/index/untracked mutations, runtime/dependency/environment/tool/
+context mutations, cross-stage and stale/mixed certificate rejection, required locks,
+secret-safe publication and exactly-one synthetic authorization. Production-shaped
+assembly is synthetic only; actual production assembly rejects unresolved closure.
+Observed identity is not a complete minimal production capsule. Native/OS/Git closure,
+descendant imports/bytecode, preserved context and exclusive TOCTOU ownership remain
+material gaps. Endpoint checks cannot establish an atomic/ABA-resistant boundary.
+
+Direct core imports require stdlib/internal code, not AI libraries. Site-disabled,
+network/external-process-denied subprocess probes validate valid/invalid source,
+deterministically generate and execute a read-only existing application command
+without OpenCode or AI credentials. Synthetic changed credentials, unreachable
+provider endpoints and development model changes produce identical results. Fixture
+authoring credential/model/editor/OpenCode changes also preserve execution identity.
+This supports the explicit AI Independence Principle within inspected/tested scope;
+audit hooks are not a native sandbox and these observations do not qualify a halted
+run or prove every operation/program. Fixed-source meaning is determined by language
+rules/contracts/inputs, not its author. Optional future AI application integrations
+remain program dependencies. Core stays 30.
+
+Before quarantine, regressions pass: restricted harness 429 discovered/393 passes/36
+preserved skips; compiler 31, focused 14, recorder 29, certificate 33, security 22,
+publication 2, fresh v2 52; 16-profile/84-row matrix, structural schema, 99-leaf
+traceability and contamination pass. R5.47 successor 1,065/1,065, historical 678/678
+and prospective 695/695 locks remain valid. R5.43 history and R5.46's 16 quarantined
+receipt hashes remain unchanged. Two pre-freeze producer-shape publication rejections
+were corrected using typed identifier rows; no secret output or stage preceded the
+freeze. No production certificate, qualified capsule or B02 exposure. B03 untouched
+prospectively, B17 unexposed/unclassified, Phase 5C paused. See the
+[R5.48 report](../benchmark/results/phase5c/R5_48-EXECUTION-STATE-AND-AI-INDEPENDENCE.md).
+
 ## R5.47 security reconciliation and infrastructure succession (2026-10-04)
 
 Observed **`R5_47_SECURITY_RECONCILIATION_QUALIFIED`**. The dotenv security

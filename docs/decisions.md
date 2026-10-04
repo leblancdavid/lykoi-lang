@@ -1,5 +1,33 @@
 # Experimental decisions
 
+## R5.48 — AI authors are optional; deterministic language authority is required
+
+Adopt the [AI Independence Principle](ai-independence-r5.48.md): fixed valid source
+has deterministic language meaning independent of model/provider/author. Core
+validation, compilation, semantic runtime and execution must not require AI inference,
+OpenCode or AI credentials. Future explicit optional AI application integrations are
+program dependencies, not language dependencies. Behavioral equivalence under the
+frozen contract remains independent of authorship and does not require identical code.
+
+The fresh v2 identity excludes author credential presence/value/fingerprints, model
+selection, IDE/editor and non-material author configuration. Domain classification
+is computation-relative: Git/oracle/recorder are optional to core compilation but
+material to an evaluation that invokes them. Do not inventory all installed packages
+or machine metadata as resolved core dependencies. Preserve the R5.47 publication
+guard; use typed rows for variable/module names rather than credential-named fields.
+
+Reject production assembly when native/descendant/context/Git closure or immutable
+ownership is unresolved. Source/stdlib/tool hashes and endpoint equality alone do
+not establish complete dependency identity or atomic/ABA-resistant TOCTOU. Keep
+closed-fixture production-shaped certificates explicitly synthetic.
+
+R5.48's inventory gate misclassified seven local standalone deployment imports;
+halt and quarantine all receipts rather than repair/resume a frozen qualification.
+Preserve the failed inventory and separately version its stopped adjudication. The
+three final stages not reached are not replaced by independent stopped diagnostics.
+The positive offline-core observations establish bounded architectural evidence,
+not qualification success. No semantic #31 or B02 authority follows.
+
 ## R5.47 — Security correction succeeds infrastructure; it does not repair history
 
 Preserve the intentional dotenv ignore correction and redacted R5.45 snapshot,

@@ -69,6 +69,34 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.48 execution-state/AI-independence investigation](../benchmark/results/phase5c/R5_48-EXECUTION-STATE-AND-AI-INDEPENDENCE.md)
+ends **`R5_48_PROTOCOL_HALT`**. Of 74 planned bounded stages, 71 receipts were
+recorded (70 PASS, one failed dependency inventory) and all are quarantined.
+The inventory's direct-import screen misclassified seven repository-owned standalone
+runtime/helper imports as third-party dependencies. The failed gate is preserved;
+the frozen run was not repaired or resumed. Native/descendant/environment/Git closure
+and exclusive production TOCTOU ownership remain unqualified; no production
+certificate or qualified v2 execution capsule follows.
+
+**Lykoi is an AI-native language, not an AI runtime.** The
+[AI-independence policy](ai-independence-r5.48.md) separates development authorship
+from semantic authority. Inspected direct core imports and isolated network-denied,
+site-disabled probes support validation, deterministic lowering and read-only
+execution without AI/OpenCode credentials/services; synthetic credential/model/editor
+changes leave core identity/output unchanged. The fresh 52-test suite passes within
+that bounded scope. These observations do not qualify the halted investigation.
+
+Before quarantine: restricted harness 393 passes / 36 preserved skips; compiler
+31, focused 14, recorder 29, certificate 33, security 22, publication 2; matrix,
+schema, 99-leaf traceability and contamination pass. Separate stopped diagnostics
+pass validation/safety/diff; they do not replace the three unrun qualification
+stages. R5.47 successor 1,065/1,065, historical 678/678 and prospective 695/695
+locks remain valid; R5.43 history and all R5.46 quarantined receipt hashes remain
+unchanged. Next: separately authorize a corrected prospective inventory resolver
+and complete execution-capsule/ownership qualification. Zero B02 exposure; core
+30; B03 prospectively untouched; B17 unexposed/unclassified; Phase 5C paused.
+Earlier records below retain their original conclusions and recommendations.
+
 The [R5.47 security/infrastructure reconciliation](../benchmark/results/phase5c/R5_47-SECURITY-RECONCILIATION-AND-INFRASTRUCTURE-LOCK-SUCCESSOR.md)
 ends **`R5_47_SECURITY_RECONCILIATION_QUALIFIED`**. The intentional `.gitignore`
 correction is preserved; contextual scans of sharing candidates, index, reachable
