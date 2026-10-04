@@ -69,6 +69,27 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.46 execution-state identity investigation](../benchmark/results/phase5c/R5_46-COMPLETE-EXECUTION-STATE-AND-DEPENDENCY-IDENTITY-QUALIFICATION.md)
+ends **`R5_46_PROTOCOL_HALT`**. Concurrent repository/security correction changed
+state during verification; before/after hashing rejected a successful worker's
+stage. Fifteen earlier PASS receipts and the failed sixteenth receipt are
+quarantined; the full 74-stage run did not complete. Historical 678/678 and
+prospective 695/695 locks remain valid; the live R5.43 infrastructure lock now
+matches **730/731**, with `.gitignore` changed. No successor was issued.
+
+The new execution-identity/certificate bridge is an **unqualified synthetic-only
+prototype**. Its initial 46 tests errored in setup; the corrected, expanded
+49-test suite was not reached before halt. Complete runtime/native/import/tool
+dependency closure and effective environment remain unresolved; no production
+certificate, reusable stage evidence or TOCTOU qualification follows. The owner's
+[R5.45 security correction](../benchmark/results/phase5c/R5_45-SECURITY-REDACTION.md)
+is preserved; its redacted snapshot intentionally fails its historical seal.
+Next: separately authorized security/infrastructure-lock reconciliation and a
+versioned successor, then complete execution-capsule qualification from an
+exclusively owned state. B02 completely sealed; core 30; B03 prospectively
+untouched; B17 unexposed/unclassified; Phase 5C paused. Earlier findings remain
+historical, not current-state certification.
+
 The [R5.45 pre-exposure reliability investigation](../benchmark/results/phase5c/R5_45-PREEXPOSURE-VERIFICATION-RELIABILITY-AND-BOUNDED-EXECUTION.md)
 ends **`R5_45_STATE_IDENTITY_GAP`**. Bounded module stages preserve the 429-test
 restricted harness (393 passes / 36 skips), 31 compiler/application, 14 focused

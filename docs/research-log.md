@@ -1,5 +1,35 @@
 # Lykoi research log
 
+## R5.46 execution identity and concurrent state drift (2026-10-04)
+
+Observed **`R5_46_PROTOCOL_HALT`**. The sixteenth staged check's worker passes,
+but its completion receipt fails because repository state changed during the
+stage. Concurrent owner security work changes `.gitignore`, the R5.45 collector
+and later its secret-bearing snapshot. Stopped-run diagnostics preserve historical
+678/678 and prospective 695/695 locks, while R5.43 infrastructure matches 730/731
+with `.gitignore` mismatched. All sixteen receipts are quarantined; no verification
+retry or successor lock was issued. Fifteen pre-quarantine PASS modules cover
+114 discovered / 79 passes / 35 skips, not a completed full-harness result.
+
+Inventory observes CPython 3.14.3, Windows build 10.0.26300, Git 2.52.0.windows.1,
+67 installed distributions and enabled user site. Version labels/executable hashes
+do not close transitive native/import/tool dependencies. `-B` disables bytecode
+writes but not reads. Effective environment publication/redaction is not complete
+environment identity. New observations persist environment names rather than
+secret values. A synthetic-only versioned composition/bridge and 49 adversarial
+tests are proposed. Initial 46 tests errored in setup; the collector defect was
+fixed before snapshot, but post-fix qualification was not reached. No synthetic
+lifecycle, deterministic full execution identity or production timing bound is
+claimed. Endpoint equality also cannot detect ABA or lock external libraries.
+
+Zero B02 exposure/support/CheckedPlans/readiness/audit/admission/generation/execution/
+acceptance; core 30; B03 prospectively untouched; B17 unexposed/unclassified;
+Phase 5C paused. Next: separately authorized security correction/infrastructure
+successor reconciliation and exclusively owned execution-capsule qualification,
+not B02 transfer. See the [report](../benchmark/results/phase5c/R5_46-COMPLETE-EXECUTION-STATE-AND-DEPENDENCY-IDENTITY-QUALIFICATION.md)
+and `R5_46-evidence/` beside it. Historical R5.45 findings remain recorded;
+its owner's redacted snapshot intentionally fails its original seal.
+
 ## R5.45 bounded verification and incomplete state closure (2026-10-04)
 
 Observed **`R5_45_STATE_IDENTITY_GAP`**. R5.43's preserved 118.187-second full

@@ -1,5 +1,26 @@
 # Experimental decisions
 
+## R5.46 — State drift rejects PASS and protected infrastructure drift halts
+
+Reject a verification-stage PASS when before/after repository identity differs,
+even if its worker exited successfully. Stop **`R5_46_PROTOCOL_HALT`** when the
+same investigation identifies a changed protected infrastructure member. Preserve
+all receipts in quarantine; do not restart the stage, refresh the baseline or
+replace the old lock in the halted round. The concurrent owner's credential
+correction is preserved and requires separately versioned infrastructure
+reconciliation; restoring secret-bearing evidence to recover an old hash is not
+an acceptable reconciliation.
+
+Execution identity must bind resolved implementation bytes, effective descendants'
+environment and Git behavior rather than version declarations or whole-machine
+metadata. Use keyed, domain-separated identity for materially relevant secrets
+with separately qualified external key custody. Endpoint hashes do not establish
+ABA/concurrent-write protection; require an immutable capsule or proven exclusive
+dependency ownership for production TOCTOU guarantees. The new synthetic bridge
+rejects production policy and remains unqualified after the interrupted test run.
+Core stays 30; no B02 authority follows. See the
+[R5.46 report](../benchmark/results/phase5c/R5_46-COMPLETE-EXECUTION-STATE-AND-DEPENDENCY-IDENTITY-QUALIFICATION.md).
+
 ## R5.45 — Staged verification requires a proven complete input identity
 
 Separate expensive regressions into bounded commands with canonical initial
