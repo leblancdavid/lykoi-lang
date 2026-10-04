@@ -1,5 +1,50 @@
 # Lykoi research log
 
+## R5.39 refinement dependency and whole-contract boundary review (2026-10-04)
+
+Implemented observations: the R5.38 analyzer rejects nine minimal redundant-guard
+selected-order fixtures; the historical optional analyzer accepts the three
+optional-only cases. The current analyzer preserves all provider justifications
+in one scoped fact and accepts all nine. Independent generated regressions also
+exercise presence-only, non-null-only and combined duplicate providers in three
+serialization placements, with guarded consumers and real absent/null populations.
+Existing emitter/verifier scheduling consumes the corrected checked representation.
+
+Nullable public decoding now composes the existing scalar decoder, preserving
+omitted, supplied null, supplied valid value and failed binding. A seed-bank
+application composes V1/V2 codecs, declared population/content constraints, generic
+state-alternative routes, migration, checked launch and one aggregate profile.
+Public subprocess observations challenge every reached layer independently.
+Seven invalid populations reject before semantic invocation and preserve bytes.
+Disposable binding/dispatch/persistence faults and aggregate metadata challenges
+are separate from positive execution evidence.
+
+Readiness v2 predicts READY for the complete independent application and enumerates
+seven findings across binding, state, transport, launch and aggregate-profile stages
+for a deliberately incomplete application. The original 84 cells remain 64 supported
+and 20 rejected. Baseline and duplicate-provider matrices each transfer 64 cells
+through 128 grounded calls. The 336 static rows preserve applicable/N/A distinctions;
+separate boundary evidence is not falsely counted as execution of every matrix row.
+
+Methodological progress: multiple independent boundary gaps are detected before
+generation, rather than discovered by serial frozen retries. Limits remain:
+nested-selection refinement propagation, complete authored obligation coverage,
+load-validation versus universal write preservation, crash/concurrent persistence,
+and hostile-runtime attestation. Core remains 30, new core 0; no #31. The result
+artifact records the subsequent locked, static-only B02 outcome and full remaining
+set. Frozen history and R5.38's defect evidence remain preserved.
+The 658-file lock verifies before/after the single static B02 pass: 15 CheckedPlans,
+whole-contract NOT_READY. Six findings remain: absent transport/state/launch/
+aggregate profiles and absent alternative-routing/content-constraint coverage.
+No B02 generation/execution/acceptance, no post-static repair, no retry recommendation.
+Result R5_39_WHOLE_CONTRACT_BOUNDARY_PARTIAL; independent capabilities do not
+substitute for missing concrete contract metadata.
+Additional post-lock independent static observation: deleting V2 query's optional
+filter mapping remains aggregate-compatible but correctly returns NOT_READY under
+readiness v2. No generation/B02 inspection or implementation repair followed.
+Aggregate admission is not yet an unconditional completeness gate; preserve this
+distinction for the next independent coverage review.
+
 ## R5.38 nullable domain and whole-contract coherence (2026-10-04)
 
 Implemented observation: the prospective authoritative analyzer recognizes existing

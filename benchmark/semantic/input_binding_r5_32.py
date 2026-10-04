@@ -22,6 +22,8 @@ def failure(argument, slot, expected, category):
 
 
 def decode(raw, shape):
+    if isinstance(shape, dict) and set(shape) == {'nullable'}:
+        return (True, None) if raw is None else decode(raw, shape['nullable'])
     if shape == 'integer' and type(raw) is str and re.fullmatch(r'[+-]?[0-9]+', raw):
         try:
             raw = int(raw)

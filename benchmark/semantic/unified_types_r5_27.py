@@ -138,8 +138,9 @@ def analyze(expr, slots, refinements=frozenset()):
     if collector is not None:
         kind, arg = next(iter(expr.items()))
         declaration = declared(arg, slots) if kind == 'ref' else shape
-        dependencies = tuple(collector['active'][path] for path in sorted(refinements)
-                             if kind == 'ref' and (tuple(arg) == path or ('non_null', *arg) == path))
+        dependencies = tuple(dependency for path in sorted(refinements)
+                             if kind == 'ref' and (tuple(arg) == path or ('non_null', *arg) == path)
+                             for dependency in collector['active'][path])
         fact = {'kind': kind, 'declared': declaration, 'effective': shape,
                 'field': tuple(arg) if kind == 'ref' else None,
                 'refinement': dependencies,
@@ -180,11 +181,25 @@ def _analyze(expr, slots, refinements=frozenset()):
         collector = _analysis.get()
         previous = None
         if collector is not None:
-            producers = {tuple(p['present']['ref']): (id(expr), id(p)) for p in arg if 'present' in p}
-            producers.update({('non_null', *path): (id(expr), id(p)) for p in arg
-                              if (path := non_null_witness(p, slots)) is not None})
-            collector['scopes'][id(expr)] = tuple((path, producers[path][1]) for path in
-                sorted(producers, key=lambda path: (path[0] == 'non_null', path)))
+            producers = {}
+            for p in arg:
+                path = (tuple(p['present']['ref']) if 'present' in p else
+                        ('non_null', *value) if (value := non_null_witness(p, slots)) is not None else None)
+                if path is not None:
+                    producers.setdefault(path, []).append((id(expr), id(p)))
+            producers = {path: tuple(values) for path, values in producers.items()}
+            collector['scopes'][id(expr)] = tuple((path, producer) for path in
+                sorted(producers, key=lambda path: (path[0] == 'non_null', path))
+                for _, producer in producers[path])
+            collector['refinement_facts'][id(expr)] = tuple({
+                'value': path[1:] if path[0] == 'non_null' else path,
+                'kind': 'non_null' if path[0] == 'non_null' else 'presence',
+                'scope': collector['identities'][id(expr)],
+                'declared': declared(list(path[1:] if path[0] == 'non_null' else path), slots),
+                'effective': effective(declared(list(path[1:] if path[0] == 'non_null' else path), slots),
+                                       path[1:] if path[0] == 'non_null' else path, guards),
+                'justifications': tuple(collector['identities'][producer] for _, producer in values)
+            } for path, values in sorted(producers.items()))
             previous = collector['active']
             collector['active'] = {**previous, **producers}
         try:
@@ -217,6 +232,20 @@ def _analyze(expr, slots, refinements=frozenset()):
             raise ValueError('selection needs sequence')
         if analyze(arg['where'], {**slots, 'item': source['sequence']}) != 'boolean':
             raise ValueError('selection needs predicate')
+        collector = _analysis.get()
+        where = arg['where']
+        guards = selection_guards(expr, slots, source['sequence'])
+        if collector is not None and guards and 'and' not in where:
+            collector['scopes'][id(where)] = tuple((path, id(where)) for path in guards)
+            collector['refinement_facts'][id(where)] = tuple({
+                'value': path[1:] if path[0] == 'non_null' else path,
+                'kind': 'non_null' if path[0] == 'non_null' else 'presence',
+                'scope': collector['identities'][id(where)],
+                'declared': declared(list(path[1:] if path[0] == 'non_null' else path), {**slots, 'item': source['sequence']}),
+                'effective': effective(declared(list(path[1:] if path[0] == 'non_null' else path), {**slots, 'item': source['sequence']}),
+                                       path[1:] if path[0] == 'non_null' else path, guards),
+                'justifications': (collector['identities'][id(where)],)
+            } for path in sorted(guards))
         return source
     if kind == 'order':
         order = ordering_plan(arg, slots)
@@ -526,12 +555,13 @@ class CheckedPlan:
     seal: str = ''
     evolutions: frozenset = frozenset()
     applicability: int = None
+    refinement_facts: dict = None
 
     def fact_digest(self):
         return general.sha(general.canonical([self.scopes, self.orders, self.operands,
             self.relations, sorted(self.optional_record_fields), self.facts, self.bindings,
             self.projections, self.capabilities, self.slots, self.outcomes,
-            sorted(self.evolutions), self.applicability]))
+            sorted(self.evolutions), self.applicability, self.refinement_facts]))
 
     def assert_current(self):
         if general.sha(general.canonical(self.contract)) != self.digest:
@@ -544,6 +574,12 @@ class CheckedPlan:
         self.assert_current()
         if set(self.facts) != set(self.operands):
             raise ValueError('compiler internal consistency failure: expression closure')
+        for scope, facts in (self.refinement_facts or {}).items():
+            for fact in facts:
+                producers = [producer for path, producer in self.scopes[scope]
+                             if path == (('non_null', *fact['value']) if fact['kind'] == 'non_null' else fact['value'])]
+                if tuple(self.facts[p]['identity'] for p in producers) != fact['justifications']:
+                    raise ValueError('compiler internal consistency failure: refinement justifications')
         for node, fact in self.facts.items():
             if fact['effective'] != self.operands[node]:
                 raise ValueError('compiler internal consistency failure: operand binding')
@@ -578,7 +614,7 @@ class CheckedPlan:
 
 def checked_plan(contract):
     collector = {name: {} for name in ('cache', 'active', 'scopes', 'orders', 'operands',
-                                      'facts', 'bindings', 'projections', 'capabilities')}
+                                      'facts', 'bindings', 'projections', 'capabilities', 'refinement_facts')}
     def identities(node, path=()):
         if isinstance(node, dict):
             collector['identities'][id(node)] = (contract['id'], *path)
@@ -622,6 +658,7 @@ def checked_plan(contract):
         {b['tag']: operands[id(b['value'])] for b in contract['branches']})
     object.__setattr__(plan, 'evolutions', frozenset(evolutions))
     object.__setattr__(plan, 'applicability', id(contract['requires']) if contract['version'] == 'R5.33' else None)
+    object.__setattr__(plan, 'refinement_facts', collector['refinement_facts'])
     object.__setattr__(plan, 'seal', plan.fact_digest())
     plan.assert_invariants()
     return plan

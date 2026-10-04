@@ -16,13 +16,15 @@ if __package__:
     from benchmark.semantic import transport_runtime_r5_34 as base
     from benchmark.semantic import input_binding_r5_32 as scalar
     from benchmark.semantic.refined_runtime_r5_28 import valid
+    from benchmark.semantic import state_runtime_r5_39 as state_codec
 else:
     import transport_runtime_r5_34 as base
     import input_binding_r5_32 as scalar
     from refined_runtime_r5_28 import valid
+    import state_runtime_r5_39 as state_codec
 
 canonical, sha = base.canonical, base.sha
-FILES = ('transport_runtime_r5_35.py',)
+FILES = ('transport_runtime_r5_35.py', 'state_runtime_r5_39.py')
 
 
 def load(root):
@@ -132,6 +134,25 @@ def main():
     raw, binding, result, effective = None, None, None, None
     invoked, initialized = False, False
     category, payload = 'transport_failure', {'code': 'unknown_public_operation'}
+    variant = None
+    if profile['version'] == 'R5.39' and route is not None:
+        policy = profile['persistence']
+        if before is None and policy['missing'] == 'INITIALIZE_DECLARED_STATE':
+            effective = canonical(profile['state_profile']['initial'][policy['initial']]['value'])
+            initialized = True
+        else:
+            effective = before
+        decoded = state_codec.decode(effective, profile['state_profile']) if effective is not None else {
+            'category': 'persistence_missing', 'variant': None}
+        variant = decoded['variant']
+        category = decoded['category']
+        if category is None:
+            route = route['alternatives'].get(variant)
+            if route is None:
+                category = 'invocation_failure'
+        else:
+            route = None
+        payload = {'code': category or 'unknown_public_operation'}
     if route is not None:
         try:
             raw = raw_arguments(argv[1:], route)
@@ -158,7 +179,9 @@ def main():
                     except ValueError:
                         category = 'persistence_invalid_json'
                     else:
-                        if not any(valid(pre, shape) for shape in profile['state_profile']['versions'].values()):
+                        if (state_codec.decode(effective, profile['state_profile'])['category'] is not None
+                                if profile['version'] == 'R5.39' else
+                                not any(valid(pre, shape) for shape in profile['state_profile']['versions'].values())):
                             category = 'persistence_invalid_state'
                 if category is not None:
                     payload = {'code': category}
@@ -195,6 +218,8 @@ def main():
         'invocation': invocation, 'generation': profile['generation'],
         'stdout': stdout, 'stderr': stderr, 'exit': descriptor['exit'], 'classification': descriptor['status'],
         'pre_digest': digest(before), 'post_digest': digest(after)}
+    if profile['version'] == 'R5.39':
+        event['state_variant'] = variant
     Path(transport_trace).write_bytes(canonical(event))
     sys.stdout.write(stdout)
     sys.stderr.write(stderr)

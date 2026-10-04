@@ -81,6 +81,24 @@ def load(root):
     if seal != {'generation': manifest['generation'], 'files': {name: sha((root / name).read_bytes()) for name in FILES}}:
         raise ValueError('stale or corrupt launch artifact')
     validate(profile, boundary, manifest, requirements)
+    if boundary['version'] == 'R5.39' or (root / 'application_boundary.json').exists():
+        aggregate = json.loads((root / 'application_boundary.json').read_bytes())
+        aggregate_seal = json.loads((root / 'application_boundary_provenance.json').read_bytes())
+        if (aggregate['version'] != 'R5.39' or
+                set(aggregate) != {'version', 'schema', 'application', 'plans', 'artifact', 'transport', 'binding',
+                                   'state', 'launch', 'provider', 'trace'} or
+                aggregate['schema'] != sha(canonical({'version': 'R5.39', 'fields': ['application', 'plans', 'artifact',
+                    'transport', 'binding', 'state', 'launch', 'provider', 'trace'], 'core_constructs': 30})) or
+                aggregate_seal != {'generation': manifest['generation'], 'profile': sha(canonical(aggregate))} or
+                aggregate['application'] != manifest['application'] or aggregate['artifact'] != manifest or
+                aggregate['plans'] != manifest['units'] or aggregate['transport'] != boundary or
+                aggregate['state'] != boundary['state_profile'] or aggregate['launch'] != profile or
+                aggregate['provider'] != {'requirements': requirements, **profile['provider']} or
+                aggregate['binding'] != {public: {variant: route['arguments'] for variant, route in entry.get('alternatives', {'state': entry}).items()}
+                    for public, entry in boundary['operations'].items()} or
+                aggregate['trace'] != {'application': manifest['application'], 'generation': manifest['generation'],
+                    'provenance': sha(canonical(manifest)), 'policy': profile['trace']}):
+            raise ValueError('incompatible aggregate application boundary')
     return profile
 
 

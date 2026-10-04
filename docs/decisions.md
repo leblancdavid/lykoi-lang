@@ -1,5 +1,40 @@
 # Experimental decisions
 
+## R5.39 — Relational refinement facts and checked application composition
+
+Equivalent guards justify one scoped refinement fact with multiple source
+identities. Keep all provider relations in checked scheduling/provenance; do not
+select a procedural winner. This resolves the R5.38 scope/dependency mismatch
+without changing presence or nullability. Opposite typed-null premises and
+wrong-field/scope facts remain distinct and unsafe consumers reject.
+
+Extend the existing R5.32 scalar decoder compositionally for nullable values;
+declare JSON null at the public representation boundary, preserve omission, and
+use unchanged per-element collection binding. Typed-state alternatives are
+determined by full codec/content validation, not arbitrary JSON inspection in
+transport. Route metadata links the resulting alternative to an operation's
+checked pre/post types; generated applicability remains semantic authority.
+
+Declare bounded persistence restrictions using existing typed equality,
+population identity, nonblank and finite-domain concepts. Reject new constraint
+kinds for separate review. Validation on load does not prove universal preservation
+of arbitrary profile predicates by every write. No implicit repair/normalization
+is permitted; invalid durable content must not become typed semantic pre-state.
+
+Compose transport, binding, state, launch, provider and trace identities in one
+aggregate infrastructure profile. Keep the existing compiler entry and launch/
+transport mechanisms. Hash consistency is revision integrity, not hostile-runtime
+attestation. Readiness v2 retains the exact 84-cell domain model and adds provider
+multiplicity and complete boundary compatibility. Missing concrete metadata is
+still NOT_READY even after independent capability demonstrations.
+
+Tradeoff: complete readiness requires authored profile and typed obligation
+coverage; there is no safe inference of omitted public mappings or durable rules
+from broad capability evidence. Lock independent evidence before the single B02
+static pass; preserve its result without implementation repair. No construct #31,
+B02 generation/execution/acceptance, B03 advancement, Phase 5C continuation or B17
+exposure follows from this decision.
+
 ## R5.38 — Separate nullable facts and require exact whole-contract readiness
 
 Choose EXISTING_TYPE_SYSTEM_GENERALIZATION: existing negated typed equality to

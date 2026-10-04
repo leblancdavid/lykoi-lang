@@ -69,6 +69,41 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.39 refinement dependency and whole-contract boundary review](../benchmark/results/phase5c/R5_39-REFINEMENT-DEPENDENCY-WHOLE-CONTRACT-BOUNDARY-CLOSURE.md)
+ends **`R5_39_WHOLE_CONTRACT_BOUNDARY_PARTIAL`**. Equivalent optional/nullable
+providers now justify one scoped fact while preserving all source identities;
+historical failures are reconstructed and generated regressions conform. Nullable
+public decoding, typed state-alternative dispatch, declared durable content
+validation and aggregate transport/state/launch/provider/trace composition are
+independently implemented on a versioned seed bank through the single current
+pipeline. Twenty-one public lifecycle/invalid-population calls, twelve public faults
+and a source-only mutation distinguish reached layers. Invalid loads preserve
+bytes and never invoke semantics.
+
+Readiness v2 preserves the 84-cell model (64 supported/20 rejected) and adds
+provider dimensions: 336 static rows; baseline and duplicate-provider transfers
+each give 128 grounded conformant calls. The complete independent application
+predicts READY; seven simultaneous deliberate profile/binding findings are
+collected before generation. After a 658-file implementation lock, one static-only
+pass forms 15/15 saved B02 CheckedPlans but returns **NOT_READY**: missing concrete
+transport, state, launch and aggregate profiles, plus absent public-alternative
+and content-constraint coverage. The nullable decoder capability finding is gone;
+capability evidence does not populate absent frozen-contract metadata. No B02
+generation/execution/acceptance or post-static repair. No retry recommended.
+An additional independent static audit finds that aggregate compatibility alone
+permits an unmapped optional input, while readiness v2 correctly rejects incomplete
+coverage. Whole-contract completeness therefore still requires the separate readiness
+gate; aggregate admission should be aligned independently in the next review.
+
+Verification: 372 harness discovered, 336 pass, 36 explicit restrictions; 31/31
+application/compiler; 12 new tests; validation/safety/evidence/diff/lock pass.
+Core remains 30/no #31. Next: authored boundary and typed-obligation coverage
+independently before any separately locked static comparison. Phase 5C paused,
+B03 prospectively untouched, B17 unexposed, format unfrozen, R5.2.2 historical
+authority, universal correctness NO. Interface:
+[R5.39 boundary closure](boundary-closure-r5.39.md). Earlier records retain their
+historical conclusions below.
+
 The [R5.38 nullable-domain and whole-contract review](../benchmark/results/phase5c/R5_38-NULLABLE-DOMAIN-WHOLE-CONTRACT-COHERENCE.md)
 ends **`R5_38_NULLABLE_COHERENCE_PARTIAL`**. Existing negated
 typed-null equality now establishes scoped non-nullness in the authoritative

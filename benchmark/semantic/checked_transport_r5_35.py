@@ -36,7 +36,7 @@ def specification(plans):
             sequence = isinstance(shape, dict) and set(shape) == {'sequence'}
             element = shape['sequence'] if sequence else shape
             args.append({'public': slot, 'slot': slot, 'decoder': element, 'domain': None,
-                'representation': 'json' if sequence or element == 'boolean' else 'text',
+                'representation': 'json' if sequence or element == 'boolean' or isinstance(element, dict) else 'text',
                 'mode': 'collection' if sequence else 'single', 'omission': 'omit' if optional else 'required',
                 'order': 'encounter' if sequence else None})
         operations.append({'public': name, 'semantic': name, 'arguments': args,
@@ -115,6 +115,9 @@ def check_output(desc, shape, statuses):
 
 
 def validate(application, plans, spec, declaration):
+    if declaration.get('version') == 'R5.39':
+        from benchmark.semantic.application_boundary_r5_39 import validate as validate_alternatives
+        return validate_alternatives(application, plans, spec, declaration)
     check_state(application, declaration)
     if type(spec) is not dict or set(spec) != {'operations', 'failures', 'persistence'}:
         raise ValueError('invalid boundary specification')
@@ -153,12 +156,13 @@ def validate(application, plans, spec, declaration):
             shape = shape['optional'] if optional else shape
             sequence = isinstance(shape, dict) and set(shape) == {'sequence'}
             element = shape['sequence'] if sequence else shape
-            if (element not in ('string', 'integer', 'instant', 'boolean') or arg['decoder'] != element or
+            base_type = element['nullable'] if isinstance(element, dict) and set(element) == {'nullable'} else element
+            if (base_type not in ('string', 'integer', 'instant', 'boolean') or arg['decoder'] != element or
                     arg['omission'] != ('omit' if optional else 'required') or
                     arg['mode'] not in (('repeat', 'collection') if sequence else ('single',)) or
                     arg['order'] != ('encounter' if sequence else None) or
                     arg['representation'] not in ('text', 'json') or
-                    (arg['mode'] == 'collection' or element == 'boolean') and arg['representation'] != 'json'):
+                    (arg['mode'] == 'collection' or element == 'boolean' or isinstance(element, dict)) and arg['representation'] != 'json'):
                 raise ValueError('incompatible checked binding')
             domain = arg['domain']
             if domain is not None and (type(domain) is not list or not domain or
@@ -190,6 +194,9 @@ def validate(application, plans, spec, declaration):
 
 
 def profile(application, spec, declaration, manifest):
+    if declaration.get('version') == 'R5.39':
+        from benchmark.semantic.application_boundary_r5_39 import transport_profile
+        return transport_profile(application, spec, declaration, manifest)
     plans = pipeline.checked(application)
     return {'version': 'R5.35', 'id': application['id'], 'application': sha(canonical(application)),
         'generation': manifest['generation'], 'units': {n: p.digest for n, p in plans.items()},

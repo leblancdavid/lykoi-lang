@@ -49,7 +49,8 @@ def metadata(plans, policy=None):
         for slot, declaration in fields.items():
             optional = isinstance(declaration, dict) and set(declaration) == {'optional'}
             shape = declaration['optional'] if optional else declaration
-            if shape not in ('string', 'integer', 'instant', 'boolean'):
+            base = shape['nullable'] if isinstance(shape, dict) and set(shape) == {'nullable'} else shape
+            if base not in ('string', 'integer', 'instant', 'boolean'):
                 raise ValueError('unsupported public binding shape')
             rule = rules.get(slot, {})
             if not isinstance(rule, dict) or set(rule) - {'argument', 'domain'}:
@@ -136,7 +137,9 @@ def expected_binding(operation, payload, descriptor):
         else:
             value = raw[argument]
             category = None
-            if shape == 'integer' and type(value) is str:
+            nullable = isinstance(shape, dict) and set(shape) == {'nullable'}
+            base = shape['nullable'] if nullable else shape
+            if base == 'integer' and type(value) is str:
                 digits = value[1:] if value[:1] in ('+', '-') else value
                 if not digits or any(c not in '0123456789' for c in digits):
                     category = 'malformed_scalar'
@@ -145,14 +148,16 @@ def expected_binding(operation, payload, descriptor):
                         value = int(value, 10)
                     except ValueError:
                         category = 'malformed_scalar'
-            if shape == 'instant':
+            if nullable and value is None:
+                ok = True
+            elif base == 'instant':
                 try:
                     ok = (type(value) is str and value.endswith('Z') and
                           datetime.fromisoformat(value[:-1] + '+00:00').tzinfo == timezone.utc)
                 except ValueError:
                     ok = False
             else:
-                ok = type(value) is {'string': str, 'integer': int, 'boolean': bool}[shape]
+                ok = type(value) is {'string': str, 'integer': int, 'boolean': bool}[base]
             if not ok:
                 category = 'malformed_scalar'
             if category is None and field['domain'] is not None and not any(
