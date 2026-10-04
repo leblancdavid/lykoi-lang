@@ -1,5 +1,33 @@
 # Experimental decisions
 
+## R5.36 — Checked configuration owns public process bootstrap
+
+Choose one co-located deterministic launch profile and copied generic entry, with
+no public bootstrap flags or hidden positional parameters. Bind semantic source,
+CheckedPlan/provenance, generated artifact/runtime, checked transport, persistence
+and capability identities; validate before invocation. Resolve bounded relative
+paths from process cwd; require store parent, permit declared evidence-directory
+creation, never create state in launch. Reuse unchanged R5.35 persistence, transport,
+R5.32 decoding and current_pipeline. Overwrite ambient capability configuration
+with the checked production/controlled_test provider so environment cannot silently
+change semantic behavior. No new binding system, compiler or semantic construct.
+
+Emit required local per-invocation evidence with application/profile/provenance,
+PID/argv/cwd/path linkage; independently observe process and durable endpoints
+before reusing existing layer challengers. Null means a layer was not reached,
+not passed. Checksums/PID correlation are bounded integrity evidence, not a hostile
+runtime proof. Relative-only paths, required traces and nontransactional persistence
+are deliberate prototype limits; packaging/installation/HTTP/production observability
+are outside the frozen local-process contract.
+
+After independent implementation/test lock, descriptive B02/baseline comparison
+finds no known benchmark-critical unresolved launch class. Stop the preparatory
+loop: recommend R5.37 = comprehensive frozen B02 retry. Acceptance remains unknown
+until that separate experiment. No repair after comparison, no B02 execution in
+R5.36, core 30/no #31 and historical boundaries preserved. Evidence:
+`benchmark/results/phase5c/R5_36-CHECKED-PUBLIC-LAUNCH-PROFILE.md`; interface:
+`docs/public-launch-r5.36.md`.
+
 ## R5.35 — Preserve the architecture; check collection/public/persistence policy
 
 Extend R5.34 profiles around the same current_pipeline. Represent repeated flags

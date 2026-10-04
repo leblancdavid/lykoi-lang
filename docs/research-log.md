@@ -1,5 +1,54 @@
 # Lykoi research log
 
+## R5.36 checked public launch profile completion (2026-10-03)
+
+Implemented observation: public-only subprocess launch now derives the four
+R5.35 infrastructure parameters from checked co-located metadata and internal
+bootstrap. Generic cwd-relative store/evidence resolution, provider selection,
+invocation allocation and trace emission preserve the existing compiler/binding/
+transport/persistence authorities. Launch contains no domain predicates, collection
+normalization, defaults, migration or state-transition logic. Ambient capability
+environment is overwritten; copied bundles need no repository PYTHONPATH.
+
+Independent acoustic station (calibration plus clock/identity stamp) and unchanged
+R5.33 specimen application use identical launcher bytes. Machine evidence records
+33 processes: A 6, B 9, path/environment 6, faults 6 and metadata mutations 6.
+Nineteen normal calls ground and conform at applicable layers; two declared
+directory-precondition failures reject before execution. Missing reads remain
+store-file-free; first generated insertion materializes V1, migration produces V2,
+and subsequent calls share exact durable byte continuity. Two cwd directories per
+application follow the same profile and executable rather than repository paths.
+
+Faults expose stale application identity, real writes to an unexpected store,
+foreign trace identity, required hidden helper, incompatible capability provider
+and consumed public argv. Four compatible metadata-only changes preserve generated
+algorithm bytes and launcher digest; two incompatible transport/persistence hash
+references reject. Separate launch/transport/input/persistence/semantic/output
+verdicts retain null for unreached layers. Trace identity corruption refuses
+grounding even when execution produced a generated result.
+
+Implementation/evidence were hash locked before descriptive frozen B02/baseline
+comparison; no implementation repair followed. All known benchmark-critical
+readiness classes are independently resolved or profile-configuration-only. Gate
+R5_36_READY_FOR_COMPREHENSIVE_B02_RETRY; exact next recommendation: R5.37 =
+comprehensive frozen B02 retry. Native packaging/installation/HTTP/production
+observability would move readiness goalposts beyond the frozen contract; they
+do not justify another preparatory phase. Complete frozen integration/acceptance
+is still unexecuted, not inferred from these independent examples.
+
+Windows PowerShell/Python 3.14.3: 347 harness tests discovered, 346 pass with one
+fail-closed nested frozen-B02 restriction skip (104.424 s); all 14 new launch tests
+pass, 31 application/compiler tests pass (2.730 s), validation/safety and readiness
+matrix pass. No Python/environment failure or LF mirror; newline conversion notices
+are separate from failures. Core 30/no #31; 46 historical raw entries unchanged.
+B02 not retried/accepted, Phase 5C paused, B03 untouched, B17 unexposed/unclassified,
+R5.2.2 historical authority, semantic-first format globally unfrozen, universal
+implementation correctness unclaimed. Crash/concurrent persistence and hostile
+runtime fidelity remain unestablished. Evidence:
+`benchmark/results/phase5c/R5_36-CHECKED-PUBLIC-LAUNCH-PROFILE.md`,
+`R5_36-launch-evidence.json`, `R5_36-readiness-matrix.json`; interface:
+`docs/public-launch-r5.36.md`.
+
 ## R5.35 generic transport boundary completion review (2026-10-03)
 
 Implemented observation: three bounded generic extensions of R5.34 consume the

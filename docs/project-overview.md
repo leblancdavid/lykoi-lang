@@ -69,6 +69,30 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.36 public launch completion review](../benchmark/results/phase5c/R5_36-CHECKED-PUBLIC-LAUNCH-PROFILE.md)
+closes the R5.35 standalone launch boundary independently. One generic copied entry
+consumes only public argv and checked co-located metadata, resolves durable/evidence
+paths from actual cwd, selects checked production or controlled-test providers,
+and invokes unchanged R5.35 transport/R5.32 binding/current_pipeline. Independent
+PID/command/cwd/public/durable observations challenge application/profile/provenance
+and trace linkage. Acoustic and unchanged specimen applications supply 33 process
+observations: 21 normal/path cases (19 grounded, 2 declared preflight rejections),
+6 detected faults and 6 metadata mutations (4 compatible, 2 correctly rejected).
+Core remains 30, no #31; launch is infrastructure, not semantic authority.
+Gate **`R5_36_READY_FOR_COMPREHENSIVE_B02_RETRY`**. Post-lock descriptive frozen-text
+comparison finds all known benchmark-critical readiness classes independently
+resolved or profile-configuration-only. Recommend **R5.37 = comprehensive frozen
+B02 retry**, with no additional preparatory phase for deployment polish. Complete
+frozen integration remains unexecuted. Windows Python 3.14.3: 347 harness tests
+discovered, 346 pass, one fail-closed nested frozen-B02 restriction skip; all 14 new
+launch tests, 31 application/compiler tests, validation/safety and readiness matrix
+pass. Interface: [R5.36 public launch](public-launch-r5.36.md).
+B02 not retried/accepted in R5.36, Phase 5C paused, B03 untouched, B17
+unexposed/unclassified, R5.2.2 historical authority and format globally unfrozen.
+Native packaging/installation/HTTP/production observability, crash/concurrent
+persistence guarantees and hostile-runtime attestation are outside this prototype;
+universal correctness is unclaimed.
+
 The [R5.35 transport boundary completion review](../benchmark/results/phase5c/R5_35-GENERIC-TRANSPORT-BOUNDARY-COMPLETION.md)
 independently validates all three R5.34 extension areas: per-element repeated/JSON
 sequence binding with suppliedness and encounter order; checked declarative public
