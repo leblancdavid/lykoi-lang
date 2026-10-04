@@ -69,6 +69,23 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.42 locked static support-transfer review](../benchmark/results/phase5c/R5_42-LOCKED-WHOLE-CONTRACT-STATIC-SUPPORT-TRANSFER.md)
+ends **`R5_42_PROTOCOL_HALT`**, before B02 exposure. The new recorder's pre-pass
+native Python matrix comparison rejects tuple/list differences introduced by JSON
+round-tripping; a stopped-run integrity diagnostic finds identical canonical
+matrix evidence. The gate was not corrected or retried. Complete B02 support,
+readiness, audit and admission are **not evaluated**; zero B02 static passes,
+generation, execution or frozen acceptance occurred.
+
+R5.41 capability remains preserved: 14/14 focused tests; 16 coherent profiles / 84
+matrix rows; 364 harness passes with 36 prohibited-B02 skips; 31/31 compiler tests;
+validation/safety/structural/821-leaf traceability/contamination pass; 678 historical
+and 695 prospective lock members unchanged. Core remains 30/no #31; no
+implementation/profile repair. B03 prospectively untouched, B17 unexposed and
+unclassified, Phase 5C paused. Recommend separately authorized R5.43 evaluation
+infrastructure investigation before any new locked static review. Earlier records
+retain their historical conclusions below.
+
 The [R5.41 independent optional-boundary support review](../benchmark/results/phase5c/R5_41-INDEPENDENT-OPTIONAL-BOUNDARY-SUPPORT-COHERENCE.md)
 ends **`R5_41_SUPPORT_COHERENCE_READY`**. The existing nullable scalar binder was
 already compositional; prospective transport admission now follows its underlying

@@ -1,5 +1,22 @@
 # Experimental decisions
 
+## R5.42 — Pre-pass protocol halt preserves the transfer boundary
+
+Record **`R5_42_PROTOCOL_HALT`** when the evaluation recorder fails its mandatory
+starting-state gate, even if a subsequent integrity diagnostic shows unchanged
+canonical evidence. Do not correct the native tuple/list matrix comparison and
+retry inside the stopped review. Keep the attempted recorder and its failure
+inspectable. The observed failure is infrastructure, not a semantic or B02
+support finding. No B02 support exposure, generation, execution or acceptance
+occurred; R5.41 generic capability remains sealed and core semantics remain 30.
+
+Preserve inherited pre-commit lock identities, HEADs and pinned bytes. Verify
+ancestry explicitly rather than falsely equating recorded pre-commit HEAD with
+current HEAD. No inherited lock or verifier was rewritten. A separately authorized
+R5.43 infrastructure investigation should establish a reliable gate before a new
+locked whole-contract static review. Phase 5C remains paused.
+See [R5.42 observation](../benchmark/results/phase5c/R5_42-LOCKED-WHOLE-CONTRACT-STATIC-SUPPORT-TRANSFER.md).
+
 ## R5.41 — Shared optional-boundary composition support
 
 Retain optional membership and nullable value alternatives as distinct existing

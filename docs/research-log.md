@@ -1,5 +1,32 @@
 # Lykoi research log
 
+## R5.42 locked static support-transfer pre-pass halt (2026-10-04)
+
+Observed **`R5_42_PROTOCOL_HALT`** before B02 support exposure. The attempted
+evaluation recorder passed 678 historical and 695 prospective pinned-byte checks
+and 14 focused tests, then rejected native Python equality between its freshly
+constructed independent matrix and JSON-loaded R5.41 evidence. In-memory tuples
+become lists through JSON round-tripping. Stopped-run integrity diagnostics find
+identical canonical JSON, SHA-256
+`02e3c3723a74d16458114760c0c917afbc7597e3ad76c62553014a475471513c`.
+The comparison was not corrected and pre-pass was not retried. This is a recorder
+infrastructure failure, not evidence of lost R5.41 capability or missing semantics.
+
+Verification: 400 harness discovered / 364 passed / 36 explicit prohibited-B02
+skips; 31/31 application/compiler; 16 coherent independent profiles and 84 matrix
+rows; validation/safety/structural schema/821-leaf traceability/contamination and
+inherited locks pass. Inherited locks retain their pre-commit HEADs; ancestry and
+exact bytes were checked without modifying old records. Final post-documentation
+`git diff --check` passes with LF→CRLF advisory warnings for the three updated
+project documents, separate from semantic results. Zero B02 static passes or CheckedPlans
+formed for this review; whole-contract support/readiness/audit/admission are not
+evaluated. Zero B02 generation, execution, frozen acceptance or implementation/
+profile repair. Core 30/no #31; B03 prospectively untouched, B17 unexposed and
+unclassified, Phase 5C paused. Recommend separately authorized R5.43 infrastructure
+investigation before a newly authorized static transfer review.
+Evidence: [R5.42 report](../benchmark/results/phase5c/R5_42-LOCKED-WHOLE-CONTRACT-STATIC-SUPPORT-TRANSFER.md)
+and `R5_42-halt-verification.json` beside it.
+
 ## R5.41 independent optional-boundary support coherence (2026-10-04)
 
 Observed: the historical scalar binder already decodes nullable non-null text
