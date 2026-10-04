@@ -1,5 +1,25 @@
 # Experimental decisions
 
+## R5.45 — Staged verification requires a proven complete input identity
+
+Separate expensive regressions into bounded commands with canonical initial
+INCOMPLETE and distinct completion evidence. A monolithic command is not inherent
+in the R5.43 freeze/verify/reserve protocol; the final complete same-state
+authorization decision must nevertheless remain atomic under exclusive state
+ownership. Keep every guarantee, including explicit focused checks already present
+in the generic harness. Do not optimize them away based solely on cost.
+
+Stop R5.45 at **`R5_45_STATE_IDENTITY_GAP`**: repository hashes and an executable
+hash do not bind Git ancestry/configuration, Python libraries/import customization,
+native tool dependencies or the actual effective worker environment. Passing
+synthetic adversaries cannot establish that missing closure. Issue no production
+certificate; permit no real-stage reuse or benchmark reservation. Broader common
+identities are required until narrower dependency scopes are proven. Qualification
+of a complete execution capsule is the next separately authorized infrastructure
+gate, before a new locked B02 experiment. Historical R5.42/R5.44 halts remain intact.
+See [report](../benchmark/results/phase5c/R5_45-PREEXPOSURE-VERIFICATION-RELIABILITY-AND-BOUNDED-EXECUTION.md)
+and [draft protocol](preexposure-r5.45.md).
+
 ## R5.44 — Interrupted starting-state verification halts before exposure
 
 Require a completed, persisted pre-exposure verification and experimental seal

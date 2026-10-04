@@ -69,6 +69,24 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.45 pre-exposure reliability investigation](../benchmark/results/phase5c/R5_45-PREEXPOSURE-VERIFICATION-RELIABILITY-AND-BOUNDED-EXECUTION.md)
+ends **`R5_45_STATE_IDENTITY_GAP`**. Bounded module stages preserve the 429-test
+restricted harness (393 passes / 36 skips), 31 compiler/application, 14 focused
+R5.41 and 29 recorder tests; 33 synthetic certificate tests pass. The independent
+16-profile/84-row matrix, validation/safety/schema/99-leaf traceability and
+contamination pass. Historical 678, prospective 695 and R5.43 infrastructure 731
+byte locks remain unchanged. Accumulated regressions explain inadequate monolithic
+120-second headroom; R5.44's exact interruption position remains unknown.
+
+The repository snapshot does not yet establish complete Git/runtime/dependency/
+effective-environment identity. Qualification stops at that boundary; no production
+certificate or B02 exposure is authorized. The [draft staged protocol](preexposure-r5.45.md)
+and synthetic prototype are prospective only. R5.43 remains the latest qualified
+infrastructure. Next: separately authorized complete execution-state/dependency
+identity qualification before any new locked B02 static transfer experiment.
+R5.42/R5.44 remain permanent halts; core 30, B03 prospectively untouched, B17
+unexposed/unclassified, Phase 5C paused. Earlier records retain their conclusions.
+
 The [R5.44 newly authorized locked static-transfer experiment](../benchmark/results/phase5c/R5_44-NEWLY-AUTHORIZED-LOCKED-WHOLE-CONTRACT-STATIC-SUPPORT-TRANSFER.md)
 ends **`R5_44_PROTOCOL_HALT`**, before B02 exposure. Its pre-exposure verification
 command was terminated at the 120-second tool limit before persisted verification

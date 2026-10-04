@@ -1,5 +1,36 @@
 # Lykoi research log
 
+## R5.45 bounded verification and incomplete state closure (2026-10-04)
+
+Observed **`R5_45_STATE_IDENTITY_GAP`**. R5.43's preserved 118.187-second full
+harness plus the requested focused/application suites estimates 123.923 seconds
+of suite work for R5.44, before other gates. Its exact timeout position remains
+unknown because buffered output and absent stage receipts cannot establish it.
+No R5.44 verification retry occurred.
+
+R5.45 independently completes 72 bounded investigation stages in three batches.
+Supervised subprocesses total 145.682 seconds; the slowest costs 12.667 seconds,
+with no single dominating stage. Full restricted union: 429 discovered / 393 pass /
+36 retained skips. Application/compiler 31, R5.41 focused 14, recorder 29 and new
+synthetic certificate tests 33 pass. Matrix reproduces twice at 16 profiles/84
+rows; model/safety/schema/99-leaf traceability/contamination pass. Historical 678,
+prospective 695 and infrastructure 731 byte locks remain valid.
+
+The synthetic certificate rejects mixed/stale/missing/failed/incomplete or mutated
+evidence, wrong mechanisms/versions/count/authority, and post-certificate mutation;
+one synthetic callback succeeds and a second is prevented. Timeout evidence stays
+INCOMPLETE across separate recomputation. These are closed-fixture observations,
+not qualification of the actual future experimental state.
+
+Inspection identifies omitted Git, external runtime and effective-environment
+inputs in the investigation snapshot. Stop qualification; no production certificate
+or real-stage reuse. Reporting changes do not retroactively refresh prior evidence.
+Zero B02 exposure/support/generation/execution/acceptance; core 30, B03 prospectively
+untouched, B17 unexposed/unclassified, Phase 5C paused. R5.42/R5.44 halts are preserved;
+R5.43 remains latest qualified infrastructure. Next: separately authorized complete
+execution-input identity qualification. See [report](../benchmark/results/phase5c/R5_45-PREEXPOSURE-VERIFICATION-RELIABILITY-AND-BOUNDED-EXECUTION.md)
+and the prospective-only [protocol](preexposure-r5.45.md).
+
 ## R5.44 pre-exposure verification interruption (2026-10-04)
 
 Observed **`R5_44_PROTOCOL_HALT`** before B02 exposure. The newly authorized
