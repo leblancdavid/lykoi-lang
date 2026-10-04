@@ -41,8 +41,41 @@ def conjunction(parts, slots):
     if not isinstance(parts, list) or len(parts) < 2:
         raise ValueError('conjunction needs predicates')
     guards = {witness(part, slots) for part in parts if isinstance(part, dict) and set(part) == {'present'}}
-    return [part for part in parts if isinstance(part, dict) and set(part) == {'present'}] + [
-        part for part in parts if not (isinstance(part, dict) and set(part) == {'present'})], guards
+    guards |= {('non_null', *path) for part in parts if (path := non_null_witness(part, slots)) is not None}
+    return sorted(parts, key=lambda p: 0 if 'present' in p else
+                  1 if non_null_witness(p, slots) is not None else 2), guards
+
+
+def non_null_witness(expr, slots):
+    """Existing negated typed equality establishes value non-nullness only.
+
+    Optional membership is a separate prerequisite. No new expression kind or
+    scalar-specific branch is introduced.
+    """
+    equality = expr.get('not', {}).get('equals') if isinstance(expr, dict) and isinstance(expr.get('not'), dict) else None
+    if not isinstance(equality, list) or len(equality) != 2:
+        return None
+    for reference, literal in (equality, equality[::-1]):
+        if not isinstance(reference, dict) or set(reference) != {'ref'}:
+            continue
+        if not isinstance(literal, dict) or set(literal) != {'literal'}:
+            continue
+        value = literal['literal']
+        if not isinstance(value, dict) or set(value) != {'type', 'value'} or value['value'] is not None:
+            continue
+        shape = declared(reference['ref'], slots)
+        base = shape['optional'] if isinstance(shape, dict) and set(shape) == {'optional'} else shape
+        if isinstance(base, dict) and set(base) == {'nullable'} and value['type'] == base:
+            return tuple(reference['ref'])
+    return None
+
+
+def effective(shape, path, guards):
+    if isinstance(shape, dict) and set(shape) == {'optional'} and path in guards:
+        shape = shape['optional']
+    if isinstance(shape, dict) and set(shape) == {'nullable'} and ('non_null', *path) in guards:
+        shape = shape['nullable']
+    return shape
 
 
 def selection_guards(source, slots, element):
@@ -55,6 +88,9 @@ def selection_guards(source, slots, element):
         return frozenset(conjunction(where['and'], scoped)[1])
     if isinstance(where, dict) and set(where) == {'present'}:
         return frozenset((witness(where, scoped),))
+    path = non_null_witness(where, scoped)
+    if path is not None:
+        return frozenset((('non_null', *path),))
     return frozenset()
 
 
@@ -72,17 +108,21 @@ def ordering_plan(arg, slots):
             raise ValueError('invalid ordering key')
         declaration = shape = _field(element, key)
         dependency = None
-        if isinstance(shape, dict) and set(shape) == {'optional'} and ('item', key) in guards:
-            shape = shape['optional']
+        dependencies = []
+        shape = effective(shape, ('item', key), guards)
+        if shape != declaration:
             where = arg['source']['select']['where']
             producers = where['and'] if 'and' in where else [where]
-            producer = [part for part in producers if 'present' in part and part['present']['ref'] == ['item', key]][-1]
-            dependency = (id(where), id(producer))
+            for producer in producers:
+                if ('present' in producer and producer['present']['ref'] == ['item', key]) or non_null_witness(producer, {**slots, 'item': element}) == ('item', key):
+                    dependencies.append((id(where), id(producer)))
+            dependency = dependencies[0] if len(dependencies) == 1 else None
         if shape not in ORDERABLE:
             raise ValueError('non-orderable key; optional key needs selection presence')
         keys.append((key, shape))
         key_facts.append({'field': (id(arg['source']), key), 'declared': declaration,
-                          'effective': shape, 'refinement': dependency})
+                          'effective': shape, 'refinement': dependency,
+                          'dependencies': tuple(dependencies)})
     return {'element': element, 'keys': keys, 'comparison': 'lexicographic',
             'ties': 'unconstrained', 'direction': None, 'source_type': source,
             'refinements': tuple(sorted(guards)), 'source': id(arg['source']),
@@ -99,11 +139,20 @@ def analyze(expr, slots, refinements=frozenset()):
         kind, arg = next(iter(expr.items()))
         declaration = declared(arg, slots) if kind == 'ref' else shape
         dependencies = tuple(collector['active'][path] for path in sorted(refinements)
-                             if kind == 'ref' and tuple(arg) == path)
+                             if kind == 'ref' and (tuple(arg) == path or ('non_null', *arg) == path))
         fact = {'kind': kind, 'declared': declaration, 'effective': shape,
                 'field': tuple(arg) if kind == 'ref' else None,
                 'refinement': dependencies,
-                'element': shape.get('sequence') if isinstance(shape, dict) else None}
+                'element': shape.get('sequence') if isinstance(shape, dict) else None,
+                'identity': collector['identities'][id(expr)],
+                'presence': 'established' if kind == 'ref' and tuple(arg) in refinements else 'declared',
+                'non_null': 'established' if kind == 'ref' and ('non_null', *arg) in refinements else 'declared'}
+        optional = isinstance(declaration, dict) and set(declaration) == {'optional'}
+        value_domain = declaration['optional'] if optional else declaration
+        fact['presence_domain'] = 'absent_capable' if optional else 'required'
+        fact['nullability_domain'] = 'nullable' if isinstance(value_domain, dict) and set(value_domain) == {'nullable'} else 'nonnullable'
+        fact['refinement_identity'] = tuple((collector['identities'][scope], collector['identities'][producer])
+                                          for scope, producer in dependencies)
         # Reused source objects may appear in multiple equivalent scopes. A
         # context-dependent reuse cannot be represented by one node binding.
         previous = collector['facts'].get(id(expr))
@@ -121,7 +170,7 @@ def _analyze(expr, slots, refinements=frozenset()):
     kind, arg = next(iter(expr.items()))
     if kind == 'ref':
         shape = declared(arg, slots)
-        return shape['optional'] if isinstance(shape, dict) and set(shape) == {'optional'} and tuple(arg) in refinements else shape
+        return effective(shape, tuple(arg), refinements)
     if kind == 'present':
         witness(expr, slots)
         analyze(arg, slots)
@@ -132,7 +181,10 @@ def _analyze(expr, slots, refinements=frozenset()):
         previous = None
         if collector is not None:
             producers = {tuple(p['present']['ref']): (id(expr), id(p)) for p in arg if 'present' in p}
-            collector['scopes'][id(expr)] = tuple((path, producer[1]) for path, producer in sorted(producers.items()))
+            producers.update({('non_null', *path): (id(expr), id(p)) for p in arg
+                              if (path := non_null_witness(p, slots)) is not None})
+            collector['scopes'][id(expr)] = tuple((path, producers[path][1]) for path in
+                sorted(producers, key=lambda path: (path[0] == 'non_null', path)))
             previous = collector['active']
             collector['active'] = {**previous, **producers}
         try:
@@ -143,7 +195,9 @@ def _analyze(expr, slots, refinements=frozenset()):
                 collector['active'] = previous
         return 'boolean'
     if kind == 'not':
-        if analyze(arg, slots, refinements) != 'boolean':
+        path = non_null_witness(expr, slots)
+        guard_facts = refinements - {('non_null', *path)} if path is not None else refinements
+        if analyze(arg, slots, guard_facts) != 'boolean':
             raise ValueError('negation needs predicate')
         return 'boolean'
     if kind in ('equals', 'before'):
@@ -151,7 +205,7 @@ def _analyze(expr, slots, refinements=frozenset()):
             raise ValueError('invalid operands')
         left, right = (analyze(part, slots, refinements) for part in arg)
         if kind == 'before' and (left, right) != ('instant', 'instant'):
-            raise ValueError('before requires two typed instants; optional operand needs in-scope presence')
+            raise ValueError('before requires two typed instants; optional operand needs in-scope presence; nullable operand needs in-scope non-nullness')
         if kind == 'equals' and left != right:
             raise ValueError('equality type mismatch; optional operand needs in-scope presence')
         return 'boolean'
@@ -504,9 +558,8 @@ class CheckedPlan:
             for (key, shape), fact in zip(order['keys'], order['key_facts']):
                 if fact['field'] != (order['source'], key) or fact['effective'] != shape:
                     raise ValueError('compiler internal consistency failure: ordering field')
-                if fact['refinement'] is not None:
-                    scope, producer = fact['refinement']
-                    if self.facts[producer]['kind'] != 'present' or (scope != producer and not any(p == producer for _, p in self.scopes[scope])):
+                for scope, producer in fact['dependencies']:
+                    if self.facts[producer]['kind'] not in ('present', 'not') or (scope != producer and not any(p == producer for _, p in self.scopes[scope])):
                         raise ValueError('compiler internal consistency failure: ordering refinement')
         for binding in self.bindings.values():
             if binding['source'][0] != 'pre' or binding['target'][0] != 'post' or any(node not in self.operands for node in binding['operands'].values()):
@@ -526,6 +579,16 @@ class CheckedPlan:
 def checked_plan(contract):
     collector = {name: {} for name in ('cache', 'active', 'scopes', 'orders', 'operands',
                                       'facts', 'bindings', 'projections', 'capabilities')}
+    def identities(node, path=()):
+        if isinstance(node, dict):
+            collector['identities'][id(node)] = (contract['id'], *path)
+            for key, value in node.items():
+                identities(value, (*path, key))
+        elif isinstance(node, list):
+            for index, value in enumerate(node):
+                identities(value, (*path, index))
+    collector['identities'] = {}
+    identities(contract)
     token = _analysis.set(collector)
     try:
         typed(contract)
@@ -574,8 +637,8 @@ def interpret(expr, facts, slots, plan):
         path = arg['ref']
         return path[-1] in _path(facts, path[:-1])
     if kind == 'and':
-        guarded = {producer for _, producer in plan.scopes[id(expr)]}
-        parts = [p for p in arg if id(p) in guarded] + [p for p in arg if id(p) not in guarded]
+        guarded = list(dict.fromkeys(producer for _, producer in plan.scopes[id(expr)]))
+        parts = [next(p for p in arg if id(p) == producer) for producer in guarded] + [p for p in arg if id(p) not in guarded]
         return all(ev(part) for part in parts)
     if kind == 'not':
         return not ev(arg)

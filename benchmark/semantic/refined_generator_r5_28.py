@@ -272,8 +272,8 @@ def expression(expr, bindings=None, slots=None, fault=False, plan=None):
     if kind == 'and':
         if plan is not None:
             dependencies = plan.scopes.get(id(expr), ())
-            guarded = {producer for _, producer in dependencies}
-            arg = [e for e in arg if id(e) in guarded] + [e for e in arg if id(e) not in guarded]
+            guarded = list(dict.fromkeys(producer for _, producer in dependencies))
+            arg = [next(e for e in arg if id(e) == producer) for producer in guarded] + [e for e in arg if id(e) not in guarded]
         return '(' + ' and '.join(emit(e) for e in arg) + ')'
     if kind == 'not':
         return '(not ' + emit(arg) + ')'

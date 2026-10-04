@@ -69,6 +69,46 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.38 nullable-domain and whole-contract review](../benchmark/results/phase5c/R5_38-NULLABLE-DOMAIN-WHOLE-CONTRACT-COHERENCE.md)
+ends **`R5_38_NULLABLE_COHERENCE_PARTIAL`**. Existing negated
+typed-null equality now establishes scoped non-nullness in the authoritative
+current analyzer/CheckedPlan, distinct from optional membership. Required nullable
+instant before/order/write compositions and nullable string/integer consumers
+generate, ground and conform on an independent publication application. Combined
+optional-nullable fields require both facts; wrong targets, unsafe use and scope
+leakage reject. No new core construct; the emitter consumes checked scheduling,
+and the independent verifier consumes authoritative facts.
+However, a post-lock independent audit finds that duplicate equivalent presence
+guards regress previously accepted optional selected ordering, and duplicate
+nullable guards fail the same checked dependency/scope invariant. No post-static
+repair occurred. Simple-case integration and green suite counts do not establish
+complete nullable/optional coherence.
+
+Readiness now records exact domains, prerequisites, state/composition and consumer
+stages rather than broad feature labels. An 84-cell matrix transfers 64 supported
+combinations through 128 grounded calls and rejects 20 before generation. Complete
+non-task binding/transport/launch readiness predicts successful generation and
+seven public calls; safe nested selection ordering is a documented unsupported
+population-fact composition. After a 625-file implementation lock, one static-only
+pass over R5.37's saved B02 family forms all 15 CheckedPlans but reports **NOT_READY**:
+nullable public decoding, public state-alternative dispatch, durable content-validity
+constraints, and missing complete transport/state/launch profiles. No B02 generation,
+execution or acceptance occurs. R5.36's historical retry gate is preserved; its
+nullable readiness implication is explicitly corrected prospectively.
+
+Verification: 360 harness tests discovered, 324 pass, 36 explicit B02 restrictions;
+31 application/compiler pass, validation/safety pass; 13 new tests and 37 optional
+regressions pass. Five R5.37 evidence checks pass with its historical live-tree lock
+assertion explicitly skipped. Byte lock, evidence audit and diff check pass;
+LF→CRLF warnings are separate. The redundant-guard audit is a real implementation
+failure. Recommend **R5.39 = Independent Refinement Dependency and Whole-Contract
+Boundary Closure Review**, repairing producer/dependency idempotence and completing
+the whole known boundary set independently before any retry recommendation.
+Core 30/no #31; Phase 5C paused, B03 prospectively untouched, B17 unexposed/unclassified,
+R5.2.2 historical authority, format globally unfrozen, universal correctness NO.
+Interface: [R5.38 nullable/readiness](nullable-readiness-r5.38.md). Earlier records
+below retain their historical conclusions and recommendations.
+
 The [R5.37 comprehensive frozen B02 evaluation](../benchmark/results/phase5c/R5_37-B02-COMPREHENSIVE-FROZEN-EVALUATION.md)
 ends at **`R5_37_B02_INTEGRATION_GAP`**. The architecture was locked at clean
 commit `428a3409ea4d47a57a9fc9e5a94af2595d98ec43` (224 protected file hashes),

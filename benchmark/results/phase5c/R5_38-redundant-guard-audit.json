@@ -1,0 +1,1604 @@
+{
+  "version": "R5.38",
+  "source": {
+    "id": "publication.nullable.coherence",
+    "state": {
+      "sequence": {
+        "record": {
+          "code": "string",
+          "edition": "integer",
+          "embargo": {
+            "nullable": "instant"
+          },
+          "released": {
+            "nullable": "instant"
+          },
+          "caption": {
+            "nullable": "string"
+          },
+          "rating": {
+            "nullable": "integer"
+          },
+          "reviewed": {
+            "optional": "instant"
+          },
+          "window": {
+            "optional": {
+              "nullable": "instant"
+            }
+          },
+          "label": "string",
+          "note": "string"
+        }
+      }
+    },
+    "operations": {
+      "earlier": {
+        "id": "publication.earlier",
+        "version": "R5.27",
+        "input": {
+          "record": {
+            "cutoff": "instant",
+            "preferred": {
+              "optional": "string"
+            }
+          }
+        },
+        "state": {
+          "sequence": {
+            "record": {
+              "code": "string",
+              "edition": "integer",
+              "embargo": {
+                "nullable": "instant"
+              },
+              "released": {
+                "nullable": "instant"
+              },
+              "caption": {
+                "nullable": "string"
+              },
+              "rating": {
+                "nullable": "integer"
+              },
+              "reviewed": {
+                "optional": "instant"
+              },
+              "window": {
+                "optional": {
+                  "nullable": "instant"
+                }
+              },
+              "label": "string",
+              "note": "string"
+            }
+          }
+        },
+        "branches": [
+          {
+            "tag": "ok",
+            "when": {
+              "equals": [
+                {
+                  "literal": {
+                    "value": 1,
+                    "type": "integer"
+                  }
+                },
+                {
+                  "literal": {
+                    "value": 1,
+                    "type": "integer"
+                  }
+                }
+              ]
+            },
+            "value": {
+              "select": {
+                "source": {
+                  "ref": [
+                    "pre"
+                  ]
+                },
+                "where": {
+                  "and": [
+                    {
+                      "before": [
+                        {
+                          "ref": [
+                            "item",
+                            "embargo"
+                          ]
+                        },
+                        {
+                          "ref": [
+                            "input",
+                            "cutoff"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "not": {
+                        "equals": [
+                          {
+                            "ref": [
+                              "item",
+                              "embargo"
+                            ]
+                          },
+                          {
+                            "literal": {
+                              "value": null,
+                              "type": {
+                                "nullable": "instant"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "value_type": {
+              "sequence": {
+                "record": {
+                  "code": "string",
+                  "edition": "integer",
+                  "embargo": {
+                    "nullable": "instant"
+                  },
+                  "released": {
+                    "nullable": "instant"
+                  },
+                  "caption": {
+                    "nullable": "string"
+                  },
+                  "rating": {
+                    "nullable": "integer"
+                  },
+                  "reviewed": {
+                    "optional": "instant"
+                  },
+                  "window": {
+                    "optional": {
+                      "nullable": "instant"
+                    }
+                  },
+                  "label": "string",
+                  "note": "string"
+                }
+              }
+            },
+            "transition": {
+              "preserve": true
+            }
+          },
+          {
+            "tag": "unavailable",
+            "when": null,
+            "value": {
+              "literal": {
+                "value": "unavailable",
+                "type": "string"
+              }
+            },
+            "value_type": "string",
+            "transition": {
+              "preserve": true
+            }
+          }
+        ]
+      },
+      "ordered": {
+        "id": "publication.ordered",
+        "version": "R5.27",
+        "input": {
+          "record": {
+            "cutoff": "instant",
+            "preferred": {
+              "optional": "string"
+            }
+          }
+        },
+        "state": {
+          "sequence": {
+            "record": {
+              "code": "string",
+              "edition": "integer",
+              "embargo": {
+                "nullable": "instant"
+              },
+              "released": {
+                "nullable": "instant"
+              },
+              "caption": {
+                "nullable": "string"
+              },
+              "rating": {
+                "nullable": "integer"
+              },
+              "reviewed": {
+                "optional": "instant"
+              },
+              "window": {
+                "optional": {
+                  "nullable": "instant"
+                }
+              },
+              "label": "string",
+              "note": "string"
+            }
+          }
+        },
+        "branches": [
+          {
+            "tag": "ok",
+            "when": {
+              "equals": [
+                {
+                  "literal": {
+                    "value": 1,
+                    "type": "integer"
+                  }
+                },
+                {
+                  "literal": {
+                    "value": 1,
+                    "type": "integer"
+                  }
+                }
+              ]
+            },
+            "value": {
+              "order": {
+                "source": {
+                  "select": {
+                    "source": {
+                      "ref": [
+                        "pre"
+                      ]
+                    },
+                    "where": {
+                      "not": {
+                        "equals": [
+                          {
+                            "ref": [
+                              "item",
+                              "embargo"
+                            ]
+                          },
+                          {
+                            "literal": {
+                              "value": null,
+                              "type": {
+                                "nullable": "instant"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "keys": [
+                  "embargo",
+                  "code"
+                ]
+              }
+            },
+            "value_type": {
+              "sequence": {
+                "record": {
+                  "code": "string",
+                  "edition": "integer",
+                  "embargo": {
+                    "nullable": "instant"
+                  },
+                  "released": {
+                    "nullable": "instant"
+                  },
+                  "caption": {
+                    "nullable": "string"
+                  },
+                  "rating": {
+                    "nullable": "integer"
+                  },
+                  "reviewed": {
+                    "optional": "instant"
+                  },
+                  "window": {
+                    "optional": {
+                      "nullable": "instant"
+                    }
+                  },
+                  "label": "string",
+                  "note": "string"
+                }
+              }
+            },
+            "transition": {
+              "preserve": true
+            }
+          },
+          {
+            "tag": "unavailable",
+            "when": null,
+            "value": {
+              "literal": {
+                "value": "unavailable",
+                "type": "string"
+              }
+            },
+            "value_type": "string",
+            "transition": {
+              "preserve": true
+            }
+          }
+        ]
+      },
+      "reviewed": {
+        "id": "publication.reviewed",
+        "version": "R5.27",
+        "input": {
+          "record": {
+            "cutoff": "instant",
+            "preferred": {
+              "optional": "string"
+            }
+          }
+        },
+        "state": {
+          "sequence": {
+            "record": {
+              "code": "string",
+              "edition": "integer",
+              "embargo": {
+                "nullable": "instant"
+              },
+              "released": {
+                "nullable": "instant"
+              },
+              "caption": {
+                "nullable": "string"
+              },
+              "rating": {
+                "nullable": "integer"
+              },
+              "reviewed": {
+                "optional": "instant"
+              },
+              "window": {
+                "optional": {
+                  "nullable": "instant"
+                }
+              },
+              "label": "string",
+              "note": "string"
+            }
+          }
+        },
+        "branches": [
+          {
+            "tag": "ok",
+            "when": {
+              "equals": [
+                {
+                  "literal": {
+                    "value": 1,
+                    "type": "integer"
+                  }
+                },
+                {
+                  "literal": {
+                    "value": 1,
+                    "type": "integer"
+                  }
+                }
+              ]
+            },
+            "value": {
+              "order": {
+                "source": {
+                  "select": {
+                    "source": {
+                      "ref": [
+                        "pre"
+                      ]
+                    },
+                    "where": {
+                      "and": [
+                        {
+                          "before": [
+                            {
+                              "ref": [
+                                "item",
+                                "reviewed"
+                              ]
+                            },
+                            {
+                              "ref": [
+                                "input",
+                                "cutoff"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "present": {
+                            "ref": [
+                              "item",
+                              "reviewed"
+                            ]
+                          }
+                        },
+                        {
+                          "present": {
+                            "ref": [
+                              "item",
+                              "reviewed"
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "keys": [
+                  "reviewed",
+                  "code"
+                ]
+              }
+            },
+            "value_type": {
+              "sequence": {
+                "record": {
+                  "code": "string",
+                  "edition": "integer",
+                  "embargo": {
+                    "nullable": "instant"
+                  },
+                  "released": {
+                    "nullable": "instant"
+                  },
+                  "caption": {
+                    "nullable": "string"
+                  },
+                  "rating": {
+                    "nullable": "integer"
+                  },
+                  "reviewed": {
+                    "optional": "instant"
+                  },
+                  "window": {
+                    "optional": {
+                      "nullable": "instant"
+                    }
+                  },
+                  "label": "string",
+                  "note": "string"
+                }
+              }
+            },
+            "transition": {
+              "preserve": true
+            }
+          },
+          {
+            "tag": "unavailable",
+            "when": null,
+            "value": {
+              "literal": {
+                "value": "unavailable",
+                "type": "string"
+              }
+            },
+            "value_type": "string",
+            "transition": {
+              "preserve": true
+            }
+          }
+        ]
+      },
+      "window": {
+        "id": "publication.window",
+        "version": "R5.27",
+        "input": {
+          "record": {
+            "cutoff": "instant",
+            "preferred": {
+              "optional": "string"
+            }
+          }
+        },
+        "state": {
+          "sequence": {
+            "record": {
+              "code": "string",
+              "edition": "integer",
+              "embargo": {
+                "nullable": "instant"
+              },
+              "released": {
+                "nullable": "instant"
+              },
+              "caption": {
+                "nullable": "string"
+              },
+              "rating": {
+                "nullable": "integer"
+              },
+              "reviewed": {
+                "optional": "instant"
+              },
+              "window": {
+                "optional": {
+                  "nullable": "instant"
+                }
+              },
+              "label": "string",
+              "note": "string"
+            }
+          }
+        },
+        "branches": [
+          {
+            "tag": "ok",
+            "when": {
+              "equals": [
+                {
+                  "literal": {
+                    "value": 1,
+                    "type": "integer"
+                  }
+                },
+                {
+                  "literal": {
+                    "value": 1,
+                    "type": "integer"
+                  }
+                }
+              ]
+            },
+            "value": {
+              "order": {
+                "source": {
+                  "select": {
+                    "source": {
+                      "ref": [
+                        "pre"
+                      ]
+                    },
+                    "where": {
+                      "and": [
+                        {
+                          "before": [
+                            {
+                              "ref": [
+                                "item",
+                                "window"
+                              ]
+                            },
+                            {
+                              "ref": [
+                                "input",
+                                "cutoff"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "not": {
+                            "equals": [
+                              {
+                                "ref": [
+                                  "item",
+                                  "window"
+                                ]
+                              },
+                              {
+                                "literal": {
+                                  "value": null,
+                                  "type": {
+                                    "nullable": "instant"
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "present": {
+                            "ref": [
+                              "item",
+                              "window"
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "keys": [
+                  "window",
+                  "code"
+                ]
+              }
+            },
+            "value_type": {
+              "sequence": {
+                "record": {
+                  "code": "string",
+                  "edition": "integer",
+                  "embargo": {
+                    "nullable": "instant"
+                  },
+                  "released": {
+                    "nullable": "instant"
+                  },
+                  "caption": {
+                    "nullable": "string"
+                  },
+                  "rating": {
+                    "nullable": "integer"
+                  },
+                  "reviewed": {
+                    "optional": "instant"
+                  },
+                  "window": {
+                    "optional": {
+                      "nullable": "instant"
+                    }
+                  },
+                  "label": "string",
+                  "note": "string"
+                }
+              }
+            },
+            "transition": {
+              "preserve": true
+            }
+          },
+          {
+            "tag": "unavailable",
+            "when": null,
+            "value": {
+              "literal": {
+                "value": "unavailable",
+                "type": "string"
+              }
+            },
+            "value_type": "string",
+            "transition": {
+              "preserve": true
+            }
+          }
+        ]
+      },
+      "caption": {
+        "id": "publication.caption",
+        "version": "R5.27",
+        "input": {
+          "record": {
+            "cutoff": "instant",
+            "preferred": {
+              "optional": "string"
+            }
+          }
+        },
+        "state": {
+          "sequence": {
+            "record": {
+              "code": "string",
+              "edition": "integer",
+              "embargo": {
+                "nullable": "instant"
+              },
+              "released": {
+                "nullable": "instant"
+              },
+              "caption": {
+                "nullable": "string"
+              },
+              "rating": {
+                "nullable": "integer"
+              },
+              "reviewed": {
+                "optional": "instant"
+              },
+              "window": {
+                "optional": {
+                  "nullable": "instant"
+                }
+              },
+              "label": "string",
+              "note": "string"
+            }
+          }
+        },
+        "branches": [
+          {
+            "tag": "ok",
+            "when": {
+              "equals": [
+                {
+                  "literal": {
+                    "value": 1,
+                    "type": "integer"
+                  }
+                },
+                {
+                  "literal": {
+                    "value": 1,
+                    "type": "integer"
+                  }
+                }
+              ]
+            },
+            "value": {
+              "select": {
+                "source": {
+                  "ref": [
+                    "pre"
+                  ]
+                },
+                "where": {
+                  "and": [
+                    {
+                      "nonblank": {
+                        "ref": [
+                          "item",
+                          "caption"
+                        ]
+                      }
+                    },
+                    {
+                      "not": {
+                        "equals": [
+                          {
+                            "ref": [
+                              "item",
+                              "caption"
+                            ]
+                          },
+                          {
+                            "literal": {
+                              "value": null,
+                              "type": {
+                                "nullable": "string"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "value_type": {
+              "sequence": {
+                "record": {
+                  "code": "string",
+                  "edition": "integer",
+                  "embargo": {
+                    "nullable": "instant"
+                  },
+                  "released": {
+                    "nullable": "instant"
+                  },
+                  "caption": {
+                    "nullable": "string"
+                  },
+                  "rating": {
+                    "nullable": "integer"
+                  },
+                  "reviewed": {
+                    "optional": "instant"
+                  },
+                  "window": {
+                    "optional": {
+                      "nullable": "instant"
+                    }
+                  },
+                  "label": "string",
+                  "note": "string"
+                }
+              }
+            },
+            "transition": {
+              "preserve": true
+            }
+          },
+          {
+            "tag": "unavailable",
+            "when": null,
+            "value": {
+              "literal": {
+                "value": "unavailable",
+                "type": "string"
+              }
+            },
+            "value_type": "string",
+            "transition": {
+              "preserve": true
+            }
+          }
+        ]
+      },
+      "rating": {
+        "id": "publication.rating",
+        "version": "R5.27",
+        "input": {
+          "record": {
+            "cutoff": "instant",
+            "preferred": {
+              "optional": "string"
+            }
+          }
+        },
+        "state": {
+          "sequence": {
+            "record": {
+              "code": "string",
+              "edition": "integer",
+              "embargo": {
+                "nullable": "instant"
+              },
+              "released": {
+                "nullable": "instant"
+              },
+              "caption": {
+                "nullable": "string"
+              },
+              "rating": {
+                "nullable": "integer"
+              },
+              "reviewed": {
+                "optional": "instant"
+              },
+              "window": {
+                "optional": {
+                  "nullable": "instant"
+                }
+              },
+              "label": "string",
+              "note": "string"
+            }
+          }
+        },
+        "branches": [
+          {
+            "tag": "ok",
+            "when": {
+              "equals": [
+                {
+                  "literal": {
+                    "value": 1,
+                    "type": "integer"
+                  }
+                },
+                {
+                  "literal": {
+                    "value": 1,
+                    "type": "integer"
+                  }
+                }
+              ]
+            },
+            "value": {
+              "select": {
+                "source": {
+                  "ref": [
+                    "pre"
+                  ]
+                },
+                "where": {
+                  "and": [
+                    {
+                      "equals": [
+                        {
+                          "ref": [
+                            "item",
+                            "rating"
+                          ]
+                        },
+                        {
+                          "literal": {
+                            "value": 3,
+                            "type": "integer"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "not": {
+                        "equals": [
+                          {
+                            "ref": [
+                              "item",
+                              "rating"
+                            ]
+                          },
+                          {
+                            "literal": {
+                              "value": null,
+                              "type": {
+                                "nullable": "integer"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "value_type": {
+              "sequence": {
+                "record": {
+                  "code": "string",
+                  "edition": "integer",
+                  "embargo": {
+                    "nullable": "instant"
+                  },
+                  "released": {
+                    "nullable": "instant"
+                  },
+                  "caption": {
+                    "nullable": "string"
+                  },
+                  "rating": {
+                    "nullable": "integer"
+                  },
+                  "reviewed": {
+                    "optional": "instant"
+                  },
+                  "window": {
+                    "optional": {
+                      "nullable": "instant"
+                    }
+                  },
+                  "label": "string",
+                  "note": "string"
+                }
+              }
+            },
+            "transition": {
+              "preserve": true
+            }
+          },
+          {
+            "tag": "unavailable",
+            "when": null,
+            "value": {
+              "literal": {
+                "value": "unavailable",
+                "type": "string"
+              }
+            },
+            "value_type": "string",
+            "transition": {
+              "preserve": true
+            }
+          }
+        ]
+      },
+      "replace": {
+        "id": "publication.replace",
+        "version": "R5.27",
+        "input": {
+          "record": {
+            "cutoff": "instant",
+            "preferred": {
+              "optional": "string"
+            }
+          }
+        },
+        "state": {
+          "sequence": {
+            "record": {
+              "code": "string",
+              "edition": "integer",
+              "embargo": {
+                "nullable": "instant"
+              },
+              "released": {
+                "nullable": "instant"
+              },
+              "caption": {
+                "nullable": "string"
+              },
+              "rating": {
+                "nullable": "integer"
+              },
+              "reviewed": {
+                "optional": "instant"
+              },
+              "window": {
+                "optional": {
+                  "nullable": "instant"
+                }
+              },
+              "label": "string",
+              "note": "string"
+            }
+          }
+        },
+        "branches": [
+          {
+            "tag": "ok",
+            "when": {
+              "equals": [
+                {
+                  "project": {
+                    "row": {
+                      "sole": {
+                        "select": {
+                          "source": {
+                            "ref": [
+                              "pre"
+                            ]
+                          },
+                          "where": {
+                            "and": [
+                              {
+                                "and": [
+                                  {
+                                    "before": [
+                                      {
+                                        "ref": [
+                                          "item",
+                                          "embargo"
+                                        ]
+                                      },
+                                      {
+                                        "ref": [
+                                          "input",
+                                          "cutoff"
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "equals": [
+                                      {
+                                        "ref": [
+                                          "item",
+                                          "code"
+                                        ]
+                                      },
+                                      {
+                                        "literal": {
+                                          "value": "a",
+                                          "type": "string"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "not": {
+                                  "equals": [
+                                    {
+                                      "ref": [
+                                        "item",
+                                        "embargo"
+                                      ]
+                                    },
+                                    {
+                                      "literal": {
+                                        "value": null,
+                                        "type": {
+                                          "nullable": "instant"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "fields": [
+                      "code"
+                    ]
+                  }
+                },
+                {
+                  "record": {
+                    "code": {
+                      "literal": {
+                        "value": "a",
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "value": {
+              "ref": [
+                "post"
+              ]
+            },
+            "value_type": {
+              "sequence": {
+                "record": {
+                  "code": "string",
+                  "edition": "integer",
+                  "embargo": {
+                    "nullable": "instant"
+                  },
+                  "released": {
+                    "nullable": "instant"
+                  },
+                  "caption": {
+                    "nullable": "string"
+                  },
+                  "rating": {
+                    "nullable": "integer"
+                  },
+                  "reviewed": {
+                    "optional": "instant"
+                  },
+                  "window": {
+                    "optional": {
+                      "nullable": "instant"
+                    }
+                  },
+                  "label": "string",
+                  "note": "string"
+                }
+              }
+            },
+            "transition": {
+              "relations": [
+                {
+                  "replace_field": {
+                    "collection": null,
+                    "key": "code",
+                    "match": {
+                      "literal": {
+                        "value": "a",
+                        "type": "string"
+                      }
+                    },
+                    "field": "label",
+                    "value": {
+                      "fallback": {
+                        "value": {
+                          "ref": [
+                            "input",
+                            "preferred"
+                          ]
+                        },
+                        "default": {
+                          "literal": {
+                            "value": "released",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "tag": "unavailable",
+            "when": null,
+            "value": {
+              "literal": {
+                "value": "unavailable",
+                "type": "string"
+              }
+            },
+            "value_type": "string",
+            "transition": {
+              "preserve": true
+            }
+          }
+        ]
+      },
+      "remove": {
+        "id": "publication.remove",
+        "version": "R5.27",
+        "input": {
+          "record": {
+            "cutoff": "instant",
+            "preferred": {
+              "optional": "string"
+            }
+          }
+        },
+        "state": {
+          "sequence": {
+            "record": {
+              "code": "string",
+              "edition": "integer",
+              "embargo": {
+                "nullable": "instant"
+              },
+              "released": {
+                "nullable": "instant"
+              },
+              "caption": {
+                "nullable": "string"
+              },
+              "rating": {
+                "nullable": "integer"
+              },
+              "reviewed": {
+                "optional": "instant"
+              },
+              "window": {
+                "optional": {
+                  "nullable": "instant"
+                }
+              },
+              "label": "string",
+              "note": "string"
+            }
+          }
+        },
+        "branches": [
+          {
+            "tag": "ok",
+            "when": {
+              "equals": [
+                {
+                  "project": {
+                    "row": {
+                      "sole": {
+                        "select": {
+                          "source": {
+                            "ref": [
+                              "pre"
+                            ]
+                          },
+                          "where": {
+                            "and": [
+                              {
+                                "and": [
+                                  {
+                                    "before": [
+                                      {
+                                        "ref": [
+                                          "item",
+                                          "embargo"
+                                        ]
+                                      },
+                                      {
+                                        "ref": [
+                                          "input",
+                                          "cutoff"
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "equals": [
+                                      {
+                                        "ref": [
+                                          "item",
+                                          "code"
+                                        ]
+                                      },
+                                      {
+                                        "literal": {
+                                          "value": "a",
+                                          "type": "string"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "not": {
+                                  "equals": [
+                                    {
+                                      "ref": [
+                                        "item",
+                                        "embargo"
+                                      ]
+                                    },
+                                    {
+                                      "literal": {
+                                        "value": null,
+                                        "type": {
+                                          "nullable": "instant"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    "fields": [
+                      "code"
+                    ]
+                  }
+                },
+                {
+                  "record": {
+                    "code": {
+                      "literal": {
+                        "value": "a",
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "value": {
+              "ref": [
+                "post"
+              ]
+            },
+            "value_type": {
+              "sequence": {
+                "record": {
+                  "code": "string",
+                  "edition": "integer",
+                  "embargo": {
+                    "nullable": "instant"
+                  },
+                  "released": {
+                    "nullable": "instant"
+                  },
+                  "caption": {
+                    "nullable": "string"
+                  },
+                  "rating": {
+                    "nullable": "integer"
+                  },
+                  "reviewed": {
+                    "optional": "instant"
+                  },
+                  "window": {
+                    "optional": {
+                      "nullable": "instant"
+                    }
+                  },
+                  "label": "string",
+                  "note": "string"
+                }
+              }
+            },
+            "transition": {
+              "relations": [
+                {
+                  "remove": {
+                    "collection": null,
+                    "identity": "code",
+                    "match": {
+                      "literal": {
+                        "value": "a",
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "tag": "unavailable",
+            "when": null,
+            "value": {
+              "literal": {
+                "value": "unavailable",
+                "type": "string"
+              }
+            },
+            "value_type": "string",
+            "transition": {
+              "preserve": true
+            }
+          }
+        ]
+      }
+    }
+  },
+  "baseline_accepts": true,
+  "current_accepts": false,
+  "diagnostic": "compiler internal consistency failure: ordering refinement",
+  "classification": "OPTIONAL_REDUNDANT_GUARD_ORDERING_REGRESSION",
+  "nullable_redundant_guard": {
+    "source": {
+      "id": "publication.ordered",
+      "version": "R5.27",
+      "input": {
+        "record": {
+          "cutoff": "instant",
+          "preferred": {
+            "optional": "string"
+          }
+        }
+      },
+      "state": {
+        "sequence": {
+          "record": {
+            "code": "string",
+            "edition": "integer",
+            "embargo": {
+              "nullable": "instant"
+            },
+            "released": {
+              "nullable": "instant"
+            },
+            "caption": {
+              "nullable": "string"
+            },
+            "rating": {
+              "nullable": "integer"
+            },
+            "reviewed": {
+              "optional": "instant"
+            },
+            "window": {
+              "optional": {
+                "nullable": "instant"
+              }
+            },
+            "label": "string",
+            "note": "string"
+          }
+        }
+      },
+      "branches": [
+        {
+          "tag": "ok",
+          "when": {
+            "equals": [
+              {
+                "literal": {
+                  "value": 1,
+                  "type": "integer"
+                }
+              },
+              {
+                "literal": {
+                  "value": 1,
+                  "type": "integer"
+                }
+              }
+            ]
+          },
+          "value": {
+            "order": {
+              "source": {
+                "select": {
+                  "source": {
+                    "ref": [
+                      "pre"
+                    ]
+                  },
+                  "where": {
+                    "and": [
+                      {
+                        "not": {
+                          "equals": [
+                            {
+                              "ref": [
+                                "item",
+                                "embargo"
+                              ]
+                            },
+                            {
+                              "literal": {
+                                "value": null,
+                                "type": {
+                                  "nullable": "instant"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "not": {
+                          "equals": [
+                            {
+                              "ref": [
+                                "item",
+                                "embargo"
+                              ]
+                            },
+                            {
+                              "literal": {
+                                "value": null,
+                                "type": {
+                                  "nullable": "instant"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "keys": [
+                "embargo",
+                "code"
+              ]
+            }
+          },
+          "value_type": {
+            "sequence": {
+              "record": {
+                "code": "string",
+                "edition": "integer",
+                "embargo": {
+                  "nullable": "instant"
+                },
+                "released": {
+                  "nullable": "instant"
+                },
+                "caption": {
+                  "nullable": "string"
+                },
+                "rating": {
+                  "nullable": "integer"
+                },
+                "reviewed": {
+                  "optional": "instant"
+                },
+                "window": {
+                  "optional": {
+                    "nullable": "instant"
+                  }
+                },
+                "label": "string",
+                "note": "string"
+              }
+            }
+          },
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "unavailable",
+          "when": null,
+          "value": {
+            "literal": {
+              "value": "unavailable",
+              "type": "string"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        }
+      ]
+    },
+    "current_accepts": false,
+    "diagnostic": "compiler internal consistency failure: ordering refinement"
+  },
+  "lock": {
+    "valid": true,
+    "identity": "46d380be742eb11f6081b2ba548ed80d62a37c13789734f6b819234d06640e5c",
+    "protected_files": 625,
+    "mismatches": []
+  },
+  "generated": false,
+  "b02_analyzed_again": false
+}

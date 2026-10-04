@@ -1,5 +1,78 @@
 # Lykoi research log
 
+## R5.38 nullable domain and whole-contract coherence (2026-10-04)
+
+Implemented observation: the prospective authoritative analyzer recognizes existing
+negated typed-null equality as a scoped non-null witness and generically eliminates
+nullable<T>. Optional field presence remains separate; optional<nullable<T>> needs
+both facts. Sealed CheckedPlan includes declared/effective types, independent
+presence/nullability states and stable producer/scope identities. The emitter
+consumes checked scheduling; the verifier independently interprets semantic source
+over observed values. No core relation or scalar-specific refinement branch added.
+
+Independent publication evidence: eight normal generated/grounded/conformant calls
+(nullable before/order, optional and combined-domain reads, string/integer consumers,
+replace/remove), five conformant source-only mutations, three disposable faults
+that ground but fail semantics, and seven layered conformant standalone public
+calls with shared durable state. Wrong-field/record/scope and unguarded uses reject.
+All six combined-domain conjunction orders execute equivalently. An 84-combination
+domain/refinement matrix gives 64 supported current-pipeline transfers, 20 pre-generation
+rejections and 128 grounded calls. These are finite witnesses, not universal proof.
+
+Methodological correction: **R5.36 readiness conclusion was too coarse with respect
+to nullable refinement.** Its historical R5_36_READY_FOR_COMPREHENSIVE_B02_RETRY result
+is retained. R5.23 explicitly identified nullable composition; capability aggregation
+lost the exact operand-domain obligation, substituted optional evidence and treated
+matrix consistency as whole-contract closure. Revised readiness walks whole source,
+records exact domains/refinement prerequisites/state/composition/stages, validates
+complete profiles and fails closed for missing/unknown boundary obligations. A complete
+non-task application predicts successful generation; a semantically safe nested
+selection ordering fixture detects unsupported population-fact propagation statically.
+
+After independent implementation/evidence/verification lock (625 protected files,
+identity 46d380be742eb11f6081b2ba548ed80d62a37c13789734f6b819234d06640e5c), one descriptive
+B02 static pass forms 15/15 saved operation-family CheckedPlans, including required
+nullable before and optional-nullable fallback. Whole-contract NOT_READY: nullable
+public decoding, one public route over multiple state alternatives, durable
+population/content validation, and missing complete transport/state/launch profiles.
+All six findings are collected together; three are capability gaps and three missing
+coverage obligations, not observed behavior failures. No B02 generation, execution,
+acceptance or serial frontier retry. Locked hashes and HEAD remain unchanged.
+
+Verification: Windows/Python 3.14.3/PowerShell 7; complete restriction-aware harness
+discovery 360 tests, 324 pass, 36 explicit restrictions (35 historical B02 rendering/
+execution probes plus one nested frozen acceptance replay). Application/compiler
+31/31; model validation/safety; 13 new tests; 37 R5.25–R5.31 optional regressions;
+architecture/grounding/semantic/binding/evolution/transport/launch families pass.
+R5.37 immutable evidence checks 5 pass, historical live-tree lock assertion 1 skip
+because two prospective implementation files intentionally changed. No skips counted
+as passes. Diff check and evidence integrity audit pass. Initial shell-assignment
+parse error and disposable fault-injection binding-name correction occurred before
+final verification/lock; LF→CRLF future-checkout warnings are environment-only.
+
+Post-lock independent audit: a non-task optional selected ordering with two
+equivalent presence guards is accepted by the pinned historical analyzer but
+rejected by current CheckedPlan ordering invariants. Two equivalent nullable
+non-null guards fail similarly. Scope maps retain one producer per fact while
+ordering records both producers; the redundant producer lacks a retained scope
+entry. This is a real implementation regression/incomplete idempotent conjunction
+composition, separate from environment notices and the B02 static gaps. No
+post-static implementation repair or B02 reanalysis; original 625-file lock intact.
+Prior test-count success cannot establish preservation of optional semantics.
+
+Gate R5_38_NULLABLE_COHERENCE_PARTIAL: demonstrated nullable integration and
+readiness improvements remain incomplete. Exact recommendation:
+R5.39 Independent Refinement Dependency and Whole-Contract Boundary Closure Review,
+repairing/regressing canonical producer consistency for redundant guards and
+independently completing the entire known boundary set and
+profiles before any future retry recommendation. Candidate core 30/no #31; TYPE
+SYSTEM/CHECKED PLAN/READINESS ANALYSIS/TESTING-EVIDENCE accounting only. Phase 5C
+paused, B03 prospectively untouched, B17 unexposed/unclassified, format globally
+unfrozen, R5.2.2 historical authority, universal correctness NO.
+Evidence: `benchmark/results/phase5c/R5_38-NULLABLE-DOMAIN-WHOLE-CONTRACT-COHERENCE.md`,
+`R5_38-summary.json`, `R5_38-B02-static-readiness.json`;
+interface: `docs/nullable-readiness-r5.38.md`.
+
 ## R5.37 comprehensive frozen B02 evaluation (2026-10-03)
 
 Evaluation observation: clean HEAD `428a3409ea4d47a57a9fc9e5a94af2595d98ec43`,

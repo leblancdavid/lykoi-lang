@@ -1,5 +1,51 @@
 # Experimental decisions
 
+## R5.38 — Separate nullable facts and require exact whole-contract readiness
+
+Choose EXISTING_TYPE_SYSTEM_GENERALIZATION: existing negated typed equality to
+null is semantically sufficient. Keep field presence and value non-nullness as
+independent facts, with stable reference/scope identities. Optional elimination
+does not eliminate nullable; a combined field needs both prerequisites. Check
+the null guard in its nullable premise domain. Collect conjunction facts before
+typing and let the sealed plan schedule producers safely, without procedural
+serialization semantics. Generator and verifier consume checked facts; neither
+owns another type authority. New core constructs 0; candidate core remains 30.
+
+**Historical correction: R5.36 readiness conclusion was too coarse with respect
+to nullable refinement.** Preserve R5_36_READY_FOR_COMPREHENSIVE_B02_RETRY as the
+historical result produced by that methodology. R5.23 already identified nullable
+composition. The defect was coarse capability aggregation/evidence substitution:
+optional witness evidence was accepted in place of an exact nullable operand-domain
+obligation, while matrix checks established only record consistency. It was not a
+new requirement or merely a missing test.
+
+Replace broad readiness rows with declared/effective type, presence/non-null
+prerequisites, scoped dependencies, state shape, relation composition, read/write
+context and analyzer/plan/lowerer/verifier/binding/transport/launch support. Walk
+every operation and explicitly represented boundary obligation in one static pass;
+missing profiles/unknown obligations reject. SUPPORTED_STATIC is bounded consumer
+support, not executed correctness. Independent generation/grounding tests challenge
+the prediction. Keep safe nested-selection population-fact propagation explicitly
+unsupported instead of assuming arbitrary composition closure.
+
+Tradeoff: the static pass requires complete source/profile/obligation coverage;
+it cannot infer omitted natural-language requirements. All 15 saved B02-family
+CheckedPlans now form, but full readiness is NOT_READY. Collect nullable public
+decoding, public multi-state alternatives and durable content validity together,
+plus missing complete profiles, without B02 generation/execution/acceptance. Only
+complete benchmark-critical static READY may recommend a later comprehensive
+evaluation. A post-lock independent audit additionally finds an optional regression:
+duplicate equivalent presence guards previously accepted by the historical analyzer
+now fail ordering producer/scope consistency; duplicate nullable guards fail too.
+Canonical scope producers and ordering dependencies disagree on redundant facts.
+Preserve the locked evidence and classify partial, rather than count green suites
+as coherence or repair after the descriptive static comparison. R5.39 should
+independently repair/regress this composition and review/complete the whole known set; no
+serial first-gap retry, B03 resumption, B17 exposure or automatic #31. Gate
+R5_38_NULLABLE_COHERENCE_PARTIAL, universal correctness NO.
+Evidence: `benchmark/results/phase5c/R5_38-NULLABLE-DOMAIN-WHOLE-CONTRACT-COHERENCE.md`;
+versioned interface: `docs/nullable-readiness-r5.38.md`.
+
 ## R5.37 — Preserve a failed integration evaluation without repair
 
 The comprehensive frozen B02 evaluation stopped at the unchanged authoritative
