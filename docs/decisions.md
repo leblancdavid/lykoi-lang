@@ -1,5 +1,34 @@
 # Experimental decisions
 
+## R5.35 — Preserve the architecture; check collection/public/persistence policy
+
+Extend R5.34 profiles around the same current_pipeline. Represent repeated flags
+and JSON arrays as existing sequences, retain encounter order/duplicates and
+invoke the unchanged R5.32 binder for every element. Omitted optional collections
+stay absent; explicit JSON empty remains supplied. Leave fallback, normalization
+and domain validity in generated semantics. Choose bounded direct/object public
+documents with checked constants/kind/payload paths, explicit coverage, stream and
+exit. No arbitrary formatting hooks or unjustified multi-record streaming.
+
+Separate physical missing storage from semantic emptiness. REQUIRE_EXISTING fails
+before invocation; INITIALIZE_DECLARED_STATE references explicit checked state
+metadata. Stage missing origin and materialize only on a successful generated
+write, leaving read-only missing storage absent. Keep physical/effective pre-state
+separate in evidence. Persistence, binding, semantics and public output get
+independent verdicts: a valid public error can conceal wrong physical creation;
+valid state and semantics can coexist with wrong output.
+
+Tradeoffs: scalar sequence elements; bounded record paths; lazy rather than eager
+initialization; one JSON document; no crash atomicity, concurrency guarantee or
+hostile-writer authentication. No core semantic extension, no #31, core 30.
+The post-lock frozen-text comparison exposes a launch gap: infrastructure argv
+remains mandatory and no checked public-only-argv/cwd-store bootstrap profile
+exists. Correct R5.34's configuration-only assumption prospectively; do not repair
+implementation after comparison. Choose the partial gate and a bounded R5.36
+Checked Public Launch Profile Completion Review, not comprehensive B02 retry.
+Evidence: `benchmark/results/phase5c/R5_35-GENERIC-TRANSPORT-BOUNDARY-COMPLETION.md`;
+versioned rules: `docs/transport-boundary-r5.35.md`.
+
 ## R5.34 — Checked public routing around unchanged binding and semantics
 
 Keep transport as interface machinery: route, preserve raw membership, bind,

@@ -69,6 +69,30 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.35 transport boundary completion review](../benchmark/results/phase5c/R5_35-GENERIC-TRANSPORT-BOUNDARY-COMPLETION.md)
+independently validates all three R5.34 extension areas: per-element repeated/JSON
+sequence binding with suppliedness and encounter order; checked declarative public
+documents with stdout/stderr/exit policy; and explicit declared-state missing-store
+policy with lazy materialization only on generated writes. New acoustic calibration
+and unchanged R5.33 specimen applications provide 39 observations: 23 normal calls,
+10 faults and 6 metadata-only mutations. All applicable normal/mutation layers pass;
+faults separately expose input, persistence and public-output defects. No compiler,
+old binder or semantic-runtime changes; core 30, no #31.
+Gate **`R5_35_GENERIC_TRANSPORT_BOUNDARY_PARTIAL`**: the post-lock descriptive
+comparison corrects R5.34's cwd-store configuration assumption. The adapter still
+requires infrastructure argv; standalone public-only argv/cwd-store/trace bootstrap
+has no checked launch profile. No implementation repair followed comparison.
+Recommend R5.36 **Checked Public Launch Profile Completion Review**, not comprehensive
+B02 retry yet. The malformed-input public mapping is now resolved independently;
+operation-declared malformed semantic outcomes remain separate and unimplemented.
+Windows Python 3.14.3: 333 harness tests discovered, 332 pass, one explicit nested
+frozen-B02 restriction skip; 31 application/compiler tests, validation/safety and
+matrix pass. Interface: [R5.35 boundary](transport-boundary-r5.35.md).
+B02 not retried/accepted, Phase 5C paused, B03 untouched, B17 unexposed/unclassified,
+R5.2.2 historical authority, format globally unfrozen, universal correctness
+unclaimed. Crash atomicity/concurrent initialization and hostile-runtime isolation
+remain unestablished.
+
 The [R5.34 checked transport study](../benchmark/results/phase5c/R5_34-CHECKED-TRANSPORT-BINDING.md)
 validates a generic checked scalar CLI around `benchmark.semantic.current_pipeline`
 and the unchanged R5.32 binder. Public routing, raw suppliedness, typed invocation

@@ -1,5 +1,58 @@
 # Lykoi research log
 
+## R5.35 generic transport boundary completion review (2026-10-03)
+
+Implemented observation: three bounded generic extensions of R5.34 consume the
+same authoritative CheckedPlans/current_pipeline. Repeated and JSON-array inputs
+preserve order/duplicates and pass each element through unchanged R5.32 decoding.
+Omitted collection, explicitly empty and supplied values remain distinguishable;
+generated acoustic calibration alone trims/deduplicates/nonblank-checks. Public
+direct/object presentation checks payload paths/types/coverage/collisions and
+maps independent semantic/binding/persistence categories to stdout/stderr/exit.
+No asynchronous or multi-record stream runtime was justified or implemented.
+
+Explicit checked state declarations supply missing semantic origin under lazy
+INITIALIZE_DECLARED_STATE; REQUIRE_EXISTING rejects without invocation/creation.
+Missing read leaves physical absence intact; generated insertion materializes V1,
+migration produces V2 and subsequent operations use V2. Physical bytes/existence
+and effective semantic pre-state are independently challenged. Invalid JSON and
+invalid state shape preserve bytes and fail persistence before semantic execution.
+
+Machine evidence: 39 observations, comprising 12 acoustic calls, 11 specimen
+calls, 10 faults (A-H plus wrong stream/exit) and 6 metadata-only mutations.
+All 23 normal and 6 mutation calls pass applicable layers; 14 normal calls have
+typed semantic executions. Faults expose reversal, duplicate removal, malformed
+drop, success under failure presentation, payload omission, forbidden creation,
+wrong initialized version, wrong public initialization report and stream/status
+mismatch. Public corruption preserves semantic conformance. Wrong-version origin
+is valid for another state shape but violates the checked initial reference.
+All six metadata mutations have identical adapter digest. Fourteen focused tests
+also cover every-element visitation, required-empty input, direct/projected output,
+empty-root count-zero migration and stale/resealed policy authority.
+
+Implementation was hash locked before descriptive B02/baseline text comparison;
+no generic implementation repair followed it. New observation: standalone
+public-only argv and cwd-relative store/trace bootstrap lack a checked launch
+profile. R5.34's configuration-only classification for this convention was not
+demonstrated and is corrected prospectively. The three requested boundary areas
+are resolved independently; overall transport binding remains partial. Gate
+R5_35_GENERIC_TRANSPORT_BOUNDARY_PARTIAL; recommend independent R5.36 Checked
+Public Launch Profile Completion Review, not comprehensive B02 retry yet.
+Malformed-input **public** mapping is resolved; no malformed untyped value is
+represented as a fabricated operation-declared semantic event.
+
+Windows PowerShell/Python 3.14.3: full harness 333 discovered, 332 pass and one
+fail-closed nested frozen-B02 restriction skip (88.997 s); 31 application/compiler
+tests pass, model validation/safety and capability matrix pass. No environment
+failures or LF mirror; Git newline notices are separate from actual failures.
+Core 30, no #31, 46 historical raw entries unchanged. No B02 retry/acceptance,
+Phase 5C paused, B03 untouched, B17 unexposed/unclassified, R5.2.2 historical
+authority, semantic-first format globally unfrozen, universal correctness
+unclaimed. Direct materialization is not crash atomic; concurrent initialization
+and hostile-runtime fidelity remain unestablished. Evidence:
+`benchmark/results/phase5c/R5_35-GENERIC-TRANSPORT-BOUNDARY-COMPLETION.md` and
+`R5_35-transport-evidence.json`; rules: `docs/transport-boundary-r5.35.md`.
+
 ## R5.34 prospective checked transport binding (2026-10-03)
 
 Observation: current internal dispatch supports checked semantic keys/codecs but
