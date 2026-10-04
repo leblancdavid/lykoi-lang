@@ -1,5 +1,28 @@
 # Experimental decisions
 
+## R5.43 — Canonical protocol evidence and fail-closed observation receipts
+
+Use immutable canonical JSON bytes as prospective evaluation authority, rather
+than native Python equality. Explicitly define tuple/list as ordered protocol
+arrays and object insertion order as non-semantic; retain every field, scalar
+type, value, sequence order, identity, version and provenance distinction.
+Reject duplicate keys, non-finite numbers, cycles and lossy runtime inputs.
+Preserve historical hash algorithms and artifacts; version the repair separately
+from R5.42's intact failed recorder. No migration or semantic/profile repair.
+
+Reserve a single controlled callback exclusively before dispatch; record linked,
+versioned, canonical observation receipts and stop after integrity verification.
+Incomplete dispatch evidence means indeterminate exposure and halt/no retry,
+never an assertion of zero exposure. The apparatus is qualified for the local
+trusted-recorder protocol, not hostile-runtime attestation or crash exactly-once
+completion. Every future evaluation must use the authorized dispatch path.
+
+Independent tests and locked synthetic simulations support
+`R5_43_EVALUATION_INFRASTRUCTURE_QUALIFIED`; B02 stays sealed. R5.42 remains a
+historical protocol halt. A future locked static transfer needs fresh authorization.
+See [protocol](canonical-evidence-r5.43.md) and
+[R5.43 report](../benchmark/results/phase5c/R5_43-EVALUATION-INFRASTRUCTURE-CANONICAL-EVIDENCE-QUALIFICATION.md).
+
 ## R5.42 — Pre-pass protocol halt preserves the transfer boundary
 
 Record **`R5_42_PROTOCOL_HALT`** when the evaluation recorder fails its mandatory

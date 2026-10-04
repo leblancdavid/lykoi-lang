@@ -1,5 +1,40 @@
 # Lykoi research log
 
+## R5.43 canonical-evidence infrastructure qualification (2026-10-04)
+
+Observed **`R5_43_EVALUATION_INFRASTRUCTURE_QUALIFIED`** on independent synthetic
+evidence through a separately versioned production recorder. The R5.42 tuple/list
+false mismatch is reproduced; canonical equivalence succeeds while raw Python
+equality fails. Adversarial value/field/type/version/sequence/provenance changes
+reject. Strict loading rejects corruption; canonical bytes detach baseline
+authority from mutable working objects. Ten repeated canonical serializations,
+two recorded focused suites and two independent matrix reconstructions agree.
+
+Production-path locked simulations: success records one observation and STOP;
+pre-pass mismatch records zero and HALT; post-observation mismatch records one
+and HALT; a second attempted callback is blocked. Multiple receipts are detected.
+An incomplete callback is indeterminate, halts and cannot retry. These observations
+qualify the local controlled dispatch path, not crash exactly-once completion,
+malicious authority rewriting or evaluator calls outside the recorder.
+
+Verification: 29 new tests pass repeatedly; 429 harness discovered / 393 passed /
+36 prohibited-B02 skips; 31/31 application/compiler; 14/14 R5.41 focused; 16
+coherent profiles / 84 rows; canonical matrix SHA-256 remains
+`02e3c3723a74d16458114760c0c917afbc7597e3ad76c62553014a475471513c`.
+Validation/safety and independent structural/source-traceability/contamination
+checks pass. Historical 678, prospective 695 and infrastructure 731 byte locks
+pass; R5.42 recorder/halt artifacts remain intact. Final diff check and any
+line-ending advisories are captured separately in final integrity evidence.
+
+Zero B02 exposure/static support/generation/execution/acceptance; no B02
+readiness/audit/admission finding. Core remains 30; no semantic/profile/application
+repair. B03 prospectively untouched, B17 unexposed/unclassified, Phase 5C paused.
+R5.42 permanently remains `R5_42_PROTOCOL_HALT`. Recommend a newly authorized
+locked whole-contract static transfer evaluation; it has not begun.
+Evidence: [R5.43 report](../benchmark/results/phase5c/R5_43-EVALUATION-INFRASTRUCTURE-CANONICAL-EVIDENCE-QUALIFICATION.md),
+`R5_43-qualification.json` and `R5_43-simulations/` beside it;
+[protocol](canonical-evidence-r5.43.md).
+
 ## R5.42 locked static support-transfer pre-pass halt (2026-10-04)
 
 Observed **`R5_42_PROTOCOL_HALT`** before B02 support exposure. The attempted

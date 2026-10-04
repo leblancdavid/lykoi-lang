@@ -69,6 +69,26 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.43 canonical-evidence infrastructure qualification](../benchmark/results/phase5c/R5_43-EVALUATION-INFRASTRUCTURE-CANONICAL-EVIDENCE-QUALIFICATION.md)
+ends **`R5_43_EVALUATION_INFRASTRUCTURE_QUALIFIED`**. A separately versioned
+recorder compares immutable canonical JSON bytes, preserves meaningful scalar,
+field and sequence distinctions, rejects corruption and enforces one controlled
+observation through exclusive reservation and linked receipts. Independent
+synthetic success and mismatch simulations pass; incomplete dispatches halt as
+indeterminate, without retry. See the explicit local trust boundary in the
+[canonical evidence protocol](canonical-evidence-r5.43.md).
+
+Verification: 29/29 independent qualification tests, repeated; 429 harness
+discovered / 393 passed / 36 prohibited-B02 skips; 31/31 application/compiler;
+14/14 R5.41 focused; 16 coherent profiles / 84 rows; validation/safety and
+independent structural/traceability/contamination pass. Historical 678, R5.41
+prospective 695 and new infrastructure 731 byte locks pass. R5.42 remains
+permanently `R5_42_PROTOCOL_HALT`. Zero B02 exposure, static passes, generation,
+execution or acceptance. Core 30, B03 prospectively untouched, B17
+unexposed/unclassified, Phase 5C paused. Next: a **newly authorized** locked
+whole-contract static support-transfer evaluation, not an R5.42 retry. It has
+not begun. Earlier records retain their historical conclusions below.
+
 The [R5.42 locked static support-transfer review](../benchmark/results/phase5c/R5_42-LOCKED-WHOLE-CONTRACT-STATIC-SUPPORT-TRANSFER.md)
 ends **`R5_42_PROTOCOL_HALT`**, before B02 exposure. The new recorder's pre-pass
 native Python matrix comparison rejects tuple/list differences introduced by JSON
