@@ -1,5 +1,26 @@
 # Experimental decisions
 
+## R5.47 — Security correction succeeds infrastructure; it does not repair history
+
+Preserve the intentional dotenv ignore correction and redacted R5.45 snapshot,
+including its invalid old seal. Preserve R5.43's infrastructure manifest and all
+historical halt/gap outcomes; qualify a distinct 1,065-member physical-byte v2
+successor with a per-file authorized-difference inventory. Keep R5.46 research
+and quarantined receipts without promoting them through lock membership.
+
+New evidence publication must use the versioned secret-safe boundary, not frozen
+raw historical writers. Constrain environment publication and structured reporting;
+reject credential fields/recognizable credential-bearing text before creating files,
+and sanitize error paths. Pattern detection is bounded defense in depth, not an
+excuse to dump raw environments or logs. Exact non-authentication scan adjudications
+never relax runtime protection. Use presence for irrelevant secrets and externally
+keyed, domain-separated identity only for materially relevant values; production
+key custody and effective-worker propagation remain R5.48 qualification obligations.
+Do not recover old credential-bearing reflog objects or store replacement credentials.
+External rotation stays unverified. See the
+[R5.47 report](../benchmark/results/phase5c/R5_47-SECURITY-RECONCILIATION-AND-INFRASTRUCTURE-LOCK-SUCCESSOR.md)
+and [publication policy](security-evidence-r5.47.md). No B02 authority follows.
+
 ## R5.46 — State drift rejects PASS and protected infrastructure drift halts
 
 Reject a verification-stage PASS when before/after repository identity differs,

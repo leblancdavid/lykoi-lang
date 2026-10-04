@@ -1,5 +1,38 @@
 # Lykoi research log
 
+## R5.47 security reconciliation and infrastructure succession (2026-10-04)
+
+Observed **`R5_47_SECURITY_RECONCILIATION_QUALIFIED`**. The dotenv security
+correction is retained. A bounded contextual scan of working/index/reachable-ref
+and archive-member content detects no unresolved credentials after exact review
+of CLI-token/admin-prose/synthetic-literal false positives. Provider rotation remains
+`ROTATION_STATUS_EXTERNAL_OR_UNVERIFIED`; unfetched remote history is not attested.
+No exposed value or replacement credential was recovered, used or stored.
+
+The prospective publication guard rejects credential fields, marked structures,
+recognizable credential text and unsafe error reporting before persistence. Narrow
+public environment controls and presence metadata avoid raw dumps. Synthetic HMAC
+tests establish non-raw representation and key separation, not production custody
+or execution identity. Contextual detectors cannot recognize all opaque/encoded
+values; producer constraints remain essential. Historical raw writers are preserved
+but are not approved new publication paths.
+
+Historical 678/678 and prospective 695/695 locks pass; the original R5.43 manifest
+retains 730/731 live matches and an intact identity. The distinct R5.47 v2 successor
+locks 1,065 members: all 731 predecessor paths retained, only `.gitignore` changed,
+334 additions classified. Canonical reload, independent reproduction and disposable
+ignore/security-code mutation rejection pass. The initial construction draft and
+19-test result remain explicitly superseded by the final lock and 22-test result.
+Regressions: restricted harness 429 discovered / 393 passes / 36 skips; compiler
+31; focused 14; recorder 29; staged certificate 33; prior publication 2; security 22;
+16-profile/84-row matrix, structural schema/99-field traceability, contamination,
+validation, safety and diff check pass. R5.46 remains permanently halted with all
+receipts quarantined; its identity tests were not resumed and prototype is unqualified.
+Zero B02 exposure; core 30; B03 prospectively untouched; B17 unexposed/unclassified;
+Phase 5C paused. Recommend separately authorized R5.48 fresh identity/dependency
+qualification against this successor. See the
+[report](../benchmark/results/phase5c/R5_47-SECURITY-RECONCILIATION-AND-INFRASTRUCTURE-LOCK-SUCCESSOR.md).
+
 ## R5.46 execution identity and concurrent state drift (2026-10-04)
 
 Observed **`R5_46_PROTOCOL_HALT`**. The sixteenth staged check's worker passes,

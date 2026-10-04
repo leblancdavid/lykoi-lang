@@ -69,6 +69,27 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.47 security/infrastructure reconciliation](../benchmark/results/phase5c/R5_47-SECURITY-RECONCILIATION-AND-INFRASTRUCTURE-LOCK-SUCCESSOR.md)
+ends **`R5_47_SECURITY_RECONCILIATION_QUALIFIED`**. The intentional `.gitignore`
+correction is preserved; contextual scans of sharing candidates, index, reachable
+local/remote-tracking history and archive members find no unresolved credentials.
+External rotation remains `ROTATION_STATUS_EXTERNAL_OR_UNVERIFIED`; unavailable
+remote history is not attested. A versioned publication guard rejects credential
+fields/recognizable credential text before persistence, with redacted diagnostics.
+See [secret-safe publication policy](security-evidence-r5.47.md).
+
+The immutable R5.43 lock remains historical (730/731 live matches); the separate
+**1,065-member R5.47 v2 infrastructure successor** verifies and reproduces
+independently. Historical 678/678 and prospective 695/695 locks pass. Restricted
+harness: 393 passes / 36 preserved skips; application/compiler 31, R5.41 focused
+14, recorder 29, staged certificate 33 and security tests 22 pass. R5.46 remains
+permanently halted with all 16 receipts quarantined and its identity prototype
+**unqualified**. No identity qualification or production certificate follows.
+Next: separately authorize R5.48 fresh execution/dependency-identity qualification
+against this successor and integrate the secret-safe publication boundary.
+B02 sealed; core 30; B03 prospectively untouched; B17 unexposed/unclassified;
+Phase 5C paused. Earlier findings below remain historical.
+
 The [R5.46 execution-state identity investigation](../benchmark/results/phase5c/R5_46-COMPLETE-EXECUTION-STATE-AND-DEPENDENCY-IDENTITY-QUALIFICATION.md)
 ends **`R5_46_PROTOCOL_HALT`**. Concurrent repository/security correction changed
 state during verification; before/after hashing rejected a successful worker's
