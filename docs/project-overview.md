@@ -69,6 +69,20 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.44 newly authorized locked static-transfer experiment](../benchmark/results/phase5c/R5_44-NEWLY-AUTHORIZED-LOCKED-WHOLE-CONTRACT-STATIC-SUPPORT-TRANSFER.md)
+ends **`R5_44_PROTOCOL_HALT`**, before B02 exposure. Its pre-exposure verification
+command was terminated at the 120-second tool limit before persisted verification
+or an experimental starting seal. No retry occurred. The qualified R5.43 recorder
+preserves a stopped-run accounting baseline: zero reservations, zero completed
+observations and HALT. B02 CheckedPlans/readiness/audit/admission/compatible-path
+support are not evaluated. Interrupted regression results are incomplete, not
+reported as passes. Historical 678, prospective 695 and infrastructure 731 byte
+locks remain valid; frozen authority is unchanged and contamination is clean.
+Core 30, zero generation/execution/acceptance/repair, B03 prospectively untouched,
+B17 unexposed/unclassified, Phase 5C paused. Next: separately authorized
+investigation of the verification interruption before a new transfer experiment.
+R5.44 is stopped; R5.43 qualification and R5.42 halt remain preserved.
+
 The [R5.43 canonical-evidence infrastructure qualification](../benchmark/results/phase5c/R5_43-EVALUATION-INFRASTRUCTURE-CANONICAL-EVIDENCE-QUALIFICATION.md)
 ends **`R5_43_EVALUATION_INFRASTRUCTURE_QUALIFIED`**. A separately versioned
 recorder compares immutable canonical JSON bytes, preserves meaningful scalar,

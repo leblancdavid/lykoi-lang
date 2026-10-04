@@ -1,5 +1,30 @@
 # Lykoi research log
 
+## R5.44 pre-exposure verification interruption (2026-10-04)
+
+Observed **`R5_44_PROTOCOL_HALT`** before B02 exposure. The newly authorized
+static-transfer experiment's prepass was terminated at the 120000-ms shell-tool
+limit. Captured stdout was `True` and `Axiom validate: ok`; no prepass, experimental
+seal, reservation or observation receipt was produced. Completed regression
+counts and fresh matrix/structural/traceability verification were not established.
+No gate retry or B02 evaluation followed. This does not identify a B02 capability,
+configuration, coherence or new-semantic gap.
+
+Stopped-run integrity verifies 678 historical, 695 prospective and 731
+infrastructure protected files unchanged, identities valid; historical lock HEAD
+ancestry valid. Frozen B02 authority hashes remain unchanged, contamination is
+clean. The unchanged qualified R5.43 recorder seals halt-accounting evidence and
+records HALT with zero reservations/observations, distinctly from an experimental
+starting seal. Its recorded evidence blocks further dispatch in this experiment.
+
+Core remains 30/no #31; zero repair, B02 generation/execution/frozen acceptance.
+B03 prospectively untouched, B17 unexposed/unclassified, Phase 5C paused. R5.43
+qualification and R5.42 permanent halt remain intact. Recommend a separately
+authorized investigation of the verification interruption before any new locked
+transfer evaluation. Evidence: [R5.44 report](../benchmark/results/phase5c/R5_44-NEWLY-AUTHORIZED-LOCKED-WHOLE-CONTRACT-STATIC-SUPPORT-TRANSFER.md),
+`R5_44-halt-verification.json`, `R5_44-classification.json`, `R5_44-recorder/` and
+`R5_44-final-integrity.json` beside the report.
+
 ## R5.43 canonical-evidence infrastructure qualification (2026-10-04)
 
 Observed **`R5_43_EVALUATION_INFRASTRUCTURE_QUALIFIED`** on independent synthetic

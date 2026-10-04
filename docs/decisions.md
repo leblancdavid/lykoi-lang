@@ -1,5 +1,21 @@
 # Experimental decisions
 
+## R5.44 — Interrupted starting-state verification halts before exposure
+
+Require a completed, persisted pre-exposure verification and experimental seal
+before consuming the one authorized static dispatch. When the verification
+command is terminated by its 120-second tool limit, preserve the incomplete
+verification as **`R5_44_PROTOCOL_HALT`**; do not restart the gate or infer suite
+passes from partial stdout. This is an execution-envelope interruption, not an
+observed B02 capability failure. No dispatch occurred.
+
+Use the unchanged R5.43 production recorder to preserve zero-dispatch halt
+accounting. Explicitly distinguish its post-interruption halt baseline from the
+uncompleted experimental starting seal. Keep all inherited implementation,
+authority and locks intact. Investigation of the interruption and any future
+transfer experiment require separate authorization. Core remains 30, Phase 5C
+paused. See [R5.44 report](../benchmark/results/phase5c/R5_44-NEWLY-AUTHORIZED-LOCKED-WHOLE-CONTRACT-STATIC-SUPPORT-TRANSFER.md).
+
 ## R5.43 — Canonical protocol evidence and fail-closed observation receipts
 
 Use immutable canonical JSON bytes as prospective evaluation authority, rather
