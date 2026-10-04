@@ -1,5 +1,39 @@
 # Experimental decisions
 
+## R5.40 — Complete public profile admission and configuration integrity
+
+Version prospective aggregate admission separately from the preserved R5.39
+implementation. Every declared public invocation input needs one explicit mapping,
+including optional inputs; use the same exact coverage condition as readiness v2,
+then delegate existing compatibility and identity checks. Do not infer internal
+input exemptions from optionality. External capability slots remain separate.
+The serialized aggregate is unchanged; old generation/runtime entry points are
+not silently retrofitted by this static-only policy.
+
+Distinguish closed declarative schema, configuration-only/source audit, checked
+compatibility and runtime correctness. Permit public names, typed references,
+state/discriminator/codec/persistence and launch/provider/trace metadata. Prohibit
+application algorithms, arbitrary code, fixture results and behavior lookup tables.
+Require exact per-leaf source/hash/clause/interpretation records; separately mark
+generic defaults and identity references. The bounded audit is not prose-entailment
+proof or malicious-code security.
+
+Equal legacy codecs with distinct V2/V3 identities and existing equality constraints
+are legitimate configuration. Preserve all 15 behavioral contracts while changing
+only application state registration. The locked B02 metadata is configuration-only
+but not fully admitted: plain-text nullable binding and optional persisted-domain
+support remain generic gaps. Preserve the supplemental readiness-analyzer finding:
+declared-rule equality does not prove optional-domain runtime fidelity. Do not
+weaken schemas, omit required validity or change the frozen interface to get READY.
+
+One 678-file locked static pass returns NOT_READY; no repair follows. Recommend
+R5.41 independent public-decoder/optional-domain/readiness support coherence, not
+B02 evaluation. Prospective future benchmark policy permits specification-derived
+semantic source and boundary configuration, with generic algorithms locked,
+source/contamination audit, readiness before generation and preserved outcomes.
+This is not authorization for B03/B17 or a global format freeze. Core remains 30.
+See [R5.40 evidence](../benchmark/results/phase5c/R5_40-BOUNDARY-PROFILE-ADMISSION-B02-CONFIGURATION.md).
+
 ## R5.39 — Relational refinement facts and checked application composition
 
 Equivalent guards justify one scoped refinement fact with multiple source

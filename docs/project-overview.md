@@ -69,6 +69,36 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.40 boundary-profile admission and B02 configuration review](../benchmark/results/phase5c/R5_40-BOUNDARY-PROFILE-ADMISSION-B02-CONFIGURATION.md)
+ends **`R5_40_GENERIC_CAPABILITY_GAP`**. A prospective aggregate admission policy
+rejects silently unmapped optional invocation inputs on independent seed-bank
+and publication profiles; historical R5.39 admission remains reproducible.
+Frozen-authority B02 metadata supplies seven public routes, four state alternatives
+and all 15 unchanged operation contracts. Equal legacy codecs with separate V2/V3
+identities use existing equality constraints; no version-domain algorithm is needed.
+All 821 profile leaves are traced; the structural/source/contamination audit passes
+as CONFIGURATION_ONLY, but complete checked transport/aggregate admission fails.
+
+After a 678-file lock, one static-only v2 pass returns **NOT_READY**, with 15/15
+CheckedPlans. Plain-text supplied due-date is incompatible with the current
+nullable decoder's JSON representation requirement. Independently, an admitted
+population finite-domain declaration rejects absent optional fields; static
+profile checks expose this for legacy priority. Readiness v2's declared-rule
+coverage misses that support composition, so its unchanged raw result is reported
+with a supplemental generic audit and explicit analyzer limitation. No B02
+generation, execution, acceptance or post-pass implementation/profile repair.
+
+Verification: 386 harness discovered, 350 pass, 36 explicit prohibited B02 checks;
+31/31 application/compiler; 14/14 new focused tests; model validation, safety,
+structural/source/contamination audit, byte lock and diff check pass. Checked-profile
+compatibility rejection is the preserved experimental finding. Next **R5.41 =
+Independent Public Decoder, Optional Durable-Domain and Readiness Support-Coherence
+Review**, not comprehensive B02 evaluation. Core 30/no #31, Phase 5C paused,
+B03 prospectively untouched, B17 unexposed/unclassified, format unfrozen, R5.2.2
+historical authority, universal correctness unclaimed. Policy:
+[R5.40 profile admission](boundary-profile-admission-r5.40.md). Earlier records
+retain their historical conclusions below.
+
 The [R5.39 refinement dependency and whole-contract boundary review](../benchmark/results/phase5c/R5_39-REFINEMENT-DEPENDENCY-WHOLE-CONTRACT-BOUNDARY-CLOSURE.md)
 ends **`R5_39_WHOLE_CONTRACT_BOUNDARY_PARTIAL`**. Equivalent optional/nullable
 providers now justify one scoped fact while preserving all source identities;

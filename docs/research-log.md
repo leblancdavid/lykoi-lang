@@ -1,5 +1,52 @@
 # Lykoi research log
 
+## R5.40 boundary-profile admission and B02 configuration (2026-10-04)
+
+Observed: a one-operation non-task profile with its sole optional input unmapped
+is admitted by preserved R5.39 aggregate compatibility and rejected by readiness
+v2. The prospective R5.40 admission entry requires exact declared public-input
+coverage. Fourteen independent tests pass across minimal/seed-bank/publication
+profiles, mapping faults, stale identities, decoder compatibility, declarative
+schema/contamination and source-trace faults. No new core semantic construct.
+
+Frozen B02 boundary metadata was reconstructed from actual request/baseline/schema
+and original frozen oracle clauses. The live oracle has a later Phase 5D change;
+the Phase 5B Git blob matches its pinned frozen SHA-256 and was read as text only.
+No Conventional internals or generated target supplied metadata. Four alternatives
+(bare V1, envelope V2/V3, current V4), seven public commands and 28 state/public pairs
+produce 19 route bindings for 15 unchanged operation contracts. Only application
+state registration splits equal-codec legacy identities; algorithms remain in the
+original semantic contracts. All 821 profile leaves have exact source records.
+Structural schema and source/contamination audit pass as CONFIGURATION_ONLY;
+complete checked-profile admission does not pass.
+
+After a 678-file byte lock, exactly one static readiness v2 call forms 15/15 plans
+and returns NOT_READY. Its four raw diagnostics arise from plain-text nullable
+due-date binding and downstream transport/aggregate/checked-route rejection.
+Supplemental generic static checks expose optional population-domain support on
+three legacy alternatives: an independent non-task optional habitat witness is
+schema-admitted and structurally valid, but its absent field fails decoding because
+the domain implementation indexes the missing key. Readiness v2 only checks declared
+rule equality and misses this support composition. The complete report preserves
+two generic support roots, their occurrences/consequences and the analyzer defect.
+The possible scalar version-domain gap was resolved with configuration before lock.
+
+Verification: full restricted harness 386 discovered/350 pass/36 explicit prohibited
+B02 skips; application/compiler 31/31; new focused 14/14; R5.37 evidence 5 pass/one
+historical live-tree-lock skip; validation/safety/source/structural/contamination
+checks pass. Lock verifies before/after/final; diff check passes. Windows Python
+3.14.3/PowerShell 7/autocrlf true; no environment failure explains these findings.
+No B02 generation, execution, acceptance or post-static implementation/profile
+repair. Earlier 84-cell matrix and 256 grounded-call evidence are unchanged.
+
+Result R5_40_GENERIC_CAPABILITY_GAP. Recommend R5.41 independent public-decoder,
+optional durable-domain and readiness support coherence, not comprehensive B02
+evaluation. Specification-derived application configuration is legitimate, but
+declarations alone do not supply missing generic behavior. Core 30/no #31; Phase 5C
+paused; B03 prospectively untouched; B17 unexposed/unclassified; format globally
+unfrozen; R5.2.2 historical authority; universal correctness unclaimed.
+See [R5.40 result/evidence](../benchmark/results/phase5c/R5_40-BOUNDARY-PROFILE-ADMISSION-B02-CONFIGURATION.md).
+
 ## R5.39 refinement dependency and whole-contract boundary review (2026-10-04)
 
 Implemented observations: the R5.38 analyzer rejects nine minimal redundant-guard
