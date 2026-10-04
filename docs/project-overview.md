@@ -69,6 +69,32 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.37 comprehensive frozen B02 evaluation](../benchmark/results/phase5c/R5_37-B02-COMPREHENSIVE-FROZEN-EVALUATION.md)
+ends at **`R5_37_B02_INTEGRATION_GAP`**. The architecture was locked at clean
+commit `428a3409ea4d47a57a9fc9e5a94af2595d98ec43` (224 protected file hashes),
+then the authoritative frozen contract was reconstructed and one current-format
+operation-family source was submitted to `benchmark.semantic.current_pipeline`.
+Authoritative analysis rejects the required nullable due-date `before` comparison
+even after its non-null guard. Optional membership refinement does not eliminate
+nullable values; R5.23 had already identified that separate composition. Thus
+R5.36's readiness claim overgeneralized independently validated optional/instant
+capabilities. No artifact, complete checked application, public launch or grounded
+execution followed; all seven applicable frozen acceptance methods are BLOCKED.
+No implementation repair or reduced-slice retry occurred. Static nullable-input,
+single-public-operation/multi-version routing and durable content-validity concerns
+are recorded separately from the observed analyzer failure.
+
+Baseline: 347/347 harness, 31 application/compiler, validation/safety and 58 focused
+architecture tests pass; six R5.37 evidence-integrity tests pass. Direct mandatory
+harness discovery replayed an existing historical B03 checkpoint; no B03 evaluation
+on a new candidate or prospective exposure occurred. Core remains 30/no #31, zero
+new demonstrated complete frozen-B02 transfers, universal correctness NO. Final
+implementation hashes remain unchanged. Recommend **R5.38 = Independent Nullable-
+Domain and Whole-Contract Boundary Coherence Review**, on non-task domains before
+another authorized B02 evaluation; no B03–B16 sweep yet. Phase 5C is paused again,
+B17 unexposed/unclassified, R5.2.2 historical authority, format globally unfrozen.
+The R5.36 checkpoint and earlier records below retain their historical conclusions.
+
 The [R5.36 public launch completion review](../benchmark/results/phase5c/R5_36-CHECKED-PUBLIC-LAUNCH-PROFILE.md)
 closes the R5.35 standalone launch boundary independently. One generic copied entry
 consumes only public argv and checked co-located metadata, resolves durable/evidence

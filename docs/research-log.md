@@ -1,5 +1,49 @@
 # Lykoi research log
 
+## R5.37 comprehensive frozen B02 evaluation (2026-10-03)
+
+Evaluation observation: clean HEAD `428a3409ea4d47a57a9fc9e5a94af2595d98ec43`,
+224 protected byte hashes locked before complete B02 generation. Direct frozen
+B02/B01/baseline/oracle/profile reconstruction records 24 obligation rows and four
+underspecified areas. Existing 30 abstract candidates can state the contract, but
+one faithful current-format operation-family attempt through current_pipeline fails
+before rendering: `before requires two typed instants; optional operand needs
+in-scope presence`. Actual left operand is required nullable<instant>; the source's
+non-null guard does not create an accepted elimination witness. Optional membership
+refinement is a different composition. R5.23 explicitly described this nullable
+blocker; R5.36's readiness gate had not actually closed it.
+
+Generation classification UNKNOWN_TYPE_COHERENCE_GAP; decision
+R5_37_B02_INTEGRATION_GAP. No complete checked source/executable/profile/provenance,
+no public launches, zero grounded cases, seven applicable frozen methods BLOCKED
+(0 PASS/FAIL/SKIP), zero new demonstrated complete frozen-B02 capability transfers.
+No source mutation, implementation repair, fallback compiler or reduced-slice retry
+after the halt. Static nullable input-binding, one-public-route/multiple-state-shape
+dispatch and nonstructural durable validity concerns are recorded as unexecuted
+integration risks, not additional measured failures. The attempt does not certify
+complete source authority. Malformed-input public failures need not be typed
+semantic invocations; that R5.23 interpretation was stronger than frozen prose.
+
+Verification: Python 3.14.3/Windows 11, core.autocrlf=true; full harness 347/347
+(131.701 s), application/compiler 31/31, model validation/safety, readiness matrix
+and 58 focused architecture tests pass. Initial 120-second tool timeout was resolved
+by a 600-second limit, not an implementation change. Direct full discovery replayed
+existing historical B03 acceptance on an old checkpoint; no new B03 candidate run
+or prospective exposure occurred. Six R5.37 evidence integrity tests pass; final
+224-file lock and HEAD unchanged; diff check passes. Newline conversion is distinct
+from the real nullable-domain rejection.
+
+Research limitation: neighboring-domain success and a green readiness checklist
+do not demonstrate whole-contract transfer. B02 is not fully held out; its known
+blockers influenced prior development. No comparative superiority or universal
+correctness follows. Recommend R5.38 independent nullable-domain and whole-contract
+boundary coherence review before another authorized B02 retry. Core remains 30,
+no #31; Phase 5C paused again, R5.2.2 historical authority, format globally unfrozen,
+B17 unexposed/unclassified, UNIVERSAL_IMPLEMENTATION_CORRECTNESS_ESTABLISHED=NO.
+Evidence: `benchmark/results/phase5c/R5_37-B02-COMPREHENSIVE-FROZEN-EVALUATION.md`,
+`R5_37-B02-CONTRACT-RECONSTRUCTION.md`, `R5_37-generation-evidence.json`,
+`R5_37-evaluation-matrix.json`, `R5_37-implementation-lock.json`.
+
 ## R5.36 checked public launch profile completion (2026-10-03)
 
 Implemented observation: public-only subprocess launch now derives the four

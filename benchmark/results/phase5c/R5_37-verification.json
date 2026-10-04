@@ -1,0 +1,26 @@
+{
+  "version": "R5.37",
+  "environment": {"python": "3.14.3", "os": "Windows 11 10.0.26300-SP0", "core_autocrlf": true},
+  "pre_evaluation": [
+    {"command": "python -m unittest discover -s benchmark/harness -v", "exit": 0, "run": 347, "passed": 347, "skipped": 0, "seconds": 131.701},
+    {"command": "python -m unittest discover -s tests -v", "PYTHONPATH": "src", "exit": 0, "run": 31, "passed": 31, "seconds": 2.734},
+    {"command": "python -m air_compiler.cli validate air/task_manager.json", "PYTHONPATH": "src", "exit": 0, "result": "Lykoi validate: ok"},
+    {"command": "python -m air_compiler.cli safety air/task_manager.json", "PYTHONPATH": "src", "exit": 0, "capability_violations": 0, "invalid_transitions": 0},
+    {"command": "python -m unittest benchmark.harness.test_semantic_authority_r5_31 benchmark.harness.test_input_binding_r5_32 benchmark.harness.test_state_evolution_r5_33 benchmark.harness.test_transport_boundary_r5_35 benchmark.harness.test_public_launch_r5_36 -v", "exit": 0, "run": 58, "passed": 58, "seconds": 20.439},
+    {"command": "git diff --check", "exit": 0},
+    {"command": "python benchmark/results/phase5c/r5_37_evaluate.py verify", "exit": 0, "unchanged_files": 224}
+  ],
+  "generation": {"command": "python benchmark/results/phase5c/r5_37_evaluate.py evaluate", "recorder_exit": 0, "generation_success": false, "classification": "UNKNOWN_TYPE_COHERENCE_GAP", "detail": "Recorder exit 0 means the failure evidence was preserved, not that generation passed."},
+  "frozen_b02_acceptance": {"run": 0, "blocked_methods": 7, "reason": "no complete generated candidate"},
+  "after_evaluation": [
+    {"command": "python -m unittest discover -s benchmark/results/phase5c -p test_r5_37_evaluation.py -v", "exit": 0, "run": 6, "passed": 6, "seconds": 0.026},
+    {"command": "python benchmark/results/phase5c/r5_37_evaluate.py verify", "exit": 0, "unchanged_files": 224},
+    {"command": "git diff --check", "exit": 0}
+  ],
+  "methodology_notes": [
+    "Initial full harness attempt hit the 120-second tool timeout; completed rerun used 600 seconds.",
+    "Direct full harness replayed old historical B03 checkpoint tests; no new candidate B03 evaluation or prospective exposure occurred.",
+    "LF-to-CRLF notices from Git are environment warnings, not the observed type-coherence failure.",
+    "No broad post-evaluation rerun required: architecture and frozen artifacts remained byte-identical; focused evaluation evidence checks passed."
+  ]
+}

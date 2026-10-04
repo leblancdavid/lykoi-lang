@@ -1,0 +1,3130 @@
+{
+  "id": "r5.37.frozen-b02.attempt",
+  "state": {
+    "versions": {
+      "V1": {
+        "sequence": {
+          "record": {
+            "id": "string",
+            "title": "string",
+            "description": "string",
+            "status": "string",
+            "priority": {
+              "optional": "string"
+            },
+            "created_at": "instant",
+            "due_date": {
+              "optional": {
+                "nullable": "instant"
+              }
+            },
+            "tags": {
+              "optional": {
+                "sequence": "string"
+              }
+            }
+          }
+        }
+      },
+      "legacy_envelope": {
+        "record": {
+          "schema_version": "integer",
+          "records": {
+            "sequence": {
+              "record": {
+                "id": "string",
+                "title": "string",
+                "description": "string",
+                "status": "string",
+                "priority": {
+                  "optional": "string"
+                },
+                "created_at": "instant",
+                "due_date": {
+                  "optional": {
+                    "nullable": "instant"
+                  }
+                },
+                "tags": {
+                  "optional": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "V4": {
+        "record": {
+          "schema_version": "integer",
+          "records": {
+            "sequence": {
+              "record": {
+                "id": "string",
+                "title": "string",
+                "description": "string",
+                "status": "string",
+                "priority": "string",
+                "created_at": "instant",
+                "due_date": {
+                  "nullable": "instant"
+                },
+                "tags": {
+                  "sequence": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "operations": {
+    "list": {
+      "id": "r5.37.b02.list",
+      "version": "R5.33",
+      "input": {
+        "record": {}
+      },
+      "state": {
+        "pre": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": "string",
+                  "created_at": "instant",
+                  "due_date": {
+                    "nullable": "instant"
+                  },
+                  "tags": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": "string",
+                  "created_at": "instant",
+                  "due_date": {
+                    "nullable": "instant"
+                  },
+                  "tags": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "requires": {
+        "equals": [
+          {
+            "ref": [
+              "pre",
+              "schema_version"
+            ]
+          },
+          {
+            "literal": {
+              "type": "integer",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "branches": [
+        {
+          "tag": "listed",
+          "when": {
+            "equals": [
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              },
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "value": {
+            "order": {
+              "source": {
+                "ref": [
+                  "pre",
+                  "records"
+                ]
+              },
+              "keys": [
+                "created_at",
+                "id"
+              ]
+            }
+          },
+          "value_type": {
+            "sequence": {
+              "record": {
+                "id": "string",
+                "title": "string",
+                "description": "string",
+                "status": "string",
+                "priority": "string",
+                "created_at": "instant",
+                "due_date": {
+                  "nullable": "instant"
+                },
+                "tags": {
+                  "sequence": "string"
+                }
+              }
+            }
+          },
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "listed_otherwise",
+          "when": null,
+          "value": {
+            "order": {
+              "source": {
+                "ref": [
+                  "pre",
+                  "records"
+                ]
+              },
+              "keys": [
+                "created_at",
+                "id"
+              ]
+            }
+          },
+          "value_type": {
+            "sequence": {
+              "record": {
+                "id": "string",
+                "title": "string",
+                "description": "string",
+                "status": "string",
+                "priority": "string",
+                "created_at": "instant",
+                "due_date": {
+                  "nullable": "instant"
+                },
+                "tags": {
+                  "sequence": "string"
+                }
+              }
+            }
+          },
+          "transition": {
+            "preserve": true
+          }
+        }
+      ]
+    },
+    "list-high": {
+      "id": "r5.37.b02.list-high",
+      "version": "R5.33",
+      "input": {
+        "record": {}
+      },
+      "state": {
+        "pre": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": "string",
+                  "created_at": "instant",
+                  "due_date": {
+                    "nullable": "instant"
+                  },
+                  "tags": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": "string",
+                  "created_at": "instant",
+                  "due_date": {
+                    "nullable": "instant"
+                  },
+                  "tags": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "requires": {
+        "equals": [
+          {
+            "ref": [
+              "pre",
+              "schema_version"
+            ]
+          },
+          {
+            "literal": {
+              "type": "integer",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "branches": [
+        {
+          "tag": "listed",
+          "when": {
+            "equals": [
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              },
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "value": {
+            "order": {
+              "source": {
+                "select": {
+                  "source": {
+                    "ref": [
+                      "pre",
+                      "records"
+                    ]
+                  },
+                  "where": {
+                    "equals": [
+                      {
+                        "ref": [
+                          "item",
+                          "priority"
+                        ]
+                      },
+                      {
+                        "literal": {
+                          "type": "string",
+                          "value": "HIGH"
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "keys": [
+                "created_at",
+                "id"
+              ]
+            }
+          },
+          "value_type": {
+            "sequence": {
+              "record": {
+                "id": "string",
+                "title": "string",
+                "description": "string",
+                "status": "string",
+                "priority": "string",
+                "created_at": "instant",
+                "due_date": {
+                  "nullable": "instant"
+                },
+                "tags": {
+                  "sequence": "string"
+                }
+              }
+            }
+          },
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "listed_otherwise",
+          "when": null,
+          "value": {
+            "order": {
+              "source": {
+                "select": {
+                  "source": {
+                    "ref": [
+                      "pre",
+                      "records"
+                    ]
+                  },
+                  "where": {
+                    "equals": [
+                      {
+                        "ref": [
+                          "item",
+                          "priority"
+                        ]
+                      },
+                      {
+                        "literal": {
+                          "type": "string",
+                          "value": "HIGH"
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "keys": [
+                "created_at",
+                "id"
+              ]
+            }
+          },
+          "value_type": {
+            "sequence": {
+              "record": {
+                "id": "string",
+                "title": "string",
+                "description": "string",
+                "status": "string",
+                "priority": "string",
+                "created_at": "instant",
+                "due_date": {
+                  "nullable": "instant"
+                },
+                "tags": {
+                  "sequence": "string"
+                }
+              }
+            }
+          },
+          "transition": {
+            "preserve": true
+          }
+        }
+      ]
+    },
+    "list-overdue": {
+      "id": "r5.37.b02.list-overdue",
+      "version": "R5.33",
+      "input": {
+        "record": {}
+      },
+      "state": {
+        "pre": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": "string",
+                  "created_at": "instant",
+                  "due_date": {
+                    "nullable": "instant"
+                  },
+                  "tags": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": "string",
+                  "created_at": "instant",
+                  "due_date": {
+                    "nullable": "instant"
+                  },
+                  "tags": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "requires": {
+        "equals": [
+          {
+            "ref": [
+              "pre",
+              "schema_version"
+            ]
+          },
+          {
+            "literal": {
+              "type": "integer",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "branches": [
+        {
+          "tag": "listed",
+          "when": {
+            "equals": [
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              },
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "value": {
+            "order": {
+              "source": {
+                "select": {
+                  "source": {
+                    "ref": [
+                      "pre",
+                      "records"
+                    ]
+                  },
+                  "where": {
+                    "and": [
+                      {
+                        "equals": [
+                          {
+                            "ref": [
+                              "item",
+                              "status"
+                            ]
+                          },
+                          {
+                            "literal": {
+                              "type": "string",
+                              "value": "pending"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "not": {
+                          "equals": [
+                            {
+                              "ref": [
+                                "item",
+                                "due_date"
+                              ]
+                            },
+                            {
+                              "literal": {
+                                "type": {
+                                  "nullable": "instant"
+                                },
+                                "value": null
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "before": [
+                          {
+                            "ref": [
+                              "item",
+                              "due_date"
+                            ]
+                          },
+                          {
+                            "external": {
+                              "source": "utc_clock"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              "keys": [
+                "created_at",
+                "id"
+              ]
+            }
+          },
+          "value_type": {
+            "sequence": {
+              "record": {
+                "id": "string",
+                "title": "string",
+                "description": "string",
+                "status": "string",
+                "priority": "string",
+                "created_at": "instant",
+                "due_date": {
+                  "nullable": "instant"
+                },
+                "tags": {
+                  "sequence": "string"
+                }
+              }
+            }
+          },
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "listed_otherwise",
+          "when": null,
+          "value": {
+            "order": {
+              "source": {
+                "select": {
+                  "source": {
+                    "ref": [
+                      "pre",
+                      "records"
+                    ]
+                  },
+                  "where": {
+                    "and": [
+                      {
+                        "equals": [
+                          {
+                            "ref": [
+                              "item",
+                              "status"
+                            ]
+                          },
+                          {
+                            "literal": {
+                              "type": "string",
+                              "value": "pending"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "not": {
+                          "equals": [
+                            {
+                              "ref": [
+                                "item",
+                                "due_date"
+                              ]
+                            },
+                            {
+                              "literal": {
+                                "type": {
+                                  "nullable": "instant"
+                                },
+                                "value": null
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "before": [
+                          {
+                            "ref": [
+                              "item",
+                              "due_date"
+                            ]
+                          },
+                          {
+                            "external": {
+                              "source": "utc_clock"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              "keys": [
+                "created_at",
+                "id"
+              ]
+            }
+          },
+          "value_type": {
+            "sequence": {
+              "record": {
+                "id": "string",
+                "title": "string",
+                "description": "string",
+                "status": "string",
+                "priority": "string",
+                "created_at": "instant",
+                "due_date": {
+                  "nullable": "instant"
+                },
+                "tags": {
+                  "sequence": "string"
+                }
+              }
+            }
+          },
+          "transition": {
+            "preserve": true
+          }
+        }
+      ]
+    },
+    "create": {
+      "id": "r5.37.b02.create",
+      "version": "R5.33",
+      "input": {
+        "record": {
+          "title": "string",
+          "description": "string",
+          "priority": {
+            "optional": "string"
+          },
+          "due_date": {
+            "optional": {
+              "nullable": "instant"
+            }
+          },
+          "tags": {
+            "optional": {
+              "sequence": "string"
+            }
+          }
+        }
+      },
+      "state": {
+        "pre": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": "string",
+                  "created_at": "instant",
+                  "due_date": {
+                    "nullable": "instant"
+                  },
+                  "tags": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": "string",
+                  "created_at": "instant",
+                  "due_date": {
+                    "nullable": "instant"
+                  },
+                  "tags": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "requires": {
+        "equals": [
+          {
+            "ref": [
+              "pre",
+              "schema_version"
+            ]
+          },
+          {
+            "literal": {
+              "type": "integer",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "branches": [
+        {
+          "tag": "invalid_title",
+          "when": {
+            "not": {
+              "nonblank": {
+                "trim": {
+                  "ref": [
+                    "input",
+                    "title"
+                  ]
+                }
+              }
+            }
+          },
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "invalid_title"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "invalid_tag",
+          "when": {
+            "not": {
+              "for_each": {
+                "sequence": {
+                  "fallback": {
+                    "value": {
+                      "ref": [
+                        "input",
+                        "tags"
+                      ]
+                    },
+                    "default": {
+                      "literal": {
+                        "type": {
+                          "sequence": "string"
+                        },
+                        "value": []
+                      }
+                    }
+                  }
+                },
+                "bind": "tag",
+                "property": {
+                  "nonblank": {
+                    "trim": {
+                      "ref": [
+                        "tag"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "invalid_tag"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "invalid_priority",
+          "when": {
+            "and": [
+              {
+                "not": {
+                  "equals": [
+                    {
+                      "fallback": {
+                        "value": {
+                          "ref": [
+                            "input",
+                            "priority"
+                          ]
+                        },
+                        "default": {
+                          "literal": {
+                            "type": "string",
+                            "value": "NORMAL"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "literal": {
+                        "type": "string",
+                        "value": "LOW"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "equals": [
+                    {
+                      "fallback": {
+                        "value": {
+                          "ref": [
+                            "input",
+                            "priority"
+                          ]
+                        },
+                        "default": {
+                          "literal": {
+                            "type": "string",
+                            "value": "NORMAL"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "literal": {
+                        "type": "string",
+                        "value": "NORMAL"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "equals": [
+                    {
+                      "fallback": {
+                        "value": {
+                          "ref": [
+                            "input",
+                            "priority"
+                          ]
+                        },
+                        "default": {
+                          "literal": {
+                            "type": "string",
+                            "value": "NORMAL"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "literal": {
+                        "type": "string",
+                        "value": "HIGH"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "equals": [
+                    {
+                      "fallback": {
+                        "value": {
+                          "ref": [
+                            "input",
+                            "priority"
+                          ]
+                        },
+                        "default": {
+                          "literal": {
+                            "type": "string",
+                            "value": "NORMAL"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "literal": {
+                        "type": "string",
+                        "value": "CRITICAL"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "invalid_priority"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "created",
+          "when": null,
+          "value": {
+            "record": {
+              "id": {
+                "external": {
+                  "source": "fresh_unique_id"
+                }
+              },
+              "title": {
+                "ref": [
+                  "input",
+                  "title"
+                ]
+              },
+              "description": {
+                "ref": [
+                  "input",
+                  "description"
+                ]
+              },
+              "status": {
+                "literal": {
+                  "type": "string",
+                  "value": "pending"
+                }
+              },
+              "priority": {
+                "fallback": {
+                  "value": {
+                    "ref": [
+                      "input",
+                      "priority"
+                    ]
+                  },
+                  "default": {
+                    "literal": {
+                      "type": "string",
+                      "value": "NORMAL"
+                    }
+                  }
+                }
+              },
+              "created_at": {
+                "external": {
+                  "source": "utc_clock"
+                }
+              },
+              "due_date": {
+                "fallback": {
+                  "value": {
+                    "ref": [
+                      "input",
+                      "due_date"
+                    ]
+                  },
+                  "default": {
+                    "literal": {
+                      "type": {
+                        "nullable": "instant"
+                      },
+                      "value": null
+                    }
+                  }
+                }
+              },
+              "tags": {
+                "stable_unique": {
+                  "sequence": {
+                    "map": {
+                      "sequence": {
+                        "fallback": {
+                          "value": {
+                            "ref": [
+                              "input",
+                              "tags"
+                            ]
+                          },
+                          "default": {
+                            "literal": {
+                              "type": {
+                                "sequence": "string"
+                              },
+                              "value": []
+                            }
+                          }
+                        }
+                      },
+                      "transform": "trim"
+                    }
+                  },
+                  "equality": "case_sensitive_string"
+                }
+              }
+            }
+          },
+          "value_type": {
+            "record": {
+              "id": "string",
+              "title": "string",
+              "description": "string",
+              "status": "string",
+              "priority": "string",
+              "created_at": "instant",
+              "due_date": {
+                "nullable": "instant"
+              },
+              "tags": {
+                "sequence": "string"
+              }
+            }
+          },
+          "transition": {
+            "relations": [
+              {
+                "exact_frame": {
+                  "collection": "records",
+                  "identity": "id",
+                  "record": {
+                    "record": {
+                      "id": {
+                        "external": {
+                          "source": "fresh_unique_id"
+                        }
+                      },
+                      "title": {
+                        "ref": [
+                          "input",
+                          "title"
+                        ]
+                      },
+                      "description": {
+                        "ref": [
+                          "input",
+                          "description"
+                        ]
+                      },
+                      "status": {
+                        "literal": {
+                          "type": "string",
+                          "value": "pending"
+                        }
+                      },
+                      "priority": {
+                        "fallback": {
+                          "value": {
+                            "ref": [
+                              "input",
+                              "priority"
+                            ]
+                          },
+                          "default": {
+                            "literal": {
+                              "type": "string",
+                              "value": "NORMAL"
+                            }
+                          }
+                        }
+                      },
+                      "created_at": {
+                        "external": {
+                          "source": "utc_clock"
+                        }
+                      },
+                      "due_date": {
+                        "fallback": {
+                          "value": {
+                            "ref": [
+                              "input",
+                              "due_date"
+                            ]
+                          },
+                          "default": {
+                            "literal": {
+                              "type": {
+                                "nullable": "instant"
+                              },
+                              "value": null
+                            }
+                          }
+                        }
+                      },
+                      "tags": {
+                        "stable_unique": {
+                          "sequence": {
+                            "map": {
+                              "sequence": {
+                                "fallback": {
+                                  "value": {
+                                    "ref": [
+                                      "input",
+                                      "tags"
+                                    ]
+                                  },
+                                  "default": {
+                                    "literal": {
+                                      "type": {
+                                        "sequence": "string"
+                                      },
+                                      "value": []
+                                    }
+                                  }
+                                }
+                              },
+                              "transform": "trim"
+                            }
+                          },
+                          "equality": "case_sensitive_string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "complete": {
+      "id": "r5.37.b02.complete",
+      "version": "R5.33",
+      "input": {
+        "record": {
+          "id": "string"
+        }
+      },
+      "state": {
+        "pre": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": "string",
+                  "created_at": "instant",
+                  "due_date": {
+                    "nullable": "instant"
+                  },
+                  "tags": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": "string",
+                  "created_at": "instant",
+                  "due_date": {
+                    "nullable": "instant"
+                  },
+                  "tags": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "requires": {
+        "equals": [
+          {
+            "ref": [
+              "pre",
+              "schema_version"
+            ]
+          },
+          {
+            "literal": {
+              "type": "integer",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "branches": [
+        {
+          "tag": "task_not_found",
+          "when": {
+            "equals": [
+              {
+                "cardinality": {
+                  "select": {
+                    "source": {
+                      "ref": [
+                        "pre",
+                        "records"
+                      ]
+                    },
+                    "where": {
+                      "equals": [
+                        {
+                          "ref": [
+                            "item",
+                            "id"
+                          ]
+                        },
+                        {
+                          "ref": [
+                            "input",
+                            "id"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 0
+                }
+              }
+            ]
+          },
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "task_not_found"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "invalid_transition",
+          "when": {
+            "equals": [
+              {
+                "cardinality": {
+                  "select": {
+                    "source": {
+                      "ref": [
+                        "pre",
+                        "records"
+                      ]
+                    },
+                    "where": {
+                      "and": [
+                        {
+                          "equals": [
+                            {
+                              "ref": [
+                                "item",
+                                "id"
+                              ]
+                            },
+                            {
+                              "ref": [
+                                "input",
+                                "id"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "equals": [
+                            {
+                              "ref": [
+                                "item",
+                                "status"
+                              ]
+                            },
+                            {
+                              "literal": {
+                                "type": "string",
+                                "value": "completed"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "invalid_transition"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "completed",
+          "when": null,
+          "value": {
+            "sole": {
+              "select": {
+                "source": {
+                  "ref": [
+                    "post",
+                    "records"
+                  ]
+                },
+                "where": {
+                  "equals": [
+                    {
+                      "ref": [
+                        "item",
+                        "id"
+                      ]
+                    },
+                    {
+                      "ref": [
+                        "input",
+                        "id"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "value_type": {
+            "record": {
+              "id": "string",
+              "title": "string",
+              "description": "string",
+              "status": "string",
+              "priority": "string",
+              "created_at": "instant",
+              "due_date": {
+                "nullable": "instant"
+              },
+              "tags": {
+                "sequence": "string"
+              }
+            }
+          },
+          "transition": {
+            "relations": [
+              {
+                "replace_field": {
+                  "collection": "records",
+                  "key": "id",
+                  "match": {
+                    "ref": [
+                      "input",
+                      "id"
+                    ]
+                  },
+                  "field": "status",
+                  "value": {
+                    "literal": {
+                      "type": "string",
+                      "value": "completed"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "delete": {
+      "id": "r5.37.b02.delete",
+      "version": "R5.33",
+      "input": {
+        "record": {
+          "id": "string"
+        }
+      },
+      "state": {
+        "pre": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": "string",
+                  "created_at": "instant",
+                  "due_date": {
+                    "nullable": "instant"
+                  },
+                  "tags": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": "string",
+                  "created_at": "instant",
+                  "due_date": {
+                    "nullable": "instant"
+                  },
+                  "tags": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "requires": {
+        "equals": [
+          {
+            "ref": [
+              "pre",
+              "schema_version"
+            ]
+          },
+          {
+            "literal": {
+              "type": "integer",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "branches": [
+        {
+          "tag": "task_not_found",
+          "when": {
+            "equals": [
+              {
+                "cardinality": {
+                  "select": {
+                    "source": {
+                      "ref": [
+                        "pre",
+                        "records"
+                      ]
+                    },
+                    "where": {
+                      "equals": [
+                        {
+                          "ref": [
+                            "item",
+                            "id"
+                          ]
+                        },
+                        {
+                          "ref": [
+                            "input",
+                            "id"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 0
+                }
+              }
+            ]
+          },
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "task_not_found"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "deleted",
+          "when": null,
+          "value": {
+            "sole": {
+              "select": {
+                "source": {
+                  "ref": [
+                    "pre",
+                    "records"
+                  ]
+                },
+                "where": {
+                  "equals": [
+                    {
+                      "ref": [
+                        "item",
+                        "id"
+                      ]
+                    },
+                    {
+                      "ref": [
+                        "input",
+                        "id"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "value_type": {
+            "record": {
+              "id": "string",
+              "title": "string",
+              "description": "string",
+              "status": "string",
+              "priority": "string",
+              "created_at": "instant",
+              "due_date": {
+                "nullable": "instant"
+              },
+              "tags": {
+                "sequence": "string"
+              }
+            }
+          },
+          "transition": {
+            "relations": [
+              {
+                "remove": {
+                  "collection": "records",
+                  "identity": "id",
+                  "match": {
+                    "ref": [
+                      "input",
+                      "id"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "migrate_current": {
+      "id": "r5.37.b02.migrate_current",
+      "version": "R5.33",
+      "input": {
+        "record": {}
+      },
+      "state": {
+        "pre": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": "string",
+                  "created_at": "instant",
+                  "due_date": {
+                    "nullable": "instant"
+                  },
+                  "tags": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": "string",
+                  "created_at": "instant",
+                  "due_date": {
+                    "nullable": "instant"
+                  },
+                  "tags": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "requires": {
+        "equals": [
+          {
+            "ref": [
+              "pre",
+              "schema_version"
+            ]
+          },
+          {
+            "literal": {
+              "type": "integer",
+              "value": 4
+            }
+          }
+        ]
+      },
+      "branches": [
+        {
+          "tag": "current",
+          "when": {
+            "equals": [
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              },
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "value": {
+            "record": {
+              "migrated": {
+                "literal": {
+                  "type": "integer",
+                  "value": 0
+                }
+              }
+            }
+          },
+          "value_type": {
+            "record": {
+              "migrated": "integer"
+            }
+          },
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "current_otherwise",
+          "when": null,
+          "value": {
+            "record": {
+              "migrated": {
+                "literal": {
+                  "type": "integer",
+                  "value": 0
+                }
+              }
+            }
+          },
+          "value_type": {
+            "record": {
+              "migrated": "integer"
+            }
+          },
+          "transition": {
+            "preserve": true
+          }
+        }
+      ]
+    },
+    "migrate_v1": {
+      "id": "r5.37.b02.migrate_v1",
+      "version": "R5.33",
+      "input": {
+        "record": {}
+      },
+      "state": {
+        "pre": {
+          "sequence": {
+            "record": {
+              "id": "string",
+              "title": "string",
+              "description": "string",
+              "status": "string",
+              "priority": {
+                "optional": "string"
+              },
+              "created_at": "instant",
+              "due_date": {
+                "optional": {
+                  "nullable": "instant"
+                }
+              },
+              "tags": {
+                "optional": {
+                  "sequence": "string"
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": "string",
+                  "created_at": "instant",
+                  "due_date": {
+                    "nullable": "instant"
+                  },
+                  "tags": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "requires": {
+        "equals": [
+          {
+            "literal": {
+              "type": "integer",
+              "value": 1
+            }
+          },
+          {
+            "literal": {
+              "type": "integer",
+              "value": 1
+            }
+          }
+        ]
+      },
+      "branches": [
+        {
+          "tag": "migrated",
+          "when": {
+            "equals": [
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              },
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "value": {
+            "record": {
+              "migrated": {
+                "cardinality": {
+                  "ref": [
+                    "pre"
+                  ]
+                }
+              }
+            }
+          },
+          "value_type": {
+            "record": {
+              "migrated": "integer"
+            }
+          },
+          "transition": {
+            "relations": [
+              {
+                "default_missing": {
+                  "source": [],
+                  "target": [
+                    "records"
+                  ],
+                  "identity": "id",
+                  "field": "priority",
+                  "value": {
+                    "literal": {
+                      "type": "string",
+                      "value": "NORMAL"
+                    }
+                  }
+                }
+              },
+              {
+                "default_missing": {
+                  "source": [],
+                  "target": [
+                    "records"
+                  ],
+                  "identity": "id",
+                  "field": "due_date",
+                  "value": {
+                    "literal": {
+                      "type": {
+                        "nullable": "instant"
+                      },
+                      "value": null
+                    }
+                  }
+                }
+              },
+              {
+                "default_missing": {
+                  "source": [],
+                  "target": [
+                    "records"
+                  ],
+                  "identity": "id",
+                  "field": "tags",
+                  "value": {
+                    "literal": {
+                      "type": {
+                        "sequence": "string"
+                      },
+                      "value": []
+                    }
+                  }
+                }
+              },
+              {
+                "post_equals": {
+                  "field": "schema_version",
+                  "value": {
+                    "literal": {
+                      "type": "integer",
+                      "value": 4
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "tag": "migrated_otherwise",
+          "when": null,
+          "value": {
+            "record": {
+              "migrated": {
+                "cardinality": {
+                  "ref": [
+                    "pre"
+                  ]
+                }
+              }
+            }
+          },
+          "value_type": {
+            "record": {
+              "migrated": "integer"
+            }
+          },
+          "transition": {
+            "relations": [
+              {
+                "default_missing": {
+                  "source": [],
+                  "target": [
+                    "records"
+                  ],
+                  "identity": "id",
+                  "field": "priority",
+                  "value": {
+                    "literal": {
+                      "type": "string",
+                      "value": "NORMAL"
+                    }
+                  }
+                }
+              },
+              {
+                "default_missing": {
+                  "source": [],
+                  "target": [
+                    "records"
+                  ],
+                  "identity": "id",
+                  "field": "due_date",
+                  "value": {
+                    "literal": {
+                      "type": {
+                        "nullable": "instant"
+                      },
+                      "value": null
+                    }
+                  }
+                }
+              },
+              {
+                "default_missing": {
+                  "source": [],
+                  "target": [
+                    "records"
+                  ],
+                  "identity": "id",
+                  "field": "tags",
+                  "value": {
+                    "literal": {
+                      "type": {
+                        "sequence": "string"
+                      },
+                      "value": []
+                    }
+                  }
+                }
+              },
+              {
+                "post_equals": {
+                  "field": "schema_version",
+                  "value": {
+                    "literal": {
+                      "type": "integer",
+                      "value": 4
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "migrate_envelope": {
+      "id": "r5.37.b02.migrate_envelope",
+      "version": "R5.33",
+      "input": {
+        "record": {}
+      },
+      "state": {
+        "pre": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": {
+                    "optional": "string"
+                  },
+                  "created_at": "instant",
+                  "due_date": {
+                    "optional": {
+                      "nullable": "instant"
+                    }
+                  },
+                  "tags": {
+                    "optional": {
+                      "sequence": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": "string",
+                  "created_at": "instant",
+                  "due_date": {
+                    "nullable": "instant"
+                  },
+                  "tags": {
+                    "sequence": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "requires": {
+        "not": {
+          "equals": [
+            {
+              "ref": [
+                "pre",
+                "schema_version"
+              ]
+            },
+            {
+              "literal": {
+                "type": "integer",
+                "value": 4
+              }
+            }
+          ]
+        }
+      },
+      "branches": [
+        {
+          "tag": "migrated",
+          "when": {
+            "equals": [
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              },
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "value": {
+            "record": {
+              "migrated": {
+                "cardinality": {
+                  "ref": [
+                    "pre",
+                    "records"
+                  ]
+                }
+              }
+            }
+          },
+          "value_type": {
+            "record": {
+              "migrated": "integer"
+            }
+          },
+          "transition": {
+            "relations": [
+              {
+                "default_missing": {
+                  "source": [
+                    "records"
+                  ],
+                  "target": [
+                    "records"
+                  ],
+                  "identity": "id",
+                  "field": "priority",
+                  "value": {
+                    "literal": {
+                      "type": "string",
+                      "value": "NORMAL"
+                    }
+                  }
+                }
+              },
+              {
+                "default_missing": {
+                  "source": [
+                    "records"
+                  ],
+                  "target": [
+                    "records"
+                  ],
+                  "identity": "id",
+                  "field": "due_date",
+                  "value": {
+                    "literal": {
+                      "type": {
+                        "nullable": "instant"
+                      },
+                      "value": null
+                    }
+                  }
+                }
+              },
+              {
+                "default_missing": {
+                  "source": [
+                    "records"
+                  ],
+                  "target": [
+                    "records"
+                  ],
+                  "identity": "id",
+                  "field": "tags",
+                  "value": {
+                    "literal": {
+                      "type": {
+                        "sequence": "string"
+                      },
+                      "value": []
+                    }
+                  }
+                }
+              },
+              {
+                "post_equals": {
+                  "field": "schema_version",
+                  "value": {
+                    "literal": {
+                      "type": "integer",
+                      "value": 4
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "tag": "migrated_otherwise",
+          "when": null,
+          "value": {
+            "record": {
+              "migrated": {
+                "cardinality": {
+                  "ref": [
+                    "pre",
+                    "records"
+                  ]
+                }
+              }
+            }
+          },
+          "value_type": {
+            "record": {
+              "migrated": "integer"
+            }
+          },
+          "transition": {
+            "relations": [
+              {
+                "default_missing": {
+                  "source": [
+                    "records"
+                  ],
+                  "target": [
+                    "records"
+                  ],
+                  "identity": "id",
+                  "field": "priority",
+                  "value": {
+                    "literal": {
+                      "type": "string",
+                      "value": "NORMAL"
+                    }
+                  }
+                }
+              },
+              {
+                "default_missing": {
+                  "source": [
+                    "records"
+                  ],
+                  "target": [
+                    "records"
+                  ],
+                  "identity": "id",
+                  "field": "due_date",
+                  "value": {
+                    "literal": {
+                      "type": {
+                        "nullable": "instant"
+                      },
+                      "value": null
+                    }
+                  }
+                }
+              },
+              {
+                "default_missing": {
+                  "source": [
+                    "records"
+                  ],
+                  "target": [
+                    "records"
+                  ],
+                  "identity": "id",
+                  "field": "tags",
+                  "value": {
+                    "literal": {
+                      "type": {
+                        "sequence": "string"
+                      },
+                      "value": []
+                    }
+                  }
+                }
+              },
+              {
+                "post_equals": {
+                  "field": "schema_version",
+                  "value": {
+                    "literal": {
+                      "type": "integer",
+                      "value": 4
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "list_legacy_v1": {
+      "id": "r5.37.b02.list_legacy_v1",
+      "version": "R5.33",
+      "input": {
+        "record": {}
+      },
+      "state": {
+        "pre": {
+          "sequence": {
+            "record": {
+              "id": "string",
+              "title": "string",
+              "description": "string",
+              "status": "string",
+              "priority": {
+                "optional": "string"
+              },
+              "created_at": "instant",
+              "due_date": {
+                "optional": {
+                  "nullable": "instant"
+                }
+              },
+              "tags": {
+                "optional": {
+                  "sequence": "string"
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "sequence": {
+            "record": {
+              "id": "string",
+              "title": "string",
+              "description": "string",
+              "status": "string",
+              "priority": {
+                "optional": "string"
+              },
+              "created_at": "instant",
+              "due_date": {
+                "optional": {
+                  "nullable": "instant"
+                }
+              },
+              "tags": {
+                "optional": {
+                  "sequence": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "requires": {
+        "equals": [
+          {
+            "literal": {
+              "type": "integer",
+              "value": 1
+            }
+          },
+          {
+            "literal": {
+              "type": "integer",
+              "value": 1
+            }
+          }
+        ]
+      },
+      "branches": [
+        {
+          "tag": "migration_required",
+          "when": {
+            "equals": [
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              },
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "migration_required"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "migration_required_otherwise",
+          "when": null,
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "migration_required"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        }
+      ]
+    },
+    "list-high_legacy_v1": {
+      "id": "r5.37.b02.list-high_legacy_v1",
+      "version": "R5.33",
+      "input": {
+        "record": {}
+      },
+      "state": {
+        "pre": {
+          "sequence": {
+            "record": {
+              "id": "string",
+              "title": "string",
+              "description": "string",
+              "status": "string",
+              "priority": {
+                "optional": "string"
+              },
+              "created_at": "instant",
+              "due_date": {
+                "optional": {
+                  "nullable": "instant"
+                }
+              },
+              "tags": {
+                "optional": {
+                  "sequence": "string"
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "sequence": {
+            "record": {
+              "id": "string",
+              "title": "string",
+              "description": "string",
+              "status": "string",
+              "priority": {
+                "optional": "string"
+              },
+              "created_at": "instant",
+              "due_date": {
+                "optional": {
+                  "nullable": "instant"
+                }
+              },
+              "tags": {
+                "optional": {
+                  "sequence": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "requires": {
+        "equals": [
+          {
+            "literal": {
+              "type": "integer",
+              "value": 1
+            }
+          },
+          {
+            "literal": {
+              "type": "integer",
+              "value": 1
+            }
+          }
+        ]
+      },
+      "branches": [
+        {
+          "tag": "migration_required",
+          "when": {
+            "equals": [
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              },
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "migration_required"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "migration_required_otherwise",
+          "when": null,
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "migration_required"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        }
+      ]
+    },
+    "list-overdue_legacy_v1": {
+      "id": "r5.37.b02.list-overdue_legacy_v1",
+      "version": "R5.33",
+      "input": {
+        "record": {}
+      },
+      "state": {
+        "pre": {
+          "sequence": {
+            "record": {
+              "id": "string",
+              "title": "string",
+              "description": "string",
+              "status": "string",
+              "priority": {
+                "optional": "string"
+              },
+              "created_at": "instant",
+              "due_date": {
+                "optional": {
+                  "nullable": "instant"
+                }
+              },
+              "tags": {
+                "optional": {
+                  "sequence": "string"
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "sequence": {
+            "record": {
+              "id": "string",
+              "title": "string",
+              "description": "string",
+              "status": "string",
+              "priority": {
+                "optional": "string"
+              },
+              "created_at": "instant",
+              "due_date": {
+                "optional": {
+                  "nullable": "instant"
+                }
+              },
+              "tags": {
+                "optional": {
+                  "sequence": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "requires": {
+        "equals": [
+          {
+            "literal": {
+              "type": "integer",
+              "value": 1
+            }
+          },
+          {
+            "literal": {
+              "type": "integer",
+              "value": 1
+            }
+          }
+        ]
+      },
+      "branches": [
+        {
+          "tag": "migration_required",
+          "when": {
+            "equals": [
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              },
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "migration_required"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "migration_required_otherwise",
+          "when": null,
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "migration_required"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        }
+      ]
+    },
+    "list_legacy_envelope": {
+      "id": "r5.37.b02.list_legacy_envelope",
+      "version": "R5.33",
+      "input": {
+        "record": {}
+      },
+      "state": {
+        "pre": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": {
+                    "optional": "string"
+                  },
+                  "created_at": "instant",
+                  "due_date": {
+                    "optional": {
+                      "nullable": "instant"
+                    }
+                  },
+                  "tags": {
+                    "optional": {
+                      "sequence": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": {
+                    "optional": "string"
+                  },
+                  "created_at": "instant",
+                  "due_date": {
+                    "optional": {
+                      "nullable": "instant"
+                    }
+                  },
+                  "tags": {
+                    "optional": {
+                      "sequence": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "requires": {
+        "not": {
+          "equals": [
+            {
+              "ref": [
+                "pre",
+                "schema_version"
+              ]
+            },
+            {
+              "literal": {
+                "type": "integer",
+                "value": 4
+              }
+            }
+          ]
+        }
+      },
+      "branches": [
+        {
+          "tag": "migration_required",
+          "when": {
+            "equals": [
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              },
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "migration_required"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "migration_required_otherwise",
+          "when": null,
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "migration_required"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        }
+      ]
+    },
+    "list-high_legacy_envelope": {
+      "id": "r5.37.b02.list-high_legacy_envelope",
+      "version": "R5.33",
+      "input": {
+        "record": {}
+      },
+      "state": {
+        "pre": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": {
+                    "optional": "string"
+                  },
+                  "created_at": "instant",
+                  "due_date": {
+                    "optional": {
+                      "nullable": "instant"
+                    }
+                  },
+                  "tags": {
+                    "optional": {
+                      "sequence": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": {
+                    "optional": "string"
+                  },
+                  "created_at": "instant",
+                  "due_date": {
+                    "optional": {
+                      "nullable": "instant"
+                    }
+                  },
+                  "tags": {
+                    "optional": {
+                      "sequence": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "requires": {
+        "not": {
+          "equals": [
+            {
+              "ref": [
+                "pre",
+                "schema_version"
+              ]
+            },
+            {
+              "literal": {
+                "type": "integer",
+                "value": 4
+              }
+            }
+          ]
+        }
+      },
+      "branches": [
+        {
+          "tag": "migration_required",
+          "when": {
+            "equals": [
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              },
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "migration_required"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "migration_required_otherwise",
+          "when": null,
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "migration_required"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        }
+      ]
+    },
+    "list-overdue_legacy_envelope": {
+      "id": "r5.37.b02.list-overdue_legacy_envelope",
+      "version": "R5.33",
+      "input": {
+        "record": {}
+      },
+      "state": {
+        "pre": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": {
+                    "optional": "string"
+                  },
+                  "created_at": "instant",
+                  "due_date": {
+                    "optional": {
+                      "nullable": "instant"
+                    }
+                  },
+                  "tags": {
+                    "optional": {
+                      "sequence": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "record": {
+            "schema_version": "integer",
+            "records": {
+              "sequence": {
+                "record": {
+                  "id": "string",
+                  "title": "string",
+                  "description": "string",
+                  "status": "string",
+                  "priority": {
+                    "optional": "string"
+                  },
+                  "created_at": "instant",
+                  "due_date": {
+                    "optional": {
+                      "nullable": "instant"
+                    }
+                  },
+                  "tags": {
+                    "optional": {
+                      "sequence": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "requires": {
+        "not": {
+          "equals": [
+            {
+              "ref": [
+                "pre",
+                "schema_version"
+              ]
+            },
+            {
+              "literal": {
+                "type": "integer",
+                "value": 4
+              }
+            }
+          ]
+        }
+      },
+      "branches": [
+        {
+          "tag": "migration_required",
+          "when": {
+            "equals": [
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              },
+              {
+                "literal": {
+                  "type": "integer",
+                  "value": 1
+                }
+              }
+            ]
+          },
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "migration_required"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        },
+        {
+          "tag": "migration_required_otherwise",
+          "when": null,
+          "value": {
+            "literal": {
+              "type": "string",
+              "value": "migration_required"
+            }
+          },
+          "value_type": "string",
+          "transition": {
+            "preserve": true
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,5 +1,33 @@
 # Experimental decisions
 
+## R5.37 — Preserve a failed integration evaluation without repair
+
+The comprehensive frozen B02 evaluation stopped at the unchanged authoritative
+analyzer's nullable-instant `before` rejection. Keep required public/persisted null
+semantics rather than substituting optional absence, a string or a date sentinel.
+No compiler, binder, runtime, transport, launch or grounding repair is permitted
+inside the locked evaluation; no reduced slice may stand in for complete acceptance.
+Classify UNKNOWN_TYPE_COHERENCE_GAP at generation and R5_37_B02_INTEGRATION_GAP at
+the decision gate. The nullable subcase was documented in R5.23, so do not claim a
+new requirement or construct #31. Optional membership and nullable elimination need
+separate readiness evidence. Preserve R5.36's prior gate and correct its implied
+coverage prospectively through this observation.
+
+Tradeoff: stopping yields seven BLOCKED acceptance methods and no runtime transfer
+evidence, rather than a repaired green candidate. This preserves the experiment's
+meaning. Distinguish a complete authoritative frozen contract from an attempted
+current-format operation family that lacks a complete checked public implementation.
+Record unexecuted nullable binding, public multi-shape dispatch and durable invariant
+concerns as static findings, not acceptance failures or grounded faults.
+
+Recommend R5.38 independent nullable-domain and whole-contract boundary coherence
+review on non-task examples. Any later authorized development must test shared
+domains and mandatory failure paths, not only relation kinds or matrix bookkeeping.
+No immediate B02 retry or B03 pressure sweep; core 30, format unfrozen, R5.2.2
+historical authority and universal correctness unestablished. The mandatory full
+baseline's old B03 checkpoint replay is disclosed separately from new-candidate
+evaluation. Evidence: `benchmark/results/phase5c/R5_37-B02-COMPREHENSIVE-FROZEN-EVALUATION.md`.
+
 ## R5.36 — Checked configuration owns public process bootstrap
 
 Choose one co-located deterministic launch profile and copied generic entry, with
