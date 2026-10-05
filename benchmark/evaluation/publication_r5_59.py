@@ -75,14 +75,19 @@ def check_text(text):
         raise security.SecretRejected('synthetic fixture leak')
 
 
-def safe_bytes(value):
-    content = security.safe_bytes(value)
-    check_text(content.decode('utf-8'))
+def safe_bytes(value, *, schema=None, schema_identity=None):
+    content = security.safe_bytes(value, schema=schema, schema_identity=schema_identity)
+    if schema is None:
+        check_text(content.decode('utf-8'))
+    elif any(value in content.decode('utf-8') for value in _values()):
+        # Typed traversal inspected every key/value. Assignment scanning of the
+        # serialized document would discard context; fixture protection stays active.
+        raise security.SecretRejected('synthetic fixture leak')
     return content
 
 
-def persist(path, value):
-    safe_bytes(value)
+def persist(path, value, *, schema=None, schema_identity=None):
+    safe_bytes(value, schema=schema, schema_identity=schema_identity)
     historical_persist(path, value)
 
 

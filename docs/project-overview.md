@@ -69,6 +69,21 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.64 context-aware publication reconciliation](../benchmark/results/phase5c/R5_64-CONTEXT-AWARE-CREDENTIAL-PUBLICATION-RECONCILIATION.md)
+ends **`R5_64_CONTEXT_AWARE_PUBLICATION_QUALIFIED`**. Immutable, content-bound
+producer schemas distinguish public protocol authorization from credential material;
+value/marked-secret inspection and R5.59 fixture nonpublication remain active.
+The unchanged `authorization` field safely seals, persists and canonically reloads
+in a synthetic qualification identity. Fresh focused tests pass **124/124**;
+schema/99-leaf traceability, contamination, validation/safety, continuity, AI
+independence and publication/whitespace checks pass. **2,066 unsealed historical
+result files** are byte-preserved; four protected files remain unopened and
+metadata-preserved. R5.63 remains permanently halted with no identity issued.
+Next: separately authorize a wholly fresh production qualification binding the
+corrected publication mechanism and checking sealed-resource compatibility.
+**No production qualification begins, B02 accounting zero, synthetic observations
+zero, production batches/receipts/certificate zero, core 30, Phase 5C paused.**
+
 The [R5.63 fresh complete production qualification](../benchmark/results/phase5c/R5_63-FRESH-COMPLETE-PRODUCTION-TIER2-QUALIFICATION.md)
 ends **`R5_63_PROTOCOL_HALT`** during its first and only freeze invocation.
 The 173-stage regression plan and registry persist, but the existing publication

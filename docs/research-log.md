@@ -1,5 +1,27 @@
 # Lykoi research log
 
+## R5.64 context-aware publication reconciliation (2026-10-05)
+
+Observed: the R5.63 failure class conflated protocol authorization identity metadata
+with authentication material by field name. Prospective immutable, pinned producer
+schemas now distinguish those contexts without renaming the field. Every actual
+key/value still receives credential inspection; public declarations cannot bypass
+recognizable secrets, marked structures or R5.59 fixture nonpublication. Unknown
+authorization contexts retain conservative safe-representation-only publication.
+
+Fresh focused verification passes 124/124, including 19 new adversarial witnesses,
+22 R5.47 security and 47 R5.62 child tests. The exact seal/persist publication chain
+accepts a synthetic identity and canonically reloads it. Schema/99-leaf traceability,
+contamination, validation/safety, continuity and AI independence pass. An initial
+57/58 development run's newline assertion failure is retained and corrected.
+The bounded detector still cannot identify arbitrary opaque secrets without context.
+
+Outcome: `R5_64_CONTEXT_AWARE_PUBLICATION_QUALIFIED`; 2,066 prior unsealed result
+files byte-preserved and four protected files unopened/metadata-preserved. R5.63
+remains halted, no identity reconstructed or plan resumed. Core 30, B02 zero,
+production and synthetic observation accounting zero, Phase 5C paused. Recommend
+separately authorized wholly fresh production qualification; none begins here.
+
 ## R5.63 fresh complete production qualification (2026-10-05)
 
 The first freeze invocation persists a canonical 173-regression-stage plan and

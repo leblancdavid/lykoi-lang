@@ -1,5 +1,25 @@
 # Experimental decisions
 
+## R5.64 — Publication classification belongs to the producer schema
+
+Use explicit, immutable, content-pinned schema classifications to distinguish
+protocol authorization metadata from credential authorization. Keep field names
+and historical candidates intact. A reviewed producer supplies the schema and
+trusted pin separately from payload data; shape/type/classification mutations
+invalidate that pin. Credential classification survives field renaming.
+
+Retain value inspection and marked-secret rejection under public declarations.
+For typed JSON, inspect each actual key/value instead of rescanning serialization
+punctuation as untyped assignments; preserve source/free-text scanning and fixture
+leak detection. Without trusted context, retain R5.47's conservative credential-name
+policy and safe representations. This trades implicit name heuristics for explicit
+producer review, not an opaque-secret recognition guarantee.
+
+Qualify the exact identity publication chain using synthetic metadata only. R5.63
+stays permanently halted; the correction does not qualify production, change Tier-2
+methodology or authorize B02. Outcome: `R5_64_CONTEXT_AWARE_PUBLICATION_QUALIFIED`.
+Require wholly fresh separately authorized production qualification and stop here.
+
 ## R5.63 — A failed identity freeze is terminal
 
 Apply the authorized no-repair/no-retry rule to the first qualification preparation

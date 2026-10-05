@@ -25,8 +25,8 @@ CONTROLS = {'PYTHONHASHSEED': '0', 'PYTHONUTF8': '1', 'PYTHONDONTWRITEBYTECODE':
 REQUIRED = ('identity', 'locks', 'contamination', 'workspace')
 
 
-def seal(body):
-    security.safe_bytes(body)
+def seal(body, *, schema=None, schema_identity=None):
+    security.safe_bytes(body, schema=schema, schema_identity=schema_identity)
     return envelopes.seal(body)
 
 

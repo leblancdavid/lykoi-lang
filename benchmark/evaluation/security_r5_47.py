@@ -50,37 +50,68 @@ def check_text(text):
             raise SecretRejected('credential assignment', match[1])
 
 
-def inspect(value):
+def inspect(value, schema=None):
     """Reject credential fields, marked structures and credential-bearing text.
 
     This is a contextual detector, not an entropy classifier or omniscient DLP.
     Producers must still use typed publication/presence metadata, never raw dumps.
     """
+    if schema is not None:
+        from benchmark.evaluation.publication_schema_r5_64 import TYPES, PUBLIC
+        classification = schema['classification']
+        if type(value) is not TYPES[schema['type']]:
+            raise SecretRejected('publication schema type mismatch')
+        if classification == 'SYNTHETIC_SECURITY_FIXTURE':
+            raise SecretRejected('synthetic fixture publication prohibited')
+        if classification not in PUBLIC and not safe_representation(value):
+            raise SecretRejected('schema credential material')
+        if type(value) is dict:
+            fields = schema['fields']
+            if (set(value) - set(fields) or
+                    set(fields) - set(schema['optional']) - set(value)):
+                raise SecretRejected('publication schema membership mismatch')
     if type(value) is dict:
         marked = value.get('secret') is True or value.get('sensitive') is True
         for key, child in value.items():
             if type(key) is not str:
                 raise SecretRejected('invalid publication key')
             check_text(key)
-            if (SENSITIVE.search(key) and not (key == 'secret' and child is True)) or (marked and key == 'value'):
+            child_schema = schema['fields'][key] if schema is not None else None
+            declared_public = child_schema is not None and child_schema['classification'] in PUBLIC
+            if (SENSITIVE.search(key) and not declared_public and not (key == 'secret' and child is True)) or (marked and key == 'value'):
                 if not safe_representation(child):
                     raise SecretRejected('secret-marked structure' if marked else 'credential field', key)
-            inspect(child)
+            inspect(child, child_schema)
     elif type(value) in (list, tuple):
         for child in value:
             inspect(child)
     elif type(value) is str:
+        if schema is not None and re.match(r'^\s*(?:Bearer|Basic)\s+\S+', value, re.I):
+            # Explicitly typed metadata cannot carry even short/opaque HTTP auth
+            # material. Keep the bounded free-text/source detector separate.
+            raise SecretRejected('credential authorization value')
         check_text(value)
 
 
-def safe_bytes(value):
+def safe_bytes(value, *, schema=None, schema_identity=None):
     # Validate canonical types/cycles before recursive inspection. Do not publish
     # canonicalizer exception details, which may originate in arbitrary input.
     try:
         content = canonical(value)
     except ValueError:
         raise SecretRejected('invalid canonical publication') from None
-    inspect(value)
+    declaration = None
+    if schema is not None:
+        try:
+            from benchmark.evaluation.publication_schema_r5_64 import PublicationSchema
+            if type(schema) is not PublicationSchema:
+                raise ValueError('untrusted publication schema type')
+            declaration = schema.resolve(schema_identity)
+        except (ValueError, TypeError, AttributeError):
+            raise SecretRejected('invalid or changed publication schema') from None
+    elif schema_identity is not None:
+        raise SecretRejected('publication schema missing')
+    inspect(value, declaration)
     return content
 
 
