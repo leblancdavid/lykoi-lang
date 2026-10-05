@@ -69,6 +69,31 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.71 final existing-infrastructure production qualification](../benchmark/results/phase5c/R5_71-FINAL-EXISTING-INFRASTRUCTURE-PRODUCTION-QUALIFICATION.md)
+ends **`R5_71_AUTHORITY_GAP`**, determined to be
+**`ACCUMULATED_FRAMEWORK_INTEGRATION_FAILURE`**. The fresh **205-stage** plan and
+identity freeze/seal/persist/schema-revalidate/canonically reload. Current mechanism
+continuity, **11 sealed commitments** and **two sealed frozen pins** pass without
+content reads. Full ordinary authority verification fails: **1,070/1,072 match**;
+the inherited policy demands pre-R5.64 hashes for `security_r5_47.py` and
+`tier2_r5_51.py`, contradicting the freshly pinned qualified R5.64 implementations.
+Independent ordinary Git provenance confirms stale generation coupling, not a
+checkout-representation mismatch or substantive project/benchmark failure.
+
+**This was the final qualification attempt for the accumulated architecture.**
+Recommendation: **`SIMPLIFIED_PHASE5_RUNNER_REQUIRED`**. Stop extending this framework;
+no compatibility-patch round or R5.72 adapter/repair layer follows. Preserve its
+historical research evidence. Authority is not retried; capsule/declaration/batches/
+receipts/certificate/workspace/gate/synthetic observation remain **NOT_RUN**.
+Initial stopped integrity/publication pass, preserving **2,281 unsealed historical
+files by bytes** and **four protected files by metadata**. A subsequent post-report
+audit fails with `FileExistsError` when recreating immutable provenance evidence;
+it is not repaired or retried. Final post-report publication verification remains
+incomplete; whitespace passes. The 36 prohibited skips
+are frozen declarations, not executed skips. **B02 attempts/reads 0/0, accounting
+0/0/0/0, opening 0/0, core 30, Phase 5C paused; production gate unqualified.**
+The earlier recommendations below retain their historical scope.
+
 The [R5.70 observation-consumer migration and publication reconciliation](../benchmark/results/phase5c/R5_70-CERTIFICATEV3-OBSERVATION-CONSUMER-MIGRATION-AND-PUBLICATION-RECONCILIATION.md)
 ends **`R5_70_V3_OBSERVATION_CONSUMER_QUALIFIED`** within prospective mechanism
 scope. Production preparation explicitly consumes CertificateV3 / `PRODUCTION_SEALED`

@@ -1,5 +1,27 @@
 # Experimental decisions
 
+## R5.71 — Enforce the final integration escape rule
+
+Freeze a wholly fresh complete production plan/identity using the qualified existing
+interfaces. Stop at the first FAIL/INCOMPLETE, without repair, retry or resume.
+The inherited full authority policy rejects two current, explicitly pinned R5.64
+publication mechanisms because it still binds their pre-R5.64 hashes. Independent
+ordinary-only provenance establishes stale generation coupling; sealed commitments
+and frozen pins remain intact. Record `R5_71_AUTHORITY_GAP` and
+`ACCUMULATED_FRAMEWORK_INTEGRATION_FAILURE`, rather than a semantic/compiler/profile
+regression or benchmark-authority corruption.
+
+Apply the owner escape rule: recommend `SIMPLIFIED_PHASE5_RUNNER_REQUIRED`.
+Do not create another compatibility patch or R5.72 adapter/repair layer. Preserve
+the accumulated framework and stopped evidence as research history. No successor
+authority, source restoration, repinning or retry is performed. Downstream production
+stages remain NOT_RUN; stopped integrity/publication checks cannot promote them.
+Preserve the secondary post-report auditor's `FileExistsError` on recreating immutable
+provenance evidence. Its initial PASS is bounded to the original inventory; final
+post-report publication remains incomplete. Do not repair or retry the failed audit.
+B02 remains sealed at all-zero accounting; core semantics remain 30. Behavioral
+equivalence and AI-independent language execution remain the frozen methodology.
+
 ## R5.70 — Migrate the consumer, preserve the producer and historical evidence
 
 Use a prospective version-aware StaticGate that directly invokes the qualified

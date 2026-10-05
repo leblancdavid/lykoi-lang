@@ -1,5 +1,42 @@
 # Lykoi research log
 
+## R5.71 final existing-infrastructure production qualification (2026-10-05)
+
+Observed: fresh plan/identity freeze, seal, persist, schema-revalidate and canonically
+reload. The plan declares 205 required bounded regression stages, seven prerequisites,
+six integration checkpoints, a pinned safe-worker closure and 36 metadata-only
+prohibited-skip selections. Current R5.70 mechanism continuity and inherited zero
+accounting pass. Eleven actual sealed commitments and two sealed frozen pins pass
+metadata/provenance verification without protected content access.
+
+Fresh full QualifiedAuthority fails once. Independent stopped ordinary-only diagnosis
+finds 1,070 matching ordinary members out of 1,072. The two mismatches are
+`security_r5_47.py` and `tier2_r5_51.py`: inherited authority hashes match historical
+Git objects, but current implementations match the qualified R5.64 commit and the
+fresh plan's implementation pins. Normalizing LF/CRLF does not remove either mismatch.
+This is stale authority/mechanism-generation coupling, not evidence of a substantive
+Lykoi regression, benchmark-authority corruption, security breach or contamination.
+
+Outcome: `R5_71_AUTHORITY_GAP`; determination:
+`ACCUMULATED_FRAMEWORK_INTEGRATION_FAILURE`. Per the final-attempt escape rule,
+recommend `SIMPLIFIED_PHASE5_RUNNER_REQUIRED`, with no further accumulated-framework
+compatibility-patch round or R5.72 adapter/repair layer. Qualification stops permanently;
+no repair/retry/resume. Capsule, production declaration, batches/receipts/certificate,
+workspace/StaticGate/synthetic observation/replay and production final audit are
+NOT_RUN. Thirty-six skip declarations remain preserved, zero skips executed.
+
+Initial separate stopped integrity/publication verification passes. A second
+post-report invocation fails with FileExistsError while attempting to recreate the
+immutable failure-provenance artifact. That secondary orchestration failure is
+preserved without repair/retry; final post-report publication verification is
+incomplete, and the initial inventory does not attest later source/prose changes.
+Whitespace passes. Preserve
+2,281 unsealed historical result files by physical bytes and four protected result
+files by metadata only, including R5.69's gap/publication FAIL. Fresh regression,
+AI-independence, validation/safety and schema/traceability passes are not claimed.
+B02 attempts/reads 0/0, exposure/reservation/dispatch/completion 0/0/0/0, opening 0/0,
+actual grants zero, core 30, Phase 5C paused. The full production gate is unqualified.
+
 ## R5.70 V3 observation-consumer and publication reconciliation (2026-10-05)
 
 Observed: R5.51 StaticGate's local validator reconstructs the old certificate;
