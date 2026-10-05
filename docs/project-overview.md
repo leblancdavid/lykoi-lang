@@ -69,6 +69,28 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.70 observation-consumer migration and publication reconciliation](../benchmark/results/phase5c/R5_70-CERTIFICATEV3-OBSERVATION-CONSUMER-MIGRATION-AND-PUBLICATION-RECONCILIATION.md)
+ends **`R5_70_V3_OBSERVATION_CONSUMER_QUALIFIED`** within prospective mechanism
+scope. Production preparation explicitly consumes CertificateV3 / `PRODUCTION_SEALED`
+through R5.68's qualified interface; legacy and unknown versions reject. Sealed
+commitment evidence needs no reads. Mediated workers, guard/exclusion, immutable
+accounting and separate one-time observation authority are preserved. A final
+synthetic demonstration opens once and rejects replay; actual B02 APIs/grants are absent.
+
+The unchanged frozen R5.69 source rejection independently reproduces as a
+**protocol-metadata false positive** at its unissued production declaration status.
+Generic pinned typed source/object publication passes prospectively with credential,
+marked-secret and fixture-leak protection intact; no filename exemption or history
+rewrite follows. **288/288 focused tests**, schema/99-leaf traceability, contamination,
+validation/safety, AI independence, publication and whitespace pass. **2,215 unsealed
+historical files** are byte-preserved; four protected files are metadata-preserved.
+**B02 attempts/reads 0/0, accounting 0/0/0/0, opening 0/0, core 30, Phase 5C paused.**
+
+The complete production gate remains unqualified. Next: separately authorize a
+wholly fresh production qualification selecting these prospective adapters; none
+starts in R5.70. Future actual B02 opening still requires separate one-time authorization.
+R5.69 remains permanently stopped with its original gap and publication FAIL below.
+
 The [R5.69 final production-sealed gate qualification](../benchmark/results/phase5c/R5_69-FINAL-PRODUCTION-SEALED-GATE-QUALIFICATION.md)
 ends **`R5_69_OBSERVATION_CONTROL_GAP`**. A fresh **193-regression-stage** plan,
 eight starting prerequisites and 15 integration checkpoints freeze; the fresh

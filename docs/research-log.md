@@ -1,5 +1,34 @@
 # Lykoi research log
 
+## R5.70 V3 observation-consumer and publication reconciliation (2026-10-05)
+
+Observed: R5.51 StaticGate's local validator reconstructs the old certificate;
+legacy infrastructure/physical locks/authority fields and synthetic callback dispatch
+also remain in its live path. A new prospective consumer uses R5.68's unchanged V3
+qualified interface, explicit supported version/mode and sealed authority evidence.
+Production preparation rejects synthetic-mode authority even when deliberately
+configured. Synthetic opening requires a separate externally pinned declaration;
+no actual B02 grant/opener is introduced. R5.62 mediated execution and guard/exclusion
+are retained. The final synthetic demonstration reserves/dispatches/completes and
+opens once, then rejects replay without another read.
+
+The frozen R5.69 orchestration reproduces its publication rejection at line 236,
+on the unissued production declaration status. Classification: protocol-metadata
+false positive. Generic pinned typed literal-source/object publication reconciles
+context while retaining credential/marked-secret/fixture checks. Old source bytes,
+rejections and R5.69's primary observation-control gap remain preserved.
+
+Final selected verification: 288/288 focused tests, schema/99-leaf traceability,
+contamination, validation/safety, AI independence, publication and whitespace pass.
+Two previously diagnosed historical security host assertions are explicitly excluded,
+not relabeled. Development namespace/publication failures and preliminary synthetic
+artifacts remain recorded separately from the final demonstration. 2,215 unsealed
+historical result files are byte-preserved; four protected files metadata-preserved.
+Outcome: R5_70_V3_OBSERVATION_CONSUMER_QUALIFIED within mechanism scope; complete
+production gate still unqualified. Actual B02 attempts/reads 0/0, accounting 0/0/0/0,
+opening 0/0, core 30, Phase 5C paused. Recommend a wholly fresh separately authorized
+production qualification. Stop after R5.70; none begins here.
+
 ## R5.69 final production-sealed gate qualification (2026-10-05)
 
 Observed: a fresh 193-stage regression plan, eight starting prerequisites and 15

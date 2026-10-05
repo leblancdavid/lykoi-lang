@@ -1,5 +1,26 @@
 # Experimental decisions
 
+## R5.70 — Migrate the consumer, preserve the producer and historical evidence
+
+Use a prospective version-aware StaticGate that directly invokes the qualified
+CertificateV3 interface. Require production-sealed mode for production preparation;
+keep synthetic preparation explicitly separate. Reject legacy/future versions without
+reconstructing the obsolete R5.51 certificate. Retain qualified sealed commitment
+verification, R5.62 mediated workers, same-or-narrower capabilities, safe exclusion
+and resource guards. Bind a separate synthetic one-time observation declaration to
+certificate/qualification/authority/resource/commitment/ledger; provide no actual B02
+opening or authorization API. Preserve durable reservation/dispatch/completion and
+opening ledgers and reject replay.
+
+Independently reproduce the frozen R5.69 source rejection before classifying it as
+protocol-metadata context loss. Extend pinned typed publication generically to
+AST-recognized literal dictionary context and typed object fields with an ordinarily
+guarded remainder. Retain value-level credentials, marked structures, immutable
+fixture nonpublication and redacted diagnostics. Source content and schema pins are
+owner/producer authority, never payload-appointed. No filename exemption, old artifact
+modification, producer redesign or new language semantic follows. Full production
+qualification requires a wholly fresh separately authorized round; B02 stays sealed.
+
 ## R5.69 — Stop when the existing production observation consumer rejects V3
 
 Freeze the fresh complete production plan and identity before outcomes. Treat
