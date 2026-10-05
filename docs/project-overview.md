@@ -69,6 +69,29 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.68 production sealed-certificate promotion qualification](../benchmark/results/phase5c/R5_68-PRODUCTION-SEALED-CERTIFICATE-PROMOTION-QUALIFICATION.md)
+ends **`R5_68_PRODUCTION_SEALED_CERTIFICATE_QUALIFIED`** within bounded mechanism
+scope. A prospective [CertificateV3 contract](certificate-modes-r5.68.md) explicitly
+separates synthetic qualification from production-sealed certification. Canonical,
+externally pinned declarations bind qualification/mode/authority/operation/sealed
+policy/zero observation state; name prefixes confer no authority. V2 and historical
+R5.66 synthetic semantics remain unchanged; R5.67 retains its permanent gap.
+
+A real fresh production-mode candidate binds all **11 actual sealed commitments**
+and **two frozen pins** without reads, a narrow actual Tier-2 capsule, four non-B02
+receipts and an opaque-reference cooperative workspace. **213/213 focused tests**,
+separate-process audit, schema/99-leaf traceability, contamination, validation/safety,
+AI independence and publication/whitespace pass. **2,154 unsealed historical files**
+are byte-preserved; four protected result files remain metadata-preserved. The
+candidate grants no opening/observation authority and issuance changes no ledger.
+**B02 attempts/reads 0/0, accounting 0/0/0/0, core 30, Phase 5C paused.**
+
+Next: separately authorize a wholly fresh complete production qualification with
+explicit V3 production authorization and all fresh required receipts. The complete
+production environment/B02 gate remains unqualified. Future opening additionally
+requires separate one-time B02 observation authorization; none is created here.
+R5.68 stops after certificate promotion, without beginning that production run.
+
 The [R5.67 fresh production qualification with sealed authority](../benchmark/results/phase5c/R5_67-FRESH-PRODUCTION-QUALIFICATION-WITH-SEALED-AUTHORITY.md)
 ends **`R5_67_PRODUCTION_CERTIFICATE_GAP`**. Its fresh **186-regression-stage** plan
 and identity freeze, seal, persist, schema-revalidate and canonically reload through

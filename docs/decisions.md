@@ -1,5 +1,22 @@
 # Experimental decisions
 
+## R5.68 — Version certificate modes and keep opening authority separate
+
+Introduce CertificateV3 instead of silently changing CertificateV2 or deleting
+R5.66's historical synthetic guard. Explicit canonical synthetic/production-sealed
+modes require producer-schema-bound public declarations and external owner pins.
+Bind qualification, authority/resource policy, capsule, complete certificate policy,
+allowed operation, closed seals and zero observation state. Names are identifiers,
+not authorization. Mutation invalidates the existing binding; repinning cannot
+override the fixed no-open policy.
+
+Qualify the mechanism with actual sealed metadata, a narrow actual Tier-2 capsule
+and non-B02 receipts. Keep this candidate's scope explicit: complete production
+readiness still needs a wholly fresh full qualification. No mode grants seal-open
+authority. Define the future two-object certificate-plus-one-time-observation chain
+without creating its actual B02 authorization or opening gate. Preserve the separate
+R5.66 ledger, historical evidence, R5.67 gap, AI independence and core count 30.
+
 ## R5.67 — Synthetic certificate qualification does not establish production eligibility
 
 Bind the unchanged qualified ordinary/sealed authority, deferred-workspace and

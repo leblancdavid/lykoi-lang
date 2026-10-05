@@ -1,5 +1,38 @@
 # Lykoi research log
 
+## R5.68 production sealed-certificate promotion (2026-10-05)
+
+Observed: prospective CertificateV3 explicitly distinguishes synthetic qualification
+and production-sealed certification. Canonical producer-schema-bound declarations
+and externally selected pins bind qualification, mode, authority/resource policy,
+capsule, required certificate policy, gate operation and closed/unobserved state.
+Prefix names confer no authority. Synthetic V2 behavior and historical evidence
+remain intact; R5.67 stays permanently `R5_67_PRODUCTION_CERTIFICATE_GAP`.
+
+A real fresh production-mode mechanism candidate binds all 11 actual sealed
+commitments and two frozen pins through unchanged R5.66 metadata-only verification,
+a narrow actual Tier-2 capsule, four non-B02 receipts and an 11-reference workspace.
+Canonical reload/deterministic reproduction/linkage and separate-process audit pass.
+Fresh focused tests pass 213/213, including 28 new mode/binding witnesses. Existing
+publication protections, schema/99-leaf traceability, contamination, validation/safety
+and AI independence pass; 2,154 unsealed result files are byte-preserved and four
+protected files metadata-preserved.
+
+The first final source-publication scan rejects a literal credential-field assignment
+in a negative test. Its redacted rejection remains evidence. Switching the test to
+dynamic use of the existing content-pinned synthetic-security fixture leaves guards
+unchanged; a fresh final 28/28 mode-suite rerun and the final publication scan pass.
+
+Outcome: `R5_68_PRODUCTION_SEALED_CERTIFICATE_QUALIFIED`, within certificate-promotion
+scope. Candidate issuance grants no opening or observation authority and leaves the
+opening ledger unchanged. Actual B02 attempts/reads 0/0 and accounting 0/0/0/0;
+complete production batches/receipts/certificates 0/0/0, core 30, Phase 5C paused.
+The complete production environment remains unqualified. Proposed future chain:
+fresh production-sealed certificate plus separate one-time B02 observation declaration
+before eligibility for an opening reservation. Neither alone suffices; no actual
+observation declaration is created. Recommend a wholly fresh separately authorized
+complete production qualification. Stop after R5.68.
+
 ## R5.67 fresh production qualification with sealed authority (2026-10-05)
 
 Observed: a wholly fresh 186-regression-stage plan, seven preflight stages and 13
