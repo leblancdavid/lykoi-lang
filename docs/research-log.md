@@ -1,5 +1,49 @@
 # Lykoi research log
 
+## R5.72 simplified Phase 5 runner qualification (2026-10-05)
+
+Observed: independent prospective two-module runner qualification under R5.50
+cooperative Tier 2. Deterministic current-state capture, eleven pre-existing sealed
+commitments, two frozen pins and provenance relationships verify without content
+reads. Eight bounded health selections pass: application/compiler 31/31, current
+generic semantic/support 157/157, runner synthetic/adversarial 30/30, 16-profile/
+84-row coherence, schema/99-leaf traceability/contamination, validation/safety,
+offline AI independence and pre-import safe exclusion. Restricted selections each
+execute 36 metadata-only prohibited skips. Development AI-state mutation leaves
+fixed-source identity and core output unchanged; no provider runtime dependency.
+
+Observed: compact actual freeze starts clean at zero. Synthetic grant binds freeze,
+commitment, operation and durable ledger. Reservation precedes opening; exact resource
+set and digest checks precede dispatch. One synthetic opening/whole-contract static
+callback completes and post-check passes. Replay rejects without another call/read.
+Intentional synthetic repair marker invalidates that demonstration; actual Lykoi
+implementation and actual zero-observation freeze remain unchanged. Thirty tests
+cover mutation, stale health, commitment substitution/missing resources, interrupted
+work, replay, forbidden operations, fake protected-content denial and publication.
+
+Preserved limitations/failures: a pre-freeze path-key publication collision and an
+obsolete historical generic-test import were resolved during development, before
+state capture. The original driver's final source-as-value scan then rejects the
+public private-key detection regex after the completed synthetic lifecycle. Its
+final command remains FAIL; frozen code/evidence are unchanged and lifecycle is not
+replayed. A separate read-only auditor independently verifies canonical identities,
+health/freeze/ledger/preservation and source publication with a narrow AST-bound
+public-regex interpretation. Two development invocations of that new auditor also
+reject its same-line marker construction; its auxiliary source layout is corrected
+before successful independent audit, without changing frozen experiment code.
+
+Outcome: R5_72_SIMPLIFIED_PHASE5_RUNNER_QUALIFIED. Simplicity: two core modules,
+six experimental artifact types plus five qualification-only evidence types, one
+authorization layer, five required observation transitions plus terminal invalidation.
+No historical evaluation stack executes. Preserve 2,301 ordinary historical result
+files by bytes and four protected historical result files by metadata only. R5.71's
+FileExistsError and incomplete final publication remain unchanged. The accumulated
+framework was retired prospectively after R5.71 due to integration complexity.
+B02 attempts/reads 0/0, accounting 0/0/0/0, opening 0/0, actual grants zero, core 30,
+Phase 5C paused. Recommend separately owner-authorized R5.73 actual one-shot static
+experiment, not another production qualification; no repair/retry/generation/
+execution/acceptance. Actual B02 adapter execution/support remains unobserved here.
+
 ## R5.71 final existing-infrastructure production qualification (2026-10-05)
 
 Observed: fresh plan/identity freeze, seal, persist, schema-revalidate and canonically

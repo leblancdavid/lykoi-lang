@@ -69,6 +69,34 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.72 simplified runner qualification](../benchmark/results/phase5c/R5_72-SIMPLIFIED-PHASE5-RUNNER-QUALIFICATION.md)
+ends **`R5_72_SIMPLIFIED_PHASE5_RUNNER_QUALIFIED`** within cooperative Tier-2
+methodology. **The accumulated framework was retired prospectively after R5.71
+due to integration complexity.** Its classifications, locks, receipts, certificates
+and failed audits remain research history; none is replayed as a runtime prerequisite.
+Two core runner modules use a compact freeze record, one-time synthetic grant and
+durable observation ledger, with no authority/certificate successor stack.
+
+Fresh checks pass: compiler/application **31/31**, current generic semantic/support
+**157/157**, new runner **30/30**, **16-profile/84-row** coherence, schema/**99-leaf**
+traceability/contamination, validation/safety and offline AI independence. Restricted
+selections execute **36 metadata-only prohibited skips** before import. All **11
+sealed commitments / two frozen pins** verify without content reads. A deterministic
+current-state/health/benchmark freeze starts clean at zero. One synthetic opening
+and static observation complete; replay and intentional synthetic repair reject.
+
+The original driver's final source-publication scan rejects its own public detection
+regex. Preserve that failure: the frozen implementation and lifecycle are unchanged.
+A separate read-only independent source/evidence audit qualifies the result; it does
+not replay observation or repair the runner. **2,301 ordinary historical result files
+are byte-preserved; four protected files are metadata-preserved.** R5.71's own
+post-report `FileExistsError` and incomplete final publication remain unchanged.
+**B02 attempts/reads 0/0, accounting 0/0/0/0, opening 0/0, actual grants zero,
+core 30, Phase 5C paused.** Next is a separately owner-authorized **R5.73 actual
+one-shot whole-contract static experiment**, not another production qualification:
+final-verify, authorize, open once, verify commitments, observe once, record,
+post-check, stop. No repair/retry/generation/execution/acceptance follows.
+
 The [R5.71 final existing-infrastructure production qualification](../benchmark/results/phase5c/R5_71-FINAL-EXISTING-INFRASTRUCTURE-PRODUCTION-QUALIFICATION.md)
 ends **`R5_71_AUTHORITY_GAP`**, determined to be
 **`ACCUMULATED_FRAMEWORK_INTEGRATION_FAILURE`**. The fresh **205-stage** plan and

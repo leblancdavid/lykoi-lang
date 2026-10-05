@@ -1,5 +1,34 @@
 # Experimental decisions
 
+## R5.72 — Retire accumulated runtime coupling and qualify a minimal runner
+
+The accumulated framework was retired prospectively after R5.71 due to integration
+complexity. Preserve R5.39–R5.71, including R5.71's post-report FileExistsError and
+incomplete final publication. Consume final trusted sealed metadata; do not run
+authority generations, historical locks/certificates or old qualification chains.
+
+Use two core modules and six experiment artifact types: current state, sealed
+benchmark commitment, generic health evidence, freeze, one-time authorization and
+durable ledger. One authorization layer and five normal observation transitions
+protect exactly-once static observation; repair adds terminal invalidation. Bind
+current relevant source/registry/compiler/profile/evaluator and declared environment
+under R5.50 Tier 2. Keep development AI state outside fixed-source execution identity;
+required observable behavior remains the benchmark target.
+
+Qualify observation using synthetic resources only. Install B02 exclusions before
+imports and exercise denial on disposable fake content. Actual commitments remain
+unopened, actual authorization remains prohibited in this round, and actual ledger
+stays zero. Use bounded explicit workers with stripped context and state-bound health
+records rather than a receipt/certificate framework.
+
+Preserve the new driver's final source-as-value false positive on its own public
+regex. Independently validate unchanged evidence and AST-bound public detection
+syntax read-only; do not repair/replay the frozen runner or synthetic lifecycle.
+Qualification-only audit artifacts are evidence, not authorization prerequisites.
+Recommend separately owner-authorized R5.73 actual static observation, not another
+production qualification. One opening/evaluation, no repair/retry/generation/
+execution/acceptance, immediate post-check and stop.
+
 ## R5.71 — Enforce the final integration escape rule
 
 Freeze a wholly fresh complete production plan/identity using the qualified existing
