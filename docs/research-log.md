@@ -1,5 +1,43 @@
 # Lykoi research log
 
+## R5.52 checkout and lock-provenance diagnosis (2026-10-04)
+
+Independent raw inventories retain **145/678**, **145/695**, **145/1,065** matches.
+Exact recovered authority bytes prove **524**, **541**, **911** representation-only
+mismatches. R5.51's one-directional comparison missed nine inverse CRLF→LF pins
+in the successor (eight in each older lock). Of its 18 residual paths: nine are
+representation-only, the README is explicit R5.50 methodology evolution, and
+**eight remain UNCLASSIFIED/UNKNOWN**. All 66 reachable commits and available
+R5.31/R5.32/R5.51 materializations fail to recover those eight exact authority
+hashes with the tested representations. Lost mixed endings are a hypothesis,
+not established provenance. No current manifest regeneration or source repair
+was performed; exact physical historical meaning is preserved.
+
+System `core.autocrlf=true`, unspecified text/EOL/filter attributes and LF index
+bytes explain Git-clean CRLF materializations. A separate explicit LF checkout of
+the same HEAD reproduces all four frozen physical pins and changes restricted
+regression from **338 pass / 36 skips / 55 errors** to **393 pass / 36 skips / zero
+errors**, 429 discovered each. All inherited failure IDs reproduce; seven
+first-reached raw-byte integrity gates account for them. No behavioral regression
+is observed. The LF diagnostic clone still fails historical physical locks at
+**661/678**, **678/695**, **1,047/1,065**; it is not a production baseline.
+
+New synthetic diagnostics **22/22**, compiler/application **31/31**, R5.50 focused
+methodology **18/18**, Tier-2 **43/43**, generic 16-profile/84-row coherence,
+schema/99-leaf traceability, contamination, validation/safety and core 30 pass.
+Seventy-seven current compiler/semantic/generated sources have equal ASTs across
+current repository and working representations. R5.47 protections remain intact;
+full security retains two diagnosed historical failures (physical-vs-blob assertion
+and old Git's quiet negated-ignore match behavior), 20 passes. Historical evidence
+and all 81 R5.51 receipts retain their identities and results.
+
+The [R5.52 report](../benchmark/results/phase5c/R5_52-CHECKOUT-AUTHORITY-AND-LOCK-PROVENANCE-RECONCILIATION.md)
+ends **`R5_52_CONTENT_PROVENANCE_GAP`**. Repository-content plus checkout-materialization
+identity is a conditional future design, not an issued successor. Resolve the eight
+physical preimages and provenance before authorizing succession and fresh production
+qualification. R5.51 stays `R5_51_TIER2_CERTIFICATE_GAP`; no production certificate,
+no B02 exposure, semantics **30**, Phase 5C **paused**.
+
 ## R5.51 Tier-2 capsule and cooperative gate (2026-10-04)
 
 New prospective capsule/certificate/gate code passes **43/43** synthetic mutation,

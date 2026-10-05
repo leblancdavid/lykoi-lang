@@ -1,5 +1,27 @@
 # Experimental decisions
 
+## R5.52 — Preserve physical locks; stop succession at unavailable authority
+
+The historical R5.40/R5.41/R5.47 generators and verifiers explicitly hash physical
+`read_bytes()`. Interpret their locks accordingly, without converting historical
+FAIL into normalized PASS. Exact-pin recovery proves both LF→CRLF and inverse
+CRLF→LF differences; Git-clean content is not a physical-byte attestation. The
+four frozen pins and 55 restricted regression errors are checkout-related, but
+eight old physical hashes remain unavailable. Expected current content and a
+green clean-checkout regression do not authorize those unidentified differences.
+Stop production succession at **`R5_52_CONTENT_PROVENANCE_GAP`**.
+
+After complete provenance, consider a separately versioned repository-content
+identity plus relevant checkout-materialization identity and exact historical
+frozen authority. Binary/hash-sensitive inputs retain exact requirements; declared
+text conversions need a proven source relationship and consumer materiality
+assessment. This fits R5.50 without recursive machine/AI-state hermeticity. It is
+a conditional design, not an implemented/qualified successor. Preserve R5.47
+security and all R5.51 failed receipts. Obtain the eight preimages/provenance before
+authorizing individual reconciliation, a new baseline and fresh R5.53 production
+qualification. No B02 authority or Phase 5C continuation follows. See the
+[R5.52 report](../benchmark/results/phase5c/R5_52-CHECKOUT-AUTHORITY-AND-LOCK-PROVENANCE-RECONCILIATION.md).
+
 ## R5.51 — Instantiate Tier 2, reject unmet production prerequisites
 
 Use a versioned, scoped capsule and canonical complete-set certificate rather

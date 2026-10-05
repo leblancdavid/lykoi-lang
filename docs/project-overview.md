@@ -69,6 +69,32 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.52 checkout/authority reconciliation](../benchmark/results/phase5c/R5_52-CHECKOUT-AUTHORITY-AND-LOCK-PROVENANCE-RECONCILIATION.md)
+ends **`R5_52_CONTENT_PROVENANCE_GAP`**. Historical physical lock meaning is
+preserved. Fresh raw matches remain **145/678**, **145/695**, **145/1,065**;
+proven representation-only counts are **524**, **541**, **911**. Nine of R5.51's
+18 residual mismatches are inverse CRLF→LF representation changes; one README
+addition is explicitly R5.50 methodology evolution; **eight physical authority
+hashes remain unrecovered/UNKNOWN**. No successor lock or production baseline
+is issued, and no physical lock is relabeled PASS through normalization.
+
+All four frozen-pin failures are proven LF/CRLF materialization; a separate clean
+LF HEAD checkout reproduces their original raw hashes. Paired restricted harness:
+active **338 pass / 36 skips / 55 errors**, clean **393 pass / 36 skips / zero errors**,
+429 discovered each. All 55 inherited IDs reproduce and group into seven raw-byte
+integrity gates. New diagnostics **22/22**, application/compiler **31/31**, R5.50
+methodology **18/18**, Tier-2 **43/43**, schema/99-leaf traceability, contamination,
+validation/safety and core 30 pass. Full security remains 20 pass/two diagnosed
+historical host assertions; R5.47 protections are preserved. No observed behavioral
+regression or unauthorized frozen content mutation follows from these differences.
+
+R5.51 remains its original certificate gap with all 81 receipts preserved.
+Resolve the eight historical preimages/provenance before authorizing a versioned
+repository-content/checkout-materialization successor and fresh production gates.
+R5.53 cannot qualify production directly from this diagnostic LF clone: its
+historical physical locks still have 17/17/18 mismatches. **B02 zero, core 30,
+Phase 5C paused.** Earlier records retain their historical conclusions.
+
 The [R5.51 capsule/static-gate investigation](../benchmark/results/phase5c/R5_51-TIER2-EXPERIMENTAL-CAPSULE-AND-STATIC-GATE-QUALIFICATION.md)
 ends **`R5_51_TIER2_CERTIFICATE_GAP`**. New Tier-2 capture, production-shaped
 certificate and cooperative synthetic gate mechanisms pass **43/43** tests and
