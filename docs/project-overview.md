@@ -69,6 +69,27 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.53 authority adjudication](../benchmark/results/phase5c/R5_53-UNRESOLVED-AUTHORITY-PROVENANCE-AND-SUCCESSOR-BASELINE-ADJUDICATION.md)
+ends **`R5_53_SUCCESSOR_PROVENANCE_QUALIFIED`**. All eight missing historical
+preimages remain explicitly unavailable; all eight current repository versions
+have traceable Git/report/carrier-commit provenance and explicit content-bound
+prospective authorization. None is frozen behavioral authority. The separately
+versioned **1,083-member** repository-content successor independently qualifies;
+checkout representation is separately recorded (**56 exact / 1,027 LF/CRLF**).
+Historical physical locks retain FAIL and their original counts; no old result
+is retroactively normalized into PASS. R5.47 security and all 81 R5.51 receipts
+remain preserved. Fresh tests: R5.53 **18/18**, R5.52 **22/22**, application **31/31**,
+methodology **18/18**, Tier-2 mechanisms **43/43**; generic schema/99-leaf traceability,
+contamination, validation/safety and core **30** pass. Full security retains its
+two diagnosed historical assertions, **20 pass**. Harness observations remain
+active **338/36/55**, LF **393/36/0**, explicitly inherited from R5.52.
+
+Next: separately authorized **R5.54 fresh production Tier-2 qualification**
+against this successor and its [versioned authority policy](authority-successor-r5.53.md).
+R5.53 qualifies the starting authority baseline only; no production capsule,
+certificate or B02 exposure follows. **B02 zero, core 30, Phase 5C paused.**
+Earlier records below preserve their historical boundaries and recommendations.
+
 The [R5.52 checkout/authority reconciliation](../benchmark/results/phase5c/R5_52-CHECKOUT-AUTHORITY-AND-LOCK-PROVENANCE-RECONCILIATION.md)
 ends **`R5_52_CONTENT_PROVENANCE_GAP`**. Historical physical lock meaning is
 preserved. Fresh raw matches remain **145/678**, **145/695**, **145/1,065**;

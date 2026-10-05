@@ -1,5 +1,39 @@
 # Lykoi research log
 
+## R5.53 authority provenance and successor baseline (2026-10-04)
+
+All eight historical physical preimages remain `HISTORICAL_PREIMAGE_UNAVAILABLE`:
+2,166 blobs in 2,676 local Git objects, 67 commits/reflogs/index, 37 project archives,
+four diagnostic copies/databases and existing R5.32 patch backups produce zero
+exact recoveries. No bytes are invented. Exact current content traces to recorded
+R5.33/R5.35/R5.38/R5.39 work. Independent carrier-commit checks verify each lock pin
+and current implementation in the same committed tree. Four initial lock HEADs
+precede that round's changes; their differing blobs are preserved as context,
+not substituted for missing physical preimages. A preliminary overstrong audit
+assertion was corrected and its failure recorded before final independent PASS.
+
+All eight current versions receive content-bound prospective authorization with
+explicit criticality: experimental analyzer semantic core; assembly/lowering/
+runtime; public profile decoding/metadata; conformance evaluator; consumed matrix
+evidence. None is frozen behavioral authority. The **1,083-member** versioned
+successor independently verifies exact repository/mode/blob identities, original
+frozen pins, ancestry, decision links and materialization (**56 exact / 1,027
+LF/CRLF**). Old physical locks remain **145/678**, **145/695**, **145/1,065**, FAIL.
+The successor cannot establish equality to missing historical content.
+
+Fresh checks: new **18/18**, R5.52 **22/22**, application/compiler **31/31**,
+methodology **18/18**, Tier-2 synthetic mechanisms **43/43**; generic 16-profile/
+84-row coherence, schema/99-leaf traceability, contamination, dependencies,
+validation/safety/core 30 pass. Security remains **20 pass / two diagnosed
+historical failures**, with corrections preserved. **1,675 historical files** and
+all **81 R5.51 receipts** retain integrity. R5.52's paired harness observations
+remain inherited **338/36/55 active**, **393/36/0 LF**; no production rerun is
+claimed. The [R5.53 report](../benchmark/results/phase5c/R5_53-UNRESOLVED-AUTHORITY-PROVENANCE-AND-SUCCESSOR-BASELINE-ADJUDICATION.md)
+ends **`R5_53_SUCCESSOR_PROVENANCE_QUALIFIED`**. Next is separately authorized
+fresh R5.54 production Tier-2 qualification, not performed here. No production
+certificate, B02 zero, core 30, Phase 5C paused. Lykoi remains a language, not an
+AI runtime; observable behavior remains the benchmark criterion.
+
 ## R5.52 checkout and lock-provenance diagnosis (2026-10-04)
 
 Independent raw inventories retain **145/678**, **145/695**, **145/1,065** matches.

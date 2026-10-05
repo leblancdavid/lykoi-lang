@@ -1,5 +1,31 @@
 # Experimental decisions
 
+## R5.53 — Authorize traceable current content without inventing old bytes
+
+Separate historical exact physical reproducibility from prospective authority.
+All eight historical preimages remain unavailable after all-object Git, reflog,
+index, archive and preserved-copy search. Their current content is independently
+related to documented R5.33/R5.35/R5.38/R5.39 changes and the commits carrying both
+the implementation and lock pins. Snapshot HEAD can precede uncommitted round
+changes; do not mistake its earlier blob for the snapshot preimage. No inferred
+old content, normalized-only match or green test is historical recovery.
+
+Adopt the exact content-bound [R5.53 successor decision](authority-successor-r5.53.md)
+for all eight prospective versions, with semantic/compiler/profile/evaluator
+criticality respected. None is frozen behavioral authority; exact original frozen
+pins remain mandatory. The 1,083-member successor binds exact repository content,
+mode/blob/path and explicit additions; physical representation has separate
+receipts. Binary/material inputs are exact, declared LF text allows proven CRLF
+pair expansion only. Pin the trusted baseline identity to reject resealed mutation.
+Retain all old physical FAILs and historical verifiers, R5.47 security and R5.51
+receipts. Every authority transition and scope addition is recorded.
+
+The successor qualifies a starting authority baseline, not a production capsule
+or certificate. R5.54 requires separate authorization and fresh full Tier-2 gates;
+diagnostic evidence is not reusable production qualification. Core remains 30,
+B02 remains sealed, Phase 5C paused. See the
+[R5.53 report](../benchmark/results/phase5c/R5_53-UNRESOLVED-AUTHORITY-PROVENANCE-AND-SUCCESSOR-BASELINE-ADJUDICATION.md).
+
 ## R5.52 — Preserve physical locks; stop succession at unavailable authority
 
 The historical R5.40/R5.41/R5.47 generators and verifiers explicitly hash physical
