@@ -1,5 +1,41 @@
 # Lykoi research log
 
+## R5.83 held-out exposure readiness decision (2026-10-05)
+
+Observed **R5_83_B03_EXPOSURE_NOT_READY**. Audit of R5.79–R5.82 freezes the
+nonactivated `R5.83-CANDIDATE-1` protocol: stage inventory, explicit halt/failure
+precedence, native outcome mappings, limitation dispositions, B01 calibration,
+six synthetic walkthroughs and immutable first-result/post-exposure policy.
+Exact ordinary-component physical-byte pins are retained; a full executable
+production evaluation freeze is not established.
+
+A read-only invented durable-store/public-event negative control keeps both
+obligations in its FRC. Declared events produce UNKNOWN / OUTSIDE_ANALYSIS_SCOPE;
+default unreviewed coverage also blocks. Omitted or falsely EXCLUDED event scope
+with intentionally incorrect complete-coverage attestation yields no UNKNOWN,
+IMPLEMENTATION_ADEQUATE and a true authorization-helper result. These are synthetic
+bookkeeping outputs, not valid independent approvals, real grants or implemented
+success. They expose the source-to-interface coverage trust boundary, not a new
+language gap. R5.80 production input-generation/containment authority and R5.82
+annotation/observation/completeness qualification remain active blockers. Supported
+rule firing and two finite implications partially supersede earlier manual work,
+without establishing arbitrary-prose completeness or general reachability.
+
+Semantic completeness is unnecessary for useful held-out learning if incompleteness
+is made visible. That proposition is valid for the research objective, but reliable
+unsupported-scope detection/refusal is not yet established operationally. No new
+semantic or discovery family is added. B01 public candidate/receipt reproduces
+NEEDS_CLARIFICATION, conditional default-trigger discovery and unauthorized helper;
+no authoring. Full production authoring/acceptance deployment remains unqualified.
+
+Audit assertions pass; unchanged focused R5.82/R5.81/R5.80 tests **52/52** pass.
+Initial prospective audit failures (missing failure-atomicity prerequisite and
+nested review-container selection) are disclosed in its README and corrected only
+in new audit code. No independent/isolated qualification is claimed. All B03
+counters **zero**, pristine/not evaluated/not exposed; no package/eligibility or
+access authorization. Core **30** inherited, Phase 5C paused; stop after R5.83.
+See [readiness report and precommitment](../benchmark/results/phase5c/R5_83-HELD-OUT-EXPOSURE-READINESS.md).
+
 ## R5.82 behavioral-decision discovery (2026-10-05)
 
 Observed **R5_82_BEHAVIORAL_DECISION_DISCOVERY_PARTIAL**. Fifteen structural rule

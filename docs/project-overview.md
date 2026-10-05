@@ -72,6 +72,30 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.83 held-out readiness audit](../benchmark/results/phase5c/R5_83-HELD-OUT-EXPOSURE-READINESS.md)
+ends **`R5_83_B03_EXPOSURE_NOT_READY`**. The
+[frozen candidate precommitment](../benchmark/results/phase5c/r5_83/PRECOMMITMENT.md)
+(`R5.83-CANDIDATE-1`, not activated) records stage inputs/authority/halts,
+canonical outcome mappings, precedence, unsupported scope and immutable
+first-result/post-exposure policy. Exact ordinary-component pins accompany
+read-only public audit evidence; no executable production freeze is claimed.
+Declared events fail closed, but omitted or falsely excluded public events with
+an incorrect coverage attestation pass the experimental adequacy/authorization
+helpers. This is a synthetic negative control, not a valid approval or grant.
+The decisive blocker is unqualified independent source-to-contract/interface
+coverage authority, including reliable unsupported-scope recognition/refusal;
+production containment and full authoring/acceptance closure remain unqualified.
+R5.82 improves supported rule firing and two finite implications but does not
+solve that boundary. Semantic completeness is not required for held-out learning;
+visible incompleteness is. Adding the four missed families would not establish it.
+Public B01 still halts **NEEDS_CLARIFICATION / unauthorized**; six synthetic
+walkthroughs separate intended outcomes while disclosing operational gaps.
+Focused unchanged checks **52/52** pass; audit assertions pass. All B03 counters
+**zero**; **B03_PRISTINE / B03_NOT_EVALUATED /
+B03_NOT_EXPOSED_TO_LYKOI_DEVELOPMENT**. Core **30** inherited, Phase 5C paused.
+Stop after R5.83; no access or subsequent round is authorized. Earlier reports
+below retain their historical scope.
+
 The [R5.82 decision-discovery investigation](../benchmark/results/phase5c/R5_82-BEHAVIORAL-DECISION-DISCOVERY.md)
 ends **`R5_82_BEHAVIORAL_DECISION_DISCOVERY_PARTIAL`**. Experimental
 [BDI-0.1](behavioral-decision-inventory-v0.1.md) adds a separate discovery stage,

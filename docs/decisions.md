@@ -1,5 +1,35 @@
 # Experimental decisions
 
+## R5.83 — Freeze the candidate; refuse exposure at unqualified coverage authority
+
+Choose **R5_83_B03_EXPOSURE_NOT_READY**. Freeze
+[R5.83-CANDIDATE-1](../benchmark/results/phase5c/r5_83/PRECOMMITMENT.md) as a
+nonactivated protocol/component snapshot with explicit stage halts, native outcome
+mappings, failure precedence and immutable first-result/contamination policy.
+Record absent production deployment and full authoring/external-verification
+closure rather than inventing an executable freeze. Preserve existing FRC/BDI/
+adequacy/V1 versions, semantics and requirements.
+
+Capability completeness is not a readiness condition. The blocker is unqualified
+independent source-to-contract/interface coverage authority: unsupported channels
+halt when declared, but erroneous omission/exclusion and a TRUE completeness
+attestation can pass existing helper checks. Reviewer dependence alone does not
+invalidate evaluation; qualification of the review boundary is missing here.
+Do not substitute aggregate discovery/test scores, different reviewer labels or
+a paper promise for that qualification. Do not add timing/identity/event families
+to hide the methodological defect. CONDITIONALLY_READY is unwarranted because no
+already-qualified mechanical precondition establishes the missing judgment boundary.
+
+Use canonical NEEDS_CLARIFICATION/CONFLICTING_REQUIREMENT/OUTSIDE_ANALYSIS_SCOPE
+and gap statuses with stage/reason reporting aliases; keep verifier/control failures
+distinct from implementation bugs and capability gaps. No downstream diagnostic
+may rescue a failed upstream authority gate. Preserve a first future result,
+including an upstream halt; any later fixes are separately authorized, versioned,
+explicitly post-exposure research. No pristine status can be restored for the same
+benchmark after development learns its contents. B01 remains unresolved/unauthorized.
+No B03 access/authorization; stop at R5.83. See
+[report and evidence](../benchmark/results/phase5c/R5_83-HELD-OUT-EXPOSURE-READINESS.md).
+
 ## R5.82 — Discover choices separately from behavioral authority
 
 Adopt experimental [BDI-0.1](behavioral-decision-inventory-v0.1.md) as a prospective
