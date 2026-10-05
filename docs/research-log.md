@@ -1,5 +1,37 @@
 # Lykoi research log
 
+## R5.69 final production-sealed gate qualification (2026-10-05)
+
+Observed: a fresh 193-stage regression plan, eight starting prerequisites and 15
+integration checkpoints freeze before outcomes. The R5.64 qualification identity
+constructs, seals, persists, schema-revalidates and canonically reloads. The frozen
+plan explicitly selects CertificateV3 production-sealed mode, external declaration
+requirements, bounded R5.57/R5.62 mechanisms and 36 metadata-only prohibited skips.
+Implementation continuity, inherited zero accounting, contamination and core 30 pass.
+
+The starting consumer check invokes the exact validator called by the unchanged
+`StaticGate.prepare` with the qualified historical R5.68 V3 candidate as compatibility
+input only. It rejects with ProtocolFailure because the consumer assembles/validates
+the R5.51 certificate/policy contract. No historical receipt is reused as fresh
+production evidence. Outcome: `R5_69_OBSERVATION_CONTROL_GAP`. The full gate and
+future certificate-plus-one-time-observation consumer remain unqualified.
+
+After the terminal record persists, summary publication rejects an unclassified
+credential-reserved field. The outer handler prints a protocol-halt message without
+overwriting the already recorded observation-control gap. Preserve the rejected
+publication and immutable orchestration; do not repair/retry/resume. Final publication
+retains FAIL for that source. Separate-process stopped integrity and whitespace pass;
+2,199 historical unsealed result files are byte-preserved and four protected files
+metadata-preserved. The separate stopped inventory is audit evidence, not a repaired run.
+
+Fresh full authority/11 sealed verifications/two pins, capsule, production declaration,
+all regressions, certificate, workspace, synthetic observation/opening/replay and
+production final audit remain NOT_RUN. Fresh AI-independence regressions are NOT_RUN;
+the plan preserves development-AI exclusion. Actual B02 attempts/reads 0/0, accounting
+0/0/0/0 and opening ledger 0/0; synthetic 0/0/0, production batches/receipts/certificates
+0/0/0, core 30, Phase 5C paused. Preparation is incomplete; B02 remains sealed.
+Stop. Any adjudication of the concrete consumer/publication failures is outside R5.69.
+
 ## R5.68 production sealed-certificate promotion (2026-10-05)
 
 Observed: prospective CertificateV3 explicitly distinguishes synthetic qualification

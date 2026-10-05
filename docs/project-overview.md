@@ -69,6 +69,26 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.69 final production-sealed gate qualification](../benchmark/results/phase5c/R5_69-FINAL-PRODUCTION-SEALED-GATE-QUALIFICATION.md)
+ends **`R5_69_OBSERVATION_CONTROL_GAP`**. A fresh **193-regression-stage** plan,
+eight starting prerequisites and 15 integration checkpoints freeze; the fresh
+qualification identity seals, persists, schema-revalidates and canonically reloads.
+Implementation continuity and inherited zero accounting pass. The existing
+`StaticGate.prepare` validator rejects the qualified CertificateV3 production-sealed
+mechanism candidate: it still assembles/validates the R5.51 certificate contract.
+No new consumer, repair, retry or resume follows.
+
+Post-stop summary publication also fails the existing guard; the frozen source
+and rejection remain preserved. Independent stopped integrity passes, preserving
+**2,199 unsealed historical result files by bytes** and **four protected files by
+metadata only**. Final publication retains FAIL for the frozen orchestration;
+whitespace checks pass. Fresh full authority/capsule/regressions/declaration,
+certificate/workspace/synthetic observation and production final audit are NOT_RUN.
+**The production B02 gate is not fully qualified; preparation is incomplete.**
+R5.68's bounded mechanism qualification and R5.67's permanent gap retain their
+scope. Any failure adjudication is outside stopped R5.69. **B02 attempts/reads 0/0,
+accounting 0/0/0/0, opening ledger 0/0, synthetic 0/0/0, core 30, Phase 5C paused.**
+
 The [R5.68 production sealed-certificate promotion qualification](../benchmark/results/phase5c/R5_68-PRODUCTION-SEALED-CERTIFICATE-PROMOTION-QUALIFICATION.md)
 ends **`R5_68_PRODUCTION_SEALED_CERTIFICATE_QUALIFIED`** within bounded mechanism
 scope. A prospective [CertificateV3 contract](certificate-modes-r5.68.md) explicitly

@@ -1,5 +1,23 @@
 # Experimental decisions
 
+## R5.69 — Stop when the existing production observation consumer rejects V3
+
+Freeze the fresh complete production plan and identity before outcomes. Treat
+compatibility of the exact existing observation consumer as a starting prerequisite.
+Its unchanged R5.51 validator rejects the qualified production-sealed CertificateV3
+mechanism candidate. Certificate operation qualification does not establish the
+complete observation gate or implement the separately defined two-object consumer.
+Record `R5_69_OBSERVATION_CONTROL_GAP`; no new consumer, wrapper, legacy policy
+override, repair, retry or resume is permitted within this execution-only round.
+
+Preserve the subsequent summary publication rejection and frozen orchestration
+source without changing the guard or schema. A separate stopped-candidate inventory
+and read-only independent diagnosis do not repair the qualification or promote
+unreached stages. Preserve historical evidence and distinguish declared sealed
+metadata from fresh full authority verification. The B02 experiment is not eligible;
+actual reads/accounting/opening stay zero, core remains 30 and AI authoring state
+remains outside language execution identity. Further adjudication is outside R5.69.
+
 ## R5.68 — Version certificate modes and keep opening authority separate
 
 Introduce CertificateV3 instead of silently changing CertificateV2 or deleting
