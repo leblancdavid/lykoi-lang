@@ -69,6 +69,27 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.55 successor-aware certificate qualification](../benchmark/results/phase5c/R5_55-SUCCESSOR-AWARE-PRODUCTION-CERTIFICATE-AND-LIVE-AUTHORITY-ADAPTER.md)
+ends **`R5_55_SUCCESSOR_AWARE_CERTIFICATE_QUALIFIED`**. A versioned
+[QualifiedAuthority v1 / ProductionCertificateV2](qualified-authority-certificate-r5.55.md)
+interface consumes the independently qualified R5.53 successor through externally
+pinned experiment authorization. Fresh member/frozen/provenance/ancestry and
+checkout checks preserve all historical FAILs. Certificate assembly and validation
+no longer impose a single historical infrastructure generation or its physical locks.
+
+Independent new tests **33/33** pass; fresh synthetic assembly, canonical reload,
+deterministic reproduction, authority mutation rejection and state restoration pass.
+Relevant focused regressions total **244 pass / two preserved historical security
+assertion failures** (246 discovered); schema/99-leaf traceability, contamination,
+core count, validation/safety and diff check pass. This qualifies certificate
+mechanics against a dedicated snapshot, not the full production observation gate.
+
+Next: separately authorized **R5.56 fresh complete production Tier-2 qualification**,
+with explicit full required receipts and live observation integration. Do not resume
+the stopped R5.54 candidate. R5.55 stops at independent certificate qualification.
+**Production observations zero, B02 zero, core 30, Phase 5C paused.**
+Earlier records below retain their historical boundaries.
+
 The [R5.54 fresh production qualification](../benchmark/results/phase5c/R5_54-FRESH-PRODUCTION-TIER2-STATIC-GATE-QUALIFICATION.md)
 ends **`R5_54_PRODUCTION_CERTIFICATE_GAP`**. Fresh validation of the trusted
 1,083-member R5.53 successor, provenance/ancestry/frozen pins and separate checkout

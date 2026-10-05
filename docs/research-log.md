@@ -1,5 +1,38 @@
 # Lykoi research log
 
+## R5.55 successor-aware production certificate (2026-10-04)
+
+R5.54's production certificate gap is reproduced architecturally: V1 requires
+the R5.47 identity and three superseded physical locks. A separately versioned
+QualifiedAuthority adapter and CertificateV2 consume the qualified R5.53 authority
+with explicit external policy pins, independently frozen behavioral pins,
+qualification/audit records, provenance, ancestry and historical-outcome integrity.
+No authority successor, language construct or compiler/profile change is introduced.
+
+New independent tests pass **33/33**. Fresh dedicated synthetic capture, certificate
+assembly/reload/validation, deterministic reproduction, live authority mutation
+rejection and restoration pass. R5.53 focused 18, Tier-2 43, staged certificate 33,
+recorder 29, methodology 18, AI independence 5, R5.41 focused 14 and application 31
+pass. R5.47 retains **20 pass / two diagnosed historical assertions failing**.
+Total final focused suites: **244 pass / two historical failures / 246 discovered**.
+Generic schema, 16-profile/84-row coherence, 99-leaf traceability, contamination,
+validation/safety/core 30 and diff pass. Full harness observations remain inherited.
+
+Development diagnostics retain a rejected secret-sensitive field name and an
+initial fixture setup error that incorrectly restored historical physical evidence
+as repository LF text. Corrections precede a fresh independent workspace; neither
+failed attempt yields a certificate. No historical result is rewritten. Final
+integrity preserves **1,728** pre-existing benchmark-result files (including the
+development initialization evidence); an independent reader audits fresh content,
+canonical identities, receipt linkage and final evidence/prose integrity.
+
+The [R5.55 report](../benchmark/results/phase5c/R5_55-SUCCESSOR-AWARE-PRODUCTION-CERTIFICATE-AND-LIVE-AUTHORITY-ADAPTER.md)
+ends **`R5_55_SUCCESSOR_AWARE_CERTIFICATE_QUALIFIED`**. This is bounded certificate
+qualification, not full production qualification or adversarial-host attestation.
+Next: newly authorized R5.56 must independently instantiate the full production
+receipt/observation protocol. R5.55 stops here. Production reservations/dispatches/
+completions zero; B02 completely sealed; core 30; Phase 5C paused.
+
 ## R5.54 fresh production qualification (2026-10-04)
 
 Freshly verify the trusted R5.53 successor: 1,083 members, canonical reload,

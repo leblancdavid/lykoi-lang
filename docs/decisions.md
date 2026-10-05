@@ -1,5 +1,30 @@
 # Experimental decisions
 
+## R5.55 — Bind qualified authority, not one historical lock generation
+
+Introduce QualifiedAuthority v1 and ProductionCertificateV2 as prospective
+infrastructure, retaining V1 certificate semantics. Select current authority with
+an externally pinned experiment policy; freshly verify actual qualification,
+members, frozen pins, provenance, predecessor evidence and ancestry. The certificate
+has no authority-generation identity constant. Updating explicitly authorized
+selection for a compatible qualified successor needs no certificate schema redesign.
+
+Preserve independent frozen behavioral pins and exact historical outcome evidence.
+Predecessor physical inputs need not match today's checkout, but predecessor
+manifests and their recorded FAILs cannot disappear or become PASS. Repository
+content identity and proven LF/CRLF representation remain distinct; binary/material
+identity stays exact. Development AI data is excluded, not part of language authority.
+
+Independently qualify only the certificate mechanism with synthetic minimum receipts.
+No observation dispatcher is added; full receipt/observation integration belongs to
+separately authorized R5.56. New documentation does not silently exempt pinned
+authority members: the experiment snapshot remains explicit and mutation-sensitive.
+All publication retains the R5.47 guard; local trust is pinned content/evidence,
+not an arbitrary self-sealed object or a Git commit alone. See the
+[versioned interface](qualified-authority-certificate-r5.55.md) and
+[R5.55 report](../benchmark/results/phase5c/R5_55-SUCCESSOR-AWARE-PRODUCTION-CERTIFICATE-AND-LIVE-AUTHORITY-ADAPTER.md).
+Core 30, B02 sealed, Phase 5C paused.
+
 ## R5.54 — Stop at concrete successor/certificate incompatibility
 
 Freshly instantiate the R5.51 Tier-2 capture and certificate against the externally
