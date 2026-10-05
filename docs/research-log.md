@@ -1,5 +1,67 @@
 # Lykoi research log
 
+## R5.66 sealed authority and deferred materialization (2026-10-05)
+
+Observed: all 11 sealed members in the inherited 1,083-member authority have prior
+qualified SHA-256 and Git commitments; two match independent frozen pins. Safe
+metadata reconstruction and a prospective generic sealed qualifier verify historical/
+current immutable-object mapping without extracting protected contents. Evidence
+records `SEALED_COMMITMENT_VERIFIED`, closed seals and deferred checkout observation.
+Current protected worktree bytes are not attested; future opening must verify the
+same precommitted object before accepting content. Git remains infrastructure.
+
+Fresh focused qualification: 185/185 applicable checks, including 31 new adversarial
+authority/workspace/opening/CertificateV2/no-read witnesses. Ordinary inputs copy;
+sealed paths remain absent, allowlisted references reveal permitted metadata only,
+and no Git database is copied. Ordinary and real mediated workers reject synthetic
+protected resolution. Externally pinned synthetic-only grants bind the durable ledger;
+exactly one opening succeeds per final demonstration, substitution/mismatched bytes
+and second/alternate-ledger opening reject. No actual B02 opener or grant is supplied.
+
+Development metadata/persistence errors and preliminary verification are preserved.
+Review added ledger-binding/replay witnesses, then reran the changed 31-test suite;
+the other 154 unchanged focused checks remain freshly applicable within this round.
+Two separate canonical synthetic demonstrations occurred across development/final
+verification, each opening once; unit fixtures are distinct from benchmark observations.
+Final evidence is `summary-final-mechanism.json`. Schema/99-leaf traceability,
+contamination, validation/safety, AI independence 5/5, independent audit and final
+publication/whitespace pass. 2,103 prior unsealed result files are byte-preserved;
+four protected result files remain unopened and metadata-preserved.
+
+Outcome: `R5_66_SEALED_AUTHORITY_QUALIFIED` within prospective infrastructure scope.
+R5.65 remains permanently `R5_65_QUALIFIED_AUTHORITY_GAP`, without retry/resume or old
+authority invocation. Full production authority/capsule/workspace/gates are NOT_RUN.
+B02 0/0/0/0, production batches/receipts/certificates 0/0/0, core 30, Phase 5C paused.
+Next: wholly fresh separately authorized production qualification selecting/pinning
+the new adapters and complete input policy. None begins in R5.66.
+
+## R5.65 fresh production gate qualification (2026-10-05)
+
+Observed: the fresh 178-regression-stage plan and qualification identity pass
+freeze/seal/persist/schema-revalidation/canonical reload through R5.64. The protocol
+`authorization` field is retained and accepted normally. No historical receipt is
+reused; five prerequisites and 11 integration checkpoints are predeclared, alongside
+the worker/capability/resource/exclusion/driver/publication bindings.
+
+Starting-state verification fails a concrete sealed-resource compatibility check.
+The current 1,083-member QualifiedAuthority required read set includes 11 sealed
+B02 resources and two frozen pins. Current code extracts all member Git blobs and
+reads every physical member; the materializer reads the same protected tracked
+files. Neither API is invoked, no protected read attempt occurs, and the candidate
+is not repaired, retried or resumed. Outcome: `R5_65_QUALIFIED_AUTHORITY_GAP`.
+
+Independent stopped-candidate integrity passes with 2,089 historical unsealed result
+files byte-preserved, four protected result files metadata-preserved, canonical
+typed publication and plan/source linkage intact, contamination clean and core 30.
+Final stopped-artifact publication/whitespace checks pass. Production batches,
+receipts, certificates and synthetic observations remain zero; fresh authority,
+capsule, workspace, regressions, observation gates and production final audit are
+NOT_RUN. The 36 prohibited-test identities remain metadata-only exclusions, not
+freshly executed skips. AI authoring state remains outside execution identity;
+fresh AI-independence production regressions are NOT_RUN. B02 0/0/0/0, Phase 5C
+paused. Preparation remains incomplete pending separate owner adjudication of
+the concrete authority/materialization compatibility failure. R5.63 remains halted.
+
 ## R5.64 context-aware publication reconciliation (2026-10-05)
 
 Observed: the R5.63 failure class conflated protocol authorization identity metadata

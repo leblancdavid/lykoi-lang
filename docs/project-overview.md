@@ -69,6 +69,40 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.66 sealed authority qualification](../benchmark/results/phase5c/R5_66-SEALED-AUTHORITY-VERIFICATION-AND-DEFERRED-MATERIALIZATION-QUALIFICATION.md)
+ends **`R5_66_SEALED_AUTHORITY_QUALIFIED`** within prospective infrastructure scope.
+All **11 sealed resources**, including **two frozen pins**, bind pre-existing R5.53/
+R5.55 commitments and immutable Git mappings without content reads. Generic ordinary
+and sealed verification modes remain explicit; deferred workspaces contain opaque
+references and no protected content or Git database. Synthetic-only opening binds
+authority, commitment and a durable one-time ledger; focused CertificateV2 evidence
+retains the verification modes. **185/185 applicable focused tests**, schema/99-leaf
+traceability, contamination, validation/safety, AI independence, independent audit
+and publication/whitespace pass. R5.65 remains permanently stopped with its original
+gap. Next: separately authorize a wholly fresh complete production qualification
+selecting and pinning the prospective adapters. None begins here. **B02 0/0/0/0,
+production batches/receipts/certificates 0/0/0, core 30, Phase 5C paused.**
+The final synthetic mechanism demonstration opens one synthetic resource once;
+the separate preliminary development demonstration remains preserved.
+
+The [R5.65 fresh production gate qualification](../benchmark/results/phase5c/R5_65-FRESH-PRODUCTION-GATE-QUALIFICATION.md)
+ends **`R5_65_QUALIFIED_AUTHORITY_GAP`**. A fresh **178-regression-stage** plan and
+qualification identity freeze, persist, schema-revalidate and canonically reload
+through R5.64's qualified publication path. Starting-state verification fails:
+the current 1,083-member QualifiedAuthority mandatory read set includes **11 sealed
+resources**, including two frozen pins; workspace materialization also includes all
+11. Neither protected-content API is invoked. No repair, retry or resume follows.
+
+Independent stopped integrity passes, preserving **2,089 unsealed historical result
+files** by bytes and four protected result files by metadata only. Publication and
+whitespace checks pass within stopped-artifact scope. Fresh authority/capsule,
+production regressions, certificate, workspace and observation gates are unrun.
+Next: separate owner adjudication of the concrete authority/materialization versus
+sealed-resource compatibility failure. Preparation remains incomplete. **B02
+0/0/0/0, synthetic 0/0/0, production batches/receipts/certificates 0/0/0, core 30,
+Phase 5C paused.** R5.63 remains permanently halted; R5.64 remains qualified within
+its publication boundary. Earlier records below retain their historical meanings.
+
 The [R5.64 context-aware publication reconciliation](../benchmark/results/phase5c/R5_64-CONTEXT-AWARE-CREDENTIAL-PUBLICATION-RECONCILIATION.md)
 ends **`R5_64_CONTEXT_AWARE_PUBLICATION_QUALIFIED`**. Immutable, content-bound
 producer schemas distinguish public protocol authorization from credential material;

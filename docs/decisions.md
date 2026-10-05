@@ -1,5 +1,44 @@
 # Experimental decisions
 
+## R5.66 — Sealed commitments qualify identity without opening contents
+
+Introduce separately versioned generic ordinary/sealed authority and deferred-workspace
+adapters. A sealed source is the already-qualified immutable resource, bound through
+externally pinned historical commitments and provenance; current protected worktree
+bytes are not newly verified or used as fallback. Evidence says
+`SEALED_COMMITMENT_VERIFIED`, never current-read byte verification. Independent frozen
+pins remain bound, and commitment/class/provenance mutation stales authority linkage.
+
+Materialize only declared ordinary inputs. Leave protected paths absent and publish
+closed-allowlist opaque references; omit Git databases/alternates and bytecode from
+worker workspaces. Retain R5.61/R5.62 mediated-worker denial. Future seal-opening
+authority must be separately granted and bind precommitment, qualified authority and
+one durable ledger. The executable prototype issues only synthetic grants, consumes
+the reservation before reading, checks the opened commitment before acceptance, and
+rejects second opening/alternate-ledger replay. No real opener or B02 grant exists.
+
+Retain historical authority/certificate implementations and R5.65's stopped candidate.
+Qualify CertificateV2 compatibility through a prospective synthetic-only adapter;
+complete production linkage requires a wholly fresh separately authorized qualification.
+This changes research infrastructure, not the 30 Lykoi core semantics or AI independence.
+
+## R5.65 — Required authority reads must respect the sealed-resource boundary
+
+Freeze a fresh complete plan and publish its unchanged qualification identity using
+the R5.64-qualified producer schema before starting-state execution. Keep all
+existing authority members and frozen pins. The current QualifiedAuthority API
+extracts every member Git blob and physically verifies every member; the cooperative
+materializer reads all tracked files. Their required sets intersect 11 sealed B02
+resources, including two frozen authority pins.
+
+Stop at this concrete prerequisite rather than invoke a prohibited read, omit
+members or reuse historical PASS evidence. No redesign is authorized within this
+no-repair round. Record `R5_65_QUALIFIED_AUTHORITY_GAP`, zero production receipts
+and observations, and downstream NOT_RUN. A separate stopped-candidate integrity
+audit verifies evidence and preservation without qualifying the production gate.
+The preparation phase remains incomplete; separate owner adjudication must address
+the demonstrated compatibility failure before any newly authorized candidate.
+
 ## R5.64 — Publication classification belongs to the producer schema
 
 Use explicit, immutable, content-pinned schema classifications to distinguish
