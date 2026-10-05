@@ -1,5 +1,26 @@
 # Lykoi research log
 
+## R5.59 continuity/publication reconciliation (2026-10-05)
+
+Prospective generic continuity witnesses pass 8/8. Four fresh implementation
+witnesses reproduce R5.55 repository pins and report CRLF-only materialization;
+their historical R5.58 physical failures remain unchanged. Final synthetic input/
+publication tests pass 9/9: fixed content designation accepts fake test input,
+publication rejects the same values, and unapproved source/raw-secret stand-ins
+remain fail-closed with redacted diagnostics. The failing R5.58 filename is not
+designated. The initial eight-test development pass is retained separately.
+
+Relevant regressions bring final focused qualification to 267/267, including
+22/22 security and 34/34 successor certificate/linkage tests. Closed schema,
+99-leaf traceability, contamination, validation/safety and publication integrity
+pass. Early read-only witness setup, shell parsing and new test-source scan
+failures are recorded and resolved prospectively without a source exemption;
+neither was a production attempt. Historical result bytes are preserved.
+Outcome: `R5_59_CONTINUITY_PUBLICATION_RECONCILED`; inherited R5.58 remains
+`R5_58_PROTOCOL_HALT`. Core 30, B02 zero, Phase 5C paused. No complete production
+qualification is claimed or begun; recommend a separately authorized fresh one.
+See [report](../benchmark/results/phase5c/R5_59-TIER2-CONTINUITY-AND-SYNTHETIC-PUBLICATION-RECONCILIATION.md).
+
 ## R5.58 fresh multi-batch production qualification (2026-10-05)
 
 R5.58 ends `R5_58_PROTOCOL_HALT` before any bounded batch. The complete plan was

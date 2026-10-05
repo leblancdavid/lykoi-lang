@@ -1,5 +1,24 @@
 # Experimental decisions
 
+## R5.59 — Separate repository continuity, synthetic inputs and publication
+
+Apply R5.50–R5.53's established repository-content/checkout distinction through
+a prospective generic adapter; retain exact physical-byte requirements wherever
+their protocol applies. Check trusted repository bytes first, transform only
+eligible checkout CRLF pairs, and record physical representation independently.
+Historical failed locks and R5.58 evidence retain their original meaning.
+
+Separate content-pinned synthetic security input from publishable source/evidence.
+Permit only explicitly fake input assignments, scan every remaining byte under
+R5.47, and reject fixture values at every prospective output entry point. No
+runtime designation API or historical failing-filename/string exemption exists.
+This keeps security probes possible without granting output exceptions. Fixed
+designations require reviewed mechanism changes to evolve; that is a deliberate
+fail-closed tradeoff, not a stronger reproducibility or hostile-runtime claim.
+Focused qualification passes 267/267; stop before fresh production qualification.
+See [policy](continuity-publication-r5.59.md) and the
+[report](../benchmark/results/phase5c/R5_59-TIER2-CONTINUITY-AND-SYNTHETIC-PUBLICATION-RECONCILIATION.md).
+
 ## R5.58 — Stop on failed starting continuity without inventing a regression
 
 Preserve the freshly frozen 137-stage regression plan and 11 integration checkpoints.

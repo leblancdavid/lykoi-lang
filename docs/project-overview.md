@@ -69,6 +69,21 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.59 continuity/publication reconciliation](../benchmark/results/phase5c/R5_59-TIER2-CONTINUITY-AND-SYNTHETIC-PUBLICATION-RECONCILIATION.md)
+ends **`R5_59_CONTINUITY_PUBLICATION_RECONCILED`**. Generic continuity now binds
+qualified repository text identity and records checkout representation separately,
+preserving exact-byte exclusions. Content-pinned synthetic security inputs are
+distinct from publication; output rejects fixture values and retains R5.47 guards.
+The failing historical audit filename has no exemption. Focused tests pass
+**267/267**, including 8 continuity and 9 final publication witnesses, with schema,
+99-leaf traceability, contamination, validation/safety and publication integrity.
+R5.58 remains permanently halted with its failed evidence byte-preserved.
+
+Next: separately authorize a wholly fresh production qualification binding the
+prospective corrections. None starts here; no production receipt or B02 exposure
+follows. **Core 30, B02 accounting zero, Phase 5C paused.** Earlier records below
+retain their original outcomes and recommendations.
+
 The [R5.58 fresh production qualification](../benchmark/results/phase5c/R5_58-FRESH-MULTI-BATCH-PRODUCTION-TIER2-QUALIFICATION.md)
 ends **`R5_58_PROTOCOL_HALT`**, before workspace materialization or any batch.
 Its frozen plan declares 137 regression stages and 11 integration checkpoints.
