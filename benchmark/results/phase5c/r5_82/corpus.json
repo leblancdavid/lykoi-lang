@@ -1,0 +1,32 @@
+{
+  "version": "DiscoveryCorpus-0.1",
+  "scope": "Public synthetic sequential abstract interfaces; reviewed structural facts, not production transport",
+  "cases": [
+    {"id":"scalar","source":"Return x+y exactly. Algorithms are internal.","facts":{"scalar":true},"channels":{"return":"MEANINGFUL"}},
+    {"id":"filter","source":"Return the records with active=true as a collection.","facts":{"selection":true,"collection":true,"max_results":"many","order_varies":true},"channels":{"return":"MEANINGFUL","order":"MEANINGFUL"}},
+    {"id":"unordered","source":"Return active records. Any permutation is permitted; callers must ignore order.","facts":{"selection":true,"collection":true,"max_results":"many","order_varies":true},"channels":{"return":"MEANINGFUL","order":"DELEGATED"},"authority":{"ordering":{"authority":"UNCONSTRAINED","allowed":["forward","reverse"],"source_quote":"Any permutation is permitted; callers must ignore order."}}},
+    {"id":"singleton","source":"Return a collection containing at most one record.","facts":{"collection":true,"max_results":"one"},"channels":{"return":"MEANINGFUL","order":"MEANINGFUL"}},
+    {"id":"hidden-tie","source":"Return exactly one highest-scored record. Scores may repeat.","facts":{"selection":true,"exactly_one":true,"multiple_matches":true},"channels":{"return":"MEANINGFUL"}},
+    {"id":"unique-score","source":"Return exactly one highest-scored record. An invariant guarantees unique scores.","facts":{"selection":true,"exactly_one":true,"multiple_matches":true,"unique_match":true},"channels":{"return":"MEANINGFUL"}},
+    {"id":"optional","source":"The unit argument may be omitted.","facts":{"optional_input":true},"channels":{"return":"MEANINGFUL"}},
+    {"id":"nullable","source":"Filter by price less than limit. Price may be null.","facts":{"nullable":true,"predicate":true},"channels":{"return":"MEANINGFUL"}},
+    {"id":"nonnull","source":"Filter by price less than limit; admitted calls have non-null prices.","facts":{"nullable":true,"predicate":true,"nonnull_precondition":true},"channels":{"return":"MEANINGFUL"}},
+    {"id":"hidden-history","source":"New sensor readings default unit to C. Historical stored readings may lack unit; load them.","facts":{"creation_default":true,"historical_absence":true},"channels":{"later":"MEANINGFUL"}},
+    {"id":"complete-history","source":"New readings default unit to C. All admitted historical readings contain unit.","facts":{"creation_default":true,"historical_absence":true,"historical_complete":true},"channels":{"later":"MEANINGFUL"}},
+    {"id":"normalize","source":"Lowercase submitted names.","facts":{"normalize":true},"channels":{"return":"MEANINGFUL"}},
+    {"id":"hidden-collision","source":"Lowercase submitted names and enforce uniqueness. Both A and a are admitted.","facts":{"normalize":true,"unique":true,"collision_possible":true},"channels":{"return":"MEANINGFUL","error":"MEANINGFUL"}},
+    {"id":"injective","source":"Normalize names and enforce uniqueness; the admitted domain is already lowercase.","facts":{"normalize":true,"normalization_identity":true,"unique":true,"collision_possible":true,"injective_on_domain":true},"channels":{"return":"MEANINGFUL","error":"MEANINGFUL"}},
+    {"id":"invalid","source":"The API admits invalid integer text at its validation boundary.","facts":{"invalid_admitted":true},"channels":{"error":"MEANINGFUL"}},
+    {"id":"duplicates","source":"Return a submitted collection; duplicate entries are admitted.","facts":{"collection":true,"max_results":"many","order_varies":true,"duplicates_admitted":true},"channels":{"return":"MEANINGFUL","order":"MEANINGFUL"}},
+    {"id":"persist","source":"Store a value and subsequently read it.","facts":{"persist":true},"channels":{"later":"MEANINGFUL"}},
+    {"id":"hidden-retry","source":"Move open records to closed. The API permits repeated invocation on closed records.","facts":{"transition":true,"repeat":true,"poststate_admitted":true},"channels":{"later":"MEANINGFUL"}},
+    {"id":"single-call","source":"Move open records to closed; each record can be invoked only once.","facts":{"transition":true,"repeat":true,"poststate_admitted":true,"single_invocation":true},"channels":{"later":"MEANINGFUL"}},
+    {"id":"hidden-failure","source":"Persist an update and emit a notification. Notification may fail after writing; subsequent reads are in scope.","facts":{"persist":true,"failure_after_write":true},"channels":{"later":"MEANINGFUL"}},
+    {"id":"prewrite-failure","source":"Persist updates; all failures occur before any write.","facts":{"persist":true,"failure_after_write":true,"failure_before_write_only":true},"channels":{"later":"MEANINGFUL"}},
+    {"id":"private-order","source":"Temporary collection order is internal; only an exact sum is returned.","facts":{"collection":true,"max_results":"many","order_varies":true},"channels":{"order":"EXCLUDED","return":"MEANINGFUL"}},
+    {"id":"cache","source":"An internal cache may be used; exact returned values and no-effects frame are fixed.","facts":{"cache":true},"channels":{"return":"MEANINGFUL"}},
+    {"id":"timing-gap","source":"Respond within the declared deadline or emit timeout. Choice at the deadline is unresolved.","facts":{"timing_boundary":true},"channels":{"timing":"MEANINGFUL","error":"MEANINGFUL"}},
+    {"id":"identity-gap","source":"Repeated reads return object handles whose stable identity is meaningful; identity across reads is unresolved.","facts":{"identity_visible":true,"repeat":true},"channels":{"identity":"MEANINGFUL"}},
+    {"id":"event-gap","source":"Emit events for committed updates; event ordering and duplication are observable and unresolved.","facts":{"events":true},"channels":{"event":"MEANINGFUL"}}
+  ]
+}

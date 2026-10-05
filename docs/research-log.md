@@ -1,5 +1,36 @@
 # Lykoi research log
 
+## R5.82 behavioral-decision discovery (2026-10-05)
+
+Observed **R5_82_BEHAVIORAL_DECISION_DISCOVERY_PARTIAL**. Fifteen structural rule
+families combine reviewed operation/domain/state/observation facts into traceable
+BDIs. In 26 synthetic cases, final expected revision 2 has **25 TP / 0 FP / 4 FN**,
+**12** enumerated irrelevant rejections, **6/6** hidden interactions and **11/11**
+model-local mutation checks. Four exhaustive finite-domain probes derive repeated
+maxima/lowercase collisions or exclude unreachable alternatives. Exhaustiveness and
+nonfinite structural reachability remain declaration/review dependent.
+
+One post-result expected correction excludes normalization on an already lowercase
+domain: raw/normalized observations coincide. Preserve original **26 TP / 0 FP /
+4 FN**, 30 expected and 11 irrelevant counts; revised total is 29 expected. Timing,
+identity stability and event order/multiplicity remain four explicit misses. Private
+algorithms, caches and private order are irrelevant; delegated returned order remains
+discovered. Five declarative plan divergences are covered, with one internal strategy
+agreement; plans are same-context predictions, not independent executed applications.
+
+No independent/context/provider-isolated review established; strict-qualified count
+zero. Structural annotation, observation scope and completeness remain reviewer gaps.
+R5.81 local two-record adapter yields adequate delegation, underspecified omission,
+outside-scope unreviewed coverage. Public B01 generic default/history rule identifies
+the conditional default-trigger decision but uses known issue provenance; independent
+rediscovery is unqualified. B01 remains **NEEDS_CLARIFICATION / unauthorized**.
+
+Checks **16/16 new**, unchanged **18/18 R5.81**, **18/18 R5.80**, **33/33 guarded V1**,
+**31/31 compiler/application** pass. Semantics, V1, generated files, frozen inputs and
+historical evidence preserved; no protected access. B03 all counters zero, pristine /
+not evaluated / not exposed. Core **30**, Phase 5C paused; stop after R5.82. See
+[report and evidence](../benchmark/results/phase5c/R5_82-BEHAVIORAL-DECISION-DISCOVERY.md).
+
 ## R5.81 implementation adequacy qualification (2026-10-05)
 
 Observed **R5_81_IMPLEMENTATION_ADEQUACY_PARTIAL**. Separate fidelity and adequacy

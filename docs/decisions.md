@@ -1,5 +1,27 @@
 # Experimental decisions
 
+## R5.82 — Discover choices separately from behavioral authority
+
+Adopt experimental [BDI-0.1](behavioral-decision-inventory-v0.1.md) as a prospective
+source/interface sidecar with stable operation/family identity, fact provenance,
+observation scope, exclusion/unknown records and separately supplied authority.
+Keep delegated visible choices discoverable; reject private or unreachable choices.
+Use structural conjunctions with explicit reachability evidence rather than a
+universal per-operation checklist. Separate finite score/lowercase enumeration from
+reviewer structural heuristics. Do not infer domain exhaustiveness from prose.
+
+Choose **R5_82_BEHAVIORAL_DECISION_DISCOVERY_PARTIAL**. The supported inventory can
+be generated mechanically after reviewed annotation; free-text structural extraction,
+temporal reachability, observation scope and general completeness remain gaps.
+Same-context expectations/plans and zero independent reviews cannot establish
+independence. Preserve four expected timing/identity/event misses and explicitly
+disclose the already-lowercase normalization expectation correction. Generic probe
+alternatives are not complete adequacy domains: keep adapter coverage unreviewed by
+default and qualify only the local two-record delegation example. B01 remains
+conditional/unresolved, not independently rediscovered or authorized. No V1/Lykoi
+expansion or protected exposure; stop after R5.82. See the
+[report](../benchmark/results/phase5c/R5_82-BEHAVIORAL-DECISION-DISCOVERY.md).
+
 ## R5.81 — Separate implementation adequacy from source fidelity
 
 Adopt [Implementation Adequacy 0.1](implementation-adequacy-v0.1.md) as a bounded

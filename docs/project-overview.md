@@ -18,7 +18,7 @@ primitive for each new feature. This is a research hypothesis, not an
 established minimum or a claim that the current vocabulary is general-purpose.
 
 The intended architecture is human requirement → replaceable human/AI requirement
-formalization → reviewed Formal Requirement Contract → implementation-adequacy
+formalization → reviewed Formal Requirement Contract → behavioral-decision discovery → implementation-adequacy
 gate → Lykoi authoring/semantic
 representation → validated, compiler-controlled transformation → executable
 implementation/runtime → observable behavior. Formal requirements define WHAT;
@@ -71,6 +71,26 @@ external resources such as storage, time and IDs should remain distinguishable.
   and [post-B16 corrected boundary](../benchmark/results/phase5c/R5_2_2-POST-B16-CORRECTED-CONTINUATION.md).
 
 ## Current boundary and next steps
+
+The [R5.82 decision-discovery investigation](../benchmark/results/phase5c/R5_82-BEHAVIORAL-DECISION-DISCOVERY.md)
+ends **`R5_82_BEHAVIORAL_DECISION_DISCOVERY_PARTIAL`**. Experimental
+[BDI-0.1](behavioral-decision-inventory-v0.1.md) adds a separate discovery stage,
+15 structural rule families and finite tie/collision implications. Across 26 public
+synthetic cases, revised expectations yield **25 TP / 0 FP / 4 FN**, with **12**
+irrelevant choices rejected, **6/6** hidden interactions and **11/11** mutation
+checks. One post-result identity-normalization expectation correction is disclosed;
+original counts are preserved. Four finite-domain probes match expectations.
+Structural annotation, observation scope, full reachability and completeness still
+need reviewers; timing/identity/events remain missed. Plan probes and manual
+expectations share one context; **zero isolated/strict-qualified reviews**. Unchanged
+R5.81 accepts explicit freedom in a two-record local probe and blocks omission;
+unreviewed coverage fails closed. B01 default-trigger discovery is conditional,
+not independent rediscovery; **NEEDS_CLARIFICATION / unauthorized**. New checks
+**16/16**, unchanged R5.81 **18/18**, R5.80 **18/18**, guarded V1 **33/33** and
+compiler/application **31/31** pass. No V1/Lykoi expansion or held-out exposure.
+All B03 counters **zero**; **B03_PRISTINE / B03_NOT_EVALUATED /
+B03_NOT_EXPOSED_TO_LYKOI_DEVELOPMENT**. Core **30**, Phase 5C paused. Stop after
+R5.82; no next round is authorized. Earlier findings retain their scope.
 
 The [R5.81 adequacy qualification](../benchmark/results/phase5c/R5_81-IMPLEMENTATION-ADEQUACY-QUALIFICATION.md)
 ends **`R5_81_IMPLEMENTATION_ADEQUACY_PARTIAL`**. A separate

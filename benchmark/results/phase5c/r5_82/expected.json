@@ -1,0 +1,35 @@
+{
+  "version":"ExpectedBDI-0.1",
+  "revision":2,
+  "review":"Coordinating agent manual source/interface analysis, written separately before executing discovery. Not independent review. One disclosed post-result semantic correction below.",
+  "post_result_corrections":[{"case":"injective","original_expected":["normalization"],"revised_expected":[],"rationale":"On an already lowercase admitted domain, raw and normalized observations coincide. Original expectation incorrectly counted a non-distinguishing choice. This lowers expected total 30 to 29; original result 26 TP/0 FP/4 FN retained in results.json. Mechanical rule now suppresses identity transforms; not an independent correction."}],
+  "decisions":{
+    "scalar":[],"filter":["selection","ordering"],"unordered":["selection","ordering"],"singleton":[],
+    "hidden-tie":["selection","cardinality","tie"],"unique-score":["selection","cardinality"],
+    "optional":["optional"],"nullable":["nullable_predicate"],"nonnull":[],
+    "hidden-history":["default_trigger_domain"],"complete-history":[],"normalize":["normalization"],
+    "hidden-collision":["normalization","collision"],"injective":[],"invalid":["invalid_input"],
+    "duplicates":["ordering","duplicates"],"persist":["persistence"],"hidden-retry":["transition","retry"],
+    "single-call":["transition"],"hidden-failure":["persistence","failure_atomicity"],"prewrite-failure":["persistence"],
+    "private-order":[],"cache":[],"timing-gap":["deadline_boundary"],"identity-gap":["identity_stability"],
+    "event-gap":["event_order","event_multiplicity"]
+  },
+  "irrelevant":{
+    "scalar":["ordering","algorithm"],"singleton":["ordering"],"unique-score":["tie"],"nonnull":["nullable_predicate"],
+    "complete-history":["default_trigger_domain"],"injective":["collision","normalization"],"single-call":["retry"],
+    "prewrite-failure":["failure_atomicity"],"private-order":["ordering"],"cache":["cache_strategy"]
+  },
+  "witnesses":{
+    "hidden-tie":"Records a and b both score 7; exactly one result distinguishes choosing a versus b.",
+    "hidden-history":"A stored reading lacks unit. Loading may return C or reject without selecting either policy.",
+    "hidden-collision":"Distinct submitted A/a normalize to a; rejecting versus merging differs in error/result.",
+    "hidden-retry":"After closing record a, invoke close(a) again; success versus rejection differs.",
+    "nullable":"Null price may be excluded or included; selected membership differs.",
+    "hidden-failure":"Write v=2 then notification fails; later read may return old v=1 or new v=2."
+  },
+  "unresolved_review_questions":[
+    "Finite alternatives are distinguishing probes, not exhaustive production behavior domains.",
+    "unique_match abstracts a proved unique maximizer, not arbitrary unique record identity.",
+    "Whether surface wording delegates any maximizer is an adequacy question, not a reason to remove tie discovery."
+  ]
+}
