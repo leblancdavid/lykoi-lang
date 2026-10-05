@@ -1,5 +1,25 @@
 # Experimental decisions
 
+## R5.75 — Preserve incomplete first exposure without repair
+
+Use the R5.74 structured preflight and unchanged shared actual-mode issuer/observe
+path. Bind the durable actual ledger before authorization; trust the pre-existing
+eleven resource commitments and two pins. Preserve the qualified 30-semantic
+CurrentState and inherited state-linked generic health. Commit callback source
+identity before issuance; do not change it after opening.
+
+The first actual opening consumes B02's unseen status permanently. The sole static
+dispatch fails extracting an expected `obligations` envelope key before support
+consumers are reached. Classify **R5_75_OBSERVATION_INDETERMINATE** and retain the
+incomplete four-event ledger. Do not manufacture completion, use captured documents
+to finish evaluation, infer a capability gap, repair extraction or retry B02.
+
+Inspect stopped state/evidence and replay predicates read-only, without another
+authorization/opening/dispatch call. Integrity PASS is distinct from completed
+observation PASS. Record unavailable counts/views explicitly rather than invent
+coverage. Future generic envelope-handling work requires separate authorization
+and non-B02 examples first; no generation/execution/acceptance gate is advanced.
+
 ## R5.74 — Explicit modes in the existing one-time authority model
 
 Qualify actual-held-out mechanics prospectively with non-B02 fake commitments.

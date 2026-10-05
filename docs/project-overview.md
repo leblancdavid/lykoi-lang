@@ -69,6 +69,25 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.75 actual one-shot B02 static experiment](../benchmark/results/phase5c/R5_75-ACTUAL-ONE-SHOT-HELDOUT-B02-STATIC-EXPERIMENT.md)
+ends **`R5_75_OBSERVATION_INDETERMINATE`**. Final metadata-only prerequisites and
+the qualified structured preflight pass. Actual authority issues once; one durable
+reservation and one whole-set opening verify all **11 commitments / two pins**.
+**`B02_EXPOSED` is permanent: B02 is no longer unseen.** One whole-contract static
+dispatch fails with **`KeyError: 'obligations'`** in the experiment callback's
+frozen-document extraction, before CheckedPlans or support views. Completion is
+**zero**, the durable ledger is incomplete, and the B02 support question is
+**undetermined**, not a static support PASS or a language gap finding.
+
+Read-only stopped integrity confirms unchanged CurrentState/runner/callback,
+intact commitments, core **30**, no repair and ledger-based replay prevention.
+Final accounting: **one authorization/reservation/opening/dispatch, zero completions;
+11 resource attempts/reads; generation/execution/acceptance/repair zero**. No retry,
+evaluation of captured documents, repair or B02 continuation follows. Preserve this
+terminal result; any future investigation of generic document handling must be
+separately authorized and use non-B02 examples. Phase 5C remains paused. The earlier
+pre-exposure boundaries below describe their historical rounds, not current B02 status.
+
 The [R5.74 actual-held-out path qualification](../benchmark/results/phase5c/R5_74-ACTUAL-HELDOUT-AUTHORIZATION-PATH-QUALIFICATION.md)
 ends **`R5_74_ACTUAL_HELDOUT_PATH_QUALIFIED`** within cooperative Tier 2. Explicit
 `SYNTHETIC_TEST` and `ACTUAL_HELD_OUT` modes share one issuer/observation path;

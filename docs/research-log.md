@@ -1,5 +1,39 @@
 # Lykoi research log
 
+## R5.75 actual B02 first exposure; static observation incomplete (2026-10-05)
+
+Observed: unchanged R5.74 CurrentState, runner and inherited eight-stage generic
+health verify. Eleven sealed commitments and two frozen pins verify metadata-only;
+all actual ledgers start empty. Structured pinned module preflight passes without
+inline source. One ACTUAL_HELD_OUT authorization binds the clean freeze and durable
+ledger. One reservation/opening reads eleven resources once, verifies every trusted
+digest using the precommitted LF representation and records permanent **B02_EXPOSED**.
+B02 must never again be described as unseen.
+
+One whole-contract static dispatch fails with **KeyError: 'obligations'** while the
+experiment callback extracts the frozen obligation envelope. No CheckedPlan,
+readiness, audit, admission or compatible-path consumer is reached. No behavioral
+requirement denominator or unsupported requirement is determined. This is an
+incomplete controller observation, not a demonstrated generic capability deficiency
+or a whole-contract support result. Classification: **R5_75_OBSERVATION_INDETERMINATE**.
+
+The ledger permanently retains AUTHORIZED, OPENING_RESERVED, OPENING_CONSUMED and
+DISPATCHED, with **zero completions**. No fallback, repair, retry or evaluation of
+captured evidence completes it. Immediate terminal state capture and separate
+read-only stopped audit find unchanged CurrentState/runner/controller, core **30**,
+intact commitment/evidence relationships and no repair. Ledger/control inspection
+shows second authorization/opening/observation reject without invoking them. Final
+publication/integrity and whitespace checks pass; no post-exposure application test
+runs. Integrity PASS does not qualify the incomplete observation.
+
+Actual accounting: authorization/reservation/opening/dispatch **1/1/1/1**;
+completion **0**; resource attempts/reads **11/11**; generation/execution/frozen
+acceptance/repair **0/0/0/0**. Preserve this result and stop. Any future investigation
+of document-envelope orchestration must be separately authorized using non-B02
+examples; no B02 rerun or generation gate follows. R5.73's halt and R5.74's bounded
+qualification remain historical. See the
+[R5.75 report](../benchmark/results/phase5c/R5_75-ACTUAL-ONE-SHOT-HELDOUT-B02-STATIC-EXPERIMENT.md).
+
 ## R5.74 actual-held-out path qualified on non-B02 authority (2026-10-05)
 
 Observed: prospective explicit SYNTHETIC_TEST / ACTUAL_HELD_OUT modes traverse
