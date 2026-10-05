@@ -1,5 +1,24 @@
 # Experimental decisions
 
+## R5.63 — A failed identity freeze is terminal
+
+Apply the authorized no-repair/no-retry rule to the first qualification preparation
+failure as well as to production receipts. The existing publication guard rejects
+the attempted identity's `authorization` field even though its intended value is
+a public policy digest. Preserve that rejection; do not rename the field, weaken
+the guard or reconstruct the missing identity within R5.63.
+
+Retain and quarantine the already-persisted 173-stage plan and worker registry.
+Record zero production/observation accounting and mark all downstream requirements
+NOT_RUN. A separate stopped-candidate audit can verify canonical evidence, unchanged
+source/plan and historical preservation without resuming qualification. Its PASS
+does not establish production-gate readiness. Distinguish an unexecuted source-level
+sealed-resource compatibility concern from the actual first publication failure.
+
+Outcome: `R5_63_PROTOCOL_HALT`. Owner adjudication is the next decision; no correction,
+new infrastructure round or B02 access begins here. Behavioral equivalence, Tier-2
+methodology, AI independence, core 30 and paused Phase 5C remain unchanged.
+
 ## R5.62 — Children inherit authority; implementation pins select workers
 
 Close the arbitrary production command adapter. Select reviewed worker definitions

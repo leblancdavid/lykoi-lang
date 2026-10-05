@@ -69,6 +69,24 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.63 fresh complete production qualification](../benchmark/results/phase5c/R5_63-FRESH-COMPLETE-PRODUCTION-TIER2-QUALIFICATION.md)
+ends **`R5_63_PROTOCOL_HALT`** during its first and only freeze invocation.
+The 173-stage regression plan and registry persist, but the existing publication
+guard rejects the attempted qualification identity's credential-reserved
+`authorization` field. No identity issues; starting-state verification, fresh
+authority/capsule, workspace, production batches and observation gates are unrun.
+The candidate is quarantined without field renaming, guard changes, repair or retry.
+
+Independent stopped integrity passes, preserving **2,054 unsealed result files**
+by physical-byte digest and four protected fixtures by metadata/Git continuity.
+The retained plan/source are unchanged; contamination/core and final stopped-artifact
+publication/whitespace checks pass. These checks do not qualify the production gate.
+Next: owner adjudication of the concrete identity-publication failure before any
+separately authorized successor candidate. **B02 all accounting zero, synthetic
+accounting zero, production batches/receipts/certificate zero, core 30, Phase 5C
+paused.** R5.62 remains qualified within its focused boundary; earlier outcomes below
+retain their historical meanings.
+
 The [R5.62 mediated child qualification](../benchmark/results/phase5c/R5_62-MEDIATED-CHILD-EXECUTION-AND-SAFE-WORKER-QUALIFICATION.md)
 ends **`R5_62_MEDIATED_CHILD_EXECUTION_QUALIFIED`**. Content-pinned worker selection,
 same-or-narrower child/descendant capabilities, linked execution bindings and child

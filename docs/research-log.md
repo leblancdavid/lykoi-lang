@@ -1,5 +1,39 @@
 # Lykoi research log
 
+## R5.63 fresh complete production qualification (2026-10-05)
+
+The first freeze invocation persists a canonical 173-regression-stage plan and
+content-bound worker registry, then fails sealing the fresh qualification identity.
+`security.safe_bytes` rejects the identity's `authorization` key as a reserved
+credential field. The intended value is the public authority-policy digest; no
+actual secret or B02 content is exposed. This is an orchestration/publication failure,
+not a language capability result. The failed source and persisted plan are unchanged.
+
+R5.63 stops and quarantines the candidate without renaming the field, changing the
+guard, repairing, retrying or resuming. No qualification identity, fresh authority,
+capsule, workspace, batch, receipt, certificate or synthetic observation follows.
+Required production regressions, child skip execution, pre/post observation gates,
+second-observation rejection, mutation/no-repair witnesses and final production
+audit are NOT_RUN. R5.62's focused 232/232 remains historical qualification evidence.
+
+An independent stopped audit verifies canonical plan/registry linkage, retained
+physical source/plan digests, zero accounting, 36 unique prohibited metadata IDs,
+unchanged historical classifications, core 30 and clean established contamination.
+It preserves 2,054 unsealed prior result files by byte digest and four protected
+fixtures by metadata/Git continuity only. Final stopped-artifact publication and
+whitespace checks pass. None of these passes promotes the stopped production gate.
+
+Ordinary code inspection also identifies possible sealed-resource conflicts in
+all-member authority verification and all-tracked-file workspace materialization.
+Neither API nor its prerequisite check was executed; this remains an unexecuted
+concern, separate from the actual earlier identity-publication failure.
+
+Outcome: **`R5_63_PROTOCOL_HALT`**. Recommend owner adjudication of that concrete
+failure before a separately authorized successor candidate. No infrastructure
+correction or next round begins here. **B02 0/0/0/0; synthetic 0/0/0; production
+batches/receipts/certificate zero; core 30; Phase 5C paused.** Lykoi remains a language,
+not an AI runtime; fresh production AI-independence regressions were not reached.
+
 ## R5.62 mediated child/SUT execution (2026-10-05)
 
 Content-bound workers now execute through the prospective bounded driver with
