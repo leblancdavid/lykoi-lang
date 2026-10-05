@@ -1,5 +1,34 @@
 # Experimental decisions
 
+## R5.50 — Match reproducibility rigor to the behavioral claim
+
+Adopt the prospective [Tier 2 boundary](../benchmark/results/phase5c/R5_50-BENCHMARK-REPRODUCIBILITY-BOUNDARY-REVIEW.md):
+known experimental implementation, authority, evaluator, relevant dependencies
+and effective controls on a declared compatible platform. Behavioral satisfaction
+is the target; internal implementation similarity, hermetic OS reconstruction,
+portability and hostile-host attestation are separate claims. Stronger native
+closure/ownership recommendations below remain historical, not current blockers
+without a specific materiality justification. This does not alter old outcomes.
+
+Keep canonical/secret-safe immutable evidence, stage/state/mechanism linkage,
+contamination controls, exact observation accounting and no repair/retry. Simplify
+Git to relevant committed/index/worktree content and consumed configuration, with
+relevant untracked/ignored membership. Declare ordinary interpreter/CRT/crypto/OS
+services unless a reasonably plausible component change affects the claim.
+Record every boundary rationale; material UNKNOWN remains blocking. Before/after
+capture and cooperative dedicated workspace discipline are required. Absolute
+ABA exclusion and unlimited host closure are deferred to future hermetic/adversarial
+work. Endpoint equality is not mislabeled ownership.
+
+Exclude development AI provider/model/credential/editor state from core execution
+identity, retaining separate authoring-fairness telemetry. The tradeoff is a clear
+Tier 2 claim with explicit transient-mutation/platform assumptions, rather than
+pretended bit-for-bit reproducibility. The 105 passing focused witnesses support
+methodology only; the failed initial run and two historical host-sensitive checks
+remain documented. A new experiment must qualify its actual small capsule adapter
+and required-state manifest before a separately authorized one-shot static gate.
+No production promotion, semantic change, B02 exposure or Phase 5C continuation.
+
 ## R5.49 — Provenance is resolved identity; endpoint checks are not ownership
 
 Classify executed implementation provenance against content-bound repository

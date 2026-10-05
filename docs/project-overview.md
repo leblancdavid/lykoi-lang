@@ -69,6 +69,36 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.50 methodology review](../benchmark/results/phase5c/R5_50-BENCHMARK-REPRODUCIBILITY-BOUNDARY-REVIEW.md)
+qualifies a prospective **Tier 2 experimental-reproducibility boundary**. Phase 5
+asks about required externally observable behavioral equivalence, not identical
+implementation or a hermetic/hostile-machine guarantee. Bind relevant subject,
+semantics/compiler/profile, authority, evaluator, dependency implementations and
+effective controls; declare ordinary Python/OS/native platform infrastructure.
+Individually bind native components with a documented claim-relevant materiality
+reason. Dedicated cooperative workspace and immediate before/after state checks
+protect against reasonable accidental drift; absolute malicious ABA resistance
+and unlimited CRT/OS descendant closure are deferred to stronger future claims.
+Development models/providers/credentials/editors are authoring state, not core
+language execution identity. Authoring fairness records remain separate.
+
+Fresh focused witnesses pass **105/105** (new boundary 18, certificate 33,
+canonical recorder 29, publication/security 20, AI independence 5). The first
+107-test run remains FAIL: one corrected fixture exception expectation and two
+preserved historical Git/checkout assertion failures (CRLF bytes and negated
+ignore-rule matching). Those two checks are explicitly excluded from the focused
+result; historical lock qualification on this host is not claimed. This is
+methodology qualification, **not** a production capsule/certificate or evidence
+reuse authorization. R5.49 diagnostics remain non-reusable; all earlier outcomes
+and recommendations below remain historical.
+
+Next: a separately authorized new Tier 2 locked static-transfer experiment with
+generic capsule-adapter preflight, required-state verification, frozen-authority
+integrity, zero new-run accounting, exactly one recorded static observation,
+immediate final state check and stop. None of those steps was performed against
+B02 here. B02 exposure **zero**, core **30**, Phase 5C paused. No automatic exposure,
+generation/execution/acceptance or benchmark continuation follows.
+
 The [R5.49 dependency-provenance investigation](../benchmark/results/phase5c/R5_49-DEPENDENCY-PROVENANCE-AND-COMPLETE-EXECUTION-CAPSULE-QUALIFICATION.md)
 ends **`R5_49_DEPENDENCY_CLOSURE_GAP`**. Generic resolved-source/content provenance
 correctly attributes package, nested, generated, namespace and copied deployment

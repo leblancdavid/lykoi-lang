@@ -26,6 +26,14 @@ blocked-request clause observations separate from benchmark outcomes.
 The original execution protocol below is retained as historical context;
 later protocol amendments and checkpoints are documented under `results/`.
 
+The prospective [R5.50 reproducibility boundary](results/phase5c/R5_50-BENCHMARK-REPRODUCIBILITY-BOUNDARY-REVIEW.md)
+requires Tier 2 experimental reproducibility on a declared compatible platform,
+with relevant implementation/authority/evaluator/dependency state bound and
+immediate pre/post observation drift checks. Behavioral equivalence is the target,
+not identical source or a fully hermetic machine. Development AI state belongs
+to separate authoring/fairness records, not fixed-source language execution identity.
+This methodology qualification does not authorize B02 exposure or resume Phase 5C.
+
 The test harness treats both applications as subprocesses; it never imports
 their internal modules or uses their internal test suites as the shared oracle.
 

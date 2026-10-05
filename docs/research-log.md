@@ -1,5 +1,42 @@
 # Lykoi research log
 
+## R5.50 benchmark reproducibility boundary (2026-10-04)
+
+Methodology review selects **Tier 2 experimental reproducibility**, behavioral
+equivalence as the scientific target, and inexpensive selected Tier 3 controls.
+Bind relevant language/program/compiler/profile, frozen authority, evaluator,
+project content and dependency/configuration state; declare ordinary runtime/OS
+infrastructure. Materiality requires a reasonably plausible claim-relevant result
+change, with a documented consumer/pathway and inclusion/exclusion justification.
+No unlimited native/CRT/crypto recursion or malicious-host integrity claim is
+required. Known mutation still invalidates a run; immediate pre/post capture in
+a dedicated cooperative workspace cannot guarantee discovery of every transient
+or deliberate ABA. R5.49's counterexample and diagnostic-only status are preserved.
+
+Authoring environment differs from language execution environment. Model/provider,
+OpenCode, credentials, editors and prompt history are excluded from fixed-source
+core execution identity; comparative authoring fairness records remain separate.
+Canonical evidence, secret-safe publication, stale/mixed rejection, contamination,
+controlled observation count, no repair and immutable history remain mandatory.
+Infrastructure/platform/reproducibility limitations are not capability failures.
+
+Fresh focused generic/synthetic evidence: **105/105 PASS**, comprising new boundary
+18, certificate 33, recorder 29, publication/security 20 and AI-independence 5,
+on CPython 3.12.10 Windows AMD64. The first **107-test FAIL** is preserved (104
+passes, one new fixture exception mismatch, two historical Git assertions).
+After correcting the fixture, the focused selection explicitly excludes historical
+raw HEAD/worktree equality on a CRLF checkout and quiet check-ignore interpretation
+of a negated example rule. Neither historical check is claimed passed; no historical
+files were changed. All 12 required mutation/integrity categories are witnessed,
+and development-model selection leaves the synthetic identity unchanged. These
+tests do not qualify a production capsule, this checkout's historical byte locks,
+cross-platform repeatability or arbitrary programs.
+
+The [R5.50 report](../benchmark/results/phase5c/R5_50-BENCHMARK-REPRODUCIBILITY-BOUNDARY-REVIEW.md)
+defines the capsule and a small newly authorized next static gate. No B02 step
+was performed here; exposure zero, core 30, Phase 5C paused. Earlier outcomes and
+quarantines remain unchanged; no diagnostic receipt promotion or reuse follows.
+
 ## R5.49 dependency provenance and closure boundary (2026-10-04)
 
 Observed **`R5_49_DEPENDENCY_CLOSURE_GAP`**. A generic resolver uses bound repository
