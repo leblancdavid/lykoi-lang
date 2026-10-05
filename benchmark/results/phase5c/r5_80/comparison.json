@@ -1,0 +1,291 @@
+{
+  "record_id": "R5.80-independent-comparison",
+  "status": "semantic comparison of candidate records; not approved behavioral authority",
+  "scope": "Seven requirement-local A/B source formalizations: S03, S07, S08, S09, S10, S12 and public B01.",
+  "semantic_inputs": [
+    "benchmark/results/phase5c/r5_80/independent-a.json",
+    "benchmark/results/phase5c/r5_80/independent-b.json",
+    "benchmark/results/phase5c/r5_80/corpus.json",
+    "benchmark/requirements/B01.md"
+  ],
+  "method": {
+    "unit": "Observable obligations with their conditions, input domains, state frames, effects and unresolved issue dispositions, rather than wording, ID identity, array size or serialization.",
+    "alignment": "Each alignment gives sets of A and B IDs. One-to-many and many-to-one mappings may cover distinct components of a composite obligation; repeated IDs are intentional. Entailed components are identified rather than silently treated as explicitly written.",
+    "equivalence": "Equal requirement-local candidate obligations and compatible unresolved issue records within the declared scope. This does not establish an executable total contract, source approval, implementation correctness or universal equivalence.",
+    "classification_meanings": {
+      "SEMANTICALLY_EQUIVALENT_WITHIN_DECLARED_SCOPE": "Same local obligations, including justified logical consequences, and same substantive unresolved limitations; annotation category or basis differences do not change behavior.",
+      "COMPATIBLE_BUT_INCOMPLETE": "No incompatible local behavior established, but a substantive omission prevents an equivalence finding without a material positive domain divergence.",
+      "MATERIALLY_DIVERGENT": "A material obligation or applicability domain differs, even if the candidates can both be satisfied and neither supplies a complete executable policy.",
+      "CONFLICTING": "A and B prescribe mutually incompatible behavior on a common resolved domain. A conflict inside a source is recorded separately and does not automatically make the A/B comparison CONFLICTING.",
+      "INDETERMINATE": "The available candidate/source evidence cannot support a comparison classification. Shared unresolved predicates alone do not prevent comparison of candidate issue records."
+    },
+    "authority": "Corpus source text and public B01 ground semantic interpretation. Corpus concern annotations and repository guidance are not additional behavioral obligations. No baseline, compiler, implementation, oracle or held-out source is used."
+  },
+  "process_and_isolation": {
+    "attempt_A": {
+      "strict_two_file_input_isolation": "MET_AS_REPORTED_NOT_INDEPENDENTLY_AUDITED",
+      "evidence": "A reports only corpus.json and B01.md file reads, injected guidance and git status; no other formalization was seen.",
+      "only_own_candidate_output": "REPORTED; no other output observed in the supplied record"
+    },
+    "attempt_B": {
+      "strict_two_file_input_isolation": "NOT_MET",
+      "additional_reads": ["docs/project-overview.md (displayed lines 1-694, capped)", "docs/agent-workflow.md"],
+      "evidence": "B expressly discloses mandatory guidance reads and git status. Guidance included historical research/benchmark/V1 summaries. B states these were not behavioral authority and no other formalization or compiler/support/held-out source file was opened.",
+      "qualification": "Semantic review is possible, but this pair cannot qualify as a strict two-file-isolated pair. No fresh formalization is performed here.",
+      "only_own_candidate_output": "REPORTED; no other output observed in the supplied record"
+    },
+    "independence": "Same-model-family attempts in separate conversation contexts, with B identifying openai/gpt-6.1-sol. Separate contexts and absence of other-formalization access are reported, not infrastructure-audited. No different-provider, different-family, independent-human or universal equivalence claim is supported.",
+    "issue_expectation_visibility": "Both read the complete corpus, including coordinator-authored concern annotations and non-target sources. Thus neither attempt was blind to issue expectations, including the S09 witness. Concern agreement is not independent discovery evidence. Synthetic sources are coordinating-AI-authored human-style examples; B01's human-authorship attribution is corpus metadata, not independently verified.",
+    "strict_isolation_agreement_count": {
+      "requested_source_pairs": 7,
+      "pairs_with_both_attempts_strict_two_file_isolated": 0,
+      "semantically_equivalent_pairs_qualified_under_strict_two_file_isolation": 0,
+      "interpretation": "Zero qualifying pairs because B deviated; this is not a finding of zero semantic agreement. A's reported compliance alone cannot qualify the pair."
+    },
+    "broader_procedural_no_other_outputs_seen": {
+      "attempts_with_only_own_candidate_output_reported_and_no_other_output_seen": 2,
+      "attempts_considered": 2,
+      "evidence_limit": "Based on the supplied records, not a filesystem or tool-history audit. This narrower output observation does not restore strict input isolation or prove compliance with every procedural restriction."
+    },
+    "comparison_context": {
+      "requested_four_file_read_isolation": "NOT_MET_DUE_TO_HIGHER_PRIORITY_REPOSITORY_GUIDANCE",
+      "additional_reads": ["docs/project-overview.md (displayed lines 1-694, capped)", "docs/agent-workflow.md"],
+      "other_operation": "git status --short before editing; names/status only",
+      "searches": 0,
+      "output": "Only benchmark/results/phase5c/r5_80/comparison.json is written by this comparison attempt.",
+      "limit": "Guidance was governance context, not semantic authority. No further source, schema, evaluator, benchmark protocol or implementation reads, execution or external retrieval were performed. No sandbox or byte-hash integrity audit is claimed."
+    }
+  },
+  "sources": [
+    {
+      "source_id": "S03",
+      "classification": "SEMANTICALLY_EQUIVALENT_WITHIN_DECLARED_SCOPE",
+      "alignment": [
+        {"a_ids": ["A-S03-O01", "A-S03-O05"], "b_ids": ["B.S03.O01", "B.S03.O02", "B.S03.O06"], "agreement": "Select every active input occurrence exactly once and no inactive or new occurrence; preserve multiplicity. Length equals active occurrence count, including empty result for no active occurrences."},
+        {"a_ids": ["A-S03-O02"], "b_ids": ["B.S03.O03"], "agreement": "Names are nondecreasing under lexicographic Unicode code-point order, with a proper prefix first."},
+        {"a_ids": ["A-S03-O03"], "b_ids": ["B.S03.O04"], "agreement": "Equal-name selected occurrences retain their relative input order."},
+        {"a_ids": ["A-S03-O04"], "b_ids": ["B.S03.O05"], "agreement": "Input sequence, order and record contents are unchanged."},
+        {"a_ids": ["A-S03-O05"], "b_ids": ["B.S03.O01", "B.S03.O02"], "agreement": "Returned occurrences preserve record contents as a necessary consequence of returning exactly the input records, not substitutes or modified records.", "b_expression": "Entailed, not a separately explicit returned-content obligation."}
+      ],
+      "coverage": {
+        "domain": "Sequence of records with string names for the stated comparison and an unresolved active predicate; neither chooses arbitrary truthiness/coercion. Both retain occurrence semantics.",
+        "state": "Input nonmutation is required; it is not a global frame or purity condition.",
+        "effects": "Unrelated state/external effects remain unspecified.",
+        "error": "No malformed-input rejection outcome is prescribed. A explicitly includes non-sequence input; B does not name it, but its sequence-domain condition leaves it outside the specified relation.",
+        "ambiguity_alignment": [{"a_ids": ["A-S03-A01"], "b_ids": ["B.S03.A01"], "issue": "Meaning/type of active unresolved."}],
+        "unspecified_alignment": [
+          {"a_ids": ["A-S03-U01"], "b_ids": ["B.S03.U01"], "issue": "Malformed fields/records and names; outside-domain input behavior not mandated."},
+          {"a_ids": ["A-S03-U02", "A-S03-U03"], "b_ids": ["B.S03.U02"], "issue": "Identity, aliasing, container representation, copying and unrelated state/effects open."}
+        ],
+        "implementation_alignment": {"a_ids": ["A-S03-I01"], "b_ids": ["B.S03.I01"], "issue": "Algorithms/layout/copy strategy open subject to selection, order, ties and nonmutation."}
+      },
+      "disagreements": [
+        {"kind": "basis_classification", "a_ids": ["A-S03-O01", "A-S03-O05"], "b_ids": ["B.S03.O01", "B.S03.O02", "B.S03.O06"], "finding": "Exact multiplicity/cardinality is partly stated in A and split into necessary implications in B. No behavioral difference."},
+        {"kind": "explicitness_not_behavior", "a_ids": ["A-S03-O05"], "b_ids": ["B.S03.O01"], "finding": "A expressly preserves returned record contents; B expressly preserves input contents but does not separately state returned-content preservation. Input preservation alone would allow mutated copies and would not justify equivalence. B's exact input-occurrence membership and no-new-record requirement, interpreted as record values with name/active fields, supply the justified inference. Returning a copy with altered fields is not returning that same input record value. Identity/aliasing freedom does not authorize changed content."}
+      ],
+      "issue_disposition": "Both retain a partial-domain candidate and require active-domain clarification. Returned-content inference is justified on the exact-record-selection semantics, not on input nonmutation alone."
+    },
+    {
+      "source_id": "S07",
+      "classification": "SEMANTICALLY_EQUIVALENT_WITHIN_DECLARED_SCOPE",
+      "alignment": [
+        {"a_ids": ["A-S07-O01"], "b_ids": ["B.S07.O01"], "agreement": "Omitted value member returns symbolic ABSENT."},
+        {"a_ids": ["A-S07-O02"], "b_ids": ["B.S07.O02"], "agreement": "Present explicit null returns symbolic NULL."},
+        {"a_ids": ["A-S07-O03"], "b_ids": ["B.S07.O03"], "agreement": "Present integer k returns that same k; no positive-only restriction, including zero and negatives."},
+        {"a_ids": ["A-S07-O04", "A-S07-O06"], "b_ids": ["B.S07.O04"], "agreement": "Other present non-null nonintegers return INVALID and are not coerced into integer success."},
+        {"a_ids": ["A-S07-O05"], "b_ids": ["B.S07.O05"], "agreement": "Every specified branch, including INVALID, has no state changes and no external effects."},
+        {"a_ids": ["A-S07-O06"], "b_ids": ["B.S07.O01", "B.S07.O02", "B.S07.O03", "B.S07.O04", "B.S07.O06"], "agreement": "The four semantic cases remain distinct, especially omission versus explicit null."}
+      ],
+      "coverage": {
+        "domain": "Object with optional value; four-way presence/null/integer/other partition. Concrete integer boundary, bool subtyping, integral numeric encodings and presence mechanics unresolved.",
+        "state": "No mutation of any state on specified branches, including input.",
+        "effects": "No external effects on specified branches.",
+        "error": "INVALID is mandated for other present values; non-object outer input has no specified outcome.",
+        "ambiguity_alignment": [{"a_ids": ["A-S07-A01", "A-S07-U01"], "b_ids": ["B.S07.A01"], "issue": "Concrete type/encoding and presence mechanics unresolved."}],
+        "unspecified_alignment": [
+          {"a_ids": ["A-S07-U01"], "b_ids": ["B.S07.U01"], "issue": "Non-object input outside stated domain."},
+          {"a_ids": ["A-S07-A02"], "b_ids": ["B.S07.U01"], "issue": "Concrete encoding of symbolic outcomes not prescribed."},
+          {"a_ids": ["A-S07-U02"], "b_ids": ["B.S07.A01"], "issue": "A explicitly notes range/representability; B leaves concrete typing open and imports no machine-width bound. Neither supplies an out-of-range policy or narrows the mathematical integer branch."}
+        ],
+        "implementation_alignment": {"a_ids": ["A-S07-I01"], "b_ids": ["B.S07.I01"], "issue": "Representation/dispatch open while preserving distinct cases and no effects."}
+      },
+      "disagreements": [
+        {"kind": "basis_classification", "a_ids": ["A-S07-O06"], "b_ids": ["B.S07.O04", "B.S07.O06"], "finding": "A places noncoercion in a necessary implication; B includes it with the stated INVALID branch. Same behavior."},
+        {"kind": "issue_disposition", "a_ids": ["A-S07-A02"], "b_ids": ["B.S07.U01"], "finding": "Symbolic result representation is classified as ambiguity by A and unspecified by B. Both refrain from choosing strings, host null or another wire encoding; this annotation-category difference is real but not behavioral."}
+      ],
+      "issue_disposition": "Both retain the four-way relation as a candidate requiring concrete type/token interface review; symbolic encodings remain open."
+    },
+    {
+      "source_id": "S08",
+      "classification": "SEMANTICALLY_EQUIVALENT_WITHIN_DECLARED_SCOPE",
+      "alignment": [{"a_ids": ["A-S08-O01"], "b_ids": ["B.S08.O01"], "agreement": "Return tasks satisfying the unresolved best predicate; neither supplies a concrete score, ranking, filter or executable selection rule."}],
+      "coverage": {
+        "domain": "Candidate task population and task structure not fixed; no concrete membership can be adjudicated.",
+        "state": "Unspecified.",
+        "effects": "Unspecified.",
+        "error": "No rejection/empty-population outcome mandated.",
+        "ambiguity_alignment": [
+          {"a_ids": ["A-S08-A01"], "b_ids": ["B.S08.A01"], "issue": "No meaning of best, scoring/comparison or selection criterion."},
+          {"a_ids": ["A-S08-A02", "A-S08-U01"], "b_ids": ["B.S08.A01", "B.S08.A02", "B.S08.U01"], "issue": "Population, cardinality, ties, order, empty behavior, interface and effects unresolved."}
+        ],
+        "unspecified_alignment": [{"a_ids": ["A-S08-U01"], "b_ids": ["B.S08.U01", "B.S08.A02"], "issue": "Input/result interface and state/effects open; A explicitly names task structure/result representation and B does not constrain them."}],
+        "implementation_alignment": {"a_ids": ["A-S08-I01"], "b_ids": ["B.S08.I01"], "issue": "Choosing a ranking criterion adds semantics and cannot be approved merely as an algorithm choice."}
+      },
+      "disagreements": [{"kind": "issue_disposition", "finding": "Tie policy is grouped differently and empty-population behavior is unspecified in A versus undetermined in B's ambiguity record. Neither selects behavior; no material difference."}],
+      "issue_disposition": "Equivalent unresolved candidate-issue records. Both require source-owner clarification and withhold executable-contract approval. Agreement does not confer approved behavioral authority or establish equivalent implementations of best."
+    },
+    {
+      "source_id": "S09",
+      "classification": "SEMANTICALLY_EQUIVALENT_WITHIN_DECLARED_SCOPE",
+      "alignment": [
+        {"a_ids": ["A-S09-O01"], "b_ids": ["B.S09.O01"], "agreement": "Every input name occurrence is returned with values and multiplicities preserved; no omission, substitution or extra occurrence."},
+        {"a_ids": ["A-S09-O02"], "b_ids": ["B.S09.O02"], "agreement": "For every input sequence, output preserves occurrence order, interpreted locally as insertion order."},
+        {"a_ids": ["A-S09-O03"], "b_ids": ["B.S09.O03"], "agreement": "The same output must always be alphabetically ascending."},
+        {"a_ids": ["A-S09-O04"], "b_ids": ["B.S09.O01", "B.S09.O02", "B.S09.O03", "B.S09.C01"], "agreement": "All constraints apply simultaneously, with no precedence or input restriction repair."}
+      ],
+      "coverage": {
+        "domain": "Universal input sequence domain; not only already sorted inputs.",
+        "state": "Input mutation and other state behavior not constrained.",
+        "effects": "Unspecified.",
+        "error": "Malformed-input behavior unspecified; inconsistency is a source issue, not a mandated runtime rejection result.",
+        "ambiguity_alignment": [
+          {"a_ids": ["A-S09-A01"], "b_ids": ["B.S09.A01"], "issue": "Alphabetical case/locale/collation not fixed."},
+          {"a_ids": ["A-S09-A02"], "b_ids": ["B.S09.A02"], "issue": "No separate insertion history supplied; sequence-order reading is explicit."}
+        ],
+        "conflict_alignment": {"a_ids": ["A-S09-C01"], "b_ids": ["B.S09.C01"], "issue": "Under ordinary a < z, input [z,a] cannot produce one sequence satisfying both orders; neither resolves this by dropping names, splitting outputs or restricting inputs."},
+        "unspecified_alignment": [{"a_ids": ["A-S09-U01"], "b_ids": ["B.S09.U01"], "issue": "Invalid inputs, state/effects and output representation unspecified."}],
+        "implementation_alignment": {"a_ids": ["A-S09-I01"], "b_ids": ["B.S09.I01"], "issue": "An algorithm cannot fix incompatible obligations without semantic amendment."}
+      },
+      "disagreements": [{"kind": "explicitness_not_behavior", "a_ids": ["A-S09-O04"], "b_ids": ["B.S09.C01"], "finding": "A separately labels conjunction a necessary implication; B expresses conjunction through obligations and conflict analysis. Same source-level constraints and disposition."}],
+      "issue_disposition": "Both preserve the unresolved source conflict and block approval pending correction. A/B are not CONFLICTING with each other. Equivalence here compares their conflict records and constraints, not a vacuous claim that implementations of an inconsistent contract are equivalent."
+    },
+    {
+      "source_id": "S10",
+      "classification": "SEMANTICALLY_EQUIVALENT_WITHIN_DECLARED_SCOPE",
+      "alignment": [{"a_ids": ["A-S10-O01", "A-S10-O02"], "b_ids": ["B.S10.O01", "B.S10.U03"], "agreement": "For every positive mathematical integer n, return exactly n+1. Wrapping, saturation, approximation and an invented finite upper bound do not satisfy that result."}],
+      "coverage": {
+        "domain": "Integer n > 0; no finite maximum added.",
+        "state": "Unspecified, including input mutation where meaningful.",
+        "effects": "Unspecified; arithmetic notation does not impose purity.",
+        "error": "Zero, negatives, nonintegers and missing/malformed inputs have no prescribed INVALID, exception, rejection or coercion policy.",
+        "ambiguity_alignment": [],
+        "unspecified_alignment": [
+          {"a_ids": ["A-S10-U01"], "b_ids": ["B.S10.U01"], "issue": "Outside-success-domain behavior unspecified; A explicitly lists missing/malformed representations, also outside B's condition."},
+          {"a_ids": ["A-S10-U02"], "b_ids": ["B.S10.U02"], "issue": "State/effects unspecified."},
+          {"a_ids": ["A-S10-U03"], "b_ids": ["B.S10.U03"], "issue": "Encoding/interface/resource realization unspecified, without narrowing the stated mathematical domain."}
+        ],
+        "implementation_alignment": {"a_ids": ["A-S10-I01"], "b_ids": ["B.S10.I01"], "issue": "Arithmetic implementation open subject to exact result on source domain."}
+      },
+      "disagreements": [{"kind": "basis_classification", "a_ids": ["A-S10-O02"], "b_ids": ["B.S10.O01", "B.S10.U03"], "finding": "A separately records exact-increment consequences as a necessary implication; B states exactness and disallows overflow elsewhere. No behavioral difference."}],
+      "issue_disposition": "Same reviewable success-domain candidate with no invented invalid-input or purity contract."
+    },
+    {
+      "source_id": "S12",
+      "classification": "SEMANTICALLY_EQUIVALENT_WITHIN_DECLARED_SCOPE",
+      "alignment": [
+        {"a_ids": ["A-S12-O01"], "b_ids": ["B.S12.O01"], "agreement": "On an accepted positive-count reservation, seats become pre-seats minus requested count; return that remainder."},
+        {"a_ids": ["A-S12-O02"], "b_ids": ["B.S12.O02"], "agreement": "Acceptance requires requested count <= available seats; capacity sufficiency alone is not made mandatory acceptance."},
+        {"a_ids": ["A-S12-O03"], "b_ids": ["B.S12.O03"], "agreement": "Positive requested count exceeding available seats returns INSUFFICIENT and changes no state, not merely seats."},
+        {"a_ids": ["A-S12-O04"], "b_ids": ["B.S12.O04"], "agreement": "Available seats never negative; invariant is not restricted to returned value or post-state."},
+        {"a_ids": ["A-S12-O05"], "b_ids": ["B.S12.O05"], "agreement": "Accepted success emits exactly one confirmation to caller."},
+        {"a_ids": ["A-S12-O06"], "b_ids": ["B.S12.O06"], "agreement": "Rejection emits no confirmation."},
+        {"a_ids": ["A-S12-O07"], "b_ids": ["B.S12.O07"], "agreement": "If accepted count equals positive available seats, seats become zero and zero is returned; no compulsory acceptance added."},
+        {"a_ids": ["A-S12-O08"], "b_ids": ["B.S12.O02", "B.S12.O03", "B.S12.O04", "B.S12.O06"], "agreement": "Zero seats with a positive request entails rejection, INSUFFICIENT, unchanged state and zero confirmations.", "b_expression": "Entailed by component obligations, not separately listed."}
+      ],
+      "coverage": {
+        "domain": "Requested positive count and nonnegative available-seat state; discrete integer typing, concrete bounds/encoding unresolved. Malformed/nonpositive counts not assigned an error policy.",
+        "state": "Exact success decrement, nonnegative invariant, and full rejection nonmutation for the stated capacity-failure branch. Success has no unrelated-state frame. State footprint/initialization/concurrency unspecified.",
+        "effects": "One success confirmation, zero rejection confirmations. Neither bans all other rejection effects or guarantees exactly-once receipt. Transport, timing, retry and failure behavior unresolved.",
+        "error": "INSUFFICIENT mandated for positive over-capacity requests; other nonacceptance outcomes depend on otherwise-scope clarification; no INVALID policy invented.",
+        "ambiguity_alignment": [
+          {"a_ids": ["A-S12-A01"], "b_ids": ["B.S12.A01"], "issue": "Necessary versus sufficient acceptance and whether otherwise covers all nonacceptance unresolved."},
+          {"a_ids": ["A-S12-A02"], "b_ids": ["B.S12.A02"], "issue": "Integer/count representation not explicit."},
+          {"a_ids": ["A-S12-A03", "A-S12-U04"], "b_ids": ["B.S12.U04"], "issue": "Change nothing frames state, not every conceivable nonconfirmation external effect."}
+        ],
+        "unspecified_alignment": [
+          {"a_ids": ["A-S12-U01"], "b_ids": ["B.S12.U01"], "issue": "Invalid/nonpositive/missing request policy open."},
+          {"a_ids": ["A-S12-U02", "A-S12-U05"], "b_ids": ["B.S12.U02", "B.S12.U03", "B.S12.U04"], "issue": "Initialization, persistence, identity, concurrency, retries, recovery and state footprint not modeled."},
+          {"a_ids": ["A-S12-U03"], "b_ids": ["B.S12.U03"], "issue": "Confirmation channel/content/timing, caller and failure/delivery semantics unresolved."},
+          {"a_ids": ["A-S12-U04"], "b_ids": ["B.S12.U04"], "issue": "Unrelated success state/effects and other rejection effects not comprehensively prescribed."}
+        ],
+        "implementation_alignment": {"a_ids": ["A-S12-I01"], "b_ids": ["B.S12.I01"], "issue": "Storage/arithmetic/transport choices open; do not resolve acceptance ambiguity as an implementation detail."}
+      },
+      "disagreements": [
+        {"kind": "issue_disposition", "a_ids": ["A-S12-A03"], "b_ids": ["B.S12.U04"], "finding": "A classifies rejection-effect scope as ambiguity; B records it as unspecified. Same refusal to invent a global no-effect obligation."},
+        {"kind": "explicitness_not_behavior", "a_ids": ["A-S12-O08"], "b_ids": ["B.S12.O02", "B.S12.O03", "B.S12.O06"], "finding": "A explicitly lists zero-seat rejection; B's positive over-capacity branch entails it."}
+      ],
+      "issue_disposition": "Equivalent conditional candidates and acceptance-ambiguity records; neither approves a total reservation decision relation or silently adds eligible-request acceptance. Shared unresolved ambiguity does not supply approved authority."
+    },
+    {
+      "source_id": "B01",
+      "classification": "MATERIALLY_DIVERGENT",
+      "alignment": [
+        {"a_ids": ["A-B01-O01"], "b_ids": ["B.B01.O01"], "agreement": "CRITICAL accepted as a task priority."},
+        {"a_ids": ["A-B01-O02"], "b_ids": ["B.B01.O02"], "agreement": "CRITICAL ranks above HIGH; no list-sort mandate or numeric encoding implied."},
+        {"a_ids": ["A-B01-O03"], "b_ids": ["B.B01.O03", "B.B01.O04"], "agreement": "Successful otherwise-valid create --priority CRITICAL persists CRITICAL and returns CRITICAL."},
+        {"a_ids": ["A-B01-O04"], "b_ids": ["B.B01.O05"], "agreement": "In applicable list scope, a created/persisted CRITICAL task is included with its CRITICAL priority."},
+        {"a_ids": ["A-B01-O03", "A-B01-O04"], "b_ids": ["B.B01.O12"], "agreement": "Successful CRITICAL creation followed by list in that scope exposes the stored CRITICAL value; B separately states the entailed cross-operation observation."},
+        {"a_ids": ["A-B01-O05", "A-B01-O06"], "b_ids": ["B.B01.O06"], "agreement": "list-high priority criterion is exactly equality to HIGH. CRITICAL, LOW and NORMAL fail that criterion; HIGH satisfies it, subject to other unspecified list scope conditions."},
+        {"a_ids": ["A-B01-O07"], "b_ids": ["B.B01.O07"], "agreement": "Each existing LOW task retains LOW through migration."},
+        {"a_ids": ["A-B01-O08"], "b_ids": ["B.B01.O08"], "agreement": "Each existing NORMAL task retains NORMAL through migration."},
+        {"a_ids": ["A-B01-O09"], "b_ids": ["B.B01.O09"], "agreement": "Each existing HIGH task retains HIGH through migration."},
+        {"a_ids": ["A-B01-O11"], "b_ids": ["B.B01.O11"], "agreement": "CRITICAL augments rather than replaces the referenced LOW/NORMAL/HIGH vocabulary; no complete total order or exhaustive accepted set reconstructed."},
+        {"a_ids": ["A-B01-O10"], "b_ids": ["B.B01.O10"], "agreement": "NORMAL is the missing-priority default on the shared creation-defaulting interpretation only.", "relation": "PARTIAL_DOMAIN_OVERLAP_NOT_FULL_EQUIVALENCE"}
+      ],
+      "coverage": {
+        "domain": "Both requirement-local command/migration candidates, with unrelated valid-create prerequisites and applicable list population left as placeholders. Missing-priority applicability differs materially: A names omitted creation argument only; B retains missing priority at an unspecified priority-defaulting point.",
+        "state": "Persist CRITICAL on successful creation and preserve existing LOW/NORMAL/HIGH priority values through migration; no complete migration frame or storage mechanism mandated.",
+        "effects": "Unrelated commands and external effects not prescribed.",
+        "error": "Invalid priority, null, case/alias normalization, creation/storage/migration failure behavior and exit status not defined.",
+        "ambiguity_alignment": [
+          {"a_ids": ["A-B01-A01"], "b_ids": ["B.B01.A02"], "issue": "Ranking observability beyond CRITICAL above HIGH unresolved."},
+          {"a_ids": ["A-B01-A02", "A-B01-U01"], "b_ids": ["B.B01.O05", "B.B01.U02"], "issue": "Both read list includes it as task/value inclusion; A additionally labels that reading an ambiguity. Exact response shapes open."},
+          {"a_ids": ["A-B01-A03"], "b_ids": ["B.B01.A01"], "issue": "Both flag missing-priority scope, but their positive default obligations are not the same domain."}
+        ],
+        "unspecified_alignment": [
+          {"a_ids": ["A-B01-U01", "A-B01-U04"], "b_ids": ["B.B01.U02"], "issue": "Task schema, interface/response, list ordering, pagination and unrelated filters open."},
+          {"a_ids": ["A-B01-U02"], "b_ids": ["B.B01.U01"], "issue": "Complete accepted set, case/aliases/null/invalid handling open."},
+          {"a_ids": ["A-B01-O11", "A-B01-A01"], "b_ids": ["B.B01.U03"], "issue": "No reconstructed order among LOW/NORMAL/HIGH or comprehensive rank interface."},
+          {"a_ids": ["A-B01-U03", "A-B01-U05"], "b_ids": ["B.B01.U04", "B.B01.U05", "B.B01.A01"], "issue": "Persistence durability details, migration mechanism/failure and unrelated-field treatment open; A explicitly leaves missing/unknown/already-CRITICAL historical records unspecified, whereas B leaves whether migration is a defaulting point unresolved."},
+          {"a_ids": ["A-B01-U06"], "b_ids": ["B.B01.U06"], "issue": "Unrelated baseline command/state/effect behavior open."}
+        ],
+        "implementation_alignment": {"a_ids": ["A-B01-I01", "A-B01-I02"], "b_ids": ["B.B01.I01", "B.B01.I02", "B.B01.I03"], "issue": "Priority/storage/migration/command representation choices open subject to local values, rank, persistence, selection and preservation."}
+      },
+      "disagreements": [
+        {"kind": "behavioral_domain_difference", "a_ids": ["A-B01-O10", "A-B01-A03", "A-B01-U05"], "b_ids": ["B.B01.O10", "B.B01.A01"], "finding": "A concretely limits the mandatory NORMAL default to priority omitted when creating a task. B retains a general obligation wherever an unspecified priority-defaulting point applies, with no create-only limit. Both identify ambiguity, but ambiguity annotations do not erase this difference in positive obligation domain.", "material": true, "conditional_witness": "Consider an interface with a non-create missing-priority defaulting point, such as an existing-record load or update default, returning LOW while omitted create priority defaults to NORMAL. A does not constrain that non-create case; B's O10 requires NORMAL if the case is within its priority-defaulting domain. This witness illustrates the conditional domain difference, not an asserted historical API or an imported baseline.", "unresolved_boundary": "B does not establish which non-create operations are defaulting points and does not unconditionally require filling missing stored fields during migration. Therefore no concrete historical migration disagreement or observed behavioral failure is claimed.", "resolution": "Source-owner clarification must define applicable defaulting points. Narrowing B to create-only or widening A would change the candidate domain and cannot be done silently."},
+        {"kind": "basis_classification", "a_ids": ["A-B01-O05", "A-B01-O06"], "b_ids": ["B.B01.O06"], "finding": "A separately marks exact-match exclusions/inclusion as necessary implications; B includes exclusions with the stated criterion. No behavioral difference."},
+        {"kind": "explicitness_not_behavior", "a_ids": ["A-B01-O03", "A-B01-O04"], "b_ids": ["B.B01.O12"], "finding": "B explicitly lists the entailed create-to-list observation. A's persistence and listing obligations jointly cover it."},
+        {"kind": "issue_disposition", "a_ids": ["A-B01-A02"], "b_ids": ["B.B01.O05", "B.B01.U02"], "finding": "A flags task-versus-catalog reading while B adopts task/value inclusion and leaves envelope unspecified. Same positive listing interpretation."}
+      ],
+      "issue_disposition": "Shared local obligations are compatible and substantial, but the missing-priority domain divergence prevents full semantic equivalence. MATERIALLY_DIVERGENT does not mean mutually contradictory, does not adjudicate either reading as approved, and does not turn B's unresolved domain into an unconditional legacy-migration rule."
+    }
+  ],
+  "summary": {
+    "source_pairs_compared": 7,
+    "classification_counts": {
+      "SEMANTICALLY_EQUIVALENT_WITHIN_DECLARED_SCOPE": 6,
+      "COMPATIBLE_BUT_INCOMPLETE": 0,
+      "MATERIALLY_DIVERGENT": 1,
+      "CONFLICTING": 0,
+      "INDETERMINATE": 0
+    },
+    "equivalent_sources": ["S03", "S07", "S08", "S09", "S10", "S12"],
+    "materially_divergent_sources": ["B01"],
+    "semantic_agreement_pair_count_without_strict_isolation_qualification": 6,
+    "strict_two_file_isolation_qualified_agreement_pair_count": 0,
+    "broader_no_other_outputs_seen_attempt_count": 2,
+    "approval_or_execution_authority_created": false,
+    "limitations": [
+      "Judgment concerns these candidate obligation/issue records on seven public requirement-local examples, not all inputs, requirements, formalizers, providers or implementations.",
+      "Same-model separate contexts are not cross-provider independence; context/tool histories and infrastructure separation were not independently audited.",
+      "Corpus concern annotations were visible to both, so agreement on expected issues is not blind independent discovery.",
+      "B violated strict two-file input isolation; semantic agreement counts must not be presented as strict-isolation qualification. This comparison also read two mandatory governance documents beyond the four requested files and discloses that deviation.",
+      "The no-other-outputs observation is based on candidate disclosures and visible operations, not a broader filesystem audit, and is distinct from input-isolation compliance.",
+      "S03 returned-content agreement uses exact input-record membership as a justified inference; input nonmutation alone would not entail it. The explicit-versus-entailed coverage distinction is preserved.",
+      "S07 symbolic encoding ambiguity-versus-unspecified categorization is retained as an issue-disposition difference, without inventing an encoding or weakening INVALID coverage.",
+      "S08 has no executable best predicate; S09 is internally inconsistent under the documented ordinary ordering; S12 eligibility sufficiency and otherwise scope remain unresolved. Equivalent candidate issue records are not approved behavioral authority.",
+      "B01's material missing-priority domain difference remains unresolved despite shared ambiguity records. No unconditional legacy-field defaulting or complete historical task-manager baseline is inferred.",
+      "No implementation execution, behavioral oracle, compiler/support assessment, schema validation, byte digest or universal equivalence proof was performed. Source clause coverage and logical entailment were reviewed from the displayed permitted semantic inputs."
+    ]
+  }
+}

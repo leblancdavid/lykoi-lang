@@ -1,5 +1,35 @@
 # Experimental decisions
 
+## R5.80 — Reviewable candidates and conservative partial qualification
+
+Adopt [FRC-0.1](formal-requirement-contract-v0.1.md) as experimental upstream
+process infrastructure, with stable source-bound clauses, direct/implication
+bases, explicit unresolved issues, open behavior and separate independent review.
+Content hashes and reviewer-identity inequality are bookkeeping, not semantic
+truth or trusted independence. Behavioral equivalence preserves unspecified
+freedoms and does not require identical clause/ID serialization.
+
+Choose **R5_80_REQUIREMENT_FORMALIZATION_PARTIAL**: structured human-reviewable
+clauses still contain informal relation parameters; same-family procedural
+isolation has disclosed read-scope limits; the synthetic texts are AI-authored
+human-style examples. Preserve these limits rather than upgrading the process
+to benchmark input-production authority from passing tests.
+
+The bounded complete projection supports explicit source-selected public
+components and existing V1 supplemental meanings. Other approved contracts fail
+UNREPRESENTABLE_SOURCE without losing obligations. Treat missing qualified mapping
+as an evaluation/projection gap, not proof of V1 impossibility or a language gap.
+Separately bind exact projection/map review; no Lykoi/V1 expansion to improve
+coverage. Public B01's local defaulting ambiguity remains unresolved, rather than
+choosing creation-only behavior. Preserve original historical B01 authority.
+
+Evidence: 9/14 source candidates approved, 4 clarification, 1 conflict; three
+defective drafts correctly nonapproved; 1/9 complete calibrated V1 projection,
+8 explicit failures; mechanical checks 18/18 plus unchanged V1 33/33. No production
+authority, protected formalization or next gate. B03 counters zero and pristine;
+core 30, Phase 5C paused. See the
+[report](../benchmark/results/phase5c/R5_80-REQUIREMENT-FORMALIZATION-QUALIFICATION.md).
+
 ## R5.79 — Independent formal behavior before semantic evaluation
 
 Adopt `Human Requirement → Requirement Formalization → Formal Requirement

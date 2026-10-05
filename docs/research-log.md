@@ -1,5 +1,42 @@
 # Lykoi research log
 
+## R5.80 requirement formalization qualification (2026-10-05)
+
+Observed **R5_80_REQUIREMENT_FORMALIZATION_PARTIAL**. Versioned
+[FRC-0.1](formal-requirement-contract-v0.1.md), schema, a twelve-example public
+AI-authored human-style corpus, public B01 and a public component calibration
+exercise reviewable behavioral clauses, stable IDs, provenance and issue handling.
+Separate source-WHAT review approves 9/14, blocks 4 for clarification and 1 for
+conflict. Three deliberately defective drafts detect leakage, invented invalid
+behavior and an omitted success obligation. Approval remains content-bound and
+distinct from initial drafting; mechanical identity is not independent trust.
+
+Two same-family isolated contexts compare semantically equivalent on 6/7 sources
+within candidate scope; B01 differs materially on missing-priority defaulting
+domain. B exceeded requested input isolation with mandated guidance reads, so
+there are zero strict-isolation-qualified comparison pairs. Shared concern
+annotations, same-model bias and a coordinating content-search scope deviation
+limit independent/trusted-process claims. No B03 content was returned or opened.
+
+Public B01 retains every identified local obligation but is NEEDS_CLARIFICATION;
+the local text alone does not settle create omission versus legacy field absence.
+No historical requirement is rewritten. P01's source explicitly selects complete
+existing public components: all context and two supplemental obligations survive
+V1 normalization/recovery and separate projection review. Eight other approved
+sources fail closed NO_QUALIFIED_COMPLETE_MAPPING: this is a prototype projection
+gap, not proof of language/V1 incapability. No arbitrary prose round-trip is proved.
+
+Final mechanical evidence: new tests **18/18 PASS**, unchanged guarded V1 **33/33
+PASS**, actual protected read attempts **zero**. First new suite **11 pass / 1
+failure / 3 errors** exposed comparator tuple/strict-JSON and error-wrapper defects;
+only prospective infrastructure was repaired. No existing compiler/runtime/schema
+or V1 adapter changed. Textual parameters, human-source diversity, resolution
+authority, evidence inventories, complete mapping and trusted containment remain
+limitations. Core **30**, B02 exposed/indeterminate retained. All B03 activity
+counters **zero**, pristine/not evaluated/not exposed, no package/eligibility.
+R5.80 stops; Phase 5C paused. See the
+[report and public evidence](../benchmark/results/phase5c/R5_80-REQUIREMENT-FORMALIZATION-QUALIFICATION.md).
+
 ## R5.79 requirement formalization boundary (2026-10-05)
 
 Adopted prospective methodology: Phase 5 begins from independent formal behavioral

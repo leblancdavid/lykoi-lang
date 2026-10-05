@@ -1,0 +1,56 @@
+{
+  "record": "R5.80-session-verification-v1",
+  "evidence_type": "Recorded command observations; not a signed execution attestation",
+  "initial_prototype_run": {
+    "command": "python -B -S -m benchmark.evaluation.test_formal_requirements_r5_80",
+    "tests": 15,
+    "passed": 11,
+    "failures": 1,
+    "errors": 3,
+    "status": "FAIL",
+    "defects": [
+      "Comparator used an internal tuple after canonicalization was tightened to reject non-JSON values.",
+      "Validation's ValueError wrapper obscured the more precise ContractError code for non-JSON input."
+    ],
+    "repair_scope": "New prospective R5.80 module only; no Lykoi semantics, frozen component or benchmark run repaired."
+  },
+  "intermediate_prototype_run": {
+    "command": "python -B -S -m benchmark.evaluation.test_formal_requirements_r5_80",
+    "tests": 15,
+    "passed": 15,
+    "failures": 0,
+    "errors": 0,
+    "status": "PASS"
+  },
+  "final_prototype_run": {
+    "command": "python -B -S -m benchmark.evaluation.test_formal_requirements_r5_80",
+    "tests": 18,
+    "passed": 18,
+    "failures": 0,
+    "errors": 0,
+    "status": "PASS",
+    "new_checks": ["Separate projection review binding", "Bounded order-conflict witness", "Evidence and exact locator reproduction"]
+  },
+  "existing_v1_regression": {
+    "command": "python -B -S -m benchmark.evaluation.test_benchmark_documents_v1",
+    "tests": 33,
+    "passed": 33,
+    "failures": 0,
+    "errors": 0,
+    "protected_read_attempts": 0,
+    "status": "PASS",
+    "scope": "Existing synthetic/public adapter tests, including public/fake static lifecycles; not 33 formalizer tests or actual held-out evaluation."
+  },
+  "whitespace": {"command":"git diff --check","status":"PASS","scope":"Tracked documentation diff; Git emitted checkout line-ending notices."},
+  "source_scope_deviations": [
+    {"actor":"Independent attempt B","status":"DISCLOSED","detail":"Additional mandated repository-governance reads beyond its two-file input restriction; not clean strict input isolation."},
+    {"actor":"Comparison reviewer","status":"DISCLOSED","detail":"Additional mandated repository-governance reads beyond its comparison-input list."},
+    {"actor":"Coordinator","status":"READ_SCOPE_DEVIATION","detail":"A file-targeted content search expanded to the containing semantic directory and returned unrelated historical draft snippets. Output was discarded; no B03 content returned or opened; no subsequent request investigation."}
+  ],
+  "limits": [
+    "No repository-wide enforced sandbox or cross-provider study.",
+    "Review judgments and comparison records are not executable universal proof.",
+    "No broad harness discovery, protected benchmark opening or production qualification.",
+    "All reported B03 activity counts are zero; no protected content or ledger was inspected to establish that accounting."
+  ]
+}

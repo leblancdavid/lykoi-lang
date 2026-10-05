@@ -71,6 +71,25 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.80 process qualification](../benchmark/results/phase5c/R5_80-REQUIREMENT-FORMALIZATION-QUALIFICATION.md)
+ends **`R5_80_REQUIREMENT_FORMALIZATION_PARTIAL`**. Experimental
+[FRC-0.1](formal-requirement-contract-v0.1.md) supplies structured candidates,
+source provenance, stable IDs, issue records and separate content-bound review.
+Independent source-WHAT review of **14 public/synthetic candidates** approves **9**,
+blocks **4** for clarification (including B01) and **1** for conflict; three
+adversarial drafts are rejected/incomplete. Two same-family contexts have **6/7
+candidate-scope semantic agreements**, with B01 default-domain divergence and a
+disclosed input-isolation deviation; clean-isolation agreement is unqualified.
+Of **9 approved projection attempts**, one explicit public-component calibration
+preserves complete V1 context/obligations with separate fidelity approval; **8**
+fail closed for missing qualified complete mappings. New mechanical checks **18/18**
+and unchanged guarded V1 checks **33/33** pass. Textual relation precision,
+real-human corpus, trusted isolation and general full projections remain gaps.
+**B03_PRISTINE / B03_NOT_EVALUATED / B03_NOT_EXPOSED_TO_LYKOI_DEVELOPMENT**;
+all B03 access/activity counters **zero**, no package or eligibility. Core **30**,
+B02 exposed/indeterminate retained, Phase 5C paused. R5.80 stops; no protected
+formalization or subsequent round is authorized. Earlier boundaries retain their scope.
+
 The [R5.79 formalization boundary](../benchmark/results/phase5c/R5_79-REQUIREMENT-FORMALIZATION-BOUNDARY-AND-INDEPENDENT-BENCHMARK-AUTHORITY.md)
 ends **`R5_79_REQUIREMENT_FORMALIZATION_BOUNDARY_QUALIFIED`** in architecture/
 methodology scope. The [versioned specification](requirement-formalization-boundary-v1.md)

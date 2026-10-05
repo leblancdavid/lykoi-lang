@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lykoi:formal-requirement-contract:0.1",
+  "title": "Formal Requirement Contract 0.1 experimental record",
+  "description": "Bounded structural validation for reviewed declarative requirement clauses; not an executable DSL or universal predicate semantics.",
+  "$comment": "Matches benchmark/evaluation/formal_requirements_r5_80.py's serialized envelope. Runtime additionally checks source SHA-256, exact quotes, ID uniqueness, valid references and acyclic derivations. Richer revision authority, coverage, no invention, ambiguity/conflict handling, neutrality, consistency and fidelity require separate review. Schema validity does not establish semantic equivalence, entailment, approval or projection fidelity. No source-owner resolution adapter is implemented; resolved stays false. No third-party dependency.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "contract_id", "revision", "source", "context",
+    "obligations", "issues", "unspecified", "implementation_choices",
+    "lineage", "formalizer", "review"
+  ],
+  "properties": {
+    "schema_version": { "const": "FormalRequirementContract-0.1" },
+    "contract_id": { "$ref": "#/$defs/nonblank" },
+    "revision": { "type": "integer", "minimum": 1 },
+    "source": { "$ref": "#/$defs/source" },
+    "context": { "$ref": "#/$defs/context" },
+    "obligations": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/obligation" },
+      "$comment": "Empty drafts are allowed; runtime review forbids empty approval. uniqueItems does not enforce uniqueness of the id property."
+    },
+    "issues": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/issue" }
+    },
+    "unspecified": { "$ref": "#/$defs/textArray" },
+    "implementation_choices": { "$ref": "#/$defs/textArray" },
+    "lineage": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/lineage" }
+    },
+    "formalizer": { "$ref": "#/$defs/nonblank" },
+    "review": { "type": "null" }
+  },
+  "$defs": {
+    "nonblank": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "sha256": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "textArray": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonblank" }
+    },
+    "jsonValue": {
+      "description": "Structured JSON data bound to reviewer judgment, without an inferred predicate interpretation.",
+      "anyOf": [
+        { "type": "null" },
+        { "type": "boolean" },
+        { "type": "number" },
+        { "type": "string" },
+        {
+          "type": "array",
+          "items": { "$ref": "#/$defs/jsonValue" }
+        },
+        { "$ref": "#/$defs/jsonObject" }
+      ]
+    },
+    "jsonObject": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/nonblank" },
+      "additionalProperties": { "$ref": "#/$defs/jsonValue" }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "text", "sha256", "classification"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonblank" },
+        "text": { "$ref": "#/$defs/nonblank" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "classification": { "enum": ["SYNTHETIC", "PUBLIC"] }
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope", "domains", "assumptions", "component_authority"],
+      "properties": {
+        "scope": { "$ref": "#/$defs/nonblank" },
+        "domains": {
+          "$ref": "#/$defs/jsonObject",
+          "$comment": "Named domains are structured reviewer-bound JSON; the schema does not assign universal logical semantics."
+        },
+        "assumptions": { "$ref": "#/$defs/textArray" },
+        "component_authority": {
+          "anyOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/jsonObject" }
+          ],
+          "$comment": "Runtime validation permits an object; projection separately requires exactly application and configuration and validates their V1 meaning. Public provenance, selection scope and content commitments require external review evidence."
+        }
+      }
+    },
+    "relation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "parameters"],
+      "properties": {
+        "kind": {
+          "enum": [
+            "sum", "increment", "crud", "filter_order", "normalize_ascii",
+            "transition", "invariant", "persist", "optional_dispatch",
+            "selection_prefix", "effects", "priority_extension", "priority_rank",
+            "priority_create", "priority_list", "priority_filter",
+            "migration_preserve", "default", "public_state_alternatives",
+            "durable_content_constraints"
+          ]
+        },
+        "parameters": {
+          "$ref": "#/$defs/jsonObject",
+          "$comment": "Only an object shape is specified, not kind-specific semantics. Review must require explicit domain, condition and frame where applicable and compare statement/context. No generic V1 mapper is implied."
+        }
+      }
+    },
+    "obligation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "basis", "source_quote", "derived_from", "relation", "statement"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonblank" },
+        "basis": { "enum": ["STATED", "NECESSARY_IMPLICATION"] },
+        "source_quote": { "$ref": "#/$defs/nonblank" },
+        "derived_from": { "$ref": "#/$defs/textArray" },
+        "relation": { "$ref": "#/$defs/relation" },
+        "statement": { "$ref": "#/$defs/nonblank" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "basis": { "const": "NECESSARY_IMPLICATION" } } },
+          "then": { "properties": { "derived_from": { "minItems": 1 } } },
+          "else": { "properties": { "derived_from": { "maxItems": 0 } } }
+        }
+      ]
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "category", "description", "affects", "alternatives", "witness", "resolved"],
+      "properties": {
+        "id": { "$ref": "#/$defs/nonblank" },
+        "category": { "enum": ["AMBIGUITY", "CONFLICT", "QUESTION"] },
+        "description": { "$ref": "#/$defs/nonblank" },
+        "affects": { "$ref": "#/$defs/textArray" },
+        "alternatives": { "$ref": "#/$defs/textArray" },
+        "witness": {
+          "anyOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/jsonObject" }
+          ]
+        },
+        "resolved": { "const": false }
+      }
+    },
+    "lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["change", "previous", "current", "reason"],
+      "properties": {
+        "change": { "enum": ["retire", "split", "merge", "meaning_change"] },
+        "previous": { "$ref": "#/$defs/textArray" },
+        "current": { "$ref": "#/$defs/textArray" },
+        "reason": { "$ref": "#/$defs/nonblank" }
+      },
+      "$comment": "Closed runtime-supported lineage shape. Runtime checks current IDs against obligations; historical continuity, retirement, split/merge cardinality and revision/authority evidence need independent review. Other prospective specification events are not implemented by this runtime."
+    }
+  }
+}

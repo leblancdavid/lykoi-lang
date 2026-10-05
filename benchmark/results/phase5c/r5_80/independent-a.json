@@ -1,0 +1,264 @@
+{
+  "record_id": "R5.80-independent-A",
+  "status": "independent candidate records; not approved authority",
+  "role": "Attempt A: isolated independent formalizer of S03, S07, S08, S09, S10, S12 and public B01",
+  "scope": "Requirement-local interpretation of the supplied sources only. No baseline contract or implementation is imported.",
+  "isolation": {
+    "inputs_seen": [
+      {"path": "benchmark/results/phase5c/r5_80/corpus.json", "extent": "Complete file, including non-target source texts, concern annotations, public-example metadata and authorship metadata."},
+      {"path": "benchmark/requirements/B01.md", "extent": "Complete six-line public requirement."},
+      {"kind": "conversation", "extent": "User instructions and preloaded system/developer/harness instructions, including repository guidance already in context."},
+      {"kind": "repository status", "extent": "git status --short reported the untracked benchmark/results/phase5c/r5_80/ directory; no file contents were disclosed by that command."}
+    ],
+    "tools_used": ["functions.bash: git status --short", "multi_tool_use.parallel: two functions.read calls for the permitted files", "functions.apply_patch: create this record"],
+    "other_formalizations_seen": false,
+    "support_compiler_or_held_out_requests_consulted": false,
+    "limitations": [
+      "Isolation is procedural within this attempt's context; no OS sandbox is claimed.",
+      "A separate attempt context is used for this candidate; model-family independence is not claimed. Same model family is allowed by the assignment.",
+      "Reading the entire permitted corpus exposed other public synthetic source texts and coordinator-written concern annotations. Those annotations are not treated as additional normative obligations.",
+      "Preloaded repository guidance and the required status check were visible; no other repository file was read or searched.",
+      "No external research, execution of an implementation, or comparison to another formalization was performed."
+    ]
+  },
+  "notation": {
+    "stated": "Directly expressed by the source text, including clauses expressed as a whole by several words.",
+    "necessary-implication": "Required for the stated behavior to hold, without selecting an implementation.",
+    "state": "before and after refer to one operation's observable pre-state and post-state; scopes are stated locally.",
+    "occurrence": "An input position is an occurrence, so equal-valued records or names are not silently deduplicated.",
+    "unspecified": "No obligation is asserted for the recorded issue. This is not permission to contradict an obligation on its stated domain."
+  },
+  "sources": [
+    {
+      "source_id": "S03",
+      "provenance": {"path": "benchmark/results/phase5c/r5_80/corpus.json", "selector": "sources[id=S03].text"},
+      "full_text": "Given a sequence of records with name and active fields, return exactly the active records, sorted by name in ascending Unicode code-point order. Equal names retain their input order. Do not change the input.",
+      "obligations": [
+        {"id": "A-S03-O01", "basis": "stated", "conditions": "Input is a sequence of records with name and active fields.", "result": "The returned sequence consists exactly of the active input occurrences: every active occurrence appears once and no inactive occurrence appears."},
+        {"id": "A-S03-O02", "basis": "stated", "conditions": "For any two result occurrences in positions i < j.", "result": "Their names are nondecreasing in ascending Unicode code-point order, comparing name strings lexicographically by code points, with a proper prefix preceding its extension."},
+        {"id": "A-S03-O03", "basis": "stated", "conditions": "Two selected input occurrences have equal names and input positions i < j.", "result": "The occurrence from i precedes the occurrence from j in the result."},
+        {"id": "A-S03-O04", "basis": "stated", "state": "The input sequence, its order and its records' contents are unchanged by the operation."},
+        {"id": "A-S03-O05", "basis": "necessary-implication", "derived_from": ["A-S03-O01"], "result": "Returned occurrences preserve their record contents; selection and ordering do not authorize changing record fields. Result length equals the number of active input occurrences; it is zero when there are none."}
+      ],
+      "ambiguities": [
+        {"id": "A-S03-A01", "issue": "The type and interpretation of active are not explicitly defined. The obligations use the source predicate 'active'; no truthiness or coercion rule is chosen.", "material_to": ["A-S03-O01"]}
+      ],
+      "conflicts": [],
+      "unspecified": [
+        {"id": "A-S03-U01", "issue": "Handling missing fields, non-string names, malformed records or a non-sequence input."},
+        {"id": "A-S03-U02", "issue": "Object identity, aliasing and copying strategy of returned records or the result container."},
+        {"id": "A-S03-U03", "issue": "Changes to non-input state and external effects; input nonmutation alone is not a global purity requirement."}
+      ],
+      "implementation_choices": [
+        {"id": "A-S03-I01", "issue": "Selection and sorting algorithm and storage layout are open, provided exact occurrence membership, code-point order, stable ties and input nonmutation hold."}
+      ],
+      "coverage": [
+        {"clause": "return exactly the active records", "obligations": ["A-S03-O01", "A-S03-O05"]},
+        {"clause": "sorted by name in ascending Unicode code-point order", "obligations": ["A-S03-O02"]},
+        {"clause": "Equal names retain their input order", "obligations": ["A-S03-O03"]},
+        {"clause": "Do not change the input", "obligations": ["A-S03-O04"]}
+      ],
+      "recommended_review_outcome": "Retain as a candidate with explicit partial-domain qualification; clarify active-field interpretation before claiming a complete executable input contract."
+    },
+    {
+      "source_id": "S07",
+      "provenance": {"path": "benchmark/results/phase5c/r5_80/corpus.json", "selector": "sources[id=S07].text"},
+      "full_text": "Given an object with an optional nullable integer value, return ABSENT when value is omitted, NULL when it is explicitly null, and that integer otherwise. Return INVALID for any other present value. Produce no state changes or external effects.",
+      "obligations": [
+        {"id": "A-S07-O01", "basis": "stated", "conditions": "Input is an object and its value field is omitted.", "result": "Return ABSENT."},
+        {"id": "A-S07-O02", "basis": "stated", "conditions": "Input is an object and its value field is present with explicit null.", "result": "Return NULL."},
+        {"id": "A-S07-O03", "basis": "stated", "conditions": "Input is an object and its value field is present with an integer k.", "result": "Return that same integer k, without conversion to another value."},
+        {"id": "A-S07-O04", "basis": "stated", "conditions": "Input is an object and its value field is present, neither null nor an integer.", "result": "Return INVALID."},
+        {"id": "A-S07-O05", "basis": "stated", "conditions": "For all specified input branches, including INVALID.", "state": "No state changes.", "effects": "No external effects."},
+        {"id": "A-S07-O06", "basis": "necessary-implication", "derived_from": ["A-S07-O01", "A-S07-O02", "A-S07-O03", "A-S07-O04"], "result": "Omission, explicit null, integer and other-present cases are distinguished. An omitted field is not treated as null, and an invalid present value is not coerced into an accepted integer."}
+      ],
+      "ambiguities": [
+        {"id": "A-S07-A01", "issue": "The input representation and integer type boundary are unspecified: for example, whether a numeric representation with an integral value is an integer. No host-language boolean-as-integer behavior is assumed."},
+        {"id": "A-S07-A02", "issue": "The representation of the named results ABSENT, NULL and INVALID is not prescribed. They are symbolic outcomes here, not assumed wire strings or host null."}
+      ],
+      "conflicts": [],
+      "unspecified": [
+        {"id": "A-S07-U01", "issue": "Result behavior for a non-object input, and how field presence is represented in an object model."},
+        {"id": "A-S07-U02", "issue": "Allowed integer range and behavior for values outside a concrete implementation's representable range."}
+      ],
+      "implementation_choices": [
+        {"id": "A-S07-I01", "issue": "Presence detection and result encoding may be chosen, while preserving the four specified observable cases and the no-state/no-effect rule."}
+      ],
+      "coverage": [
+        {"clause": "ABSENT when value is omitted", "obligations": ["A-S07-O01", "A-S07-O06"]},
+        {"clause": "NULL when it is explicitly null", "obligations": ["A-S07-O02", "A-S07-O06"]},
+        {"clause": "that integer otherwise", "obligations": ["A-S07-O03"]},
+        {"clause": "INVALID for any other present value", "obligations": ["A-S07-O04", "A-S07-O06"]},
+        {"clause": "no state changes or external effects", "obligations": ["A-S07-O05"]}
+      ],
+      "recommended_review_outcome": "Retain the four-way candidate contract; clarify representation and integer boundaries before claiming full executable-domain coverage."
+    },
+    {
+      "source_id": "S08",
+      "provenance": {"path": "benchmark/results/phase5c/r5_80/corpus.json", "selector": "sources[id=S08].text"},
+      "full_text": "Return the best tasks.",
+      "obligations": [
+        {"id": "A-S08-O01", "basis": "stated", "result": "Return tasks characterized as 'best'. This is a source-level obligation with an unresolved predicate, not an operational ranking or selection rule."}
+      ],
+      "ambiguities": [
+        {"id": "A-S08-A01", "issue": "'Best' has no criterion, scoring relation or comparison rule; therefore no concrete task can be proven included or excluded from this text alone.", "material_to": ["A-S08-O01"]},
+        {"id": "A-S08-A02", "issue": "The candidate task population, number of tasks to return, meaning of ties and output order are not supplied."}
+      ],
+      "conflicts": [],
+      "unspecified": [
+        {"id": "A-S08-U01", "issue": "Task structure, input interface, empty-population behavior, result representation, state changes and external effects."}
+      ],
+      "implementation_choices": [
+        {"id": "A-S08-I01", "issue": "No concrete implementation choice is endorsed. Choosing a meaning for 'best' would add a requirement rather than merely implement this source."}
+      ],
+      "coverage": [{"clause": "Return the best tasks", "obligations": ["A-S08-O01"], "unresolved_records": ["A-S08-A01", "A-S08-A02"]}],
+      "recommended_review_outcome": "Require source clarification; do not approve a concrete selection or ordering contract."
+    },
+    {
+      "source_id": "S09",
+      "provenance": {"path": "benchmark/results/phase5c/r5_80/corpus.json", "selector": "sources[id=S09].text"},
+      "full_text": "For every input sequence of names, return all names in insertion order and always sorted alphabetically ascending.",
+      "obligations": [
+        {"id": "A-S09-O01", "basis": "stated", "conditions": "Every input sequence of names.", "result": "Return all input name occurrences, preserving their values and multiplicities."},
+        {"id": "A-S09-O02", "basis": "stated", "conditions": "Every input sequence of names.", "result": "Return those occurrences in insertion order, understood as their order in the supplied sequence."},
+        {"id": "A-S09-O03", "basis": "stated", "conditions": "Every input sequence of names.", "result": "The same returned sequence is alphabetically ascending."},
+        {"id": "A-S09-O04", "basis": "necessary-implication", "derived_from": ["A-S09-O01", "A-S09-O02", "A-S09-O03"], "result": "All three constraints apply simultaneously to the same output; no branch, priority or exception is stated."}
+      ],
+      "ambiguities": [
+        {"id": "A-S09-A01", "issue": "Alphabetical collation, case handling and language are undefined. This does not resolve the simultaneous-order conflict for an ordinary alphabet with a preceding z."},
+        {"id": "A-S09-A02", "issue": "The input gives a sequence but no separate insertion history. Sequence order is the local reading of insertion order; a different intended meaning needs source clarification."}
+      ],
+      "conflicts": [
+        {"id": "A-S09-C01", "obligations": ["A-S09-O01", "A-S09-O02", "A-S09-O03", "A-S09-O04"], "witness": {"input": ["z", "a"], "insertion_order_output": ["z", "a"], "alphabetical_output": ["a", "z"]}, "reason": "Under the ordinary alphabetical relation a < z, no single sequence of these two occurrences satisfies both orders. Restricting inputs to already sorted sequences contradicts the stated every-input domain.", "resolution": "No precedence or repair is adopted."}
+      ],
+      "unspecified": [
+        {"id": "A-S09-U01", "issue": "Invalid input behavior, state changes, effects and output representation."}
+      ],
+      "implementation_choices": [
+        {"id": "A-S09-I01", "issue": "An implementation cannot repair the conflict by silently dropping names, returning two outputs, restricting the domain or choosing one ordering clause."}
+      ],
+      "coverage": [
+        {"clause": "For every input sequence of names", "obligations": ["A-S09-O01", "A-S09-O02", "A-S09-O03"]},
+        {"clause": "return all names", "obligations": ["A-S09-O01"]},
+        {"clause": "in insertion order and always sorted alphabetically ascending", "obligations": ["A-S09-O02", "A-S09-O03", "A-S09-O04"], "unresolved_records": ["A-S09-C01"]}
+      ],
+      "recommended_review_outcome": "Return for source correction: incompatible universal ordering constraints. Preserve both clauses as evidence rather than approving a repaired interpretation."
+    },
+    {
+      "source_id": "S10",
+      "provenance": {"path": "benchmark/results/phase5c/r5_80/corpus.json", "selector": "sources[id=S10].text"},
+      "full_text": "For a positive integer n, return n plus one.",
+      "obligations": [
+        {"id": "A-S10-O01", "basis": "stated", "conditions": "n is an integer and n > 0.", "result": "Return the integer n + 1."},
+        {"id": "A-S10-O02", "basis": "necessary-implication", "derived_from": ["A-S10-O01"], "conditions": "n is a positive integer.", "result": "The returned mathematical value is greater than n by exactly one; wrapping, saturation or approximation is not an equivalent successful result."}
+      ],
+      "ambiguities": [],
+      "conflicts": [],
+      "unspecified": [
+        {"id": "A-S10-U01", "issue": "Behavior for zero, negative integers, non-integers, missing inputs or malformed representations: no rejection outcome or coercion policy is stated."},
+        {"id": "A-S10-U02", "issue": "State changes and external effects are not constrained by this source."},
+        {"id": "A-S10-U03", "issue": "Integer encoding, interface and resource limits are not supplied. No finite maximum is added to the stated positive-integer domain."}
+      ],
+      "implementation_choices": [
+        {"id": "A-S10-I01", "issue": "Arithmetic mechanism and representation are open insofar as they deliver the stated mathematical result on the source domain."}
+      ],
+      "coverage": [{"clause": "For a positive integer n, return n plus one", "obligations": ["A-S10-O01", "A-S10-O02"]}],
+      "recommended_review_outcome": "Retain as a success-domain candidate. Do not append an invalid-input policy or purity contract."
+    },
+    {
+      "source_id": "S12",
+      "provenance": {"path": "benchmark/results/phase5c/r5_80/corpus.json", "selector": "sources[id=S12].text"},
+      "full_text": "On an accepted reservation, reduce available seats by the requested positive count and return the remaining count. Accept only when the requested count does not exceed available seats. Otherwise return INSUFFICIENT and change nothing. Available seats must never be negative. Emit exactly one confirmation to the caller on success and none on rejection.",
+      "obligations": [
+        {"id": "A-S12-O01", "basis": "stated", "conditions": "A reservation is accepted, with requested positive count c and available seats a before the operation.", "state": "Available seats after the operation equal a - c.", "result": "Return a - c, the remaining count."},
+        {"id": "A-S12-O02", "basis": "stated", "conditions": "A reservation is accepted within the stated positive-count domain.", "required_precondition": "c <= a. Acceptance with c > a is prohibited."},
+        {"id": "A-S12-O03", "basis": "stated", "conditions": "Requested positive count c exceeds available seats a.", "result": "Return INSUFFICIENT.", "state": "Change nothing."},
+        {"id": "A-S12-O04", "basis": "stated", "state": "Available seats are never negative, including before, during and after specified reservation behavior."},
+        {"id": "A-S12-O05", "basis": "stated", "conditions": "Reservation succeeds (the accepted branch).", "effects": "Emit exactly one confirmation to the caller."},
+        {"id": "A-S12-O06", "basis": "stated", "conditions": "Reservation is rejected.", "effects": "Emit zero confirmations."},
+        {"id": "A-S12-O07", "basis": "necessary-implication", "derived_from": ["A-S12-O01", "A-S12-O02", "A-S12-O04"], "conditions": "An accepted request consumes exactly the available positive count, c = a.", "state": "Available seats become zero.", "result": "Return zero."},
+        {"id": "A-S12-O08", "basis": "necessary-implication", "derived_from": ["A-S12-O02", "A-S12-O03", "A-S12-O04", "A-S12-O06"], "conditions": "Available seats are zero and the requested count is positive.", "state": "State remains unchanged.", "result": "Return INSUFFICIENT.", "effects": "No confirmation."}
+      ],
+      "ambiguities": [
+        {"id": "A-S12-A01", "issue": "'Accept only when' establishes a necessary eligibility condition, not unambiguously a sufficient one. 'Otherwise' naturally describes insufficient-seat rejection, but could be read as all nonacceptance. Whether every eligible positive-count request must be accepted requires clarification; no unconditional eligible-request acceptance obligation is added."},
+        {"id": "A-S12-A02", "issue": "Counts suggest discrete seat quantities, but integer typing, representation and bounds are not explicit."},
+        {"id": "A-S12-A03", "issue": "'Change nothing' specifies rejection-state preservation. The source also expressly prohibits rejection confirmations; it does not expressly prohibit every other external effect."}
+      ],
+      "conflicts": [],
+      "unspecified": [
+        {"id": "A-S12-U01", "issue": "Handling zero, negative, missing or otherwise invalid requested counts; no INVALID outcome is invented."},
+        {"id": "A-S12-U02", "issue": "Initialization, persistence, concurrent reservations, retries, operation identities and failure recovery. The seat invariant applies, but no transaction or delivery mechanism is prescribed."},
+        {"id": "A-S12-U03", "issue": "Confirmation contents, channel and timing; caller representation; behavior when confirmation emission fails."},
+        {"id": "A-S12-U04", "issue": "Accepted-operation changes to state other than available seats and external effects other than the required confirmation are not given an explicit frame condition."},
+        {"id": "A-S12-U05", "issue": "State footprint is not modeled. Rejection's 'change nothing' is retained without inventing additional state variables."}
+      ],
+      "implementation_choices": [
+        {"id": "A-S12-I01", "issue": "Storage and reservation mechanisms and confirmation transport remain open, subject to the specified decrement, invariant, rejection preservation and confirmation counts. This record does not select them."}
+      ],
+      "coverage": [
+        {"clause": "On an accepted reservation, reduce available seats by the requested positive count and return the remaining count", "obligations": ["A-S12-O01", "A-S12-O07"]},
+        {"clause": "Accept only when the requested count does not exceed available seats", "obligations": ["A-S12-O02"], "unresolved_records": ["A-S12-A01"]},
+        {"clause": "Otherwise return INSUFFICIENT and change nothing", "obligations": ["A-S12-O03", "A-S12-O08"], "unresolved_records": ["A-S12-A01", "A-S12-A03"]},
+        {"clause": "Available seats must never be negative", "obligations": ["A-S12-O04"]},
+        {"clause": "Emit exactly one confirmation to the caller on success and none on rejection", "obligations": ["A-S12-O05", "A-S12-O06"]}
+      ],
+      "recommended_review_outcome": "Retain conditional transition, invariant and effect-count obligations as candidates; resolve eligible-request acceptance and 'otherwise' scope before claiming a total reservation decision contract."
+    },
+    {
+      "source_id": "B01",
+      "provenance": {
+        "path": "benchmark/requirements/B01.md",
+        "extent": "Complete public file, lines 1 through 6, with line breaks preserved below.",
+        "full_text": "# B01 — Critical priority (local)\n\nAdd `CRITICAL` above `HIGH` to accepted task priorities. `create --priority\nCRITICAL` persists and returns that value; `list` includes it. `list-high`\ncontinues to mean exactly `HIGH`. Existing LOW, NORMAL and HIGH tasks retain\ntheir values through migration. A missing priority still defaults to NORMAL.\n",
+        "corpus_reference": "public_example[id=B01] in benchmark/results/phase5c/r5_80/corpus.json identifies this public source and requirement-local policy.",
+        "authorship_note": "The corpus describes public B01 as the existing human-written benchmark source; this is source metadata, not an independently verified authorship claim.",
+        "integrity_note": "No digest was computed. The full text is transcribed from the only B01 file read, without importing a baseline, support document or held-out request."
+      },
+      "obligations": [
+        {"id": "A-B01-O01", "basis": "stated", "result": "CRITICAL is an accepted task-priority value."},
+        {"id": "A-B01-O02", "basis": "stated", "result": "In the task-priority ordering, CRITICAL ranks above HIGH. This does not by itself prescribe any list-output sorting."},
+        {"id": "A-B01-O03", "basis": "stated", "conditions": "A task is created successfully using create --priority CRITICAL, with any unrelated creation requirements satisfied.", "state": "The task's persisted priority is CRITICAL.", "result": "Creation returns CRITICAL as that task's priority value."},
+        {"id": "A-B01-O04", "basis": "stated", "conditions": "A successfully created CRITICAL task is in the task population addressed by list.", "result": "list includes the CRITICAL task and its CRITICAL priority value; the new priority is not omitted or replaced by HIGH."},
+        {"id": "A-B01-O05", "basis": "stated", "conditions": "list-high applies its priority criterion to tasks.", "result": "That criterion is exactly equality to HIGH; it is not a threshold including CRITICAL."},
+        {"id": "A-B01-O06", "basis": "necessary-implication", "derived_from": ["A-B01-O05"], "conditions": "A task has priority CRITICAL.", "result": "It does not qualify for list-high by priority. LOW and NORMAL do not qualify either; a HIGH task satisfies the priority criterion."},
+        {"id": "A-B01-O07", "basis": "stated", "conditions": "A task exists before migration and its priority is LOW.", "state": "After migration, that task's priority remains LOW."},
+        {"id": "A-B01-O08", "basis": "stated", "conditions": "A task exists before migration and its priority is NORMAL.", "state": "After migration, that task's priority remains NORMAL."},
+        {"id": "A-B01-O09", "basis": "stated", "conditions": "A task exists before migration and its priority is HIGH.", "state": "After migration, that task's priority remains HIGH."},
+        {"id": "A-B01-O10", "basis": "stated", "conditions": "Priority is omitted when creating a task.", "result": "The effective default task priority is NORMAL."},
+        {"id": "A-B01-O11", "basis": "necessary-implication", "derived_from": ["A-B01-O01", "A-B01-O07", "A-B01-O08", "A-B01-O09", "A-B01-O10"], "result": "Adding CRITICAL extends the accepted priorities; it does not remove LOW, NORMAL or HIGH as accepted priority values. No order among these three beyond CRITICAL above HIGH is reconstructed from outside this source."}
+      ],
+      "ambiguities": [
+        {"id": "A-B01-A01", "issue": "The observable interface for 'above HIGH' is not given. The semantic rank relation is explicit, but a numeric encoding, display order or ranking API is not."},
+        {"id": "A-B01-A02", "issue": "'list includes it' is read as including the created CRITICAL task with its priority, not merely adding CRITICAL to a catalog. Exact list and create response shapes are absent."},
+        {"id": "A-B01-A03", "issue": "'A missing priority' is read in the local creation context as an omitted creation argument. Treatment of absent priority fields in historical stored records is not explicitly stated."}
+      ],
+      "conflicts": [],
+      "unspecified": [
+        {"id": "A-B01-U01", "issue": "Other required creation arguments, task schema, identifiers, response encoding, command exit status and error behavior."},
+        {"id": "A-B01-U02", "issue": "Case normalization, whitespace, null or empty priority values, invalid priority values and additional accepted priority values beyond the named ones."},
+        {"id": "A-B01-U03", "issue": "Storage engine, persistence format, restart protocol, migration trigger and failure behavior. Persistence is required for the CRITICAL creation case, but no mechanism or explicit durability horizon is specified."},
+        {"id": "A-B01-U04", "issue": "Ordering, pagination and unrelated filters for list or list-high. Exactly HIGH is the local priority criterion, not an imported complete listing contract."},
+        {"id": "A-B01-U05", "issue": "Migration effects on non-priority fields, records with missing or unknown priorities, and already-CRITICAL records; no global migration frame is invented."},
+        {"id": "A-B01-U06", "issue": "Priority updates, deletion, other commands, external effects and unrelated baseline behavior."}
+      ],
+      "implementation_choices": [
+        {"id": "A-B01-I01", "issue": "Priority encoding, storage and migration technique are open subject to the specified values, rank, persistence and preservation."},
+        {"id": "A-B01-I02", "issue": "Exact-match list-high implementation and list representation are open, subject to the local observable priority obligations."}
+      ],
+      "coverage": [
+        {"clause": "Add CRITICAL above HIGH to accepted task priorities", "obligations": ["A-B01-O01", "A-B01-O02", "A-B01-O11"]},
+        {"clause": "create --priority CRITICAL persists and returns that value", "obligations": ["A-B01-O03"]},
+        {"clause": "list includes it", "obligations": ["A-B01-O04"]},
+        {"clause": "list-high continues to mean exactly HIGH", "obligations": ["A-B01-O05", "A-B01-O06"]},
+        {"clause": "Existing LOW, NORMAL and HIGH tasks retain their values through migration", "obligations": ["A-B01-O07", "A-B01-O08", "A-B01-O09"]},
+        {"clause": "A missing priority still defaults to NORMAL", "obligations": ["A-B01-O10"]}
+      ],
+      "recommended_review_outcome": "Retain as a requirement-local candidate covering every public clause. Review rank observability, response shapes and missing-priority scope without importing baseline obligations."
+    }
+  ],
+  "overall_review": {
+    "coverage_claim": "All clauses of the seven requested source texts are represented by local obligations or explicitly unresolved source-level predicates. No complete implementation or behavior outside those texts is claimed.",
+    "principal_concerns": ["S08 lacks a meaning for best.", "S09 has incompatible universal order requirements.", "S12 does not unambiguously make seat sufficiency a sufficient acceptance condition.", "S03 active interpretation and S07 integer representation need domain clarification.", "B01 must remain local: rank semantics and preservation do not supply a full historical task-manager contract."],
+    "recommended_outcome": "Independent review required. Preserve these candidates and their unresolved records; do not promote them to approved authority merely because the record is written."
+  }
+}
