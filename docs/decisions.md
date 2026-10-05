@@ -1,5 +1,23 @@
 # Experimental decisions
 
+## R5.60 — Preserve terminal plan/driver incompatibility
+
+Freeze a fresh complete plan and qualification identity before execution, apply
+R5.59 repository-text continuity, and use the existing qualified Tier-2 mechanisms.
+Fresh QualifiedAuthority and capsule pass, but seven restricted-harness stage IDs
+contain `b02`, which the unchanged R5.57 driver rejects before its binding is issued.
+Preserve the plan and failed candidate as `R5_60_PROTOCOL_HALT`; do not rename,
+repair, retry or infer required production PASSes from prerequisite checks.
+
+The stopped-candidate audit establishes evidence integrity and historical
+preservation, not gate qualification. Zero batches/receipts/certificates/observations
+follow. This is an orchestration incompatibility, not proof against the Phase 5
+behavioral claim or a reason to strengthen the cooperative Tier-2 threat model.
+Withhold B02 authorization and refer the concrete incompatibility to owner
+adjudication; no new infrastructure qualification is initiated. Core remains 30,
+B02 accounting zero, Phase 5C paused. See the
+[R5.60 report](../benchmark/results/phase5c/R5_60-FINAL-FRESH-PRODUCTION-TIER2-QUALIFICATION.md).
+
 ## R5.59 — Separate repository continuity, synthetic inputs and publication
 
 Apply R5.50–R5.53's established repository-content/checkout distinction through

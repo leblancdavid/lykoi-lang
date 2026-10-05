@@ -1,5 +1,32 @@
 # Lykoi research log
 
+## R5.60 final fresh production qualification (2026-10-05)
+
+The fresh 144-regression/11-integration plan and qualification identity are sealed
+before initialization. R5.59 continuity passes seven implementation witnesses,
+including the four CRLF checkouts that halted R5.58. Fresh QualifiedAuthority
+verifies 1,083 successor members and existing frozen/provenance/ancestry pins.
+Fresh capsule capture is deterministic and canonical; contamination is clean,
+core count 30, accounting zero.
+
+Initialization then fails: seven frozen restricted-harness stage names contain
+`b02`, and R5.57's existing constructor prohibits that substring before any worker
+or qualification journal. Test-level sealed-B02 skips cannot satisfy the naming
+contract. The prerequisite starting-state PASS record remains preserved alongside
+the terminal FAIL, without promotion. Outcome: `R5_60_PROTOCOL_HALT`.
+
+No bounded batch, production receipt, certificate, gate preparation or synthetic
+observation occurs. Fresh AI-independence and other required regressions remain
+unrun. Read-only stopped diagnosis requalifies authority and recaptures unchanged
+capsule. Independent stopped-candidate integrity/publication checks pass and
+preserve all 1,989 prior tracked benchmark-result files. No repair or retry follows.
+The failure establishes an orchestration incompatibility, not a behavioral/language
+regression or invalidity of the Tier-2 claim. The gate remains unqualified by this
+candidate; withhold B02 authorization pending owner adjudication of this concrete
+failure. No additional infrastructure round is started. B02 all accounting zero,
+core 30, Phase 5C paused. See the
+[R5.60 report](../benchmark/results/phase5c/R5_60-FINAL-FRESH-PRODUCTION-TIER2-QUALIFICATION.md).
+
 ## R5.59 continuity/publication reconciliation (2026-10-05)
 
 Prospective generic continuity witnesses pass 8/8. Four fresh implementation

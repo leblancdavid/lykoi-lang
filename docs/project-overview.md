@@ -69,6 +69,23 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.60 final fresh production qualification](../benchmark/results/phase5c/R5_60-FINAL-FRESH-PRODUCTION-TIER2-QUALIFICATION.md)
+ends **`R5_60_PROTOCOL_HALT`** before its first bounded batch. The fresh sealed
+plan has 144 required regression stages and 11 integration checkpoints. R5.59
+continuity, fresh 1,083-member QualifiedAuthority and deterministic canonical
+Tier-2 capsule pass. Driver initialization rejects seven frozen restricted-harness
+stage IDs containing `b02`, under R5.57's existing prohibited-name contract.
+No stage is renamed or retried; production receipts, certificate and observations
+are zero. The prerequisite PASS record does not override the terminal failure.
+
+Read-only stopped diagnosis confirms unchanged authority/capsule; independent
+stopped-candidate integrity and publication checks pass, preserving all 1,989
+pre-existing tracked benchmark-result files. Fresh production regressions and
+post-synthetic final audit remain unrun. The gate is not qualified by this candidate.
+Next: owner adjudication of the concrete plan/driver incompatibility; no broader
+methodology defect is established and no further run starts here. **B02 all
+accounting zero, core 30, Phase 5C paused.** Earlier boundaries retain their meaning.
+
 The [R5.59 continuity/publication reconciliation](../benchmark/results/phase5c/R5_59-TIER2-CONTINUITY-AND-SYNTHETIC-PUBLICATION-RECONCILIATION.md)
 ends **`R5_59_CONTINUITY_PUBLICATION_RECONCILED`**. Generic continuity now binds
 qualified repository text identity and records checkout representation separately,
