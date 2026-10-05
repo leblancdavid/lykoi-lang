@@ -17,10 +17,12 @@ syntax, assemble code-generation templates, or add a benchmark-specific
 primitive for each new feature. This is a research hypothesis, not an
 established minimum or a claim that the current vocabulary is general-purpose.
 
-The intended architecture is human intent → AI interpretation → Lykoi semantic
+The intended architecture is human requirement → replaceable human/AI requirement
+formalization → reviewed Formal Requirement Contract → Lykoi authoring/semantic
 representation → validated, compiler-controlled transformation → executable
-implementation/runtime → observable behavior. The semantic model, rather
-than a generated Python file, is the source of truth. Python is the first
+implementation/runtime → observable behavior. Formal requirements define WHAT;
+the program defines HOW. Lykoi is AI-native, not AI-dependent. The semantic model,
+rather than a generated Python file, is the source of truth. Python is the first
 backend, not the definition of the language.
 
 The goal is to make changes easier to reason about and safer to maintain:
@@ -68,6 +70,24 @@ external resources such as storage, time and IDs should remain distinguishable.
   and [post-B16 corrected boundary](../benchmark/results/phase5c/R5_2_2-POST-B16-CORRECTED-CONTINUATION.md).
 
 ## Current boundary and next steps
+
+The [R5.79 formalization boundary](../benchmark/results/phase5c/R5_79-REQUIREMENT-FORMALIZATION-BOUNDARY-AND-INDEPENDENT-BENCHMARK-AUTHORITY.md)
+ends **`R5_79_REQUIREMENT_FORMALIZATION_BOUNDARY_QUALIFIED`** in architecture/
+methodology scope. The [versioned specification](requirement-formalization-boundary-v1.md)
+establishes independent Formal Requirement Contracts as prospective Phase 5
+behavioral authority. Prose interpretation, Lykoi authoring and compilation are
+separate transformations; human and isolated AI formalizers are possible, with
+provider-independent meaning. Stable IDs, ambiguity/conflict resolution, provenance,
+independent review and faithful explicit V1 projection are required. Existing V1
+is bounded; a missing faithful projection halts packaging rather than weakens intent.
+Synthetic conceptual validation covers the ten requested boundary conditions;
+fresh **33/33 V1 checks** pass with **zero protected read attempts**. No production
+formalizer or held-out package is qualified. **B03 remains pristine/unread/not
+evaluated; no FRC, V1 package, commitment or runner eligibility is created.**
+B02 exposed/indeterminate and core **30** remain unchanged. Next: separately
+authorize process qualification on synthetic, public B01 and additional non-held-out
+examples before any protected formalization. R5.79 stops; Phase 5C remains paused.
+Earlier boundaries below retain their historical scope.
 
 The [R5.78 trusted pre-exposure packaging attempt](../benchmark/results/phase5c/R5_78-TRUSTED-PREEXPOSURE-B03-V1-PACKAGING.md)
 ends **`R5_78_B03_PACKAGING_GAP`** at the **pre-B03 source-interface gate**.

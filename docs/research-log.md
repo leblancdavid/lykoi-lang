@@ -1,5 +1,33 @@
 # Lykoi research log
 
+## R5.79 requirement formalization boundary (2026-10-05)
+
+Adopted prospective methodology: Phase 5 begins from independent formal behavioral
+authority, separating human intent interpretation, implementation authoring and
+compilation. New [boundary v1](requirement-formalization-boundary-v1.md) defines
+minimal behavioral content, stable IDs, ambiguity/conflict handling, provenance,
+implementation neutrality and independent human/AI approval. Provider identity
+does not define meaning. Formalization research becomes a separate future track.
+
+Observed: unchanged guarded V1 suite **33/33 PASS**, zero protected read attempts.
+Synthetic conceptual examples cover the ten required boundary conditions, including
+cross-ID contradiction rejection and unresolved ambiguity blocking freeze. These
+are architecture checks, not production formalizer/completeness-solver tests.
+V1 normalization retains supplemental IDs but excludes provenance metadata;
+separate committed coverage maps are required. Its semantic-facing application
+format remains bounded: inability to project faithfully must halt packaging,
+not weaken the contract or automatically become a Lykoi capability finding.
+
+R5.78's packaging gap is preserved. No protected B02 contents/captured documents
+are used; its exposed/indeterminate status remains. B03 reads, formalizations,
+packages, authorizations, openings, observations and static calls are **zero**;
+no FRC/package/commitment/eligibility is claimed. Core **30**, Phase 5C paused.
+Classification **R5_79_REQUIREMENT_FORMALIZATION_BOUNDARY_QUALIFIED**, scoped to
+architecture. Next proposal: separately qualify vocabulary, independent review,
+full projection and trusted process on synthetic/public B01/additional non-held-out
+examples before protected formalization. R5.79 stops. See the
+[report](../benchmark/results/phase5c/R5_79-REQUIREMENT-FORMALIZATION-BOUNDARY-AND-INDEPENDENT-BENCHMARK-AUTHORITY.md).
+
 ## R5.78 pre-B03 source packaging gate (2026-10-05)
 
 Observed: the frozen generic historical benchmark source protocol supplies prose

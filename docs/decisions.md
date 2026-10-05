@@ -1,5 +1,30 @@
 # Experimental decisions
 
+## R5.79 — Independent formal behavior before semantic evaluation
+
+Adopt `Human Requirement → Requirement Formalization → Formal Requirement
+Contract → Lykoi authoring → deterministic validation/lowering → software`.
+Requirements define WHAT; implementation representations define HOW. Phase 5
+prospectively evaluates semantic capability/composition/compiler/behavior against
+independently approved formal authority, while prose remains provenance. Arbitrary
+natural-language interpretation is a separate research dimension, not core semantics.
+
+Human or isolated AI formalization is valid only outside Lykoi support feedback.
+Require stable IDs, explicit material assumptions, source coverage, independent
+review and ambiguity/conflict resolution before freeze. Provider identity does not
+define contract meaning. Preserve behavioral equivalence over implementation layout.
+
+Use the existing bounded V1 explicit-component interface with an independently
+approved faithful projection and retained coverage/provenance mapping. A missing
+evaluation representation must halt packaging, not erase a requirement or establish
+a language gap by itself. Do not add a general predicate DSL or authority stack
+without qualification. Architectural separation trades an extra upstream review
+for interpretable semantic results; upstream fidelity remains a separate obligation.
+Require safe synthetic/public process qualification next. No B03 formalization,
+package or observation; B02 is not design feedback; core remains 30. See the
+[specification](requirement-formalization-boundary-v1.md) and
+[report](../benchmark/results/phase5c/R5_79-REQUIREMENT-FORMALIZATION-BOUNDARY-AND-INDEPENDENT-BENCHMARK-AUTHORITY.md).
+
 ## R5.78 — Fail the source gate before protected access
 
 Freeze a mechanical pass-through rule for already-explicit V1 components;
