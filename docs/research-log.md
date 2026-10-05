@@ -1,5 +1,30 @@
 # Lykoi research log
 
+## R5.78 pre-B03 source packaging gate (2026-10-05)
+
+Observed: the frozen generic historical benchmark source protocol supplies prose
+and regression profile/capability fragments, without a declared mechanical full
+semantic application/configuration/identified-obligation conversion. A frozen
+pure pass-through packager qualifies already-explicit components with **16/16
+public/synthetic checks**, including public R5.39 seed-bank, commitment agreement,
+error redaction, evaluator separation and metadata-only stand-in eligibility.
+Public B01 historical source rejects `UNREPRESENTABLE_SOURCE`; the separate
+applicable-source gate fails before B03 access. Passing rejection tests are not
+evidence of successful historical conversion or full prose coverage.
+
+Classification **R5_78_B03_PACKAGING_GAP**, not a B03 support result. **No B03
+source read, packaging attempt, authorization, opening or evaluation occurs.**
+No B03 package identity/commitment/provenance/seal or eligibility is attested.
+B03 remains pristine to development; no trusted mechanical access occurs either.
+B02 exposed/indeterminate history is unchanged. Fresh 74-runner, 31-application,
+157-support, 33-V1, coherence/schema/traceability/contamination, validation/safety,
+AI-independence, publication and safe-exclusion checks pass. Core remains **30**.
+
+Proposal: separately authorize independent source-representation and sealed
+packaging qualification before any actual B03 experiment. R5.78 stops with
+Phase 5C paused. See the
+[report](../benchmark/results/phase5c/R5_78-TRUSTED-PREEXPOSURE-B03-V1-PACKAGING.md).
+
 ## R5.77 prospective document contract qualification (2026-10-05)
 
 Newly specified BenchmarkDocumentContractV1 resolves R5.76's missing prospective

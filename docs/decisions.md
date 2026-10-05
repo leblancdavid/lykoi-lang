@@ -1,5 +1,23 @@
 # Experimental decisions
 
+## R5.78 — Fail the source gate before protected access
+
+Freeze a mechanical pass-through rule for already-explicit V1 components;
+conservatively emit one behavioral owner and no metadata. Do not invent behavior,
+identified obligations or an empty obligation set from prose/regression fragments.
+The historical generic protocol does not declare that conversion. Public B01
+is sufficient to witness `UNREPRESENTABLE_SOURCE` at this protocol boundary;
+there is no reason to inspect B03 to rediscover it.
+
+Distinguish passing rejection tests from a passing representability gate.
+Classify **R5_78_B03_PACKAGING_GAP**, before B03 processing, rather than claiming
+packaging success from synthetic explicit components. No production sealing
+controller or actual B03 authority is installed after the failed gate. Require
+independent source-representation authority in a separately authorized round;
+preserve V1, runner, consumers, core 30 and B02 history. B03 remains untouched
+and pristine. See the [rule](benchmark-source-packaging-r5-78.md) and
+[report](../benchmark/results/phase5c/R5_78-TRUSTED-PREEXPOSURE-B03-V1-PACKAGING.md).
+
 ## R5.77 — Small prospective static document contract
 
 Authorize BenchmarkDocumentContractV1 as evaluation infrastructure, not a new

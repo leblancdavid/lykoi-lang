@@ -69,6 +69,18 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.78 trusted pre-exposure packaging attempt](../benchmark/results/phase5c/R5_78-TRUSTED-PREEXPOSURE-B03-V1-PACKAGING.md)
+ends **`R5_78_B03_PACKAGING_GAP`** at the **pre-B03 source-interface gate**.
+A frozen mechanical rule passes **16/16 public/synthetic checks** for explicit
+components and safe historical rejection. The applicable historical protocol has
+no declared complete semantic-component conversion; public B01 rejects
+`UNREPRESENTABLE_SOURCE`. **B03 is untouched, pristine, not evaluated and not
+exposed to development; no B03 V1 package is created.** B03 runner eligibility
+is unavailable; only a public stand-in's metadata path qualifies. Fresh generic
+health and **33/33 V1 tests** pass; core **30**, B02 exposed/indeterminate unchanged.
+Next: separately authorized independent source-representation/packaging authority
+before any actual B03 one-shot authorization. R5.78 stops; Phase 5C remains paused.
+
 The [R5.77 versioned benchmark document contract](../benchmark/results/phase5c/R5_77-VERSIONED-GENERIC-BENCHMARK-DOCUMENT-CONTRACT.md)
 ends **`R5_77_BENCHMARK_DOCUMENT_CONTRACT_V1_QUALIFIED`** in prospective evaluation
 infrastructure scope. [BenchmarkDocumentContractV1](benchmark-document-contract-v1.md)
