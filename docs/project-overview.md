@@ -69,6 +69,25 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.67 fresh production qualification with sealed authority](../benchmark/results/phase5c/R5_67-FRESH-PRODUCTION-QUALIFICATION-WITH-SEALED-AUTHORITY.md)
+ends **`R5_67_PRODUCTION_CERTIFICATE_GAP`**. Its fresh **186-regression-stage** plan
+and identity freeze, seal, persist, schema-revalidate and canonically reload through
+R5.64. Implementation continuity and metadata prerequisites pass; starting production
+certificate eligibility fails. The unchanged R5.66 sealed-evidence adapter explicitly
+rejects non-`synthetic:` experiment identities and returns `SYNTHETIC_ONLY` issuance.
+The exact frozen predicate is evaluated; complete certificate assembly is not invoked.
+No experiment renaming, scope override, repair, retry or resume follows.
+
+Independent stopped integrity and publication/whitespace pass, preserving **2,139
+unsealed historical result files by bytes** and **four protected result files by
+metadata only**. The declared full policy retains 1,083 members, 11 sealed metadata
+rows and two sealed frozen pins; fresh full authority/capsule/regressions/workspace,
+synthetic observation, replay witnesses and production final audit are NOT_RUN.
+**Preparation is incomplete; the production B02 observation gate is not qualified.**
+R5.67 stops without actual B02 authorization. **B02 reads/attempts 0/0, accounting
+0/0/0/0, synthetic 0/0/0, production batches/receipts/certificates 0/0/0, core 30,
+Phase 5C paused.** R5.66 and all earlier classifications retain their original scope.
+
 The [R5.66 sealed authority qualification](../benchmark/results/phase5c/R5_66-SEALED-AUTHORITY-VERIFICATION-AND-DEFERRED-MATERIALIZATION-QUALIFICATION.md)
 ends **`R5_66_SEALED_AUTHORITY_QUALIFIED`** within prospective infrastructure scope.
 All **11 sealed resources**, including **two frozen pins**, bind pre-existing R5.53/

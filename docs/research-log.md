@@ -1,5 +1,31 @@
 # Lykoi research log
 
+## R5.67 fresh production qualification with sealed authority (2026-10-05)
+
+Observed: a wholly fresh 186-regression-stage plan, seven preflight stages and 13
+integration checkpoints freeze before execution. The R5.64 path constructs, seals,
+persists, schema-revalidates and canonically reloads the fresh qualification identity.
+The declared full policy retains 1,083 members, 11 sealed rows and two sealed frozen
+pins derived from previously qualified metadata; no protected bytes are read.
+
+Starting implementation continuity and metadata prerequisites pass. Production
+certificate eligibility fails: the unchanged R5.66 sealed-evidence adapter rejects
+non-`synthetic:` identities and returns `SYNTHETIC_ONLY` scope. Evaluation of its exact
+content-pinned AST predicate confirms rejection of the fresh production experiment.
+Complete certificate assembly and legacy protected-reading qualification are not
+invoked. No scope override, identity renaming, repair, retry or resume occurs.
+
+Outcome: `R5_67_PRODUCTION_CERTIFICATE_GAP`. Fresh full authority/sealed verification,
+capsule, production regressions, workspace, observation/replay and complete final audit
+are NOT_RUN. Independent stopped integrity passes, including separate AST confirmation,
+2,139 unsealed historical result files byte-preserved and four protected result files
+metadata-preserved. Stopped-artifact publication/security/whitespace pass; fresh
+production AI-independence regressions are NOT_RUN. Contamination is clean, core 30,
+B02 attempts/reads 0/0 and accounting 0/0/0/0, synthetic 0/0/0, production batches/
+receipts/certificates 0/0/0, Phase 5C paused. Preparation is incomplete and the production
+gate is not qualified for the actual B02 observation. R5.67 stops permanently here;
+R5.66's infrastructure qualification and R5.65's historical gap are preserved.
+
 ## R5.66 sealed authority and deferred materialization (2026-10-05)
 
 Observed: all 11 sealed members in the inherited 1,083-member authority have prior

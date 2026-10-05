@@ -1,5 +1,21 @@
 # Experimental decisions
 
+## R5.67 — Synthetic certificate qualification does not establish production eligibility
+
+Bind the unchanged qualified ordinary/sealed authority, deferred-workspace and
+CertificateV2 adapters into a fresh production plan. Check the selected certificate's
+production eligibility as a frozen starting prerequisite. Its mandatory `synthetic:`
+experiment prefix and `SYNTHETIC_ONLY` issuance scope exclude the fresh production
+identity. A synthetic observation authorization does not authorize reclassifying the
+whole qualification as synthetic-only issuance.
+
+Record `R5_67_PRODUCTION_CERTIFICATE_GAP` and stop before full authority/capsule,
+production regressions, workspace or synthetic observation. Do not rename the
+experiment, overwrite scope, replace the adapter, repair, retry or resume. Independently
+audit the terminal diagnosis and preserved evidence without promoting unreached gates.
+Actual B02 remains sealed; behavioral equivalence remains the experimental criterion;
+core semantics and the AI-independent language execution identity remain unchanged.
+
 ## R5.66 — Sealed commitments qualify identity without opening contents
 
 Introduce separately versioned generic ordinary/sealed authority and deferred-workspace
