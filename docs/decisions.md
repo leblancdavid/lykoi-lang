@@ -1,5 +1,31 @@
 # Experimental decisions
 
+## R5.49 — Provenance is resolved identity; endpoint checks are not ownership
+
+Classify executed implementation provenance against content-bound repository
+members and resolved loaders/locations. Attribute renamed deployment artifacts by
+verified source bytes, not special-case names. External installation metadata is
+evidence only for the matching resolved file; an unattributed editable source or
+custom loader fails closed. Namespace locations do not establish descendant closure.
+Separate implementation provenance from dependency role and operation materiality.
+
+Native image hashes and direct PE import names do not establish loader-selected
+transitive closure. Built-in/frozen code is derived from the complete implementing
+interpreter image, not just an executable/version or a nominal source path. Avoid
+indiscriminate OS fingerprints without a per-computation materiality argument.
+
+The fresh ABA counterexample confirms that checking immediately before observation
+cannot establish ownership. Prefer complete content-addressed immutable input/runtime/
+tool materialization with constrained child access and controlled outputs; this is
+an unimplemented production proposal here. Preserve fail-closed production assembly.
+Diagnostic receipts and historical-prototype synthetic certificates cannot substitute
+for a qualified complete capsule. Stop at the native dependency-closure gate while
+recording the additional context/ownership limitations.
+
+Preserve AI Independence, R5.47 publication/infrastructure policy, all quarantined
+history, zero B02 authority and core 30. See the
+[R5.49 report](../benchmark/results/phase5c/R5_49-DEPENDENCY-PROVENANCE-AND-COMPLETE-EXECUTION-CAPSULE-QUALIFICATION.md).
+
 ## R5.48 — AI authors are optional; deterministic language authority is required
 
 Adopt the [AI Independence Principle](ai-independence-r5.48.md): fixed valid source

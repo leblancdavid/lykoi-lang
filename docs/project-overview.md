@@ -69,6 +69,28 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.49 dependency-provenance investigation](../benchmark/results/phase5c/R5_49-DEPENDENCY-PROVENANCE-AND-COMPLETE-EXECUTION-CAPSULE-QUALIFICATION.md)
+ends **`R5_49_DEPENDENCY_CLOSURE_GAP`**. Generic resolved-source/content provenance
+correctly attributes package, nested, generated, namespace and copied deployment
+implementations without helper-name exceptions; eight actual acoustic deployment
+helpers resolve to repository sources. External installed/editable implementations
+remain distinct or fail closed when unattributed. Fresh PE observations expose
+unbound interpreter/CRT/crypto native descendants. A synthetic ABA attack also
+demonstrates that final recapture alone does not establish ownership.
+
+All **78 bounded diagnostic receipts** pass against one explicitly incomplete
+diagnostic identity; none is reusable for production. Restricted harness 393 passes /
+36 preserved skips; compiler 31, focused 14, recorder 29, certificate 33, security 22,
+publication 2, historical prototype freshly replayed 52, new provenance 24,
+AI-independence 5 and ownership-counterexample 1. Matrix/schema/99-leaf traceability,
+contamination, validation/safety and locks pass. R5.47 remains 1,065/1,065 with its
+unchanged identity. R5.46/R5.48 evidence is preserved; no receipt reuse or run repair.
+No qualified ExecutionCapsuleV2, production certificate or exclusive seal follows.
+AI independence remains policy with fresh bounded observations. Next: implement
+complete per-computation native/descendant and effective Git/context closure plus
+immutable ownership before a separately versioned fresh production qualification.
+Zero B02 exposure, core 30, Phase 5C paused. Earlier records retain their conclusions.
+
 The [R5.48 execution-state/AI-independence investigation](../benchmark/results/phase5c/R5_48-EXECUTION-STATE-AND-AI-INDEPENDENCE.md)
 ends **`R5_48_PROTOCOL_HALT`**. Of 74 planned bounded stages, 71 receipts were
 recorded (70 PASS, one failed dependency inventory) and all are quarantined.

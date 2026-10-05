@@ -1,5 +1,38 @@
 # Lykoi research log
 
+## R5.49 dependency provenance and closure boundary (2026-10-04)
+
+Observed **`R5_49_DEPENDENCY_CLOSURE_GAP`**. A generic resolver uses bound repository
+content and actual module specifications/loaders/locations; arbitrary package,
+nested, generated, namespace and renamed-copy layouts pass fresh regressions.
+Eight actual acoustic deployment imports map to repository source bytes, including
+the historical renamed helpers. Installed-file metadata distinguishes third-party
+implementations; unattributed editable sources are UNKNOWN, not repository-owned.
+The new 24-test provenance suite passes; no seven-name exception table was added.
+
+Fresh native PE observations include interpreter/CRT/API-set dependencies and
+`_hashlib -> libcrypto-3.dll`. Direct names/file hashes do not close transitive
+loader/forwarder/runtime-loaded dependencies. The fresh synthetic ownership attack
+changes a certified input after capture, reads it, restores it, and still passes
+endpoint integrity: a positive counterexample to ownership, not qualification.
+Complete effective Git/context, cache/descendant closure and immutable ownership
+remain unqualified. No production ExecutionCapsuleV2/certificate was issued.
+
+Fresh bounded diagnostics: 78/78 PASS receipts, non-reusable for production;
+restricted harness 429 discovered/393 passes/36 preserved skips; compiler 31,
+focused 14, recorder 29, certificate 33, security 22, publication 2, historical
+identity implementation freshly rerun 52, new AI-independence 5 and ownership
+counterexample 1. Offline/site-disabled/empty-PATH validation, lowering/read-only
+execution and synthetic provider/model/authoring changes support AI independence
+within the tested scope. Matrix 16 profiles/84 rows, structural schema/99-leaf
+traceability, contamination, validation/safety/diff and all authoritative locks pass.
+
+Historical 678/678, prospective 695/695 and R5.47 1,065/1,065 unchanged. R5.46/R5.48
+quarantined evidence remains unchanged; no old PASS receipt was reused. Core 30,
+zero B02 exposure, Phase 5C paused. Full production lifecycle stopped before
+complete closure, certificate assembly and sealing. See the
+[R5.49 report](../benchmark/results/phase5c/R5_49-DEPENDENCY-PROVENANCE-AND-COMPLETE-EXECUTION-CAPSULE-QUALIFICATION.md).
+
 ## R5.48 execution identity and AI independence (2026-10-04)
 
 Observed **`R5_48_PROTOCOL_HALT`** at the dependency-inventory gate: 71/74 receipts,
