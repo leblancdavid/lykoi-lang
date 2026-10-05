@@ -69,6 +69,24 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.76 generic document-envelope investigation](../benchmark/results/phase5c/R5_76-GENERIC-DOCUMENT-ENVELOPE-CONTRACT-QUALIFICATION.md)
+ends **`R5_76_DOCUMENT_ENVELOPE_GAP`**. Inspected generic protocols define component
+formats and direct static-consumer arguments, but no authoritative versioned
+opened-document role/container/reference/whole-contract assembly contract was found.
+No generic extractor is installed without that authority. **19/19 synthetic
+diagnostics**, four complete fake lifecycles, and fresh eight-stage health pass;
+the explicit non-task fixture reaches all static consumers with distinguishable
+supported, unsupported and infrastructure outcomes. These do not qualify arbitrary
+nested or distributed benchmark envelopes. The runner and core **30** are unchanged.
+
+**`B02_EXPOSED_IN_R5_75` / `B02_STATIC_RESULT_INDETERMINATE`** remain permanent;
+its incomplete actual ledger and historical counts are preserved. R5.76 makes
+no protected B02 reads and no new actual-benchmark observation; B03 remains
+unexposed. Next: independently authorize a generic document contract and qualify
+its full synthetic path before considering B03 or the next pristine benchmark.
+Future B02 work can only be post-exposure diagnostic/regression evidence. Phase 5C
+remains paused; R5.75's historical boundary below is unchanged.
+
 The [R5.75 actual one-shot B02 static experiment](../benchmark/results/phase5c/R5_75-ACTUAL-ONE-SHOT-HELDOUT-B02-STATIC-EXPERIMENT.md)
 ends **`R5_75_OBSERVATION_INDETERMINATE`**. Final metadata-only prerequisites and
 the qualified structured preflight pass. Actual authority issues once; one durable

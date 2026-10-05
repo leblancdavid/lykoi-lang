@@ -1,5 +1,24 @@
 # Experimental decisions
 
+## R5.76 — Require envelope authority before generic extraction
+
+Classify **R5_76_DOCUMENT_ENVELOPE_GAP**. Generic component formats and readiness's
+explicit obligation-list argument do not imply a top-level `obligations` key,
+nested payload path, role registry or multi-document assembly rules. Preserve the
+historical callback rather than retrofit an undocumented interpretation. Do not
+install an invented generic schema merely to qualify fixtures invented alongside it.
+
+Use the actual historical assignment AST for non-protected failure reproduction,
+and independently constructed non-task direct inputs for full synthetic static
+lifecycles. Distinguish coherent supported/unsupported results from malformed or
+incomplete diagnostic fixtures. These witnesses establish a bounded direct-input
+path, not complete generic benchmark-envelope qualification. Keep one simple future
+adapter contingent on separately authorized generic roles, versions, completeness,
+references, ordering and provenance rules. No semantic extension or runner stack is
+added. Preserve B02's exposed/indeterminate status and incomplete ledger; protect
+B03. Consider a pristine held-out experiment only after the missing contract and
+full synthetic adapter path are independently qualified.
+
 ## R5.75 — Preserve incomplete first exposure without repair
 
 Use the R5.74 structured preflight and unchanged shared actual-mode issuer/observe

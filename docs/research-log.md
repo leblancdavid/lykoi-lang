@@ -1,5 +1,37 @@
 # Lykoi research log
 
+## R5.76 generic document-envelope authority gap (2026-10-05)
+
+Observed without B02/B03 contents: the R5.75 callback treats every dictionary
+obligation document as `document['obligations']`. Evaluating only that assignment's
+source AST reproduces the incidental KeyError on a synthetic nested container and
+missing-key example. The expression also lacks version, role, duplicate/conflict
+and reference validation. Inspected generic protocols specify separate component
+formats and direct consumer arguments, but no opened-document envelope/assembly
+authority was identified. Nested/multi-document examples cannot honestly be called
+protocol-valid on that evidence. Result: **R5_76_DOCUMENT_ENVELOPE_GAP**; no generic
+extractor or complete assembled-contract interface is installed or qualified.
+
+Bounded evidence: **19/19 diagnostic tests**, with an initial fixture-construction
+sentinel failure corrected before the fresh evidence run; four separate committed
+synthetic lifecycles complete and post-check. An explicit independent measurement
+fixture reaches CheckedPlans, readiness, audit, admission and compatibility with
+coherent static PASS. A known Boolean/text boundary limit produces static UNSUPPORTED;
+malformed and incomplete fixtures produce distinct infrastructure results before
+static evaluation. These are direct synthetic witnesses, not whole-document
+benchmark transfer evidence or generic distributed-contract qualification.
+
+Fresh health: runner **74/74**, application/compiler **31/31**, generic support
+**157/157**, **16-profile/84-row** coherence, schema/**99-leaf** traceability,
+contamination, validation/safety, offline AI independence, publication and safe
+exclusion (**36 metadata-only skips**) pass. Runner/core remain unchanged at **30**.
+No new actual authorization/opening/observation or protected-content access occurs.
+**B02_EXPOSED_IN_R5_75 / B02_STATIC_RESULT_INDETERMINATE** remain permanent; no ledger
+reset or captured-document evaluation. B03 remains pristine. Next proposal: define
+the missing generic contract on non-held-out authority, qualify one adapter and
+the full synthetic path, then consider a separately authorized pristine benchmark.
+See the [R5.76 report](../benchmark/results/phase5c/R5_76-GENERIC-DOCUMENT-ENVELOPE-CONTRACT-QUALIFICATION.md).
+
 ## R5.75 actual B02 first exposure; static observation incomplete (2026-10-05)
 
 Observed: unchanged R5.74 CurrentState, runner and inherited eight-stage generic
