@@ -69,6 +69,21 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.77 versioned benchmark document contract](../benchmark/results/phase5c/R5_77-VERSIONED-GENERIC-BENCHMARK-DOCUMENT-CONTRACT.md)
+ends **`R5_77_BENCHMARK_DOCUMENT_CONTRACT_V1_QUALIFIED`** in prospective evaluation
+infrastructure scope. [BenchmarkDocumentContractV1](benchmark-document-contract-v1.md)
+has two roles, four required envelope fields, one optional field, no references
+and one deterministic adapter. One behavioral document owns application,
+configuration and explicit identified obligations; optional metadata does not
+change behavioral identity. Historical layouts are not silently reinterpreted.
+**33/33 tests**, four full synthetic lifecycles and one public non-held-out
+seed-bank representation pipeline pass, with fresh health and no consumer changes.
+Core remains **30**. B02 is neither read nor adapted; its exposed/indeterminate
+status is preserved. B03 remains pristine. Trusted independent pre-exposure V1
+packaging is specified but not performed for B03. Next: that packaging and
+separate owner authorization before any pristine observation. R5.77 stops;
+Phase 5C remains paused. Earlier boundaries below retain their historical scope.
+
 The [R5.76 generic document-envelope investigation](../benchmark/results/phase5c/R5_76-GENERIC-DOCUMENT-ENVELOPE-CONTRACT-QUALIFICATION.md)
 ends **`R5_76_DOCUMENT_ENVELOPE_GAP`**. Inspected generic protocols define component
 formats and direct static-consumer arguments, but no authoritative versioned

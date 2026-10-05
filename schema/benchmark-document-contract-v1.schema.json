@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lykoi:benchmark-document-contract:v1",
+  "title": "BenchmarkDocumentContractV1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "document_id", "role", "payload"],
+  "properties": {
+    "schema_version": {"const": "BenchmarkDocumentContractV1"},
+    "document_id": {"type": "string", "pattern": "\\S"},
+    "role": {"enum": ["behavioral", "metadata"]},
+    "metadata": {"type": "object"},
+    "payload": {"type": "object"}
+  },
+  "allOf": [{
+    "if": {"properties": {"role": {"const": "behavioral"}}},
+    "then": {"properties": {"payload": {
+      "type": "object", "additionalProperties": false,
+      "required": ["application", "configuration", "obligations"],
+      "properties": {
+        "application": {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "state", "operations"],
+          "properties": {
+            "id": {"type": "string", "pattern": "\\S"},
+            "state": {"type": "object", "additionalProperties": false,
+              "required": ["versions"], "properties": {"versions": {"type": "object", "minProperties": 1}}},
+            "operations": {"type": "object", "minProperties": 1, "propertyNames": {"pattern": "\\S"},
+              "additionalProperties": {"type": "object"}}
+          }
+        },
+        "configuration": {"type": "object", "additionalProperties": false,
+          "required": ["transport", "state", "launch"],
+          "properties": {"transport": {"type": "object"}, "state": {"type": "object"}, "launch": {"type": "object"}}},
+        "obligations": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false, "required": ["id", "requirement"],
+          "properties": {
+            "id": {"type": "string", "pattern": "\\S"},
+            "requirement": {"type": "object", "required": ["kind"],
+              "properties": {"kind": {"type": "string", "pattern": "\\S"}}}
+          }
+        }}
+      }
+    }}}
+  }]
+}

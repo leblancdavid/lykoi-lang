@@ -1,5 +1,30 @@
 # Lykoi research log
 
+## R5.77 prospective document contract qualification (2026-10-05)
+
+Newly specified BenchmarkDocumentContractV1 resolves R5.76's missing prospective
+assembly authority without asserting it governed historical documents. Observed:
+**33/33 document qualification tests**; five fresh health-bound complete lifecycles
+for supported, unsupported, malformed, incomplete and public non-held-out seed-bank
+inputs. The same generic adapter deterministically produces BehavioralContractV1;
+all existing static consumers compose without modification. The Boolean/text
+fixture reproduces an existing support gap; malformed/incomplete inputs fail
+structurally before static consumers. Seed-bank representation is prospective
+adapter validation, not historical acceptance or held-out transfer.
+
+Fresh health: **74 runner**, **31 compiler/application**, **157 generic support**,
+16-profile/84-row coherence, schema/99-leaf traceability, contamination,
+validation/safety, AI independence, publication and safe exclusion pass. V1's
+bounded simplicity is two roles, four required fields, one optional field,
+no references and one adapter. Core remains **30**. Full requirement coverage
+still depends on independent packaging review; schema alone cannot prove it.
+
+No B02 contents/captured documents are read or adapted; exposed/indeterminate
+history remains. B03 stays pristine. Trusted independent pre-exposure V1 packaging
+is defined but not executed for B03. Classification:
+**R5_77_BENCHMARK_DOCUMENT_CONTRACT_V1_QUALIFIED**. R5.77 stops; Phase 5C remains
+paused. See the [report](../benchmark/results/phase5c/R5_77-VERSIONED-GENERIC-BENCHMARK-DOCUMENT-CONTRACT.md).
+
 ## R5.76 generic document-envelope authority gap (2026-10-05)
 
 Observed without B02/B03 contents: the R5.75 callback treats every dictionary

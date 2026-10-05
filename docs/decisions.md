@@ -1,5 +1,26 @@
 # Experimental decisions
 
+## R5.77 — Small prospective static document contract
+
+Authorize BenchmarkDocumentContractV1 as evaluation infrastructure, not a new
+Lykoi semantic or historical layout interpretation. Choose one complete behavioral
+owner plus optional descriptive metadata documents: two roles, four required
+fields, one optional field, no document references. Distributed fragments would
+require inventories, ownership graphs and merge policy without an independently
+demonstrated consumer need. Explicit obligation IDs allow deterministic ordering
+and duplicate/conflict rejection; unknown kinds remain unchanged for fail-closed
+consumer review. Metadata changes document identity but not behavioral identity.
+
+Delegate existing configuration structural validation, never support admission,
+to existing component authority. One adapter normalizes inputs; unchanged static
+consumers see only normalized projections. Completeness relative to a request is
+independently reviewed benchmark authority, not a schema-derived claim. Use the
+public seed-bank study for non-held-out validation rather than protected examples.
+Require independent trusted V1 packaging/sealing before future pristine exposure,
+with generation/execution/acceptance material separately committed. B03 packaging
+is specified, not executed. Preserve B02 history and stop after R5.77.
+See the [versioned specification](benchmark-document-contract-v1.md).
+
 ## R5.76 — Require envelope authority before generic extraction
 
 Classify **R5_76_DOCUMENT_ENVELOPE_GAP**. Generic component formats and readiness's
