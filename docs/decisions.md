@@ -1,5 +1,28 @@
 # Experimental decisions
 
+## R5.51 — Instantiate Tier 2, reject unmet production prerequisites
+
+Use a versioned, scoped capsule and canonical complete-set certificate rather
+than reviving unlimited native closure. Bind committed/index/physical content,
+membership, consumed controls and resolved implementations; declare ordinary
+Python/OS/native services. Source materialization preserves bytes and Git content
+state while removing input caches and unrelated authoring startup. Evidence stays
+outside import/discovery inputs. Immediate cooperative pre/post checks, durable
+single reservation, secret-safe publication and terminal no-repair records remain
+mandatory; endpoint equality is not adversarial ABA resistance.
+
+The synthetic mechanism/lifecycle witnesses pass, but required actual frozen
+authority/byte locks and restricted regressions fail. Do not turn diagnostic CRLF
+comparison into normalization, rewrite historical pins, exclude failing checks to
+issue a certificate, or label failures as language capability gaps. In particular,
+18 successor differences remain after the newline-only diagnostic. Preserve the
+failed 81-stage qualification and require separately versioned provenance/regression
+reconciliation before new production qualification. The production-shaped assembly
+API does not imply a production-qualified certificate. Development credential/model/
+editor/OpenCode state remains excluded from fixed-source meaning. No B02 authority,
+semantic #31 or Phase 5C continuation follows. See the
+[R5.51 report](../benchmark/results/phase5c/R5_51-TIER2-EXPERIMENTAL-CAPSULE-AND-STATIC-GATE-QUALIFICATION.md).
+
 ## R5.50 — Match reproducibility rigor to the behavioral claim
 
 Adopt the prospective [Tier 2 boundary](../benchmark/results/phase5c/R5_50-BENCHMARK-REPRODUCIBILITY-BOUNDARY-REVIEW.md):

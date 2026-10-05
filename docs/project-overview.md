@@ -69,6 +69,32 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.51 capsule/static-gate investigation](../benchmark/results/phase5c/R5_51-TIER2-EXPERIMENTAL-CAPSULE-AND-STATIC-GATE-QUALIFICATION.md)
+ends **`R5_51_TIER2_CERTIFICATE_GAP`**. New Tier-2 capture, production-shaped
+certificate and cooperative synthetic gate mechanisms pass **43/43** tests and
+an independently recorded exactly-one synthetic lifecycle. A byte-preserving,
+cache-free dedicated copy binds actual committed/index/worktree content, relevant
+dependencies/configuration and declared Windows AMD64 / CPython 3.12.10 platform;
+development AI state is excluded and ordinary native descendants are declared.
+
+All **81 bounded stages** finish: **59 PASS, 22 FAIL, zero INCOMPLETE**. Restricted
+harness: 429 discovered, 338 passes, 36 preserved skips, 55 failures/errors.
+Compiler/application 31, R5.41 focused 14, recorder 29, certificate 33, R5.50
+methodology 18 and AI independence 5 pass. Generic 16-profile/84-row coherence,
+schema/99-leaf traceability, contamination, validation/safety and core 30 pass.
+Full R5.47 security retains its two documented historical failures (20 pass).
+
+Required physical byte locks fail: historical **145/678**, prospective **145/695**,
+R5.47 successor **145/1,065**. Successor mismatches comprise 902 CRLF-only and
+18 additional content differences; original identities and ancestry pass. Four
+frozen-authority physical pins also fail. These initial-checkout differences are
+preserved, with no repair, normalization, bypass or production certificate.
+Final evidence integrity passes without promoting failed qualification. Next:
+separately authorized checkout/authority/lock-provenance and restricted-regression
+reconciliation, then a fresh qualification before any authorized B02 static gate.
+B02 exposure **zero**, core **30**, Phase 5C paused. Earlier records below retain
+their historical results and recommendations.
+
 The [R5.50 methodology review](../benchmark/results/phase5c/R5_50-BENCHMARK-REPRODUCIBILITY-BOUNDARY-REVIEW.md)
 qualifies a prospective **Tier 2 experimental-reproducibility boundary**. Phase 5
 asks about required externally observable behavioral equivalence, not identical

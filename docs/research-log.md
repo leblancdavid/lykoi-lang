@@ -1,5 +1,40 @@
 # Lykoi research log
 
+## R5.51 Tier-2 capsule and cooperative gate (2026-10-04)
+
+New prospective capsule/certificate/gate code passes **43/43** synthetic mutation,
+independence, publication, stale/mixed evidence, accounting and cooperative-workspace
+tests. An independently persisted mineral lifecycle completes exactly one authorized
+synthetic observation and stops after immediate postcheck. Actual qualification uses
+a fresh **1,573-file** byte-preserving copy with no input caches, separate canonical
+output and content/index provenance. CPython 3.12.10, Windows build 10.0.26200 AMD64
+is declared; ordinary native descendants are not recursively bound. No third-party
+requirement is found; eight actual copied helpers resolve by bound source content.
+
+Fresh **81-stage** evidence: **59 PASS / 22 FAIL / 0 INCOMPLETE**. Restricted harness
+429 discovered / 338 pass / 36 preserved skips / 55 failures/errors. Application/
+compiler 31, R5.41 focused 14, R5.43 recorder 29, R5.45 certificate 33, R5.50 focused
+methodology 18 and AI independence 5 pass. Full R5.47 security records 20 passes and
+the same two historical failures documented in R5.50; neither is excluded here.
+Independent 16-profile/84-row coherence, structural schema/99-leaf traceability,
+contamination, core count, validation and safety pass.
+
+Actual required locks fail: 145/678 historical, 145/695 prospective, 145/1,065
+successor physical matches. Successor mismatches include 902 CRLF-only and 18 other
+content differences; all manifest identities and ancestry checks pass. Four original
+authority physical pins fail while the original oracle blob hash passes (no oracle
+execution). These differences exist in the initial clean checkout and survive exact
+materialization. Stopped diagnostic newline comparison changes no input or receipt.
+No failed stage is retried and production certificate assembly explicitly rejects.
+
+The [R5.51 report](../benchmark/results/phase5c/R5_51-TIER2-EXPERIMENTAL-CAPSULE-AND-STATIC-GATE-QUALIFICATION.md)
+records **`R5_51_TIER2_CERTIFICATE_GAP`**. Final canonical-evidence integrity passes
+without qualifying production. Next is separately authorized bounded checkout/
+authority/lock-provenance and restricted-regression reconciliation, then new
+qualification. R5.50 methodology and the historical ABA counterexample remain valid;
+no hermeticity/hostile-host claim follows. Fixed-source AI independence is preserved.
+B02 exposure zero, semantics 30, Phase 5C paused; historical outcomes remain unchanged.
+
 ## R5.50 benchmark reproducibility boundary (2026-10-04)
 
 Methodology review selects **Tier 2 experimental reproducibility**, behavioral
