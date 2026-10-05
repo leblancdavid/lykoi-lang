@@ -1,5 +1,29 @@
 # Lykoi research log
 
+## R5.73 one-shot held-out B02 pre-exposure halt (2026-10-05)
+
+Observed: the frozen qualified `phase5_runner_v2.authorize_synthetic` rejects
+actual commitments, and `observe` independently requires synthetic-only scope,
+synthetic kind and resource names. R5.72 explicitly deferred actual adapters.
+The first pre-exposure verification command fails with Python SyntaxError before
+imports or checks, due to shell quoting. No retry or lifecycle invocation follows.
+Result: **R5_73_PREEXPOSURE_HALT**. The requested static support question is
+NOT_OBSERVED; no semantic/composition/profile/coherence limitation is inferred.
+
+Separate stopped-state audit observes unchanged CurrentState, ExperimentFreeze,
+runner and benchmark identities; all eleven sealed metadata commitments and two
+frozen pins revalidate without protected reads. Inherited health PASS evidence is
+canonically/hash/linkage verified against unchanged state, not freshly rerun.
+The actual ledger is empty; all B02 reads/attempts/authorizations/reservations/
+openings/exposures/dispatches/completions remain zero. CheckedPlans, requirement
+count and support views remain unevaluated. Core 30; repair/generation/execution/
+frozen acceptance zero. Post-report stopped publication/integrity passes.
+
+Recommendation: separately authorized non-B02 adjudication and qualification of
+the actual-path blocker and preflight invocation before a new actual static
+experiment. R5.73 is terminal; preserve R5.72's synthetic qualification and keep
+B02 sealed. No observed B02 behavioral gap or support-transfer result exists.
+
 ## R5.72 simplified Phase 5 runner qualification (2026-10-05)
 
 Observed: independent prospective two-module runner qualification under R5.50

@@ -1,5 +1,21 @@
 # Experimental decisions
 
+## R5.73 — Stop before exposure when frozen actual authority is unavailable
+
+Preserve the frozen R5.72 synthetic-only issuer and observation predicates. Owner
+authorization of the research task cannot substitute for a qualified actual-path
+implementation. Do not relabel B02 synthetic, manufacture a ledger grant, bypass
+the protected boundary or modify the runner to complete this round. The first
+preflight invocation also fails at parsing; preserve it without retry. Classify
+`R5_73_PREEXPOSURE_HALT`, with no B02 opening or static support inference.
+
+Use separately scoped read-only stopped evidence to verify unchanged identities,
+inherited health linkage, commitments and zero actual accounting. It cannot resume
+the lifecycle. Record contract/CheckedPlan/support views as NOT_EVALUATED rather
+than infer results from generic health. Keep core 30 and B02 sealed. Recommend
+separately authorized non-B02 adjudication and prospective actual-path qualification;
+no repair, new grant, static rerun or generation/execution/acceptance occurs in R5.73.
+
 ## R5.72 — Retire accumulated runtime coupling and qualify a minimal runner
 
 The accumulated framework was retired prospectively after R5.71 due to integration

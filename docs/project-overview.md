@@ -69,6 +69,20 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.73 one-shot held-out B02 experiment](../benchmark/results/phase5c/R5_73-ONE-SHOT-HELD-OUT-B02-STATIC-SUPPORT-TRANSFER.md)
+ends **`R5_73_PREEXPOSURE_HALT`**. The unchanged qualified runner's issuer and
+observation consumer explicitly require synthetic resources; actual B02 authority
+cannot be issued through that frozen path. The first preflight command also fails
+at Python parsing before imports/checks. No preflight retry, alternate grant,
+opening or observation follows. A separate read-only stopped audit verifies the
+unchanged state/freeze, inherited health linkage, all 11 sealed commitments, two
+pins and empty actual ledger; it does not resume the experiment. **The B02 support
+question remains unobserved. B02 attempts/reads 0/0, authorizations/openings/
+dispatches/completions 0/0/0/0, generation/execution/acceptance 0/0/0, core 30.**
+Next: separately authorize non-B02 adjudication/qualification of the actual-path
+blocker and invocation failure before a new actual static experiment. R5.73 stops;
+R5.72 remains qualified within its original synthetic scope, Phase 5C paused.
+
 The [R5.72 simplified runner qualification](../benchmark/results/phase5c/R5_72-SIMPLIFIED-PHASE5-RUNNER-QUALIFICATION.md)
 ends **`R5_72_SIMPLIFIED_PHASE5_RUNNER_QUALIFIED`** within cooperative Tier-2
 methodology. **The accumulated framework was retired prospectively after R5.71
