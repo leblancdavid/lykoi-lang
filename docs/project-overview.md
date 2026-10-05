@@ -69,6 +69,25 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.57 bounded-driver repair](../benchmark/results/phase5c/R5_57-BOUNDED-QUALIFICATION-DRIVER-BUDGETING-REPAIR.md)
+ends **`R5_57_BOUNDED_DRIVER_QUALIFIED`**. A prospective production scheduler binds
+full lifecycle allowances, a max(15 seconds, 25%) margin, durable batch boundaries
+and integrity-validated continuation within one fresh qualification. Adversarial
+budgeting tests pass 29/29; three separate synthetic invocations complete 3/2/1
+receipts without timeout-induced stage starts. Fresh affected checks total 257/257,
+including 34 certificate/linkage witnesses on an explicitly selected prospective
+fixture. Earlier development/setup failures remain recorded. All 1,873 prior
+tracked result files are byte-preserved; schema/traceability, contamination,
+validation/safety and diff checks pass.
+
+Next: separately authorize **R5.58 fresh complete production Tier-2 qualification**
+across clean bounded batches. Predeclare smaller units for the historical
+103.157-second CertificateV2 suite and calibrate/subdivide oversized unseen stages
+before freezing the fresh plan. R5.56 remains stopped with its original gap and
+75 INCOMPLETE receipts; none is reusable. Driver qualification does not qualify
+the complete production gate or its unreached live integration. **B02 zero,
+core 30, Phase 5C paused.** Earlier boundaries below remain historical.
+
 The [R5.56 fresh complete production qualification](../benchmark/results/phase5c/R5_56-FRESH-COMPLETE-PRODUCTION-TIER2-QUALIFICATION.md)
 ends **`R5_56_PRODUCTION_REGRESSION_GAP`**. Starting-state implementation continuity,
 fresh 1,083-member QualifiedAuthority, deterministic capsule and a dedicated

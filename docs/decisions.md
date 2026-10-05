@@ -1,5 +1,30 @@
 # Experimental decisions
 
+## R5.57 — Admit complete lifecycles and preserve fresh batch identity
+
+Use a separately versioned prospective qualification scheduler. Reserve pre/post
+capture, startup/shutdown, worker execution/result persistence, canonical evidence,
+receipt finalization/integrity, a max(15 seconds, 25%) margin and five seconds for
+the clean boundary. Default internal budget is 110 seconds inside the 120-second
+tool envelope. Historical worker timings inform only their measured component;
+unmeasured lifecycle costs stay explicit conservative allowances. An unseen
+65-second worker fallback is intentionally too large for the window: calibrate or
+subdivide before freezing a fresh plan rather than admit optimistically.
+
+Persist immutable linked batch journals and receipt-byte pins. Continue only the
+same experiment/state/authority/driver/protocol/stage-plan identity; interpret
+canonical receipt maps in the pinned stage sequence. An unadmitted stage is pending
+at a normal boundary. Interrupted admitted work is INCOMPLETE and terminal, with
+orphan attempts prohibiting retry. Pre-exposure batching does not alter exactly-one
+locked observation restrictions. Preserve R5.56's gap and all receipts unchanged.
+
+Fresh synthetic production-driver qualification and scheduler-to-CertificateV2
+linkage pass. Explicit prospective fixture materialization resolves checkout
+representation for independent certificate regressions without changing authority
+policy or original evidence. Recommend R5.58 fresh complete qualification with
+smaller predeclared expensive stages. B02 sealed, core 30, Phase 5C paused.
+See the [R5.57 report](../benchmark/results/phase5c/R5_57-BOUNDED-QUALIFICATION-DRIVER-BUDGETING-REPAIR.md).
+
 ## R5.56 — Preserve interruption and withhold production eligibility
 
 Freshly instantiate the unchanged R5.50/51/53/55 mechanisms with all 80 required

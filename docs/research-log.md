@@ -1,5 +1,33 @@
 # Lykoi research log
 
+## R5.57 bounded qualification driver repair (2026-10-04)
+
+The prospective scheduler independently qualifies full-lifecycle admission and
+fresh multi-batch continuation. Historical component telemetry records worker
+time, not separate capture/startup/persistence costs; R5.55's 103.157-second
+CertificateV2 suite cannot fit a conservative 120-second stage. Full lifecycle
+allowances plus max(15 seconds, 25%) margin and boundary reserve reject unsafe
+starts. Unseen stages require calibration/subdivision before a fresh fixed plan.
+
+New budgeting witnesses pass 29/29, including real child interruption, mutation
+rejection, strict observation retry behavior and nonlexical stage ordering after
+canonical reload. Three separate production-driver synthetic invocations preserve
+3/2/1 PASS receipts and complete normally. Certificate linkage exposed a canonical
+map-order bug during development; fixed sequence validation and fresh 34/34
+certificate witnesses pass. The unchanged older fixture retains setup failures;
+the prospective fixture explicitly selects canonical/hash-confirmed checkout
+representations before qualification. No historical assertion is rewritten.
+
+Fresh focused results total 257/257 PASS. Independent schema/99-leaf traceability,
+contamination, validation/safety, publication, six receipt rehashes, scheduler pin
+and diff checks pass. All 1,873 pre-existing tracked research result files remain
+unchanged. R5.56 is not resumed and its 75 INCOMPLETE receipts remain terminal.
+No complete production gate, certificate issuance or observation lifecycle is
+claimed from this scheduler qualification. B02 zero, core 30, Phase 5C paused.
+Next: separately authorized R5.58 fresh complete qualification across clean
+bounded batches, with smaller fixed expensive stages and fresh live integration.
+See the [R5.57 report](../benchmark/results/phase5c/R5_57-BOUNDED-QUALIFICATION-DRIVER-BUDGETING-REPAIR.md).
+
 ## R5.56 fresh complete production qualification (2026-10-04)
 
 The fresh qualification stops **`R5_56_PRODUCTION_REGRESSION_GAP`**. Implementation
