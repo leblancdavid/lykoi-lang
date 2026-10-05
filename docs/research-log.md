@@ -1,5 +1,28 @@
 # Lykoi research log
 
+## R5.58 fresh multi-batch production qualification (2026-10-05)
+
+R5.58 ends `R5_58_PROTOCOL_HALT` before any bounded batch. The complete plan was
+frozen first: 137 exact-membership regression stages, including at most four
+CertificateV2 methods per stage, plus 11 integration checkpoints. Initialization
+then fails the inherited R5.55-snapshot physical continuity assertion. Fresh
+diagnostics show four of four checked files match the snapshot after CRLF→LF
+conversion. No behavioral regression is observed; the continuity prerequisite
+is stricter than the qualified checkout-representation boundary. No normalization,
+repair or retry follows. Fresh QualifiedAuthority/capsule/certificate/workspace,
+production receipts and synthetic observations remain absent.
+
+A stopped independent audit reaches preservation, contamination/core, synthetic
+secret rejection/redaction and authoring-environment exclusion checks, then fails
+a source-text scan on its synthetic credential assignment. The failure remains
+recorded and reproduced. Separate final canonical JSON/prose integrity and historical
+rehashing pass; they do not establish a successful final production audit or fresh
+AI/security regression qualification. B02 production exposure/reservations/dispatches/
+completions remain zero, core semantics 30, Phase 5C paused. The candidate is stopped.
+The next authorization should address only these observed orchestration issues
+using existing qualified mechanisms, then start fresh. See the
+[R5.58 report](../benchmark/results/phase5c/R5_58-FRESH-MULTI-BATCH-PRODUCTION-TIER2-QUALIFICATION.md).
+
 ## R5.57 bounded qualification driver repair (2026-10-04)
 
 The prospective scheduler independently qualifies full-lifecycle admission and

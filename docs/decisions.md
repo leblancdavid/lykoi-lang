@@ -1,5 +1,23 @@
 # Experimental decisions
 
+## R5.58 — Stop on failed starting continuity without inventing a regression
+
+Preserve the freshly frozen 137-stage regression plan and 11 integration checkpoints.
+The inherited R5.56 raw-byte continuity check fails against R5.55's physical snapshot
+before governed workspace selection: all four differences reproduce the expected
+digests under CRLF→LF conversion. Record the failure as `R5_58_PROTOCOL_HALT`;
+representation-only diagnostics do not retroactively pass its prerequisite or
+authorize repair/resumption. No production receipt, capsule or certificate exists.
+
+The stopped audit's synthetic-source credential-assignment scan rejection also
+remains FAIL. Separate JSON/prose publication-integrity checks do not replace a
+successful independent final audit. Use a separately authorized minimal prospective
+correction applying the already-qualified checkout model and accounting for the
+observed scan issue, followed by a fresh complete qualification. No redesign of
+language or production mechanisms is justified by these orchestration failures.
+B02 accounting remains zero, core 30, Phase 5C paused. See the
+[R5.58 report](../benchmark/results/phase5c/R5_58-FRESH-MULTI-BATCH-PRODUCTION-TIER2-QUALIFICATION.md).
+
 ## R5.57 — Admit complete lifecycles and preserve fresh batch identity
 
 Use a separately versioned prospective qualification scheduler. Reserve pre/post

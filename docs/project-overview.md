@@ -69,6 +69,24 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.58 fresh production qualification](../benchmark/results/phase5c/R5_58-FRESH-MULTI-BATCH-PRODUCTION-TIER2-QUALIFICATION.md)
+ends **`R5_58_PROTOCOL_HALT`**, before workspace materialization or any batch.
+Its frozen plan declares 137 regression stages and 11 integration checkpoints.
+The inherited starting continuity assertion compares current physical bytes with
+R5.55's snapshot: all four mechanisms differ solely by LF/CRLF representation.
+This establishes an orchestration prerequisite failure, not a behavioral or language
+regression. No repair, retry, QualifiedAuthority, capsule, certificate or synthetic
+observation follows. Production receipts and batches are zero.
+
+The stopped independent audit also fails its source-text publication scan on a
+synthetic credential assignment. Final canonical JSON/prose integrity, historical
+preservation, contamination/core and diff checks pass, without promoting that audit
+or unrun production gates. Next: separately authorize a minimal correction applying
+the existing qualified checkout model to starting continuity and addressing the
+observed synthetic-source scan issue, then a wholly fresh qualification. R5.58 and
+R5.56 remain stopped. **B02 all production accounting zero, core 30, Phase 5C paused.**
+The prior R5.57 qualification remains valid within its original boundary.
+
 The [R5.57 bounded-driver repair](../benchmark/results/phase5c/R5_57-BOUNDED-QUALIFICATION-DRIVER-BUDGETING-REPAIR.md)
 ends **`R5_57_BOUNDED_DRIVER_QUALIFIED`**. A prospective production scheduler binds
 full lifecycle allowances, a max(15 seconds, 25%) margin, durable batch boundaries
