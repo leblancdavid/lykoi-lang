@@ -1,6 +1,9 @@
 """Independent synthetic/adversarial tests for the complete prospective lifecycle."""
 import copy
 import os
+import json
+import subprocess
+import sys
 from pathlib import Path
 import tempfile
 import unittest
@@ -15,6 +18,7 @@ def synthetic():
     content = {'synthetic:whole-contract': b'{"behavior":"preserve observable sample order"}',
                'synthetic:profile': b'{"static":"whole-contract"}'}
     benchmark = r.seal({'kind': 'synthetic', 'expected_benchmark': 'independent-held-out-fake',
+        'authority_class': r.SYNTHETIC_TEST,
         'resources': {name: {'commitment': r.digest(raw), 'seal': 'CLOSED',
                              'provenance': 'synthetic setup before freeze', 'frozen': True}
                       for name, raw in content.items()}})
@@ -31,7 +35,7 @@ class RunnerTests(unittest.TestCase):
         self.benchmark, self.content = synthetic()
         results = {name: {'status': 'PASS', 'state': self.state['identity']} for name in r.HEALTH_STAGES}
         self.health = r.health_record(self.state, results)
-        self.freeze = r.freeze(self.state, self.benchmark, self.health)
+        self.freeze = r.freeze(self.state, self.benchmark, self.health, self.ledger)
         self.reads = self.calls = 0
 
     def authorize(self):
@@ -59,7 +63,7 @@ class RunnerTests(unittest.TestCase):
 
     def test_complete_synthetic_lifecycle_and_durable_reload(self):
         self.assertEqual(self.ledger.status(), 'zero')
-        self.assertEqual(self.freeze, r.freeze(self.state, self.benchmark, self.health))
+        self.assertEqual(self.freeze, r.freeze(self.state, self.benchmark, self.health, self.ledger))
         r.verify_commitment(self.benchmark, self.benchmark['identity'], copy.deepcopy(self.benchmark))
         grant = self.authorize()
         self.assertEqual(self.ledger.status(), 'incomplete')
@@ -280,6 +284,161 @@ class RunnerTests(unittest.TestCase):
         self.assertEqual(r.load(path), value)
         with self.assertRaises(FileExistsError):
             r.persist(path, value)
+
+
+def held_out():
+    benchmark, content = synthetic()
+    body = r.verify(benchmark)
+    body.update(kind='fake-benchmark', authority_class=r.ACTUAL_HELD_OUT, precommitted=True)
+    # Deliberately keep synthetic: names: explicit classification confers mode.
+    return r.seal(body), content
+
+
+class ActualModeTests(RunnerTests):
+    """Run the identical adversarial lifecycle against actual-mode fake authority."""
+    def setUp(self):
+        super().setUp()
+        self.benchmark, self.content = held_out()
+        self.trusted_identity = self.benchmark['identity']
+        self.freeze = r.freeze(self.state, self.benchmark, self.health, self.ledger)
+
+    def authorize(self):
+        return r.authorize(self.freeze, self.benchmark, self.ledger, self.state,
+                           r.ACTUAL_HELD_OUT, self.trusted_identity)
+
+    def test_requires_frozen_commitment(self):
+        body = copy.deepcopy(r.verify(self.benchmark))
+        for row in body['resources'].values():
+            row['frozen'] = False
+        changed = r.seal(body)
+        frozen = r.freeze(self.state, changed, self.health)
+        with self.assertRaises(r.Rejected):
+            r.authorize(frozen, changed, self.ledger, self.state, r.ACTUAL_HELD_OUT, changed['identity'])
+        self.assertEqual(self.ledger.status(), 'zero')
+
+    def test_requires_precommit_and_trusted_identity(self):
+        body = r.verify(self.benchmark)
+        body['precommitted'] = False
+        with self.assertRaises(r.Rejected):
+            r.eligible(r.seal(body), r.ACTUAL_HELD_OUT, self.trusted_identity)
+        with self.assertRaises(r.Rejected):
+            r.eligible(self.benchmark, r.ACTUAL_HELD_OUT, 'untrusted')
+
+    def test_requires_frozen_zero_observation(self):
+        for changes in ({'kind': 'unfrozen'}, {'observation_count': 1}, {'repair_state': 'repaired'}):
+            with self.subTest(changes=changes):
+                frozen = r.seal({**r.verify(self.freeze), **changes})
+                with self.assertRaises(r.Rejected):
+                    r.authorize(frozen, self.benchmark, self.ledger, self.state,
+                                r.ACTUAL_HELD_OUT, self.trusted_identity)
+        self.assertEqual(self.ledger.status(), 'zero')
+
+    def test_cross_mode_rejected_before_issuance(self):
+        with self.assertRaises(r.Rejected):
+            r.authorize_synthetic(self.freeze, self.benchmark, self.ledger, self.state)
+        ordinary, _ = synthetic()
+        frozen = r.freeze(self.state, ordinary, self.health)
+        with self.assertRaises(r.Rejected):
+            r.authorize(frozen, ordinary, self.ledger, self.state,
+                        r.ACTUAL_HELD_OUT, ordinary['identity'])
+        self.assertEqual(self.ledger.status(), 'zero')
+
+    def test_cross_mode_grant_rejected_before_opening(self):
+        grant = self.authorize()
+        body = r.verify(grant)
+        body['mode'] = r.SYNTHETIC_TEST
+        with self.assertRaises(r.Rejected):
+            self.observe(r.seal(body))
+        self.assertEqual((self.reads, self.calls), (0, 0))
+
+    def test_wrong_commitment_argument_before_opening(self):
+        grant = self.authorize()
+        other, _ = held_out()
+        body = r.verify(other)
+        body['expected_benchmark'] = 'commitment-B'
+        with self.assertRaises(r.Rejected):
+            self.observe(grant, commitment=r.seal(body))
+        self.assertEqual(self.reads, 0)
+
+    def test_second_authorization_before_opening(self):
+        self.authorize()
+        with self.assertRaises(r.Rejected):
+            self.authorize()
+
+    def test_new_ledger_cannot_reset_frozen_experiment(self):
+        self.observe()
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaises(r.Rejected):
+                r.authorize(self.freeze, self.benchmark, r.Ledger(directory), self.state,
+                            r.ACTUAL_HELD_OUT, self.trusted_identity)
+
+    def test_actual_mode_requires_prefrozen_ledger_binding(self):
+        frozen = r.freeze(self.state, self.benchmark, self.health)
+        with self.assertRaises(r.Rejected):
+            r.authorize(frozen, self.benchmark, self.ledger, self.state,
+                        r.ACTUAL_HELD_OUT, self.trusted_identity)
+
+    def test_actual_scope_cannot_open_synthetic_only_commitment(self):
+        ordinary, _ = synthetic()
+        with self.assertRaises(r.Rejected):
+            r.eligible(ordinary, r.ACTUAL_HELD_OUT, ordinary['identity'])
+
+    def test_repair_mutates_state_and_blocks_new_authority(self):
+        self.observe()
+        self.state = r.seal({**r.verify(self.state), 'files': {'subject': 'intentional repair'}})
+        with self.assertRaises(r.Rejected):
+            self.post()
+        r.invalidate_repair(self.freeze, self.ledger)
+        with self.assertRaises(r.Rejected):
+            self.authorize()
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaises(r.Rejected):
+                r.authorize(self.freeze, self.benchmark, r.Ledger(directory), self.state,
+                            r.ACTUAL_HELD_OUT, self.trusted_identity)
+
+    def test_forbidden_operations_reject_at_issuance(self):
+        for operation in ('generation', 'execution', 'acceptance', 'repair'):
+            with self.subTest(operation=operation), self.assertRaises(r.Rejected):
+                r.authorize(self.freeze, self.benchmark, self.ledger, self.state,
+                            r.ACTUAL_HELD_OUT, self.trusted_identity, operation)
+        self.assertEqual(self.ledger.status(), 'zero')
+
+    def test_b02_structural_eligibility_without_authorization_or_access(self):
+        boundary = r.Boundary(ROOT)
+        with boundary.active(), patch.object(r, 'authorize', side_effect=AssertionError('no B02 issuer')):
+            actual = r.benchmark_commitment(ROOT)
+            self.assertTrue(r.eligible(actual, r.ACTUAL_HELD_OUT, actual['identity']))
+        self.assertEqual(boundary.attempts, 0)
+        self.assertEqual(self.ledger.status(), 'zero')
+
+
+class InvocationTests(unittest.TestCase):
+    def test_structured_pinned_preflight_both_modes_with_space_paths(self):
+        state = r.current_state(ROOT)
+        results = {name: {'status': 'PASS', 'state': state['identity']} for name in r.HEALTH_STAGES}
+        health = r.health_record(state, results)
+        for factory, mode in ((synthetic, r.SYNTHETIC_TEST), (held_out, r.ACTUAL_HELD_OUT)):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory(prefix='held out qualification ') as directory:
+                parent = Path(directory)
+                commitment, _ = factory()
+                ledger = parent / 'one time ledger'
+                ledger.mkdir()
+                frozen = r.freeze(state, commitment, health, r.Ledger(ledger))
+                for name, value in (('freeze', frozen), ('commitment', commitment), ('state', state)):
+                    r.persist(parent / (name + '.json'), value)
+                command = [sys.executable, '-B', '-S', '-m', 'benchmark.evaluation.phase5_runner_v2',
+                           'preflight', '--mode', mode, '--trusted-identity', commitment['identity'],
+                           '--ledger', str(ledger)]
+                for name in ('freeze', 'commitment', 'state'):
+                    command.extend(['--' + name, str(parent / (name + '.json'))])
+                self.assertNotIn('-c', command)
+                result = subprocess.run(command, cwd=ROOT, env=r.controlled_environment(ROOT),
+                                        capture_output=True, timeout=30)
+                self.assertEqual(result.returncode, 0, result.stderr.decode())
+                evidence = json.loads(result.stdout)
+                self.assertEqual((evidence['status'], evidence['mode'], evidence['protected_read_attempts']),
+                                 ('PASS', mode, 0))
+                self.assertEqual(r.Ledger(ledger).status(), 'zero')
 
 
 if __name__ == '__main__':

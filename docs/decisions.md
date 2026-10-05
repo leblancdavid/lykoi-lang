@@ -1,5 +1,32 @@
 # Experimental decisions
 
+## R5.74 — Explicit modes in the existing one-time authority model
+
+Qualify actual-held-out mechanics prospectively with non-B02 fake commitments.
+Preserve R5.73's halt, synthetic qualification and historical accounting. Mode is
+explicit authority metadata, never a filename heuristic. Use one issuer and one
+shared observe path; preserve two core modules, six experiment artifact types,
+one authorization layer and five normal transitions plus terminal invalidation.
+
+Actual issuance requires a pre-existing independently trusted identity, classified
+closed/precommitted authority with frozen pin(s)/provenance, a clean zero-observation
+ExperimentFreeze and an empty durable ledger bound into that freeze before issuance.
+Prevent a new ledger from resetting the same experiment. Restrict authority to
+WHOLE_CONTRACT_STATIC_SUPPORT_OBSERVATION; prohibit generation/execution/acceptance/
+repair. Keep openers/evaluators controller-bound under cooperative Tier 2 rather
+than expose a generic file-access grant. Retain interrupted work as fail-closed.
+
+Use checked-in, state-pinned structured argv preflight and a small stand-in
+qualification controller. Declare the resolved Git metadata tool in state and
+expose only its directory in the stripped worker PATH. Preserve the earlier missing-
+tool development failure. Preserve the completed candidate's source-publication
+false positive; independently audit canonical evidence and narrowly AST-bound
+public detection syntax read-only, without replay or frozen-source repair.
+
+Record B02 structural eligibility using pinned safe metadata only. It confers no
+grant and proves no B02 support. Stop after R5.74_ACTUAL_HELDOUT_PATH_QUALIFIED;
+core 30, B02 all accounting zero, actual experiment separately owner-authorized.
+
 ## R5.73 — Stop before exposure when frozen actual authority is unavailable
 
 Preserve the frozen R5.72 synthetic-only issuer and observation predicates. Owner

@@ -1,5 +1,50 @@
 # Lykoi research log
 
+## R5.74 actual-held-out path qualified on non-B02 authority (2026-10-05)
+
+Observed: prospective explicit SYNTHETIC_TEST / ACTUAL_HELD_OUT modes traverse
+the same issuer and observation enforcement. Actual-mode authority requires a
+pre-existing trusted commitment identity, closed precommitted authority, frozen
+pins/provenance, clean zero-observation freeze and prefrozen durable ledger binding.
+Modes confer no authority through resource-name prefixes. A fresh fake benchmark
+file is precommitted before freeze; one opening/static observation completes and
+post-check passes. Replay/second grant reject. Intentionally mutated synthetic
+subject state fails post-check; terminal invalidation blocks new authority.
+
+Independent tests: 74/74 runner (thirty original tests in each mode, thirteen actual-
+specific and one structured invocation test); 31/31 compiler/application; 157/157
+generic semantic/support with 36 pre-import prohibited skips; 16 profiles/84 rows;
+schema/99-leaf traceability, contamination, validation/safety and offline AI
+independence pass. Commitment substitution, cross-mode misuse, forbidden operations,
+incomplete observation and replacement-ledger replay reject. Pinned structured
+preflight argv succeeds for both fake modes, including paths with spaces.
+
+Observed failures preserved: the first development health runner lacks Git in its
+stripped PATH; standalone diagnostics identify the metadata-only test's missing
+executable. Its incomplete evidence remains. A fresh candidate declares the metadata
+tool and passes all health stages. The frozen controller later rejects its own public
+detection-marker concatenation during source-text publication audit. Its completed
+lifecycle/source remain unchanged. A separate read-only independent auditor verifies
+canonical hashes, health/freeze/ledger linkage, publication with exact AST-role
+placeholder handling, concrete-credential rejection and historical preservation.
+No completed observation is replayed or repaired. 2,347 ordinary historical result
+files are byte-preserved; four protected files metadata-preserved.
+
+The first post-report publication check also rejects a hyphenated prose word whose
+internal substring matches the recognizable credential-prefix rule. Correct the
+new prose and repeat only read-only publication verification; frozen source/health/
+lifecycle evidence remains unchanged. This is another observed lexical false
+positive, not a concrete credential exposure or authorization failure.
+
+Result: **R5_74_ACTUAL_HELDOUT_PATH_QUALIFIED** within cooperative Tier 2. Two core
+modules, one authority layer, six experiment artifact types, five normal transitions
+plus terminal invalidation; no retired-framework stack. B02's eleven closed trusted
+commitments and two pins are structurally eligible by metadata only. No B02 grant,
+read attempt/content read, reservation/opening, dispatch/completion, generation,
+execution, frozen acceptance or repair occurs. Core semantics 30. B02 support and
+its actual evaluator behavior remain unobserved. R5.73 remains permanently halted.
+R5.74 stops; any actual experiment requires separate owner authorization.
+
 ## R5.73 one-shot held-out B02 pre-exposure halt (2026-10-05)
 
 Observed: the frozen qualified `phase5_runner_v2.authorize_synthetic` rejects

@@ -69,6 +69,34 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.74 actual-held-out path qualification](../benchmark/results/phase5c/R5_74-ACTUAL-HELDOUT-AUTHORIZATION-PATH-QUALIFICATION.md)
+ends **`R5_74_ACTUAL_HELDOUT_PATH_QUALIFIED`** within cooperative Tier 2. Explicit
+`SYNTHETIC_TEST` and `ACTUAL_HELD_OUT` modes share one issuer/observation path;
+actual authority additionally requires a pre-existing trusted commitment and a
+prefrozen durable ledger binding. One non-B02 fake opening/static observation
+completes, post-check passes, replay/second authorization reject, and intentional
+synthetic state repair invalidates the experiment. Cross-mode misuse, commitment
+substitution, incomplete work and generation/execution/acceptance reject.
+
+Fresh health: **74/74 runner**, **31/31 compiler/application**, **157/157 generic
+support**, **16-profile/84-row** coherence, schema/**99-leaf** traceability,
+contamination, validation/safety, offline AI independence and **36 metadata-only
+prohibited skips**. Structured pinned argv preflight works in both modes, including
+paths with spaces. B02's eleven sealed commitments/two pins are **structurally
+eligible using metadata only**, without issuance/access. The runner retains **two
+core modules, one authority layer, six artifact types and five normal transitions**.
+
+Preserve the first development candidate's missing-Git health failure and the
+qualified controller's source-publication false positive. A fresh declared-tool
+candidate and separate read-only independent source/evidence audit qualify the
+prospective result; no completed lifecycle is replayed or repaired. **2,347 ordinary
+historical result files are byte-preserved; four protected files metadata-preserved.**
+**Core 30; B02 attempts/reads/grants/reservations/openings/dispatches/completions and
+generation/execution/acceptance/repair all zero.** R5.74 stops. R5.73 remains halted;
+the B02 support question is unobserved. Any actual experiment needs separate owner
+authorization; none follows here. Phase 5C remains paused. Earlier boundaries retain
+their historical scope.
+
 The [R5.73 one-shot held-out B02 experiment](../benchmark/results/phase5c/R5_73-ONE-SHOT-HELD-OUT-B02-STATIC-SUPPORT-TRANSFER.md)
 ends **`R5_73_PREEXPOSURE_HALT`**. The unchanged qualified runner's issuer and
 observation consumer explicitly require synthetic resources; actual B02 authority
@@ -79,8 +107,8 @@ unchanged state/freeze, inherited health linkage, all 11 sealed commitments, two
 pins and empty actual ledger; it does not resume the experiment. **The B02 support
 question remains unobserved. B02 attempts/reads 0/0, authorizations/openings/
 dispatches/completions 0/0/0/0, generation/execution/acceptance 0/0/0, core 30.**
-Next: separately authorize non-B02 adjudication/qualification of the actual-path
-blocker and invocation failure before a new actual static experiment. R5.73 stops;
+R5.74 separately qualifies the prospective actual path and structured invocation
+with non-B02 stand-ins, preserving this halt and its failed command. R5.73 stops;
 R5.72 remains qualified within its original synthetic scope, Phase 5C paused.
 
 The [R5.72 simplified runner qualification](../benchmark/results/phase5c/R5_72-SIMPLIFIED-PHASE5-RUNNER-QUALIFICATION.md)

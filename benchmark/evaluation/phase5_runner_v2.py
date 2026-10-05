@@ -1,7 +1,8 @@
 """Small cooperative Tier-2 experiment runner. No historical runtime stack.
 
-R5.72 has no real benchmark opener or authorization issuer. Only synthetic
-resources may traverse the observation lifecycle. Git calls inspect metadata.
+R5.74 prospectively qualifies explicit synthetic and actual-held-out modes.
+Openers/evaluators remain experiment-bound callbacks, not arbitrary-file APIs.
+Git calls inspect metadata. R5.73 remains permanently stopped.
 """
 from contextlib import contextmanager
 import ast
@@ -12,6 +13,7 @@ import os
 from pathlib import Path
 import platform
 import re
+import shutil
 import subprocess
 import sys
 
@@ -195,6 +197,7 @@ def benchmark_commitment(root):
     for name, row in rows.items():
         require(not row['frozen'] or policy['frozen_authority'][name] == row['sha256'], 'frozen pin mismatch')
     return seal({'kind': 'B02', 'expected_benchmark': 'Phase5/B02', 'resources': resources,
+                 'authority_class': ACTUAL_HELD_OUT, 'precommitted': True,
                  'trusted_metadata': METADATA, 'protected_content_reads': 0})
 
 
@@ -214,7 +217,8 @@ def current_state(root, extra=()):
                  'operation-contract-fixtures', 'invariant-fixtures', 'selection-fixtures', 'state-relation-fixtures')),
              'generated/task_manager.py', 'generated/task_manager.manifest.json',
              'benchmark/evaluation/phase5_runner_v2.py', 'benchmark/evaluation/phase5_worker_v2.py',
-             'benchmark/evaluation/test_phase5_runner_v2.py',
+              'benchmark/evaluation/test_phase5_runner_v2.py',
+              'benchmark/results/phase5c/r5_74_qualification.py',
              'benchmark/results/phase5c/r5_72_qualification.py', *METADATA, *extra}
     for directory in ('src/air_compiler', 'benchmark/semantic', 'tests'):
         names.update(p.relative_to(root).as_posix() for p in (root / directory).glob('*.py'))
@@ -242,6 +246,7 @@ def current_state(root, extra=()):
             'python': platform.python_version(), 'implementation': platform.python_implementation()},
         'direct_dependencies': {'third_party': [], 'stdlib': platform.python_version()},
         'configuration': {'python_site': False, 'python_hash_seed': '0', 'network_inference': False,
+                          'git_metadata_tool': shutil.which('git'),
                           'text_identity': 'UTF8 repository text; CRLF normalized to LF'},
         'runner': {n: files[n] for n in files if n.endswith(('phase5_runner_v2.py', 'phase5_worker_v2.py'))}})
 
@@ -257,12 +262,15 @@ def health_record(state, results):
     return seal({'kind': 'GenericHealthCheck', 'state': state['identity'], 'results': results})
 
 
-def freeze(state, commitment, health):
+def freeze(state, commitment, health, ledger=None):
     for value in (state, commitment, health):
         verify(value)
     require(health['state'] == state['identity'] and state['semantic_count'] == 30, 'stale health/state')
     require(health_record(state, health['results']) == health, 'invalid health record')
-    return seal({'kind': 'ExperimentFreeze', 'state': state['identity'],
+    binding = {'ledger': str(ledger.directory)} if ledger is not None else {}
+    if ledger is not None:
+        require(ledger.status() == 'zero', 'freeze ledger not zero')
+    return seal({'kind': 'ExperimentFreeze', 'state': state['identity'], **binding,
                  'benchmark': commitment['identity'], 'health': health['identity'],
                  'runner': state['runner'], 'observation_count': 0, 'repair_state': 'clean'})
 
@@ -314,29 +322,78 @@ class Ledger:
         return 'one' if events[-1]['transition'] == 'COMPLETED' else 'incomplete'
 
 
-def authorize_synthetic(frozen, commitment, ledger, state):
+SYNTHETIC_TEST = 'SYNTHETIC_TEST'
+ACTUAL_HELD_OUT = 'ACTUAL_HELD_OUT'
+STATIC_OPERATION = 'WHOLE_CONTRACT_STATIC_SUPPORT_OBSERVATION'
+
+
+def eligible(commitment, mode, trusted_identity):
+    """Structural authority only; no issuance, resource access or name inference.
+
+    The controller supplies the pre-existing trusted identity independently of
+    the candidate. A self-sealed arbitrary file is not trusted benchmark authority.
+    """
+    verify(commitment)
+    require(mode in (SYNTHETIC_TEST, ACTUAL_HELD_OUT), 'unknown authorization mode')
+    require(commitment['identity'] == trusted_identity, 'untrusted benchmark commitment')
+    require(commitment.get('authority_class') == mode, 'authorization mode mismatch')
+    resources = commitment.get('resources', {})
+    require(resources and all(row.get('seal') == 'CLOSED' for row in resources.values()),
+            'benchmark not sealed')
+    if mode == ACTUAL_HELD_OUT:
+        require(commitment.get('precommitted') is True and
+                any(row.get('frozen') is True for row in resources.values()) and
+                all(re.fullmatch('[0-9a-f]{64}', row.get('commitment', '')) and
+                    row.get('provenance') for row in resources.values()),
+                'held-out authority requires pre-existing frozen commitments/provenance')
+    else:
+        require(commitment.get('kind') == 'synthetic', 'synthetic authority required')
+    return True
+
+
+def authorization_preflight(frozen, commitment, ledger, state, mode, trusted_identity,
+                            operation=STATIC_OPERATION):
     for value in (frozen, commitment, state):
         verify(value)
-    require(commitment['kind'] == 'synthetic' and all(n.startswith('synthetic:') for n in commitment['resources']),
-            'R5_72_PROTOCOL_HALT: actual benchmark authorization prohibited')
+    eligible(commitment, mode, trusted_identity)
+    require(operation == STATIC_OPERATION, 'unauthorized operation')
+    require(frozen.get('kind') == 'ExperimentFreeze' and frozen.get('observation_count') == 0
+            and frozen.get('repair_state') == 'clean', 'experiment not frozen clean at zero')
+    require((mode != ACTUAL_HELD_OUT or 'ledger' in frozen) and
+            ('ledger' not in frozen or frozen['ledger'] == str(ledger.directory)),
+            'frozen experiment ledger mismatch')
     require(frozen['state'] == state['identity'] and frozen['benchmark'] == commitment['identity']
             and frozen['runner'] == state['runner'] and ledger.status() == 'zero', 'authorization binding mismatch')
+    return {'status': 'PASS', 'mode': mode, 'operation': operation, 'observations': 0}
+
+
+def authorize(frozen, commitment, ledger, state, mode, trusted_identity, operation=STATIC_OPERATION):
+    authorization_preflight(frozen, commitment, ledger, state, mode, trusted_identity, operation)
     grant = seal({'kind': 'OneTimeObservationAuthorization', 'freeze': frozen['identity'],
-                  'benchmark': commitment['identity'], 'operation': 'static-whole-contract',
-                  'scope': 'synthetic-only', 'ledger': str(ledger.directory), 'repair': False,
+                  'benchmark': commitment['identity'], 'operation': operation,
+                  'mode': mode, 'ledger': str(ledger.directory), 'repair': False,
                   'generation': False, 'execution': False, 'acceptance': False})
     ledger.append('AUTHORIZED', frozen['identity'], grant=grant['identity'])
     return grant
 
 
+def authorize_synthetic(frozen, commitment, ledger, state):
+    return authorize(frozen, commitment, ledger, state, SYNTHETIC_TEST, commitment['identity'])
+
+
 def observe(frozen, commitment, grant, ledger, capture, metadata_check, opener, evaluator,
-            operation='static-whole-contract'):
+            operation=STATIC_OPERATION):
     for value in (frozen, commitment, grant):
         verify(value)
     events = ledger.events()
-    require(operation == 'static-whole-contract' and grant['operation'] == operation
-            and grant['scope'] == 'synthetic-only' and commitment['kind'] == 'synthetic'
-            and all(n.startswith('synthetic:') for n in commitment['resources'])
+    eligible(commitment, grant.get('mode'), frozen['benchmark'])
+    require((grant.get('mode') != ACTUAL_HELD_OUT or 'ledger' in frozen) and
+            ('ledger' not in frozen or frozen['ledger'] == str(ledger.directory)),
+            'frozen experiment ledger mismatch')
+    require(grant.get('kind') == 'OneTimeObservationAuthorization'
+            and frozen.get('kind') == 'ExperimentFreeze' and frozen.get('observation_count') == 0
+            and frozen.get('repair_state') == 'clean'
+            and operation == STATIC_OPERATION and grant['operation'] == operation
             and all(grant[k] is False for k in ('repair', 'generation', 'execution', 'acceptance')),
             'unauthorized operation')
     require(len(events) == 1 and events[0]['details']['grant'] == grant['identity']
@@ -382,7 +439,10 @@ def controlled_environment(root):
     # Necessary Windows runtime/process context only. Never propagate authoring AI.
     env = {key: os.environ[key] for key in ('SYSTEMROOT', 'WINDIR', 'TEMP', 'TMP', 'COMSPEC') if key in os.environ}
     env.update(PYTHONPATH=os.pathsep.join((str(root), str(Path(root) / 'src'))),
-               PYTHONHASHSEED='0', PYTHONDONTWRITEBYTECODE='1', PYTHONIOENCODING='utf-8')
+                PYTHONHASHSEED='0', PYTHONDONTWRITEBYTECODE='1', PYTHONIOENCODING='utf-8')
+    tool = shutil.which('git')
+    require(tool is not None, 'Git metadata tool unavailable')
+    env['PATH'] = str(Path(tool).resolve().parent)
     return env
 
 
@@ -397,3 +457,31 @@ def run_health_stage(root, state, stage):
     require(evidence['status'] == 'PASS' and evidence['protected_read_attempts'] == 0
             and current_state(root) == state, 'health drift or protocol halt')
     return {**evidence, 'kind': 'GenericHealthCheck', 'state': state['identity'], 'worker': state['runner']}
+
+
+def main():
+    """Structured, read-only preflight for a future experiment; never issues grants.
+
+    Pin this module and the controller in CurrentState. Use argv, never Python -c.
+    Observation itself uses the same qualified Python interface in the controller.
+    """
+    import argparse
+    parser = argparse.ArgumentParser(description=main.__doc__)
+    parser.add_argument('command', choices=['preflight'])
+    for name in ('freeze', 'commitment', 'state', 'ledger', 'trusted-identity'):
+        parser.add_argument('--' + name, required=True)
+    parser.add_argument('--mode', choices=[SYNTHETIC_TEST, ACTUAL_HELD_OUT], required=True)
+    parser.add_argument('--operation', default=STATIC_OPERATION)
+    args = parser.parse_args()
+    root = Path(__file__).resolve().parents[2]
+    boundary = Boundary(root)
+    with boundary.active():
+        frozen, commitment, state = load(args.freeze), load(args.commitment), load(args.state)
+        require(state == current_state(root), 'preflight current state drift')
+        result = authorization_preflight(frozen, commitment, Ledger(args.ledger), state,
+                                        args.mode, args.trusted_identity, args.operation)
+    print(json.dumps({**result, 'protected_read_attempts': boundary.attempts}, sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()
