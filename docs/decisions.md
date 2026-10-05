@@ -1,5 +1,24 @@
 # Experimental decisions
 
+## R5.81 — Separate implementation adequacy from source fidelity
+
+Adopt [Implementation Adequacy 0.1](implementation-adequacy-v0.1.md) as a bounded
+experimental sidecar. Require determined or deliberately delegated authority for
+reachable contractually relevant choices, plus separate fidelity approval. Do not
+reinterpret silence as freedom or demand irrelevant internal details. Explicit
+consumer restrictions can make physical ordering non-semantic while preserving
+membership/multiplicity/frame obligations. This is a prospective authoring policy,
+not a universal theorem about partial-specification refinement.
+
+Choose **R5_81_IMPLEMENTATION_ADEQUACY_PARTIAL**: finite intersection/absence checks
+work, but inventories and necessary implications remain textual and reviewer based.
+Preserve independent disagreement about default, tie, cardinality and normalization
+mutations. Seven detections establish mechanical sensitivity, not seven proven
+semantic omissions. Source fidelity and V1 projection stay separate axes; do not
+expand semantics or V1 to improve results. B01 default trigger remains unresolved.
+No actual implementation grants, protected access or subsequent round. See the
+[report](../benchmark/results/phase5c/R5_81-IMPLEMENTATION-ADEQUACY-QUALIFICATION.md).
+
 ## R5.80 — Reviewable candidates and conservative partial qualification
 
 Adopt [FRC-0.1](formal-requirement-contract-v0.1.md) as experimental upstream

@@ -18,7 +18,8 @@ primitive for each new feature. This is a research hypothesis, not an
 established minimum or a claim that the current vocabulary is general-purpose.
 
 The intended architecture is human requirement → replaceable human/AI requirement
-formalization → reviewed Formal Requirement Contract → Lykoi authoring/semantic
+formalization → reviewed Formal Requirement Contract → implementation-adequacy
+gate → Lykoi authoring/semantic
 representation → validated, compiler-controlled transformation → executable
 implementation/runtime → observable behavior. Formal requirements define WHAT;
 the program defines HOW. Lykoi is AI-native, not AI-dependent. The semantic model,
@@ -70,6 +71,24 @@ external resources such as storage, time and IDs should remain distinguishable.
   and [post-B16 corrected boundary](../benchmark/results/phase5c/R5_2_2-POST-B16-CORRECTED-CONTINUATION.md).
 
 ## Current boundary and next steps
+
+The [R5.81 adequacy qualification](../benchmark/results/phase5c/R5_81-IMPLEMENTATION-ADEQUACY-QUALIFICATION.md)
+ends **`R5_81_IMPLEMENTATION_ADEQUACY_PARTIAL`**. A separate
+[experimental adequacy gate](implementation-adequacy-v0.1.md) distinguishes
+source-fidelity approval from authority to choose observable behavior. Sixteen
+synthetic cases yield 10 profile-local adequate, 3 underspecified, 1 clarification,
+1 conflict and 1 outside scope. Seven behavioral clause removals are detected
+mechanically; semantic re-elicitation remains contested. Internal algorithm
+removal preserves adequacy. Five finite internal-strategy samples agree, while
+residual omission plans diverge and explicit ordering freedom remains authorized.
+One separate same-family context reviews twice; zero strict-isolation-qualified
+reviews. Inventory completeness, implications and consumer scope remain judgment
+based. New tests **18/18**, R5.80 **18/18**, guarded V1 **33/33** pass. Public B01
+remains **NEEDS_CLARIFICATION / unauthorized** for unresolved default trigger
+domain. V1 coverage remains R5.80 **1/9**; no actual authoring grant. All B03
+counters **zero**, **B03_PRISTINE / B03_NOT_EVALUATED /
+B03_NOT_EXPOSED_TO_LYKOI_DEVELOPMENT**. Core **30**, Phase 5C paused. R5.81 stops;
+no subsequent round or held-out exposure is authorized. Earlier boundaries retain scope.
 
 The [R5.80 process qualification](../benchmark/results/phase5c/R5_80-REQUIREMENT-FORMALIZATION-QUALIFICATION.md)
 ends **`R5_80_REQUIREMENT_FORMALIZATION_PARTIAL`**. Experimental

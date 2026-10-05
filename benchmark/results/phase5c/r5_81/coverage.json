@@ -1,0 +1,38 @@
+{
+  "version": "R5.81-review-inventory-1",
+  "review_type": "Coordinating semantic inventory; independent review challenged first draft. Not independently confirmed complete coverage.",
+  "mechanical_domain": "Finite residual decisions only. Option labels denote strategies; they do not enumerate all concrete traces. Positive analysis depends on reviewed fixed obligations below.",
+  "fixed_obligations": {
+    "A": ["exact boolean-match membership", "each unique task once", "unchanged task contents and input", "empty output for no matches"],
+    "B": ["integer equality for present priorities", "creation order", "once-only multiplicity", "input frame", "empty result"],
+    "C": ["nonempty integer-priority domain", "one maximum task unchanged", "input frame"],
+    "D-stable-freedom": ["exact membership and once-only multiplicity", "input/content frame", "empty results", "creation-order ties", "direction may be chosen per call; no direction consistency promise"],
+    "D-unconstrained": ["membership/multiplicity/frame/empty", "consumer must ignore order including across calls"],
+    "E": ["exact mathematical sum", "no state/external effects"],
+    "M-rejection": ["identity on nonnegative integers", "no effects"],
+    "M-transition": ["OPEN/CLOSED state domain", "no other effects"],
+    "M-cardinality": ["maximum-priority result membership", "creation ordering", "input/content frame"],
+    "M-normalization": ["ASCII input", "A-Z lowercasing", "internal spaces unchanged", "no effects"]
+  },
+  "exclusions": ["transport outside abstract typed interface", "restart/persistence not requested", "concurrency excluded by sequential scope", "duplicate identities excluded by declared input domain", "creation ties excluded by unique sequence numbers"],
+  "witnesses": {
+    "ordering": {"tasks":["z","a"],"creation":[0,1],"outputs":[["z","a"],["a","z"]]},
+    "missing-priority": {"task":"missing","query":0,"outputs":[["missing"],[]]},
+    "ties": {"priorities":[1,1],"outputs":["z","a"]},
+    "rejection": {"input":-1,"outputs":["ERROR",0]},
+    "transition": {"state":"CLOSED","outputs":["ERROR unchanged","OK CLOSED"]},
+    "cardinality": {"priorities":[1,1],"outputs":[["z","a"],["z"]]},
+    "normalization": {"input":" A ","outputs":["a"," a "]}
+  },
+  "mutation_semantic_assessment": {
+    "ordering": "Removed ordering leaves membership/frame but no sequence policy.",
+    "defaulting": "Removed default rule leaves present-field equality; absent-field comparison remains disputed, not independently validated.",
+    "tie-breaking": "Removed tie rule leaves one maximizer; this may be interpreted as implicit delegation. Detection is model-local, semantic necessity remains disputed.",
+    "rejection": "Removed error branch leaves negative-input behavior without authority in the all-integer domain.",
+    "transition": "Removed entire accepted/rejected condition leaves no transition or return specification.",
+    "cardinality": "Removed all-ties clause leaves a list drawn from maxima without specified cardinality. Ordinary refinement interpretations may allow arbitrary subsets; authority policy requires determination/delegation.",
+    "normalization": "Removed endpoint-space rule leaves lowercasing. Reviewer notes ordinary case-conversion semantics may already preserve spaces; semantic underspecification remains disputed.",
+    "internal": "Removed algorithm sentence cannot alter required sum/no-effect observations."
+  },
+  "authority_policy": "Material silence is blocked prospectively; this is an explicit authoring discipline, not a universal theorem about refinement semantics. Necessary implications can determine choices, but need reviewed entailment evidence."
+}

@@ -1,5 +1,31 @@
 # Lykoi research log
 
+## R5.81 implementation adequacy qualification (2026-10-05)
+
+Observed **R5_81_IMPLEMENTATION_ADEQUACY_PARTIAL**. Separate fidelity and adequacy
+statuses distinguish faithful but insufficient contracts from finite-profile
+authoritative contracts. Sixteen synthetic cases: 10 adequate, 3 underspecified,
+1 clarification, 1 conflict, 1 outside scope. Seven clause-removal mutations trigger
+missing encoded authority; internal algorithm removal stays adequate. Semantic
+re-elicitation remains disputed for defaults, ties, cardinality and normalization.
+Five selected sorting/insertion samples agree; omission mini-plans diverge, while
+explicit non-semantic ordering allows different sequences without consumer violation.
+
+Independent same-family review twice identifies/refines reservation wording,
+transition return/state ambiguity and sparse-ID implementation handling. Zero
+strict-isolation-qualified reviews or independent test reruns. Source-derived
+relevance, complete inventories, implication and observation contracts remain
+judgment-based; finite tests do not prove general completeness. Five public R5.80
+receipt bindings match; S01 adequate only abstractly, S02/S10/P01 outside full
+analysis scope. B01 NEEDS_CLARIFICATION and unauthorized: NORMAL is known, but
+omitted creation argument versus absent legacy field trigger is unresolved.
+
+Tests **18/18 new**, **18/18 unchanged R5.80**, **33/33 guarded V1** pass; protected
+read attempts zero. No qualification command failures. Existing semantics/V1 and
+historical evidence unchanged; R5.80 projection **1/9**, core **30**. B03 all counters
+zero, pristine/not evaluated/not exposed. No actual authoring authority, benchmark
+continuation or later round. See [R5.81 report](../benchmark/results/phase5c/R5_81-IMPLEMENTATION-ADEQUACY-QUALIFICATION.md).
+
 ## R5.80 requirement formalization qualification (2026-10-05)
 
 Observed **R5_80_REQUIREMENT_FORMALIZATION_PARTIAL**. Versioned
