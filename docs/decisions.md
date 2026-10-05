@@ -1,5 +1,26 @@
 # Experimental decisions
 
+## R5.56 — Preserve interruption and withhold production eligibility
+
+Freshly instantiate the unchanged R5.50/51/53/55 mechanisms with all 80 required
+regression stages fixed before execution. Select an explicit pinned baseline and
+qualified LF checkout representation before capture, preserving historical physical
+evidence and main-checkout bytes. Authority qualification is fresh interface
+verification under an externally pinned policy, not an inherited receipt PASS.
+
+The bounded driver admits a stage without reserving its capture and child costs;
+the parent tool terminates during the CertificateV2 regression at 120 seconds.
+Record five PASS receipts and 75 INCOMPLETE receipts, stop, and withhold certificate
+assembly and gate preparation. Do not retry the stage, invent its result or infer
+a language regression from absent evidence. Diagnose only this budgeting component;
+leave successful mechanisms and the Tier 2 cooperative threat model unchanged.
+
+An independent stopped-candidate audit is useful integrity evidence, not complete
+production qualification. Recommend a separately authorized fresh qualification
+after the minimal driver budgeting correction. No new benchmark architecture,
+native dependency closure or ABA gate is introduced. B02 remains sealed, core 30,
+Phase 5C paused. See the [R5.56 report](../benchmark/results/phase5c/R5_56-FRESH-COMPLETE-PRODUCTION-TIER2-QUALIFICATION.md).
+
 ## R5.55 — Bind qualified authority, not one historical lock generation
 
 Introduce QualifiedAuthority v1 and ProductionCertificateV2 as prospective

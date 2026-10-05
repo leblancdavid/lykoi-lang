@@ -69,6 +69,27 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.56 fresh complete production qualification](../benchmark/results/phase5c/R5_56-FRESH-COMPLETE-PRODUCTION-TIER2-QUALIFICATION.md)
+ends **`R5_56_PRODUCTION_REGRESSION_GAP`**. Starting-state implementation continuity,
+fresh 1,083-member QualifiedAuthority, deterministic capsule and a dedicated
+cooperative workspace pass. Five required receipts PASS (87/87 completed suite
+tests); the bounded batch hits the 120-second tool boundary during the CertificateV2
+regression, leaving that stage and 74 unrun required stages INCOMPLETE. The driver
+admission budget omits the next stage's capture/child costs. No retry, production
+certificate, gate preparation or synthetic observation follows.
+
+An independent stopped-candidate audit verifies all authority members, unchanged
+capsule, canonical secret-safe evidence and **1,763** byte-preserved prior result
+files. Final publication/redaction, contamination/core and diff checks pass; they
+do not replace unrun required regressions. The fresh governed LF representation
+is 1,080 exact / three LF/CRLF relationships; historical representations/results
+retain their original meaning. AI independence freshly passes 5/5.
+
+Next: separately authorize a new complete qualification after correcting only
+the bounded-driver budgeting defect. Do not resume this candidate or authorize
+B02 from partial evidence. **Production synthetic observations zero, B02 zero,
+core 30, Phase 5C paused.** Earlier records retain their historical boundaries.
+
 The [R5.55 successor-aware certificate qualification](../benchmark/results/phase5c/R5_55-SUCCESSOR-AWARE-PRODUCTION-CERTIFICATE-AND-LIVE-AUTHORITY-ADAPTER.md)
 ends **`R5_55_SUCCESSOR_AWARE_CERTIFICATE_QUALIFIED`**. A versioned
 [QualifiedAuthority v1 / ProductionCertificateV2](qualified-authority-certificate-r5.55.md)
