@@ -20,6 +20,7 @@ class BudgetTests(unittest.TestCase):
         self.authority = 'synthetic-authority'
         self.cost = budget.Cost(1, 1, 2, 1, 1, 1, 1, 1)
         self.stages = {f'stage-{i}': {'mechanism': f'mechanism-{i}', 'cost': self.cost,
+                                    'capabilities': ['REGRESSION_EVIDENCE'],
                                     'run': self.run_stage} for i in range(6)}
         self.driver = self.make()
         self.driver.initialize()
@@ -183,24 +184,26 @@ class BudgetTests(unittest.TestCase):
         self.driver.batch(49)
         self.assertEqual(budget.reload(self.fixture.output / 'receipt-stage-0.json')['status'], 'INCOMPLETE')
 
-    def test_real_child_interrupted_after_result_still_incomplete(self):
+    def test_unmediated_child_no_start_incomplete(self):
         path = self.fixture.output / 'child-result.json'
         command = [sys.executable, '-B', '-S', '-c',
                    "from pathlib import Path; import sys,time; Path(sys.argv[1]).write_bytes(b'{\"successful\":true}\\n'); time.sleep(5)", str(path)]
         callback = budget.child(command, self.fixture.root, {}, path)
         self.stages['stage-0']['run'] = lambda timeout: callback(.1)
         self.driver.batch(49)
+        self.assertFalse(path.exists())
+        self.assertEqual(budget.reload(self.fixture.output / 'quarantine.json')['access'], 'DENIED_BEFORE_CONTENT')
         self.assertEqual(budget.reload(self.fixture.output / 'receipt-stage-0.json')['status'], 'INCOMPLETE')
         with self.assertRaises(ProtocolFailure):
             self.driver.batch(49)
 
-    def test_real_child_failure_diagnostics_withheld(self):
+    def test_unmediated_child_diagnostics_withheld(self):
         command = [sys.executable, '-B', '-S', '-c', "import sys; print('private diagnostic'); sys.exit(1)"]
         callback = budget.child(command, self.fixture.root, {}, self.fixture.output / 'absent.json')
         self.stages['stage-0']['run'] = callback
         self.driver.batch(49)
         row = budget.reload(self.fixture.output / 'receipt-stage-0.json')
-        self.assertEqual(row['status'], 'FAIL')
+        self.assertEqual(row['status'], 'INCOMPLETE')
         self.assertNotIn('private diagnostic', str(row))
 
     def test_unknown_cost_conservative(self):
@@ -211,10 +214,9 @@ class BudgetTests(unittest.TestCase):
         with self.assertRaises(ProtocolFailure):
             budget.Cost(worker=float('nan')).required()
 
-    def test_b02_and_r556_prohibited(self):
-        for name in ('synthetic:B02', 'R5.56-fresh'):
-            with self.assertRaises(ProtocolFailure):
-                self.make(experiment=name)
+    def test_r556_stopped_identity_prohibited(self):
+        with self.assertRaises(ProtocolFailure):
+            self.make(experiment='R5.56-fresh')
 
     def test_observation_retry_rules_unchanged(self):
         # Exercise the actual recorder: interrupted observation permanently halts.

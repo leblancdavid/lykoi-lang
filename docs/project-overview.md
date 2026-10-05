@@ -69,6 +69,42 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.62 mediated child qualification](../benchmark/results/phase5c/R5_62-MEDIATED-CHILD-EXECUTION-AND-SAFE-WORKER-QUALIFICATION.md)
+ends **`R5_62_MEDIATED_CHILD_EXECUTION_QUALIFIED`**. Content-pinned worker selection,
+same-or-narrower child/descendant capabilities, linked execution bindings and child
+resource enforcement pass focused qualification. Safe exclusion precedes worker/test
+imports; a real child preserves **36 metadata-only prohibited skips**, also alongside
+one ordinary test. Known Python SUT descendants use mediation; arbitrary worker
+commands are closed. Lifecycle budgets explicitly include mediation/validation/exclusion,
+with enclosing deadlines, secret-safe environment and synthetic CertificateV2 linkage.
+
+Fresh focused tests pass **232/232**, including AI independence; validation/safety,
+schema/99-leaf traceability, continuity, contamination and publication checks pass.
+Historical R5.60/R5.61 outcomes remain halt/gap. Next: separately authorize a wholly
+fresh production qualification with reviewed worker closures and calibrated costs.
+None begins here, and no B02 authorization follows. **B02 accounting zero, production
+batches/receipts/certificate zero, core 30, Phase 5C paused.** Earlier boundaries below
+retain their historical meanings.
+
+The [R5.61 B02 capability-guard reconciliation](../benchmark/results/phase5c/R5_61-B02-CAPABILITY-GUARD-RECONCILIATION.md)
+ends **`R5_61_PROTECTED_RESOURCE_GAP`**. Stage/experiment B02 substring checks are
+replaced by explicit declarations, deterministic capability/resource bindings and
+practical Python access enforcement. Harmless B02 metadata is permitted; protected
+capabilities and lying generic resource reads are denied and quarantined. A pinned
+content-free index and pre-factory exclusion adapter preserve **36 prohibited skips**
+without importing prohibited tests or invoking the SUT. Fresh focused tests pass
+**180/180**; schema/99-leaf traceability, contamination, validation/safety, continuity
+and publication/integrity pass, preserving **2,010** prior result files.
+
+Complete production reconciliation remains unqualified: the existing `child()`
+adapter launches an unaudited subprocess and is now refused before start. Historical
+restricted workers perform late discovery/method exclusion and require prospective
+safe-index integration. Next: narrowly qualify mediated child/SUT execution and
+safe worker selection, then separately authorize a wholly fresh production
+qualification. None begins here; R5.60 remains permanently halted. Observation
+controls, Tier-2 methodology and budgeting remain unchanged. **B02 accounting zero,
+production batches/receipts/certificate zero, core 30, Phase 5C paused.**
+
 The [R5.60 final fresh production qualification](../benchmark/results/phase5c/R5_60-FINAL-FRESH-PRODUCTION-TIER2-QUALIFICATION.md)
 ends **`R5_60_PROTOCOL_HALT`** before its first bounded batch. The fresh sealed
 plan has 144 required regression stages and 11 integration checkpoints. R5.59

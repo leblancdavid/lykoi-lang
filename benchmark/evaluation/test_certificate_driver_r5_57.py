@@ -60,6 +60,7 @@ class DriverCertificateTests(previous.SuccessorCertificateTests):
                     now[0] += 10
                     return self.results[name]
                 stages[name] = {'mechanism': self.policy['stages'][name],
+                               'capabilities': ['REGRESSION_EVIDENCE'],
                                'cost': budgeting.Cost(1, 1, 2, 1, 1, 1, 1, 1), 'run': run}
             driver = budgeting.Driver(output, self.policy['experiment'], self.capsule,
                 self.qualified['identity'], stages, lambda: self.capsule,

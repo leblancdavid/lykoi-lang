@@ -1,5 +1,59 @@
 # Experimental decisions
 
+## R5.62 — Children inherit authority; implementation pins select workers
+
+Close the arbitrary production command adapter. Select reviewed worker definitions
+through an externally pinned registry, bind explicit implementation closures and
+execute them only through the mediated bootstrap. Child and Python SUT-descendant
+capabilities cannot exceed their immediate parent's set. Preserve qualification,
+stage, authority/resource policy and safe exclusion linkage across process boundaries.
+Consult the pinned exclusion index before import or test construction, and compile
+qualified source rather than treating timestamp-valid bytecode as authority.
+
+Use the cooperative Tier-2 audit boundary with an exact one-shot launch permit and
+adapter-owned pipe setup, not a general subprocess exemption or an OS sandbox.
+Keep arbitrary command/native forms denied. A prospective bridge can preserve a
+known external oracle's interpreter/script invocation while selecting the SUT by
+qualified content identity. Declare implementation/test closures explicitly.
+
+Carry deterministic Tier-2 controls and minimal OS/temp configuration, not ambient
+AI/editor credentials. Preserve fixed diagnostics, durable quarantine, INCOMPLETE
+and no-retry semantics. Budget mediation, validation, exclusion and descendant
+deadlines within the existing complete lifecycle and shutdown reserve. Use unchanged
+CertificateV2 outer receipts with validated mediated proofs; qualify synthetic
+compatibility without issuing a production certificate.
+
+Outcome: `R5_62_MEDIATED_CHILD_EXECUTION_QUALIFIED`, 232/232 focused witnesses.
+Future production registries/costs require their own reviewed fresh freeze. Preserve
+R5.60/R5.61 evidence and sealed resources; do not read protected fixtures merely to
+re-hash preservation. B02 authorization and production qualification remain separate.
+
+## R5.61 — Capabilities authorize; names describe
+
+Security and benchmark-protocol boundaries should be enforced through explicit
+capabilities and actual protected-resource access rather than naming conventions
+whenever practical. Remove B02 stage/experiment substring authorization and require
+explicit fail-closed capability declarations. Bind the normalized policy, resource
+registry and guard implementation before stage execution; retain descriptive names
+in evidence identity without making them security authority. All thirteen protected
+B02 operations remain forbidden.
+
+Use a content-pinned prohibition index and fixture-free skip placeholders before
+test import/construction/setup. The inherited method-replacement worker discovers
+first; it is not a pre-import exclusion guarantee. Discovery/accounting metadata
+may identify B02 without carrying behavioral content. Reject direct protected reads,
+aliases, synthetic evaluation and swallowed denial, with durable protocol quarantine.
+
+Fail closed on the existing unaudited subprocess adapter rather than granting a
+generic execution exemption. The practical Python boundary is not an OS sandbox;
+complete production integration remains a concrete resource-enforcement gap.
+Outcome: `R5_61_PROTECTED_RESOURCE_GAP`, despite 180/180 focused mechanism witnesses.
+Do not claim reconciliation success or begin production from partial evidence.
+Qualify mediated execution and safe indexed-worker integration separately before
+a wholly fresh production qualification. Preserve R5.60's halt and all prior result
+bytes; unchanged observation controls/Tier-2 semantics/budgeting, core 30 and B02 zero.
+See [R5.61 report](../benchmark/results/phase5c/R5_61-B02-CAPABILITY-GUARD-RECONCILIATION.md).
+
 ## R5.60 — Preserve terminal plan/driver incompatibility
 
 Freeze a fresh complete plan and qualification identity before execution, apply

@@ -8,15 +8,15 @@ from dataclasses import dataclass, asdict
 import math
 from pathlib import Path
 import re
-import subprocess
 import time
 
 from benchmark.evaluation import security_r5_47 as security
 from benchmark.evaluation import tier2_r5_51 as tier
+from benchmark.evaluation import capability_guard_r5_61 as capabilities
 from benchmark.evaluation.recorder_r5_43 import canonical, digest, loads, ProtocolFailure
 
-PROTOCOL = 'lykoi-bounded-qualification-r5.57-v1'
-VERSION = 'bounded-driver-r5.57-v1'
+PROTOCOL = 'lykoi-bounded-qualification-r5.62-v1'
+VERSION = 'bounded-driver-r5.62-v1'
 NAME = re.compile(r'[A-Za-z0-9_-]{1,100}\Z')
 
 
@@ -30,6 +30,9 @@ class Cost:
     evidence: float = 2
     receipt: float = 2
     integrity: float = 2
+    mediation: float = 0
+    child_validation: float = 0
+    exclusion_setup: float = 0
 
     def total(self):
         values = asdict(self).values()
@@ -46,7 +49,8 @@ class Cost:
 
 def production_cost(worker_seconds=None):
     # Unmeasured classes get a 65-second worker allowance, not a fast-suite guess.
-    return Cost(worker=65 if worker_seconds is None else max(35, worker_seconds))
+    return Cost(worker=65 if worker_seconds is None else max(35, worker_seconds),
+                mediation=2, child_validation=2, exclusion_setup=2)
 
 
 def reload(path):
@@ -64,19 +68,36 @@ def reload(path):
 
 class Driver:
     def __init__(self, output, experiment, capsule, authority, stages, capture,
-                 live_authority, *, version=VERSION, clock=time.monotonic):
-        if ('r5.56' in experiment.casefold() or 'b02' in experiment.casefold() or
-                any(not NAME.fullmatch(n) or 'b02' in n.casefold() for n in stages)):
+                 live_authority, *, version=VERSION, clock=time.monotonic, resources=None):
+        if ('r5.56' in experiment.casefold() or
+                any(not NAME.fullmatch(n) for n in stages)):
             raise ProtocolFailure('R5_57_PROTOCOL_HALT: prohibited qualification')
+        declarations = {n: capabilities.binding(s.get('capabilities')) for n, s in stages.items()}
         tier.check(capsule)
         self.output, self.capture, self.live_authority = Path(output), capture, live_authority
         self.capsule, self.stages, self.clock = capsule, stages, clock
+        if resources is None:
+            resources = capabilities.repository_resources(Path(__file__).resolve().parents[2])
+        self.boundary = capabilities.Boundary(resources, lambda evidence: self.write('quarantine', evidence))
         self.binding = {'protocol': PROTOCOL, 'version': version,
             'implementation': digest(Path(__file__).read_bytes()), 'experiment': experiment,
             'capsule': capsule['identity'], 'authority': authority,
-            'stages': [{'name': n, 'mechanism': s['mechanism'], 'cost': asdict(s['cost'])}
-                       for n, s in stages.items()]}
+            'resource_policy': self.boundary.identity(),
+            'capability_guard': self.boundary.implementation(),
+            'stages': [{'name': n, 'mechanism': s['mechanism'], 'cost': asdict(s['cost']),
+                        'capability_binding': declarations[n], **self.child_definition(s)} for n, s in stages.items()]}
         security.safe_bytes(self.binding)
+        for name, stage in stages.items():
+            if self.child_definition(stage):
+                if any(getattr(stage['cost'], field) <= 0 for field in
+                       ('mediation', 'child_validation', 'exclusion_setup')):
+                    raise ProtocolFailure('mediated lifecycle budget required')
+                stage['run'].bind(self.binding, name, self.boundary)
+
+    @staticmethod
+    def child_definition(stage):
+        from benchmark.evaluation.mediated_child_r5_62 import Child
+        return {'child': stage['run'].descriptor} if isinstance(stage['run'], Child) else {}
 
     def write(self, name, body):
         value = tier.seal(body)
@@ -91,6 +112,14 @@ class Driver:
         self.write('qualification', self.binding)
 
     def validate(self):
+        if (self.output / 'quarantine.json').exists() or self.boundary.denied:
+            raise ProtocolFailure('R5_61_PROTOCOL_HALT: qualification quarantined')
+        current = [{'name': n, 'mechanism': s['mechanism'], 'cost': asdict(s['cost']),
+                    'capability_binding': capabilities.binding(s.get('capabilities')), **self.child_definition(s)}
+                   for n, s in self.stages.items()]
+        if (current != self.binding['stages'] or self.boundary.identity() != self.binding['resource_policy'] or
+                self.boundary.implementation() != self.binding['capability_guard']):
+            raise ProtocolFailure('R5_61_PROTOCOL_HALT: stage authorization binding changed')
         if reload(self.output / 'qualification.json') != tier.seal(self.binding):
             raise ProtocolFailure('qualification identity incompatible')
         if self.capture() != self.capsule or self.live_authority() != self.binding['authority']:
@@ -121,6 +150,8 @@ class Driver:
                     raise ProtocolFailure('attempt linkage invalid')
                 if receipt['status'] == 'PASS' and receipt['result'].get('successful') is not True:
                     raise ProtocolFailure('invalid PASS')
+                if self.child_definition(self.stages[name]) and receipt['status'] in ('PASS', 'FAIL'):
+                    self.stages[name]['run'].check_result(receipt['result'], receipt['status'])
                 receipts[name] = receipt
             stopped = row['disposition'] == 'STOPPED'
             next_name = list(self.stages)[len(receipts)] if len(receipts) < len(self.stages) else None
@@ -168,11 +199,13 @@ class Driver:
                     raise ProtocolFailure('state changed')
                 # Execution timeout includes startup and shutdown; post costs stay reserved.
                 tail = cost.post_capture + cost.evidence + cost.receipt + cost.integrity
-                timeout = min(cost.startup + cost.worker + cost.shutdown,
+                timeout = min(cost.startup + cost.worker + cost.shutdown + cost.mediation +
+                              cost.child_validation + cost.exclusion_setup,
                               seconds - (self.clock() - started) - tail - cost.margin() - boundary_reserve)
                 if timeout <= 0:
                     raise ProtocolFailure('admitted capture exceeded allowance')
-                result = stage['run'](timeout)
+                with self.boundary.stage(stage['capabilities']):
+                    result = stage['run'](timeout)
                 security.safe_bytes(result)
                 after = self.capture()
                 if self.live_authority() != self.binding['authority']:
@@ -180,9 +213,12 @@ class Driver:
                 row = tier.receipt(before, after, self.binding['experiment'], name,
                                    stage['mechanism'], 'PASS' if result.get('successful') is True else 'FAIL', result)
                 status = row['status']
-            except Exception:
+            except Exception as error:
                 # No worker result is inferred, even if a child wrote output before timeout.
                 result = {'successful': False, 'reason': 'stage interrupted; details withheld'}
+                from benchmark.evaluation.mediated_child_r5_62 import ChildFailure
+                if isinstance(error, ChildFailure):
+                    result['child_execution'] = error.execution
                 row = tier.receipt(self.capsule, self.capsule, self.binding['experiment'], name,
                                    stage['mechanism'], 'INCOMPLETE', result)
             security.persist(self.output / ('receipt-' + name + '.json'), row)
@@ -199,16 +235,14 @@ class Driver:
 
 
 def child(command, cwd, environment, result_path):
-    """Production subprocess adapter. Neither command state nor output is published."""
+    """Historical command interface is closed prospectively; use qualified_child."""
     def run(timeout):
-        process = subprocess.run(command, cwd=cwd, env=environment,
-                                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=timeout)
-        if process.returncode:
-            return {'successful': False, 'reason': 'worker failed; diagnostics withheld'}
-        raw = Path(result_path).read_bytes()
-        value = loads(raw)
-        if raw != canonical(value) + b'\n':
-            raise ProtocolFailure('worker evidence not canonical')
-        security.safe_bytes(value)
-        return value
+        if capabilities._active is not None:
+            capabilities._active.deny('UNMEDIATED_EXECUTION')
+        raise ProtocolFailure('R5_62_PROTOCOL_HALT: arbitrary worker command rejected')
     return run
+
+
+def qualified_child(root, registry, trusted_registry, worker, capabilities, inputs=None, **options):
+    from benchmark.evaluation.mediated_child_r5_62 import Child
+    return Child(root, registry, trusted_registry, worker, capabilities, inputs, **options)

@@ -1,5 +1,84 @@
 # Lykoi research log
 
+## R5.62 mediated child/SUT execution (2026-10-05)
+
+Content-bound workers now execute through the prospective bounded driver with
+parent qualification/stage/authority/resource linkage and same-or-narrower
+capabilities. Child startup validates the binding and installs pinned pre-import
+exclusion before importing the worker. Selected ordinary modules must belong to
+the qualified source closure; a timestamp-valid substituted bytecode witness
+executes the pinned source instead. Registry aliases cannot substitute code.
+
+The real child harness reports 36 metadata-only prohibited skips, including a
+mixed 37-case witness with one ordinary PASS. A cooperative bridge recognizes
+qualified Python SUT script invocations and launches mediated descendants with
+the immediate parent's attenuated rights and enclosing lifecycle deadline.
+Synthetic protected reads in the worker and SUT descendant quarantine the parent.
+Unknown commands and the historical raw command adapter are rejected.
+
+Fresh focused verification passes 232/232: new child/descendant/SUT adversaries
+47, capability/resource/exclusion 30, bounded driver 29, Tier-2 controls 43,
+recorder 29, synthetic authority 18, continuity 8, publication 9, AI independence
+5 and generic schema/profile checks 14. Validation/safety, 99-leaf traceability,
+contamination and core count pass. Synthetic CertificateV2 compatibility uses
+real mediated receipts and an explicitly substituted synthetic authority; no
+production certificate or full authority qualification is performed.
+
+Windows pipe wrapping/normalized audit arguments initially prevented launch;
+those development failures are preserved. A later temporary bytecode fixture
+omitted the exclusion index, correctly failing child startup; its 46/47 failed
+record is preserved beside the final 47/47 qualification. The original R5.60
+halt and R5.61 gap are not repaired or reclassified.
+
+The boundary remains cooperative Tier 2, not hostile-process isolation. Actual
+production worker closures and costs require a separate fresh reviewed freeze;
+the complete production qualification and complete historical restricted harness
+are not run here. Preservation hashes cover 2,026 unsealed pre-existing result
+files; four protected historical fixtures remain unopened with metadata/Git
+continuity only. No new content-hash attestation of those sealed files is claimed.
+Outcome: `R5_62_MEDIATED_CHILD_EXECUTION_QUALIFIED`. **B02 exposure/accounting zero,
+production batches/receipts/certificate zero, core 30, Phase 5C paused.** Stop at
+R5.62; recommend separately authorized wholly fresh production qualification.
+
+## R5.61 B02 capability/resource reconciliation (2026-10-05)
+
+The prospective bounded driver no longer treats `b02` in a stage or experiment
+name as exposure. Fresh generic/mixed/protected declaration witnesses establish
+name-independent authorization, deterministic bindings and capability-mutation
+rejection. Explicit protected resources and broker/audit checks reject synthetic
+authority, fixture, static-evaluation, hardlink and cross-thread access, record
+quarantine, and prohibit retries even when denial is swallowed. Thirteen B02
+capabilities remain ungrantable; no actual B02 content is used in those tests.
+
+The inherited restricted worker imports/discovers before replacing prohibited
+methods with skip callbacks. This is late method exclusion; safe imports/setup
+cannot be inferred from the skip count. A prospective pinned index derived from
+safe frozen-plan IDs yields 36 prohibited placeholders before any test factory is
+called. Fresh execution records 36 skips, zero prohibited factory calls and no new
+module imports. Ordinary cases still run. This qualifies the new exclusion adapter,
+not the entire historical restricted worker or actual B02 acceptance.
+
+Focused verification passes 180/180, including synthetic QualifiedAuthority identity
+and CertificateV2 receipt linkage, 43 Tier-2 and 29 recorder control witnesses,
+continuity/publication, schema and 99-leaf traceability. Validation/safety and
+contamination pass. Early publication-reserved binding-field errors remain recorded;
+the guard was not weakened. Final integrity preserves 2,010 pre-existing tracked
+result files, including R5.60's permanent `R5_60_PROTOCOL_HALT` evidence.
+A first integrity-reader field-name error is retained separately; the reader was
+corrected to consume R5.60's historical `primary_classification` without rewriting it.
+
+Concrete limitation: the raw production `child()` adapter does not mediate resource
+access inside its subprocess. The guard refuses that launch before it starts;
+permitting it would create an escape. Full mediated execution and prospective
+safe-index worker adoption remain unqualified. Primary result:
+`R5_61_PROTECTED_RESOURCE_GAP`; local PASSes do not establish complete reconciliation.
+Next: separately qualify those narrow integrations, then authorize a wholly fresh
+production qualification. No production batch, receipt, certificate or observation
+begins here. Disposable synthetic control-test observations are separate from
+production accounting. Tier-2 methodology and core semantics remain unchanged:
+**core 30, B02 exposure/reservation/dispatch/completion zero, Phase 5C paused**.
+See [R5.61 report](../benchmark/results/phase5c/R5_61-B02-CAPABILITY-GUARD-RECONCILIATION.md).
+
 ## R5.60 final fresh production qualification (2026-10-05)
 
 The fresh 144-regression/11-integration plan and qualification identity are sealed
