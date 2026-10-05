@@ -1,5 +1,25 @@
 # Experimental decisions
 
+## R5.54 — Stop at concrete successor/certificate incompatibility
+
+Freshly instantiate the R5.51 Tier-2 capture and certificate against the externally
+pinned R5.53 successor. Successor validation and dedicated cooperative capture
+pass, but unchanged certificate admission fixes the R5.47 infrastructure identity
+and requires the historical/prospective/infrastructure physical-lock set. Rejecting
+the new authority is a concrete integration failure, not evidence that the Tier-2
+methodology needs stronger native or adversarial-host controls.
+
+Stop before production gate preparation or observation. Preserve fresh FAIL and
+blocked INCOMPLETE entries rather than assert complete regressions or infer a
+successful synthetic lifecycle from historical tests. Do not make the old physical
+locks PASS to fit the certificate. The two assembly calls are minimum compatibility
+preflight and read-only diagnosis, not successful full production certification.
+
+Recommend only a prospectively versioned minimal successor certificate/live-authority
+adapter and a new complete qualification. Do not repair or resume this candidate.
+B02 remains sealed, core 30, Phase 5C paused. See the
+[R5.54 report](../benchmark/results/phase5c/R5_54-FRESH-PRODUCTION-TIER2-STATIC-GATE-QUALIFICATION.md).
+
 ## R5.53 — Authorize traceable current content without inventing old bytes
 
 Separate historical exact physical reproducibility from prospective authority.

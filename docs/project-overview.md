@@ -69,6 +69,23 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.54 fresh production qualification](../benchmark/results/phase5c/R5_54-FRESH-PRODUCTION-TIER2-STATIC-GATE-QUALIFICATION.md)
+ends **`R5_54_PRODUCTION_CERTIFICATE_GAP`**. Fresh validation of the trusted
+1,083-member R5.53 successor, provenance/ancestry/frozen pins and separate checkout
+representation passes. A dedicated 2,013-file cooperative copy yields deterministic
+capsule capture and canonical round trip; historical physical locks retain their
+original FAIL counts. The existing R5.51 certificate rejects successor authority
+and still requires the superseded three physical locks. No certificate is issued.
+Qualification stops: seven preflight entries PASS, one FAIL, 24 downstream entries
+INCOMPLETE; no fresh full regression or production observation-control qualification
+is claimed. Final integrity preserves 1,707 pre-existing benchmark-result files.
+
+Next: address the concrete certificate/live-authority successor-policy integration
+with the smallest prospective adapter, then freshly complete production qualification.
+Do not resume the stopped candidate, expand the R5.50 claim or proceed to B02.
+**Production synthetic observations zero, B02 zero, core 30, Phase 5C paused.**
+Earlier recommendations and observations below retain their historical boundaries.
+
 The [R5.53 authority adjudication](../benchmark/results/phase5c/R5_53-UNRESOLVED-AUTHORITY-PROVENANCE-AND-SUCCESSOR-BASELINE-ADJUDICATION.md)
 ends **`R5_53_SUCCESSOR_PROVENANCE_QUALIFIED`**. All eight missing historical
 preimages remain explicitly unavailable; all eight current repository versions
