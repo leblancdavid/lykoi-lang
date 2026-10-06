@@ -13,6 +13,9 @@ VERSION = "sealed-pipeline-1"
 
 
 def structural(contract, frc_id):
+    from . import query_profile
+    if query_profile.applies(contract):
+        return query_profile.structural(contract, frc_id)
     rows, operations, unsupported = [], [], []
     for o in contract["obligations"]:
         oid, relation = o["id"], o["relation"]
@@ -77,6 +80,9 @@ def structural(contract, frc_id):
 
 
 def coverage(contract, projection):
+    from . import query_profile
+    if query_profile.applies(contract):
+        return query_profile.coverage(contract, projection)
     ids = [o["id"] for o in contract["obligations"]]
     if contract["context"]["component_authority"] is not None:
         ids.append("@component-context")
@@ -93,12 +99,18 @@ def coverage(contract, projection):
 
 
 def bdi(contract, projection):
+    from . import query_profile
+    if query_profile.applies(contract):
+        return query_profile.bdi(contract, projection)
     result = discovery.discover(contract, projection["interface"])
     return {"version": discovery.VERSION_BDI, "outcome": "SUPPORTED" if not result["unknown"] else "UNSUPPORTED",
             "result": result}
 
 
 def adequate(contract, discovered):
+    from . import query_profile
+    if query_profile.applies(contract):
+        return query_profile.adequate(contract, discovered)
     sidecar = discovery.adequacy_sidecar(contract, discovered["result"], coverage_reviewed=True)
     # The unchanged adequacy engine requires a nonempty inventory. A component
     # with no discovered choice has an explicit INTERNAL record, not a new family.
@@ -115,6 +127,9 @@ def faithful_v1(contract):
 
     Does not expand V1 or invent a mapping for generic behavioral relations.
     """
+    from . import query_profile
+    if query_profile.selected(contract):
+        return query_profile.faithful_v1(contract)
     context = contract["context"]["component_authority"]
     missing = [o["id"] for o in contract["obligations"] if o["relation"]["kind"] not in
                ("public_state_alternatives", "durable_content_constraints")]

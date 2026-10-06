@@ -19,6 +19,14 @@ def main():
         raise ValueError("AUTHOR_INPUT_ALLOWLIST_VIOLATION")
     sys.addaudithook(deny)
     fixture = request["fixture"]
+    normal = request["v1"]
+    if normal.get("schema_version") == "LykoiContractV1" and normal.get("profile") == "collection-query-1":
+        # Fixed semantic author: no test material, source interpretation or adapter
+        # injection. Trusted build will recover/validate the authorized profile.
+        source = {"lykoi_version": "LykoiProgram-1", "profile": normal["profile"], "contract": copy.deepcopy(normal)}
+        print(json.dumps({"source": source, "run": request["run"], "author_adapter": "restricted-fixture-1",
+                          "isolation": "PYTHON_AUDIT_HOOK_PROCESS_FIXTURE_NO_OS_SANDBOX"}))
+        return
     if fixture is None:
         print(json.dumps({"failure": "LYKOI_CAPABILITY_GAP", "reason": "No qualified author adapter for this V1 context"}))
         return

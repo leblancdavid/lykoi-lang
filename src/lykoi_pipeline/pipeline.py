@@ -34,6 +34,16 @@ def classify_observations(plan, observations):
                           and all(x not in actual["stdout"] for x in expected.get("absent", [])))
                 if expected.get("files"):
                     passed = passed and actual.get("files") == expected["files"]
+                for channel in ("stdout", "stderr"):
+                    if channel + "_exact" in expected:
+                        passed = passed and actual[channel] == expected[channel + "_exact"]
+                    if channel + "_json" in expected:
+                        try:
+                            passed = passed and json.loads(actual[channel]) == expected[channel + "_json"]
+                        except (ValueError, TypeError):
+                            passed = False
+                if expected.get("preserved"):
+                    passed = passed and actual.get("preserved") == {p: True for p in expected["preserved"]}
                 if actual.get("passed", passed) != passed:
                     raise Failure("VERIFICATION_BINDING_FAILURE", reason="Forged pass result")
                 actual["passed"] = passed
@@ -56,8 +66,12 @@ def external_execute(target_source, plan):
         for n, case in enumerate(plan["cases"]):
             state = root / str(n)
             state.mkdir()
+            for fixture in case.get("initial_files", []):
+                (state / fixture["path"]).write_text(json.dumps(fixture["json"], ensure_ascii=False), encoding="utf-8")
             steps = []
             for step in case["steps"]:
+                before = {p: (state / p).read_bytes() if (state / p).exists() else None
+                          for p in step.get("preserved", [])}
                 try:
                     result = subprocess.run([sys.executable, "-I", "-S", str(target), *step["argv"]],
                                             cwd=state, env={}, text=True, capture_output=True, timeout=10)
@@ -70,7 +84,9 @@ def external_execute(target_source, plan):
                             observed = {"unobservable": True}
                         files.append({"path": observation["path"], "json": observed})
                     steps.append({"returncode": result.returncode, "stdout": result.stdout,
-                                  "stderr": result.stderr, "unexecutable": None, "files": files})
+                                  "stderr": result.stderr, "unexecutable": None, "files": files,
+                                  "preserved": {p: ((state / p).read_bytes() if (state / p).exists() else None) == b
+                                                for p, b in before.items()}})
                 except (OSError, subprocess.TimeoutExpired) as exc:
                     steps.append({"returncode": None, "stdout": "", "stderr": "",
                                   "unexecutable": type(exc).__name__})
@@ -192,8 +208,8 @@ class Pipeline:
         a = self.c.artifact(model)
         source = a["content"]["source"]
         try:
-            program = validate(parse(canonical(source).decode()))
-            generated = generate(program)
+            from air_compiler.profiles import generate as generate_program
+            generated = generate_program(source)
         except (AirError, ValueError, KeyError, TypeError) as exc:
             raise Failure("COMPILATION_FAILURE", reason=str(exc)) from exc
         grant = a["dependencies"]["grant"]

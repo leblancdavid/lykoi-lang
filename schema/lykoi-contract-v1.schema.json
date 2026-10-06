@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lykoi:contract:v1",
+  "title": "LykoiContractV1 explicit CollectionQuery capability profile",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "profile", "document", "storage"],
+  "properties": {
+    "schema_version": {"const": "LykoiContractV1"},
+    "profile": {"const": "collection-query-1"},
+    "document": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "contract", "source_frc", "queries"],
+      "properties": {
+        "schema_version": {"const": "CollectionQueryDocumentV1"},
+        "contract": {"$ref": "frc-collection-query-1.schema.json"},
+        "source_frc": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "queries": {"type": "array", "minItems": 1, "items": {"type": "object"}}
+      }
+    },
+    "storage": {"oneOf": [
+      {"type": "object", "additionalProperties": false, "required": ["kind"], "properties": {"kind": {"const": "json_array"}}},
+      {"type": "object", "additionalProperties": false, "required": ["kind", "model", "state"], "properties": {
+        "kind": {"const": "model_state"}, "model": {"$ref": "axiom-v0.3.schema.json"}, "state": {"type": "string"}
+      }}
+    ]}
+  },
+  "$comment": "Native query_profile.recover reprojects every obligation, verifies FRC commitment, queries/origins and storage authority. This schema never weakens or reinterprets historical BenchmarkDocumentContractV1."
+}

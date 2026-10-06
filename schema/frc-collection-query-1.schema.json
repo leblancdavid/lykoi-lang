@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lykoi:frc:collection-query:1",
+  "title": "Normal FRC CollectionQuery-1 semantic profile",
+  "$comment": "Additive profile on the unchanged FRC-0.1 envelope. Runtime query_schema.relation_schema supplies the closed value schemas to formalizers; query_profile.validate_relations enforces all cross-facet types/references, complete groups, unique identity ordering and explicit policy authority. JSON Schema alone is not source approval or complete structural coverage.",
+  "allOf": [
+    {"$ref": "formal-requirement-contract-v0.1.schema.json"},
+    {"properties": {"obligations": {"items": {"properties": {"relation": {
+      "if": {"properties": {"kind": {"const": "filter_order"}, "parameters": {"anyOf": [{"required": ["query"]}, {"required": ["facet"]}, {"required": ["value"]}]}}, "required": ["kind", "parameters"]},
+      "then": {"$ref": "#/$defs/queryRelation"}
+    }}}}}}
+  ],
+  "$defs": {
+    "queryRelation": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "parameters"],
+      "properties": {
+        "kind": {"const": "filter_order"},
+        "parameters": {
+          "type": "object", "additionalProperties": false, "required": ["query", "facet", "value"],
+          "properties": {
+            "query": {"type": "string", "pattern": "^[a-z][a-z0-9_-]*$"},
+            "facet": {"enum": ["source", "parameters", "predicate", "comparison", "ordering", "validation", "inclusion", "effect", "result"]},
+            "value": {"type": ["object", "array", "null"]}
+          },
+          "$comment": "Closed per-facet values are defined by the formalizer's executable relation_schema; additional cross-facet constraints are normative in validate_relations. No prose values are accepted by either native checker."
+        }
+      }
+    }
+  }
+}

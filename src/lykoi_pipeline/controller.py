@@ -31,6 +31,10 @@ COMPONENTS = (
     "src/air_compiler/generator.py", "src/air_compiler/runtime_template.py",
     "schema/axiom-v0.3.schema.json", "schema/formal-requirement-contract-v0.1.schema.json",
     "schema/benchmark-document-contract-v1.schema.json", "schema/sealed-pipeline-v1.schema.json",
+    "src/lykoi_pipeline/query_profile.py", "src/lykoi_workspace/query_schema.py",
+    "src/air_compiler/profiles.py", "src/air_compiler/profile_runtime.py",
+    "src/air_compiler/collection_query.py", "src/air_compiler/collection_query_runtime.py",
+    "src/lykoi_query/contracts.py", "schema/frc-collection-query-1.schema.json",
 )
 
 
@@ -42,7 +46,7 @@ def component_paths():
     code can affect V1 validation even where only one function is directly called.
     """
     paths, pending = set(COMPONENTS), list(COMPONENTS)
-    prefixes = ("benchmark.semantic", "benchmark.evaluation", "air_compiler", "lykoi_controller", "lykoi_workspace", "lykoi_pipeline")
+    prefixes = ("benchmark.semantic", "benchmark.evaluation", "air_compiler", "lykoi_controller", "lykoi_workspace", "lykoi_pipeline", "lykoi_query")
     def resolve(module):
         if not any(module == p or module.startswith(p + ".") for p in prefixes):
             return None
@@ -113,9 +117,20 @@ class PipelineController(Controller):
         self._need(fid, "ARTIFACT_SEALED")
         content = self.artifact(fid)["content"]
         contracts.frc.validate(content["contract"])
+        from .query_profile import validate_relations
+        validate_relations(content["contract"])
         return fid, content["contract"]
 
     def expected_plan(self, contract):
+        from .query_profile import applies
+        if applies(contract):
+            # Independent plans may be prepared from the human source before FRC
+            # artifact IDs exist. Bind exact text, not a mutable corpus identity.
+            key = contract["source"]["sha256"]
+            plan = self.verification_fixtures.get(digest(contract), self.verification_fixtures.get(key))
+            if plan is None or plan.get("source_sha256") != key:
+                raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="No source-bound independent query plan")
+            return copy.deepcopy(plan)
         return copy.deepcopy(self.verification_fixtures.get(digest(contract), plans.produce(contract)))
 
     def check_freeze(self, freeze):
@@ -211,17 +226,22 @@ class PipelineController(Controller):
                     or value.get("author_adapter") != "restricted-fixture-1"
                     or value.get("run") != self.artifact(d["bundle"])["content"]["manifest"]["run"]):
                 raise Failure("AUTHORING_FAILURE")
+            normal = self.artifact(d["bundle"])["content"]["author_input"]["v1"]
+            from .query_profile import V1
+            if normal.get("schema_version") == V1:
+                from air_compiler.profiles import author
+                if value["source"] != author(normal):
+                    raise Failure("AUTHORING_FAILURE", reason="Unfaithful authorized profile")
             return
         elif kind == "target":
-            from air_compiler.generator import generate
-            from air_compiler.parser import parse
+            from air_compiler.profiles import generate
             self._native(d["model"])
             self.check_freeze(d["freeze"])
             model = self.artifact(d["model"])
             grant = model["dependencies"]["grant"]
             if self.artifact(grant)["dependencies"]["freeze"] != d["freeze"]:
                 raise Failure("DEPENDENCY_MISMATCH")
-            source = generate(parse(canonical(model["content"]["source"]).decode()))
+            source = generate(model["content"]["source"])
             expected = {"outcome": "BUILT", "target_source": source, "target_sha256": hashlib.sha256(source.encode()).hexdigest(),
                         "source_identity": model["content"]["source_identity"], "compiler": "0.3.0",
                         "author_run": model["content"]["run"], "grant": grant,

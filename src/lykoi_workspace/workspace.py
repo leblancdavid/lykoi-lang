@@ -142,7 +142,9 @@ class Workspace:
         request = {"role": role, "session": producer.session, "source": source,
                    "evidence": evidence, "output_schema": "WorkspaceAnalysis-1" if role == "formalizer" else "WorkspaceSOI-1",
                    "instructions": "Propose WHAT only. Retain material uncertainty; conventions are not authority. "
-                   + ("Extract source inventory without candidate access." if role == "reviewer" else "Propose obligations and product questions.")}
+                    + ("Extract source inventory without candidate access." if role == "reviewer" else "Propose obligations and product questions.")}
+        from lykoi_pipeline.query_profile import formalizer_guidance
+        request["instructions"] += " " + formalizer_guidance()
         result = producer.produce(copy.deepcopy(request))
         canonical(result)
         if type(result) is not dict:
@@ -157,6 +159,8 @@ class Workspace:
         if any(a["content"]["producer"]["session"] == producer.session for _, a in self._records("soi")):
             raise Failure("SHARED_PRODUCER_CONTEXT")
         obligations = result["obligations"]
+        from .query_schema import validate_output
+        validate_output(result)
         questions = result.get("questions", [])
         for q in questions:
             if q["priority"] not in PRIORITIES or not q["text"]:
@@ -185,6 +189,8 @@ class Workspace:
                     "lineage": result.get("lineage", []), "formalizer": attribution["session"], "review": None}
         try:
             validate(contract)
+            from lykoi_pipeline.query_profile import validate_relations
+            validate_relations(contract)
             if previous:
                 check_revision(previous, contract)
         except ContractError as exc:
@@ -333,7 +339,7 @@ class Workspace:
                 status = "SOURCE_OBLIGATION_MISSING"
             elif oid not in sc["interpretations"]:
                 status = "UNRESOLVED_MAPPING"
-            elif sc["interpretations"][oid] != {k: obligations[oid][k] for k in ("statement", "relation")}:
+            elif not self._meaning_equal(obligations[oid], sc["interpretations"][oid]):
                 status = "MATERIALLY_DIVERGENT"
             elif not sc["authority"].get(oid) or set(sc["authority"][oid]) - allowed:
                 status = "LACKING_AUTHORITY"
@@ -382,6 +388,11 @@ class Workspace:
         self._validate(structural)
         self._review(structural, "UNSUPPORTED", "Authoring projection deferred; WHAT-only requirements seal")
         return aid
+
+    @staticmethod
+    def _meaning_equal(candidate, interpretation):
+        from lykoi_pipeline.query_profile import meaning_equal
+        return meaning_equal(candidate, interpretation)
 
     def route_disagreement(self, coverage):
         a = self.c.artifact(coverage)

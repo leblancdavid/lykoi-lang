@@ -120,6 +120,27 @@ on the unmodified R5.97 candidate; no downstream stages or remediation followed.
 **`B03_FIRST_RESULT = DECISION_DISCOVERY_UNSUPPORTED`** is unchanged. B04 and later
 unexposed requests remain untouched; R5.98 stops after generic work and transfer.
 
+**R5.99 — `R5_99_NORMAL_PATH_INTEGRATION_IMPLEMENTED_FIREWALL_VIOLATION`.**
+The [normal query profile](collection-query-normal-path-v1.md) connects typed
+formalizer/FRC output, source inventory/reconciliation, complete structural coverage,
+existing BDI/adequacy, explicitly selected `LykoiContractV1`, restricted semantic
+authoring, normal compiler dispatch and a generic read-only model-state adapter.
+**280/280 tests** pass. Sixteen captured synthetic requirements yield **14 verified
+normal-path executions / 87 external invocations**, one clarification and one
+mutating-frame compilation refusal. Three paraphrase pairs converge; material
+policy differences remain distinct. Captures/inventory/oracle are same-agent evidence,
+not general live formalization accuracy or independent cognition. Historical public
+range/numeric/nullable/prefix/stable-occurrence gaps remain unsupported.
+
+The [R5.99 report](../benchmark/results/phase5c/R5_99-COLLECTION-QUERY-NORMAL-PATH-INTEGRATION.md)
+records an [unintended tool disclosure](../benchmark/results/phase5c/R5_99-FIREWALL-INCIDENT.md):
+an exact-file search returned parent-directory B04/later historical implementation
+logs. Requirement files were not directly opened, but behavior was indirectly
+exposed; **B04/later nonexposure cannot be claimed** for this session. Generic
+engineering pins/tests and historical R5.98 evidence are preserved; optional
+**B03 post-exposure transfer 2 was NOT_RUN**. Original B03/R5.98 results remain
+immutable. No next held-out evaluation is authorized by this contaminated round.
+
 ### Historical boundaries (preserved; not current infrastructure prerequisites)
 
 The records below describe their original experiments and stop conditions. Their

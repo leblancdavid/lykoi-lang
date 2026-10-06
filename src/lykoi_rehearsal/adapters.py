@@ -56,7 +56,15 @@ SCHEMAS = {"formalizer": FORMALIZER, "reviewer": REVIEWER,
 
 def check_schema(value, schema):
     """Dependency-free structural schema checks; native FRC/SOI/compiler add semantics."""
-    types = {"object": dict, "array": list, "string": str, "integer": int, "boolean": bool}
+    if "anyOf" in schema:
+        for option in schema["anyOf"]:
+            try:
+                check_schema(value, option)
+                return
+            except Failure:
+                pass
+        raise Failure("INVALID_PRODUCER_OUTPUT", reason="schema alternatives")
+    types = {"object": dict, "array": list, "string": str, "integer": int, "boolean": bool, "null": type(None)}
     if "type" in schema and type(value) is not types[schema["type"]]:
         raise Failure("INVALID_PRODUCER_OUTPUT", reason="schema type")
     if "enum" in schema and value not in schema["enum"]:
@@ -69,6 +77,9 @@ def check_schema(value, schema):
             raise Failure("INVALID_PRODUCER_OUTPUT", reason="unknown field")
         for key in value.keys() & props.keys():
             check_schema(value[key], props[key])
+        if type(schema.get("additionalProperties")) is dict:
+            for key in value.keys() - props.keys():
+                check_schema(value[key], schema["additionalProperties"])
     if type(value) is list and "items" in schema:
         for item in value:
             check_schema(item, schema["items"])
@@ -125,7 +136,14 @@ class AIAdapter:
     def produce(self, request):
         bound = self._request(request)
         identity = digest(bound)
-        schema = obj({"binding": {"enum": [identity]}, "output": SCHEMAS[self.role]})
+        output_schema = copy.deepcopy(SCHEMAS[self.role])
+        if self.role == "formalizer":
+            # Keep opaque historical relations compatible, but require the typed
+            # profile schema for query-shaped parameters after model output.
+            from lykoi_workspace.query_schema import relation_schema
+            output_schema["properties"]["obligations"]["items"]["properties"]["relation"] = {
+                "anyOf": [relation_schema(), RELATION]}
+        schema = obj({"binding": {"enum": [identity]}, "output": output_schema})
         payload = {"model": self.config.get("model"), "temperature": 0,
                    "messages": [{"role": "system", "content": PROMPTS[self.role]},
                                 {"role": "user", "content": canonical({"input": bound, "binding": identity}).decode()}],
@@ -155,6 +173,9 @@ class AIAdapter:
         try:
             envelope = parse_json(response["choices"][0]["message"]["content"])
             check_schema(envelope, schema)
+            if self.role == "formalizer":
+                from lykoi_workspace.query_schema import validate_output
+                validate_output(envelope["output"])
         except (KeyError, IndexError, TypeError, ValueError) as exc:
             raise Failure("INVALID_PRODUCER_OUTPUT", reason=type(exc).__name__) from None
         receipt = {"adapter": VERSION, "role": self.role, "session": self.session,

@@ -66,10 +66,17 @@ def review_coverage(contract, plan):
             raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Case identity mismatch")
         if not set(case["obligations"]) <= expected:
             raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Unbound case")
+        for fixture in case.get("initial_files", []):
+            if set(fixture) != {"path", "json"} or fixture["path"] not in ("measurements.json", "tasks.json"):
+                raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Fixture state allowlist violation")
+        if len({f["path"] for f in case.get("initial_files", [])}) != len(case.get("initial_files", [])):
+            raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Duplicate fixture state")
         for step in case["steps"]:
             if (not isinstance(step["argv"], list) or not all(type(x) is str for x in step["argv"])
                     or type(step["returncode"]) is not int or not all(type(x) is str for x in step["contains"])):
                 raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Invalid executable case")
+            if any(p not in ("measurements.json", "tasks.json") for p in step.get("preserved", [])):
+                raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Preservation state allowlist violation")
             for observation in step.get("files", []):
                 if set(observation) != {"path", "json"} or observation["path"] not in ("measurements.json", "tasks.json"):
                     raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Fixture state allowlist violation")

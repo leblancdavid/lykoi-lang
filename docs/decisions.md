@@ -1,5 +1,37 @@
 # Experimental decisions
 
+## R5.99 — Explicit normal query profile; disclose firewall failure
+
+Reuse CollectionQuery-0.1 facets as closed normal FRC `filter_order` relations.
+Interpret English once in the AI formalizer; validate and consume typed meaning
+thereafter. Compare source-side typed relations independently of display prose,
+while preserving source commitments, spans, material items, evidence authority,
+context/policies, clarification and exact owner sealing. Agreement is bounded
+evidence, not a natural-language completeness proof.
+
+Select the additive `collection-query-1` profile explicitly in reconciled normal
+domains. `LykoiContractV1` retains faithful query V1 and declared storage;
+`LykoiProgram-1` routes it through normal author/build/compiler interfaces. Keeping
+historical unselected contracts on their old route preserves the R5.98 normal-V1
+gap assertion without editing its test/pins. A read-only model-state query view
+reuses full old store validation and returns complete detached records; nullable
+payload does not authorize nullable predicates or invented fields. Independent
+source-bound external plans are sealed before authoring.
+
+The tradeoff is source-bound AI-capture evidence and general callback/schema
+integration, rather than demonstrated arbitrary live-source interpretation or
+independent cognition. Numeric/range/nullability/prefix/stable-occurrence gaps stay
+unsupported. **280/280 tests and 14 verified captured normal paths** establish
+bounded engineering behavior, not universal understanding.
+
+An exact-file search unexpectedly disclosed B04/later implementation logs. Record
+the [firewall incident](../benchmark/results/phase5c/R5_99-FIREWALL-INCIDENT.md),
+cancel optional B03 transfer 2, preserve all historical results and reject a clean
+round/nonexposure claim. Direct requirement-file nonaccess does not erase semantic
+log disclosure. Overall classification:
+`R5_99_NORMAL_PATH_INTEGRATION_IMPLEMENTED_FIREWALL_VIOLATION`; no remediation or
+next benchmark follows. See the [report](../benchmark/results/phase5c/R5_99-COLLECTION-QUERY-NORMAL-PATH-INTEGRATION.md).
+
 ## R5.98 — Compositional query profile; preserve transfer boundaries
 
 Implement [CollectionQuery-0.1](collection-query-v0.1.md) as a separately versioned

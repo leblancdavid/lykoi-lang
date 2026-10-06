@@ -1,5 +1,43 @@
 # Lykoi research log
 
+## R5.99 normal collection-query integration (2026-10-06)
+
+**`R5_99_NORMAL_PATH_INTEGRATION_IMPLEMENTED_FIREWALL_VIOLATION`**.
+The [report](../benchmark/results/phase5c/R5_99-COLLECTION-QUERY-NORMAL-PATH-INTEGRATION.md)
+and [normal-path semantics](collection-query-normal-path-v1.md) describe typed normal
+FRC output/clarification, source-side typed reconciliation, structural coverage,
+existing query BDI/adequacy, explicitly selected normal V1, restricted authoring and
+normal compiler dispatch. A generic model-state adapter validates the full existing
+task store, queries supported nonnullable views and returns full unchanged payload.
+No query family or canonical task-model change was added.
+
+Final **280/280 tests**, model validation/safety and **16/16 commands** pass.
+Recorded active-agent human-style interpretations traverse normal ModelAdapter,
+Workspace and Pipeline: **16 attempts / 14 verified / one clarification / one
+mutating-frame compilation refusal**, with **87 external subprocess invocations**.
+Three equivalent-phrasing pairs converge; case, trim, direction, inclusion,
+validation, no-match and effects remain distinct. AI captures, inventory and literal
+oracle share one agent context; human approvals are synthetic owner actions.
+General live formalization accuracy/cognitive-independent review is unverified.
+
+First full run **279/280** retains the expected old normal-V1 refusal regression;
+explicit reconciled profile selection corrected compatibility without editing any
+R5.98 test/evidence. Earlier schema-alternative validation fault was also corrected
+before final freeze. Generic implementation/tests/corpus stay frozen after public
+transfer. R5.80 stable-name/prefix and R5.82 price-limit cases retain activation,
+stable-occurrence, numeric/range/nullable/prefix gaps; none was forced into partial
+executable support.
+
+An exact-file evidence search unexpectedly searched its parent directory and
+returned historical B04/later implementation logs. **Indirect semantic exposure
+occurred**, despite no direct requirement-file open. The
+[incident](../benchmark/results/phase5c/R5_99-FIREWALL-INCIDENT.md) invalidates the
+requested clean nonexposure result. Optional **B03 transfer 2 is NOT_RUN**; no new
+B03 result or failure remediation occurred. Immutable original
+**`B03_FIRST_RESULT = DECISION_DISCOVERY_UNSUPPORTED`** and R5.98's
+**`B03_POST_EXPOSURE_TRANSFER = STRUCTURAL_COVERAGE_FAILURE`** remain unchanged.
+Stop after contaminated engineering evidence/reporting; no next benchmark access.
+
 ## R5.98 general structural query capability (2026-10-06)
 
 **`R5_98_GENERAL_STRUCTURAL_QUERY_CAPABILITY_IMPLEMENTED_BOUNDED_PROFILE`**.

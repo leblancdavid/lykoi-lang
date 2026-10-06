@@ -39,6 +39,16 @@ query-V1/compiler path on six synthetic compositions. See the
 [report, verification and post-exposure transfer limits](benchmark/results/phase5c/R5_98-GENERAL-STRUCTURAL-QUERY-CAPABILITY.md).
 The unchanged B03 candidate still halts structurally; the first result is preserved.
 
+**R5.99 integrates the bounded query profile into the normal requirements pipeline.**
+Typed FRC output, source reconciliation, explicit normal V1 selection, restricted
+authoring/compiler dispatch and a generic read-only model-state adapter reach
+external behavior on source-bound AI captures. **280/280 tests pass.** The round
+has a **benchmark firewall violation**: a targeted evidence search unexpectedly
+returned B04/later historical implementation logs. No requirement files were opened,
+but indirect disclosure occurred; B03 transfer 2 was not run. See the
+[normal-path specification](docs/collection-query-normal-path-v1.md) and
+[R5.99 report and incident](benchmark/results/phase5c/R5_99-COLLECTION-QUERY-NORMAL-PATH-INTEGRATION.md).
+
 The [R5.87 requirements workspace](docs/requirements-workspace-r5.87.md) implements
 a public synthetic human-intent → clarification → independent source review → exact
 approval → controller-sealed requirements lifecycle. With `PYTHONPATH=src`, run

@@ -2,6 +2,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
+from lykoi_controller import Failure
 
 from .generator import write
 from .parser import AirError, load
@@ -22,6 +23,18 @@ def main(argv=None):
     if args.operation in ("inspect", "diff", "impact") and not args.output:
         parser.error(f"{args.operation} requires an entity ID or second model")
     try:
+        if args.operation in ("validate", "generate", "safety"):
+            source = json.loads(Path(args.air_file).read_text(encoding="utf-8"))
+            if source.get("lykoi_version") == "LykoiProgram-1":
+                from .profiles import generate
+                target = generate(source)
+                if args.operation == "generate":
+                    Path(args.output).write_text(target, encoding="utf-8", newline="\n")
+                elif args.operation == "safety":
+                    print(json.dumps({"profile": source["profile"], "query_effect": "read_only",
+                                      "storage_writes": False, "scope": "Declared query commands only; legacy commands retain v0.3 effects"}))
+                print(f"Lykoi {args.operation}: ok")
+                return 0
         if args.operation in ("plan", "apply"):
             plan = load_plan(args.air_file)
             report = evaluate(plan)[0] if args.operation == "plan" else apply(plan)
@@ -52,7 +65,7 @@ def main(argv=None):
         elif args.operation == "safety":
             print(json.dumps(safety(program), indent=2, sort_keys=True))
             return 0
-    except (AirError, OSError) as exc:
+    except (AirError, OSError, ValueError, Failure) as exc:
         print(f"Lykoi error: {exc}", file=sys.stderr)
         return 1
     print(f"Lykoi {args.operation}: ok")
