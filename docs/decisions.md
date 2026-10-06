@@ -1,5 +1,43 @@
 # Experimental decisions
 
+## R5.103 — Fresh measurement first; qualified composition rather than profile union
+
+Create fresh typed source interpretations for every exposed B01–B20 request and
+retain the exact producer/FRC/native-stage evidence. A complete pre-repair run
+isolates representation debt: **B01 improves on existing R5.102 support before
+engineering changes**, yielding three local successes. Generic guard/clock/resource/
+composition repairs yield no further first-blocker changes. Preserve both runs and
+the historical matrices rather than attribute existing-support reachability to new
+semantics. Unsupported requirements remain explicit structured demands that coverage
+refuses; an opaque declaration is not an executable operator.
+
+Reuse existing v0.3 equality/lookup/lifecycle guards, required-input validation,
+strict before-clock/null-exclusion/equality conjunction, literal guarantees and
+declared UUID/UTC resources. Bind deterministic creation providers only by required
+creation capability IDs in the normal generated API; preserve default providers,
+collision checks, invalid-state rejection and execution-local reset. Leave the
+legacy runtime template, generator, model and generated application intact.
+
+Qualify scalar/read-only-query composition for **one actual derived scalar state**,
+with complete facets, type/identity matching, disjoint commands and read-only query
+effects. Retain scalar and query BDI policy decisions, exact V1 recovery, source
+reconciliation/clarification and owner approval. State/command/guard conflicts and
+unsupported interactions refuse. Independent single-transition lifecycle fields
+reuse the existing algebra; they are not arbitrary state-machine programming.
+
+Use **`R5_103_FRESH_TYPED_CORPUS_REBASELINED`** for the completed twenty-case
+baseline, not a claim of full language closure. B17/B20 still need source authority.
+The fresh distribution is **3 success / 14 structure / 1 BDI / 2 clarification**;
+backend/store labels may have missing writable-semantic prerequisites. Preserve the
+Unicode stdout observation separately; no infrastructure/portability work.
+
+Recommend **typed mutable values and transformations** for the next separately
+authorized round, based on five direct local demands and reusable architectural
+dependencies. Predicate/relationship/atomic-effect alternatives remain important
+but have more unavailable store/foundation prerequisites or fewer direct cases.
+No selected family is begun. See the [report](../benchmark/results/phase5c/R5_103-REPORT.md)
+and [versioned composition rules](existing-semantic-composition-v1.md).
+
 ## R5.102 — Integrate the executable algebra; classify material seams as partial
 
 Expose existing v0.3 semantics through a closed typed `existing-scalar-1` normal

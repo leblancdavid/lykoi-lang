@@ -13,6 +13,12 @@ VERSION = "sealed-pipeline-1"
 
 
 def structural(contract, frc_id):
+    from . import model_profile
+    if model_profile.applies(contract):
+        return model_profile.structural(contract, frc_id)
+    from . import composition_profile
+    if composition_profile.applies(contract):
+        return composition_profile.structural(contract, frc_id)
     from . import scalar_profile
     if scalar_profile.applies(contract):
         return scalar_profile.structural(contract, frc_id)
@@ -83,6 +89,12 @@ def structural(contract, frc_id):
 
 
 def coverage(contract, projection):
+    from . import model_profile
+    if model_profile.applies(contract):
+        return model_profile.coverage(contract, projection)
+    from . import composition_profile
+    if composition_profile.applies(contract):
+        return composition_profile.coverage(contract, projection)
     from . import scalar_profile
     if scalar_profile.applies(contract):
         return scalar_profile.coverage(contract, projection)
@@ -105,6 +117,12 @@ def coverage(contract, projection):
 
 
 def bdi(contract, projection):
+    from . import model_profile
+    if model_profile.applies(contract):
+        return model_profile.bdi(contract, projection)
+    from . import composition_profile
+    if composition_profile.applies(contract):
+        return composition_profile.bdi(contract, projection)
     from . import scalar_profile
     if scalar_profile.applies(contract):
         return scalar_profile.bdi(contract, projection)
@@ -117,6 +135,12 @@ def bdi(contract, projection):
 
 
 def adequate(contract, discovered):
+    from . import model_profile
+    if model_profile.applies(contract):
+        return model_profile.adequate(contract, discovered)
+    from . import composition_profile
+    if composition_profile.applies(contract):
+        return composition_profile.adequate(contract, discovered)
     from . import scalar_profile
     if scalar_profile.applies(contract):
         return scalar_profile.adequate(contract, discovered)
@@ -139,7 +163,11 @@ def faithful_v1(contract):
 
     Does not expand V1 or invent a mapping for generic behavioral relations.
     """
-    from . import query_profile, scalar_profile
+    from . import query_profile, scalar_profile, composition_profile, model_profile
+    if model_profile.applies(contract):
+        return model_profile.faithful_v1(contract)
+    if composition_profile.applies(contract):
+        return composition_profile.faithful_v1(contract)
     if scalar_profile.applies(contract):
         return scalar_profile.faithful_v1(contract)
     if query_profile.selected(contract):

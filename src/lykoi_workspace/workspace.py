@@ -146,6 +146,8 @@ class Workspace:
         from lykoi_pipeline.query_profile import formalizer_guidance
         request["instructions"] += " " + formalizer_guidance()
         from lykoi_pipeline.scalar_profile import formalizer_guidance as scalar_guidance
+        from lykoi_pipeline.composition_profile import formalizer_guidance as composition_guidance
+        request["instructions"] += " " + composition_guidance()
         request["instructions"] += " " + scalar_guidance()
         result = producer.produce(copy.deepcopy(request))
         canonical(result)

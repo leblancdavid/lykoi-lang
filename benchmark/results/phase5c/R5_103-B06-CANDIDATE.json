@@ -1,0 +1,2215 @@
+{
+  "case": "B06",
+  "producer_capture": {
+    "id": "B06",
+    "source": "## Source: benchmark/baseline.md\n# External baseline contract (before B01)\n\nThe interface is a subprocess CLI run from an isolated working directory.\nCommands print exactly one JSON value to stdout on success (exit 0); expected\napplication failures print `{\"error\":\"CODE\"}` to stderr (exit 1). Commands\npersist across separate processes in `tasks.json` in that directory. `list`\non missing storage returns `[]` without creating the file.\n\nEach task result has exactly `id`, `title`, `description`, `status`, `priority`,\n`created_at`, and `due_date`. IDs are unique nonempty strings; timestamps are\nUTC ISO strings ending in `Z`. Lists sort by `(created_at, id)` ascending.\n\n* `create --title T --description D [--priority LOW|NORMAL|HIGH]\n  [--due-date UTC_TIMESTAMP]`: nonblank title, verbatim description, new ID,\n  status `pending`, priority default `NORMAL`, current creation timestamp,\n  due date default `null`. Blank title fails `invalid_title`; malformed or\n  non-UTC due date fails `invalid_due_date` without changing storage.\n* `list`: return all tasks including completed tasks.\n* `list-high`: return only HIGH tasks (including completed ones).\n* `list-overdue`: return only pending tasks with a non-null due date **strictly\n  earlier** than current UTC time. Undated and completed tasks are excluded.\n* `complete --id ID`: pending task becomes completed and is persisted; a\n  missing ID fails `task_not_found`, an already completed task fails\n  `invalid_transition`, both without altering the stored file.\n* `delete --id ID`: remove and return the task (pending or completed); missing\n  ID fails `task_not_found` without altering storage.\n* `migrate`: explicit conversion of legacy unversioned records to version 3\n  (add `priority: NORMAL`, `due_date: null`) and version 2 records to version 3\n  (add `due_date: null`); return `{\"migrated\": N}`. Running on current data or\n  absent storage returns `{\"migrated\": 0}`. Legacy reads fail\n  `migration_required` without changing data. New writes use a version-3\n  envelope with `schema_version` and `records`.\n\nMalformed JSON and invalid record shape, duplicate IDs, blank IDs/titles,\ninvalid enums and timestamps fail `invalid_state` on read. Failed operations\nmust not mutate persisted bytes. An exact-time overdue boundary can be checked\nonly with a controlled clock; the external CLI oracle checks widely separated\npast and future instants instead of relying on timing-sensitive sleeps.\n\nThe oracle exercises *both* executable CLIs with fresh subprocesses and\nindependent temporary directories; it asserts this contract before comparing\nnormalized outcomes. Random IDs and wall-clock timestamps are checked for\nproperties, not falsely required to be byte-identical across tracks.\n\n\n## Source: benchmark/requirements/README.md\n# Frozen sequential change set\n\nExecute B01\u2013B20 in numeric order; a change is cumulative. Each file states an\nobservable API and acceptance criteria, not an implementation strategy. New\nfields on existing tasks require an explicit `migrate` path; ordinary reads of\nold storage must report `migration_required` without mutation. Migration is\natomic, returns the number of migrated tasks, and is idempotent. Missing IDs\nreturn `task_not_found` unless a request explicitly defines another error.\nSuccessful operations output JSON; application errors use the baseline JSON\nerror envelope and exit 1. New list commands use the baseline `(created_at,\nid)` sort unless stated otherwise. Existing commands remain compatible unless\na request expressly changes them. Errors must leave observable state intact.\n\nIDs and test cases are fixed before execution; correcting a faulty requirement\nrequires a recorded protocol deviation, never a silent retroactive edit.\nThe authoritative frozen file hashes are in `../results/BASELINE.md`.\n\n\n## Source: benchmark/requirements/B06.md\n# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n\n\n## Source: benchmark/requirements/B01.md\n# B01 \u2014 Critical priority (local)\n\nAdd `CRITICAL` above `HIGH` to accepted task priorities. `create --priority\nCRITICAL` persists and returns that value; `list` includes it. `list-high`\ncontinues to mean exactly `HIGH`. Existing LOW, NORMAL and HIGH tasks retain\ntheir values through migration. A missing priority still defaults to NORMAL.\n\n\n## Source: benchmark/requirements/B02.md\n# B02 \u2014 Task tags (local)\n\nAccept zero or more `--tag VALUE` flags on `create`. Each VALUE must be a\nnonblank string after trimming whitespace; store the trimmed value. Tags are\ncase-sensitive, deduplicated while retaining first occurrence order, and\nreturned as a `tags` array on every task. Omission and migrated older tasks\nhave `tags: []`. Empty tag input fails `invalid_tag` with no new task.\n\n\n## Source: benchmark/requirements/B03.md\n# B03 \u2014 List by tag (local)\n\nAdd `list-tag --tag VALUE`. Return tasks whose `tags` contains exactly VALUE\n(case-sensitive; query input is not trimmed), including completed tasks, in\nnormal order. Reject blank or whitespace-only query input with `invalid_tag`.\nA tag not present returns `[]`; the query never changes storage. For example,\n`work` does not select a task tagged `Work`.\n\n\n## Source: benchmark/requirements/B04.md\n# B04 \u2014 Source label (local)\n\nAdd optional `create --source VALUE` and a returned `source` string on every\ntask. Preserve the supplied value verbatim, including whitespace; omission\nand migrated tasks use `\"\"`. Listing and subsequent mutations preserve it.\nThis is a small field addition: creation timestamps already exist at baseline.\n\n\n## Source: benchmark/requirements/B05.md\n# B05 \u2014 Status filter (local)\n\nAdd `list-status --status pending|completed`. Return precisely the tasks in\nthe requested status in normal order. An empty result is `[]`; querying does\nnot change storage. Both values include all matching tasks at this step.\n",
+    "source_files": {
+      "benchmark/baseline.md": "d69de8d4da44c74aff1ac9c6361995ad8dc881f454271cfaedff61d3e98651e5",
+      "benchmark/requirements/README.md": "152efdaf2ddaac79ae7e87bcc0dc31327a6ff6d9ba7a45e17711f097353d1e8b",
+      "benchmark/requirements/B06.md": "b2be288e4e5a58ac348169860f3e4123b1560c9a9d787787005ff94b46c04b61",
+      "benchmark/requirements/B01.md": "b7b2d714db5cee566e9e55982dd4c4d95d3d57f0c341e04ba1e15c24e9a8e94d",
+      "benchmark/requirements/B02.md": "8a76e276240fa840c473be60a8e7ed0e10bd0c165426b1bfc84741e69872032b",
+      "benchmark/requirements/B03.md": "56c6ac4c187962c71d5866b27f9568c8b6de055a0bab074896ef41b61a554630",
+      "benchmark/requirements/B04.md": "2c2e9e3787d53eb45df7b4b48362db2217e62c165dedda38222f5561cd859221",
+      "benchmark/requirements/B05.md": "fc06265789c2781c913e14dfc22a8c37a0ed627b1e1839d43ebaec31373372ff"
+    },
+    "rows": [
+      {
+        "id": "B06/list-category/source",
+        "basis": "STATED",
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-category/source",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-category",
+            "facet": "source",
+            "value": {
+              "collection": "state_tasks",
+              "fields": {
+                "id": "string",
+                "created_at": "string",
+                "category": "string",
+                "status": "string"
+              },
+              "unique_key": "id"
+            }
+          }
+        }
+      },
+      {
+        "id": "B06/list-category/parameters",
+        "basis": "STATED",
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-category/parameters",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-category",
+            "facet": "parameters",
+            "value": {
+              "category": "string"
+            }
+          }
+        }
+      },
+      {
+        "id": "B06/list-category/predicate",
+        "basis": "STATED",
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-category/predicate",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-category",
+            "facet": "predicate",
+            "value": {
+              "field": "category",
+              "operator": "equals",
+              "operand": {
+                "parameter": "category"
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "B06/list-category/comparison",
+        "basis": "STATED",
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-category/comparison",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-category",
+            "facet": "comparison",
+            "value": {
+              "case": "sensitive",
+              "normalization": "none"
+            }
+          }
+        }
+      },
+      {
+        "id": "B06/list-category/ordering",
+        "basis": "STATED",
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-category/ordering",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-category",
+            "facet": "ordering",
+            "value": [
+              {
+                "field": "created_at",
+                "direction": "ASC"
+              },
+              {
+                "field": "id",
+                "direction": "ASC"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "B06/list-category/validation",
+        "basis": "STATED",
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-category/validation",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-category",
+            "facet": "validation",
+            "value": []
+          }
+        }
+      },
+      {
+        "id": "B06/list-category/inclusion",
+        "basis": "STATED",
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-category/inclusion",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-category",
+            "facet": "inclusion",
+            "value": [
+              {
+                "field": "status",
+                "mode": "all"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "B06/list-category/effect",
+        "basis": "STATED",
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-category/effect",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-category",
+            "facet": "effect",
+            "value": {
+              "state": "read_only",
+              "persistence": "unchanged"
+            }
+          }
+        }
+      },
+      {
+        "id": "B06/list-category/result",
+        "basis": "STATED",
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-category/result",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-category",
+            "facet": "result",
+            "value": {
+              "shape": "collection",
+              "cardinality": "zero_or_more",
+              "no_match": "empty"
+            }
+          }
+        }
+      },
+      {
+        "id": "B06/write_transform",
+        "basis": "STATED",
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized write_transform",
+        "relation": {
+          "kind": "crud",
+          "parameters": {
+            "required_capability": "write_transform",
+            "specification": {
+              "field": "category",
+              "type": "string",
+              "command": "create",
+              "flag": "--category",
+              "transform": "strip_nonempty",
+              "omitted": "",
+              "explicit_empty": "",
+              "whitespace_error": "invalid_category",
+              "migration": "",
+              "result": "all_task_results",
+              "rejection": "unchanged"
+            }
+          }
+        }
+      }
+    ],
+    "question": null,
+    "domains": {
+      "evaluation_scope": "requirement-local against canonical baseline; precursor demands explicit, not achieved",
+      "baseline_model_sha256": "971b8ec4079d45101ff8fd7877b6ccd86e7c931124621cf4b5394e93e9dd2f14",
+      "capability_profile": "collection-query-1",
+      "collection_store": {
+        "kind": "model_state",
+        "model": {
+          "axiom_version": "0.3",
+          "application": {
+            "id": "app_tasks",
+            "name": "task_manager"
+          },
+          "types": [
+            {
+              "id": "type_status",
+              "name": "TaskStatus",
+              "kind": "enum",
+              "values": [
+                "pending",
+                "completed"
+              ]
+            },
+            {
+              "id": "type_priority",
+              "name": "Priority",
+              "kind": "enum",
+              "values": [
+                "LOW",
+                "NORMAL",
+                "HIGH"
+              ]
+            },
+            {
+              "id": "type_task",
+              "name": "Task",
+              "kind": "record",
+              "fields": [
+                {
+                  "id": "field_id",
+                  "name": "id",
+                  "type": "prim:string"
+                },
+                {
+                  "id": "field_title",
+                  "name": "title",
+                  "type": "prim:string"
+                },
+                {
+                  "id": "field_description",
+                  "name": "description",
+                  "type": "prim:string"
+                },
+                {
+                  "id": "field_status",
+                  "name": "status",
+                  "type": "type_status"
+                },
+                {
+                  "id": "field_priority",
+                  "name": "priority",
+                  "type": "type_priority"
+                },
+                {
+                  "id": "field_created_at",
+                  "name": "created_at",
+                  "type": "prim:timestamp"
+                },
+                {
+                  "id": "field_due_date",
+                  "name": "due_date",
+                  "type": "prim:timestamp",
+                  "nullable": true
+                }
+              ]
+            },
+            {
+              "id": "type_task_list",
+              "name": "TaskList",
+              "kind": "list",
+              "item_type": "type_task"
+            }
+          ],
+          "capabilities": [
+            {
+              "id": "cap_store",
+              "kind": "json_file",
+              "path": "tasks.json",
+              "missing_file": "empty_collection"
+            },
+            {
+              "id": "cap_clock",
+              "kind": "utc_clock"
+            },
+            {
+              "id": "cap_ids",
+              "kind": "uuid_v4"
+            },
+            {
+              "id": "cap_task_read",
+              "kind": "resource_access",
+              "resource": "cap_store",
+              "action": "read"
+            },
+            {
+              "id": "cap_task_write",
+              "kind": "resource_access",
+              "resource": "cap_store",
+              "action": "write"
+            }
+          ],
+          "state_machines": [
+            {
+              "id": "ax:machine:task_lifecycle",
+              "name": "TaskLifecycle",
+              "field": "field_status",
+              "initial": "pending",
+              "transitions": [
+                "ax:transition:task_complete"
+              ]
+            }
+          ],
+          "transitions": [
+            {
+              "id": "ax:transition:task_complete",
+              "machine": "ax:machine:task_lifecycle",
+              "source": "pending",
+              "target": "completed",
+              "trigger": "fn_complete",
+              "guard": "pre_complete_pending",
+              "effects": [
+                "state_write"
+              ]
+            }
+          ],
+          "errors": [
+            {
+              "id": "err_invalid_title",
+              "code": "invalid_title"
+            },
+            {
+              "id": "err_id_collision",
+              "code": "id_collision"
+            },
+            {
+              "id": "err_invalid_state",
+              "code": "invalid_state"
+            },
+            {
+              "id": "err_persistence_failure",
+              "code": "persistence_failure"
+            },
+            {
+              "id": "err_migration_required",
+              "code": "migration_required"
+            },
+            {
+              "id": "err_task_not_found",
+              "code": "task_not_found"
+            },
+            {
+              "id": "err_invalid_transition",
+              "code": "invalid_transition"
+            },
+            {
+              "id": "err_invalid_due_date",
+              "code": "invalid_due_date"
+            }
+          ],
+          "state": [
+            {
+              "id": "state_tasks",
+              "name": "tasks",
+              "type": "type_task_list",
+              "storage": "cap_store",
+              "key_field": "field_id",
+              "schema_version": 3,
+              "invariants": [
+                "inv_unique_ids",
+                "inv_valid_tasks",
+                "inv_title",
+                "inv_status",
+                "inv_priority",
+                "inv_overdue_excludes_completed"
+              ]
+            }
+          ],
+          "invariants": [
+            {
+              "id": "inv_unique_ids",
+              "kind": "unique_field",
+              "state": "state_tasks",
+              "field": "field_id"
+            },
+            {
+              "id": "inv_valid_tasks",
+              "kind": "all_records_valid",
+              "state": "state_tasks",
+              "field_rules": [
+                {
+                  "kind": "nonblank",
+                  "field": "field_id"
+                },
+                {
+                  "kind": "nonblank",
+                  "field": "field_title"
+                },
+                {
+                  "kind": "timestamp_utc",
+                  "field": "field_created_at"
+                },
+                {
+                  "kind": "timestamp_utc",
+                  "field": "field_due_date"
+                }
+              ]
+            },
+            {
+              "id": "inv_title",
+              "kind": "predicate",
+              "state": "state_tasks",
+              "predicate": {
+                "operator": "NOT_EMPTY",
+                "field": "field_title"
+              }
+            },
+            {
+              "id": "inv_status",
+              "kind": "predicate",
+              "state": "state_tasks",
+              "predicate": {
+                "operator": "LIFECYCLE_STATE",
+                "field": "field_status",
+                "machine": "ax:machine:task_lifecycle"
+              }
+            },
+            {
+              "id": "inv_priority",
+              "kind": "predicate",
+              "state": "state_tasks",
+              "predicate": {
+                "operator": "IN",
+                "field": "field_priority",
+                "values": [
+                  "LOW",
+                  "NORMAL",
+                  "HIGH"
+                ]
+              }
+            },
+            {
+              "id": "inv_overdue_excludes_completed",
+              "kind": "query_exclusion",
+              "state": "state_tasks",
+              "behavior": "fn_list_overdue",
+              "field": "field_status",
+              "value": "completed"
+            }
+          ],
+          "behaviors": [
+            {
+              "id": "fn_create",
+              "requires": [
+                "cap_task_read",
+                "cap_task_write",
+                "cap_clock",
+                "cap_ids"
+              ],
+              "name": "create_task",
+              "kind": "create",
+              "state": "state_tasks",
+              "inputs": [
+                {
+                  "id": "arg_title",
+                  "name": "title",
+                  "type": "prim:string"
+                },
+                {
+                  "id": "arg_description",
+                  "name": "description",
+                  "type": "prim:string"
+                },
+                {
+                  "id": "arg_priority",
+                  "name": "priority",
+                  "type": "type_priority"
+                },
+                {
+                  "id": "arg_due_date",
+                  "name": "due_date",
+                  "type": "prim:timestamp",
+                  "nullable": true
+                }
+              ],
+              "output": "type_task",
+              "dependencies": [
+                "state_tasks",
+                "cap_store",
+                "cap_clock",
+                "cap_ids"
+              ],
+              "reads": [
+                "state_tasks"
+              ],
+              "writes": [
+                "state_tasks"
+              ],
+              "effects": [
+                "state_read",
+                "state_write",
+                "file_read",
+                "file_write",
+                "clock_read",
+                "random_id"
+              ],
+              "conditions": [
+                {
+                  "id": "pre_create_title",
+                  "kind": "nonblank_input",
+                  "input": "arg_title",
+                  "failure": "err_invalid_title"
+                },
+                {
+                  "id": "pre_due_date_valid",
+                  "kind": "timestamp_input",
+                  "input": "arg_due_date",
+                  "failure": "err_invalid_due_date"
+                }
+              ],
+              "assignments": [
+                {
+                  "field": "field_id",
+                  "source": "capability",
+                  "id": "cap_ids"
+                },
+                {
+                  "field": "field_title",
+                  "source": "input",
+                  "id": "arg_title"
+                },
+                {
+                  "field": "field_description",
+                  "source": "input",
+                  "id": "arg_description"
+                },
+                {
+                  "field": "field_status",
+                  "source": "literal",
+                  "value": "pending"
+                },
+                {
+                  "field": "field_priority",
+                  "source": "input_default",
+                  "id": "arg_priority",
+                  "value": "NORMAL"
+                },
+                {
+                  "field": "field_created_at",
+                  "source": "capability",
+                  "id": "cap_clock"
+                },
+                {
+                  "field": "field_due_date",
+                  "source": "input_default",
+                  "id": "arg_due_date",
+                  "value": null
+                }
+              ],
+              "guarantees": [
+                {
+                  "id": "contract_create_status",
+                  "kind": "result_field_equals",
+                  "field": "field_status",
+                  "value": "pending"
+                },
+                {
+                  "id": "contract_create_persisted",
+                  "kind": "result_in_state",
+                  "state": "state_tasks"
+                },
+                {
+                  "id": "contract_create_priority",
+                  "kind": "result_field_equals_assignment",
+                  "field": "field_priority"
+                },
+                {
+                  "id": "contract_create_due_date",
+                  "kind": "result_field_equals_assignment",
+                  "field": "field_due_date"
+                }
+              ],
+              "failures": [
+                "err_invalid_title",
+                "err_id_collision",
+                "err_invalid_state",
+                "err_persistence_failure",
+                "err_migration_required",
+                "err_invalid_due_date"
+              ]
+            },
+            {
+              "id": "fn_list",
+              "requires": [
+                "cap_task_read"
+              ],
+              "name": "list_tasks",
+              "kind": "list",
+              "state": "state_tasks",
+              "inputs": [],
+              "output": "type_task_list",
+              "dependencies": [
+                "state_tasks",
+                "cap_store"
+              ],
+              "reads": [
+                "state_tasks"
+              ],
+              "writes": [],
+              "effects": [
+                "state_read",
+                "file_read"
+              ],
+              "conditions": [],
+              "assignments": [],
+              "order_by": [
+                "field_created_at",
+                "field_id"
+              ],
+              "guarantees": [
+                {
+                  "id": "contract_list_sorted",
+                  "kind": "result_equals_state_sorted",
+                  "state": "state_tasks"
+                }
+              ],
+              "failures": [
+                "err_invalid_state",
+                "err_persistence_failure",
+                "err_migration_required"
+              ]
+            },
+            {
+              "id": "fn_list_high",
+              "requires": [
+                "cap_task_read"
+              ],
+              "name": "list_high_priority_tasks",
+              "kind": "list",
+              "state": "state_tasks",
+              "inputs": [],
+              "output": "type_task_list",
+              "dependencies": [
+                "state_tasks",
+                "cap_store"
+              ],
+              "reads": [
+                "state_tasks"
+              ],
+              "writes": [],
+              "effects": [
+                "state_read",
+                "file_read"
+              ],
+              "conditions": [],
+              "assignments": [],
+              "order_by": [
+                "field_created_at",
+                "field_id"
+              ],
+              "filter": {
+                "kind": "field_equals",
+                "field": "field_priority",
+                "value": "HIGH"
+              },
+              "guarantees": [
+                {
+                  "id": "contract_high_sorted",
+                  "kind": "result_equals_state_sorted",
+                  "state": "state_tasks"
+                }
+              ],
+              "failures": [
+                "err_invalid_state",
+                "err_persistence_failure",
+                "err_migration_required"
+              ]
+            },
+            {
+              "id": "fn_complete",
+              "requires": [
+                "cap_task_read",
+                "cap_task_write"
+              ],
+              "performs": "ax:transition:task_complete",
+              "name": "complete_task",
+              "kind": "update",
+              "state": "state_tasks",
+              "inputs": [
+                {
+                  "id": "arg_complete_id",
+                  "name": "id",
+                  "type": "prim:string"
+                }
+              ],
+              "output": "type_task",
+              "dependencies": [
+                "state_tasks",
+                "cap_store"
+              ],
+              "reads": [
+                "state_tasks"
+              ],
+              "writes": [
+                "state_tasks"
+              ],
+              "effects": [
+                "state_read",
+                "state_write",
+                "file_read",
+                "file_write"
+              ],
+              "lookup": {
+                "field": "field_id",
+                "input": "arg_complete_id"
+              },
+              "conditions": [
+                {
+                  "id": "pre_complete_exists",
+                  "kind": "record_exists",
+                  "failure": "err_task_not_found"
+                },
+                {
+                  "id": "pre_complete_pending",
+                  "kind": "record_field_equals",
+                  "field": "field_status",
+                  "value": "pending",
+                  "failure": "err_invalid_transition"
+                }
+              ],
+              "assignments": [
+                {
+                  "field": "field_status",
+                  "source": "literal",
+                  "value": "completed"
+                }
+              ],
+              "guarantees": [
+                {
+                  "id": "contract_complete_status",
+                  "kind": "result_field_equals",
+                  "field": "field_status",
+                  "value": "completed"
+                },
+                {
+                  "id": "contract_complete_persisted",
+                  "kind": "result_in_state",
+                  "state": "state_tasks"
+                }
+              ],
+              "failures": [
+                "err_task_not_found",
+                "err_invalid_transition",
+                "err_invalid_state",
+                "err_persistence_failure",
+                "err_migration_required"
+              ]
+            },
+            {
+              "id": "fn_delete",
+              "requires": [
+                "cap_task_read",
+                "cap_task_write"
+              ],
+              "name": "delete_task",
+              "kind": "delete",
+              "state": "state_tasks",
+              "inputs": [
+                {
+                  "id": "arg_delete_id",
+                  "name": "id",
+                  "type": "prim:string"
+                }
+              ],
+              "output": "type_task",
+              "dependencies": [
+                "state_tasks",
+                "cap_store"
+              ],
+              "reads": [
+                "state_tasks"
+              ],
+              "writes": [
+                "state_tasks"
+              ],
+              "effects": [
+                "state_read",
+                "state_write",
+                "file_read",
+                "file_write"
+              ],
+              "lookup": {
+                "field": "field_id",
+                "input": "arg_delete_id"
+              },
+              "conditions": [
+                {
+                  "id": "pre_delete_exists",
+                  "kind": "record_exists",
+                  "failure": "err_task_not_found"
+                }
+              ],
+              "assignments": [],
+              "guarantees": [
+                {
+                  "id": "contract_delete_absent",
+                  "kind": "result_id_absent_from_state",
+                  "state": "state_tasks"
+                }
+              ],
+              "failures": [
+                "err_task_not_found",
+                "err_invalid_state",
+                "err_persistence_failure",
+                "err_migration_required"
+              ]
+            },
+            {
+              "id": "fn_list_overdue",
+              "requires": [
+                "cap_task_read",
+                "cap_clock"
+              ],
+              "name": "list_overdue_tasks",
+              "kind": "list",
+              "state": "state_tasks",
+              "inputs": [],
+              "output": "type_task_list",
+              "dependencies": [
+                "state_tasks",
+                "cap_store",
+                "cap_clock"
+              ],
+              "reads": [
+                "state_tasks"
+              ],
+              "writes": [],
+              "effects": [
+                "state_read",
+                "file_read",
+                "clock_read"
+              ],
+              "conditions": [],
+              "assignments": [],
+              "order_by": [
+                "field_created_at",
+                "field_id"
+              ],
+              "filter": {
+                "kind": "all",
+                "predicates": [
+                  {
+                    "kind": "field_equals",
+                    "field": "field_status",
+                    "value": "pending"
+                  },
+                  {
+                    "kind": "field_before_clock",
+                    "field": "field_due_date",
+                    "clock": "cap_clock"
+                  }
+                ]
+              },
+              "guarantees": [
+                {
+                  "id": "contract_overdue_sorted",
+                  "kind": "result_equals_state_sorted",
+                  "state": "state_tasks"
+                }
+              ],
+              "failures": [
+                "err_invalid_state",
+                "err_persistence_failure",
+                "err_migration_required"
+              ]
+            }
+          ],
+          "commands": [
+            {
+              "id": "cmd_create",
+              "token": "create",
+              "behavior": "fn_create",
+              "arguments": [
+                {
+                  "flag": "--title",
+                  "input": "arg_title",
+                  "required": true
+                },
+                {
+                  "flag": "--description",
+                  "input": "arg_description",
+                  "required": true
+                },
+                {
+                  "flag": "--priority",
+                  "input": "arg_priority",
+                  "required": false
+                },
+                {
+                  "flag": "--due-date",
+                  "input": "arg_due_date",
+                  "required": false
+                }
+              ]
+            },
+            {
+              "id": "cmd_list",
+              "token": "list",
+              "behavior": "fn_list",
+              "arguments": []
+            },
+            {
+              "id": "cmd_list_high",
+              "token": "list-high",
+              "behavior": "fn_list_high",
+              "arguments": []
+            },
+            {
+              "id": "cmd_migrate",
+              "token": "migrate",
+              "migration": "migration_task_due_date",
+              "arguments": []
+            },
+            {
+              "id": "cmd_complete",
+              "token": "complete",
+              "behavior": "fn_complete",
+              "arguments": [
+                {
+                  "flag": "--id",
+                  "input": "arg_complete_id",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "id": "cmd_delete",
+              "token": "delete",
+              "behavior": "fn_delete",
+              "arguments": [
+                {
+                  "flag": "--id",
+                  "input": "arg_delete_id",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "id": "cmd_list_overdue",
+              "token": "list-overdue",
+              "behavior": "fn_list_overdue",
+              "arguments": []
+            }
+          ],
+          "migrations": [
+            {
+              "id": "migration_task_priority",
+              "requires": [
+                "cap_task_read",
+                "cap_task_write"
+              ],
+              "state": "state_tasks",
+              "from_version": 1,
+              "to_version": 2,
+              "add_fields": [
+                {
+                  "field": "field_priority",
+                  "value": "NORMAL"
+                }
+              ],
+              "effects": [
+                "state_read",
+                "state_write",
+                "file_read",
+                "file_write"
+              ]
+            },
+            {
+              "id": "migration_task_due_date",
+              "requires": [
+                "cap_task_read",
+                "cap_task_write"
+              ],
+              "state": "state_tasks",
+              "from_version": 2,
+              "to_version": 3,
+              "add_fields": [
+                {
+                  "field": "field_due_date",
+                  "value": null
+                }
+              ],
+              "effects": [
+                "state_read",
+                "state_write",
+                "file_read",
+                "file_write"
+              ]
+            }
+          ],
+          "scenarios": [
+            {
+              "id": "scenario_complete_transition",
+              "transition": "ax:transition:task_complete",
+              "lookup_value": "pending-task",
+              "record": {
+                "field_id": "pending-task",
+                "field_title": "Complete me",
+                "field_description": "x",
+                "field_status": "pending",
+                "field_priority": "NORMAL",
+                "field_created_at": "2026-09-01T00:00:00Z",
+                "field_due_date": null
+              }
+            },
+            {
+              "id": "scenario_overdue_mixed",
+              "behavior": "fn_list_overdue",
+              "clock": "2026-10-01T12:00:00Z",
+              "records": [
+                {
+                  "field_id": "past",
+                  "field_title": "Past",
+                  "field_description": "x",
+                  "field_status": "pending",
+                  "field_priority": "NORMAL",
+                  "field_created_at": "2026-09-01T00:00:00Z",
+                  "field_due_date": "2026-10-01T11:59:59Z"
+                },
+                {
+                  "field_id": "future",
+                  "field_title": "Future",
+                  "field_description": "x",
+                  "field_status": "pending",
+                  "field_priority": "NORMAL",
+                  "field_created_at": "2026-09-01T00:00:00Z",
+                  "field_due_date": "2026-10-01T12:00:01Z"
+                },
+                {
+                  "field_id": "equal",
+                  "field_title": "Equal",
+                  "field_description": "x",
+                  "field_status": "pending",
+                  "field_priority": "NORMAL",
+                  "field_created_at": "2026-09-01T00:00:00Z",
+                  "field_due_date": "2026-10-01T12:00:00Z"
+                },
+                {
+                  "field_id": "none",
+                  "field_title": "None",
+                  "field_description": "x",
+                  "field_status": "pending",
+                  "field_priority": "NORMAL",
+                  "field_created_at": "2026-09-01T00:00:00Z",
+                  "field_due_date": null
+                },
+                {
+                  "field_id": "done",
+                  "field_title": "Done",
+                  "field_description": "x",
+                  "field_status": "completed",
+                  "field_priority": "NORMAL",
+                  "field_created_at": "2026-09-01T00:00:00Z",
+                  "field_due_date": "2026-10-01T11:59:59Z"
+                }
+              ],
+              "expected_ids": [
+                "past"
+              ]
+            }
+          ]
+        },
+        "state": "state_tasks"
+      }
+    }
+  },
+  "exact_frc": {
+    "context": {
+      "assumptions": [],
+      "component_authority": null,
+      "domains": {
+        "baseline_model_sha256": "971b8ec4079d45101ff8fd7877b6ccd86e7c931124621cf4b5394e93e9dd2f14",
+        "capability_profile": "collection-query-1",
+        "collection_store": {
+          "kind": "model_state",
+          "model": {
+            "application": {
+              "id": "app_tasks",
+              "name": "task_manager"
+            },
+            "axiom_version": "0.3",
+            "behaviors": [
+              {
+                "assignments": [
+                  {
+                    "field": "field_id",
+                    "id": "cap_ids",
+                    "source": "capability"
+                  },
+                  {
+                    "field": "field_title",
+                    "id": "arg_title",
+                    "source": "input"
+                  },
+                  {
+                    "field": "field_description",
+                    "id": "arg_description",
+                    "source": "input"
+                  },
+                  {
+                    "field": "field_status",
+                    "source": "literal",
+                    "value": "pending"
+                  },
+                  {
+                    "field": "field_priority",
+                    "id": "arg_priority",
+                    "source": "input_default",
+                    "value": "NORMAL"
+                  },
+                  {
+                    "field": "field_created_at",
+                    "id": "cap_clock",
+                    "source": "capability"
+                  },
+                  {
+                    "field": "field_due_date",
+                    "id": "arg_due_date",
+                    "source": "input_default",
+                    "value": null
+                  }
+                ],
+                "conditions": [
+                  {
+                    "failure": "err_invalid_title",
+                    "id": "pre_create_title",
+                    "input": "arg_title",
+                    "kind": "nonblank_input"
+                  },
+                  {
+                    "failure": "err_invalid_due_date",
+                    "id": "pre_due_date_valid",
+                    "input": "arg_due_date",
+                    "kind": "timestamp_input"
+                  }
+                ],
+                "dependencies": [
+                  "state_tasks",
+                  "cap_store",
+                  "cap_clock",
+                  "cap_ids"
+                ],
+                "effects": [
+                  "state_read",
+                  "state_write",
+                  "file_read",
+                  "file_write",
+                  "clock_read",
+                  "random_id"
+                ],
+                "failures": [
+                  "err_invalid_title",
+                  "err_id_collision",
+                  "err_invalid_state",
+                  "err_persistence_failure",
+                  "err_migration_required",
+                  "err_invalid_due_date"
+                ],
+                "guarantees": [
+                  {
+                    "field": "field_status",
+                    "id": "contract_create_status",
+                    "kind": "result_field_equals",
+                    "value": "pending"
+                  },
+                  {
+                    "id": "contract_create_persisted",
+                    "kind": "result_in_state",
+                    "state": "state_tasks"
+                  },
+                  {
+                    "field": "field_priority",
+                    "id": "contract_create_priority",
+                    "kind": "result_field_equals_assignment"
+                  },
+                  {
+                    "field": "field_due_date",
+                    "id": "contract_create_due_date",
+                    "kind": "result_field_equals_assignment"
+                  }
+                ],
+                "id": "fn_create",
+                "inputs": [
+                  {
+                    "id": "arg_title",
+                    "name": "title",
+                    "type": "prim:string"
+                  },
+                  {
+                    "id": "arg_description",
+                    "name": "description",
+                    "type": "prim:string"
+                  },
+                  {
+                    "id": "arg_priority",
+                    "name": "priority",
+                    "type": "type_priority"
+                  },
+                  {
+                    "id": "arg_due_date",
+                    "name": "due_date",
+                    "nullable": true,
+                    "type": "prim:timestamp"
+                  }
+                ],
+                "kind": "create",
+                "name": "create_task",
+                "output": "type_task",
+                "reads": [
+                  "state_tasks"
+                ],
+                "requires": [
+                  "cap_task_read",
+                  "cap_task_write",
+                  "cap_clock",
+                  "cap_ids"
+                ],
+                "state": "state_tasks",
+                "writes": [
+                  "state_tasks"
+                ]
+              },
+              {
+                "assignments": [],
+                "conditions": [],
+                "dependencies": [
+                  "state_tasks",
+                  "cap_store"
+                ],
+                "effects": [
+                  "state_read",
+                  "file_read"
+                ],
+                "failures": [
+                  "err_invalid_state",
+                  "err_persistence_failure",
+                  "err_migration_required"
+                ],
+                "guarantees": [
+                  {
+                    "id": "contract_list_sorted",
+                    "kind": "result_equals_state_sorted",
+                    "state": "state_tasks"
+                  }
+                ],
+                "id": "fn_list",
+                "inputs": [],
+                "kind": "list",
+                "name": "list_tasks",
+                "order_by": [
+                  "field_created_at",
+                  "field_id"
+                ],
+                "output": "type_task_list",
+                "reads": [
+                  "state_tasks"
+                ],
+                "requires": [
+                  "cap_task_read"
+                ],
+                "state": "state_tasks",
+                "writes": []
+              },
+              {
+                "assignments": [],
+                "conditions": [],
+                "dependencies": [
+                  "state_tasks",
+                  "cap_store"
+                ],
+                "effects": [
+                  "state_read",
+                  "file_read"
+                ],
+                "failures": [
+                  "err_invalid_state",
+                  "err_persistence_failure",
+                  "err_migration_required"
+                ],
+                "filter": {
+                  "field": "field_priority",
+                  "kind": "field_equals",
+                  "value": "HIGH"
+                },
+                "guarantees": [
+                  {
+                    "id": "contract_high_sorted",
+                    "kind": "result_equals_state_sorted",
+                    "state": "state_tasks"
+                  }
+                ],
+                "id": "fn_list_high",
+                "inputs": [],
+                "kind": "list",
+                "name": "list_high_priority_tasks",
+                "order_by": [
+                  "field_created_at",
+                  "field_id"
+                ],
+                "output": "type_task_list",
+                "reads": [
+                  "state_tasks"
+                ],
+                "requires": [
+                  "cap_task_read"
+                ],
+                "state": "state_tasks",
+                "writes": []
+              },
+              {
+                "assignments": [
+                  {
+                    "field": "field_status",
+                    "source": "literal",
+                    "value": "completed"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "failure": "err_task_not_found",
+                    "id": "pre_complete_exists",
+                    "kind": "record_exists"
+                  },
+                  {
+                    "failure": "err_invalid_transition",
+                    "field": "field_status",
+                    "id": "pre_complete_pending",
+                    "kind": "record_field_equals",
+                    "value": "pending"
+                  }
+                ],
+                "dependencies": [
+                  "state_tasks",
+                  "cap_store"
+                ],
+                "effects": [
+                  "state_read",
+                  "state_write",
+                  "file_read",
+                  "file_write"
+                ],
+                "failures": [
+                  "err_task_not_found",
+                  "err_invalid_transition",
+                  "err_invalid_state",
+                  "err_persistence_failure",
+                  "err_migration_required"
+                ],
+                "guarantees": [
+                  {
+                    "field": "field_status",
+                    "id": "contract_complete_status",
+                    "kind": "result_field_equals",
+                    "value": "completed"
+                  },
+                  {
+                    "id": "contract_complete_persisted",
+                    "kind": "result_in_state",
+                    "state": "state_tasks"
+                  }
+                ],
+                "id": "fn_complete",
+                "inputs": [
+                  {
+                    "id": "arg_complete_id",
+                    "name": "id",
+                    "type": "prim:string"
+                  }
+                ],
+                "kind": "update",
+                "lookup": {
+                  "field": "field_id",
+                  "input": "arg_complete_id"
+                },
+                "name": "complete_task",
+                "output": "type_task",
+                "performs": "ax:transition:task_complete",
+                "reads": [
+                  "state_tasks"
+                ],
+                "requires": [
+                  "cap_task_read",
+                  "cap_task_write"
+                ],
+                "state": "state_tasks",
+                "writes": [
+                  "state_tasks"
+                ]
+              },
+              {
+                "assignments": [],
+                "conditions": [
+                  {
+                    "failure": "err_task_not_found",
+                    "id": "pre_delete_exists",
+                    "kind": "record_exists"
+                  }
+                ],
+                "dependencies": [
+                  "state_tasks",
+                  "cap_store"
+                ],
+                "effects": [
+                  "state_read",
+                  "state_write",
+                  "file_read",
+                  "file_write"
+                ],
+                "failures": [
+                  "err_task_not_found",
+                  "err_invalid_state",
+                  "err_persistence_failure",
+                  "err_migration_required"
+                ],
+                "guarantees": [
+                  {
+                    "id": "contract_delete_absent",
+                    "kind": "result_id_absent_from_state",
+                    "state": "state_tasks"
+                  }
+                ],
+                "id": "fn_delete",
+                "inputs": [
+                  {
+                    "id": "arg_delete_id",
+                    "name": "id",
+                    "type": "prim:string"
+                  }
+                ],
+                "kind": "delete",
+                "lookup": {
+                  "field": "field_id",
+                  "input": "arg_delete_id"
+                },
+                "name": "delete_task",
+                "output": "type_task",
+                "reads": [
+                  "state_tasks"
+                ],
+                "requires": [
+                  "cap_task_read",
+                  "cap_task_write"
+                ],
+                "state": "state_tasks",
+                "writes": [
+                  "state_tasks"
+                ]
+              },
+              {
+                "assignments": [],
+                "conditions": [],
+                "dependencies": [
+                  "state_tasks",
+                  "cap_store",
+                  "cap_clock"
+                ],
+                "effects": [
+                  "state_read",
+                  "file_read",
+                  "clock_read"
+                ],
+                "failures": [
+                  "err_invalid_state",
+                  "err_persistence_failure",
+                  "err_migration_required"
+                ],
+                "filter": {
+                  "kind": "all",
+                  "predicates": [
+                    {
+                      "field": "field_status",
+                      "kind": "field_equals",
+                      "value": "pending"
+                    },
+                    {
+                      "clock": "cap_clock",
+                      "field": "field_due_date",
+                      "kind": "field_before_clock"
+                    }
+                  ]
+                },
+                "guarantees": [
+                  {
+                    "id": "contract_overdue_sorted",
+                    "kind": "result_equals_state_sorted",
+                    "state": "state_tasks"
+                  }
+                ],
+                "id": "fn_list_overdue",
+                "inputs": [],
+                "kind": "list",
+                "name": "list_overdue_tasks",
+                "order_by": [
+                  "field_created_at",
+                  "field_id"
+                ],
+                "output": "type_task_list",
+                "reads": [
+                  "state_tasks"
+                ],
+                "requires": [
+                  "cap_task_read",
+                  "cap_clock"
+                ],
+                "state": "state_tasks",
+                "writes": []
+              }
+            ],
+            "capabilities": [
+              {
+                "id": "cap_store",
+                "kind": "json_file",
+                "missing_file": "empty_collection",
+                "path": "tasks.json"
+              },
+              {
+                "id": "cap_clock",
+                "kind": "utc_clock"
+              },
+              {
+                "id": "cap_ids",
+                "kind": "uuid_v4"
+              },
+              {
+                "action": "read",
+                "id": "cap_task_read",
+                "kind": "resource_access",
+                "resource": "cap_store"
+              },
+              {
+                "action": "write",
+                "id": "cap_task_write",
+                "kind": "resource_access",
+                "resource": "cap_store"
+              }
+            ],
+            "commands": [
+              {
+                "arguments": [
+                  {
+                    "flag": "--title",
+                    "input": "arg_title",
+                    "required": true
+                  },
+                  {
+                    "flag": "--description",
+                    "input": "arg_description",
+                    "required": true
+                  },
+                  {
+                    "flag": "--priority",
+                    "input": "arg_priority",
+                    "required": false
+                  },
+                  {
+                    "flag": "--due-date",
+                    "input": "arg_due_date",
+                    "required": false
+                  }
+                ],
+                "behavior": "fn_create",
+                "id": "cmd_create",
+                "token": "create"
+              },
+              {
+                "arguments": [],
+                "behavior": "fn_list",
+                "id": "cmd_list",
+                "token": "list"
+              },
+              {
+                "arguments": [],
+                "behavior": "fn_list_high",
+                "id": "cmd_list_high",
+                "token": "list-high"
+              },
+              {
+                "arguments": [],
+                "id": "cmd_migrate",
+                "migration": "migration_task_due_date",
+                "token": "migrate"
+              },
+              {
+                "arguments": [
+                  {
+                    "flag": "--id",
+                    "input": "arg_complete_id",
+                    "required": true
+                  }
+                ],
+                "behavior": "fn_complete",
+                "id": "cmd_complete",
+                "token": "complete"
+              },
+              {
+                "arguments": [
+                  {
+                    "flag": "--id",
+                    "input": "arg_delete_id",
+                    "required": true
+                  }
+                ],
+                "behavior": "fn_delete",
+                "id": "cmd_delete",
+                "token": "delete"
+              },
+              {
+                "arguments": [],
+                "behavior": "fn_list_overdue",
+                "id": "cmd_list_overdue",
+                "token": "list-overdue"
+              }
+            ],
+            "errors": [
+              {
+                "code": "invalid_title",
+                "id": "err_invalid_title"
+              },
+              {
+                "code": "id_collision",
+                "id": "err_id_collision"
+              },
+              {
+                "code": "invalid_state",
+                "id": "err_invalid_state"
+              },
+              {
+                "code": "persistence_failure",
+                "id": "err_persistence_failure"
+              },
+              {
+                "code": "migration_required",
+                "id": "err_migration_required"
+              },
+              {
+                "code": "task_not_found",
+                "id": "err_task_not_found"
+              },
+              {
+                "code": "invalid_transition",
+                "id": "err_invalid_transition"
+              },
+              {
+                "code": "invalid_due_date",
+                "id": "err_invalid_due_date"
+              }
+            ],
+            "invariants": [
+              {
+                "field": "field_id",
+                "id": "inv_unique_ids",
+                "kind": "unique_field",
+                "state": "state_tasks"
+              },
+              {
+                "field_rules": [
+                  {
+                    "field": "field_id",
+                    "kind": "nonblank"
+                  },
+                  {
+                    "field": "field_title",
+                    "kind": "nonblank"
+                  },
+                  {
+                    "field": "field_created_at",
+                    "kind": "timestamp_utc"
+                  },
+                  {
+                    "field": "field_due_date",
+                    "kind": "timestamp_utc"
+                  }
+                ],
+                "id": "inv_valid_tasks",
+                "kind": "all_records_valid",
+                "state": "state_tasks"
+              },
+              {
+                "id": "inv_title",
+                "kind": "predicate",
+                "predicate": {
+                  "field": "field_title",
+                  "operator": "NOT_EMPTY"
+                },
+                "state": "state_tasks"
+              },
+              {
+                "id": "inv_status",
+                "kind": "predicate",
+                "predicate": {
+                  "field": "field_status",
+                  "machine": "ax:machine:task_lifecycle",
+                  "operator": "LIFECYCLE_STATE"
+                },
+                "state": "state_tasks"
+              },
+              {
+                "id": "inv_priority",
+                "kind": "predicate",
+                "predicate": {
+                  "field": "field_priority",
+                  "operator": "IN",
+                  "values": [
+                    "LOW",
+                    "NORMAL",
+                    "HIGH"
+                  ]
+                },
+                "state": "state_tasks"
+              },
+              {
+                "behavior": "fn_list_overdue",
+                "field": "field_status",
+                "id": "inv_overdue_excludes_completed",
+                "kind": "query_exclusion",
+                "state": "state_tasks",
+                "value": "completed"
+              }
+            ],
+            "migrations": [
+              {
+                "add_fields": [
+                  {
+                    "field": "field_priority",
+                    "value": "NORMAL"
+                  }
+                ],
+                "effects": [
+                  "state_read",
+                  "state_write",
+                  "file_read",
+                  "file_write"
+                ],
+                "from_version": 1,
+                "id": "migration_task_priority",
+                "requires": [
+                  "cap_task_read",
+                  "cap_task_write"
+                ],
+                "state": "state_tasks",
+                "to_version": 2
+              },
+              {
+                "add_fields": [
+                  {
+                    "field": "field_due_date",
+                    "value": null
+                  }
+                ],
+                "effects": [
+                  "state_read",
+                  "state_write",
+                  "file_read",
+                  "file_write"
+                ],
+                "from_version": 2,
+                "id": "migration_task_due_date",
+                "requires": [
+                  "cap_task_read",
+                  "cap_task_write"
+                ],
+                "state": "state_tasks",
+                "to_version": 3
+              }
+            ],
+            "scenarios": [
+              {
+                "id": "scenario_complete_transition",
+                "lookup_value": "pending-task",
+                "record": {
+                  "field_created_at": "2026-09-01T00:00:00Z",
+                  "field_description": "x",
+                  "field_due_date": null,
+                  "field_id": "pending-task",
+                  "field_priority": "NORMAL",
+                  "field_status": "pending",
+                  "field_title": "Complete me"
+                },
+                "transition": "ax:transition:task_complete"
+              },
+              {
+                "behavior": "fn_list_overdue",
+                "clock": "2026-10-01T12:00:00Z",
+                "expected_ids": [
+                  "past"
+                ],
+                "id": "scenario_overdue_mixed",
+                "records": [
+                  {
+                    "field_created_at": "2026-09-01T00:00:00Z",
+                    "field_description": "x",
+                    "field_due_date": "2026-10-01T11:59:59Z",
+                    "field_id": "past",
+                    "field_priority": "NORMAL",
+                    "field_status": "pending",
+                    "field_title": "Past"
+                  },
+                  {
+                    "field_created_at": "2026-09-01T00:00:00Z",
+                    "field_description": "x",
+                    "field_due_date": "2026-10-01T12:00:01Z",
+                    "field_id": "future",
+                    "field_priority": "NORMAL",
+                    "field_status": "pending",
+                    "field_title": "Future"
+                  },
+                  {
+                    "field_created_at": "2026-09-01T00:00:00Z",
+                    "field_description": "x",
+                    "field_due_date": "2026-10-01T12:00:00Z",
+                    "field_id": "equal",
+                    "field_priority": "NORMAL",
+                    "field_status": "pending",
+                    "field_title": "Equal"
+                  },
+                  {
+                    "field_created_at": "2026-09-01T00:00:00Z",
+                    "field_description": "x",
+                    "field_due_date": null,
+                    "field_id": "none",
+                    "field_priority": "NORMAL",
+                    "field_status": "pending",
+                    "field_title": "None"
+                  },
+                  {
+                    "field_created_at": "2026-09-01T00:00:00Z",
+                    "field_description": "x",
+                    "field_due_date": "2026-10-01T11:59:59Z",
+                    "field_id": "done",
+                    "field_priority": "NORMAL",
+                    "field_status": "completed",
+                    "field_title": "Done"
+                  }
+                ]
+              }
+            ],
+            "state": [
+              {
+                "id": "state_tasks",
+                "invariants": [
+                  "inv_unique_ids",
+                  "inv_valid_tasks",
+                  "inv_title",
+                  "inv_status",
+                  "inv_priority",
+                  "inv_overdue_excludes_completed"
+                ],
+                "key_field": "field_id",
+                "name": "tasks",
+                "schema_version": 3,
+                "storage": "cap_store",
+                "type": "type_task_list"
+              }
+            ],
+            "state_machines": [
+              {
+                "field": "field_status",
+                "id": "ax:machine:task_lifecycle",
+                "initial": "pending",
+                "name": "TaskLifecycle",
+                "transitions": [
+                  "ax:transition:task_complete"
+                ]
+              }
+            ],
+            "transitions": [
+              {
+                "effects": [
+                  "state_write"
+                ],
+                "guard": "pre_complete_pending",
+                "id": "ax:transition:task_complete",
+                "machine": "ax:machine:task_lifecycle",
+                "source": "pending",
+                "target": "completed",
+                "trigger": "fn_complete"
+              }
+            ],
+            "types": [
+              {
+                "id": "type_status",
+                "kind": "enum",
+                "name": "TaskStatus",
+                "values": [
+                  "pending",
+                  "completed"
+                ]
+              },
+              {
+                "id": "type_priority",
+                "kind": "enum",
+                "name": "Priority",
+                "values": [
+                  "LOW",
+                  "NORMAL",
+                  "HIGH"
+                ]
+              },
+              {
+                "fields": [
+                  {
+                    "id": "field_id",
+                    "name": "id",
+                    "type": "prim:string"
+                  },
+                  {
+                    "id": "field_title",
+                    "name": "title",
+                    "type": "prim:string"
+                  },
+                  {
+                    "id": "field_description",
+                    "name": "description",
+                    "type": "prim:string"
+                  },
+                  {
+                    "id": "field_status",
+                    "name": "status",
+                    "type": "type_status"
+                  },
+                  {
+                    "id": "field_priority",
+                    "name": "priority",
+                    "type": "type_priority"
+                  },
+                  {
+                    "id": "field_created_at",
+                    "name": "created_at",
+                    "type": "prim:timestamp"
+                  },
+                  {
+                    "id": "field_due_date",
+                    "name": "due_date",
+                    "nullable": true,
+                    "type": "prim:timestamp"
+                  }
+                ],
+                "id": "type_task",
+                "kind": "record",
+                "name": "Task"
+              },
+              {
+                "id": "type_task_list",
+                "item_type": "type_task",
+                "kind": "list",
+                "name": "TaskList"
+              }
+            ]
+          },
+          "state": "state_tasks"
+        },
+        "evaluation_scope": "requirement-local against canonical baseline; precursor demands explicit, not achieved"
+      },
+      "scope": "Public synthetic requirements session B06"
+    },
+    "contract_id": "B06",
+    "formalizer": "B06:fresh:formalizer",
+    "implementation_choices": [],
+    "issues": [],
+    "lineage": [],
+    "obligations": [
+      {
+        "basis": "STATED",
+        "derived_from": [],
+        "id": "B06/list-category/source",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "facet": "source",
+            "query": "list-category",
+            "value": {
+              "collection": "state_tasks",
+              "fields": {
+                "category": "string",
+                "created_at": "string",
+                "id": "string",
+                "status": "string"
+              },
+              "unique_key": "id"
+            }
+          }
+        },
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "statement": "Fresh source-authorized list-category/source"
+      },
+      {
+        "basis": "STATED",
+        "derived_from": [],
+        "id": "B06/list-category/parameters",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "facet": "parameters",
+            "query": "list-category",
+            "value": {
+              "category": "string"
+            }
+          }
+        },
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "statement": "Fresh source-authorized list-category/parameters"
+      },
+      {
+        "basis": "STATED",
+        "derived_from": [],
+        "id": "B06/list-category/predicate",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "facet": "predicate",
+            "query": "list-category",
+            "value": {
+              "field": "category",
+              "operand": {
+                "parameter": "category"
+              },
+              "operator": "equals"
+            }
+          }
+        },
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "statement": "Fresh source-authorized list-category/predicate"
+      },
+      {
+        "basis": "STATED",
+        "derived_from": [],
+        "id": "B06/list-category/comparison",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "facet": "comparison",
+            "query": "list-category",
+            "value": {
+              "case": "sensitive",
+              "normalization": "none"
+            }
+          }
+        },
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "statement": "Fresh source-authorized list-category/comparison"
+      },
+      {
+        "basis": "STATED",
+        "derived_from": [],
+        "id": "B06/list-category/ordering",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "facet": "ordering",
+            "query": "list-category",
+            "value": [
+              {
+                "direction": "ASC",
+                "field": "created_at"
+              },
+              {
+                "direction": "ASC",
+                "field": "id"
+              }
+            ]
+          }
+        },
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "statement": "Fresh source-authorized list-category/ordering"
+      },
+      {
+        "basis": "STATED",
+        "derived_from": [],
+        "id": "B06/list-category/validation",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "facet": "validation",
+            "query": "list-category",
+            "value": []
+          }
+        },
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "statement": "Fresh source-authorized list-category/validation"
+      },
+      {
+        "basis": "STATED",
+        "derived_from": [],
+        "id": "B06/list-category/inclusion",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "facet": "inclusion",
+            "query": "list-category",
+            "value": [
+              {
+                "field": "status",
+                "mode": "all"
+              }
+            ]
+          }
+        },
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "statement": "Fresh source-authorized list-category/inclusion"
+      },
+      {
+        "basis": "STATED",
+        "derived_from": [],
+        "id": "B06/list-category/effect",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "facet": "effect",
+            "query": "list-category",
+            "value": {
+              "persistence": "unchanged",
+              "state": "read_only"
+            }
+          }
+        },
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "statement": "Fresh source-authorized list-category/effect"
+      },
+      {
+        "basis": "STATED",
+        "derived_from": [],
+        "id": "B06/list-category/result",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "facet": "result",
+            "query": "list-category",
+            "value": {
+              "cardinality": "zero_or_more",
+              "no_match": "empty",
+              "shape": "collection"
+            }
+          }
+        },
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "statement": "Fresh source-authorized list-category/result"
+      },
+      {
+        "basis": "STATED",
+        "derived_from": [],
+        "id": "B06/write_transform",
+        "relation": {
+          "kind": "crud",
+          "parameters": {
+            "required_capability": "write_transform",
+            "specification": {
+              "command": "create",
+              "explicit_empty": "",
+              "field": "category",
+              "flag": "--category",
+              "migration": "",
+              "omitted": "",
+              "rejection": "unchanged",
+              "result": "all_task_results",
+              "transform": "strip_nonempty",
+              "type": "string",
+              "whitespace_error": "invalid_category"
+            }
+          }
+        },
+        "source_quote": "# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n",
+        "statement": "Fresh source-authorized write_transform"
+      }
+    ],
+    "review": null,
+    "revision": 1,
+    "schema_version": "FormalRequirementContract-0.1",
+    "source": {
+      "classification": "SYNTHETIC",
+      "id": "source:authority-1:CJ-1:sha256:f12c54f9534c4703225c65440859e56f9d00b844715efe05b190ee69bfb641bd",
+      "sha256": "4a48e348c5af96a9d520ce9a59a72ec543f434b34df29013bcdbe04f91354e91",
+      "text": "## Source: benchmark/baseline.md\n# External baseline contract (before B01)\n\nThe interface is a subprocess CLI run from an isolated working directory.\nCommands print exactly one JSON value to stdout on success (exit 0); expected\napplication failures print `{\"error\":\"CODE\"}` to stderr (exit 1). Commands\npersist across separate processes in `tasks.json` in that directory. `list`\non missing storage returns `[]` without creating the file.\n\nEach task result has exactly `id`, `title`, `description`, `status`, `priority`,\n`created_at`, and `due_date`. IDs are unique nonempty strings; timestamps are\nUTC ISO strings ending in `Z`. Lists sort by `(created_at, id)` ascending.\n\n* `create --title T --description D [--priority LOW|NORMAL|HIGH]\n  [--due-date UTC_TIMESTAMP]`: nonblank title, verbatim description, new ID,\n  status `pending`, priority default `NORMAL`, current creation timestamp,\n  due date default `null`. Blank title fails `invalid_title`; malformed or\n  non-UTC due date fails `invalid_due_date` without changing storage.\n* `list`: return all tasks including completed tasks.\n* `list-high`: return only HIGH tasks (including completed ones).\n* `list-overdue`: return only pending tasks with a non-null due date **strictly\n  earlier** than current UTC time. Undated and completed tasks are excluded.\n* `complete --id ID`: pending task becomes completed and is persisted; a\n  missing ID fails `task_not_found`, an already completed task fails\n  `invalid_transition`, both without altering the stored file.\n* `delete --id ID`: remove and return the task (pending or completed); missing\n  ID fails `task_not_found` without altering storage.\n* `migrate`: explicit conversion of legacy unversioned records to version 3\n  (add `priority: NORMAL`, `due_date: null`) and version 2 records to version 3\n  (add `due_date: null`); return `{\"migrated\": N}`. Running on current data or\n  absent storage returns `{\"migrated\": 0}`. Legacy reads fail\n  `migration_required` without changing data. New writes use a version-3\n  envelope with `schema_version` and `records`.\n\nMalformed JSON and invalid record shape, duplicate IDs, blank IDs/titles,\ninvalid enums and timestamps fail `invalid_state` on read. Failed operations\nmust not mutate persisted bytes. An exact-time overdue boundary can be checked\nonly with a controlled clock; the external CLI oracle checks widely separated\npast and future instants instead of relying on timing-sensitive sleeps.\n\nThe oracle exercises *both* executable CLIs with fresh subprocesses and\nindependent temporary directories; it asserts this contract before comparing\nnormalized outcomes. Random IDs and wall-clock timestamps are checked for\nproperties, not falsely required to be byte-identical across tracks.\n\n\n## Source: benchmark/requirements/README.md\n# Frozen sequential change set\n\nExecute B01\u2013B20 in numeric order; a change is cumulative. Each file states an\nobservable API and acceptance criteria, not an implementation strategy. New\nfields on existing tasks require an explicit `migrate` path; ordinary reads of\nold storage must report `migration_required` without mutation. Migration is\natomic, returns the number of migrated tasks, and is idempotent. Missing IDs\nreturn `task_not_found` unless a request explicitly defines another error.\nSuccessful operations output JSON; application errors use the baseline JSON\nerror envelope and exit 1. New list commands use the baseline `(created_at,\nid)` sort unless stated otherwise. Existing commands remain compatible unless\na request expressly changes them. Errors must leave observable state intact.\n\nIDs and test cases are fixed before execution; correcting a faulty requirement\nrequires a recorded protocol deviation, never a silent retroactive edit.\nThe authoritative frozen file hashes are in `../results/BASELINE.md`.\n\n\n## Source: benchmark/requirements/B06.md\n# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n\n\n## Source: benchmark/requirements/B01.md\n# B01 \u2014 Critical priority (local)\n\nAdd `CRITICAL` above `HIGH` to accepted task priorities. `create --priority\nCRITICAL` persists and returns that value; `list` includes it. `list-high`\ncontinues to mean exactly `HIGH`. Existing LOW, NORMAL and HIGH tasks retain\ntheir values through migration. A missing priority still defaults to NORMAL.\n\n\n## Source: benchmark/requirements/B02.md\n# B02 \u2014 Task tags (local)\n\nAccept zero or more `--tag VALUE` flags on `create`. Each VALUE must be a\nnonblank string after trimming whitespace; store the trimmed value. Tags are\ncase-sensitive, deduplicated while retaining first occurrence order, and\nreturned as a `tags` array on every task. Omission and migrated older tasks\nhave `tags: []`. Empty tag input fails `invalid_tag` with no new task.\n\n\n## Source: benchmark/requirements/B03.md\n# B03 \u2014 List by tag (local)\n\nAdd `list-tag --tag VALUE`. Return tasks whose `tags` contains exactly VALUE\n(case-sensitive; query input is not trimmed), including completed tasks, in\nnormal order. Reject blank or whitespace-only query input with `invalid_tag`.\nA tag not present returns `[]`; the query never changes storage. For example,\n`work` does not select a task tagged `Work`.\n\n\n## Source: benchmark/requirements/B04.md\n# B04 \u2014 Source label (local)\n\nAdd optional `create --source VALUE` and a returned `source` string on every\ntask. Preserve the supplied value verbatim, including whitespace; omission\nand migrated tasks use `\"\"`. Listing and subsequent mutations preserve it.\nThis is a small field addition: creation timestamps already exist at baseline.\n\n\n## Source: benchmark/requirements/B05.md\n# B05 \u2014 Status filter (local)\n\nAdd `list-status --status pending|completed`. Return precisely the tasks in\nthe requested status in normal order. An empty result is `[]`; querying does\nnot change storage. Both values include all matching tasks at this step.\n"
+    },
+    "unspecified": []
+  },
+  "source_sha256": "4a48e348c5af96a9d520ce9a59a72ec543f434b34df29013bcdbe04f91354e91"
+}

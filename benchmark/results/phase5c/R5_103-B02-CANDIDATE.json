@@ -1,0 +1,105 @@
+{
+  "case": "B02",
+  "producer_capture": {
+    "id": "B02",
+    "source": "## Source: benchmark/baseline.md\n# External baseline contract (before B01)\n\nThe interface is a subprocess CLI run from an isolated working directory.\nCommands print exactly one JSON value to stdout on success (exit 0); expected\napplication failures print `{\"error\":\"CODE\"}` to stderr (exit 1). Commands\npersist across separate processes in `tasks.json` in that directory. `list`\non missing storage returns `[]` without creating the file.\n\nEach task result has exactly `id`, `title`, `description`, `status`, `priority`,\n`created_at`, and `due_date`. IDs are unique nonempty strings; timestamps are\nUTC ISO strings ending in `Z`. Lists sort by `(created_at, id)` ascending.\n\n* `create --title T --description D [--priority LOW|NORMAL|HIGH]\n  [--due-date UTC_TIMESTAMP]`: nonblank title, verbatim description, new ID,\n  status `pending`, priority default `NORMAL`, current creation timestamp,\n  due date default `null`. Blank title fails `invalid_title`; malformed or\n  non-UTC due date fails `invalid_due_date` without changing storage.\n* `list`: return all tasks including completed tasks.\n* `list-high`: return only HIGH tasks (including completed ones).\n* `list-overdue`: return only pending tasks with a non-null due date **strictly\n  earlier** than current UTC time. Undated and completed tasks are excluded.\n* `complete --id ID`: pending task becomes completed and is persisted; a\n  missing ID fails `task_not_found`, an already completed task fails\n  `invalid_transition`, both without altering the stored file.\n* `delete --id ID`: remove and return the task (pending or completed); missing\n  ID fails `task_not_found` without altering storage.\n* `migrate`: explicit conversion of legacy unversioned records to version 3\n  (add `priority: NORMAL`, `due_date: null`) and version 2 records to version 3\n  (add `due_date: null`); return `{\"migrated\": N}`. Running on current data or\n  absent storage returns `{\"migrated\": 0}`. Legacy reads fail\n  `migration_required` without changing data. New writes use a version-3\n  envelope with `schema_version` and `records`.\n\nMalformed JSON and invalid record shape, duplicate IDs, blank IDs/titles,\ninvalid enums and timestamps fail `invalid_state` on read. Failed operations\nmust not mutate persisted bytes. An exact-time overdue boundary can be checked\nonly with a controlled clock; the external CLI oracle checks widely separated\npast and future instants instead of relying on timing-sensitive sleeps.\n\nThe oracle exercises *both* executable CLIs with fresh subprocesses and\nindependent temporary directories; it asserts this contract before comparing\nnormalized outcomes. Random IDs and wall-clock timestamps are checked for\nproperties, not falsely required to be byte-identical across tracks.\n\n\n## Source: benchmark/requirements/README.md\n# Frozen sequential change set\n\nExecute B01\u2013B20 in numeric order; a change is cumulative. Each file states an\nobservable API and acceptance criteria, not an implementation strategy. New\nfields on existing tasks require an explicit `migrate` path; ordinary reads of\nold storage must report `migration_required` without mutation. Migration is\natomic, returns the number of migrated tasks, and is idempotent. Missing IDs\nreturn `task_not_found` unless a request explicitly defines another error.\nSuccessful operations output JSON; application errors use the baseline JSON\nerror envelope and exit 1. New list commands use the baseline `(created_at,\nid)` sort unless stated otherwise. Existing commands remain compatible unless\na request expressly changes them. Errors must leave observable state intact.\n\nIDs and test cases are fixed before execution; correcting a faulty requirement\nrequires a recorded protocol deviation, never a silent retroactive edit.\nThe authoritative frozen file hashes are in `../results/BASELINE.md`.\n\n\n## Source: benchmark/requirements/B02.md\n# B02 \u2014 Task tags (local)\n\nAccept zero or more `--tag VALUE` flags on `create`. Each VALUE must be a\nnonblank string after trimming whitespace; store the trimmed value. Tags are\ncase-sensitive, deduplicated while retaining first occurrence order, and\nreturned as a `tags` array on every task. Omission and migrated older tasks\nhave `tags: []`. Empty tag input fails `invalid_tag` with no new task.\n\n\n## Source: benchmark/requirements/B01.md\n# B01 \u2014 Critical priority (local)\n\nAdd `CRITICAL` above `HIGH` to accepted task priorities. `create --priority\nCRITICAL` persists and returns that value; `list` includes it. `list-high`\ncontinues to mean exactly `HIGH`. Existing LOW, NORMAL and HIGH tasks retain\ntheir values through migration. A missing priority still defaults to NORMAL.\n",
+    "source_files": {
+      "benchmark/baseline.md": "d69de8d4da44c74aff1ac9c6361995ad8dc881f454271cfaedff61d3e98651e5",
+      "benchmark/requirements/README.md": "152efdaf2ddaac79ae7e87bcc0dc31327a6ff6d9ba7a45e17711f097353d1e8b",
+      "benchmark/requirements/B02.md": "8a76e276240fa840c473be60a8e7ed0e10bd0c165426b1bfc84741e69872032b",
+      "benchmark/requirements/B01.md": "b7b2d714db5cee566e9e55982dd4c4d95d3d57f0c341e04ba1e15c24e9a8e94d"
+    },
+    "rows": [
+      {
+        "id": "B02/mutable_values",
+        "basis": "STATED",
+        "source_quote": "# B02 \u2014 Task tags (local)\n\nAccept zero or more `--tag VALUE` flags on `create`. Each VALUE must be a\nnonblank string after trimming whitespace; store the trimmed value. Tags are\ncase-sensitive, deduplicated while retaining first occurrence order, and\nreturned as a `tags` array on every task. Omission and migrated older tasks\nhave `tags: []`. Empty tag input fails `invalid_tag` with no new task.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized mutable_values",
+        "relation": {
+          "kind": "crud",
+          "parameters": {
+            "required_capability": "mutable_values",
+            "specification": {
+              "field": "tags",
+              "type": "ordered_strings",
+              "command": "create",
+              "flag": "--tag",
+              "repeated": true,
+              "transform": "strip",
+              "validate": "nonblank",
+              "error": "invalid_tag",
+              "deduplicate": "stable_first_case_sensitive",
+              "omission": [],
+              "migration": [],
+              "result": "all_task_results",
+              "rejection": "unchanged"
+            }
+          }
+        }
+      }
+    ],
+    "question": null,
+    "domains": {
+      "evaluation_scope": "requirement-local against canonical baseline; precursor demands explicit, not achieved",
+      "baseline_model_sha256": "971b8ec4079d45101ff8fd7877b6ccd86e7c931124621cf4b5394e93e9dd2f14"
+    }
+  },
+  "exact_frc": {
+    "context": {
+      "assumptions": [],
+      "component_authority": null,
+      "domains": {
+        "baseline_model_sha256": "971b8ec4079d45101ff8fd7877b6ccd86e7c931124621cf4b5394e93e9dd2f14",
+        "evaluation_scope": "requirement-local against canonical baseline; precursor demands explicit, not achieved"
+      },
+      "scope": "Public synthetic requirements session B02"
+    },
+    "contract_id": "B02",
+    "formalizer": "B02:fresh:formalizer",
+    "implementation_choices": [],
+    "issues": [],
+    "lineage": [],
+    "obligations": [
+      {
+        "basis": "STATED",
+        "derived_from": [],
+        "id": "B02/mutable_values",
+        "relation": {
+          "kind": "crud",
+          "parameters": {
+            "required_capability": "mutable_values",
+            "specification": {
+              "command": "create",
+              "deduplicate": "stable_first_case_sensitive",
+              "error": "invalid_tag",
+              "field": "tags",
+              "flag": "--tag",
+              "migration": [],
+              "omission": [],
+              "rejection": "unchanged",
+              "repeated": true,
+              "result": "all_task_results",
+              "transform": "strip",
+              "type": "ordered_strings",
+              "validate": "nonblank"
+            }
+          }
+        },
+        "source_quote": "# B02 \u2014 Task tags (local)\n\nAccept zero or more `--tag VALUE` flags on `create`. Each VALUE must be a\nnonblank string after trimming whitespace; store the trimmed value. Tags are\ncase-sensitive, deduplicated while retaining first occurrence order, and\nreturned as a `tags` array on every task. Omission and migrated older tasks\nhave `tags: []`. Empty tag input fails `invalid_tag` with no new task.\n",
+        "statement": "Fresh source-authorized mutable_values"
+      }
+    ],
+    "review": null,
+    "revision": 1,
+    "schema_version": "FormalRequirementContract-0.1",
+    "source": {
+      "classification": "SYNTHETIC",
+      "id": "source:authority-1:CJ-1:sha256:e46a4cc86ab3eeb100aa592c140a4fcb65a6cdb6b1e69fc75e4533b8b99b1ae5",
+      "sha256": "86cabeadf8e22bd9142ad772adcbfed7ef45a7ef497b13150fcc00f6ebe17743",
+      "text": "## Source: benchmark/baseline.md\n# External baseline contract (before B01)\n\nThe interface is a subprocess CLI run from an isolated working directory.\nCommands print exactly one JSON value to stdout on success (exit 0); expected\napplication failures print `{\"error\":\"CODE\"}` to stderr (exit 1). Commands\npersist across separate processes in `tasks.json` in that directory. `list`\non missing storage returns `[]` without creating the file.\n\nEach task result has exactly `id`, `title`, `description`, `status`, `priority`,\n`created_at`, and `due_date`. IDs are unique nonempty strings; timestamps are\nUTC ISO strings ending in `Z`. Lists sort by `(created_at, id)` ascending.\n\n* `create --title T --description D [--priority LOW|NORMAL|HIGH]\n  [--due-date UTC_TIMESTAMP]`: nonblank title, verbatim description, new ID,\n  status `pending`, priority default `NORMAL`, current creation timestamp,\n  due date default `null`. Blank title fails `invalid_title`; malformed or\n  non-UTC due date fails `invalid_due_date` without changing storage.\n* `list`: return all tasks including completed tasks.\n* `list-high`: return only HIGH tasks (including completed ones).\n* `list-overdue`: return only pending tasks with a non-null due date **strictly\n  earlier** than current UTC time. Undated and completed tasks are excluded.\n* `complete --id ID`: pending task becomes completed and is persisted; a\n  missing ID fails `task_not_found`, an already completed task fails\n  `invalid_transition`, both without altering the stored file.\n* `delete --id ID`: remove and return the task (pending or completed); missing\n  ID fails `task_not_found` without altering storage.\n* `migrate`: explicit conversion of legacy unversioned records to version 3\n  (add `priority: NORMAL`, `due_date: null`) and version 2 records to version 3\n  (add `due_date: null`); return `{\"migrated\": N}`. Running on current data or\n  absent storage returns `{\"migrated\": 0}`. Legacy reads fail\n  `migration_required` without changing data. New writes use a version-3\n  envelope with `schema_version` and `records`.\n\nMalformed JSON and invalid record shape, duplicate IDs, blank IDs/titles,\ninvalid enums and timestamps fail `invalid_state` on read. Failed operations\nmust not mutate persisted bytes. An exact-time overdue boundary can be checked\nonly with a controlled clock; the external CLI oracle checks widely separated\npast and future instants instead of relying on timing-sensitive sleeps.\n\nThe oracle exercises *both* executable CLIs with fresh subprocesses and\nindependent temporary directories; it asserts this contract before comparing\nnormalized outcomes. Random IDs and wall-clock timestamps are checked for\nproperties, not falsely required to be byte-identical across tracks.\n\n\n## Source: benchmark/requirements/README.md\n# Frozen sequential change set\n\nExecute B01\u2013B20 in numeric order; a change is cumulative. Each file states an\nobservable API and acceptance criteria, not an implementation strategy. New\nfields on existing tasks require an explicit `migrate` path; ordinary reads of\nold storage must report `migration_required` without mutation. Migration is\natomic, returns the number of migrated tasks, and is idempotent. Missing IDs\nreturn `task_not_found` unless a request explicitly defines another error.\nSuccessful operations output JSON; application errors use the baseline JSON\nerror envelope and exit 1. New list commands use the baseline `(created_at,\nid)` sort unless stated otherwise. Existing commands remain compatible unless\na request expressly changes them. Errors must leave observable state intact.\n\nIDs and test cases are fixed before execution; correcting a faulty requirement\nrequires a recorded protocol deviation, never a silent retroactive edit.\nThe authoritative frozen file hashes are in `../results/BASELINE.md`.\n\n\n## Source: benchmark/requirements/B02.md\n# B02 \u2014 Task tags (local)\n\nAccept zero or more `--tag VALUE` flags on `create`. Each VALUE must be a\nnonblank string after trimming whitespace; store the trimmed value. Tags are\ncase-sensitive, deduplicated while retaining first occurrence order, and\nreturned as a `tags` array on every task. Omission and migrated older tasks\nhave `tags: []`. Empty tag input fails `invalid_tag` with no new task.\n\n\n## Source: benchmark/requirements/B01.md\n# B01 \u2014 Critical priority (local)\n\nAdd `CRITICAL` above `HIGH` to accepted task priorities. `create --priority\nCRITICAL` persists and returns that value; `list` includes it. `list-high`\ncontinues to mean exactly `HIGH`. Existing LOW, NORMAL and HIGH tasks retain\ntheir values through migration. A missing priority still defaults to NORMAL.\n"
+    },
+    "unspecified": []
+  },
+  "source_sha256": "86cabeadf8e22bd9142ad772adcbfed7ef45a7ef497b13150fcc00f6ebe17743"
+}

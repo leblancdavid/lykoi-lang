@@ -1,6 +1,19 @@
 # Phase 5: comparative maintenance benchmark
 
-## Current corpus status — R5.101
+## Current fresh typed baseline — R5.103
+
+The [fresh current-system report](results/phase5c/R5_103-REPORT.md),
+[matrix](results/phase5c/R5_103-CAPABILITY-MATRIX.md) and
+[three-round progression](results/phase5c/R5_103-PROGRESSION.md) evaluate every
+B01–B20 case from a fresh typed source interpretation. **B01/B04/B05 local
+behavioral success, fourteen structural blockers, B18 BDI and B17/B20 clarification**
+form the new development baseline. B01 alone changes first result from fresh
+representation reaching existing support; generic existing-semantic closures add
+no further corpus first-result changes. Historical R5.101/R5.102 evidence remains
+unchanged. No held-out generalization or cumulative achievement claim follows.
+Stop after the typed mutable values/transformations recommendation for R5.104.
+
+## Preserved corpus status — R5.101
 
 **B01–B20 are an exposed development, transfer and regression corpus.**
 Performance on B01–B20 is now development/regression evidence, not held-out

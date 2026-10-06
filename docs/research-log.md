@@ -1,5 +1,56 @@
 # Lykoi research log
 
+## R5.103 fresh typed B01–B20 rebaseline (2026-10-06)
+
+**`R5_103_FRESH_TYPED_CORPUS_REBASELINED`**. The
+[report](../benchmark/results/phase5c/R5_103-REPORT.md),
+[fresh matrix](../benchmark/results/phase5c/R5_103-CAPABILITY-MATRIX.md) and
+[progression](../benchmark/results/phase5c/R5_103-PROGRESSION.md) record twenty
+fresh source-authorized current typed producer captures, normal source inventory/
+reconciliation and native stage accounting. No historical prose capture is a primary
+input. **B01/B04/B05 succeed behaviorally (47 external invocations)**; fourteen
+cases first halt structurally, B18 at BDI, B17/B20 at unresolved clarification.
+Unexecuted stages remain `NOT_REACHED`. Same-agent interpretation/inventory/oracles
+and synthetic owner approval are disclosed; no held-out or cumulative claim.
+
+**One stale-capture result change: B01**, already successful in the complete
+pre-repair fresh run on the R5.102 implementation. No corpus first-blocker change
+is caused by subsequent repairs. Existing equality/lookup guard amendments,
+required-field validation on additive evolution, strict clock-relative/equality-
+conjunction read projection, deterministic UUID/UTC creation bindings, one-state
+scalar/read-only-query composition and independent single-transition lifecycle
+fields now have bounded normal integration. Four published synthetic normal runs
+add **78** external observations (125 published CLI invocations total), with
+supplemental deterministic API/rejection/boundary/evolution/composition challenges.
+The [versioned rules](existing-semantic-composition-v1.md) refuse unsupported
+interactions and contradictory authority; profile union is not a proof.
+
+Final verification: **328/328 tests**, canonical validation/safety and whitespace/
+scope preservation checks. Initial evidence-driver attempts exposed import-root and
+source-span accounting issues; a complete pre-repair run was then retained. Early
+composition development exposed a command-token validation restriction and an
+incorrect assumption that the query projection contained the scalar interface;
+integration was corrected to retain the query's actual BDI policy decisions. The
+published final suites all pass; no historical result or source expectation was
+rewritten. The existing Unicode stdout issue was not hit by the current ASCII/
+whitespace corpus, remains an observation, and received no portability repair.
+
+Fresh primary blocked clusters: **11 missing semantic compositions, 3 backend/store
+prerequisites, 1 BDI gap, 2 ambiguities**. B03 membership exists but tags storage does
+not; B13 equality guards now bind normally but archived/notes/append/B11 prerequisites
+remain. B12's clock selection exists but scalar-in-set/archive demands remain.
+B18's structural pass is only a bounded external-effect channel, not full audit
+semantics. No primary remaining integration-only or reached V1 blocker is measured.
+
+Recommend **typed mutable values and transformations** for R5.104: five directly
+affected local requests B02/B03/B06/B07/B10, with useful later dependency-value
+foundations. That recommendation is not an implementation or a five-success
+prediction. No mutable arrays/append/dedup, new boolean composition, relationships,
+atomic events, successor creation or calendar arithmetic were introduced. No
+OpenCode/model/transport/portability/research-freeze/firewall work. Historical
+Phase 5, B03 first result, R5.101 and R5.102 remain intact. Stop after baseline
+and recommendation.
+
 ## R5.102 existing-semantics normal-path integration (2026-10-06)
 
 **`R5_102_EXISTING_SEMANTICS_NORMAL_PATH_PARTIAL`**. The

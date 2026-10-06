@@ -200,6 +200,39 @@ repair. Full normal-path closure is not claimed. Stop after generic integration 
 fixed transfer; proposed next work is residual existing-semantic closure before new
 families, with typed mutable values still a subsequent candidate.
 
+**R5.103 — `R5_103_FRESH_TYPED_CORPUS_REBASELINED`.** The
+[fresh report](../benchmark/results/phase5c/R5_103-REPORT.md),
+[twenty-case matrix](../benchmark/results/phase5c/R5_103-CAPABILITY-MATRIX.md) and
+[three-round progression](../benchmark/results/phase5c/R5_103-PROGRESSION.md)
+evaluate **all twenty cases from fresh current typed producer captures**, with
+source inventory/reconciliation, normal coverage and every legitimately reached
+downstream stage. The new exposed local baseline is **B01/B04/B05 behavioral
+success, fourteen structural blockers, B18 BDI and B17/B20 clarification**.
+**B01 alone improves solely from removing stale prose-capture debt**, succeeding
+before any integration repair. The generic repairs add no further corpus successes.
+Historical matrices and B03's immutable first result remain preserved.
+
+[Bounded existing-semantic composition](existing-semantic-composition-v1.md) now
+integrates typed equality/lookup guard amendments, guarded required-field evolution,
+existing strict before-clock/equality-conjunction reads, deterministic declared
+UUID/UTC creation-provider binding, scalar/read-only-query composition against one
+actual state and independent single-transition lifecycle fields. Conflicting
+state/command/guard authorities and unsupported interactions refuse. **328/328
+tests**, canonical validation/safety, **47 corpus + 78 published synthetic external
+invocations** pass. Same-agent captured interpretations/inventories/oracles and
+synthetic approvals remain evidence limits; the Unicode stdout observation is
+preserved without portability repair.
+
+The remaining primary clusters are eleven missing semantic compositions, three
+backend/store prerequisite gaps (B03/B08/B13), B18's BDI gap and two ambiguities.
+Read views do not supply writable arrays/booleans. B12 still needs scalar-in-set
+and archive storage despite existing clock selection integration. Recommend **typed
+mutable values and transformations** as the single R5.104 family: five directly
+affected local requests (B02/B03/B06/B07/B10), with useful dependency-value
+foundations for later relationships. **Stop at recommendation; no new family is
+implemented.** This corpus remains development/regression evidence, never held-out
+generality; new generalization requires a new development-unexposed source.
+
 ### Historical boundaries (preserved; not current infrastructure prerequisites)
 
 The records below describe their original experiments and stop conditions. Their

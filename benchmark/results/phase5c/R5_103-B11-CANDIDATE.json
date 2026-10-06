@@ -1,0 +1,130 @@
+{
+  "case": "B11",
+  "producer_capture": {
+    "id": "B11",
+    "source": "## Source: benchmark/baseline.md\n# External baseline contract (before B01)\n\nThe interface is a subprocess CLI run from an isolated working directory.\nCommands print exactly one JSON value to stdout on success (exit 0); expected\napplication failures print `{\"error\":\"CODE\"}` to stderr (exit 1). Commands\npersist across separate processes in `tasks.json` in that directory. `list`\non missing storage returns `[]` without creating the file.\n\nEach task result has exactly `id`, `title`, `description`, `status`, `priority`,\n`created_at`, and `due_date`. IDs are unique nonempty strings; timestamps are\nUTC ISO strings ending in `Z`. Lists sort by `(created_at, id)` ascending.\n\n* `create --title T --description D [--priority LOW|NORMAL|HIGH]\n  [--due-date UTC_TIMESTAMP]`: nonblank title, verbatim description, new ID,\n  status `pending`, priority default `NORMAL`, current creation timestamp,\n  due date default `null`. Blank title fails `invalid_title`; malformed or\n  non-UTC due date fails `invalid_due_date` without changing storage.\n* `list`: return all tasks including completed tasks.\n* `list-high`: return only HIGH tasks (including completed ones).\n* `list-overdue`: return only pending tasks with a non-null due date **strictly\n  earlier** than current UTC time. Undated and completed tasks are excluded.\n* `complete --id ID`: pending task becomes completed and is persisted; a\n  missing ID fails `task_not_found`, an already completed task fails\n  `invalid_transition`, both without altering the stored file.\n* `delete --id ID`: remove and return the task (pending or completed); missing\n  ID fails `task_not_found` without altering storage.\n* `migrate`: explicit conversion of legacy unversioned records to version 3\n  (add `priority: NORMAL`, `due_date: null`) and version 2 records to version 3\n  (add `due_date: null`); return `{\"migrated\": N}`. Running on current data or\n  absent storage returns `{\"migrated\": 0}`. Legacy reads fail\n  `migration_required` without changing data. New writes use a version-3\n  envelope with `schema_version` and `records`.\n\nMalformed JSON and invalid record shape, duplicate IDs, blank IDs/titles,\ninvalid enums and timestamps fail `invalid_state` on read. Failed operations\nmust not mutate persisted bytes. An exact-time overdue boundary can be checked\nonly with a controlled clock; the external CLI oracle checks widely separated\npast and future instants instead of relying on timing-sensitive sleeps.\n\nThe oracle exercises *both* executable CLIs with fresh subprocesses and\nindependent temporary directories; it asserts this contract before comparing\nnormalized outcomes. Random IDs and wall-clock timestamps are checked for\nproperties, not falsely required to be byte-identical across tracks.\n\n\n## Source: benchmark/requirements/README.md\n# Frozen sequential change set\n\nExecute B01\u2013B20 in numeric order; a change is cumulative. Each file states an\nobservable API and acceptance criteria, not an implementation strategy. New\nfields on existing tasks require an explicit `migrate` path; ordinary reads of\nold storage must report `migration_required` without mutation. Migration is\natomic, returns the number of migrated tasks, and is idempotent. Missing IDs\nreturn `task_not_found` unless a request explicitly defines another error.\nSuccessful operations output JSON; application errors use the baseline JSON\nerror envelope and exit 1. New list commands use the baseline `(created_at,\nid)` sort unless stated otherwise. Existing commands remain compatible unless\na request expressly changes them. Errors must leave observable state intact.\n\nIDs and test cases are fixed before execution; correcting a faulty requirement\nrequires a recorded protocol deviation, never a silent retroactive edit.\nThe authoritative frozen file hashes are in `../results/BASELINE.md`.\n\n\n## Source: benchmark/requirements/B11.md\n# B11 \u2014 Completed deletion rule (invariant)\n\n`delete` on a completed, unarchived task fails `delete_requires_archive` and\ndoes not alter storage. Deleting an archived completed task succeeds and\nreturns it; deleting a pending task succeeds whether archived or not.\n\n\n## Source: benchmark/requirements/B01.md\n# B01 \u2014 Critical priority (local)\n\nAdd `CRITICAL` above `HIGH` to accepted task priorities. `create --priority\nCRITICAL` persists and returns that value; `list` includes it. `list-high`\ncontinues to mean exactly `HIGH`. Existing LOW, NORMAL and HIGH tasks retain\ntheir values through migration. A missing priority still defaults to NORMAL.\n\n\n## Source: benchmark/requirements/B02.md\n# B02 \u2014 Task tags (local)\n\nAccept zero or more `--tag VALUE` flags on `create`. Each VALUE must be a\nnonblank string after trimming whitespace; store the trimmed value. Tags are\ncase-sensitive, deduplicated while retaining first occurrence order, and\nreturned as a `tags` array on every task. Omission and migrated older tasks\nhave `tags: []`. Empty tag input fails `invalid_tag` with no new task.\n\n\n## Source: benchmark/requirements/B03.md\n# B03 \u2014 List by tag (local)\n\nAdd `list-tag --tag VALUE`. Return tasks whose `tags` contains exactly VALUE\n(case-sensitive; query input is not trimmed), including completed tasks, in\nnormal order. Reject blank or whitespace-only query input with `invalid_tag`.\nA tag not present returns `[]`; the query never changes storage. For example,\n`work` does not select a task tagged `Work`.\n\n\n## Source: benchmark/requirements/B04.md\n# B04 \u2014 Source label (local)\n\nAdd optional `create --source VALUE` and a returned `source` string on every\ntask. Preserve the supplied value verbatim, including whitespace; omission\nand migrated tasks use `\"\"`. Listing and subsequent mutations preserve it.\nThis is a small field addition: creation timestamps already exist at baseline.\n\n\n## Source: benchmark/requirements/B05.md\n# B05 \u2014 Status filter (local)\n\nAdd `list-status --status pending|completed`. Return precisely the tasks in\nthe requested status in normal order. An empty result is `[]`; querying does\nnot change storage. Both values include all matching tasks at this step.\n\n\n## Source: benchmark/requirements/B06.md\n# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n\n\n## Source: benchmark/requirements/B07.md\n# B07 \u2014 Appendable notes (cross-cutting)\n\nTasks gain `notes`, an ordered array of strings, initially `[]` (including\nmigrated tasks). `append-note --id ID --text TEXT` appends trimmed nonblank\nTEXT and returns the updated task. Blank text fails `invalid_note`; failed\nappends do not alter the task. Repeated appends preserve insertion order.\n\n\n## Source: benchmark/requirements/B08.md\n# B08 \u2014 Archival (cross-cutting)\n\nTasks gain an `archived` boolean, default false (also for migrated tasks),\nindependent of pending/completed status. `archive --id ID` sets true and\nreturns the task; repeating it fails `invalid_transition`. Archived tasks are\nhidden from `list`, `list-high`, `list-overdue`, `list-tag`, `list-status`, and\n`list-category`. Add `list-archived` to expose them in normal order. Archiving\neither pending or completed tasks is valid; the status value does not change.\n\n\n## Source: benchmark/requirements/B09.md\n# B09 \u2014 Due window (cross-cutting)\n\nAdd `list-due --start UTC_TIMESTAMP --end UTC_TIMESTAMP`. Include only\nnonarchived pending tasks with a due date in the **inclusive** interval\n`[start, end]`, ordered normally. Equal endpoints are valid; start after end\nfails `invalid_window`. Invalid/non-UTC timestamps fail `invalid_due_date`.\nUndated or completed tasks are excluded and the query has no write effect.\n\n\n## Source: benchmark/requirements/B10.md\n# B10 \u2014 Optional owner (cross-cutting)\n\nAdd `create --owner USER_ID` and a returned `owner` string. Omitted owner and\nmigrated tasks have `\"\"`. A supplied owner is trimmed and must be nonblank;\notherwise fail `invalid_owner`. Add `list-owner --owner USER_ID` for exact,\ncase-sensitive matches (including `\"\"` for unowned). This step does not yet\nrequire that an owner correspond to a user.\n",
+    "source_files": {
+      "benchmark/baseline.md": "d69de8d4da44c74aff1ac9c6361995ad8dc881f454271cfaedff61d3e98651e5",
+      "benchmark/requirements/README.md": "152efdaf2ddaac79ae7e87bcc0dc31327a6ff6d9ba7a45e17711f097353d1e8b",
+      "benchmark/requirements/B11.md": "7ab1ea7ac3cf963993a30135ae9cf4f3de1a05b64ab294bc86940bc5ecf66c92",
+      "benchmark/requirements/B01.md": "b7b2d714db5cee566e9e55982dd4c4d95d3d57f0c341e04ba1e15c24e9a8e94d",
+      "benchmark/requirements/B02.md": "8a76e276240fa840c473be60a8e7ed0e10bd0c165426b1bfc84741e69872032b",
+      "benchmark/requirements/B03.md": "56c6ac4c187962c71d5866b27f9568c8b6de055a0bab074896ef41b61a554630",
+      "benchmark/requirements/B04.md": "2c2e9e3787d53eb45df7b4b48362db2217e62c165dedda38222f5561cd859221",
+      "benchmark/requirements/B05.md": "fc06265789c2781c913e14dfc22a8c37a0ed627b1e1839d43ebaec31373372ff",
+      "benchmark/requirements/B06.md": "b2be288e4e5a58ac348169860f3e4123b1560c9a9d787787005ff94b46c04b61",
+      "benchmark/requirements/B07.md": "588e21f734cf75003dfd96a414a4f7352aded8c4146daab5e1e2b4f74164f1f8",
+      "benchmark/requirements/B08.md": "dbe9d062092c4fc00c2d32210b8e493dbe0f05d0f2ee2e462c44588988335109",
+      "benchmark/requirements/B09.md": "dd44a353c5d26c099e7cee3fc7e0d3fe6361f70b139a11e85b61473631b3c121",
+      "benchmark/requirements/B10.md": "3bf536185111466f225ccc8a1fc8ae10a99cfa6da8e85d3a04fca533306febe5"
+    },
+    "rows": [
+      {
+        "id": "B11/predicate_composition",
+        "basis": "STATED",
+        "source_quote": "# B11 \u2014 Completed deletion rule (invariant)\n\n`delete` on a completed, unarchived task fails `delete_requires_archive` and\ndoes not alter storage. Deleting an archived completed task succeeds and\nreturns it; deleting a pending task succeeds whether archived or not.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized predicate_composition",
+        "relation": {
+          "kind": "invariant",
+          "parameters": {
+            "required_capability": "predicate_composition",
+            "specification": {
+              "command": "delete",
+              "permit": {
+                "any": [
+                  {
+                    "status": "pending"
+                  },
+                  {
+                    "all": [
+                      {
+                        "status": "completed"
+                      },
+                      {
+                        "archived": true
+                      }
+                    ]
+                  }
+                ]
+              },
+              "error": "delete_requires_archive",
+              "result": "removed_whole_record",
+              "rejection": "unchanged"
+            }
+          }
+        }
+      }
+    ],
+    "question": null,
+    "domains": {
+      "evaluation_scope": "requirement-local against canonical baseline; precursor demands explicit, not achieved",
+      "baseline_model_sha256": "971b8ec4079d45101ff8fd7877b6ccd86e7c931124621cf4b5394e93e9dd2f14"
+    }
+  },
+  "exact_frc": {
+    "context": {
+      "assumptions": [],
+      "component_authority": null,
+      "domains": {
+        "baseline_model_sha256": "971b8ec4079d45101ff8fd7877b6ccd86e7c931124621cf4b5394e93e9dd2f14",
+        "evaluation_scope": "requirement-local against canonical baseline; precursor demands explicit, not achieved"
+      },
+      "scope": "Public synthetic requirements session B11"
+    },
+    "contract_id": "B11",
+    "formalizer": "B11:fresh:formalizer",
+    "implementation_choices": [],
+    "issues": [],
+    "lineage": [],
+    "obligations": [
+      {
+        "basis": "STATED",
+        "derived_from": [],
+        "id": "B11/predicate_composition",
+        "relation": {
+          "kind": "invariant",
+          "parameters": {
+            "required_capability": "predicate_composition",
+            "specification": {
+              "command": "delete",
+              "error": "delete_requires_archive",
+              "permit": {
+                "any": [
+                  {
+                    "status": "pending"
+                  },
+                  {
+                    "all": [
+                      {
+                        "status": "completed"
+                      },
+                      {
+                        "archived": true
+                      }
+                    ]
+                  }
+                ]
+              },
+              "rejection": "unchanged",
+              "result": "removed_whole_record"
+            }
+          }
+        },
+        "source_quote": "# B11 \u2014 Completed deletion rule (invariant)\n\n`delete` on a completed, unarchived task fails `delete_requires_archive` and\ndoes not alter storage. Deleting an archived completed task succeeds and\nreturns it; deleting a pending task succeeds whether archived or not.\n",
+        "statement": "Fresh source-authorized predicate_composition"
+      }
+    ],
+    "review": null,
+    "revision": 1,
+    "schema_version": "FormalRequirementContract-0.1",
+    "source": {
+      "classification": "SYNTHETIC",
+      "id": "source:authority-1:CJ-1:sha256:3caf60475313c45817cb0c86fcbfeadc4786e36b62e0f6d35a7a38ad64711949",
+      "sha256": "c71bf3cefca184fd7d3e33183bae6df7c9065ea7fa951eaefc20a82a91462672",
+      "text": "## Source: benchmark/baseline.md\n# External baseline contract (before B01)\n\nThe interface is a subprocess CLI run from an isolated working directory.\nCommands print exactly one JSON value to stdout on success (exit 0); expected\napplication failures print `{\"error\":\"CODE\"}` to stderr (exit 1). Commands\npersist across separate processes in `tasks.json` in that directory. `list`\non missing storage returns `[]` without creating the file.\n\nEach task result has exactly `id`, `title`, `description`, `status`, `priority`,\n`created_at`, and `due_date`. IDs are unique nonempty strings; timestamps are\nUTC ISO strings ending in `Z`. Lists sort by `(created_at, id)` ascending.\n\n* `create --title T --description D [--priority LOW|NORMAL|HIGH]\n  [--due-date UTC_TIMESTAMP]`: nonblank title, verbatim description, new ID,\n  status `pending`, priority default `NORMAL`, current creation timestamp,\n  due date default `null`. Blank title fails `invalid_title`; malformed or\n  non-UTC due date fails `invalid_due_date` without changing storage.\n* `list`: return all tasks including completed tasks.\n* `list-high`: return only HIGH tasks (including completed ones).\n* `list-overdue`: return only pending tasks with a non-null due date **strictly\n  earlier** than current UTC time. Undated and completed tasks are excluded.\n* `complete --id ID`: pending task becomes completed and is persisted; a\n  missing ID fails `task_not_found`, an already completed task fails\n  `invalid_transition`, both without altering the stored file.\n* `delete --id ID`: remove and return the task (pending or completed); missing\n  ID fails `task_not_found` without altering storage.\n* `migrate`: explicit conversion of legacy unversioned records to version 3\n  (add `priority: NORMAL`, `due_date: null`) and version 2 records to version 3\n  (add `due_date: null`); return `{\"migrated\": N}`. Running on current data or\n  absent storage returns `{\"migrated\": 0}`. Legacy reads fail\n  `migration_required` without changing data. New writes use a version-3\n  envelope with `schema_version` and `records`.\n\nMalformed JSON and invalid record shape, duplicate IDs, blank IDs/titles,\ninvalid enums and timestamps fail `invalid_state` on read. Failed operations\nmust not mutate persisted bytes. An exact-time overdue boundary can be checked\nonly with a controlled clock; the external CLI oracle checks widely separated\npast and future instants instead of relying on timing-sensitive sleeps.\n\nThe oracle exercises *both* executable CLIs with fresh subprocesses and\nindependent temporary directories; it asserts this contract before comparing\nnormalized outcomes. Random IDs and wall-clock timestamps are checked for\nproperties, not falsely required to be byte-identical across tracks.\n\n\n## Source: benchmark/requirements/README.md\n# Frozen sequential change set\n\nExecute B01\u2013B20 in numeric order; a change is cumulative. Each file states an\nobservable API and acceptance criteria, not an implementation strategy. New\nfields on existing tasks require an explicit `migrate` path; ordinary reads of\nold storage must report `migration_required` without mutation. Migration is\natomic, returns the number of migrated tasks, and is idempotent. Missing IDs\nreturn `task_not_found` unless a request explicitly defines another error.\nSuccessful operations output JSON; application errors use the baseline JSON\nerror envelope and exit 1. New list commands use the baseline `(created_at,\nid)` sort unless stated otherwise. Existing commands remain compatible unless\na request expressly changes them. Errors must leave observable state intact.\n\nIDs and test cases are fixed before execution; correcting a faulty requirement\nrequires a recorded protocol deviation, never a silent retroactive edit.\nThe authoritative frozen file hashes are in `../results/BASELINE.md`.\n\n\n## Source: benchmark/requirements/B11.md\n# B11 \u2014 Completed deletion rule (invariant)\n\n`delete` on a completed, unarchived task fails `delete_requires_archive` and\ndoes not alter storage. Deleting an archived completed task succeeds and\nreturns it; deleting a pending task succeeds whether archived or not.\n\n\n## Source: benchmark/requirements/B01.md\n# B01 \u2014 Critical priority (local)\n\nAdd `CRITICAL` above `HIGH` to accepted task priorities. `create --priority\nCRITICAL` persists and returns that value; `list` includes it. `list-high`\ncontinues to mean exactly `HIGH`. Existing LOW, NORMAL and HIGH tasks retain\ntheir values through migration. A missing priority still defaults to NORMAL.\n\n\n## Source: benchmark/requirements/B02.md\n# B02 \u2014 Task tags (local)\n\nAccept zero or more `--tag VALUE` flags on `create`. Each VALUE must be a\nnonblank string after trimming whitespace; store the trimmed value. Tags are\ncase-sensitive, deduplicated while retaining first occurrence order, and\nreturned as a `tags` array on every task. Omission and migrated older tasks\nhave `tags: []`. Empty tag input fails `invalid_tag` with no new task.\n\n\n## Source: benchmark/requirements/B03.md\n# B03 \u2014 List by tag (local)\n\nAdd `list-tag --tag VALUE`. Return tasks whose `tags` contains exactly VALUE\n(case-sensitive; query input is not trimmed), including completed tasks, in\nnormal order. Reject blank or whitespace-only query input with `invalid_tag`.\nA tag not present returns `[]`; the query never changes storage. For example,\n`work` does not select a task tagged `Work`.\n\n\n## Source: benchmark/requirements/B04.md\n# B04 \u2014 Source label (local)\n\nAdd optional `create --source VALUE` and a returned `source` string on every\ntask. Preserve the supplied value verbatim, including whitespace; omission\nand migrated tasks use `\"\"`. Listing and subsequent mutations preserve it.\nThis is a small field addition: creation timestamps already exist at baseline.\n\n\n## Source: benchmark/requirements/B05.md\n# B05 \u2014 Status filter (local)\n\nAdd `list-status --status pending|completed`. Return precisely the tasks in\nthe requested status in normal order. An empty result is `[]`; querying does\nnot change storage. Both values include all matching tasks at this step.\n\n\n## Source: benchmark/requirements/B06.md\n# B06 \u2014 Categories (cross-cutting)\n\nAdd `create --category VALUE`, default `\"\"`, returned on all tasks. A supplied\nnonempty value is trimmed; whitespace-only input fails `invalid_category`.\nOmission, an explicitly empty value, and migrated tasks use `\"\"`. Add\n`list-category --category VALUE` for exact, case-sensitive matching, including\n`\"\"` to select uncategorized tasks. Standard list retains all tasks.\n\n\n## Source: benchmark/requirements/B07.md\n# B07 \u2014 Appendable notes (cross-cutting)\n\nTasks gain `notes`, an ordered array of strings, initially `[]` (including\nmigrated tasks). `append-note --id ID --text TEXT` appends trimmed nonblank\nTEXT and returns the updated task. Blank text fails `invalid_note`; failed\nappends do not alter the task. Repeated appends preserve insertion order.\n\n\n## Source: benchmark/requirements/B08.md\n# B08 \u2014 Archival (cross-cutting)\n\nTasks gain an `archived` boolean, default false (also for migrated tasks),\nindependent of pending/completed status. `archive --id ID` sets true and\nreturns the task; repeating it fails `invalid_transition`. Archived tasks are\nhidden from `list`, `list-high`, `list-overdue`, `list-tag`, `list-status`, and\n`list-category`. Add `list-archived` to expose them in normal order. Archiving\neither pending or completed tasks is valid; the status value does not change.\n\n\n## Source: benchmark/requirements/B09.md\n# B09 \u2014 Due window (cross-cutting)\n\nAdd `list-due --start UTC_TIMESTAMP --end UTC_TIMESTAMP`. Include only\nnonarchived pending tasks with a due date in the **inclusive** interval\n`[start, end]`, ordered normally. Equal endpoints are valid; start after end\nfails `invalid_window`. Invalid/non-UTC timestamps fail `invalid_due_date`.\nUndated or completed tasks are excluded and the query has no write effect.\n\n\n## Source: benchmark/requirements/B10.md\n# B10 \u2014 Optional owner (cross-cutting)\n\nAdd `create --owner USER_ID` and a returned `owner` string. Omitted owner and\nmigrated tasks have `\"\"`. A supplied owner is trimmed and must be nonblank;\notherwise fail `invalid_owner`. Add `list-owner --owner USER_ID` for exact,\ncase-sensitive matches (including `\"\"` for unowned). This step does not yet\nrequire that an owner correspond to a user.\n"
+    },
+    "unspecified": []
+  },
+  "source_sha256": "c71bf3cefca184fd7d3e33183bae6df7c9065ea7fa951eaefc20a82a91462672"
+}

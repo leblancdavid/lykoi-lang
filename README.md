@@ -68,6 +68,17 @@ The fixed exposed transfer has B04/B05 local success, fifteen structural halts,
 one BDI halt and two clarifications; nineteen cases replay old captures. R5.101
 remains the pre-development baseline, not replaced or reclassified.
 
+**R5.103 establishes the fresh typed current development baseline.**
+[All twenty new candidates and the report](benchmark/results/phase5c/R5_103-REPORT.md)
+reach normal reconciliation/coverage: **B01/B04/B05 behavioral success, fourteen
+structural blockers, B18 BDI, B17/B20 clarification**. B01 improves solely by
+fresh typed formalization reaching existing support. Bounded
+[guard/clock/resource/profile composition](docs/existing-semantic-composition-v1.md)
+passes **328/328 tests**, model validation/safety and 125 published external CLI
+invocations. Historical matrices are preserved. Recommend typed mutable values
+and transformations for R5.104; no selected family is implemented. This remains
+exposed regression evidence, not held-out generalization or cumulative achievement.
+
 The [R5.87 requirements workspace](docs/requirements-workspace-r5.87.md) implements
 a public synthetic human-intent → clarification → independent source review → exact
 approval → controller-sealed requirements lifecycle. With `PYTHONPATH=src`, run

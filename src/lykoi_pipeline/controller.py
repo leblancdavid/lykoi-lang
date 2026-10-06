@@ -35,6 +35,7 @@ COMPONENTS = (
     "src/air_compiler/profiles.py", "src/air_compiler/profile_runtime.py",
     "src/air_compiler/collection_query.py", "src/air_compiler/collection_query_runtime.py",
     "src/lykoi_query/contracts.py", "schema/frc-collection-query-1.schema.json",
+    "src/air_compiler/creation_provider_runtime.py",
 )
 
 
@@ -122,12 +123,16 @@ class PipelineController(Controller):
         from .scalar_profile import applies, facts
         if applies(content["contract"]):
             facts(content["contract"])
+        from .model_profile import applies as model_applies, facts as model_facts
+        if model_applies(content["contract"]):
+            model_facts(content["contract"])
         return fid, content["contract"]
 
     def expected_plan(self, contract):
         from .query_profile import applies
         from .scalar_profile import applies as scalar_applies
-        if applies(contract) or scalar_applies(contract):
+        from .model_profile import applies as model_applies
+        if applies(contract) or scalar_applies(contract) or model_applies(contract):
             # Independent plans may be prepared from the human source before FRC
             # artifact IDs exist. Bind exact text, not a mutable corpus identity.
             key = contract["source"]["sha256"]

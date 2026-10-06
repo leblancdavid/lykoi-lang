@@ -24,6 +24,12 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
   `docs/existing-scalar-normal-path-v1.md` and its round report before extending
   the bridge. B04/B05 local transfer success is exposed regression evidence;
   nineteen cases replay R5.101 captures. Guard/profile/resource-testing seams remain.
+- R5.103 rebaselines all twenty cases with fresh typed source captures:
+  `R5_103_FRESH_TYPED_CORPUS_REBASELINED`. B01/B04/B05 locally verify; fourteen
+  structural, B18 BDI and B17/B20 clarification remain. Read
+  `docs/existing-semantic-composition-v1.md` for bounded guard/clock/provider and
+  one-state scalar/read-only-query composition. No mutable-value, relationship or
+  atomic-effect family was added. R5.104 is only a recommendation; preserve history.
 - `air/task_manager.json` is canonical; `src/air_compiler/` validates and
   generates the Python backend. Never hand-edit `generated/`. Current model
   semantics: `docs/axiom-v0.3.md` and `schema/axiom-v0.3.schema.json`; the

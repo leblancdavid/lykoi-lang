@@ -57,6 +57,10 @@ def review_coverage(contract, plan):
     if applies(contract):
         allowed_paths = {facts(contract)["storage"]["path"]}
     else:
+        from .model_profile import applies as model_applies, lower
+        if model_applies(contract):
+            model = lower(contract)
+            allowed_paths = {c["path"] for c in model["capabilities"] if c["kind"] == "json_file"}
         from .query_profile import applies as query_applies, storage
         if query_applies(contract):
             binding = storage(contract)

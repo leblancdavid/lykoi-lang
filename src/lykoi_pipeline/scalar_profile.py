@@ -17,6 +17,7 @@ from lykoi_controller import Failure
 PROFILE = "existing-scalar-1"
 V1 = "LykoiContractV1"
 FACETS = ("storage", "fields", "creation", "listing", "lifecycle", "evolution")
+OPTIONAL_FACETS = ("guards", "clock_queries")
 
 
 def typed(relation):
@@ -40,6 +41,10 @@ def name(value):
     require(type(value) is str and re.fullmatch(r"[a-z][a-z0-9_]*", value), "Invalid semantic name")
 
 
+def command_name(value):
+    require(type(value) is str and re.fullmatch(r"[a-z][a-z0-9_-]*", value), "Invalid command token")
+
+
 def facts(contract):
     frc.validate(contract)
     result = {}
@@ -50,14 +55,15 @@ def facts(contract):
         require(r["kind"] == "crud", "Scalar facts use the existing crud relation kind")
         p = r["parameters"]
         keys(p, ("profile", "facet", "value"))
-        require(p["facet"] in FACETS and p["facet"] not in result, "Unknown/duplicate scalar facet")
+        require(p["facet"] in FACETS + OPTIONAL_FACETS and p["facet"] not in result, "Unknown/duplicate scalar facet")
         result[p["facet"]] = copy.deepcopy(p["value"])
-    require(set(result) == set(FACETS), "Missing scalar facet; empty is explicit, never inferred")
+    require(set(FACETS) <= set(result), "Missing scalar facet; empty is explicit, never inferred")
     validate_facts(result)
     return result
 
 
 def validate_facts(f):
+    require(set(FACETS) <= set(f) <= set(FACETS + OPTIONAL_FACETS), "Closed scalar facets")
     keys(f["storage"], ("path", "version", "missing", "write", "rejection"))
     s = f["storage"]
     require(type(s["path"]) is str and re.fullmatch(r"[a-z][a-z0-9_-]*\.json", s["path"]), "Local JSON resource path")
@@ -96,6 +102,9 @@ def validate_facts(f):
         keys(v, ("field", "rule", "error"))
         require(v["field"] in seen and v["rule"] in ("nonblank", "timestamp_utc"), "Existing scalar guard")
         name(v["error"])
+        binding = next(b for b in f["creation"]["bindings"] if b["field"] == v["field"])
+        require(binding["source"] == "input", "Input guard requires input authority")
+        require(v["rule"] != "nonblank" or binding["default"] is None, "Existing nonblank guard requires supplied input, not inferred presence semantics")
     keys(f["listing"], ("command", "order", "result"))
     name(f["listing"]["command"])
     require(type(f["listing"]["order"]) is list and bool(f["listing"]["order"]) and all(x in seen for x in f["listing"]["order"]), "Explicit ascending field order")
@@ -112,13 +121,31 @@ def validate_facts(f):
         require(type(m["from"]) is int and type(m["to"]) is int and m["to"] == m["from"] + 1, "Additive migration version")
         require(type(m["defaults"]) is dict and bool(m["defaults"]) and set(m["defaults"]) <= seen, "Explicit migration field defaults")
         require(m["boundary"] == "explicit_migration" and m["preservation"] == "unrelated_fields", "No inferred historical default authority")
+    require(type(f.get("guards", [])) is list and type(f.get("clock_queries", [])) is list, "Explicit integration arrays")
+    for g in f.get("guards", []):
+        keys(g, ("command", "field", "value", "error", "rejection"))
+        command_name(g["command"]); name(g["error"])
+        require(g["field"] in seen and g["rejection"] == "unchanged", "Existing equality guard field/frame")
+    for q in f.get("clock_queries", []):
+        keys(q, ("command", "predicates", "order", "result", "effect"))
+        command_name(q["command"])
+        require(type(q["predicates"]) is list and bool(q["predicates"]), "Existing conjunction selection only")
+        require(type(q["order"]) is list and bool(q["order"]) and all(n in seen for n in q["order"]), "Declared query order")
+        require(q["result"] == "whole_records" and q["effect"] == "read_only", "Existing read-only whole-record selection")
+        for p in q["predicates"]:
+            if p.get("kind") == "field_equals":
+                keys(p, ("kind", "field", "value"))
+            else:
+                keys(p, ("kind", "field", "clock"))
+                require(p["kind"] == "field_before_clock" and p["clock"] == "utc_clock", "Existing strict clock comparison only")
+            require(p["field"] in seen, "Declared predicate field")
 
 
 def lower(f, base=None):
     """Deterministic implementation of authorized facts, using only v0.3 nodes."""
     validate_facts(f)
     if base is not None:
-        return extend_model(f, base)
+        return integrate_facets(extend_model(f, base), f)
     fields = {x["name"]: x for x in f["fields"]}
     bindings = {x["field"]: x for x in f["creation"]["bindings"]}
     identity = [x for x, b in bindings.items() if b["source"] == "uuid_v4"]
@@ -188,10 +215,11 @@ def lower(f, base=None):
         create["conditions"].append({"id": "guard:create:" + str(index), "kind": "nonblank_input" if v["rule"] == "nonblank" else "timestamp_input", "input": "input:create:" + v["field"], "failure": "error:" + v["error"]})
         create["failures"].append("error:" + v["error"])
     literals = [a for a in create["assignments"] if a["source"] == "literal"]
-    require(len(literals) == 1, "Existing backend requires one literal result guarantee on creation")
+    require(bool(literals), "Existing backend requires a literal result guarantee on creation")
     create["guarantees"] = [{"id": "guarantee:create:value", "kind": "result_field_equals", "field": literals[0]["field"], "value": literals[0]["value"]},
         {"id": "guarantee:create:stored", "kind": "result_in_state", "state": "state"}]
     create["guarantees"] += [{"id": "guarantee:create:" + n, "kind": "result_field_equals_assignment", "field": fid(n)} for n, b in bindings.items() if b["source"] == "input"]
+    create["guarantees"] += [{"id": "guarantee:create:literal:" + a["field"], "kind": "result_field_equals_assignment", "field": a["field"]} for a in literals[1:]]
     for k in ("dependencies", "requires", "effects", "failures"):
         create[k] = sorted(set(create[k]))
     listing, _ = behavior(f["listing"]["command"], "list")
@@ -222,6 +250,58 @@ def lower(f, base=None):
             "add_fields": [{"field": fid(n), "value": v} for n, v in m["defaults"].items()], "requires": ["read", "write"], "effects": ["state_read", "state_write", "file_read", "file_write"]})
     if d["migrations"]:
         d["commands"].append({"id": "command:migrate", "token": "migrate", "migration": max(d["migrations"], key=lambda m: m["to_version"])["id"], "arguments": []})
+    return integrate_facets(d, f)
+
+
+def integrate_facets(d, f):
+    """Bind already-executable v0.3 guards and equality/before-clock selections.
+
+    Ordered guard failures are preserved. New conflicting guards on a field and
+    command collisions refuse, rather than silently changing old authority.
+    """
+    types = {t["id"]: t for t in d["types"]}
+    state = d["state"][0]
+    fields = {x["name"]: x["id"] for x in types[types[state["type"]]["item_type"]]["fields"]}
+    commands = {c["token"]: c for c in d["commands"]}
+    def error(code):
+        old = next((e for e in d["errors"] if e["code"] == code), None)
+        if old is None:
+            old = {"id": "error:integration:" + code, "code": code}; d["errors"].append(old)
+        return old["id"]
+    for i, g in enumerate(f.get("guards", [])):
+        require(g["command"] in commands and "behavior" in commands[g["command"]], "Guard requires existing command")
+        b = next(b for b in d["behaviors"] if b["id"] == commands[g["command"]]["behavior"])
+        require(b["kind"] in ("update", "delete"), "Existing lookup guard operations only")
+        require(b["conditions"][0]["kind"] == "record_exists", "Existence precondition precedes field guard")
+        prior = [c for c in b["conditions"] if c["kind"] == "record_field_equals" and c["field"] == fields[g["field"]]]
+        eid = error(g["error"])
+        require(not prior or all(c["value"] == g["value"] and c["failure"] == eid for c in prior), "CONFLICT: existing guard authority")
+        if not prior:
+            b["conditions"].append({"id": "guard:integration:" + str(i), "kind": "record_field_equals", "field": fields[g["field"]], "value": g["value"], "failure": eid})
+            b["failures"] = sorted(set(b["failures"] + [eid]))
+    for q in f.get("clock_queries", []):
+        require(q["command"] not in commands, "CONFLICT: existing command authority")
+        require(state["key_field"] in [fields[n] for n in q["order"]], "Identity tie key required")
+        read = next(c["id"] for c in d["capabilities"] if c["kind"] == "resource_access" and c["resource"] == state["storage"] and c["action"] == "read")
+        predicates = []
+        clocks = set()
+        for p in q["predicates"]:
+            node = {**p, "field": fields[p["field"]]}
+            if p["kind"] == "field_before_clock":
+                clock = next((c for c in d["capabilities"] if c["kind"] == "utc_clock"), None)
+                if clock is None:
+                    clock = {"id": "utc_clock", "kind": "utc_clock"}; d["capabilities"].append(clock)
+                node["clock"] = clock["id"]; clocks.add(clock["id"])
+            predicates.append(node)
+        bid = "behavior:selection:" + q["command"]
+        failures = [e["id"] for e in d["errors"] if e["code"] in ("invalid_state", "persistence_failure", "migration_required")]
+        d["behaviors"].append({"id": bid, "name": q["command"], "kind": "list", "state": state["id"], "inputs": [], "output": state["type"],
+            "dependencies": sorted({state["id"], state["storage"]} | clocks), "requires": sorted({read} | clocks), "reads": [state["id"]], "writes": [],
+            "effects": ["state_read", "file_read"] + (["clock_read"] if clocks else []), "conditions": [], "assignments": [],
+            "filter": predicates[0] if len(predicates) == 1 else {"kind": "all", "predicates": predicates}, "order_by": [fields[n] for n in q["order"]],
+            "guarantees": [{"id": "guarantee:selection:" + q["command"], "kind": "result_equals_state_sorted", "state": state["id"]}], "failures": failures})
+        d["commands"].append({"id": "command:selection:" + q["command"], "token": q["command"], "behavior": bid, "arguments": []})
+        commands[q["command"]] = d["commands"][-1]
     validate(parse(json.dumps(d)))
     return d
 
@@ -233,7 +313,7 @@ def extend_model(f, base):
     field rewrites, command renames, or unsupported precursor fields are created.
     """
     validate(parse(json.dumps(base)))
-    desired = lower(f)
+    desired = lower({k: v for k, v in f.items() if k in FACETS})
     d = copy.deepcopy(base)
     types = {t["id"]: t for t in d["types"]}
     state = d["state"][0]
@@ -261,7 +341,7 @@ def extend_model(f, base):
                     pred["values"] = copy.deepcopy(after[1])
         require(compatible and x.get("nullable", False) == new_fields[n].get("nullable", False), "Existing type preserved; only explicit finite enum expansion")
     added = set(all_fields) - set(old)
-    require(bool(added or enum_changes), "Explicit field introduction or finite enum expansion")
+    require(bool(added or enum_changes or any(f.get(k) for k in OPTIONAL_FACETS)), "Explicit field introduction, enum expansion or existing integration facet")
     require((state["schema_version"] < f["storage"]["version"]) if added else state["schema_version"] == f["storage"]["version"], "Explicit additive field schema boundary; enum expansion preserves version")
     mapping = {"state": state["id"], "record": record["id"], "records": state["type"], "store": state["storage"]}
     mapping.update({"field:" + n: x["id"] for n, x in old.items()})
@@ -307,7 +387,17 @@ def extend_model(f, base):
         base_create["inputs"].append(next(i for i in desired_create["inputs"] if i["id"] == a["id"]))
         base_command["arguments"].append(next(arg for arg in next(c for c in desired["commands"] if c.get("behavior") == desired_create["id"])["arguments"] if arg["input"] == a["id"]))
         base_create["guarantees"].append(next(g for g in desired_create["guarantees"] if g.get("field") == "field:" + n))
-        require(not any(c.get("input") == a["id"] for c in desired_create["conditions"]), "Additional input guards need separate integration")
+        for condition in desired_create["conditions"]:
+            if condition.get("input") != a["id"]:
+                continue
+            require(a["source"] == "input" or condition["kind"] == "timestamp_input", "Existing nonblank guard needs a supplied required input")
+            error_node = next(e for e in desired["errors"] if e["id"] == condition["failure"])
+            prior_error = next((e for e in d["errors"] if e["code"] == error_node["code"]), None)
+            if prior_error is None:
+                prior_error = copy.deepcopy(error_node); d["errors"].append(prior_error)
+            node = remap(condition); node["failure"] = prior_error["id"]
+            base_create["conditions"].append(node)
+            base_create["failures"] = sorted(set(base_create["failures"] + [prior_error["id"]]))
     for m in desired["migrations"]:
         if m["to_version"] <= state["schema_version"]:
             prior = next(x for x in d["migrations"] if x["to_version"] == m["to_version"])
@@ -319,15 +409,15 @@ def extend_model(f, base):
             d["migrations"].append(m)
     state["schema_version"] = f["storage"]["version"]
     for b in d["behaviors"]:
-        if not any(next(e["code"] for e in d["errors"] if e["id"] == x) == "migration_required" for x in b["failures"]):
+        if f["storage"]["version"] > 1 and not any(next(e["code"] for e in d["errors"] if e["id"] == x) == "migration_required" for x in b["failures"]):
             e = next((e for e in d["errors"] if e["code"] == "migration_required"), None)
             if e is None:
                 e = {"id": "error:migration_required", "code": "migration_required"}; d["errors"].append(e)
             b["failures"].append(e["id"])
-    if not any("migration" in c for c in d["commands"]):
+    if d["migrations"] and not any("migration" in c for c in d["commands"]):
         d["commands"].append({"id": "command:migrate", "token": "migrate", "migration": d["migrations"][-1]["id"], "arguments": []})
     for c in d["commands"]:
-        if "migration" in c:
+        if "migration" in c and d["migrations"]:
             c["migration"] = max(d["migrations"], key=lambda m: m["to_version"])["id"]
     additions = {a["field"]: a["value"] for m in d["migrations"] if m["from_version"] >= base["state"][0]["schema_version"] for a in m["add_fields"]}
     require(set(additions) == {"field:" + n for n in added}, "Each added field requires explicit migration authority")
@@ -379,8 +469,10 @@ def structural(contract, fid):
         if p["facet"] == "lifecycle" and p["value"]:
             fact("transition", True); fact("repeat", True); fact("poststate_admitted", True)
             clause("transition", "change"); clause("retry", "reject")
-        if p["facet"] == "listing":
+        if p["facet"] in ("listing", "clock_queries"):
             fact("collection", True); fact("max_results", "many"); fact("order_varies", False)
+        if p["facet"] == "guards" and p["value"]:
+            fact("invalid_admitted", True); clause("invalid_input", "reject")
         ops.append({"id": oid, "facts": facts_, "channels": {"return": "MEANINGFUL", "error": "MEANINGFUL", "later": "MEANINGFUL", "order": "MEANINGFUL"}, "authority": authority})
     return {"version": PROFILE, "source_frc": fid, "rows": rows, "facts": f,
             "interface": {"version": discovery.VERSION_BDI, "operations": ops}, "unsupported": sorted(set(unsupported)), "profile_failure": reason,

@@ -22,6 +22,16 @@ read-only types and unclosed normal integration seams. Do not infer writable
 booleans/integers, arbitrary guards or mixed-profile composition from passing
 scalar examples. R5.101 remains the pre-development baseline.
 
+**R5.103's fresh typed baseline supersedes stale-capture measurement, not historical
+results.** Read its [report](../benchmark/results/phase5c/R5_103-REPORT.md) and
+[bounded composition rules](existing-semantic-composition-v1.md) for current
+guard/clock/provider/scalar-query integration. All twenty cases are freshly
+evaluated; B01/B04/B05 are local behavioral successes. Writable arrays/booleans,
+write transformations, OR/ranges/in-set, relationships and atomic effects remain
+gaps. One-state read-only composition is qualified; arbitrary profile union is
+not. B17/B20 still require clarification. R5.104's mutable-values recommendation
+is prospective, not implemented or authorized by that report.
+
 B03 was exposed in
 R5.97 and its first structural-coverage result is immutable; later B03 work is
 post-exposure research and requires separate instructions. Never read held-out requirements
