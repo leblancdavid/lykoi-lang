@@ -73,6 +73,15 @@ required. CPython 3.14.3 passes. The [engineering report](benchmark/results/phas
 records an inactive new candidate blocked by inherited file-byte/OpenCode pins,
 not Python incompatibility. No protected authorization follows.
 
+The [R5.94B portable freeze](docs/freeze-dependency-classes-v1.md) pins exact canonical
+content, qualifies Python/OpenCode through behavioral contracts and records physical
+bytes/paths as provenance. **R5.94B-GENERIC-PROTECTED-CANDIDATE-2** initially passed
+Python 3.14.3/OpenCode 1.18.32 first/restart and relocated LF/CRLF checks. Later live
+OpenCode CLI failures block current machine eligibility; content pins and Python pass.
+The configured worker model remains frozen independently. See the
+[report and preflight command](benchmark/results/phase5c/R5_94B-CROSS-MACHINE-FREEZE-PORTABILITY.md).
+The candidate is inactive; no B03 activation, authorization or access follows.
+
 The task application lives in [`air/task_manager.json`](air/task_manager.json)
 (the `air/` path and `air_compiler` import path are retained for compatibility).
 The current v0.3 model is documented in [`docs/axiom-v0.3.md`](docs/axiom-v0.3.md),

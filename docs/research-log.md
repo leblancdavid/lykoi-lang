@@ -1,5 +1,43 @@
 # Lykoi research log
 
+## R5.94B cross-machine freeze portability (2026-10-06 session)
+
+**`R5_94B_CURRENT_MACHINE_ELIGIBILITY_BLOCKED_LIVE_OPENCODE_ADAPTER_CONTRACT`**.
+Candidate 2 is inactive and content-intact. Initial first/restart full preflights
+passed, but post-publication checks failed reviewer then author invocation with
+`AI_EXECUTION_FAILURE / CLI_FAILURE`; latest machine eligibility is false. Both
+failures are preserved without altering the contract; their underlying provider/CLI
+cause is unestablished. All 137 content pins and published evidence still pass.
+Explicit classes cover 135
+text-file pin entries (one historical case-only path alias), two embedded CJ-1 pins,
+three infrastructure contracts and aggregate machine provenance. No experimental
+binary byte pin is necessary in this set; binary verification is implemented/tested.
+The 101 inherited LF/CRLF byte differences preserve canonical content, and complete
+relocated LF/CRLF mirrors verify without changing wording, ordering, whitespace,
+final newlines, BOM or Unicode normalization. New tests **26/26**, including fourteen
+meaningful text-mutation subcases, pass.
+
+Python **3.14.3 AMD64** passes the unchanged runtime contract (**41 existing tests**
+plus probes per first/restart and later failed-live preflights). OpenCode **1.18.32**
+initially passed the bounded adapter
+contract with **4/4** public/synthetic live role responses and **8/8** negative controls
+per first/restart preflight. Effective config and exported synthetic session metadata
+confirm fixed prompts, tool denial and `github-copilot/claude-sonnet-4.6`; session sets
+are fresh/disjoint. Provider weights and historical 1.1.25 equivalence are unproven.
+Synthetic unchanged pipeline/BDI/adequacy/V1/target outcomes match preserved 3.12.10
+evidence. No second physical computer was executed; relocation mirrors and historical
+comparison have those explicit limits.
+
+Engineering candidate 1's successful preflight is retained; final controller-copy
+external-identity binding and its negative control define candidate 2. Runtime/tool
+changes must requalify, with actual implementations/paths/OS recorded separately from
+semantic identity. Historical machinery/results and benchmark semantics are unchanged.
+All 16 scoped B03 counters remain zero, with inherited pristine/unevaluated/unexposed
+status and no target/metadata inspection. Historical installation recovery is not a
+requirement for the new format; a passing unchanged-contract live machine preflight
+is still required before separately considering activation/owner authorization outside
+this round. [Report/evidence](../benchmark/results/phase5c/R5_94B-CROSS-MACHINE-FREEZE-PORTABILITY.md).
+
 ## R5.94A portable runtime contract (2026-10-06 session)
 
 Implemented compatibility/provenance separation in prospective generic freeze and

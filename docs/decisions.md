@@ -1,5 +1,33 @@
 # Experimental decisions
 
+## R5.94B — Freeze meaning exactly, qualify transport, retain physical provenance
+
+Use explicit `CANONICAL_CONTENT_PIN`, `EXACT_BINARY_PIN`, `COMPATIBILITY_CONTRACT`
+and `PROVENANCE_ONLY` declarations in a new prospective format. Text canonicalization
+strictly decodes UTF-8 and replaces CRLF with LF only; final newlines, BOM, Unicode,
+wording, formatting, comments and ordering remain significant. Require historical
+physical/LF/CRLF hash continuity before creating inherited canonical pins. Keep exact
+physical hashes and historical machine facts separately rather than erase evidence.
+
+The actual R5.91 transport surface supports a bounded OpenCode compatibility contract:
+effective frozen prompts/model/tool restrictions, allowlisted inputs, fresh sessions,
+bound JSON/error handling and public/synthetic context-denial probes. Installed 1.18.32
+initially passed first/restart qualification; model/provider/temperature/timeout remain
+independently exact. Do not infer
+historical 1.1.25 equivalence or provider-weight identity from that result. Platform/
+containment qualification remains the existing trusted-local Python contract.
+
+Bind an external expected semantic candidate identity and each process's actual
+implementations. Requalify drift before dispatch, and keep per-operation provenance
+separate from authority payloads. The controller's working copy and retained guard
+copy must both match that identity. Preserve engineering candidate 1 and publish
+candidate 2 after this final negative-control tightening. No historical freeze rewrite,
+new language semantics or B03 authority follows. Post-publication live checks failed
+reviewer then author invocation with `AI_EXECUTION_FAILURE / CLI_FAILURE`; retain both
+and mark latest eligibility false. No provider-cause speculation, contract weakening
+or further retry follows. The exact-byte portability repair cannot stand in for a
+currently passing live adapter preflight. [Report](../benchmark/results/phase5c/R5_94B-CROSS-MACHINE-FREEZE-PORTABILITY.md).
+
 ## R5.94A — Qualify Python behavior, preserve exact research dependencies
 
 Separate Python installation provenance from semantic freeze eligibility in a new

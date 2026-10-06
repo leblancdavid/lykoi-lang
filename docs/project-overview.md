@@ -75,6 +75,33 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.94B cross-machine portability round](../benchmark/results/phase5c/R5_94B-CROSS-MACHINE-FREEZE-PORTABILITY.md)
+ends **`R5_94B_CURRENT_MACHINE_ELIGIBILITY_BLOCKED_LIVE_OPENCODE_ADAPTER_CONTRACT`**.
+**R5.94B-GENERIC-PROTECTED-CANDIDATE-2** is **content-intact and inactive**, but latest
+machine eligibility is **false**. Initial first/restart full preflights passed;
+post-publication checks failed live reviewer then author invocation with
+`AI_EXECUTION_FAILURE / CLI_FAILURE`. Both failures are preserved; their underlying
+provider/CLI cause is unestablished. No contract or model setting was weakened.
+Explicit dependency classes bind exact canonical semantic content, qualify Python/
+OpenCode/platform machinery behaviorally and retain physical bytes/paths as provenance.
+Conservative UTF-8 CRLF→LF identity removes the 101 inherited representation blockers;
+final new tests **26/26** and complete relocated LF/CRLF mirrors pass.
+
+CPython **3.14.3** retains `PYTHON_RUNTIME_CONTRACT_V1` qualification (**41** existing
+tests plus probes per process). OpenCode **1.18.32** initially passed new
+`OPENCODE_ADAPTER_CONTRACT_V1`: **4/4** live public/synthetic roles, **8/8** negative
+controls, effective prompt/tool configuration and session-reported fixed
+`github-copilot/claude-sonnet-4.6` route. Initial fresh-process preflight independently
+passed with disjoint sessions; later live qualification failures block current use.
+All **137** content pins, published evidence and Python still pass. No 1.1.25 equivalence
+or second physical-machine execution is claimed. Historical installations are not
+requirements for the new format, but current live availability must qualify again.
+**No B03 activation, authorization, access or target metadata inspection; all 16 scoped
+counters zero. Stop after generic freeze verification.** A separately instructed round
+must obtain a passing unchanged-contract machine preflight before considering activation
+and target-specific owner authority. Earlier boundaries retain
+their historical scope, including their correctly blocked results.
+
 The [R5.94A portable-runtime repair](../benchmark/results/phase5c/R5_94A-PORTABLE-RUNTIME-CONTRACT-REPAIR.md)
 implements `PYTHON_RUNTIME_CONTRACT_V1`; CPython **3.14.3 AMD64 qualifies** with
 41 existing tests and bounded runtime probes. Synthetic portability **38/38** checks
