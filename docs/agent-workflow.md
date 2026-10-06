@@ -10,7 +10,11 @@ does not retroactively amend them or authorize a new run.
 
 **Current prospective research policy is [R5.96](research-workflow-r5.96.md).**
 Historical frozen experiments retain their protocols; their infrastructure gates
-do not govern ordinary research or the next held-out benchmark. B03 was exposed in
+do not govern ordinary research or the next held-out benchmark. **R5.101 treats
+B01–B20 as an exposed development/transfer/regression corpus, freely inspectable
+for diagnosis and regression. Their performance cannot establish held-out
+generalization; new generalization needs a new development-unexposed source.**
+B03 was exposed in
 R5.97 and its first structural-coverage result is immutable; later B03 work is
 post-exposure research and requires separate instructions. Never read held-out requirements
 merely to orient, select retained architecture or run broad historical tests.

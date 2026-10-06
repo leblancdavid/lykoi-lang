@@ -15,6 +15,10 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
   no authoring or behavioral evaluation reached. Preserve its immutable result;
   later B03 work is post-exposure research. For future held-out access record a
   fresh snapshot; no informed Lykoi changes before the first terminal result.
+- R5.101: B01–B20 are an exposed development/transfer/regression corpus and may
+  be inspected freely. Their performance is not held-out generalization evidence.
+  Current capability matrix/roadmap is diagnostic only; new generalization needs
+  a new development-unexposed source. Preserve historical first results.
 - `air/task_manager.json` is canonical; `src/air_compiler/` validates and
   generates the Python backend. Never hand-edit `generated/`. Current model
   semantics: `docs/axiom-v0.3.md` and `schema/axiom-v0.3.schema.json`; the

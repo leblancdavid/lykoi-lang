@@ -1,5 +1,19 @@
 # Phase 5: comparative maintenance benchmark
 
+## Current corpus status — R5.101
+
+**B01–B20 are an exposed development, transfer and regression corpus.**
+Performance on B01–B20 is now development/regression evidence, not held-out
+generalization evidence. Future generalization claims require a new
+development-unexposed source; none is created by R5.101.
+
+The [current capability report](results/phase5c/R5_101-B01-B20-CURRENT-CAPABILITY-REPORT.md)
+and [matrices](results/phase5c/R5_101-CAPABILITY-MATRICES.md) record twenty local
+attempts on unchanged Lykoi: B05 external success, sixteen structural halts,
+B18 BDI halt and B17/B20 clarification. Local success is not cumulative Phase 5C
+achievement. Historical protocols/results below retain their original scope;
+old nonexposure wording is not today's corpus status. R5.101 is diagnostic only.
+
 ## Current research path — R5.96
 
 The [simplified benchmark protocol](../docs/research-workflow-r5.96.md) governs

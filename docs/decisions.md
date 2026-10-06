@@ -1,5 +1,33 @@
 # Experimental decisions
 
+## R5.101 — Diagnose exposed corpus; prioritize reusable composition
+
+Treat B01–B20 as exposed development/transfer/regression evidence. Preserve
+historical results and separate current requirement-local capability from the
+frozen cumulative achieved histories. The
+[report and roadmap](../benchmark/results/phase5c/R5_101-B01-B20-CURRENT-CAPABILITY-REPORT.md)
+record first native blockers, downstream `NOT_REACHED`, root categories and
+overlapping capability demand sets. One local B05 query success is not a
+cumulative twenty-case result or a generalization claim.
+
+Distinguish normal structural/V1/store integration from missing semantic
+composition. Enum/default/verbatim-field behavior, simple guards and query
+membership/equality already exist. Read-only string-list/boolean views do not
+provide persistent append/dedup, presence-aware write normalization, cross-entity
+relations or transaction/event semantics. A missing task-store binding is not
+evidence that string membership needs reinvention. B18's external-effect BDI
+refusal also does not prove the compiler failed. B17/B20 retain material source
+questions instead of guessing observable migration/error behavior.
+
+Propose four bounded project families: normal closure for existing semantics;
+typed values and mutation transformations; composable predicates and guards;
+persistent identity relationships and atomic effects, with staged milestones.
+Tradeoff: diagnosis uses same-agent source-bound candidate captures and synthetic
+owner credentials, not independent formalization approval. Native refusal is
+measured; deeper unsupported demands are source/code analysis, not executed
+downstream failures. No capability is implemented in R5.101. New held-out
+generalization evidence must come from a new development-unexposed source.
+
 ## R5.99 — Explicit normal query profile; disclose firewall failure
 
 Reuse CollectionQuery-0.1 facets as closed normal FRC `filter_order` relations.

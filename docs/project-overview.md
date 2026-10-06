@@ -155,6 +155,28 @@ run or Lykoi implementation changed in R5.100. Stop at selection; genuinely new
 held-out learning needs a separately supplied unexposed evaluation source,
 then the R5.96 snapshot/first-result protocol.
 
+**R5.101 — `R5_101_B01_B20_CAPABILITY_MATRIX_COMPLETE`.** B01–B20 are now
+an **exposed development, transfer and regression corpus**. Performance on them
+is development/regression evidence, **not held-out generalization evidence**.
+The [unchanged-system report](../benchmark/results/phase5c/R5_101-B01-B20-CURRENT-CAPABILITY-REPORT.md)
+and [matrices](../benchmark/results/phase5c/R5_101-CAPABILITY-MATRICES.md) classify
+twenty requirement-local attempts: **B05 behaviorally verified**, sixteen first
+structural halts, B18 BDI halt, and B17/B20 formalization clarification. B05 has
+six external cases / ten process invocations; this is not cumulative B01–B05
+achievement. No new cumulative benchmark success or historical reclassification
+is claimed. All unexecuted downstream stages are `NOT_REACHED`.
+
+The main reusable development projects proposed are normal-path closure for
+existing scalar/lifecycle/model-evolution semantics, typed mutable values and
+transformations, composable predicates/guards, and persistent relationships with
+atomic effect composition. Existing query membership/equality is distinguished
+from missing task-store fields and write semantics. B17 old-user migration role
+and B20 nonexistent-member error need source authority. Current implementation,
+canonical model, tests and historical evidence remain unchanged. Stop after
+diagnosis/roadmap; no capability project or new benchmark was implemented.
+Future generalization needs a genuinely new development-unexposed source and
+the R5.96 fresh-snapshot/first-result process.
+
 ### Historical boundaries (preserved; not current infrastructure prerequisites)
 
 The records below describe their original experiments and stop conditions. Their

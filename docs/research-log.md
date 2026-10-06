@@ -1,5 +1,41 @@
 # Lykoi research log
 
+## R5.101 B01–B20 current capability matrix (2026-10-06)
+
+**`R5_101_B01_B20_CAPABILITY_MATRIX_COMPLETE`**. The
+[report](../benchmark/results/phase5c/R5_101-B01-B20-CURRENT-CAPABILITY-REPORT.md),
+[snapshot](../benchmark/results/phase5c/R5_101-PRE-EVALUATION-SNAPSHOT.md),
+[twenty-case/inverted matrices](../benchmark/results/phase5c/R5_101-CAPABILITY-MATRICES.md)
+and source-bound current evidence evaluate all twenty exposed requirements through
+unchanged normal interfaces. **B05 reaches local behavioral success** (six cases,
+ten external process invocations); **sixteen first structural halts**, **B18 BDI
+halt**, and **B17/B20 clarification** complete the accounting. Unreached stages
+are not failures. This is requirement-local capability diagnosis, not new
+cumulative Phase 5C achievement. Historical B01/B04 successes and B03's immutable
+first result are preserved.
+
+Primary blocked-case roots: eleven missing general semantic compositions, four
+structural/discovery integration gaps, two application/store integration gaps,
+two ambiguous requirements. Existing enum/scalar/default/migration/lifecycle
+semantics are narrower in normal mapping than in legacy model authoring. Query
+membership/equality works, but absent persisted tags/category/owner or boolean
+task fields prevent bindings; comparison trimming does not implement write-time
+normalization. Main clusters are typed mutable values/transforms, predicates/
+temporal operands, relationships/multiple entity state and atomic ordered effects.
+No aggregation/regex/pagination demand was inferred from this corpus.
+
+B17 lacks an explicit old ordinary-user migration role; B20 lacks authority for
+unknown member-user error behavior. An evidence-script assertion initially
+failed to record B18's existing `UNSUPPORTED_BDI_SCOPE`; only measurement
+bookkeeping was corrected, preserving that native result. No product code,
+schema, mappings, compiler, BDI, adequacy, backend, model, generated artifact,
+tests or frozen requirement/oracle changed. Pre-evaluation checks pass 228/228;
+the current FRC/BDI/adequacy supplement passes 52/52, for **280/280 existing tests**
+plus model validation/safety across 16 commands;
+final scope/whitespace audit accompanies the report. Stop after the proposed
+general roadmap. **Performance on B01–B20 is development/regression evidence,
+not held-out generalization evidence**; future claims need a new unexposed source.
+
 ## R5.100 benchmark exposure inventory (2026-10-06)
 
 **`R5_100_BENCHMARK_EXPOSURE_INVENTORY_COMPLETE`**. The

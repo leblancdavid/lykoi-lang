@@ -49,6 +49,15 @@ but indirect disclosure occurred; B03 transfer 2 was not run. See the
 [normal-path specification](docs/collection-query-normal-path-v1.md) and
 [R5.99 report and incident](benchmark/results/phase5c/R5_99-COLLECTION-QUERY-NORMAL-PATH-INTEGRATION.md).
 
+**R5.101 diagnoses B01–B20 as an exposed development/regression corpus.**
+The [current capability report](benchmark/results/phase5c/R5_101-B01-B20-CURRENT-CAPABILITY-REPORT.md)
+and [matrices](benchmark/results/phase5c/R5_101-CAPABILITY-MATRICES.md) classify
+all twenty on unchanged Lykoi: B05 local behavioral success, sixteen structural
+halts, one BDI halt and two clarifications. This is not cumulative benchmark
+achievement or held-out generalization evidence. The roadmap proposes general
+capability projects; none was implemented. Future generalization requires a
+new development-unexposed evaluation source.
+
 The [R5.87 requirements workspace](docs/requirements-workspace-r5.87.md) implements
 a public synthetic human-intent → clarification → independent source review → exact
 approval → controller-sealed requirements lifecycle. With `PYTHONPATH=src`, run
@@ -132,9 +141,10 @@ compatibility interfaces for saved models and research artifacts.
 
 Phase 5's comparative-maintenance setup, conventional Python baseline,
 external behavioral oracle, twenty sequential requests and execution records
-are in [`benchmark/`](benchmark/README.md). The benchmark is in progress:
-post-B16 histories have been revalidated against the corrected oracle, while
-R5.3 acceptance reconstruction remains unfrozen and B17 is unexposed.
+are in [`benchmark/`](benchmark/README.md). Historical post-B16 histories were
+revalidated against the corrected oracle; R5.3 reconstruction remains unfrozen.
+R5.101 treats all twenty requests as exposed diagnostics, preserving those
+historical boundaries and achieved histories.
 
 Python 3.10+; no third-party dependencies. In PowerShell from the repository root:
 
