@@ -75,6 +75,45 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.94A portable-runtime repair](../benchmark/results/phase5c/R5_94A-PORTABLE-RUNTIME-CONTRACT-REPAIR.md)
+implements `PYTHON_RUNTIME_CONTRACT_V1`; CPython **3.14.3 AMD64 qualifies** with
+41 existing tests and bounded runtime probes. Synthetic portability **38/38** checks
+and preserved-3.12.10 comparison retain tested compiler/V1/BDI/adequacy outcomes.
+Exact Python version/executable/library identities are provenance in the prospective
+freeze and per-run controller; each executing process must qualify independently.
+
+Overall **`R5_94A_GENERIC_FREEZE_BLOCKED_EXACT_NON_PYTHON_DEPENDENCY_DRIFT`**:
+**R5.94A-GENERIC-PROTECTED-CANDIDATE-2** is created **inactive but not eligible**.
+Verification and fresh-process reverification both reject 101 inherited byte-pin
+differences (all LF/CRLF representation) and OpenCode **1.18.32** instead of exact
+**1.1.25**. No semantic pin, model configuration or historical freeze was relaxed.
+This is not a Python incompatibility; recovering 3.12.10 is not the prospective
+runtime requirement. The new candidate cannot yet supersede R5.94 as an eligible
+protected freeze. **No B03 authorization or access; all scoped counters zero.**
+Stop before protected activation/access. Earlier reports retain their historical scope.
+
+The [R5.95A runtime continuation](../benchmark/results/phase5c/R5_95A-RUNTIME-RECOVERY-AND-B03-AUTHORIZATION-CONTINUATION.md)
+ends **`R5_95A_FROZEN_RUNTIME_ARTIFACT_UNAVAILABLE`**. Existing CPython 3.14.3 AMD64
+meets ordinary Python 3.10+ requirements, but R5.94 explicitly pins the exact 3.12.10
+version string, executable bytes and DLL/ZIP hashes. Pathname is not a Python runtime
+pin; relocating the same artifacts is possible, substituting 3.14.3 is not. Record
+self-digest matches; full frozen verification remains unexecuted. No installation,
+activation or B03 authorization occurred. All scoped source/delivery/exposure counters
+remain zero and inherited pristine status is retained. **Stop before access**; recover
+the pinned runtime before a separately instructed verification/authorization continuation.
+R5.95's stopped result and all earlier frozen evidence remain unchanged.
+
+The [R5.95 authorization round](../benchmark/results/phase5c/R5_95-B03-PROTECTED-EVALUATION-AUTHORIZATION.md)
+ends **`R5_95_AUTHORIZATION_BLOCKED_DESIGNATED_RUNTIME_UNAVAILABLE`**. The designated
+CPython 3.12.10 executable could not be resolved, so mandatory frozen verification
+did not start. No repair or alternate-runtime check followed. R5.94's generic candidate
+remains inactive by inherited state; no protected activation, B03 authorization or
+pre-run eligibility result was created. B03 retains inherited pristine/unevaluated/
+unexposed status, with every scoped source/exposure counter zero. **Stop before
+activation and access.** A separately instructed continuation must address the runtime
+blocker and complete verification/authorization before evaluation. Earlier boundaries
+below retain their historical scope.
+
 The [R5.94 generic protected admission repair](../benchmark/results/phase5c/R5_94-GENERIC-PROTECTED-EVALUATION-ADMISSION-REPAIR.md)
 ends **`R5_94_GENERIC_PROTECTED_EVALUATION_IMPLEMENTED`** in trusted-local synthetic
 engineering scope. Separately versioned protected provenance, exact opaque-source/run

@@ -1,5 +1,63 @@
 # Lykoi research log
 
+## R5.94A portable runtime contract (2026-10-06 session)
+
+Implemented compatibility/provenance separation in prospective generic freeze and
+per-run controller components. CPython **3.14.3 AMD64** mechanically passes V1's
+bounded probes and **41 existing deterministic tests**; exact executable/DLL identities
+remain separately recorded. Synthetic portability calibration **38/38** passes;
+two subsequent interpreter-selection checks pass. Preserved 3.12.10 evidence agrees
+on supported/unsupported outcomes, compiler target bytes, normalized V1 identity,
+BDI decisions, adequacy and paired public/protected semantic meaning. Only 3.14.3
+was executed; no universal cross-version invariance or retroactive V1 qualification.
+
+**`R5_94A_GENERIC_FREEZE_BLOCKED_EXACT_NON_PYTHON_DEPENDENCY_DRIFT`**:
+candidate 2 is inactive and not eligible. Fresh-process verification reproduces
+Python PASS and freeze FAIL: **101** inherited file-byte mismatches are explained
+by LF/CRLF representations; configured OpenCode is **1.18.32**, not exact frozen
+**1.1.25**. No alternate contract for that worker runtime was established, and no
+semantic pin/configuration/history was changed. Local synthetic calibration explicitly
+uses separate local pins and mock workers; it is not production freeze verification.
+Pre-freeze resource handling, native-denial probe and journal-provenance implementation
+failures are preserved with corrections. B03 was neither identified, authorized nor
+accessed; all scoped counters zero, pristine/unevaluated/unexposed state inherited.
+Stop before protected activation/access; 3.12.10 recovery is no longer the prospective
+Python requirement, but exact non-Python drift still prevents authorization.
+[Report and evidence](../benchmark/results/phase5c/R5_94A-PORTABLE-RUNTIME-CONTRACT-REPAIR.md).
+
+## R5.95A runtime recovery continuation (2026-10-06 session)
+
+**R5_95A_FROZEN_RUNTIME_ARTIFACT_UNAVAILABLE**. Registered/likely-location read-only
+discovery finds CPython 3.14.3 Windows AMD64. It meets ordinary Python 3.10+ requirements,
+but its exact version string, executable hash and library set/hashes all differ from
+R5.94's explicitly pinned CPython 3.12.10 runtime. The Python pathname is not a runtime
+identity field. No matching frozen installation was found; no software was installed.
+
+Available Python freshly recomputes the candidate record's canonical digest to the
+expected `f19c6dab34128813558a636e37d1f8c2ff109c45cd82172ab561712ba192f77e`.
+This is record self-binding, not a full freeze verification pass. Full verification,
+activation, single-use checks and pre-run eligibility remain unexecuted. No B03 opaque
+identity retrieval, authorization, access or metadata inspection occurred; all scoped
+source/delivery/exposure counters zero, inherited pristine status retained. R5.95 and
+all historical/frozen machinery/evidence are preserved. Stop before access.
+[Report/evidence](../benchmark/results/phase5c/R5_95A-RUNTIME-RECOVERY-AND-B03-AUTHORIZATION-CONTINUATION.md).
+
+## R5.95 protected evaluation authorization (2026-10-06 session)
+
+**R5_95_AUTHORIZATION_BLOCKED_DESIGNATED_RUNTIME_UNAVAILABLE**. Initial Git status
+was clean. The designated R5.94 read-only frozen check failed at shell executable
+resolution for `C:\Users\lblan\AppData\Local\Temp\opencode\python312\python.exe`;
+Python did not start. This establishes unavailable verification, not candidate drift
+or a semantic defect. No repair, substitute runtime or retry followed.
+
+No activation or B03 authorization was issued; pre-run eligibility and new single-use
+checks were not executed. Candidate identity was read from existing evidence only.
+B03 source and content-revealing metadata were untouched; all scoped source/exposure
+counters and authorization counts remain zero. Pristine/unevaluated/unexposed status
+is inherited from R5.94 plus this session's operations, not a fresh protected-ledger
+inspection. Historical evidence and semantic/pipeline machinery are preserved.
+[Stopped report and machine state](../benchmark/results/phase5c/R5_95-B03-PROTECTED-EVALUATION-AUTHORIZATION.md).
+
 ## R5.94 generic protected evaluation repair (2026-10-05 session)
 
 **R5_94_GENERIC_PROTECTED_EVALUATION_IMPLEMENTED**. The concrete public-purpose and

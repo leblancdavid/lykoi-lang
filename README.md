@@ -65,6 +65,14 @@ is frozen inactive; no B03 authorization or access occurred. Historical R5.91 ma
 and evidence remain intact. See the [engineering report](benchmark/results/phase5c/R5_94-GENERIC-PROTECTED-EVALUATION-ADMISSION-REPAIR.md)
 for checks and trusted-local containment limits.
 
+The [R5.94A runtime contract](docs/python-runtime-contract-v1.md) qualifies Python
+behavior independently of exact installation bytes while recording actual runtime
+provenance. With `PYTHONPATH=src`, run the chosen interpreter with
+`-X utf8 -m lykoi_runtime.verify verify --current`; no global `python` command is
+required. CPython 3.14.3 passes. The [engineering report](benchmark/results/phase5c/R5_94A-PORTABLE-RUNTIME-CONTRACT-REPAIR.md)
+records an inactive new candidate blocked by inherited file-byte/OpenCode pins,
+not Python incompatibility. No protected authorization follows.
+
 The task application lives in [`air/task_manager.json`](air/task_manager.json)
 (the `air/` path and `air_compiler` import path are retained for compatibility).
 The current v0.3 model is documented in [`docs/axiom-v0.3.md`](docs/axiom-v0.3.md),

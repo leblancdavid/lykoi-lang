@@ -1,0 +1,589 @@
+test_append_only_ledger_cannot_erase_exposures (test_portable_runtime.PortableTests.test_append_only_ledger_cannot_erase_exposures) ... ERROR
+test_author_original_source_denied_and_audited (test_portable_runtime.PortableTests.test_author_original_source_denied_and_audited) ... ERROR
+test_author_role_escalation_denied (test_portable_runtime.PortableTests.test_author_role_escalation_denied) ... ERROR
+test_authorization_is_opaque_and_not_access (test_portable_runtime.PortableTests.test_authorization_is_opaque_and_not_access) ... ok
+test_candidate_source_substitution_and_relabeling_denied (test_portable_runtime.PortableTests.test_candidate_source_substitution_and_relabeling_denied) ... ERROR
+test_changed_runtime_must_requalify_before_dispatch (test_portable_runtime.PortableTests.test_changed_runtime_must_requalify_before_dispatch) ... ok
+test_clarification_available_preserves_protected_revision (test_portable_runtime.PortableTests.test_clarification_available_preserves_protected_revision) ... ERROR
+test_clarification_unavailable_terminates (test_portable_runtime.PortableTests.test_clarification_unavailable_terminates) ... ERROR
+test_contract_substitution_denied (test_portable_runtime.PortableTests.test_contract_substitution_denied) ... ok
+test_exact_file_drift_rejected_even_with_resealed_body (test_portable_runtime.PortableTests.test_exact_file_drift_rejected_even_with_resealed_body) ... ok
+test_failed_delivery_is_still_exposure (test_portable_runtime.PortableTests.test_failed_delivery_is_still_exposure) ... ok
+test_freeze_integrity_and_historical_identity (test_portable_runtime.PortableTests.test_freeze_integrity_and_historical_identity) ... ok
+test_incompatible_runtime_denies_before_activation (test_portable_runtime.PortableTests.test_incompatible_runtime_denies_before_activation) ... ok
+test_incomplete_open_is_durable_and_not_retryable (test_portable_runtime.PortableTests.test_incomplete_open_is_durable_and_not_retryable) ... ok
+test_pre_authorized_clarification_authority (test_portable_runtime.PortableTests.test_pre_authorized_clarification_authority) ... ERROR
+test_protected_schema_only_extends_provenance (test_portable_runtime.PortableTests.test_protected_schema_only_extends_provenance) ... ok
+test_protected_workspace_requires_protected_controller (test_portable_runtime.PortableTests.test_protected_workspace_requires_protected_controller) ... ok
+test_provenance_invariance (test_portable_runtime.PortableTests.test_provenance_invariance) ... ERROR
+test_public_active_controller_cannot_reserve_protected_source (test_portable_runtime.PortableTests.test_public_active_controller_cannot_reserve_protected_source) ... ok
+test_public_scope_cannot_activate_protected (test_portable_runtime.PortableTests.test_public_scope_cannot_activate_protected) ... ok
+test_read_before_failed_admission_remains_exposed (test_portable_runtime.PortableTests.test_read_before_failed_admission_remains_exposed) ... ok
+test_restart_rejects_new_freeze (test_portable_runtime.PortableTests.test_restart_rejects_new_freeze) ... ok
+test_reviewer_candidate_before_commitment_denied (test_portable_runtime.PortableTests.test_reviewer_candidate_before_commitment_denied) ... ok
+test_reviewer_structural_candidate_side_channel_denied (test_portable_runtime.PortableTests.test_reviewer_structural_candidate_side_channel_denied) ... ok
+test_runtime_provenance_not_component_identity (test_portable_runtime.PortableTests.test_runtime_provenance_not_component_identity) ... ok
+test_scope_rejects_unmediated_public_workflow (test_portable_runtime.PortableTests.test_scope_rejects_unmediated_public_workflow) ... ok
+test_single_open_and_authorization (test_portable_runtime.PortableTests.test_single_open_and_authorization) ... ERROR
+test_stale_authorization_denied (test_portable_runtime.PortableTests.test_stale_authorization_denied) ... ok
+test_synthetic_success_and_exact_roles (test_portable_runtime.PortableTests.test_synthetic_success_and_exact_roles) ... ERROR
+test_unsupported_mapping_halts_without_grant (test_portable_runtime.PortableTests.test_unsupported_mapping_halts_without_grant) ... ERROR
+test_validator_does_not_weaken_contract_checks (test_portable_runtime.PortableTests.test_validator_does_not_weaken_contract_checks) ... ERROR
+test_verifier_original_source_and_inventory_denied (test_portable_runtime.PortableTests.test_verifier_original_source_and_inventory_denied) ... ERROR
+test_without_activation_no_open (test_portable_runtime.PortableTests.test_without_activation_no_open) ... ok
+test_without_source_authorization_no_open (test_portable_runtime.PortableTests.test_without_source_authorization_no_open) ... ok
+test_wrong_identity_and_cross_source_authorization (test_portable_runtime.PortableTests.test_wrong_identity_and_cross_source_authorization) ... ok
+test_wrong_run_denied (test_portable_runtime.PortableTests.test_wrong_run_denied) ... ok
+test_wrong_worker_configuration_denies_before_exposure (test_portable_runtime.PortableTests.test_wrong_worker_configuration_denies_before_exposure) ... ok
+test_explicit_environment_current_selection (test_portable_runtime.SelectionTests.test_explicit_environment_current_selection) ... ok
+
+======================================================================
+ERROR: test_append_only_ledger_cannot_erase_exposures (test_portable_runtime.PortableTests.test_append_only_ledger_cannot_erase_exposures)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 329, in execute
+    result = handlers[command](actor, project, **args)
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 483, in _begin_review
+    self._event("REVIEW_STARTED", subject, actor, "controller", "REVIEW", evidence=soi)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 43, in _event
+    evidence = dict(kwargs.get("evidence") or {})
+ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 408, in test_append_only_ledger_cannot_erase_exposures
+    self.workspace()
+    ~~~~~~~~~~~~~~^^
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 92, in workspace
+    soi = w.commit_inventory(r)
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 302, in commit_inventory
+    self._call("controller", "begin_review", subject=frc, soi=aid)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 30, in _call
+    return self.c.execute(self.credentials[role], self.project, command,
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          expected_revision=self.c.revision, **args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 40, in execute
+    return super().execute(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 89, in execute
+    return self._execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 95, in _execute
+    return super().execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 331, in execute
+    raise Failure("MALFORMED_REQUEST", command=command) from exc
+lykoi_controller.controller.Failure: MALFORMED_REQUEST
+
+======================================================================
+ERROR: test_author_original_source_denied_and_audited (test_portable_runtime.PortableTests.test_author_original_source_denied_and_audited)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 329, in execute
+    result = handlers[command](actor, project, **args)
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 483, in _begin_review
+    self._event("REVIEW_STARTED", subject, actor, "controller", "REVIEW", evidence=soi)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 43, in _event
+    evidence = dict(kwargs.get("evidence") or {})
+ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 193, in test_author_original_source_denied_and_audited
+    w, _, _, _, auth = self.workspace()
+                       ~~~~~~~~~~~~~~^^
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 92, in workspace
+    soi = w.commit_inventory(r)
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 302, in commit_inventory
+    self._call("controller", "begin_review", subject=frc, soi=aid)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 30, in _call
+    return self.c.execute(self.credentials[role], self.project, command,
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          expected_revision=self.c.revision, **args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 40, in execute
+    return super().execute(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 89, in execute
+    return self._execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 95, in _execute
+    return super().execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 331, in execute
+    raise Failure("MALFORMED_REQUEST", command=command) from exc
+lykoi_controller.controller.Failure: MALFORMED_REQUEST
+
+======================================================================
+ERROR: test_author_role_escalation_denied (test_portable_runtime.PortableTests.test_author_role_escalation_denied)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 329, in execute
+    result = handlers[command](actor, project, **args)
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 483, in _begin_review
+    self._event("REVIEW_STARTED", subject, actor, "controller", "REVIEW", evidence=soi)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 43, in _event
+    evidence = dict(kwargs.get("evidence") or {})
+ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 358, in test_author_role_escalation_denied
+    w, _, _, _, auth = self.workspace()
+                       ~~~~~~~~~~~~~~^^
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 92, in workspace
+    soi = w.commit_inventory(r)
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 302, in commit_inventory
+    self._call("controller", "begin_review", subject=frc, soi=aid)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 30, in _call
+    return self.c.execute(self.credentials[role], self.project, command,
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          expected_revision=self.c.revision, **args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 40, in execute
+    return super().execute(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 89, in execute
+    return self._execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 95, in _execute
+    return super().execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 331, in execute
+    raise Failure("MALFORMED_REQUEST", command=command) from exc
+lykoi_controller.controller.Failure: MALFORMED_REQUEST
+
+======================================================================
+ERROR: test_candidate_source_substitution_and_relabeling_denied (test_portable_runtime.PortableTests.test_candidate_source_substitution_and_relabeling_denied)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 329, in execute
+    result = handlers[command](actor, project, **args)
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 483, in _begin_review
+    self._event("REVIEW_STARTED", subject, actor, "controller", "REVIEW", evidence=soi)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 43, in _event
+    evidence = dict(kwargs.get("evidence") or {})
+ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 395, in test_candidate_source_substitution_and_relabeling_denied
+    w, fid, _, _, _ = self.workspace()
+                      ~~~~~~~~~~~~~~^^
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 92, in workspace
+    soi = w.commit_inventory(r)
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 302, in commit_inventory
+    self._call("controller", "begin_review", subject=frc, soi=aid)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 30, in _call
+    return self.c.execute(self.credentials[role], self.project, command,
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          expected_revision=self.c.revision, **args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 40, in execute
+    return super().execute(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 89, in execute
+    return self._execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 95, in _execute
+    return super().execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 331, in execute
+    raise Failure("MALFORMED_REQUEST", command=command) from exc
+lykoi_controller.controller.Failure: MALFORMED_REQUEST
+
+======================================================================
+ERROR: test_clarification_available_preserves_protected_revision (test_portable_runtime.PortableTests.test_clarification_available_preserves_protected_revision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 329, in execute
+    result = handlers[command](actor, project, **args)
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 483, in _begin_review
+    self._event("REVIEW_STARTED", subject, actor, "controller", "REVIEW", evidence=soi)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 43, in _event
+    evidence = dict(kwargs.get("evidence") or {})
+ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 256, in test_clarification_available_preserves_protected_revision
+    w, _, _, _, auth = self.workspace(questions=True, mode="HUMAN_AVAILABLE")
+                       ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 92, in workspace
+    soi = w.commit_inventory(r)
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 302, in commit_inventory
+    self._call("controller", "begin_review", subject=frc, soi=aid)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 30, in _call
+    return self.c.execute(self.credentials[role], self.project, command,
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          expected_revision=self.c.revision, **args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 40, in execute
+    return super().execute(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 89, in execute
+    return self._execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 95, in _execute
+    return super().execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 331, in execute
+    raise Failure("MALFORMED_REQUEST", command=command) from exc
+lykoi_controller.controller.Failure: MALFORMED_REQUEST
+
+======================================================================
+ERROR: test_clarification_unavailable_terminates (test_portable_runtime.PortableTests.test_clarification_unavailable_terminates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 329, in execute
+    result = handlers[command](actor, project, **args)
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 483, in _begin_review
+    self._event("REVIEW_STARTED", subject, actor, "controller", "REVIEW", evidence=soi)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 43, in _event
+    evidence = dict(kwargs.get("evidence") or {})
+ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 248, in test_clarification_unavailable_terminates
+    w, fid, _, _, auth = self.workspace(questions=True)
+                         ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 92, in workspace
+    soi = w.commit_inventory(r)
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 302, in commit_inventory
+    self._call("controller", "begin_review", subject=frc, soi=aid)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 30, in _call
+    return self.c.execute(self.credentials[role], self.project, command,
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          expected_revision=self.c.revision, **args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 40, in execute
+    return super().execute(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 89, in execute
+    return self._execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 95, in _execute
+    return super().execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 331, in execute
+    raise Failure("MALFORMED_REQUEST", command=command) from exc
+lykoi_controller.controller.Failure: MALFORMED_REQUEST
+
+======================================================================
+ERROR: test_pre_authorized_clarification_authority (test_portable_runtime.PortableTests.test_pre_authorized_clarification_authority)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 329, in execute
+    result = handlers[command](actor, project, **args)
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 483, in _begin_review
+    self._event("REVIEW_STARTED", subject, actor, "controller", "REVIEW", evidence=soi)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 43, in _event
+    evidence = dict(kwargs.get("evidence") or {})
+ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 387, in test_pre_authorized_clarification_authority
+    w, _, _, _, _ = self.workspace(questions=True, mode="PREAUTHORIZED_AUTHORITY")
+                    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 92, in workspace
+    soi = w.commit_inventory(r)
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 302, in commit_inventory
+    self._call("controller", "begin_review", subject=frc, soi=aid)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 30, in _call
+    return self.c.execute(self.credentials[role], self.project, command,
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          expected_revision=self.c.revision, **args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 40, in execute
+    return super().execute(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 89, in execute
+    return self._execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 95, in _execute
+    return super().execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 331, in execute
+    raise Failure("MALFORMED_REQUEST", command=command) from exc
+lykoi_controller.controller.Failure: MALFORMED_REQUEST
+
+======================================================================
+ERROR: test_provenance_invariance (test_portable_runtime.PortableTests.test_provenance_invariance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 329, in execute
+    result = handlers[command](actor, project, **args)
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 483, in _begin_review
+    self._event("REVIEW_STARTED", subject, actor, "controller", "REVIEW", evidence=soi)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 43, in _event
+    evidence = dict(kwargs.get("evidence") or {})
+ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 265, in test_provenance_invariance
+    w, fid, _, _, _ = self.workspace()
+                      ~~~~~~~~~~~~~~^^
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 92, in workspace
+    soi = w.commit_inventory(r)
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 302, in commit_inventory
+    self._call("controller", "begin_review", subject=frc, soi=aid)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 30, in _call
+    return self.c.execute(self.credentials[role], self.project, command,
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          expected_revision=self.c.revision, **args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 40, in execute
+    return super().execute(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 89, in execute
+    return self._execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 95, in _execute
+    return super().execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 331, in execute
+    raise Failure("MALFORMED_REQUEST", command=command) from exc
+lykoi_controller.controller.Failure: MALFORMED_REQUEST
+
+======================================================================
+ERROR: test_single_open_and_authorization (test_portable_runtime.PortableTests.test_single_open_and_authorization)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 329, in execute
+    result = handlers[command](actor, project, **args)
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 483, in _begin_review
+    self._event("REVIEW_STARTED", subject, actor, "controller", "REVIEW", evidence=soi)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 43, in _event
+    evidence = dict(kwargs.get("evidence") or {})
+ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 212, in test_single_open_and_authorization
+    w, _, _, _, _ = self.workspace()
+                    ~~~~~~~~~~~~~~^^
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 92, in workspace
+    soi = w.commit_inventory(r)
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 302, in commit_inventory
+    self._call("controller", "begin_review", subject=frc, soi=aid)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 30, in _call
+    return self.c.execute(self.credentials[role], self.project, command,
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          expected_revision=self.c.revision, **args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 40, in execute
+    return super().execute(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 89, in execute
+    return self._execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 95, in _execute
+    return super().execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 331, in execute
+    raise Failure("MALFORMED_REQUEST", command=command) from exc
+lykoi_controller.controller.Failure: MALFORMED_REQUEST
+
+======================================================================
+ERROR: test_synthetic_success_and_exact_roles (test_portable_runtime.PortableTests.test_synthetic_success_and_exact_roles)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 329, in execute
+    result = handlers[command](actor, project, **args)
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 483, in _begin_review
+    self._event("REVIEW_STARTED", subject, actor, "controller", "REVIEW", evidence=soi)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 43, in _event
+    evidence = dict(kwargs.get("evidence") or {})
+ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 106, in test_synthetic_success_and_exact_roles
+    w, fid, soi, coverage, auth = self.workspace()
+                                  ~~~~~~~~~~~~~~^^
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 92, in workspace
+    soi = w.commit_inventory(r)
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 302, in commit_inventory
+    self._call("controller", "begin_review", subject=frc, soi=aid)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 30, in _call
+    return self.c.execute(self.credentials[role], self.project, command,
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          expected_revision=self.c.revision, **args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 40, in execute
+    return super().execute(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 89, in execute
+    return self._execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 95, in _execute
+    return super().execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 331, in execute
+    raise Failure("MALFORMED_REQUEST", command=command) from exc
+lykoi_controller.controller.Failure: MALFORMED_REQUEST
+
+======================================================================
+ERROR: test_unsupported_mapping_halts_without_grant (test_portable_runtime.PortableTests.test_unsupported_mapping_halts_without_grant)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 329, in execute
+    result = handlers[command](actor, project, **args)
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 483, in _begin_review
+    self._event("REVIEW_STARTED", subject, actor, "controller", "REVIEW", evidence=soi)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 43, in _event
+    evidence = dict(kwargs.get("evidence") or {})
+ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 130, in test_unsupported_mapping_halts_without_grant
+    w, fid, _, _, auth = self.workspace(unsupported=True)
+                         ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 92, in workspace
+    soi = w.commit_inventory(r)
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 302, in commit_inventory
+    self._call("controller", "begin_review", subject=frc, soi=aid)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 30, in _call
+    return self.c.execute(self.credentials[role], self.project, command,
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          expected_revision=self.c.revision, **args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 40, in execute
+    return super().execute(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 89, in execute
+    return self._execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 95, in _execute
+    return super().execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 331, in execute
+    raise Failure("MALFORMED_REQUEST", command=command) from exc
+lykoi_controller.controller.Failure: MALFORMED_REQUEST
+
+======================================================================
+ERROR: test_validator_does_not_weaken_contract_checks (test_portable_runtime.PortableTests.test_validator_does_not_weaken_contract_checks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 329, in execute
+    result = handlers[command](actor, project, **args)
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 483, in _begin_review
+    self._event("REVIEW_STARTED", subject, actor, "controller", "REVIEW", evidence=soi)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 43, in _event
+    evidence = dict(kwargs.get("evidence") or {})
+ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 296, in test_validator_does_not_weaken_contract_checks
+    w, fid, _, _, _ = self.workspace()
+                      ~~~~~~~~~~~~~~^^
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 92, in workspace
+    soi = w.commit_inventory(r)
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 302, in commit_inventory
+    self._call("controller", "begin_review", subject=frc, soi=aid)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 30, in _call
+    return self.c.execute(self.credentials[role], self.project, command,
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          expected_revision=self.c.revision, **args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 40, in execute
+    return super().execute(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 89, in execute
+    return self._execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 95, in _execute
+    return super().execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 331, in execute
+    raise Failure("MALFORMED_REQUEST", command=command) from exc
+lykoi_controller.controller.Failure: MALFORMED_REQUEST
+
+======================================================================
+ERROR: test_verifier_original_source_and_inventory_denied (test_portable_runtime.PortableTests.test_verifier_original_source_and_inventory_denied)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 329, in execute
+    result = handlers[command](actor, project, **args)
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 483, in _begin_review
+    self._event("REVIEW_STARTED", subject, actor, "controller", "REVIEW", evidence=soi)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 43, in _event
+    evidence = dict(kwargs.get("evidence") or {})
+ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 347, in test_verifier_original_source_and_inventory_denied
+    w, fid, soi, _, auth = self.workspace()
+                           ~~~~~~~~~~~~~~^^
+  File "D:\Dev\axiom\tests\test_protected_evaluation.py", line 92, in workspace
+    soi = w.commit_inventory(r)
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 302, in commit_inventory
+    self._call("controller", "begin_review", subject=frc, soi=aid)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_workspace\workspace.py", line 30, in _call
+    return self.c.execute(self.credentials[role], self.project, command,
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          expected_revision=self.c.revision, **args)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\portable_controller.py", line 40, in execute
+    return super().execute(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 89, in execute
+    return self._execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_protected\controller.py", line 95, in _execute
+    return super().execute(credential, project, command, expected_revision=expected_revision, **args)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Dev\axiom\src\lykoi_controller\controller.py", line 331, in execute
+    raise Failure("MALFORMED_REQUEST", command=command) from exc
+lykoi_controller.controller.Failure: MALFORMED_REQUEST
+
+----------------------------------------------------------------------
+Ran 38 tests in 319.434s
+
+FAILED (errors=13)

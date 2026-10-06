@@ -1,0 +1,38 @@
+{
+  "scope": "PREFREEZE_SYNTHETIC_ENGINEERING_ONLY",
+  "attempts": [
+    {
+      "stage": "initial runtime qualification",
+      "status": "RUNTIME_INCOMPATIBLE",
+      "existing_tests_passed": 41,
+      "failure": "SQLite probe committed but did not explicitly close connection; Windows temporary-directory cleanup raised WinError 32",
+      "correction": "Use contextlib.closing plus explicit commit; preserve transaction/rollback assertions"
+    },
+    {
+      "stage": "first four prospective tests",
+      "tests": 4,
+      "passed": 1,
+      "failures": 1,
+      "errors": 2,
+      "finding": "Actual inherited freeze integrity rejects current ordinary file bytes and OpenCode artifact; no production substitution made"
+    },
+    {
+      "stage": "expanded native audit probe",
+      "evidence": "qualification.json",
+      "status": "RUNTIME_INCOMPATIBLE",
+      "finding": "Native import was already correctly denied by existing hook; ctypes wrapped kernel32 PermissionError in AttributeError before probe catch",
+      "correction": "Use separate child probes and require nonzero status plus exact existing guard PermissionError marker in stderr; never accept a missing-library/process error"
+    },
+    {
+      "stage": "first full synthetic portability calibration",
+      "evidence": "synthetic-calibration-tests.txt",
+      "tests": 38,
+      "passed": 25,
+      "errors": 13,
+      "finding": "New provenance wrapper incorrectly assumed existing event evidence was always a dictionary; controller also uses exact artifact-ID strings",
+      "correction": "Keep original event evidence unchanged; write adjacent append-only provenance receipts in the same transaction"
+    }
+  ],
+  "historical_R5_91_R5_94_R5_95_R5_95A_rewritten": false,
+  "B03_access_or_authorization": false
+}

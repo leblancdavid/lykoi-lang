@@ -1,5 +1,42 @@
 # Experimental decisions
 
+## R5.94A — Qualify Python behavior, preserve exact research dependencies
+
+Separate Python installation provenance from semantic freeze eligibility in a new
+versioned implementation. Bind `PYTHON_RUNTIME_CONTRACT_V1`, exact qualification
+procedure and selected existing tests; qualify each executing process independently.
+Keep runtime receipts adjacent to existing journal events rather than alter exact
+authority evidence or semantic artifacts. Preserve all historical freezes/results.
+
+OpenCode executes frozen role interfaces and has no qualified replacement contract;
+retain its exact artifact/configuration requirement. Current 1.18.32 cannot silently
+replace frozen 1.1.25. LF/CRLF diagnostics explain 101 inherited file-pin differences
+but do not satisfy physical-byte verification. Publish the candidate and precise
+non-Python dependency blocker rather than re-pin current artifacts, change model
+configuration or claim an eligible superseding freeze. Python 3.14.3 passes; protected
+authorization remains blocked. [Report](../benchmark/results/phase5c/R5_94A-PORTABLE-RUNTIME-CONTRACT-REPAIR.md).
+
+## R5.95A — Distinguish runtime location from exact frozen runtime artifacts
+
+Read-only discovery identifies CPython 3.14.3, sufficient for ordinary Python 3.10+
+project work. The implemented R5.94 snapshot explicitly binds exact `sys.version`,
+interpreter SHA-256 and Python DLL/ZIP hashes, and integrity compares the whole body.
+Its historical Python pathname is not pinned. Permit no substitution of general
+compatibility for that stronger existing predicate. Stop with the frozen-runtime-artifact
+blocker; no pin changes, installation, runtime impersonation or protected authorization.
+Recovery of the same artifacts at a new path can be considered in a separately instructed
+continuation. [Report](../benchmark/results/phase5c/R5_95A-RUNTIME-RECOVERY-AND-B03-AUTHORIZATION-CONTINUATION.md).
+
+## R5.95 — Stop authorization when designated-runtime verification cannot start
+
+The frozen R5.94 report designates an exact CPython 3.12.10 executable for its
+read-only integrity check. PowerShell could not resolve that executable in this
+session. Treat unavailable verification as an authorization blocker: no activation,
+target identification, authorization or evaluation follows. Preserve the frozen
+machinery and evidence; no runtime repair or substitution is attempted during this
+authorization-only round. Record inherited B03 pristine status separately from a
+fresh target-ledger audit. [Stopped report](../benchmark/results/phase5c/R5_95-B03-PROTECTED-EVALUATION-AUTHORIZATION.md).
+
 ## R5.94 — Repair protected plumbing in a new identity, preserve semantic engines
 
 Create a generic protected provenance and activation/authorization boundary around
