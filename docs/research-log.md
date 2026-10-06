@@ -1,5 +1,24 @@
 # Lykoi research log
 
+## R5.100 benchmark exposure inventory (2026-10-06)
+
+**`R5_100_BENCHMARK_EXPOSURE_INVENTORY_COMPLETE`**. The
+[inventory/report](../benchmark/results/phase5c/R5_100-BENCHMARK-EXPOSURE-INVENTORY.md)
+uses existing development evidence without opening any requirement or running
+any benchmark. Historical log entries explicitly record development readings of
+frozen B01–B16 text: those cases are `DIRECTLY_EXPOSED`, with historical
+evaluations. B17–B20 are `INDIRECTLY_EXPOSED` through existing development
+summaries; no evaluation is documented for them. No pristine or `UNKNOWN` row
+remains. **`NEXT_HELD_OUT_CANDIDATE = NONE`**.
+
+Older context-scoped nonexposure wording and all benchmark results are preserved.
+The R5.99 exact-file grep unexpectedly returned parent-directory behavioral logs;
+the persisted incident does not retain a per-case search-response transcript, so
+precise incident-hit attribution remains unknown. Independent historical evidence
+supports the inventory despite that limit. Lykoi implementation is unchanged;
+R5.100 stops at inventory/selection. Future genuinely held-out learning requires
+a separately supplied new unexposed source before snapshot and evaluation.
+
 ## R5.99 normal collection-query integration (2026-10-06)
 
 **`R5_99_NORMAL_PATH_INTEGRATION_IMPLEMENTED_FIREWALL_VIOLATION`**.

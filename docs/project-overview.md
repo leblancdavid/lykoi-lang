@@ -141,6 +141,20 @@ engineering pins/tests and historical R5.98 evidence are preserved; optional
 **B03 post-exposure transfer 2 was NOT_RUN**. Original B03/R5.98 results remain
 immutable. No next held-out evaluation is authorized by this contaminated round.
 
+**R5.100 — `R5_100_BENCHMARK_EXPOSURE_INVENTORY_COMPLETE`.** The
+[development-history exposure inventory](../benchmark/results/phase5c/R5_100-BENCHMARK-EXPOSURE-INVENTORY.md)
+records B01–B16 as directly exposed (historical frozen-text readings) and
+historically evaluated; B17–B20 are indirectly exposed by material existing
+development summaries, with no documented evaluations. No case remains
+`PRISTINE_BY_AVAILABLE_EVIDENCE`; no inventory row is `UNKNOWN`.
+**`NEXT_HELD_OUT_CANDIDATE = NONE`**. Historical context-scoped nonexposure
+wording/results are preserved; the inventory does not retrospectively alter
+them. Precise R5.99 per-case search-hit attribution remains unavailable, but
+independent exposure evidence suffices. No requirement was opened, benchmark
+run or Lykoi implementation changed in R5.100. Stop at selection; genuinely new
+held-out learning needs a separately supplied unexposed evaluation source,
+then the R5.96 snapshot/first-result protocol.
+
 ### Historical boundaries (preserved; not current infrastructure prerequisites)
 
 The records below describe their original experiments and stop conditions. Their
