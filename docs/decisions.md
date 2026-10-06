@@ -1,5 +1,45 @@
 # Experimental decisions
 
+## R5.85 — One production architecture with explicit authority and finite review
+
+Adopt **R5_85_PRODUCTION_ARCHITECTURE_DEFINED** in design scope. The
+[architecture reference](production-formalization-evaluation-architecture-r5.85.md)
+consolidates R5.79–R5.84 into a requirements-to-software service: AI wizard,
+versioned human source/clarifications/project policies, blind committed independent
+SOI, bidirectional reconciliation, owner approval, immutable artifact/controller
+seals, bounded discovery/adequacy, full faithful V1, restricted Lykoi authorship,
+deterministic compilation and independent external verification.
+
+Choose explicit human/delegated source authority rather than AI confidence or AI
+agreement as permission. Independent review is fallible evidence, not a truth oracle.
+Finite review ends in human approval or a visible unresolved issue; no reviewer-of-
+reviewer chain is required. Mechanical tools establish identity/closure/bounded
+results conditional on reviewed premises, not arbitrary prose understanding.
+Residual correlated omissions and false semantic mappings remain acknowledged.
+
+Separate sealed WHAT from an implementation grant. A contract can be approved but
+unsupported by analysis or V1; preserve it and halt. Grant authorship only after
+supported structural coverage/BDI, adequate authority, faithful whole-V1 projection
+and an independently approved verification plan sealed before author dispatch.
+Least-information author inputs omit original prose, rejected interpretations,
+benchmark identity and hidden expected outputs. Exact content bindings cover the
+executed and released artifacts. The controller is the sole production entrypoint;
+experimental helper labels/booleans cannot confer authority.
+
+PPCs are explicitly approved scoped defaults, not assistant conventions. Feature
+authority can override waivable policies with recorded exceptions; non-waivable
+constraints and conflicting applicability require resolution. Clarification produces
+new source/candidate versions and conservatively invalidates descendant eligibility,
+retaining historical evidence. Product iteration and held-out immutable first-result/
+containment requirements are separate layers.
+
+Propose four engineering stages with completion evidence instead of more disconnected
+conceptual qualification rounds: controller; wizard/lifecycle/isolated review;
+authoring/external-verification closure; public end-to-end rehearsal. Do not execute
+the roadmap here. No semantics/V1 expansion, R5.80–R5.84 outcome upgrade, protected
+access or candidate activation follows. Stop after R5.85. See the
+[round report](../benchmark/results/phase5c/R5_85-PRODUCTION-FORMALIZATION-AND-EVALUATION-ARCHITECTURE.md).
+
 ## R5.84 — Evidence-bound coverage; retain unqualified reviewer truth boundary
 
 Choose **R5_84_INDEPENDENT_COVERAGE_AUTHORITY_PARTIAL**. Adopt prospective

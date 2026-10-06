@@ -1,5 +1,42 @@
 # Lykoi research log
 
+## R5.85 production formalization and evaluation architecture (2026-10-05)
+
+Produced **R5_85_PRODUCTION_ARCHITECTURE_DEFINED**, a prospective architecture
+consolidation of exact public R5.79–R5.84 reports/specifications and the nonactivated
+R5.83 precommitment. No new qualification experiment, AI review context or production
+prototype ran. Existing reported evidence was reviewed, not rerun or upgraded.
+
+The [core reference](production-formalization-evaluation-architecture-r5.85.md)
+defines a human-facing requirements wizard with targeted material questions,
+versioned owner answers and approved project policies, independent source-only SOI
+commitment before candidate disclosure, coverage reconciliation, owner approval and
+content-bound seals. A deterministic artifact/authority controller mediates bounded
+discovery/adequacy, unchanged-V1 fidelity, restricted Lykoi authorship, pinned
+compilation and independently planned external behavioral verification. Artifact
+and authority graphs, trust table, threat controls/residual risks, containment/freeze
+designs, ordinary-user walkthrough and unknowns classification are integrated.
+
+R5.84's umbrella-inventory/dishonest-review counterexample remains a substantive
+limit: graph closure and hashes do not establish semantic truth. Finite review
+terminates in declared human authority or a halt, not another AI reviewer chain.
+Sealed FRC authority is WHAT; implementation requires a separate scoped grant and
+prefrozen independent verification plan. Unsupported scope remains visible without
+new discovery families. Human approval is authority, not mathematical correctness.
+
+The minimal proposed path comprises controller/artifacts, wizard/lifecycle/isolated
+review, isolated authoring/external verification, then a frozen public rehearsal.
+Operational completion evidence is specified; the roadmap is not implemented.
+Documentation-only link/section, whitespace and change-scope checks accompany the
+[report](../benchmark/results/phase5c/R5_85-PRODUCTION-FORMALIZATION-AND-EVALUATION-ARCHITECTURE.md).
+No compiler or benchmark tests establish the new design's operational reliability.
+
+All B03 access/activity counters **zero**; inherited **B03_PRISTINE /
+B03_NOT_EVALUATED / B03_NOT_EXPOSED_TO_LYKOI_DEVELOPMENT** retained without protected
+content/metadata/ledger inspection. R5.83-CANDIDATE-1 remains unactivated; R5.80–R5.84
+outcomes, historical evidence, semantics and V1 preserved. Core **30** inherited;
+Phase 5C paused. Stop after R5.85; no roadmap execution or subsequent round starts.
+
 ## R5.84 independent source/interface coverage authority (2026-10-05)
 
 Observed **R5_84_INDEPENDENT_COVERAGE_AUTHORITY_PARTIAL**. Prospective SCCA-0.1

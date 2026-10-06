@@ -17,13 +17,14 @@ syntax, assemble code-generation templates, or add a benchmark-specific
 primitive for each new feature. This is a research hypothesis, not an
 established minimum or a claim that the current vocabulary is general-purpose.
 
-The intended architecture is human requirement → replaceable human/AI requirement
-formalization, with a separately extracted source obligation inventory → reviewed
-Formal Requirement Contract/interface → independent source/interface coverage
-authority → behavioral-decision discovery → implementation-adequacy
-gate → Lykoi authoring/semantic
-representation → validated, compiler-controlled transformation → executable
-implementation/runtime → observable behavior. Formal requirements define WHAT;
+The intended architecture is human intent → AI requirements wizard with approved
+project policies → candidate Formal Requirement Contract ↔ independent source-only
+obligation inventory → coverage reconciliation / human clarification → owner-approved,
+sealed FRC → reviewed structural projection → bounded behavioral-decision discovery
+→ implementation adequacy → faithful V1 projection → restricted Lykoi authoring
+→ deterministic validation/lowering → software → independent external verification.
+A content-bound authority/artifact controller enforces handoffs and halts; independent
+verification is planned and sealed before authoring. Formal requirements define WHAT;
 the program defines HOW. Lykoi is AI-native, not AI-dependent. The semantic model,
 rather than a generated Python file, is the source of truth. Python is the first
 backend, not the definition of the language.
@@ -73,6 +74,32 @@ external resources such as storage, time and IDs should remain distinguishable.
   and [post-B16 corrected boundary](../benchmark/results/phase5c/R5_2_2-POST-B16-CORRECTED-CONTINUATION.md).
 
 ## Current boundary and next steps
+
+The [R5.85 production architecture](production-formalization-evaluation-architecture-r5.85.md)
+ends **`R5_85_PRODUCTION_ARCHITECTURE_DEFINED`**. This is an architecture
+consolidation, not a qualification experiment or an implemented production service.
+The [round report](../benchmark/results/phase5c/R5_85-PRODUCTION-FORMALIZATION-AND-EVALUATION-ARCHITECTURE.md)
+records the design scope and protection. AI interpretations/review remain fallible
+evidence; explicit owners/delegates authorize behavioral meaning. One deterministic
+controller and immutable artifact journal mediate versioned clarification/policies,
+blind independent SOI commitment/reconciliation, scoped seals/grants, analysis,
+restricted authorship and external verification. FRC authority defines WHAT;
+implementation authorization separately requires supported coverage/discovery,
+adequacy, complete faithful unchanged-V1 mapping and a sealed independent verification
+plan. Unsupported scope and unresolved material disagreement halt visibly.
+
+The proposed engineering path has four stages: authority/artifact controller;
+human-facing wizard/policy/clarification and isolated review around existing bounded
+tools; isolated authoring plus prefrozen external-verification closure; then a frozen
+end-to-end public rehearsal. Each stage has concrete completion evidence. **The
+roadmap is not executed here.** No autonomous formalization authority, universal
+understanding or production readiness is claimed; R5.80–R5.84 retain their outcomes.
+Protected admission, executable freeze and full operational closure remain future
+engineering/evaluation work. **R5.83-CANDIDATE-1 remains unactivated**; all B03
+access/activity counters **zero**, **B03_PRISTINE / B03_NOT_EVALUATED /
+B03_NOT_EXPOSED_TO_LYKOI_DEVELOPMENT**. Semantics and V1 unchanged; core **30**
+inherited, Phase 5C paused. Stop after R5.85; no next round or access is authorized.
+Earlier reports below retain their historical scope.
 
 The [R5.84 coverage-authority experiment](../benchmark/results/phase5c/R5_84-INDEPENDENT-COVERAGE-AUTHORITY.md)
 ends **`R5_84_INDEPENDENT_COVERAGE_AUTHORITY_PARTIAL`**. Prospective
