@@ -1,5 +1,30 @@
 # Experimental decisions
 
+## R5.88 — Native back-half evidence and an executable two-part freeze
+
+Implement **R5_88_SEALED_AUTHORING_VERIFICATION_PIPELINE_IMPLEMENTED** as a prospective
+controller extension, preserving authority-1 history and workspace. Recompute native
+adapter/analysis/coverage/build evidence rather than accept producer outcome strings
+or synthetic validation receipts. Require new authoring structural review beyond the
+R5.87 WHAT-only disposition. Preserve exact selected component authority, finite BDI
+families/reachability and R5.80's narrow faithful V1 domain.
+
+Freeze ordinary implementation/import closure, schemas, tools and service fixture
+registries first; after independent plan sealing, bind every exact stage/seal identity
+in an immutable executable run manifest inside the author bundle. Grant binds both,
+avoiding a cyclic freeze/plan identity. Recheck through dispatch/build/verification;
+substitutions and upstream replacements cannot retain authorization.
+
+Prefer normalized V1/minimal toolchain/public seed to exposing human prose or acceptance
+material. Fixed stdin/stdout subprocess fixtures and Python API denial provide local
+separation without OS/provider-independence claims. Plans are service-owned, pre-authoring,
+immutable, independently reviewed evidence. External checks compare public observations,
+not code identity; textual invariants are not executed assertions and bounded coverage
+does not prove universal equivalence. Retain the wizard's V1 gap instead of repairing it.
+Qualified semantic review, broader adapters and a separately authorized public rehearsal
+remain future work. B03/all zero counters and unactivated R5.83 candidate preserved.
+Stop after R5.88.
+
 ## R5.87 — Build a finite requirements service around authority-1
 
 Implement R5.85 stage 2 as **R5_87_REQUIREMENTS_WORKSPACE_IMPLEMENTED**, with the

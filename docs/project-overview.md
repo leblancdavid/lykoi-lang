@@ -75,6 +75,35 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.88 sealed authoring/verification round](../benchmark/results/phase5c/R5_88-SEALED-AUTHORING-AND-INDEPENDENT-VERIFICATION.md)
+ends **`R5_88_SEALED_AUTHORING_VERIFICATION_PIPELINE_IMPLEMENTED`** in public synthetic
+engineering scope. [Sealed-pipeline-1](sealed-authoring-verification-r5.88.md) extends
+the unchanged authority-1 controller with native structural/coverage, existing BDI
+and adequacy, faithful unchanged-V1 projection, independently prepared/reviewed sealed
+plans, executable two-part freeze, exact implementation grants, restricted fixed author
+workers, deterministic existing compiler builds, external behavior checks and restart
+audit. Acceptance is sealed before author-bundle creation; authors cannot revise or
+approve their criteria. Exact selected component authority is retained, with bounded
+BDI discovery/reachability limitations preserved.
+
+New **30/30** tests pass; existing controller **34/34**, workspace **26/26**,
+compiler/application **31/31**, model validation/safety pass. Guarded historical
+R5.80–82/R5.84/V1 remain **104 pass / 2 known physical-byte Windows CRLF pin failures**,
+with old files/pins unchanged. The exact R5.87 public wizard reaches supported
+BDI/adequacy and halts **UNREPRESENTABLE_SOURCE / NO_QUALIFIED_COMPLETE_MAPPING** before
+grant/authoring; no boundary is repaired. Separate synthetic fixtures exercise authorized
+compilation followed by correctly bound behavioral failure and actual process-restart
+audit. A lower-level probe accepts two different generated programs under one behavior
+plan and rejects a compilable wrong default; this is not a full authorized wizard run.
+
+Local process/role fixtures and Python API denial are executable, **not an OS sandbox
+or model/provider independence**. General AI authoring, qualified semantic review,
+broader faithful adapters/verifier coverage and a separately authorized public frozen
+rehearsal remain unqualified. **B03_PRISTINE / B03_NOT_EVALUATED /
+B03_NOT_EXPOSED_TO_LYKOI_DEVELOPMENT**, all counters **zero**; **R5.83-CANDIDATE-1
+unactivated**. Semantics/V1/BDI families unchanged, core **30** inherited, Phase 5C
+paused. **Stop after R5.88**. Earlier boundaries below retain their historical scope.
+
 The [R5.87 requirements workspace round](../benchmark/results/phase5c/R5_87-AI-REQUIREMENTS-WORKSPACE.md)
 ends **`R5_87_REQUIREMENTS_WORKSPACE_IMPLEMENTED`** in public synthetic engineering
 scope. The [workspace-1 service](requirements-workspace-r5.87.md) implements R5.85

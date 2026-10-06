@@ -27,6 +27,14 @@ approval → controller-sealed requirements lifecycle. With `PYTHONPATH=src`, ru
 exact artifact bindings. This is requirements engineering, not production AI
 qualification or an implementation grant.
 
+The [R5.88 sealed authoring/verification pipeline](docs/sealed-authoring-verification-r5.88.md)
+adds native analysis/coverage checks, independently presealed acceptance plans,
+executable component/run freezes, exact grants, restricted fixture authorship,
+deterministic builds and external behavioral verification with restart audit.
+`python -m lykoi_pipeline.example` attempts the public wizard's back half and halts
+at the existing faithful-V1 adapter gap before authoring. Local fixture isolation
+is not an OS sandbox or production AI qualification.
+
 The task application lives in [`air/task_manager.json`](air/task_manager.json)
 (the `air/` path and `air_compiler` import path are retained for compatibility).
 The current v0.3 model is documented in [`docs/axiom-v0.3.md`](docs/axiom-v0.3.md),

@@ -1,5 +1,36 @@
 # Lykoi research log
 
+## R5.88 sealed authoring and independent verification (2026-10-05)
+
+Implemented **R5_88_SEALED_AUTHORING_VERIFICATION_PIPELINE_IMPLEMENTED** in public
+synthetic engineering scope. [Interface](sealed-authoring-verification-r5.88.md) and
+[report/evidence](../benchmark/results/phase5c/R5_88-SEALED-AUTHORING-AND-INDEPENDENT-VERIFICATION.md)
+record native structural coverage, unchanged BDI/adequacy, faithful V1, independent
+WHAT-side plan production/review/seal, executable two-part freeze, exact grant,
+restricted fixture author, existing compiler lowering, bound target, external behavior
+checks, role-controlled result and audit after actual process restart.
+
+New **30/30** tests pass; unchanged controller **34/34**, workspace **26/26**,
+compiler/application **31/31**, model validation/safety pass. Guarded historical suites
+retain **104 pass / 2 known Windows CRLF physical-byte pin failures**; original evidence
+and pins remain unchanged. The exact R5.87 public wizard reaches BDI/adequacy then halts
+at **UNREPRESENTABLE_SOURCE** before grant/authoring; no capability boundary is repaired.
+
+Separate public calibration fixtures preseal a plan, authorize and compile an intentionally
+wrong task implementation, then bind external route/persistence failure. A lower-level
+probe accepts different generated declaration forms under one unchanged wizard plan and
+rejects a compilable wrong default. These are behavioral engineering observations, not
+a successful full authorized wizard run or universal equivalence proof.
+
+Native coverage/identity authority close substitution and author self-acceptance paths
+but do not qualify semantic reviewers or exhaustive acceptance selection. Exact component
+authority is retained, not independently rediscovered by BDI. Role/process fixtures and
+Python API denial are not OS/native-code containment or model/provider independence.
+General AI authoring, broader faithful mapping/verification coverage and a separately
+authorized public frozen rehearsal remain future work. B03/all zero counters, unactivated
+R5.83 candidate, unchanged semantics/V1/families and paused Phase 5C are preserved.
+Stop after R5.88.
+
 ## R5.87 AI-assisted requirements workspace (2026-10-05)
 
 Implemented **R5_87_REQUIREMENTS_WORKSPACE_IMPLEMENTED** around the unchanged R5.86
