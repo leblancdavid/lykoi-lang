@@ -1,5 +1,42 @@
 # Lykoi research log
 
+## R5.86 authority/artifact controller implementation (2026-10-05)
+
+Implemented **R5_86_AUTHORITY_CONTROLLER_IMPLEMENTED** against the unchanged R5.85
+architecture. [Controller/interface](authority-artifact-controller-r5.86.md) and
+[engineering report](../benchmark/results/phase5c/R5_86-AUTHORITY-AND-ARTIFACT-CONTROLLER.md)
+record typed canonical immutable identity, exact dependency DAG, attributable scoped
+approval, separate lifecycle claims, append-only journal, WHAT/plan seals,
+implementation grants, conservative invalidation, durable SQLite restart and audit.
+
+New **34/34** tests pass: arbitrary AI approval/coverage/adequacy/verification labels
+have no authority; wrong versions, escalation, own-model verification, stale policy,
+clarification mismatch and substitution deny. Source/FRC/structure/adequacy/V1/plan/
+policy changes and clarification-answer withdrawal prevent stale new use. Public
+synthetic priority clarification → revised approval/seal → placeholder analysis/V1
+→ sealed independent plan → grant succeeds; replacement source makes it inapplicable.
+Identical semantic event sequences reproduce identities/decisions, and a separate
+process reload preserves authority/audit. Revision races, crash reservations, replay,
+withdrawal during authoring and corrupted copied stores fail visibly.
+
+Compiler/application **31/31**, V1 **33/33**, adequacy **18/18**, BDI **16/16** and
+model validation/safety pass. Selected historical suites total **104 pass / 2 fail**:
+R5.80 public B01 physical-byte reproduction and R5.84 public independent-SOI byte
+pin differ in this CRLF checkout; explicit read-only LF diagnostics match both
+historical pins. Preserve these failures and original files/pins. Verification used
+isolated CPython 3.12.10 because PATH lacks Python and the installed launcher exposes
+only 3.9. No broad protected harness discovery occurred.
+
+This is authority/integrity engineering, not semantic or production qualification.
+Synthetic producers and access receipts do not establish correct natural-language
+judgment or real isolation. Human/session UX, existing bounded producer adapters,
+blind worker containment, restricted build/independent verifier closure, real freeze
+enforcement and public rehearsal remain integration work. No semantics/V1/BDI
+expansion, requirements recovery or next roadmap stage starts. B03 access/activity
+counters **zero**; **B03_PRISTINE / B03_NOT_EVALUATED /
+B03_NOT_EXPOSED_TO_LYKOI_DEVELOPMENT** retained without protected inspection;
+**R5.83-CANDIDATE-1 unactivated**; core **30** inherited, Phase 5C paused. Stop R5.86.
+
 ## R5.85 production formalization and evaluation architecture (2026-10-05)
 
 Produced **R5_85_PRODUCTION_ARCHITECTURE_DEFINED**, a prospective architecture

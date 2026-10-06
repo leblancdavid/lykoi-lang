@@ -1,5 +1,34 @@
 # Experimental decisions
 
+## R5.86 — Implement exact-content authority with a small transactional controller
+
+Implement R5.85 stage 1 as **R5_86_AUTHORITY_CONTROLLER_IMPLEMENTED**. Select
+standard-library SQLite for atomic expected-revision compare-and-append, immutable
+typed artifacts, digest-linked journal, seals/grants and durable single-use author
+reservations. Retain old evidence; conservative authoritative dependency closure
+blocks new use after supersession/revocation. Historical source lineage stays
+auditable without importing predecessor execution authority; retained answers remain
+normative in each subsequent root.
+
+Choose authority-1 wrappers and CJ-1 canonical JSON (safe integers only) rather than
+editing historical experimental schemas. Exact bytes use an explicit base64 wrapper;
+all submitted content is authoritative, locators and journal wall times are not.
+Bind approval/review event identities into seals/grants. Use static provisioned
+credential/role/project principals for minimal attributable human authority; no
+caller-supplied roles or mutable approval fields. Keep finite independent review,
+owner behavioral authority, WHAT seal, implementation grant and independent
+verification-plan authority separate.
+
+Policy precedence is an explicit owner-approved application/exception record,
+not a natural-language solver. Structural content binds the candidate before sealing;
+a post-seal positive receipt binds that projection and exact seal, avoiding cycles.
+Real authentication/delegation, blind worker containment, producer integration,
+actual executable pins and author/verifier launch closure remain later architecture
+stages. Synthetic receipts qualify controller mechanics only. See the
+[interface](authority-artifact-controller-r5.86.md) and
+[report](../benchmark/results/phase5c/R5_86-AUTHORITY-AND-ARTIFACT-CONTROLLER.md).
+Stop after R5.86; no protected access or candidate activation follows.
+
 ## R5.85 — One production architecture with explicit authority and finite review
 
 Adopt **R5_85_PRODUCTION_ARCHITECTURE_DEFINED** in design scope. The

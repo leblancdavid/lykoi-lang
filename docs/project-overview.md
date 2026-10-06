@@ -75,6 +75,32 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.86 controller engineering round](../benchmark/results/phase5c/R5_86-AUTHORITY-AND-ARTIFACT-CONTROLLER.md)
+ends **`R5_86_AUTHORITY_CONTROLLER_IMPLEMENTED`**. The
+[authority-1 controller](authority-artifact-controller-r5.86.md) implements R5.85's
+first engineering layer: typed immutable canonical identities/dependencies,
+credential/role/project authority, exact lifecycle/approval evidence, append-only
+journal, WHAT/plan seals, implementation grants, conservative invalidation, durable
+single-use author reservations, SQLite persistence and programmatic audit. New
+**34/34** controller challenges pass, including false AI assertions, substitutions,
+role escalation, own-model verification, dependency replacement, deterministic
+replay and separate-process restart. A public synthetic clarified/policy-bound chain
+obtains a grant; changing source makes the retained grant stale.
+
+Compiler/application **31/31**, model validation/safety and V1 **33/33** pass.
+Selected historical R5.80–82/R5.84/V1 suites have **104 pass / 2 fail**, attributable
+to public physical-byte pins versus this CRLF checkout; read-only LF diagnostics
+match both original pins. Historical results/pins remain unchanged. Synthetic
+analysis/V1/access receipts exercise integrity, not semantic truth or deployment
+isolation. Real human/session UX, bounded producer adapters, blind worker containment,
+restricted author/build/independent verifier closure, executable pins and a public
+end-to-end rehearsal remain. No production qualification or protected readiness is
+claimed. **B03_PRISTINE / B03_NOT_EVALUATED /
+B03_NOT_EXPOSED_TO_LYKOI_DEVELOPMENT**, all B03 counters **zero**;
+**R5.83-CANDIDATE-1 unactivated**. Semantics/V1/BDI families unchanged, core **30**
+inherited, Phase 5C paused. **Stop after R5.86**; no requirements workspace begins.
+Earlier boundaries below retain their historical scope.
+
 The [R5.85 production architecture](production-formalization-evaluation-architecture-r5.85.md)
 ends **`R5_85_PRODUCTION_ARCHITECTURE_DEFINED`**. This is an architecture
 consolidation, not a qualification experiment or an implemented production service.
