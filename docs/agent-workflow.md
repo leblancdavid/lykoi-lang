@@ -10,8 +10,9 @@ does not retroactively amend them or authorize a new run.
 
 **Current prospective research policy is [R5.96](research-workflow-r5.96.md).**
 Historical frozen experiments retain their protocols; their infrastructure gates
-do not govern ordinary research or the next held-out benchmark. Preserve B03 until
-a later benchmark round takes the fresh snapshot. Never read held-out requirements
+do not govern ordinary research or the next held-out benchmark. B03 was exposed in
+R5.97 and its first structural-coverage result is immutable; later B03 work is
+post-exposure research and requires separate instructions. Never read held-out requirements
 merely to orient, select retained architecture or run broad historical tests.
 
 1. Read `AGENTS.md`, `README.md` and `docs/project-overview.md`. Check

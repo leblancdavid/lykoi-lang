@@ -25,7 +25,10 @@ available in the active environment. OpenCode, model/machine/runtime/transport
 qualification and protected freeze activation are not benchmark prerequisites.
 See the [simplified workflow, infrastructure classification and snapshot command](docs/research-workflow-r5.96.md).
 No held-out-informed Lykoi changes are allowed before the first recorded result.
-B03 remains unread in R5.96; the next instructed round can snapshot and benchmark it.
+B03 was exposed in R5.97 and halted at structural coverage:
+**`B03_FIRST_RESULT = DECISION_DISCOVERY_UNSUPPORTED`** (native
+`STRUCTURAL_COVERAGE_FAILURE`). No authoring, compilation or B03 behavioral
+verification was reached. See the [R5.97 report](benchmark/results/phase5c/R5_97-B03-HELD-OUT-EVALUATION.md).
 The infrastructure descriptions below retain their historical experimental scope.
 
 The [R5.87 requirements workspace](docs/requirements-workspace-r5.87.md) implements

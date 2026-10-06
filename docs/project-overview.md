@@ -86,13 +86,23 @@ snapshot command. FRC, clarification/policies/wizard, SOI/reconciliation,
 BDI/adequacy, faithful V1, controller/workspace, independent verification and
 deterministic lowering remain useful bounded Lykoi architecture.
 
-**B03 remains unread in R5.96.** The next research step is the B03 benchmark in a
-subsequent instructed round: immediately record commit/tree/tests/core/V1/model/time
-and the held-out declaration, then expose and evaluate without B03-informed Lykoi
-changes until the first terminal result is recorded. Later development is marked
-post-exposure. No further infrastructure qualification is required. See the
-[R5.96 report](../benchmark/results/phase5c/R5_96-RESEARCH-WORKFLOW-SIMPLIFICATION.md)
-for current-environment baseline evidence.
+**R5.97 — `R5_97_B03_HELD_OUT_EVALUATION_COMPLETE`.** B03 was first accessed at
+2026-10-06T18:15:12.391794+00:00 after a fresh clean-tree snapshot and 190/190
+selected baseline tests. **`B03_FIRST_RESULT = DECISION_DISCOVERY_UNSUPPORTED`**,
+native **`STRUCTURAL_COVERAGE_FAILURE`**: the unchanged structural bridge marked
+all nine source-anchored candidate obligations unsupported. Candidate FRC validation
+succeeded; inventory/reconciliation were same-context, with no independent approval
+or owner-sealed WHAT claimed. BDI, adequacy, V1 representation, authoring, compilation
+and B03 behavioral verification were not reached. See the
+[R5.97 report and immutable result](../benchmark/results/phase5c/R5_97-B03-HELD-OUT-EVALUATION.md).
+
+**B03 is permanently exposed to formalization and structural analysis**, not pristine
+or unread. No Lykoi machinery changed before or after its first result; no repair or
+rerun occurred. Future B03 work is post-exposure research. A separately instructed
+round may investigate the general structural bridge and independently review the
+candidate/context; R5.97 stops after evidence/reporting and does not access B04.
+The [R5.96 report](../benchmark/results/phase5c/R5_96-RESEARCH-WORKFLOW-SIMPLIFICATION.md)
+retains its earlier pre-access baseline and policy decision.
 
 ### Historical boundaries (preserved; not current infrastructure prerequisites)
 

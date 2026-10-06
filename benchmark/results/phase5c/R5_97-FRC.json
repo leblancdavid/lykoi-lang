@@ -1,0 +1,181 @@
+{
+  "schema_version": "FormalRequirementContract-protected-0.1",
+  "contract_id": "R5.97-B03",
+  "revision": 1,
+  "source": {
+    "id": "B03",
+    "text": "# B03 — List by tag (local)\n\nAdd `list-tag --tag VALUE`. Return tasks whose `tags` contains exactly VALUE\n(case-sensitive; query input is not trimmed), including completed tasks, in\nnormal order. Reject blank or whitespace-only query input with `invalid_tag`.\nA tag not present returns `[]`; the query never changes storage. For example,\n`work` does not select a task tagged `Work`.\n",
+    "sha256": "56c6ac4c187962c71d5866b27f9568c8b6de055a0bab074896ef41b61a554630",
+    "classification": "PROTECTED_EVALUATION"
+  },
+  "context": {
+    "scope": "B03 local list-by-tag change to the existing task CLI under the frozen shared benchmark contract; requirements/README.md retains cumulative compatibility. No other-track implementation or hidden oracle is authority.",
+    "domains": {
+      "query": "CLI string VALUE; blank/whitespace-only rejected; other VALUE compared verbatim",
+      "tasks": "Valid task records with tags, pending or completed",
+      "order": "(created_at, id) ascending per frozen shared contract"
+    },
+    "assumptions": [],
+    "component_authority": null
+  },
+  "obligations": [
+    {
+      "id": "B03-REQ-001",
+      "basis": "STATED",
+      "source_quote": "Add `list-tag --tag VALUE`.",
+      "derived_from": [],
+      "relation": {
+        "kind": "crud",
+        "parameters": {
+          "domain": "Existing task CLI",
+          "operation": "list-tag --tag VALUE",
+          "condition": "Invocation of the new command",
+          "result": "Read/list task query under the shared JSON subprocess contract",
+          "frame": "B03-REQ-009"
+        }
+      },
+      "statement": "The task CLI shall expose list-tag --tag VALUE using the existing JSON subprocess interface."
+    },
+    {
+      "id": "B03-REQ-002",
+      "basis": "STATED",
+      "source_quote": "Return tasks whose `tags` contains exactly VALUE",
+      "derived_from": [],
+      "relation": {
+        "kind": "filter_order",
+        "parameters": {
+          "domain": "Valid stored tasks and nonblank query VALUE",
+          "predicate": "tags contains a string exactly equal to VALUE",
+          "multiplicity": "All and only qualifying tasks, each once",
+          "frame": "B03-REQ-009"
+        }
+      },
+      "statement": "For a valid nonblank query, return all and only tasks with a tag exactly equal to the supplied VALUE."
+    },
+    {
+      "id": "B03-REQ-003",
+      "basis": "STATED",
+      "source_quote": "case-sensitive",
+      "derived_from": [],
+      "relation": {
+        "kind": "filter_order",
+        "parameters": {
+          "domain": "B03-REQ-002",
+          "comparison": "Case-sensitive exact equality",
+          "result": "work does not match Work",
+          "frame": "B03-REQ-009"
+        }
+      },
+      "statement": "Tag matching shall be case-sensitive; work shall not select a task tagged only Work."
+    },
+    {
+      "id": "B03-REQ-004",
+      "basis": "STATED",
+      "source_quote": "query input is not trimmed",
+      "derived_from": [],
+      "relation": {
+        "kind": "filter_order",
+        "parameters": {
+          "domain": "Nonblank query VALUE",
+          "comparison": "Use VALUE verbatim without trimming",
+          "result": "Whitespace around nonblank input remains part of the match value",
+          "frame": "B03-REQ-009"
+        }
+      },
+      "statement": "Matching shall use the supplied query verbatim without trimming it."
+    },
+    {
+      "id": "B03-REQ-005",
+      "basis": "STATED",
+      "source_quote": "including completed tasks",
+      "derived_from": [],
+      "relation": {
+        "kind": "filter_order",
+        "parameters": {
+          "domain": "Existing valid task statuses",
+          "predicate": "B03-REQ-002 without excluding completed tasks",
+          "result": "Qualifying completed and pending tasks included",
+          "frame": "B03-REQ-009"
+        }
+      },
+      "statement": "Qualifying completed tasks shall be included along with qualifying pending tasks."
+    },
+    {
+      "id": "B03-REQ-006",
+      "basis": "STATED",
+      "source_quote": "normal order",
+      "derived_from": [],
+      "relation": {
+        "kind": "filter_order",
+        "parameters": {
+          "domain": "Returned matching task list",
+          "ordering": "(created_at, id) ascending",
+          "authority": "benchmark/baseline.md and benchmark/requirements/README.md",
+          "multiplicity": "B03-REQ-002",
+          "frame": "B03-REQ-009"
+        }
+      },
+      "statement": "The returned matching tasks shall be ordered by (created_at, id) ascending, as defined by the shared benchmark contract."
+    },
+    {
+      "id": "B03-REQ-007",
+      "basis": "STATED",
+      "source_quote": "Reject blank or whitespace-only query input with `invalid_tag`.",
+      "derived_from": [],
+      "relation": {
+        "kind": "transition",
+        "parameters": {
+          "domain": "Blank or whitespace-only query VALUE",
+          "condition": "Query input is blank or whitespace-only",
+          "result": "Reject with invalid_tag in the shared JSON error envelope on stderr and exit 1",
+          "successor_state": "Unchanged storage",
+          "frame": "B03-REQ-009"
+        }
+      },
+      "statement": "Blank or whitespace-only query input shall fail with invalid_tag, using the existing JSON error envelope and exit status, without changing storage."
+    },
+    {
+      "id": "B03-REQ-008",
+      "basis": "STATED",
+      "source_quote": "A tag not present returns `[]`",
+      "derived_from": [],
+      "relation": {
+        "kind": "filter_order",
+        "parameters": {
+          "domain": "Valid nonblank query VALUE",
+          "condition": "No stored task has an exactly matching tag",
+          "result": [],
+          "frame": "B03-REQ-009"
+        }
+      },
+      "statement": "A valid query with no matching tag shall return an empty JSON list."
+    },
+    {
+      "id": "B03-REQ-009",
+      "basis": "STATED",
+      "source_quote": "the query never changes storage",
+      "derived_from": [],
+      "relation": {
+        "kind": "transition",
+        "parameters": {
+          "domain": "Every list-tag invocation",
+          "condition": "Success or rejection",
+          "successor_state": "Storage unchanged, including observable persisted bytes and file absence",
+          "result": "No storage mutation",
+          "frame": "All existing stored tasks and unrelated fields preserved"
+        }
+      },
+      "statement": "The query shall never change storage, on either success or rejection; persisted bytes and file absence shall remain unchanged."
+    }
+  ],
+  "issues": [],
+  "unspecified": [
+    "No new concurrency, performance or internal-algorithm policy is supplied by B03; existing shared contract remains applicable."
+  ],
+  "implementation_choices": [
+    "Any internal strategy that preserves the complete required observable behavior."
+  ],
+  "lineage": [],
+  "formalizer": "openai/gpt-6.1-sol / active research agent",
+  "review": null
+}

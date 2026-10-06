@@ -1,0 +1,163 @@
+{
+  "version": "sealed-pipeline-1",
+  "source_frc": "ef80ce829df154d9405fa409d0ffffef67bf9325855af66d5446c4bab2b5a83c",
+  "rows": [
+    {
+      "obligation": "B03-REQ-001",
+      "classification": "UNSUPPORTED",
+      "relation": {
+        "kind": "crud",
+        "parameters": {
+          "domain": "Existing task CLI",
+          "operation": "list-tag --tag VALUE",
+          "condition": "Invocation of the new command",
+          "result": "Read/list task query under the shared JSON subprocess contract",
+          "frame": "B03-REQ-009"
+        }
+      },
+      "operation": null,
+      "justification": "No qualified structural mapping"
+    },
+    {
+      "obligation": "B03-REQ-002",
+      "classification": "UNSUPPORTED",
+      "relation": {
+        "kind": "filter_order",
+        "parameters": {
+          "domain": "Valid stored tasks and nonblank query VALUE",
+          "predicate": "tags contains a string exactly equal to VALUE",
+          "multiplicity": "All and only qualifying tasks, each once",
+          "frame": "B03-REQ-009"
+        }
+      },
+      "operation": null,
+      "justification": "No qualified structural mapping"
+    },
+    {
+      "obligation": "B03-REQ-003",
+      "classification": "UNSUPPORTED",
+      "relation": {
+        "kind": "filter_order",
+        "parameters": {
+          "domain": "B03-REQ-002",
+          "comparison": "Case-sensitive exact equality",
+          "result": "work does not match Work",
+          "frame": "B03-REQ-009"
+        }
+      },
+      "operation": null,
+      "justification": "No qualified structural mapping"
+    },
+    {
+      "obligation": "B03-REQ-004",
+      "classification": "UNSUPPORTED",
+      "relation": {
+        "kind": "filter_order",
+        "parameters": {
+          "domain": "Nonblank query VALUE",
+          "comparison": "Use VALUE verbatim without trimming",
+          "result": "Whitespace around nonblank input remains part of the match value",
+          "frame": "B03-REQ-009"
+        }
+      },
+      "operation": null,
+      "justification": "No qualified structural mapping"
+    },
+    {
+      "obligation": "B03-REQ-005",
+      "classification": "UNSUPPORTED",
+      "relation": {
+        "kind": "filter_order",
+        "parameters": {
+          "domain": "Existing valid task statuses",
+          "predicate": "B03-REQ-002 without excluding completed tasks",
+          "result": "Qualifying completed and pending tasks included",
+          "frame": "B03-REQ-009"
+        }
+      },
+      "operation": null,
+      "justification": "No qualified structural mapping"
+    },
+    {
+      "obligation": "B03-REQ-006",
+      "classification": "UNSUPPORTED",
+      "relation": {
+        "kind": "filter_order",
+        "parameters": {
+          "domain": "Returned matching task list",
+          "ordering": "(created_at, id) ascending",
+          "authority": "benchmark/baseline.md and benchmark/requirements/README.md",
+          "multiplicity": "B03-REQ-002",
+          "frame": "B03-REQ-009"
+        }
+      },
+      "operation": null,
+      "justification": "No qualified structural mapping"
+    },
+    {
+      "obligation": "B03-REQ-007",
+      "classification": "UNSUPPORTED",
+      "relation": {
+        "kind": "transition",
+        "parameters": {
+          "domain": "Blank or whitespace-only query VALUE",
+          "condition": "Query input is blank or whitespace-only",
+          "result": "Reject with invalid_tag in the shared JSON error envelope on stderr and exit 1",
+          "successor_state": "Unchanged storage",
+          "frame": "B03-REQ-009"
+        }
+      },
+      "operation": null,
+      "justification": "No qualified structural mapping"
+    },
+    {
+      "obligation": "B03-REQ-008",
+      "classification": "UNSUPPORTED",
+      "relation": {
+        "kind": "filter_order",
+        "parameters": {
+          "domain": "Valid nonblank query VALUE",
+          "condition": "No stored task has an exactly matching tag",
+          "result": [],
+          "frame": "B03-REQ-009"
+        }
+      },
+      "operation": null,
+      "justification": "No qualified structural mapping"
+    },
+    {
+      "obligation": "B03-REQ-009",
+      "classification": "UNSUPPORTED",
+      "relation": {
+        "kind": "transition",
+        "parameters": {
+          "domain": "Every list-tag invocation",
+          "condition": "Success or rejection",
+          "successor_state": "Storage unchanged, including observable persisted bytes and file absence",
+          "result": "No storage mutation",
+          "frame": "All existing stored tasks and unrelated fields preserved"
+        }
+      },
+      "operation": null,
+      "justification": "No qualified structural mapping"
+    }
+  ],
+  "interface": {
+    "version": "BehavioralDecisionInventory-0.1",
+    "operations": []
+  },
+  "unsupported": [
+    "B03-REQ-001",
+    "B03-REQ-002",
+    "B03-REQ-003",
+    "B03-REQ-004",
+    "B03-REQ-005",
+    "B03-REQ-006",
+    "B03-REQ-007",
+    "B03-REQ-008",
+    "B03-REQ-009"
+  ],
+  "exclusions": [],
+  "observation_scope": "Only sealed relations and explicitly declared channels",
+  "reachability": "Declared possible; no general reachability/completeness proof; exact component context is preserved, not independently rediscovered"
+}

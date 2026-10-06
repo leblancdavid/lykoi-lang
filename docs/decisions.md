@@ -1,5 +1,28 @@
 # Experimental decisions
 
+## R5.97 — Preserve B03's first structural halt; defer remediation
+
+Retain **`B03_FIRST_RESULT = DECISION_DISCOVERY_UNSUPPORTED`**, native
+**`STRUCTURAL_COVERAGE_FAILURE`**, as recorded before analysis/reporting in the
+[R5.97 evidence](../benchmark/results/phase5c/R5_97-B03-HELD-OUT-EVALUATION.md).
+Use the available current model and compatible interpreter under R5.96; no
+infrastructure-readiness phase or protected activation was added. The existing
+pure protected-provenance validator/structural functions can produce negative
+research evidence without fabricating product controller approvals.
+
+The tradeoff is explicit: same-context FRC drafting/inventory is inspectable
+candidate evidence, not independent review or an owner-sealed WHAT. Preserve that
+limitation with the negative result. Never transform fixed ordering to unconstrained
+ordering, substitute task creation for a tag query, or discard rejection/storage
+frames to fit bounded structural patterns. Stop at the first structural coverage
+failure rather than proceeding downstream to select a more favorable classification.
+
+B03 is permanently exposed to formalization and structural analysis. Adequacy,
+faithful V1 and core-language capability remain undetermined by this run. Any later
+review, general abstraction work or B03 diagnostic needs a separately instructed
+round and must retain this first result; no repair, second attempt or B04 access
+occurs in R5.97. Historical freezes and comparative achieved histories stay intact.
+
 ## R5.96 — Return research to Lykoi; retire infrastructure prerequisites
 
 Adopt [the R5.96 workflow decision](research-workflow-r5.96.md) prospectively.

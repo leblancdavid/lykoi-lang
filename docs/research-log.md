@@ -1,5 +1,37 @@
 # Lykoi research log
 
+## R5.97 B03 held-out evaluation (2026-10-06)
+
+**`R5_97_B03_HELD_OUT_EVALUATION_COMPLETE`**;
+**`B03_FIRST_RESULT = DECISION_DISCOVERY_UNSUPPORTED`**, native
+**`STRUCTURAL_COVERAGE_FAILURE`** at structural projection/coverage.
+[Report and immutable evidence](../benchmark/results/phase5c/R5_97-B03-HELD-OUT-EVALUATION.md)
+bind the fresh snapshot at `8c4240ae85336bc8700b788e44cc7f5b88f3c2d7`, clean
+pre-check/post-check tree, 190/190 tests plus validation/safety, core 0.3/backend
+0.3.0, unchanged V1, CPython 3.14.3 and OpenAI `openai/gpt-6.1-sol`.
+
+B03 first access was 2026-10-06T18:15:12.391794+00:00. Original source bytes/hash
+and exact text are retained. The current agent drafted nine obligations for the
+tag-query command, exact membership, case sensitivity, verbatim query, completed
+tasks, fixed baseline order, invalid-tag rejection, empty result and no mutation.
+The protected-provenance FRC passed its existing validator. Inventory/reconciliation
+were same-context; no independent/blind review, owner approval or WHAT seal was
+asserted. No material ambiguity/conflict was detected; shared benchmark authority
+defines normal order without consulting an implementation or hidden acceptance.
+
+The unchanged structural adapter returned 9/9 unsupported rows and its coverage
+function raised the recorded terminal failure at 18:18:22.068907+00:00. BDI,
+adequacy, V1 projection, authoring, compilation and behavioral verification were
+NOT_RUN. This observes a bounded structural-bridge limitation on the preserved
+candidate, not fundamental V1/Lykoi impossibility or a behavioral software failure.
+No machinery, prompts, model or generated implementation were changed to progress.
+
+B03 is now permanently exposed to formalization/structural analysis; it was not
+exposed to authoring or evaluated behaviorally. No repair or rerun followed.
+Independent source/candidate review and general public/synthetic query-structure
+investigation are deferred to a separately instructed round. R5.97 stops; no B04
+access. Earlier unread declarations below retain their historical round scope.
+
 ## R5.96 research workflow simplification (2026-10-06)
 
 The research priority returns to evaluating Lykoi with the current compatible

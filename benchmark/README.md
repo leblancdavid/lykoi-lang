@@ -14,7 +14,12 @@ model/provider when known, time and the declaration that B03 has never been insp
 Mark B03 exposed at first access. Process/formalize with existing Lykoi, implement
 if representable, independently verify and record the first terminal result before
 any B03-informed change to Lykoi. Later attempts are post-exposure diagnostics.
-R5.96 performs cleanup only: **B03 remains unread**.
+R5.96 performed cleanup without B03 access. **R5.97 exposed B03** after the fresh
+snapshot and recorded **`DECISION_DISCOVERY_UNSUPPORTED`**, native
+`STRUCTURAL_COVERAGE_FAILURE`, before BDI/adequacy/V1/authoring/compilation or
+behavioral verification. [The report and immutable first result](results/phase5c/R5_97-B03-HELD-OUT-EVALUATION.md)
+retain the exact source, candidate-review limitations and stage accounting.
+B03 is no longer pristine/unread; later B03 runs are post-exposure evidence.
 
 Two task CLIs start from equivalent observable behavior. `conventional/task_manager.py`
 is maintained as Python source. Track B's source of truth is the repository's
