@@ -1,0 +1,49 @@
+{
+  "plan": {
+    "cases": [
+      {
+        "id": "create-task-with-title",
+        "initial_state": "fresh_directory",
+        "invariants": [],
+        "obligations": [
+          "TITLE"
+        ],
+        "rejections": "Any output that omits the supplied title or returns a non-zero exit code.",
+        "steps": [
+          {
+            "absent": [],
+            "argv": [
+              "create",
+              "--title",
+              "My Task",
+              "--description",
+              "A description"
+            ],
+            "contains": [
+              "My Task"
+            ],
+            "returncode": 0
+          }
+        ],
+        "transitions": "A task is created and the supplied title is reflected in the output."
+      }
+    ],
+    "coverage": [
+      {
+        "cases": [
+          "create-task-with-title"
+        ],
+        "classification": "EXERCISED",
+        "justification": "The case invokes create with a supplied title and verifies it appears in output.",
+        "obligation": "TITLE"
+      }
+    ],
+    "limitations": [
+      "Priority and description behavior beyond title are not covered by the single TITLE obligation.",
+      "Return code contract is inferred from conventional CLI behavior; no explicit obligation states the code."
+    ],
+    "outcome": "READY",
+    "producer": "candidate-plan-generator",
+    "version": "external-cli-plan-1"
+  }
+}

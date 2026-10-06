@@ -1,0 +1,88 @@
+{
+  "plan": {
+    "cases": [
+      {
+        "argv": [
+          "task",
+          "create",
+          "--title",
+          "Buy groceries"
+        ],
+        "coverage": {
+          "TITLE": [
+            "supplied title is present in output"
+          ]
+        },
+        "description": "Create a task with a supplied title and verify the title appears in output",
+        "id": "case-TITLE-create-basic",
+        "obligation_ids": [
+          "TITLE"
+        ],
+        "observations": [
+          {
+            "kind": "contains",
+            "value": "Buy groceries"
+          }
+        ],
+        "returncode": 0
+      },
+      {
+        "argv": [
+          "task",
+          "create",
+          "--title",
+          "Schedule meeting"
+        ],
+        "coverage": {
+          "TITLE": [
+            "supplied title is present in output for alternate input"
+          ]
+        },
+        "description": "Create a task with a different supplied title to confirm title is not hardcoded",
+        "id": "case-TITLE-create-alternate-title",
+        "obligation_ids": [
+          "TITLE"
+        ],
+        "observations": [
+          {
+            "kind": "contains",
+            "value": "Schedule meeting"
+          }
+        ],
+        "returncode": 0
+      },
+      {
+        "argv": [
+          "task",
+          "create",
+          "--title",
+          "Write report"
+        ],
+        "coverage": {
+          "TITLE": [
+            "result reflects the supplied title not a prior title"
+          ]
+        },
+        "description": "Verify that a previously used title does not appear when a different title is supplied",
+        "id": "case-TITLE-create-title-absent-other",
+        "obligation_ids": [
+          "TITLE"
+        ],
+        "observations": [
+          {
+            "kind": "contains",
+            "value": "Write report"
+          },
+          {
+            "kind": "absent",
+            "value": "Buy groceries"
+          }
+        ],
+        "returncode": 0
+      }
+    ],
+    "contract_id": "calibration",
+    "plan_type": "external-cli-plan-1",
+    "revision": 1
+  }
+}

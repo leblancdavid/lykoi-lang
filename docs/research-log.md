@@ -1,5 +1,32 @@
 # Lykoi research log
 
+## R5.91 live AI integration and public rehearsal freeze (2026-10-05/06 UTC)
+
+**R5_91_PUBLIC_REHEARSAL_FROZEN**. Existing OpenCode 1.1.25/GitHub Copilot OAuth
+provides live `claude-sonnet-4.6` access without an environment API key. Four real
+role adapters succeeded in final non-scored public smoke: native formalizer candidate,
+committed source-only inventory, compiler/externally verified author calibration,
+reviewed WHAT-only plan candidate. Eleven explicit role invocations across three
+small attempts preserve malformed FRC, invalid author field, non-native plan and
+empty-span reviewer failures. Protocol guidance/source-span metadata/identity-reference
+assignment were repaired; Lykoi semantics, compiler, mappings and profile were not.
+This is adapter integration, not broad certification or a live human-approved rehearsal.
+
+Same model for all roles; separate fresh contexts/source-blind-to-candidate workflow,
+not independent cognition. Correlated errors and ordinary clarification/refusal remain.
+Provider build/weights and exact internal provider-request accounting are unavailable.
+Current policy freezes provenance/configuration and keeps all outputs non-authoritative.
+Full model-governance/qualification infrastructure is deferred; evaluate Lykoi itself.
+
+New **14/14** tests and existing R5.86–89 **34/26/30/33**, compiler/application **31/31**
+pass; guarded historical **104 pass / 2 known CRLF pin failures** preserved. Final
+**R5.91-PUBLIC-REHEARSAL-2** activates at journal revision **2**, 2026-10-06T03:59:48.308193Z.
+The first activation's decimal-timing receipt-publication failure and stale original
+freeze/controller are preserved. Final admission/restart/order checks enforce freeze
+before source storage; actual requirement admissions remain zero. [Report/evidence](../benchmark/results/phase5c/R5_91-LIVE-AI-INTEGRATION-AND-PUBLIC-REHEARSAL-FREEZE.md).
+R5.90 historical result unchanged; no future requirement selected, no rehearsal, B03
+all counters zero/protection unchanged, R5.83 nonactivation. Stop after R5.91.
+
 ## R5.90 live AI worker qualification operational preflight (2026-10-05)
 
 **R5_90_LIVE_AI_WORKERS_BLOCKED_CREDENTIAL_UNAVAILABLE**. Presence-only checks of

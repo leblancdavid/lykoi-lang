@@ -75,6 +75,33 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.91 live integration and public freeze](../benchmark/results/phase5c/R5_91-LIVE-AI-INTEGRATION-AND-PUBLIC-REHEARSAL-FREEZE.md)
+ends **`R5_91_PUBLIC_REHEARSAL_FROZEN`**. Existing OpenCode/GitHub Copilot OAuth executes
+`claude-sonnet-4.6` in fresh restricted contexts for all four roles. Final public
+non-scored smoke tests register native formalizer/reviewer candidates, compile/verify
+an author candidate under existing public calibration authority, and review a WHAT-only
+candidate plan. Invalid earlier outputs/retries are preserved. Same-model correlated
+errors remain possible; separate-context/source-blind-to-candidate workflow is the claim,
+not independent model cognition. Semantics/mappings/profile/compiler are unchanged.
+
+**R5.91-PUBLIC-REHEARSAL-2** is active at controller revision **2**, with exact identity
+and UTC time in [activation evidence](../benchmark/results/phase5c/r5_91/activation.json).
+The first activation's receipt-publication failure is preserved under its different,
+now-stale identity. The final public controller rejects requirements before activation
+and proves ordering through its append-only journal; no future requirement has been
+selected or admitted. New checks **14/14**, R5.86–89 **34/26/30/33**, compiler/application
+**31/31** pass; historical **104 pass / 2 known CRLF pin failures** remain preserved.
+
+The deliberate strategy is **evaluate Lykoi, not build general model governance**.
+Full role-by-role model qualification is not required for this bounded research round;
+model identity is provenance and frozen configuration, never semantic authority.
+R5.90's historical blocked result remains unchanged. Next: a separately authorized
+new public human requirement through the [frozen protocol](public-rehearsal-protocol-r5.91.md),
+clarification/human answers and unchanged pipeline, preserving its first terminal result.
+**Stop after R5.91**; no rehearsal or requirement selection here. B03 protection/all
+zero counters and R5.83 nonactivation remain; Phase 5C paused. Earlier boundaries retain
+their historical scope.
+
 The [R5.90 live worker qualification preflight](../benchmark/results/phase5c/R5_90-LIVE-AI-WORKER-QUALIFICATION.md)
 ends **`R5_90_LIVE_AI_WORKERS_BLOCKED_CREDENTIAL_UNAVAILABLE`**. Presence-only checks
 found no designated service credential or conventional OpenAI credential in process,

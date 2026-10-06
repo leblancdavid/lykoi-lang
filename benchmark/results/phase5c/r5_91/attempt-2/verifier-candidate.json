@@ -1,0 +1,125 @@
+{
+  "plan": {
+    "cases": [
+      {
+        "id": "CASE_TITLE_BASIC",
+        "initial_state": "fresh_directory",
+        "invariants": [],
+        "obligations": [
+          "TITLE"
+        ],
+        "rejections": "Any output not containing the supplied title, or non-zero exit code.",
+        "steps": [
+          {
+            "absent": [],
+            "argv": [
+              "create",
+              "--title",
+              "My Task",
+              "--description",
+              "Some description"
+            ],
+            "contains": [
+              "My Task"
+            ],
+            "returncode": 0
+          }
+        ],
+        "transitions": "A task is created with the supplied title visible in output."
+      },
+      {
+        "id": "CASE_TITLE_EMPTY",
+        "initial_state": "fresh_directory",
+        "invariants": [],
+        "obligations": [
+          "TITLE"
+        ],
+        "rejections": "Zero exit code or silent acceptance of empty title.",
+        "steps": [
+          {
+            "absent": [],
+            "argv": [
+              "create",
+              "--title",
+              "",
+              "--description",
+              "desc"
+            ],
+            "contains": [],
+            "returncode": 1
+          }
+        ],
+        "transitions": "An empty title is rejected with a non-zero exit code."
+      },
+      {
+        "id": "CASE_TITLE_WHITESPACE",
+        "initial_state": "fresh_directory",
+        "invariants": [],
+        "obligations": [
+          "TITLE"
+        ],
+        "rejections": "Non-zero exit code or title not present in output.",
+        "steps": [
+          {
+            "absent": [],
+            "argv": [
+              "create",
+              "--title",
+              "  Task With Spaces  ",
+              "--description",
+              "desc"
+            ],
+            "contains": [
+              "Task With Spaces"
+            ],
+            "returncode": 0
+          }
+        ],
+        "transitions": "A task is created and the title is reflected in output."
+      },
+      {
+        "id": "CASE_TITLE_MISSING_FLAG",
+        "initial_state": "fresh_directory",
+        "invariants": [],
+        "obligations": [
+          "TITLE"
+        ],
+        "rejections": "Zero exit code when --title is absent.",
+        "steps": [
+          {
+            "absent": [],
+            "argv": [
+              "create",
+              "--description",
+              "desc"
+            ],
+            "contains": [],
+            "returncode": 1
+          }
+        ],
+        "transitions": "Missing required --title flag causes a non-zero exit code."
+      }
+    ],
+    "coverage": [
+      {
+        "cases": [
+          "CASE_TITLE_BASIC",
+          "CASE_TITLE_EMPTY",
+          "CASE_TITLE_WHITESPACE",
+          "CASE_TITLE_MISSING_FLAG"
+        ],
+        "classification": "EXERCISED",
+        "justification": "Cases exercise creation with a valid title, empty title, whitespace title, and missing title flag, covering the CRUD create operation with supplied title.",
+        "obligation": "TITLE"
+      }
+    ],
+    "limitations": [
+      "Title persistence and retrieval are not verified; only creation output is checked.",
+      "Priority and description semantics beyond TITLE obligation are not covered here.",
+      "Behavior of empty title (reject vs. accept) is assumed non-zero but is UNVERIFIED without implementation access."
+    ],
+    "outcome": "READY",
+    "producer": "candidate-plan-generator",
+    "version": "external-cli-plan-1"
+  }
+}

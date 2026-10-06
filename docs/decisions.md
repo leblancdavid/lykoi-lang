@@ -1,5 +1,24 @@
 # Experimental decisions
 
+## R5.91 — One live configuration; evaluate Lykoi before general model governance
+
+Full role-by-role model qualification is unnecessary before this bounded research
+question proceeds. Preserve R5.90's credential-unavailable stop, while prospectively
+using the legitimate existing OpenCode/GitHub Copilot OAuth path and one model for
+four separate restricted contexts. Freeze actual configuration/prompts/schema/adapter
+and retain untrusted outputs plus existing controller authority. Model identity is
+provenance, not semantic authority; a changed configuration defines another experiment.
+Defer registries, routing, tournaments, retirement and interchangeability guarantees.
+
+Native-protocol instructions and source-only span metadata repair integration without
+changing language semantics or faithful mappings. Invalid model candidates/retries
+remain evidence. Same-model correlated errors are expected; source-blind workflow is
+not independent cognition. The public controller enforces activation before message/
+source admission and records order in its existing journal. The first activation's
+receipt publication failure is preserved; corrected publication receives a different
+freeze identity before any requirement is seen. The final active public configuration
+is R5.91-PUBLIC-REHEARSAL-2, separate from B03. [Report](../benchmark/results/phase5c/R5_91-LIVE-AI-INTEGRATION-AND-PUBLIC-REHEARSAL-FREEZE.md).
+
 ## R5.90 — Stop qualification when live credentials are unavailable
 
 Apply the requested operational stop before scored execution or qualification

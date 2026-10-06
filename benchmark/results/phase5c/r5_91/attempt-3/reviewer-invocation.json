@@ -1,0 +1,86 @@
+{
+  "allowed_input": {
+    "evidence": [
+      {
+        "identity": "message:authority-1:CJ-1:sha256:47a16d7058d322183b1cebf92920da1364fe6f75a4527975d15d921c7cbe9cb7",
+        "provenance": "human_statement",
+        "text": "Create tasks with titles."
+      }
+    ],
+    "instructions": "Propose WHAT only. Retain material uncertainty; conventions are not authority. Extract source inventory without candidate access.",
+    "output_schema": "WorkspaceSOI-1",
+    "role": "reviewer",
+    "session": "reviewer:43451edc38ce4adabe4dcf4450b6608e",
+    "source": {
+      "identity": "source:authority-1:CJ-1:sha256:ad0a17f555b6bbec3b54adab3de0a3ca36e059b1fe1c7db1b5027efaa39bde39",
+      "revision": 1,
+      "text": "Create tasks with titles."
+    },
+    "source_commitment": "87f44d79a9896f47ac8f9c0fbe4ca7bda29cf12034fcc5c1dd7a0a7a34bf71d4",
+    "source_span": {
+      "end": 25,
+      "quote": "Create tasks with titles.",
+      "start": 0
+    }
+  },
+  "attempts": [
+    {
+      "input_identity": "97abe160b029c6ab7abb3cf3217d8d492924bf4dba5b1116de351ae837214c05",
+      "role": "reviewer",
+      "session": "ses_ef0b04e93ffeSrMAG0fFH9g0hx",
+      "status": "LIVE_RESPONSE"
+    }
+  ],
+  "candidate_text": "{\"binding\":\"97abe160b029c6ab7abb3cf3217d8d492924bf4dba5b1116de351ae837214c05\",\"output\":{\"inventory\":{\"version\":\"SourceObligationInventory-0.1\",\"source_commitment\":\"87f44d79a9896f47ac8f9c0fbe4ca7bda29cf12034fcc5c1dd7a0a7a34bf71d4\",\"extractor\":\"reviewer:43451edc38ce4adabe4dcf4450b6608e\",\"context_class\":\"task-management\",\"items\":[{\"id\":\"TASK_CREATE\",\"spans\":[{\"start\":0,\"end\":12,\"quote\":\"Create tasks\"}],\"meaning\":\"There is an obligation or capability to create tasks.\",\"category\":\"BEHAVIOR\",\"material\":true,\"dependencies\":[]},{\"id\":\"TITLE_REQUIRED\",\"spans\":[{\"start\":13,\"end\":25,\"quote\":\"with titles.\"}],\"meaning\":\"Tasks are created with titles; the title is a required or expected attribute of a task at creation time. Whether title is mandatory or merely typical is unspecified.\",\"category\":\"AMBIGUITY\",\"material\":true,\"dependencies\":[\"TASK_CREATE\"]},{\"id\":\"TITLE_CONTENT\",\"spans\":[{\"start\":13,\"end\":25,\"quote\":\"with titles.\"}],\"meaning\":\"No constraints on title content, format, length, uniqueness, or character set are stated.\",\"category\":\"UNSPECIFIED\",\"material\":true,\"dependencies\":[\"TITLE_REQUIRED\"]},{\"id\":\"OTHER_FIELDS\",\"spans\":[{\"start\":0,\"end\":25,\"quote\":\"Create tasks with titles.\"}],\"meaning\":\"No fields other than title are mentioned (e.g., priority, description, assignee, due date). Whether other fields exist or are allowed is unspecified.\",\"category\":\"UNSPECIFIED\",\"material\":false,\"dependencies\":[\"TASK_CREATE\"]},{\"id\":\"MULTIPLICITY\",\"spans\":[{\"start\":7,\"end\":12,\"quote\":\"tasks\"}],\"meaning\":\"Plural form 'tasks' is used but no cardinality bound on how many tasks may be created is stated.\",\"category\":\"UNSPECIFIED\",\"material\":false,\"dependencies\":[\"TASK_CREATE\"]}],\"questions\":[\"Is the title mandatory (task cannot be created without one) or optional with a default?\",\"Are there any constraints on title content such as length or uniqueness?\",\"Are any other task fields supported or required?\",\"Is there a limit on the number of tasks that can be created?\"],\"limitations\":[\"Source is a single imperative sentence; no further context is available to resolve ambiguities.\",\"No error-handling, persistence, or access-control obligations can be derived from the source.\"]},\"interpretations\":{\"TASK_CREATE\":{\"statement\":\"The system must support an operation that results in the creation of a task.\",\"relation\":{\"kind\":\"crud\",\"parameters\":{\"domain\":\"task creation\",\"result\":\"supplied title\"}}},\"TITLE_REQUIRED\":{\"statement\":\"A title must be supplied when creating a task; the source associates titles directly with task creation but does not explicitly state the title is mandatory versus defaulted.\",\"relation\":{\"kind\":\"ambiguity\",\"parameters\":{\"uncertainty\":\"mandatory vs optional title\"}}}},\"authority\":{\"TASK_CREATE\":[\"message:authority-1:CJ-1:sha256:47a16d7058d322183b1cebf92920da1364fe6f75a4527975d15d921c7cbe9cb7\"],\"TITLE_REQUIRED\":[\"message:authority-1:CJ-1:sha256:47a16d7058d322183b1cebf92920da1364fe6f75a4527975d15d921c7cbe9cb7\"],\"TITLE_CONTENT\":[\"source:authority-1:CJ-1:sha256:ad0a17f555b6bbec3b54adab3de0a3ca36e059b1fe1c7db1b5027efaa39bde39\"],\"OTHER_FIELDS\":[\"source:authority-1:CJ-1:sha256:ad0a17f555b6bbec3b54adab3de0a3ca36e059b1fe1c7db1b5027efaa39bde39\"],\"MULTIPLICITY\":[\"source:authority-1:CJ-1:sha256:ad0a17f555b6bbec3b54adab3de0a3ca36e059b1fe1c7db1b5027efaa39bde39\"]},\"domains\":{\"task-creation\":{\"description\":\"Creation of task entities with at minimum a title attribute.\"}},\"unspecified\":[\"Priority field behavior not mentioned; no omitted-priority defaulting rule can be derived from source.\",\"No persistence, retrieval, update, or deletion obligations stated.\",\"No authentication or authorization constraints stated.\"]}}",
+  "provenance": {
+    "access_path": "installed OpenCode CLI / GitHub Copilot OAuth",
+    "adapter": "public-opencode-adapter-r5.91-1",
+    "authority": "UNTRUSTED_CANDIDATE",
+    "cli_configuration_identity": "ce034cb532269ef8570f476ee844aefb048032ade7630b117fd1b2b4a077a084",
+    "cli_session": "ses_ef0b04e93ffeSrMAG0fFH9g0hx",
+    "configuration_identity": "83b6f0d38f5b1f6693d12f1607747d8beec406bf373acaf4db041fa5cb61347e",
+    "execution": "LIVE_OPENCODE_OAUTH",
+    "input_identity": "97abe160b029c6ab7abb3cf3217d8d492924bf4dba5b1116de351ae837214c05",
+    "instruction_identity": "30cb730b3015c8a24ec39a73fcff4216825a27245ac6b5cf556975bd35945174",
+    "model": "claude-sonnet-4.6",
+    "model_version_exposed": null,
+    "output_identity": "97478ca76f7211cbb126d1db9eb143d3e860ff8ac5aec9e1e9b2a7abbf8acb79",
+    "policy_evidence_identity": "b20208d4d4f8876ebf8657fca2825afe291f80afaa0a57bfa1f43adee96e42d5",
+    "protocol": "opencode-json-events-to-bound-json-1",
+    "provider": "github-copilot",
+    "provider_response_id": null,
+    "requested_model": "claude-sonnet-4.6",
+    "returned_model": null,
+    "role": "reviewer",
+    "role_prompt_identity": "ff5cfc02b23bcfef8a66f7407dea4beda840b0d48e8ed0b9a1ae038971f22852",
+    "schema_identity": "62ea9c5db822ac3110ed7f9b19e0a870f80274a1d8bebe109072e71aa5a9bbe4",
+    "session": "reviewer:43451edc38ce4adabe4dcf4450b6608e",
+    "source_identity": "source:authority-1:CJ-1:sha256:ad0a17f555b6bbec3b54adab3de0a3ca36e059b1fe1c7db1b5027efaa39bde39"
+  },
+  "receipts": [
+    {
+      "access_path": "installed OpenCode CLI / GitHub Copilot OAuth",
+      "adapter": "public-opencode-adapter-r5.91-1",
+      "authority": "UNTRUSTED_CANDIDATE",
+      "cli_configuration_identity": "ce034cb532269ef8570f476ee844aefb048032ade7630b117fd1b2b4a077a084",
+      "cli_session": "ses_ef0b04e93ffeSrMAG0fFH9g0hx",
+      "configuration_identity": "83b6f0d38f5b1f6693d12f1607747d8beec406bf373acaf4db041fa5cb61347e",
+      "execution": "LIVE_OPENCODE_OAUTH",
+      "input_identity": "97abe160b029c6ab7abb3cf3217d8d492924bf4dba5b1116de351ae837214c05",
+      "instruction_identity": "30cb730b3015c8a24ec39a73fcff4216825a27245ac6b5cf556975bd35945174",
+      "model_version_exposed": null,
+      "output_identity": "97478ca76f7211cbb126d1db9eb143d3e860ff8ac5aec9e1e9b2a7abbf8acb79",
+      "policy_evidence_identity": "b20208d4d4f8876ebf8657fca2825afe291f80afaa0a57bfa1f43adee96e42d5",
+      "protocol": "opencode-json-events-to-bound-json-1",
+      "provider": "github-copilot",
+      "provider_response_id": null,
+      "requested_model": "claude-sonnet-4.6",
+      "returned_model": null,
+      "role": "reviewer",
+      "role_prompt_identity": "ff5cfc02b23bcfef8a66f7407dea4beda840b0d48e8ed0b9a1ae038971f22852",
+      "schema_identity": "62ea9c5db822ac3110ed7f9b19e0a870f80274a1d8bebe109072e71aa5a9bbe4",
+      "session": "reviewer:43451edc38ce4adabe4dcf4450b6608e",
+      "source_identity": "source:authority-1:CJ-1:sha256:ad0a17f555b6bbec3b54adab3de0a3ca36e059b1fe1c7db1b5027efaa39bde39"
+    }
+  ]
+}

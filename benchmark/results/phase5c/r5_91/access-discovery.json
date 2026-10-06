@@ -1,0 +1,56 @@
+{
+  "round": "R5.91",
+  "scope": "PUBLIC_CONFIGURATION_AND_AUTH_PRESENCE_ONLY",
+  "secrets_published": false,
+  "opencode": {
+    "version": "1.1.25",
+    "on_PATH": false,
+    "invocation": "Explicit installed opencode-windows-x64/bin/opencode.exe path",
+    "global_configuration_found": true,
+    "explicit_global_model": null,
+    "auth_entries": [
+      {"provider": "openai", "type": "oauth", "credential_present": true},
+      {"provider": "github-copilot", "type": "oauth", "credential_present": true}
+    ],
+    "credential_handling": "Presence/type metadata only. CLI owns OAuth and refresh; no token export to adapter or repository."
+  },
+  "environment_presence": {
+    "scopes": ["Process", "User", "Machine"],
+    "all_absent": ["LYKOI_REHEARSAL_API_KEY", "OPENAI_API_KEY", "ANTHROPIC_API_KEY", "OPENROUTER_API_KEY", "OPENCODE_API_KEY"]
+  },
+  "historical_https_adapter": {
+    "identity": "public-ai-adapter-1",
+    "endpoint": "https://api.openai.com/v1/chat/completions",
+    "designated_key_environment": "LYKOI_REHEARSAL_API_KEY",
+    "supports_opencode_oauth": false,
+    "modified": false
+  },
+  "connection_diagnostics": [
+    {"attempts": 2, "result": "CLI_SESSION_NOT_FOUND_BEFORE_INFERENCE", "reason": "Inherited local-server authentication settings; fresh CLI in-process client does not supply those settings"},
+    {"model": "openai/gpt-5.2", "result": "HTTP_400_ACCOUNT_MODEL_UNSUPPORTED"},
+    {"model": "github-copilot/gpt-6.1-sol", "result": "HTTP_400"},
+    {"model": "github-copilot/gpt-5.4", "result": "HTTP_400"},
+    {"model": "github-copilot/claude-sonnet-4.6", "result": "LIVE_PUBLIC_JSON_RESPONSE", "selected": true}
+  ],
+  "local_server_settings": "Excluded from new isolated CLI subprocess only; existing servers and provider authentication unchanged. No attach or protected-server access.",
+  "explicit_inference_invocations": 15,
+  "role_adapter_invocations": 11,
+  "role_adapter_live_responses": 11,
+  "connection_live_responses": 1,
+  "exact_provider_request_count": null,
+  "provider_count_limitation": "CLI does not expose authoritative HTTP/model-call accounting; explicit invocations are not claimed as total internal provider requests.",
+  "role_models": "All four use github-copilot/claude-sonnet-4.6; model build/version and provider response IDs not exposed by CLI events.",
+  "qualification_registry": "NOT_IMPLEMENTED_NOT_REQUIRED_FOR_THIS_RESEARCH_ROUND",
+  "future_requirement_selected": false,
+  "B03_round_activity": {
+    "access_attempts": 0,
+    "reads": 0,
+    "opens": 0,
+    "content_revealing_metadata": 0,
+    "inference": 0,
+    "packaging": 0,
+    "authorizations": 0,
+    "execution": 0,
+    "evaluation": 0
+  }
+}

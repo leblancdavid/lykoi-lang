@@ -48,6 +48,15 @@ stops **`R5_90_LIVE_AI_WORKERS_BLOCKED_CREDENTIAL_UNAVAILABLE`**: no service cre
 is available and all role models remain unconfigured. Live runs and qualified roles
 are zero; infrastructure remains ineligible before future requirement selection.
 
+The [R5.91 live integration](benchmark/results/phase5c/R5_91-LIVE-AI-INTEGRATION-AND-PUBLIC-REHEARSAL-FREEZE.md)
+ends **`R5_91_PUBLIC_REHEARSAL_FROZEN`**. Existing OpenCode/GitHub Copilot OAuth now
+executes `claude-sonnet-4.6` for all four restricted roles; real smoke evidence is
+preserved. **R5.91-PUBLIC-REHEARSAL-2** is active, with mechanical freeze-before-
+requirements admission. Model identity is frozen provenance, not semantic authority;
+general model qualification is deferred. The [next-round protocol](docs/public-rehearsal-protocol-r5.91.md)
+is frozen. No future requirement was selected and no rehearsal was run. R5.90's
+historical blocked result, the R5.89 envelope and B03 protection remain intact.
+
 The task application lives in [`air/task_manager.json`](air/task_manager.json)
 (the `air/` path and `air_compiler` import path are retained for compatibility).
 The current v0.3 model is documented in [`docs/axiom-v0.3.md`](docs/axiom-v0.3.md),
