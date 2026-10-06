@@ -1,5 +1,41 @@
 # Lykoi research log
 
+## R5.102 existing-semantics normal-path integration (2026-10-06)
+
+**`R5_102_EXISTING_SEMANTICS_NORMAL_PATH_PARTIAL`**. The
+[report](../benchmark/results/phase5c/R5_102-NORMAL-PATH-REPORT.md),
+[inventory/orphan analysis](../benchmark/results/phase5c/R5_102-EXISTING-SEMANTIC-INVENTORY.md)
+and [versioned profile](existing-scalar-normal-path-v1.md) connect bounded existing
+string/enum/timestamp/default/optionality, raw preservation, identity, single guarded
+lifecycle, declared actual clock/ID creation and additive migration meanings through
+normal formalizer output, reconciliation, coverage, BDI/adequacy, V1, author/compiler
+and external behavior. No legacy algebra/runtime/validator extension or generated
+Python patch. Three public domains publish 51 process observations with identical
+controller reopen audits; additional normal tests exercise existing-model field
+introduction, enum expansion and scalar-store exact comparison. Captured AI/source-side
+inventory/oracle evidence is same-agent and owner approval is synthetic.
+
+**314/314 tests** and canonical validation/safety pass, with new producer/coverage/
+authority/V1/adequacy negative controls and existing query/compiler/application/
+workspace/controller/external regressions. An initial driver timeout was followed
+by the retained complete verification run. A Unicode diagnostic exposes current
+isolated stdout encoding failure after persistence; no portability repair followed.
+Writable boolean/integer types are absent despite query-view support. Arbitrary
+guard/filter amendments, general mixed profiles and deterministic creation-resource
+injection remain unclosed; full existing-semantic closure is not established.
+
+The [fixed exposed transfer](../benchmark/results/phase5c/R5_102-CAPABILITY-MATRIX.md)
+changes the distribution from **1 success / 16 structural / 1 BDI / 2 clarification**
+to **2 / 15 / 1 / 2**. **B04 progresses without new semantics**, with 17 external
+observations; B05 retains its ten observations. B17/B20 stay clarification-blocked;
+no authority was invented. Product import-closure pins matched before every case
+and afterward, with no transfer repairs. B04 is fresh typed formalizer output;
+the other nineteen replay R5.101 captures, limiting refreshed-capability conclusions.
+No newly blocked case reaches a deeper stage. R5.101 and immutable historical first
+results remain unchanged. This is exposed local regression evidence, not cumulative
+achievement or held-out generalization. Stop after R5.102; residual existing-semantic
+closure is proposed before new capability-family work.
+
 ## R5.101 B01–B20 current capability matrix (2026-10-06)
 
 **`R5_101_B01_B20_CAPABILITY_MATRIX_COMPLETE`**. The

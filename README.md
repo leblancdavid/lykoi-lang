@@ -58,6 +58,16 @@ achievement or held-out generalization evidence. The roadmap proposes general
 capability projects; none was implemented. Future generalization requires a
 new development-unexposed evaluation source.
 
+**R5.102 integrates a bounded existing-scalar normal profile.**
+[Typed scalar/default/lifecycle/resource/migration facts](docs/existing-scalar-normal-path-v1.md)
+reach external behavior through ordinary author/compiler interfaces on public
+captures. **314/314 tests pass**. The
+[report](benchmark/results/phase5c/R5_102-NORMAL-PATH-REPORT.md) classifies the round
+**partial** because material guard/composition/resource-testing seams remain.
+The fixed exposed transfer has B04/B05 local success, fifteen structural halts,
+one BDI halt and two clarifications; nineteen cases replay old captures. R5.101
+remains the pre-development baseline, not replaced or reclassified.
+
 The [R5.87 requirements workspace](docs/requirements-workspace-r5.87.md) implements
 a public synthetic human-intent → clarification → independent source review → exact
 approval → controller-sealed requirements lifecycle. With `PYTHONPATH=src`, run

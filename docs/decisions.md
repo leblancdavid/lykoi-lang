@@ -1,5 +1,37 @@
 # Experimental decisions
 
+## R5.102 — Integrate the executable algebra; classify material seams as partial
+
+Expose existing v0.3 semantics through a closed typed `existing-scalar-1` normal
+profile instead of reparsing prose or accepting supplied implementation models as
+requirements. Preserve source-only inventory reconciliation, policy/clarification,
+owner approval, full material coverage, unchanged BDI/adequacy and faithful V1.
+The restricted author deterministically emits an authorized normal program;
+lowering uses existing types/assignments/guards/resources/migrations. Store fixture
+authority comes from the declared local resource rather than task-specific names.
+
+Keep type support separate from type operations and read views separate from
+writable state. Boolean/integer query values do not establish v0.3 writes. Default
+authority includes omitted trigger and creation boundary; separate explicit
+migration defaults are required. Raw strings remain raw; no write normalization
+is borrowed from query comparison policy. Existing-model evolution preserves prior
+IDs/commands/guards/migrations and refuses incompatible changes.
+
+Use **`R5_102_EXISTING_SEMANTICS_NORMAL_PATH_PARTIAL`**, because generic guard/filter
+amendments, mixed-profile composition and deterministic creation-resource testing
+remain incomplete. Record the Unicode stdout diagnostic without undertaking excluded
+portability work. Passing bounded cases does not establish full scalar closure.
+
+Freeze the passing generic implementation before transfer. B04 fresh typed capture
+improves naturally; nineteen R5.101 captures are replay compatibility evidence, not
+exhaustive fresh AI formalization. Preserve this limitation, the pre-development
+snapshot and historical first results. No case-driven transfer repairs. See the
+[report and completion answers](../benchmark/results/phase5c/R5_102-NORMAL-PATH-REPORT.md).
+
+Proposed next work is residual existing-semantic integration plus fresh typed transfer
+coverage, before introducing mutable-value or broader predicate/relationship families.
+No next round is begun by this decision.
+
 ## R5.101 — Diagnose exposed corpus; prioritize reusable composition
 
 Treat B01–B20 as exposed development/transfer/regression evidence. Preserve

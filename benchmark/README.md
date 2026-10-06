@@ -14,6 +14,17 @@ B18 BDI halt and B17/B20 clarification. Local success is not cumulative Phase 5C
 achievement. Historical protocols/results below retain their original scope;
 old nonexposure wording is not today's corpus status. R5.101 is diagnostic only.
 
+## R5.102 exposed transfer
+
+The [normal-path report](results/phase5c/R5_102-NORMAL-PATH-REPORT.md) is
+`R5_102_EXISTING_SEMANTICS_NORMAL_PATH_PARTIAL`. Its
+[fixed twenty-case matrix](results/phase5c/R5_102-CAPABILITY-MATRIX.md) has two local
+behavioral successes (B04/B05), fifteen structural first blockers, B18 BDI and
+B17/B20 clarification. B04 uses fresh typed formalization; nineteen rows replay
+R5.101 captures, so unchanged halts are not exhaustive current typed-formalization
+results. R5.101 remains the immutable pre-development snapshot. These are exposed
+regression outcomes, not held-out generalization or cumulative achievement.
+
 ## Current research path — R5.96
 
 The [simplified benchmark protocol](../docs/research-workflow-r5.96.md) governs

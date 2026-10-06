@@ -19,6 +19,11 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
   be inspected freely. Their performance is not held-out generalization evidence.
   Current capability matrix/roadmap is diagnostic only; new generalization needs
   a new development-unexposed source. Preserve historical first results.
+- R5.102 adds a bounded existing-scalar normal profile; final classification is
+  `R5_102_EXISTING_SEMANTICS_NORMAL_PATH_PARTIAL`. Read
+  `docs/existing-scalar-normal-path-v1.md` and its round report before extending
+  the bridge. B04/B05 local transfer success is exposed regression evidence;
+  nineteen cases replay R5.101 captures. Guard/profile/resource-testing seams remain.
 - `air/task_manager.json` is canonical; `src/air_compiler/` validates and
   generates the Python backend. Never hand-edit `generated/`. Current model
   semantics: `docs/axiom-v0.3.md` and `schema/axiom-v0.3.schema.json`; the

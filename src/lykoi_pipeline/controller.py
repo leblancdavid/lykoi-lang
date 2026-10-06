@@ -119,11 +119,15 @@ class PipelineController(Controller):
         contracts.frc.validate(content["contract"])
         from .query_profile import validate_relations
         validate_relations(content["contract"])
+        from .scalar_profile import applies, facts
+        if applies(content["contract"]):
+            facts(content["contract"])
         return fid, content["contract"]
 
     def expected_plan(self, contract):
         from .query_profile import applies
-        if applies(contract):
+        from .scalar_profile import applies as scalar_applies
+        if applies(contract) or scalar_applies(contract):
             # Independent plans may be prepared from the human source before FRC
             # artifact IDs exist. Bind exact text, not a mutable corpus identity.
             key = contract["source"]["sha256"]

@@ -59,7 +59,8 @@ def validate_relations(contract):
 
 def meaning_equal(candidate, interpretation):
     """Only closed typed relations can disregard a display description difference."""
-    if typed(candidate["relation"]):
+    from .scalar_profile import typed as scalar_typed
+    if typed(candidate["relation"]) or scalar_typed(candidate["relation"]):
         return (type(interpretation) is dict and set(interpretation) == {"statement", "relation"}
                 and type(interpretation["statement"]) is str and bool(interpretation["statement"].strip())
                 and candidate["relation"] == interpretation["relation"])

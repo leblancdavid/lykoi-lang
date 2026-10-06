@@ -14,6 +14,14 @@ do not govern ordinary research or the next held-out benchmark. **R5.101 treats
 B01–B20 as an exposed development/transfer/regression corpus, freely inspectable
 for diagnosis and regression. Their performance cannot establish held-out
 generalization; new generalization needs a new development-unexposed source.**
+R5.102's bounded existing-scalar profile is **partial**, not full language-path
+closure. Its [versioned semantics](existing-scalar-normal-path-v1.md) and
+[report](../benchmark/results/phase5c/R5_102-NORMAL-PATH-REPORT.md) distinguish
+fresh typed source capture, old-capture regression, existing write algebra,
+read-only types and unclosed normal integration seams. Do not infer writable
+booleans/integers, arbitrary guards or mixed-profile composition from passing
+scalar examples. R5.101 remains the pre-development baseline.
+
 B03 was exposed in
 R5.97 and its first structural-coverage result is immutable; later B03 work is
 post-exposure research and requires separate instructions. Never read held-out requirements

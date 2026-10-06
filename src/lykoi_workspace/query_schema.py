@@ -42,6 +42,8 @@ def relation_schema():
 
 
 def validate_output(output):
+    from .scalar_schema import validate_output as validate_scalar
+    validate_scalar(output)
     from lykoi_rehearsal.adapters import check_schema
     from lykoi_pipeline.query_profile import typed
     for obligation in output["obligations"]:

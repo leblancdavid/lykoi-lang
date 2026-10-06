@@ -177,6 +177,29 @@ diagnosis/roadmap; no capability project or new benchmark was implemented.
 Future generalization needs a genuinely new development-unexposed source and
 the R5.96 fresh-snapshot/first-result process.
 
+**R5.102 — `R5_102_EXISTING_SEMANTICS_NORMAL_PATH_PARTIAL`.** The
+[normal-path report](../benchmark/results/phase5c/R5_102-NORMAL-PATH-REPORT.md) and
+[existing-semantic inventory](../benchmark/results/phase5c/R5_102-EXISTING-SEMANTIC-INVENTORY.md)
+record a bounded [existing-scalar-1 profile](existing-scalar-normal-path-v1.md):
+typed source-authorized fields/defaults/preservation, single guarded transitions,
+declared UUID/UTC resources and explicit additive migrations now use normal
+reconciliation, structure/coverage, existing BDI/adequacy, faithful V1 and deterministic
+existing-backend authoring. Three public domains publish **51 external invocations**;
+existing-model field evolution, enum expansion and scalar-store equality also pass.
+**314/314 tests**, canonical validation/safety and whitespace checks pass.
+
+The [fixed exposed transfer matrix](../benchmark/results/phase5c/R5_102-CAPABILITY-MATRIX.md)
+has **B04/B05 local behavioral success, fifteen structural halts, one BDI halt and
+two clarifications**. B04 uses fresh typed formalization; nineteen cases replay
+R5.101 captures, so unchanged prose halts are not exhaustive refreshed typed-capability
+results. R5.101 remains the pre-development snapshot; no held-out or cumulative
+achievement claim. B17/B20 remain unanswered. Boolean/integer writes, arbitrary
+guard/filter amendments, mixed profiles and deterministic creation-resource injection
+remain seams; a current isolated Unicode stdout failure is recorded without portability
+repair. Full normal-path closure is not claimed. Stop after generic integration and
+fixed transfer; proposed next work is residual existing-semantic closure before new
+families, with typed mutable values still a subsequent candidate.
+
 ### Historical boundaries (preserved; not current infrastructure prerequisites)
 
 The records below describe their original experiments and stop conditions. Their

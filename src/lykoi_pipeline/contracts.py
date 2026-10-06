@@ -13,6 +13,9 @@ VERSION = "sealed-pipeline-1"
 
 
 def structural(contract, frc_id):
+    from . import scalar_profile
+    if scalar_profile.applies(contract):
+        return scalar_profile.structural(contract, frc_id)
     from . import query_profile
     if query_profile.applies(contract):
         return query_profile.structural(contract, frc_id)
@@ -80,6 +83,9 @@ def structural(contract, frc_id):
 
 
 def coverage(contract, projection):
+    from . import scalar_profile
+    if scalar_profile.applies(contract):
+        return scalar_profile.coverage(contract, projection)
     from . import query_profile
     if query_profile.applies(contract):
         return query_profile.coverage(contract, projection)
@@ -99,6 +105,9 @@ def coverage(contract, projection):
 
 
 def bdi(contract, projection):
+    from . import scalar_profile
+    if scalar_profile.applies(contract):
+        return scalar_profile.bdi(contract, projection)
     from . import query_profile
     if query_profile.applies(contract):
         return query_profile.bdi(contract, projection)
@@ -108,6 +117,9 @@ def bdi(contract, projection):
 
 
 def adequate(contract, discovered):
+    from . import scalar_profile
+    if scalar_profile.applies(contract):
+        return scalar_profile.adequate(contract, discovered)
     from . import query_profile
     if query_profile.applies(contract):
         return query_profile.adequate(contract, discovered)
@@ -127,7 +139,9 @@ def faithful_v1(contract):
 
     Does not expand V1 or invent a mapping for generic behavioral relations.
     """
-    from . import query_profile
+    from . import query_profile, scalar_profile
+    if scalar_profile.applies(contract):
+        return scalar_profile.faithful_v1(contract)
     if query_profile.selected(contract):
         return query_profile.faithful_v1(contract)
     context = contract["context"]["component_authority"]

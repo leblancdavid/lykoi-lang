@@ -7,6 +7,7 @@ import copy
 
 from lykoi_controller import Failure, canonical
 import hashlib
+import re
 
 VERSION = "external-cli-plan-1"
 ISOLATION = "SEPARATE_ROLE_DETERMINISTIC_FIXTURE_NO_MODEL_PROVIDER_INDEPENDENCE"
@@ -51,6 +52,20 @@ def produce(contract):
 
 
 def review_coverage(contract, plan):
+    allowed_paths = {"measurements.json", "tasks.json"}
+    from .scalar_profile import applies, facts
+    if applies(contract):
+        allowed_paths = {facts(contract)["storage"]["path"]}
+    else:
+        from .query_profile import applies as query_applies, storage
+        if query_applies(contract):
+            binding = storage(contract)
+            if binding["kind"] == "model_state":
+                model = binding["model"]
+                state = next(s for s in model["state"] if s["id"] == binding["state"])
+                allowed_paths = {next(c["path"] for c in model["capabilities"] if c["id"] == state["storage"])}
+                if any(type(p) is not str or not re.fullmatch(r"[a-z][a-z0-9_-]*\.json", p) for p in allowed_paths):
+                    raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Declared fixture resource must be a local JSON filename")
     expected = {o["id"] for o in contract["obligations"]}
     if contract["context"]["component_authority"] is not None:
         expected.add("@component-context")
@@ -67,7 +82,7 @@ def review_coverage(contract, plan):
         if not set(case["obligations"]) <= expected:
             raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Unbound case")
         for fixture in case.get("initial_files", []):
-            if set(fixture) != {"path", "json"} or fixture["path"] not in ("measurements.json", "tasks.json"):
+            if set(fixture) != {"path", "json"} or fixture["path"] not in allowed_paths:
                 raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Fixture state allowlist violation")
         if len({f["path"] for f in case.get("initial_files", [])}) != len(case.get("initial_files", [])):
             raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Duplicate fixture state")
@@ -75,10 +90,10 @@ def review_coverage(contract, plan):
             if (not isinstance(step["argv"], list) or not all(type(x) is str for x in step["argv"])
                     or type(step["returncode"]) is not int or not all(type(x) is str for x in step["contains"])):
                 raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Invalid executable case")
-            if any(p not in ("measurements.json", "tasks.json") for p in step.get("preserved", [])):
+            if any(p not in allowed_paths for p in step.get("preserved", [])):
                 raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Preservation state allowlist violation")
             for observation in step.get("files", []):
-                if set(observation) != {"path", "json"} or observation["path"] not in ("measurements.json", "tasks.json"):
+                if set(observation) != {"path", "json"} or observation["path"] not in allowed_paths:
                     raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Fixture state allowlist violation")
     for r in rows:
         if not r["justification"] or r["classification"] not in ("EXERCISED", "AUTHORIZED_FREEDOM"):

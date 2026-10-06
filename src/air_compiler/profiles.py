@@ -38,7 +38,10 @@ def validate_storage(storage, queries):
 
 
 def author(normal):
-    from lykoi_pipeline.query_profile import recover
+    if normal.get("profile") == "existing-scalar-1":
+        from lykoi_pipeline.scalar_profile import recover
+    else:
+        from lykoi_pipeline.query_profile import recover
     recover(normal)
     return {"lykoi_version": VERSION, "profile": normal["profile"], "contract": copy.deepcopy(normal)}
 
@@ -47,6 +50,13 @@ def generate(source):
     if source.get("lykoi_version") != VERSION:
         return generate_legacy(validate_legacy(parse(json.dumps(source))))
     require(set(source) == {"lykoi_version", "profile", "contract"}, "Unknown normal program fields")
+    if source["profile"] == "existing-scalar-1":
+        from lykoi_pipeline import scalar_profile
+        contract = scalar_profile.recover(source["contract"])
+        p = scalar_profile.structural(contract, scalar_profile.frc.digest(contract))
+        b = scalar_profile.bdi(contract, p)
+        require(scalar_profile.adequate(contract, b)["outcome"] == "ADEQUATE", "Scalar contract is not adequate")
+        return generate_legacy(validate_legacy(parse(json.dumps(scalar_profile.lower(p["facts"], contract["context"]["domains"].get("scalar_base_model"))))))
     from lykoi_pipeline.query_profile import recover, PROFILE
     require(source["profile"] == PROFILE, "Unsupported program profile")
     contract = recover(source["contract"])

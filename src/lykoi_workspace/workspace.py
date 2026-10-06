@@ -145,6 +145,8 @@ class Workspace:
                     + ("Extract source inventory without candidate access." if role == "reviewer" else "Propose obligations and product questions.")}
         from lykoi_pipeline.query_profile import formalizer_guidance
         request["instructions"] += " " + formalizer_guidance()
+        from lykoi_pipeline.scalar_profile import formalizer_guidance as scalar_guidance
+        request["instructions"] += " " + scalar_guidance()
         result = producer.produce(copy.deepcopy(request))
         canonical(result)
         if type(result) is not dict:
@@ -191,6 +193,9 @@ class Workspace:
             validate(contract)
             from lykoi_pipeline.query_profile import validate_relations
             validate_relations(contract)
+            from lykoi_pipeline.scalar_profile import applies, facts
+            if applies(contract):
+                facts(contract)
             if previous:
                 check_revision(previous, contract)
         except ContractError as exc:
