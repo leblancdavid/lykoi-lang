@@ -18,7 +18,9 @@ primitive for each new feature. This is a research hypothesis, not an
 established minimum or a claim that the current vocabulary is general-purpose.
 
 The intended architecture is human requirement → replaceable human/AI requirement
-formalization → reviewed Formal Requirement Contract → behavioral-decision discovery → implementation-adequacy
+formalization, with a separately extracted source obligation inventory → reviewed
+Formal Requirement Contract/interface → independent source/interface coverage
+authority → behavioral-decision discovery → implementation-adequacy
 gate → Lykoi authoring/semantic
 representation → validated, compiler-controlled transformation → executable
 implementation/runtime → observable behavior. Formal requirements define WHAT;
@@ -71,6 +73,37 @@ external resources such as storage, time and IDs should remain distinguishable.
   and [post-B16 corrected boundary](../benchmark/results/phase5c/R5_2_2-POST-B16-CORRECTED-CONTINUATION.md).
 
 ## Current boundary and next steps
+
+The [R5.84 coverage-authority experiment](../benchmark/results/phase5c/R5_84-INDEPENDENT-COVERAGE-AUTHORITY.md)
+ends **`R5_84_INDEPENDENT_COVERAGE_AUTHORITY_PARTIAL`**. Prospective
+[SCCA-0.1](source-contract-interface-coverage-v0.1.md) and
+[SOI-0.1](source-obligation-inventory-v0.1.md) require inspectable source inventories,
+bidirectional source/FRC mappings, structural projection, exclusion/implication
+evidence and separate content-bound review. The experimental wrapper derives the
+legacy coverage flag from those checks; a supplied completeness bool cannot approve
+the path. Across 16 public synthetic corruption classes, **16/16** source omissions,
+**16/16** structural losses and **16/16** false exclusions block; **6/6** unjustified
+inventions and **6/6** convention-as-implication claims reject. All four missed
+deadline/identity/event families remain visible as unsupported, with no new rules.
+
+One fresh same-model source-only context publishes six inventories before candidate
+creation: **29 items / 9 ambiguity items**; all **6/6** comparisons remain disputed
+and unauthorized. Shared-filesystem cooperative isolation and a metadata-access
+deviation are disclosed; model/provider/strict-qualified review counts are **zero**.
+A vague umbrella-span inventory with freshly dishonest review/admission still makes
+the experimental helper true. Thus evidence binding improves coverage assurance,
+but independent semantic extraction/reviewer authority remains unqualified; no
+production authorization is exposed. Public B01 default-trigger uncertainty remains
+**NEEDS_CLARIFICATION / unauthorized**, discovery NOT_RUN. New checks **21/21**,
+unchanged R5.80–82 **52/52**, public driver assertions pass.
+
+Even if coverage were qualified, protected admission/containment, executable
+production freeze/enforcement and full authoring/independent external-verification
+closure remain active blockers; faithful V1 mapping and supported adequacy remain
+conditional boundaries. No new gates or next round start. **R5.83-CANDIDATE-1 is
+not activated**. All B03 counters **zero**, **B03_PRISTINE / B03_NOT_EVALUATED /
+B03_NOT_EXPOSED_TO_LYKOI_DEVELOPMENT**. Core **30** inherited; Phase 5C paused.
+Stop after R5.84. Earlier reports below retain their historical scope.
 
 The [R5.83 held-out readiness audit](../benchmark/results/phase5c/R5_83-HELD-OUT-EXPOSURE-READINESS.md)
 ends **`R5_83_B03_EXPOSURE_NOT_READY`**. The

@@ -1,5 +1,54 @@
 # Lykoi research log
 
+## R5.84 independent source/interface coverage authority (2026-10-05)
+
+Observed **R5_84_INDEPENDENT_COVERAGE_AUTHORITY_PARTIAL**. Prospective SCCA-0.1
+and SOI-0.1 add inspectable source-only inventories, bidirectional source/FRC
+justification, exact structural projection, exclusion evidence, necessary-implication
+provenance and separate content-bound review/admission. The experimental integration
+derives the legacy coverage flag only after evidence checks; supplied bools cannot
+approve incomplete/disputed/unreviewed/unsupported coverage.
+
+Across 23 synthetic primary sources, same-context bookkeeping yields 15 graph
+approvals, six structural halts, one ambiguity and one conflict; these are not
+independent semantic approvals. Generalized store-plus-target negative controls:
+**16/16** omitted-material candidates falsely authorized by legacy helpers are
+rejected by R5.84; **16/16** structural losses and **16/16** falsely asserted
+nonsemantic exclusions reject. **6/6** unbacked inventions and **6/6** plausible
+conventions claimed necessary reject. Four deadline/identity/event targets remain
+STRUCTURAL_SCOPE_UNSUPPORTED → OUTSIDE_ANALYSIS_SCOPE. Mutation tests preserve
+ambiguity/freedom, detect loss/value/binding changes and leave display metadata plus
+an injected completeness flag without effect. No semantic family is added.
+
+A fresh same-model source-only context published six inventories before candidate
+creation, pinned at physical SHA-256
+`ff124b66301901a9e945338ccad1a354f8e393d8fe9175f06d1fbf3068d29d44`.
+Its **29 items / 9 ambiguity items** expose additional domain/observation questions;
+**6/6** coordinating-context comparisons are disputed/unauthorized. Cooperative
+shared-file isolation, harness guidance, visibility of all source labels and a
+narrow pre-edit Git metadata access deviation are disclosed. Model/provider/strict-
+qualified reviews **0/0/0**; independent positive whole-source approvals **zero**.
+
+Crucially, an umbrella-span incomplete inventory with fresh dishonest review and
+caller admission still produces experimental helper authorization **true**. Production
+authorization stays **false**. Evidence binding alone cannot establish semantic
+truth or qualified independent review; this residual negative control prevents
+promoting the experiment to production authority. Human-compatible protocol design
+is implemented bookkeeping plus proposed deployment qualification, not production
+source-generation reliability.
+
+Public B01 source-default span [295,339) is inventoried and mapped to O08/I1;
+trigger-domain uncertainty remains SOURCE_AMBIGUOUS / NEEDS_CLARIFICATION,
+discovery NOT_RUN and authoring unauthorized. This is known-issue same-context
+calibration, not independent rediscovery or resolution. New tests **21/21**,
+unchanged R5.80–82 **52/52**, public driver assertions pass. Coverage authority
+remains active; even its hypothetical qualification would leave protected
+admission/containment, executable production freeze/enforcement and full authoring/
+independent verification closure unqualified, with V1/analysis conditional refusals.
+All B03 counters **zero**; pristine/not evaluated/not exposed. R5.83-CANDIDATE-1
+not activated; core **30** inherited, Phase 5C paused. Stop after R5.84. See
+[report and evidence](../benchmark/results/phase5c/R5_84-INDEPENDENT-COVERAGE-AUTHORITY.md).
+
 ## R5.83 held-out exposure readiness decision (2026-10-05)
 
 Observed **R5_83_B03_EXPOSURE_NOT_READY**. Audit of R5.79–R5.82 freezes the

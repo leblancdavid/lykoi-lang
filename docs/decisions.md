@@ -1,5 +1,40 @@
 # Experimental decisions
 
+## R5.84 — Evidence-bound coverage; retain unqualified reviewer truth boundary
+
+Choose **R5_84_INDEPENDENT_COVERAGE_AUTHORITY_PARTIAL**. Adopt prospective
+[SCCA-0.1](source-contract-interface-coverage-v0.1.md) and
+[SOI-0.1](source-obligation-inventory-v0.1.md): source-only extraction precedes
+candidate access; many-to-many mappings and reverse source justification preserve
+material obligations, freedoms, issues and nonbehavioral fragments. Exact structural
+paths/values and observation evidence are independently inspectable. Exclusions
+need premises/rationale/review; necessary implications need bounded inference and
+denial/provenance evidence. Unresolved material disagreement never becomes a majority
+approval. Qualified human review and isolated AI review use the same protocol;
+provider identity is not semantic authority.
+
+No downstream implementation authority may rely on an unsupported completeness
+boolean. The R5.84 experimental wrapper derives the historical adapter flag from
+source/structural evidence approval, then separately checks fidelity, supported
+discovery and adequacy. Direct naked-flag helpers remain historical code outside
+this authority path. Production admission rejects and production authorization stays
+false; synthetic graph closure is not a qualified source reviewer deployment.
+
+The residual fresh-dishonest-inventory/review counterexample warrants PARTIAL:
+umbrella spans can account for text while concealing meaning. Digests and nonempty
+rationales do not prove truthful extraction, fidelity, exclusion or implication.
+Six cooperatively context-isolated source inventories raise unresolved questions;
+retain disputes rather than weaken their significance to obtain positive approval.
+No strict/model/provider-isolation qualification or independently positive source
+coverage is claimed.
+
+Keep unsupported deadline/identity/event behavior visible, without new discovery
+families or Lykoi/V1 semantics. Leave protected admission/containment, executable
+production closure and full authoring/independent acceptance qualification as the
+exact remaining R5.83 blockers; mapping/analysis gaps remain conditional refusals.
+No automatic gates, next round, candidate activation or B03 access follow. Stop at
+R5.84. See [report](../benchmark/results/phase5c/R5_84-INDEPENDENT-COVERAGE-AUTHORITY.md).
+
 ## R5.83 — Freeze the candidate; refuse exposure at unqualified coverage authority
 
 Choose **R5_83_B03_EXPOSURE_NOT_READY**. Freeze

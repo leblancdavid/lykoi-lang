@@ -1,0 +1,120 @@
+{
+  "version": "SourceObligationInventory-0.1",
+  "reviewer_identity": "process-b-context-isolated-gpt-6.1-sol",
+  "context_class": "CONTEXT_ISOLATED_SAME_MODEL_COOPERATIVE",
+  "purpose": "Independent human-style source inventory before candidate formalization; synthetic methodology evidence, not production qualification.",
+  "publication_boundary": "Creation of this artifact is the inventory publication boundary, not a git commit. The parent is to hash the published artifact before candidate creation.",
+  "provenance": {
+    "task_data_file": "D:\\Dev\\axiom\\benchmark\\results\\phase5c\\r5_84\\sources.json",
+    "source_version": "R5.84-public-sources-1",
+    "source_authorship": "Coordinating AI context; synthetic development corpus, not held-out human evidence",
+    "actual_explicit_file_accesses": [
+      {"path": "D:\\Dev\\axiom\\benchmark\\results\\phase5c\\r5_84\\sources.json", "access": "Read in full with the file-read tool; sole task-data input."},
+      {"path": "D:\\Dev\\axiom\\benchmark\\results\\phase5c\\r5_84\\independent-soi.json", "access": "Created with apply_patch as the publication artifact."}
+    ],
+    "additional_access_disclosure": "A repository-required pre-edit git status --short --untracked-files=normal -- benchmark/results/phase5c/r5_84/independent-soi.json was executed. It produced no output. Git accessed repository metadata internally; individual internal paths were not traced. This is a deviation from the requested no-metadata-access boundary, so this record does not claim that boundary was perfectly satisfied.",
+    "candidate_seen_before_publication": false,
+    "candidate_access_statement": "No candidate FRC, interface, downstream engine, protected source, or B03 artifact was opened or examined. Inventory meanings were derived directly from the six supplied human-style texts.",
+    "isolation_statement": "Cooperative context isolation on the same model; no strict sandbox isolation, provider isolation, or model isolation is claimed. The harness supplied repository guidance before the task; no additional repository document was opened.",
+    "authority_statement": "This inventory grants no acceptance, qualification, exposure, freeze, or other downstream authority.",
+    "delegation": "No delegation or subagents used.",
+    "digest_policy": "Source-text SHA-256 digests omitted; exact source texts are preserved without a digest computation that might add access or encoding uncertainty."
+  },
+  "accountability": {
+    "requested_source_ids": ["optional_null", "event_count", "freedom", "cross_clause", "unreachable", "nonsemantic"],
+    "coverage_method": "For each requested source, quote each materially relevant clause and separately record behavioral meaning, freedom, ambiguity, inter-clause dependencies, and nonbehavioral content. The entries are an interpretation, not a proof of exhaustive semantic coverage.",
+    "other_visible_source_ids": ["filtering", "ordering", "cardinality", "tie", "defaults", "normalization", "persistence", "transition", "retry", "errors", "failure_atomicity", "deadline", "identity", "event_order", "unspecified", "ambiguity", "conflict"],
+    "other_visible_source_disposition": "The entire supplied JSON was returned by the read tool, so these other texts and top-level provenance were visible. They are outside the requested representative inventory and were not used to import obligations into the six selected sources.",
+    "dependencies_convention": "Dependencies reference item IDs within this artifact and express interpretation relationships, not execution precedence. Unknown operational details are not filled in from other sources."
+  },
+  "sources": [
+    {
+      "source_id": "optional_null",
+      "source_text": "An omitted value returns zero; an explicit null returns null.",
+      "items": [
+        {"id": "optional_null.1", "quote": "An omitted value returns zero", "category": "behavior", "meaning": "When the value is absent, the return value is zero.", "material": true, "dependencies": []},
+        {"id": "optional_null.2", "quote": "an explicit null returns null", "category": "behavior", "meaning": "When null is explicitly supplied, the return value is null.", "material": true, "dependencies": []},
+        {"id": "optional_null.3", "quote": "An omitted value returns zero; an explicit null returns null.", "category": "cross_clause_dependency", "meaning": "Omission and explicit null are distinct input cases with distinct specified outputs; treating them as one missing-value case would lose a stated distinction.", "material": true, "dependencies": ["optional_null.1", "optional_null.2"]},
+        {"id": "optional_null.4", "quote": "An omitted value returns zero; an explicit null returns null.", "category": "ambiguity", "meaning": "The input location, absence representation, null representation, and zero's concrete type or serialization are not defined. Behavior for a present non-null value is not given; this is silence rather than explicit permission for arbitrary behavior.", "material": true, "dependencies": ["optional_null.1", "optional_null.2"]}
+      ],
+      "unknowns": ["Which argument or field is the value?", "How does the observable interface distinguish absence from explicit null?", "What concrete zero and null representations are required?", "What happens for supplied non-null values?"],
+      "limitations": ["The two conditional return obligations do not define a full operation or its other effects."]
+    },
+    {
+      "source_id": "event_count",
+      "source_text": "Emit exactly one public event for each successful call.",
+      "items": [
+        {"id": "event_count.1", "quote": "Emit", "category": "behavior", "meaning": "An event must actually be emitted; the requirement is not merely to prepare an event internally.", "material": true, "dependencies": ["event_count.2", "event_count.3", "event_count.4"]},
+        {"id": "event_count.2", "quote": "exactly one", "category": "behavior", "meaning": "The required count is one, excluding both zero and multiple qualifying public events attributable to a successful call.", "material": true, "dependencies": ["event_count.3", "event_count.4"]},
+        {"id": "event_count.3", "quote": "public event", "category": "behavior", "meaning": "The counted emission is public. Internal activity alone does not establish this obligation, and the text does not constrain the number of private internal events.", "material": true, "dependencies": []},
+        {"id": "event_count.4", "quote": "for each successful call", "category": "behavior", "meaning": "The count is per successful call, not merely an aggregate count across a batch. Every successful call is subject to the obligation.", "material": true, "dependencies": []},
+        {"id": "event_count.5", "quote": "Emit exactly one public event for each successful call.", "category": "ambiguity", "meaning": "Success, public visibility, event identity, attribution to calls, and the observation window are not defined. The sentence gives no event payload, type, timing deadline, ordering rule, or failed-call event policy. In particular it does not say failed calls emit zero events.", "material": true, "dependencies": ["event_count.1", "event_count.2", "event_count.3", "event_count.4"]}
+      ],
+      "unknowns": ["What makes a call successful?", "Which event surface is public, and what is one event?", "How are emissions attributed to concurrent calls?", "When must emission occur and how long is it observed?", "What behavior is required on failed calls?"],
+      "limitations": ["No delivery-versus-emission equivalence, retry policy, or global prohibition of unrelated events can be established from this sentence."]
+    },
+    {
+      "source_id": "freedom",
+      "source_text": "Return all records in any order; consumers may not depend on returned order.",
+      "items": [
+        {"id": "freedom.1", "quote": "Return all records", "category": "behavior", "meaning": "The returned result must include every record in the relevant record universe; order freedom does not permit omissions.", "material": true, "dependencies": []},
+        {"id": "freedom.2", "quote": "in any order", "category": "freedom", "meaning": "The producer may choose any ordering of the required records. A deterministic ordering and a varying ordering are both compatible; variability is not required.", "material": true, "dependencies": ["freedom.1"]},
+        {"id": "freedom.3", "quote": "consumers may not depend on returned order", "category": "behavioral_exclusion", "meaning": "Consumers are explicitly forbidden to rely on returned order. A consumer expectation that privileges one otherwise permitted order would contradict the stated freedom.", "material": true, "dependencies": ["freedom.2"]},
+        {"id": "freedom.4", "quote": "Return all records in any order; consumers may not depend on returned order.", "category": "cross_clause_dependency", "meaning": "The clauses jointly preserve record inclusion while removing a guaranteed order and constraining consumer reliance. The second clause is material, not decorative commentary.", "material": true, "dependencies": ["freedom.1", "freedom.2", "freedom.3"]},
+        {"id": "freedom.5", "quote": "all records", "category": "ambiguity", "meaning": "The record universe, snapshot time, identity and multiplicity are unstated. Ordinary reading suggests returning the collection's records, but the wording does not independently settle duplicate additions or concurrent changes.", "material": true, "dependencies": ["freedom.1"]},
+        {"id": "freedom.6", "quote": "consumers may not depend on returned order", "category": "ambiguity", "meaning": "The forbidden kind of dependence and its observation or enforcement are undefined. This does not necessarily prohibit representing or displaying an ordered result; it prohibits reliance on an order guarantee.", "material": true, "dependencies": ["freedom.3"]}
+      ],
+      "unknowns": ["What records belong to the result and at what time?", "Are records distinguished by identity, value, or occurrence?", "Are duplicates permitted?", "What observable consumer behavior constitutes prohibited dependence?"],
+      "limitations": ["Order freedom is explicit; freedom about inclusion, errors, or other effects is not."]
+    },
+    {
+      "source_id": "cross_clause",
+      "source_text": "Every returned record is active. Exactly one record is returned.",
+      "items": [
+        {"id": "cross_clause.1", "quote": "Every returned record is active.", "category": "behavior", "meaning": "Each returned record must satisfy the active predicate. Taken alone, this universal condition would also hold for an empty result.", "material": true, "dependencies": []},
+        {"id": "cross_clause.2", "quote": "Exactly one record is returned.", "category": "behavior", "meaning": "The result contains one record, excluding empty and multiple-record results.", "material": true, "dependencies": []},
+        {"id": "cross_clause.3", "quote": "Every returned record is active. Exactly one record is returned.", "category": "cross_clause_dependency", "meaning": "Both obligations apply together: the one returned record must be active. An empty result cannot satisfy the combined requirement by vacuous activity, and returning an inactive singleton fails it.", "material": true, "dependencies": ["cross_clause.1", "cross_clause.2"]},
+        {"id": "cross_clause.4", "quote": "Every returned record is active. Exactly one record is returned.", "category": "ambiguity", "meaning": "The source does not define active, the candidate universe, selection among multiple active records, or behavior when no active record exists. If return must be selected from an empty active universe, the clauses cannot both be fulfilled in that state; no fallback or precondition is supplied.", "material": true, "dependencies": ["cross_clause.1", "cross_clause.2", "cross_clause.3"]}
+      ],
+      "unknowns": ["What defines active and when is it evaluated?", "Must the returned record come from an existing input or store?", "Which active record should be selected if several exist?", "Is existence of an active record a precondition, or is a missing-case policy required?"],
+      "limitations": ["The two clauses have no intrinsic contradiction. Any infeasibility claim depends on an additional assumption about available records; lack of a selection rule is not explicit unrestricted-choice language."]
+    },
+    {
+      "source_id": "unreachable",
+      "source_text": "At most one record is admitted. Return all admitted records in any order.",
+      "items": [
+        {"id": "unreachable.1", "quote": "At most one record is admitted.", "category": "behavior", "meaning": "The admitted collection has cardinality zero or one; admitting two or more violates this bound.", "material": true, "dependencies": []},
+        {"id": "unreachable.2", "quote": "Return all admitted records", "category": "behavior", "meaning": "Return the whole admitted collection, not an arbitrary subset. On the ordinary collection reading, no admitted records yields an empty result and one admitted record yields that singleton.", "material": true, "dependencies": ["unreachable.1"]},
+        {"id": "unreachable.3", "quote": "in any order", "category": "freedom", "meaning": "The source explicitly permits any returned ordering. This fragment remains source-accountable even if the admitted-cardinality bound makes different permutations unavailable.", "material": true, "dependencies": ["unreachable.2"]},
+        {"id": "unreachable.4", "quote": "At most one record is admitted. Return all admitted records in any order.", "category": "cross_clause_dependency", "meaning": "If the bound governs the exact collection returned, and return means each admitted record once with no extras, there are only empty or singleton results. Relative ordering distinctions between different records then have no reachable witness. This is conditional semantic redundancy, not permission to discard the order clause without explanation.", "material": true, "dependencies": ["unreachable.1", "unreachable.2", "unreachable.3"]},
+        {"id": "unreachable.5", "quote": "At most one record is admitted.", "category": "ambiguity", "meaning": "The scope of admission is not stated: it could be per call, per batch, simultaneous state, or lifetime. Without that scope, the bound is not proven to limit every returned collection to one record.", "material": true, "dependencies": ["unreachable.1", "unreachable.4"]},
+        {"id": "unreachable.6", "quote": "Return all admitted records in any order.", "category": "ambiguity", "meaning": "Excluding returned order from a behavioral comparison could mean quotienting permutations, or merely recording that no order difference is reachable. The source explicitly supports producer order freedom, but contains no explicit consumer nondependence rule and no instruction for dropping order from an inventory. Such an exclusion needs a stated interpretation and scope; it should not erase the quoted freedom.", "material": true, "dependencies": ["unreachable.3", "unreachable.4", "unreachable.5"]},
+        {"id": "unreachable.7", "quote": "Return all admitted records", "category": "ambiguity", "meaning": "Admission identity, collection time, duplicate handling, additional non-admitted records, and the empty-result representation are not explicit. The ordinary exact-collection reading supports the zero-or-one deduction, but the deduction relies on that reading.", "material": true, "dependencies": ["unreachable.2", "unreachable.4"]}
+      ],
+      "unknowns": ["What is the temporal and operational scope of the admission bound?", "Is the returned collection exactly the collection governed by that bound?", "Does returning all mean each admitted record once and no extras?", "What does exclusion of returned order mean in the intended observation model?", "Is consumer reliance on returned order separately restricted?"],
+      "limitations": ["The source ID unreachable is not itself a behavioral premise or proof of unreachability.", "Order may be observationally vacuous under the ordinary zero-or-one interpretation, but no downstream interface or observation model was inspected to establish that interpretation.", "The source does not contain an unconditional textual conflict; ambiguity concerns the scope needed for the redundancy argument."]
+    },
+    {
+      "source_id": "nonsemantic",
+      "source_text": "Return the supplied integer. This feature is called Lantern in the planning notes.",
+      "items": [
+        {"id": "nonsemantic.1", "quote": "Return the supplied integer.", "category": "behavior", "meaning": "For a supplied integer, return that integer value rather than a different value. The text does not require preservation of object identity or a particular serialization.", "material": true, "dependencies": []},
+        {"id": "nonsemantic.2", "quote": "This feature is called Lantern in the planning notes.", "category": "nonbehavioral", "meaning": "This identifies a planning-note name for the feature. It does not require a runtime output, API name, event, or other observable behavior called Lantern.", "material": false, "dependencies": []},
+        {"id": "nonsemantic.3", "quote": "Return the supplied integer.", "category": "ambiguity", "meaning": "The supplied argument, integer domain or bounds, output encoding, and behavior on absent or noninteger input are undefined. The sentence alone does not specify absence of other effects.", "material": true, "dependencies": ["nonsemantic.1"]}
+      ],
+      "unknowns": ["What integer domain, bounds, and representation are intended?", "How is the supplied value provided and returned?", "What happens for missing or noninteger input?"],
+      "limitations": ["Planning notes were not accessed. The Lantern clause is retained for textual accountability while judged nonbehavioral for this source."]
+    }
+  ],
+  "unknowns": [
+    "No operational domain, interface, observation model, or normative interpretation procedure is provided for resolving the recorded ambiguities.",
+    "Whether a future formalization captures each distinction can only be assessed after this inventory has been published and independently hashed; no such assessment occurred here."
+  ],
+  "limitations": [
+    "This is a synthetic source-text interpretation by a cooperatively isolated instance of the same model, not independent provider/model evidence or production qualification.",
+    "The narrow git-status access prevents a claim of strict compliance with the requested no-metadata-access condition; its internals were not audited.",
+    "No candidate was seen before publication. No candidate matching, executable validation, downstream evaluation, or B03 investigation was performed.",
+    "No completeness boolean is supplied. Itemization does not prove that every possible material interpretation has been found.",
+    "Silence is recorded as an unknown rather than automatically converted into a positive freedom. Conditional incompatibility is distinguished from an intrinsic textual conflict."
+  ]
+}
