@@ -1,5 +1,42 @@
 # Lykoi research log
 
+## R5.104 typed mutable values and write transformations (2026-10-06)
+
+**`R5_104_TYPED_MUTABLE_VALUES_IMPLEMENTED`**, bounded normal compositional profile.
+Typed ordered collections, explicit duplicate/equality policies, append/add-unique/
+replace, stable dedup, element mapping, trim/verbatim, validation-stage ordering,
+presence-aware updates and atomic multi-field single-record writes now execute
+through normal workspace reconciliation, structure/coverage, mutation BDI/adequacy,
+faithful V1, restricted author, deterministic compiler and external verifier.
+Four source-first public-domain runs publish **96 CLI invocations**. Additional
+tests verify explicit additive collection migration/idempotence, rejected-state
+preservation, supported persistence failure, nullable timestamp presence, enum
+updates and later-field rejection. Write/reload/CollectionQuery and independent
+lifecycle composition pass. **340/340 current tests** and model validation/safety pass.
+
+The verified generic implementation/spec/test content was locked before all
+twenty exposed attempts; fixed source captures/plans precede outcomes, and no
+implementation changed afterward. **B01/B02/B03/B04/B05/B10 succeed (121 corpus
+CLI invocations)**; eleven structural halts, B18 BDI, B17/B20 clarification.
+B02/B03/B10 newly reach later stages; B06 narrows to raw-empty-sensitive validation,
+while B07 lacks literal collection creation and faithful required CLI-input binding.
+No error or unrequested create input was invented for B07. Unsupported downstream
+boolean/predicate/relationship/effect families remain unsupported. Recommend bounded
+typed-value normal-profile closure for R5.105, without starting it.
+
+Development checks initially caught missing FRC envelope metadata and the normal
+author profile allowlist seam. Additive collection migration initially exposed the
+need to project the legacy scalar component independently of collection-only
+schema steps; generic repair preceded the final passing checks and lock. Historical
+results were not rewritten. Same-agent interpretations/inventory/oracles and
+synthetic approval remain evidence limits. No infrastructure or portability repair,
+new major unrelated family, canonical model edit or generated-file hand edit.
+See [specification](typed-mutable-values-v1.md),
+[report/evidence](../benchmark/results/phase5c/R5_104-REPORT.md) and
+[fixed comparison](../benchmark/results/phase5c/R5_104-CAPABILITY-MATRIX.md).
+R5.103 and B03's first result remain immutable; this is exposed regression evidence,
+not held-out generalization or cumulative benchmark achievement. Stop after R5.104.
+
 ## R5.103 fresh typed B01–B20 rebaseline (2026-10-06)
 
 **`R5_103_FRESH_TYPED_CORPUS_REBASELINED`**. The

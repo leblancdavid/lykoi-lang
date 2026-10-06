@@ -79,6 +79,16 @@ invocations. Historical matrices are preserved. Recommend typed mutable values
 and transformations for R5.104; no selected family is implemented. This remains
 exposed regression evidence, not held-out generalization or cumulative achievement.
 
+**R5.104 implements bounded typed mutable values through the normal path.**
+[Explicit collection/value/presence/pipeline semantics](docs/typed-mutable-values-v1.md)
+compose with scalar storage, additive migration, independent lifecycle and existing
+CollectionQuery. **340 tests pass**; four synthetic domains publish 96 external
+CLI invocations. The locked
+[exposed transfer/report](benchmark/results/phase5c/R5_104-REPORT.md) has **six local
+successes: B01/B02/B03/B04/B05/B10**, eleven structural blockers, B18 BDI and
+B17/B20 clarification. B06/B07 retain bounded profile seams. R5.103's baseline
+and historical first results remain preserved; no held-out/cumulative claim.
+
 The [R5.87 requirements workspace](docs/requirements-workspace-r5.87.md) implements
 a public synthetic human-intent → clarification → independent source review → exact
 approval → controller-sealed requirements lifecycle. With `PYTHONPATH=src`, run

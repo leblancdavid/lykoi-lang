@@ -149,6 +149,8 @@ class Workspace:
         from lykoi_pipeline.composition_profile import formalizer_guidance as composition_guidance
         request["instructions"] += " " + composition_guidance()
         request["instructions"] += " " + scalar_guidance()
+        from lykoi_pipeline.mutable_profile import formalizer_guidance as mutable_guidance
+        request["instructions"] += " " + mutable_guidance()
         result = producer.produce(copy.deepcopy(request))
         canonical(result)
         if type(result) is not dict:

@@ -1,5 +1,17 @@
 # Phase 5: comparative maintenance benchmark
 
+## R5.104 fixed exposed transfer
+
+The [typed mutable-value report](results/phase5c/R5_104-REPORT.md) and
+[before/after matrix](results/phase5c/R5_104-CAPABILITY-MATRIX.md) record a complete
+post-generic-lock exposed transfer: **B01/B02/B03/B04/B05/B10 behavioral success**,
+eleven structural blockers, B18 BDI and B17/B20 clarification. R5.103 below remains
+the pre-R5.104 baseline. Generic public-domain behavior has 96 published CLI
+invocations and 340 passing current tests; transfer successes have 121 invocations.
+Implementation content remained fixed throughout transfer. No held-out or cumulative
+achievement claim follows. B06 raw-empty validation and B07 literal collection/
+required-input profile seams remain; stop after this round.
+
 ## Current fresh typed baseline — R5.103
 
 The [fresh current-system report](results/phase5c/R5_103-REPORT.md),

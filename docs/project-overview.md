@@ -233,6 +233,30 @@ foundations for later relationships. **Stop at recommendation; no new family is
 implemented.** This corpus remains development/regression evidence, never held-out
 generality; new generalization requires a new development-unexposed source.
 
+**R5.104 — `R5_104_TYPED_MUTABLE_VALUES_IMPLEMENTED`.** The
+[typed mutable-value specification](typed-mutable-values-v1.md) and
+[report](../benchmark/results/phase5c/R5_104-REPORT.md) add bounded ordered typed
+collections with independent duplicate/equality policies, scalar/collection
+replacement, append/add-unique, stable-first dedup, element pipelines, explicit
+trim/validation stage order, supplied/omitted input and atomic single-record
+multi-field writes. Normal FRC reconciliation/coverage, mutation BDI/adequacy,
+faithful normal V1 and deterministic compiler/backend composition execute four
+source-bound public synthetic domains: **96 published external CLI invocations**,
+**340/340 tests**, canonical validation/safety. Explicit collection migration,
+reload, same-state CollectionQuery and independent lifecycle composition pass.
+
+Generic implementation was content-locked before the complete
+[exposed transfer](../benchmark/results/phase5c/R5_104-CAPABILITY-MATRIX.md), with
+no outcome-driven implementation changes: **B01/B02/B03/B04/B05/B10 succeed**,
+eleven structural blockers, B18 BDI, B17/B20 clarification. B02/B03/B10 newly
+reach external behavior; **121 corpus CLI invocations** pass. B06 retains a
+raw-empty-sensitive validation gap; B07 retains literal collection creation and
+required-CLI-input profile seams. R5.103 remains the preserved pre-R5.104 baseline,
+and B03's immutable first result is unchanged. Same-agent captures/inventory/oracles
+and synthetic owner approval limit evidence; no held-out/cumulative claim follows.
+Recommend bounded remaining typed-value normal-profile closure for R5.105.
+**Stop after R5.104**; no next-family or infrastructure work begun.
+
 ### Historical boundaries (preserved; not current infrastructure prerequisites)
 
 The records below describe their original experiments and stop conditions. Their

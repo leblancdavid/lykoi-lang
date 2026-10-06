@@ -1,5 +1,33 @@
 # Experimental decisions
 
+## R5.104 — Typed policies and staged atomic values, not implicit normalization
+
+Compose `typed-mutable-values-1` with the established scalar normal profile and
+same-state read-only queries. Use a separately versioned extended model/IR and
+normal compiler dispatch, retaining historical v0.3 serialization/runtime/generator.
+Ordered scalar-element collections carry independent insertion-order, allow/unique
+duplicate and exact-equality policy. Append, add-unique and replacement differ.
+Unique policy validates; stable-first dedup requires separate transformation
+authority. Represent ordered transform/validate steps and element pipelines;
+omission is input membership rather than truthiness or creation defaulting.
+
+Stage candidate single-record updates privately and atomically persist once after
+all validations. Separate creation defaults from explicit additive migration
+authority. Retain identity/lifecycle authority, full prior scalar bindings and
+query type/effect/namespace boundaries. Recompute structural facets and faithful
+V1; carry generic mutation decisions to existing adequacy. Closed typed facts
+remain source-authorized candidates, never authority in themselves.
+
+Lock the verified generic implementation before transfer, and make no product
+repair after outcomes. Four public domains pass 96 published external invocations;
+340 tests pass. Exposed local successes rise from three to six (B02/B03/B10 added),
+with 121 transfer invocations. B06's conditional raw-empty validation and B07's
+literal collection creation/required CLI error binding stay visible rather than
+being guessed or repaired mid-transfer. Recommend bounded profile closure for
+R5.105. See [semantics](typed-mutable-values-v1.md) and
+[report](../benchmark/results/phase5c/R5_104-REPORT.md). No held-out/general
+formalization/cumulative claim; preserve all historical evidence.
+
 ## R5.103 — Fresh measurement first; qualified composition rather than profile union
 
 Create fresh typed source interpretations for every exposed B01–B20 request and

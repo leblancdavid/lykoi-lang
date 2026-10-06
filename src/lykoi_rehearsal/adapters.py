@@ -142,8 +142,9 @@ class AIAdapter:
             # profile schema for query-shaped parameters after model output.
             from lykoi_workspace.query_schema import relation_schema
             from lykoi_workspace.scalar_schema import relation_schema as scalar_schema
+            from lykoi_workspace.mutable_schema import relation_schema as mutable_schema
             output_schema["properties"]["obligations"]["items"]["properties"]["relation"] = {
-                "anyOf": [relation_schema(), scalar_schema(), RELATION]}
+                "anyOf": [relation_schema(), scalar_schema(), mutable_schema(), RELATION]}
         schema = obj({"binding": {"enum": [identity]}, "output": output_schema})
         payload = {"model": self.config.get("model"), "temperature": 0,
                    "messages": [{"role": "system", "content": PROMPTS[self.role]},

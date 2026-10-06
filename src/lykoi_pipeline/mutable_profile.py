@@ -1,0 +1,171 @@
+"""Normal compositional profile for typed value mutations, R5.104."""
+import copy
+
+from . import scalar_profile as scalar, query_profile as query
+from air_compiler.mutable_values import VERSION as PROFILE, compose, keys, require
+from lykoi_controller import Failure
+
+FACETS = ("collections", "mutations", "creation_pipelines")
+
+
+def typed(relation):
+    return relation.get("parameters", {}).get("profile") == PROFILE
+
+
+def applies(contract):
+    return any(typed(o["relation"]) for o in contract["obligations"])
+
+
+def split(contract):
+    require(contract["context"]["domains"].get("capability_profile") == PROFILE, "Explicit mutable composition selection")
+    sc, qc = copy.deepcopy(contract), copy.deepcopy(contract)
+    sc["obligations"] = [o for o in sc["obligations"] if scalar.typed(o["relation"])]
+    qc["obligations"] = [o for o in qc["obligations"] if query.typed(o["relation"])]
+    sc["context"]["domains"]["capability_profile"] = scalar.PROFILE
+    qc["context"]["domains"]["capability_profile"] = query.PROFILE
+    f = scalar.facts(sc)
+    scalar_f = copy.deepcopy(f)
+    prior = sc["context"]["domains"].get("scalar_base_model")
+    # Collection-only introduction steps are validated by the typed extension;
+    # the legacy component must retain its own complete scalar migration chain.
+    scalar_f["storage"]["version"] = max([1] + [m["to"] for m in scalar_f["evolution"]])
+    base = scalar.integrate_facets(scalar.extend_model(scalar_f, prior, allow_unchanged=True), scalar_f) if prior is not None else scalar.lower(scalar_f)
+    values = {}
+    for o in contract["obligations"]:
+        if not typed(o["relation"]):
+            continue
+        require(o["relation"]["kind"] == "crud", "Typed mutation relation kind")
+        p = o["relation"]["parameters"]
+        keys(p, ("profile", "facet", "value"))
+        require(p["facet"] in FACETS and p["facet"] not in values, "Unknown or repeated mutation facet")
+        values[p["facet"]] = copy.deepcopy(p["value"])
+    require(set(values) == set(FACETS), "Every mutation facet required; empty is explicit")
+    ir = compose(base, values)
+    require(ir["model"]["state"][0]["schema_version"] == f["storage"]["version"], "Declared storage version must equal composed migration boundary")
+    if prior is not None:
+        prior_version = prior["state"][0]["schema_version"]
+        require(all(len(c["migration"]) == 1 and c["migration"][0]["from"] >= prior_version for c in values["collections"]), "Existing-model collection introduction needs fresh additive migration authority")
+    groups = query.validate_relations(qc)
+    if groups:
+        binding = contract["context"]["domains"].get("collection_store")
+        require(binding == {"kind": "composed_scalar", "state": base["state"][0]["id"]}, "Query binds the same mutable state")
+        qc["context"]["domains"]["collection_store"] = {"kind": "mutable_state", "ir": ir, "state": binding["state"]}
+        from air_compiler.profiles import validate_mutable_storage
+        validate_mutable_storage(qc["context"]["domains"]["collection_store"], list(groups.values()))
+    # Discover scalar decisions on its qualified standalone semantic component;
+    # preservation of prior model IDs/commands was already checked above.
+    sc["context"]["domains"].pop("scalar_base_model", None)
+    for o in sc["obligations"]:
+        p = o["relation"]["parameters"]
+        if p["facet"] == "storage":
+            p["value"] = copy.deepcopy(scalar_f["storage"])
+    return sc, qc, dict(scalar=f, mutable=values, ir=ir, queries=groups)
+
+
+def facts(contract):
+    return split(contract)[2]
+
+
+def structural(contract, fid):
+    try:
+        sc, qc, f = split(contract)
+        sp = scalar.structural(sc, fid); scalar.coverage(sc, sp)
+        unsupported = [o["id"] for o in contract["obligations"] if not (typed(o["relation"]) or scalar.typed(o["relation"]) or query.typed(o["relation"]))]
+        require(contract["context"]["component_authority"] is None, "No arbitrary component authority")
+        operations = sp["interface"]["operations"]
+        reason = None
+    except (Failure, ValueError, KeyError, TypeError, StopIteration) as exc:
+        unsupported = [o["id"] for o in contract["obligations"]]
+        operations, f, reason = [], None, str(exc)
+    rows = [dict(obligation=o["id"], classification="UNSUPPORTED" if o["id"] in unsupported else "REPRESENTED", relation=copy.deepcopy(o["relation"]), operation=None if o["id"] in unsupported else o["id"], justification="Typed compositional mutable-value facets") for o in contract["obligations"]]
+    facets = []
+    if f:
+        for o in contract["obligations"]:
+            if typed(o["relation"]):
+                facets.append(dict(origin=o["id"], source_quote=o["source_quote"], kind={"collections": "CollectionMutation", "mutations": "ValueMutation", "creation_pipelines": "TransformationPipeline"}[o["relation"]["parameters"]["facet"]], value=copy.deepcopy(o["relation"]["parameters"]["value"])))
+        for m in f["mutable"]["mutations"]:
+            origin = next(o["id"] for o in contract["obligations"] if typed(o["relation"]) and o["relation"]["parameters"]["facet"] == "mutations")
+            facets += [dict(origin=origin, kind="InputPresence", command=m["command"], value=[dict(input=w["input"], omitted=w["omitted"], missing_error=w["missing_error"]) for w in m["changes"]]), dict(origin=origin, kind="AtomicWriteEffect", command=m["command"], value=m["effect"])]
+            for w in m["changes"]:
+                facets.append(dict(origin=origin, kind="ValidationStage", command=m["command"], field=w["field"], value=w["pipeline"], final_type_error=w["invalid_error"]))
+    return dict(version=PROFILE, source_frc=fid, rows=rows, facts=f, facets=facets, interface=dict(version=scalar.discovery.VERSION_BDI, operations=operations), unsupported=unsupported, profile_failure=reason, observation_scope="Explicit typed single-record values, ordered pipelines and same-state readonly queries", reachability="Bounded source captures, not general formalization completeness")
+
+
+def coverage(contract, projection):
+    expected = structural(contract, projection["source_frc"])
+    if expected != projection or expected["unsupported"]:
+        raise Failure("STRUCTURAL_COVERAGE_FAILURE", unsupported=expected["unsupported"], reason=expected["profile_failure"])
+    return dict(outcome="SUPPORTED", version=PROFILE, rows=expected["rows"], scope=expected["observation_scope"], limitations=[expected["reachability"]])
+
+
+def bdi(contract, projection):
+    coverage(contract, projection)
+    result = scalar.discovery.discover(contract, projection["interface"])
+    # Prospective extension: retain historical discovery engine/rules unchanged.
+    # Each material choice has finite alternatives and exact source-clause authority.
+    def decision(oid, family, allowed, alternatives, channel="later"):
+        row = next(o for o in contract["obligations"] if o["id"] == oid)
+        result["decisions"].append(dict(id=oid + ":" + family, family=family, operation=oid, origins=[oid], trigger={"typed_mutation": True}, facts=["typed_mutation"], alternatives=alternatives, channel=channel, observation_scope="MEANINGFUL", consequence="Material mutation choice changes " + channel, rule=PROFILE + "/" + family, evidence="BOUNDED_STRUCTURAL", witnesses=[], reachability="DECLARED_POSSIBLE_UNLESS_SUPPORTED_INVARIANT", authority=dict(allowed=[allowed], authority="DETERMINED", source_quote=row["source_quote"]), dependency=[]))
+    for o in contract["obligations"]:
+        if not typed(o["relation"]):
+            continue
+        p = o["relation"]["parameters"]
+        if p["facet"] == "collections":
+            for c in p["value"]:
+                decision(o["id"], c["name"] + "/duplicates", c["duplicates"], ["allow", "unique"])
+                decision(o["id"], c["name"] + "/ordering", "insertion", ["insertion", "sorted"], "order")
+                decision(o["id"], c["name"] + "/equality", "exact", ["exact", "casefold"])
+                sequence = scalar.json.dumps(c["creation"]["pipeline"], sort_keys=True)
+                decision(o["id"], c["name"] + "/creation_pipeline", sequence, [sequence, "unauthorized_reordering"], "error")
+        entries = p["value"] if p["facet"] in ("mutations", "creation_pipelines") else []
+        for m in entries:
+            if p["facet"] == "mutations":
+                decision(o["id"], m["command"] + "/atomicity", "unchanged", ["unchanged", "partial"])
+                writes = m["changes"]
+            else:
+                writes = [m]
+            for w in writes:
+                prefix = (m.get("command", "creation") + "/" + w["field"])
+                if "omitted" in w:
+                    decision(o["id"], prefix + "/presence", w["omitted"], ["unchanged", "reject"])
+                    decision(o["id"], prefix + "/operation", w["operation"], ["replace", "append", "add_unique"])
+                sequence = scalar.json.dumps(w["pipeline"], sort_keys=True)
+                decision(o["id"], prefix + "/pipeline", sequence, [sequence, "unauthorized_reordering"], "error")
+    if projection["facts"]["queries"]:
+        from lykoi_query import contracts as queries
+        _, qc, _ = split(contract)
+        qp = queries.structural(qc, scalar.frc.digest(qc))
+        qb = queries.bdi(qc, qp)["result"]
+        for k in ("decisions", "exclusions", "unknown"):
+            result[k] += qb[k]
+    result["extension"] = PROFILE
+    return dict(version=scalar.discovery.VERSION_BDI, outcome="UNSUPPORTED" if result["unknown"] else "SUPPORTED", result=result)
+
+
+adequate = scalar.adequate
+
+
+def faithful_v1(contract):
+    p = structural(contract, scalar.frc.digest(contract)); coverage(contract, p)
+    normal = dict(schema_version=scalar.V1, profile=PROFILE, contract=copy.deepcopy(contract), facts=p["facts"])
+    return dict(version=scalar.V1, profile=PROFILE, outcome="FAITHFUL_COMPLETE", document=normal, normalized=copy.deepcopy(normal), coverage=[dict(frc_id=o["id"], v1_id=o["id"]) for o in contract["obligations"]])
+
+
+def recover(normal):
+    keys(normal, ("schema_version", "profile", "contract", "facts"))
+    require(normal["schema_version"] == scalar.V1 and normal["profile"] == PROFILE, "Versioned mutable V1")
+    require(faithful_v1(normal["contract"])["normalized"] == normal, "Faithful mutable V1 recovery")
+    return copy.deepcopy(normal["contract"])
+
+
+def formalizer_guidance():
+    return ("Typed mutable values compose complete existing-scalar-1 facets with crud relations "
+            "{profile:typed-mutable-values-1,facet,value}: collections, mutations, creation_pipelines. "
+            "Select capability_profile typed-mutable-values-1. Declare nonnullable scalar element type/domain, "
+            "insertion ordering, independent allow/unique duplicate policy and exact equality. Declare creation "
+            "default separately from migration authority. Mutations declare command, identity lookup, missing_error, "
+            "changes, guards and effect {atomicity:single_record,persistence:atomic,rejection:unchanged}. Each change "
+            "declares field,input,operation replace/append/add_unique,omitted unchanged/reject,missing_error, "
+            "pipeline,invalid_error. Ordered pipeline steps are transform operation verbatim/trim/stable_deduplicate "
+            "or validate rule nonempty/nonblank/typed with error. Never infer transforms or duplicate behavior. "
+            "Missing material authority requires clarification; typed facts are candidates, not authority.")

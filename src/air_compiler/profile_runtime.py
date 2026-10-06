@@ -3,7 +3,7 @@
 
 def profile_main(queries, storage):
     models = {q["id"]: q for q in queries}
-    if storage["kind"] == "model_state" and len(sys.argv) > 1 and sys.argv[1] not in models:
+    if storage["kind"] in ("model_state", "mutable_state") and len(sys.argv) > 1 and sys.argv[1] not in models:
         return legacy_main()
     parser = argparse.ArgumentParser(prog="lykoi")
     commands = parser.add_subparsers(dest="command", required=True)

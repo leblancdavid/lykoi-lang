@@ -306,7 +306,7 @@ def integrate_facets(d, f):
     return d
 
 
-def extend_model(f, base):
+def extend_model(f, base, *, allow_unchanged=False):
     """Generic additive scalar evolution of an explicitly authorized existing model.
 
     Existing operations/guards/resources/IDs remain intact. No guessed migrations,
@@ -341,7 +341,7 @@ def extend_model(f, base):
                     pred["values"] = copy.deepcopy(after[1])
         require(compatible and x.get("nullable", False) == new_fields[n].get("nullable", False), "Existing type preserved; only explicit finite enum expansion")
     added = set(all_fields) - set(old)
-    require(bool(added or enum_changes or any(f.get(k) for k in OPTIONAL_FACETS)), "Explicit field introduction, enum expansion or existing integration facet")
+    require(bool(allow_unchanged or added or enum_changes or any(f.get(k) for k in OPTIONAL_FACETS)), "Explicit field introduction, enum expansion or existing integration facet")
     require((state["schema_version"] < f["storage"]["version"]) if added else state["schema_version"] == f["storage"]["version"], "Explicit additive field schema boundary; enum expansion preserves version")
     mapping = {"state": state["id"], "record": record["id"], "records": state["type"], "store": state["storage"]}
     mapping.update({"field:" + n: x["id"] for n, x in old.items()})

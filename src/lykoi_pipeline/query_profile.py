@@ -61,7 +61,8 @@ def meaning_equal(candidate, interpretation):
     """Only closed typed relations can disregard a display description difference."""
     from .scalar_profile import typed as scalar_typed
     from .model_profile import typed as model_typed
-    if typed(candidate["relation"]) or scalar_typed(candidate["relation"]) or model_typed(candidate["relation"]):
+    from .mutable_profile import typed as mutable_typed
+    if typed(candidate["relation"]) or scalar_typed(candidate["relation"]) or model_typed(candidate["relation"]) or mutable_typed(candidate["relation"]):
         return (type(interpretation) is dict and set(interpretation) == {"statement", "relation"}
                 and type(interpretation["statement"]) is str and bool(interpretation["statement"].strip())
                 and candidate["relation"] == interpretation["relation"])

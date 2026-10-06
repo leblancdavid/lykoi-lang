@@ -53,10 +53,13 @@ def produce(contract):
 
 def review_coverage(contract, plan):
     allowed_paths = {"measurements.json", "tasks.json"}
+    from .mutable_profile import applies as mutable_applies, facts as mutable_facts
+    if mutable_applies(contract):
+        allowed_paths = {mutable_facts(contract)["scalar"]["storage"]["path"]}
     from .scalar_profile import applies, facts
-    if applies(contract):
+    if applies(contract) and not mutable_applies(contract):
         allowed_paths = {facts(contract)["storage"]["path"]}
-    else:
+    elif not mutable_applies(contract):
         from .model_profile import applies as model_applies, lower
         if model_applies(contract):
             model = lower(contract)

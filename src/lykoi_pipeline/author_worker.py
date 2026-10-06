@@ -20,7 +20,7 @@ def main():
     sys.addaudithook(deny)
     fixture = request["fixture"]
     normal = request["v1"]
-    if normal.get("schema_version") == "LykoiContractV1" and normal.get("profile") in ("collection-query-1", "existing-scalar-1", "existing-composed-1", "existing-model-1"):
+    if normal.get("schema_version") == "LykoiContractV1" and normal.get("profile") in ("collection-query-1", "existing-scalar-1", "existing-composed-1", "existing-model-1", "typed-mutable-values-1"):
         # Fixed semantic author: no test material, source interpretation or adapter
         # injection. Trusted build will recover/validate the authorized profile.
         source = {"lykoi_version": "LykoiProgram-1", "profile": normal["profile"], "contract": copy.deepcopy(normal)}

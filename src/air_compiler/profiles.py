@@ -38,7 +38,9 @@ def validate_storage(storage, queries):
 
 
 def author(normal):
-    if normal.get("profile") == "existing-model-1":
+    if normal.get("profile") == "typed-mutable-values-1":
+        from lykoi_pipeline.mutable_profile import recover
+    elif normal.get("profile") == "existing-model-1":
         from lykoi_pipeline.model_profile import recover
     elif normal.get("profile") == "existing-composed-1":
         from lykoi_pipeline.composition_profile import recover
@@ -54,6 +56,12 @@ def generate(source):
     if source.get("lykoi_version") != VERSION:
         return generate_legacy(validate_legacy(parse(json.dumps(source))))
     require(set(source) == {"lykoi_version", "profile", "contract"}, "Unknown normal program fields")
+    if source["profile"] == "typed-mutable-values-1":
+        from lykoi_pipeline import mutable_profile
+        contract = mutable_profile.recover(source["contract"])
+        p = mutable_profile.structural(contract, mutable_profile.scalar.frc.digest(contract))
+        require(mutable_profile.adequate(contract, mutable_profile.bdi(contract, p))["outcome"] == "ADEQUATE", "Mutation contract is not adequate")
+        return generate_mutable(p["facts"]["ir"], list(p["facts"]["queries"].values()))
     if source["profile"] == "existing-model-1":
         from lykoi_pipeline import model_profile as amendment
         contract = amendment.recover(source["contract"])
@@ -94,6 +102,47 @@ def normal_resources(legacy):
     footer = 'if __name__ == "__main__":\n    sys.exit(main())'
     require(legacy.count(footer) == 1, "Legacy backend entrypoint mismatch")
     return legacy.replace(footer, "") + "\n" + resource_runtime + "\n" + footer + "\n"
+
+
+def validate_mutable_storage(storage, queries):
+    from .mutable_values import compose
+    ir = storage["ir"]
+    require(compose(ir["base"], ir["facts"]) == ir, "Invalid mutable model IR")
+    model = ir["model"]
+    state = model["state"][0]
+    require(storage["state"] == state["id"], "Mutable query state mismatch")
+    key = next(t for t in model["types"] if t["kind"] == "record")
+    identity = next(f["name"] for f in key["fields"] if f["id"] == state["key_field"])
+    for q in queries:
+        validate_query(q, complete=True)
+        require(q["effect"] == {"state": "read_only", "persistence": "unchanged"}, "Only existing read-only query composition")
+        require(q["source"]["collection"] == state["id"] and q["source"]["unique_key"] == identity, "Query collection/unique identity authority")
+        require(q["id"] not in {c["token"] for c in model["commands"]} | {m["command"] for m in ir["facts"]["mutations"]}, "Mutation/query command conflict")
+        for n, kind in q["source"]["fields"].items():
+            t = ir["value_types"].get(n)
+            require(t is not None and not t.get("nullable", False), "Missing/nullable query field")
+            mapped = "strings" if t["type"] == "collection" and t["element"]["type"] in ("string", "identifier", "enum") else "string" if t["type"] in ("string", "identifier", "enum", "timestamp") else None
+            require(mapped == kind, "Unsupported mutable query type")
+    return ir
+
+
+def generate_mutable(ir, queries):
+    from .mutable_values import compose
+    require(compose(ir["base"], ir["facts"]) == ir, "Invalid mutable IR")
+    legacy = normal_resources(generate_legacy(validate_legacy(parse(json.dumps(ir["base"])))))
+    footer = 'if __name__ == "__main__":\n    sys.exit(main())'
+    runtime = Path(__file__).with_name("mutable_runtime.py").read_text(encoding="utf-8")
+    runtime = runtime.replace("MUTABLE = {}  # inserted by normal compiler", "MUTABLE = " + repr(ir) + "\nSPEC = MUTABLE['model']")
+    target = legacy.replace(footer, "") + "\n" + runtime + "\n"
+    if not queries:
+        return target + footer + "\n"
+    storage = dict(kind="mutable_state", ir=ir, state=ir["model"]["state"][0]["id"])
+    validate_mutable_storage(storage, queries)
+    target += "\nlegacy_main = main\n"
+    qr = Path(__file__).with_name("collection_query_runtime.py").read_text(encoding="utf-8")
+    qr = qr.replace("def execute(", "def execute_query(").replace("execute(model, records, args)", "execute_query(model, records, args)").replace("def main(model):", "def standalone_query_main(model):")
+    integration = Path(__file__).with_name("profile_runtime.py").read_text(encoding="utf-8")
+    return target + qr + "\n" + integration + "\nif __name__ == '__main__':\n    sys.exit(profile_main(" + repr(queries) + ", " + repr({"kind": "mutable_state", "state": storage["state"]}) + "))\n"
 
 
 def generate_bound(queries, storage):

@@ -32,6 +32,14 @@ gaps. One-state read-only composition is qualified; arbitrary profile union is
 not. B17/B20 still require clarification. R5.104's mutable-values recommendation
 is prospective, not implemented or authorized by that report.
 
+R5.104's [typed mutable-value profile](typed-mutable-values-v1.md) executes
+ordered collections, presence-aware staged transforms and atomic record writes
+through the normal path. Read its [report](../benchmark/results/phase5c/R5_104-REPORT.md)
+before extension: verified generic content was locked before twenty exposed
+attempts; six local successes, eleven structural, B18 BDI and B17/B20 clarification.
+Literal collection creation, required CLI binding and raw-empty-sensitive validation
+remain profile seams. R5.103 stays the pre-R5.104 baseline; R5.105 is prospective.
+
 B03 was exposed in
 R5.97 and its first structural-coverage result is immutable; later B03 work is
 post-exposure research and requires separate instructions. Never read held-out requirements

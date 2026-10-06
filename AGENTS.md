@@ -30,6 +30,14 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
   `docs/existing-semantic-composition-v1.md` for bounded guard/clock/provider and
   one-state scalar/read-only-query composition. No mutable-value, relationship or
   atomic-effect family was added. R5.104 is only a recommendation; preserve history.
+- R5.104 adds `typed-mutable-values-1` through the normal compiler dispatcher,
+  not historical v0.3 serialization. Read `docs/typed-mutable-values-v1.md` and
+  `benchmark/results/phase5c/R5_104-REPORT.md` before extending it. Its verified
+  generic lock precedes exposed transfer: six local successes B01/B02/B03/B04/
+  B05/B10, eleven structural, B18 BDI and B17/B20 clarification. B06 conditional
+  raw-empty validation and B07 literal collection/required-CLI-input seams remain.
+  R5.103 is the preserved pre-R5.104 baseline; no held-out/cumulative claim.
+  R5.105 closure is only a recommendation. Stop after R5.104.
 - `air/task_manager.json` is canonical; `src/air_compiler/` validates and
   generates the Python backend. Never hand-edit `generated/`. Current model
   semantics: `docs/axiom-v0.3.md` and `schema/axiom-v0.3.schema.json`; the
