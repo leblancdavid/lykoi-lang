@@ -1,0 +1,182 @@
+{
+  "utc": "2026-10-06T18:41:31.067252+00:00",
+  "freeze_sha256": "2b9df2c74879bd863f3a8c09ee6c3ce9251c5423b6d019342f1ebc171aae245c",
+  "historical_public_transfer": {
+    "classification": "UNSUPPORTED_RANGE_AND_NULLABILITY",
+    "probe_error": "Unsupported predicate",
+    "source": {
+      "id": "nullable",
+      "source": "Filter by price less than limit. Price may be null.",
+      "facts": {
+        "nullable": true,
+        "predicate": true
+      },
+      "channels": {
+        "return": "MEANINGFUL"
+      }
+    },
+    "source_sha256": "8f6e411984b2e502967cf4aaf69e64580f584268c00d216ca73d65444dd487ae",
+    "scope": "Operator-class refusal probe, not a faithful complete authored price application",
+    "unchanged_gaps": [
+      "less_than predicate",
+      "numeric runtime parameter",
+      "nullable field policy"
+    ]
+  },
+  "B03_POST_EXPOSURE_TRANSFER": "STRUCTURAL_COVERAGE_FAILURE",
+  "target": "Unmodified R5.97 candidate FRC through prospective query structural adapter",
+  "failure": "STRUCTURAL_COVERAGE_FAILURE",
+  "projection": {
+    "version": "collection-query-1",
+    "source_frc": "ef80ce829df154d9405fa409d0ffffef67bf9325855af66d5446c4bab2b5a83c",
+    "rows": [
+      {
+        "obligation": "B03-REQ-001",
+        "relation": {
+          "kind": "crud",
+          "parameters": {
+            "domain": "Existing task CLI",
+            "operation": "list-tag --tag VALUE",
+            "condition": "Invocation of the new command",
+            "result": "Read/list task query under the shared JSON subprocess contract",
+            "frame": "B03-REQ-009"
+          }
+        },
+        "classification": "UNSUPPORTED"
+      },
+      {
+        "obligation": "B03-REQ-002",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "domain": "Valid stored tasks and nonblank query VALUE",
+            "predicate": "tags contains a string exactly equal to VALUE",
+            "multiplicity": "All and only qualifying tasks, each once",
+            "frame": "B03-REQ-009"
+          }
+        },
+        "classification": "UNSUPPORTED"
+      },
+      {
+        "obligation": "B03-REQ-003",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "domain": "B03-REQ-002",
+            "comparison": "Case-sensitive exact equality",
+            "result": "work does not match Work",
+            "frame": "B03-REQ-009"
+          }
+        },
+        "classification": "UNSUPPORTED"
+      },
+      {
+        "obligation": "B03-REQ-004",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "domain": "Nonblank query VALUE",
+            "comparison": "Use VALUE verbatim without trimming",
+            "result": "Whitespace around nonblank input remains part of the match value",
+            "frame": "B03-REQ-009"
+          }
+        },
+        "classification": "UNSUPPORTED"
+      },
+      {
+        "obligation": "B03-REQ-005",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "domain": "Existing valid task statuses",
+            "predicate": "B03-REQ-002 without excluding completed tasks",
+            "result": "Qualifying completed and pending tasks included",
+            "frame": "B03-REQ-009"
+          }
+        },
+        "classification": "UNSUPPORTED"
+      },
+      {
+        "obligation": "B03-REQ-006",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "domain": "Returned matching task list",
+            "ordering": "(created_at, id) ascending",
+            "authority": "benchmark/baseline.md and benchmark/requirements/README.md",
+            "multiplicity": "B03-REQ-002",
+            "frame": "B03-REQ-009"
+          }
+        },
+        "classification": "UNSUPPORTED"
+      },
+      {
+        "obligation": "B03-REQ-007",
+        "relation": {
+          "kind": "transition",
+          "parameters": {
+            "domain": "Blank or whitespace-only query VALUE",
+            "condition": "Query input is blank or whitespace-only",
+            "result": "Reject with invalid_tag in the shared JSON error envelope on stderr and exit 1",
+            "successor_state": "Unchanged storage",
+            "frame": "B03-REQ-009"
+          }
+        },
+        "classification": "UNSUPPORTED"
+      },
+      {
+        "obligation": "B03-REQ-008",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "domain": "Valid nonblank query VALUE",
+            "condition": "No stored task has an exactly matching tag",
+            "result": [],
+            "frame": "B03-REQ-009"
+          }
+        },
+        "classification": "UNSUPPORTED"
+      },
+      {
+        "obligation": "B03-REQ-009",
+        "relation": {
+          "kind": "transition",
+          "parameters": {
+            "domain": "Every list-tag invocation",
+            "condition": "Success or rejection",
+            "successor_state": "Storage unchanged, including observable persisted bytes and file absence",
+            "result": "No storage mutation",
+            "frame": "All existing stored tasks and unrelated fields preserved"
+          }
+        },
+        "classification": "UNSUPPORTED"
+      }
+    ],
+    "queries": [],
+    "unsupported": [
+      "B03-REQ-001",
+      "B03-REQ-002",
+      "B03-REQ-003",
+      "B03-REQ-004",
+      "B03-REQ-005",
+      "B03-REQ-006",
+      "B03-REQ-007",
+      "B03-REQ-008",
+      "B03-REQ-009"
+    ]
+  },
+  "gap": "Legacy prose relations and CLI/storage context have no faithful typed-facet adapter in this profile",
+  "downstream": {
+    "BDI": "NOT_RUN",
+    "adequacy": "NOT_RUN",
+    "V1": "NOT_RUN",
+    "authoring": "NOT_RUN",
+    "compilation": "NOT_RUN",
+    "behavioral_verification": "NOT_RUN"
+  },
+  "B03_FIRST_RESULT": "DECISION_DISCOVERY_UNSUPPORTED",
+  "first_result_sha256": "4408851c1d6fd22a946cb68d546269183981a2c481b4fc6374cc9e2f90b4f00b",
+  "immutable_evidence_verified": 10,
+  "generic_implementation_unchanged": true,
+  "stop": "No remediation after transfer; no B04 access"
+}

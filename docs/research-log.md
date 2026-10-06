@@ -1,5 +1,32 @@
 # Lykoi research log
 
+## R5.98 general structural query capability (2026-10-06)
+
+**`R5_98_GENERAL_STRUCTURAL_QUERY_CAPABILITY_IMPLEMENTED_BOUNDED_PROFILE`**.
+[Report/evidence](../benchmark/results/phase5c/R5_98-GENERAL-STRUCTURAL-QUERY-CAPABILITY.md)
+and [versioned semantics](collection-query-v0.1.md) document a new prospective typed
+query path across products, users and documents. Runtime equality and collection
+membership, exact/casefold and none/strip policies, key precedence/directions,
+input rejection, inclusion, empty/error/null and authoritative effects compose.
+Complete FRC-facet coverage, existing BDI selection plus query policy decisions,
+unchanged adequacy, a separate faithful query-V1 profile and standalone deterministic
+Lykoi backend pass six compositions and a 54-obligation combined contract.
+
+Nine exposed-source obligations were analytically confirmed before implementation;
+no blind/independent-model review is claimed. Initial synthetic failures exposed a
+missing plural-match BDI annotation, corrected before the passing freeze. Final
+**263/263** selected tests, validation/safety, and **42** independent-process
+synthetic behavioral cases pass. Same-agent corpus/model/oracle authorship and
+finite bounded discovery remain limitations, not universal semantic guarantees.
+
+**`B03_POST_EXPOSURE_TRANSFER = STRUCTURAL_COVERAGE_FAILURE`**: the unchanged R5.97
+prose candidate has no typed-facet mapping, so downstream stages remain NOT_RUN.
+Public price-limit filtering still lacks ranges/numeric parameters/nullability.
+The historical task CLI/store and historical executable V1 integration are also
+unimplemented. No implementation change followed transfer. The first result remains
+**`B03_FIRST_RESULT = DECISION_DISCOVERY_UNSUPPORTED`**, with ten retained evidence
+commitments verified. No B04/later unexposed access or transfer remediation occurs.
+
 ## R5.97 B03 held-out evaluation (2026-10-06)
 
 **`R5_97_B03_HELD_OUT_EVALUATION_COMPLETE`**;

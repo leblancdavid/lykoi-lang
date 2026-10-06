@@ -104,6 +104,22 @@ candidate/context; R5.97 stops after evidence/reporting and does not access B04.
 The [R5.96 report](../benchmark/results/phase5c/R5_96-RESEARCH-WORKFLOW-SIMPLIFICATION.md)
 retains its earlier pre-access baseline and policy decision.
 
+**R5.98 — `R5_98_GENERAL_STRUCTURAL_QUERY_CAPABILITY_IMPLEMENTED_BOUNDED_PROFILE`.**
+The [prospective CollectionQuery-0.1 profile](collection-query-v0.1.md) implements
+typed runtime equality/membership queries with independent comparison, ordering,
+validation, inclusion, effect and result policies. Six synthetic compositions pass
+structural coverage, BDI, existing adequacy, a separate query-V1 extension and
+deterministic standalone lowering; 42 external process cases preserve state/storage.
+Final verification: **263/263 tests**, model validation/safety and 14/14 commands pass.
+The [R5.98 report](../benchmark/results/phase5c/R5_98-GENERAL-STRUCTURAL-QUERY-CAPABILITY.md)
+records nine independently rechecked obligations (same-agent analytical review),
+the passing pre-transfer freeze and limits. Historical task CLI/store/V1 integration
+and prose-to-typed mappings are not implemented. Public range/numeric/nullable
+filtering remains unsupported. **`B03_POST_EXPOSURE_TRANSFER = STRUCTURAL_COVERAGE_FAILURE`**
+on the unmodified R5.97 candidate; no downstream stages or remediation followed.
+**`B03_FIRST_RESULT = DECISION_DISCOVERY_UNSUPPORTED`** is unchanged. B04 and later
+unexposed requests remain untouched; R5.98 stops after generic work and transfer.
+
 ### Historical boundaries (preserved; not current infrastructure prerequisites)
 
 The records below describe their original experiments and stop conditions. Their

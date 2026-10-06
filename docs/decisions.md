@@ -1,5 +1,28 @@
 # Experimental decisions
 
+## R5.98 — Compositional query profile; preserve transfer boundaries
+
+Implement [CollectionQuery-0.1](collection-query-v0.1.md) as a separately versioned
+prospective semantic profile, with source/schema, runtime references, selection,
+comparison, key ordering, validation, inclusion, result and effect facets. Equality
+and collection membership compose with independent policies; explicit casefold and
+strip contrasts prevent convenience normalization from becoming hidden semantics.
+Use typed formal values, not source wording or benchmark IDs. Complete reprojection
+coverage rejects unsupported/lost obligations; omission is distinct from freedom.
+
+Reuse existing BDI selection and unchanged adequacy; add bounded policy distinctions
+that their earlier finite families cannot express. Historical V1's opaque dictionaries
+do not establish query semantics, so add a faithful query-document profile rather
+than silently declaring its mapper sufficient. The tradeoff is a working standalone
+query compiler with a narrow closed record/store adapter, not immediate compatibility
+with the historical task application, generic expressions or arbitrary collections.
+
+Freeze all passing synthetic content before transfer. The unmodified exposed candidate
+still fails structural mapping, and public price/range/nullability remains unsupported.
+Keep both limits, no implementation changes after observation, no B04 access, no
+historical evidence edits. [R5.98 evidence](../benchmark/results/phase5c/R5_98-GENERAL-STRUCTURAL-QUERY-CAPABILITY.md)
+establishes bounded capability, not held-out generalization or universal discovery.
+
 ## R5.97 — Preserve B03's first structural halt; defer remediation
 
 Retain **`B03_FIRST_RESULT = DECISION_DISCOVERY_UNSUPPORTED`**, native

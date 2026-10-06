@@ -31,6 +31,14 @@ B03 was exposed in R5.97 and halted at structural coverage:
 verification was reached. See the [R5.97 report](benchmark/results/phase5c/R5_97-B03-HELD-OUT-EVALUATION.md).
 The infrastructure descriptions below retain their historical experimental scope.
 
+**R5.98 adds a bounded prospective collection-query capability.** Typed runtime
+equality/membership, comparison policies, ordering, validation, inclusion, results
+and read-only effects work through structural analysis, adequacy and a separate
+query-V1/compiler path on six synthetic compositions. See the
+[specification](docs/collection-query-v0.1.md) and
+[report, verification and post-exposure transfer limits](benchmark/results/phase5c/R5_98-GENERAL-STRUCTURAL-QUERY-CAPABILITY.md).
+The unchanged B03 candidate still halts structurally; the first result is preserved.
+
 The [R5.87 requirements workspace](docs/requirements-workspace-r5.87.md) implements
 a public synthetic human-intent → clarification → independent source review → exact
 approval → controller-sealed requirements lifecycle. With `PYTHONPATH=src`, run
