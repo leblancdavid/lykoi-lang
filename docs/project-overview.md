@@ -75,6 +75,27 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.94 generic protected admission repair](../benchmark/results/phase5c/R5_94-GENERIC-PROTECTED-EVALUATION-ADMISSION-REPAIR.md)
+ends **`R5_94_GENERIC_PROTECTED_EVALUATION_IMPLEMENTED`** in trusted-local synthetic
+engineering scope. Separately versioned protected provenance, exact opaque-source/run
+authorization, durable access reservation, role visibility and append-only exposure
+accounting now pass the unchanged semantic back half. The supported synthetic case is
+behaviorally verified; the unsupported case halts at the unchanged complete-mapping
+boundary without a grant. Paired public/protected content preserves formal meaning,
+structural projection, BDI/adequacy behavior and normalized V1.
+
+**R5.94-GENERIC-PROTECTED-CANDIDATE-1** is frozen **inactive**, with exact identity in
+[machine evidence](../benchmark/results/phase5c/r5_94/protected-freeze-candidate.json).
+New **32/32** checks pass; controller/workspace/pipeline/mapping/public-freeze checks
+remain **34/26/30/33/14**, compiler/application **31/31**, external baseline **3/3**,
+guarded history **104 pass / 2 unchanged CRLF pin failures**. Historical R5.91 integrity
+passes; old machinery/evidence and semantics are byte-preserved. Mediated worker APIs
+enforce visibility, not hostile-code OS isolation; exposure receipts measure delivery,
+not cognition. **Stop after generic freeze.** No B03 authorization, access, metadata
+inspection or evaluation occurred; all scoped counters remain zero and inherited
+pristine/unexposed status is retained. A subsequent round must separately consider any
+target activation/authorization. Earlier boundaries below retain their historical scope.
+
 The [R5.92A evidence-materialization preflight](../benchmark/results/phase5c/R5_92A-READINESS-AND-PROTECTED-AUTHORIZATION.md)
 ends **`R5_92A_B03_READINESS_NOT_REPRODUCED`**, with precise blocker
 **`R5_92A_PROTECTED_ADMISSION_REQUIRES_FROZEN_MACHINERY_CHANGE`**. Named non-B03

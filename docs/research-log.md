@@ -1,5 +1,41 @@
 # Lykoi research log
 
+## R5.94 generic protected evaluation repair (2026-10-05 session)
+
+**R5_94_GENERIC_PROTECTED_EVALUATION_IMPLEMENTED**. The concrete public-purpose and
+PUBLIC/SYNTHETIC-only incompatibilities are repaired prospectively with generic
+`PROTECTED_EVALUATION` provenance, protected activation, opaque pre-access identity,
+exact source/policy/run authority, durable custody reservation/read accounting and
+per-role mediated disclosure receipts. Historical frozen source/evidence is untouched;
+private compatibility namespaces retain the same native semantic implementations.
+
+**32/32** protected challenges pass. The synthetic supported title/default source reaches
+behavioral verification; the synthetic additional ordering obligation is truthfully
+admitted but halts at the unchanged complete-mapping boundary, without a grant or author
+exposure. Identical public/protected content has equal formal semantics, structural
+projection, BDI decisions, adequacy outcome and normalized V1. Human, preauthorized and
+unavailable clarification policies are exercised; unavailable ambiguity terminates.
+Source read followed by failed admission stays exposed; failed producer execution retains
+its delivered-input receipt. No later role exposure is inferred without delivery.
+
+Existing controller/workspace/pipeline/mapping/public-freeze **34/26/30/33/14**,
+compiler/application **31/31** and external baseline **3/3** pass. Guarded history remains
+**104 pass / 2 known CRLF pin failures**, zero errors/skips. Model validation/safety,
+new freeze/evidence integrity and historical R5.91 integrity pass. The first evidence
+writer invocation timed out after suites/model checks and before publishing a candidate;
+its interruption is retained, and publication resumed from immutable suite logs using
+fresh synthetic calibration stores. No actual held-out retry occurred.
+
+The new **R5.94-GENERIC-PROTECTED-CANDIDATE-1** is frozen inactive with identity
+`f19c6dab34128813558a636e37d1f8c2ff109c45cd82172ab561712ba192f77e`.
+[Report/evidence](../benchmark/results/phase5c/R5_94-GENERIC-PROTECTED-EVALUATION-ADMISSION-REPAIR.md).
+Receipts measure mediated input delivery, not cognition; trusted local service/operator
+and custodian reporting, provider retention/build identity, correlated errors and finite
+coverage remain limitations. No live protected model run or general semantic expansion
+is claimed. **Stop at generic freeze**, before any target authorization. B03 remains
+pristine/unevaluated/unexposed with all scoped activity counters zero by inherited status
+and synthetic-only operations; no target source, metadata or protected ledger inspected.
+
 ## R5.92A readiness/authorization reproduction (2026-10-05 session)
 
 **R5_92A_B03_READINESS_NOT_REPRODUCED**. Named non-B03 R5.83–91 evidence and

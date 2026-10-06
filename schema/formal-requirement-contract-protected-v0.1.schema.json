@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lykoi:formal-requirement-contract:protected:0.1",
+  "title": "Prospective protected FRC provenance compatibility",
+  "$comment": "Only version and classification extend the historical schema. All semantic definitions remain referenced exactly; runtime enforces additional identity/revision constraints and protected controller authorization.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "contract_id", "revision", "source", "context", "obligations", "issues", "unspecified", "implementation_choices", "lineage", "formalizer", "review"],
+  "properties": {
+    "schema_version": {"const": "FormalRequirementContract-protected-0.1"},
+    "contract_id": {"$ref": "formal-requirement-contract-v0.1.schema.json#/$defs/nonblank"},
+    "revision": {"type": "integer", "minimum": 1},
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "text", "sha256", "classification"],
+      "properties": {
+        "id": {"$ref": "formal-requirement-contract-v0.1.schema.json#/$defs/nonblank"},
+        "text": {"$ref": "formal-requirement-contract-v0.1.schema.json#/$defs/nonblank"},
+        "sha256": {"$ref": "formal-requirement-contract-v0.1.schema.json#/$defs/sha256"},
+        "classification": {"enum": ["SYNTHETIC", "PUBLIC", "PROTECTED_EVALUATION"]}
+      }
+    },
+    "context": {"$ref": "formal-requirement-contract-v0.1.schema.json#/$defs/context"},
+    "obligations": {"type": "array", "uniqueItems": true, "items": {"$ref": "formal-requirement-contract-v0.1.schema.json#/$defs/obligation"}},
+    "issues": {"type": "array", "uniqueItems": true, "items": {"$ref": "formal-requirement-contract-v0.1.schema.json#/$defs/issue"}},
+    "unspecified": {"$ref": "formal-requirement-contract-v0.1.schema.json#/$defs/textArray"},
+    "implementation_choices": {"$ref": "formal-requirement-contract-v0.1.schema.json#/$defs/textArray"},
+    "lineage": {"type": "array", "uniqueItems": true, "items": {"$ref": "formal-requirement-contract-v0.1.schema.json#/$defs/lineage"}},
+    "formalizer": {"$ref": "formal-requirement-contract-v0.1.schema.json#/$defs/nonblank"},
+    "review": {"type": "null"}
+  }
+}

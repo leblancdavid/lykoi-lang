@@ -1,5 +1,29 @@
 # Experimental decisions
 
+## R5.94 — Repair protected plumbing in a new identity, preserve semantic engines
+
+Create a generic protected provenance and activation/authorization boundary around
+the existing requirements and sealed pipeline architecture. Preauthorize an opaque
+source identity and one run against an exact active candidate and role policy; bind
+content only after authorized custody access. Reserve opening durably before invoking
+the custodian, record reads separately from admission, and retain monotone per-role
+delivery receipts. Authorization alone conveys no source exposure. Author input remains
+the existing restricted V1/toolchain/seed bundle, with original prose denied.
+
+Byte-preserve the historical frozen modules. Use a small explicit private namespace
+compatibility recipe instead of changing historical global validators or copying a
+second semantic engine. Each provenance/version substitution has a unique fail-closed
+anchor; pin the recipe and original dependency closure in the new candidate. This trades
+some import indirection for exact historical reproducibility and a single semantic
+implementation. The new provenance schema references unchanged semantic definitions.
+
+Clarification availability is preauthorized policy, not an invitation to invent answers.
+Unavailable material clarification terminates; human/preauthorized answers retain exact
+revision/review requirements. Protected provenance changes access/audit, not meaning or
+capability. Synthetic success/invariance and unsupported-without-grant evidence support
+the bounded repair. Freeze **inactive** before selecting or authorizing an actual target.
+Trusted-local service/SQLite/operator limitations remain explicit. [Report](../benchmark/results/phase5c/R5_94-GENERIC-PROTECTED-EVALUATION-ADMISSION-REPAIR.md).
+
 ## R5.92A — Protected authority must be consumed by the frozen admission boundary
 
 An owner-adopted ordinary context cannot substitute for an enforced protected gate.

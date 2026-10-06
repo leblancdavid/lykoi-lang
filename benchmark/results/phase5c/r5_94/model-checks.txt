@@ -1,0 +1,93 @@
+Lykoi validate: ok
+{
+  "capability_violations": 0,
+  "declared_transitions": 1,
+  "evidence_counts": {
+    "RUNTIME_ENFORCED": 5,
+    "SCENARIO_VERIFIED": 0,
+    "STRUCTURALLY_GUARANTEED": 1,
+    "UNVERIFIED": 0
+  },
+  "findings": [
+    {
+      "evidence": "RUNTIME_ENFORCED",
+      "id": "inv_unique_ids"
+    },
+    {
+      "evidence": "RUNTIME_ENFORCED",
+      "id": "inv_valid_tasks"
+    },
+    {
+      "evidence": "RUNTIME_ENFORCED",
+      "id": "inv_title"
+    },
+    {
+      "evidence": "RUNTIME_ENFORCED",
+      "id": "inv_status"
+    },
+    {
+      "evidence": "RUNTIME_ENFORCED",
+      "id": "inv_priority"
+    },
+    {
+      "evidence": "STRUCTURALLY_GUARANTEED",
+      "id": "inv_overdue_excludes_completed"
+    }
+  ],
+  "invalid_transitions": 0,
+  "invariants": 6,
+  "mutations": [
+    {
+      "behavior": "fn_create",
+      "mutates": [
+        "field_created_at",
+        "field_description",
+        "field_due_date",
+        "field_id",
+        "field_priority",
+        "field_status",
+        "field_title"
+      ],
+      "relevant_invariants": [
+        "inv_unique_ids",
+        "inv_valid_tasks",
+        "inv_title",
+        "inv_status",
+        "inv_priority",
+        "inv_overdue_excludes_completed"
+      ]
+    },
+    {
+      "behavior": "fn_complete",
+      "mutates": [
+        "field_status"
+      ],
+      "relevant_invariants": [
+        "inv_status",
+        "inv_overdue_excludes_completed"
+      ]
+    },
+    {
+      "behavior": "fn_delete",
+      "mutates": [
+        "field_created_at",
+        "field_description",
+        "field_due_date",
+        "field_id",
+        "field_priority",
+        "field_status",
+        "field_title"
+      ],
+      "relevant_invariants": [
+        "inv_unique_ids",
+        "inv_valid_tasks",
+        "inv_title",
+        "inv_status",
+        "inv_priority",
+        "inv_overdue_excludes_completed"
+      ]
+    }
+  ],
+  "protected_resources": 1,
+  "state_machines": 1
+}

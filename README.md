@@ -57,6 +57,14 @@ general model qualification is deferred. The [next-round protocol](docs/public-r
 is frozen. No future requirement was selected and no rehearsal was run. R5.90's
 historical blocked result, the R5.89 envelope and B03 protection remain intact.
 
+The [R5.94 protected evaluation repair](docs/protected-evaluation-r5.94.md) adds generic
+protected provenance, exact opaque-source/run authorization, durable admission and
+role-specific access accounting around the existing semantic pipeline. Synthetic
+supported/invariance/unsupported challenges pass. A [new generic candidate](benchmark/results/phase5c/r5_94/protected-freeze-candidate.json)
+is frozen inactive; no B03 authorization or access occurred. Historical R5.91 machinery
+and evidence remain intact. See the [engineering report](benchmark/results/phase5c/R5_94-GENERIC-PROTECTED-EVALUATION-ADMISSION-REPAIR.md)
+for checks and trusted-local containment limits.
+
 The task application lives in [`air/task_manager.json`](air/task_manager.json)
 (the `air/` path and `air_compiler` import path are retained for compatibility).
 The current v0.3 model is documented in [`docs/axiom-v0.3.md`](docs/axiom-v0.3.md),
