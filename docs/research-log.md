@@ -1,5 +1,34 @@
 # Lykoi research log
 
+## R5.89 public rehearsal capability closure (2026-10-05)
+
+Implemented a [closed public capability profile](public-rehearsal-capability-r5.89.md),
+two exact whole-contract title/default mappings, actual HTTPS structured AI producer
+interfaces, source-only reviewer path, restricted AI author, independent WHAT-derived
+rule verifier, stronger trusted-target process/API containment and machine-checkable
+inactive public freeze/requirement-blind eligibility. No compiler/V1 semantic expansion.
+The exact R5.87 public wizard still halts at its original unqualified complete mapping.
+
+New **33/33** challenges pass, including four supported mock-transport authorized
+workspace-to-external-verification chains, wrong-default behavioral failure, unsupported
+author language, ambiguity/disagreement, near-miss preservation, containment denials,
+freeze drift and public-admission refusal. Existing R5.86 **34/34**, R5.87 **26/26**,
+R5.88 **30/30**, compiler/application **31/31**, validation/safety pass. Selected
+historical suites remain **104 pass / 2 known CRLF physical-byte failures**, unchanged.
+[Report/raw evidence](../benchmark/results/phase5c/R5_89-PUBLIC-REHEARSAL-CAPABILITY-CLOSURE.md).
+
+No model is selected in adapter configuration; designated service credential unavailable.
+Live AI dry runs **zero**; transport/schema tests are not semantic extraction qualification.
+Separate stateless contexts do not demonstrate provider independence. The verifier
+observes only title/default stdout and exit status, not all supported compiler behavior
+or universal semantic equivalence. Python API containment is not a hostile-code OS
+sandbox; POSIX budgets are untested here and Windows quotas are absent. Candidate
+integrity passes, public eligibility fails. Classification is
+**R5_89_PUBLIC_REHEARSAL_BLOCKED_REAL_AI_QUALIFICATION**. Actual configuration/live
+calibration/human qualification and separate public activation remain before any
+future requirement selection. No future rehearsal was selected; recovery unimplemented;
+B03/all zero counters and R5.83 nonactivation preserved. Stop after R5.89.
+
 ## R5.88 sealed authoring and independent verification (2026-10-05)
 
 Implemented **R5_88_SEALED_AUTHORING_VERIFICATION_PIPELINE_IMPLEMENTED** in public

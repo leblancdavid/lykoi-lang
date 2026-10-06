@@ -1,5 +1,31 @@
 # Experimental decisions
 
+## R5.89 — Freeze a closed observation slice; fail public admission without live qualification
+
+Choose a structural task-creation/title and explicit omitted-priority subset already
+executable by the public compiler. Do not qualify generic CRUD, persistence or filter
+mapping just because the seed implements some related behavior. Two exact whole-
+contract mappings preserve all IDs/relations/statements in unchanged V1; every extra
+obligation or parameter variation rejects. Preserve the exact R5.87 wizard's halt.
+
+Use prospective controller/pipeline subclasses and stateless standard-library HTTPS
+adapters, with structured untrusted output and source/policy/prompt/configuration
+bindings. Keep source-only reviewer commitment before reconciliation and human final
+authority. Do not call mock HTTP transport real AI or infer provider independence
+from distinct session labels. Default verification is a WHAT-derived fixed rule
+producer, separately reviewed/sealed, with executable claim checks beyond coverage
+labels. Public author seeds remove scenario expected results.
+
+Admit trusted deterministic compiler output only, with isolated processes, empty
+environment, case-local state, Python API denials and timeout. Windows lacks robust
+OS containment/resource quotas; hostile-code safety stays false. This limit does not
+independently block the explicitly trusted public profile. Require machine integrity,
+exact seed/configuration/role separation, separately activated public freeze and
+multiple approved live calibration receipts before public admission. Today's inactive
+null-model candidate is **R5_89_PUBLIC_REHEARSAL_BLOCKED_REAL_AI_QUALIFICATION**.
+Configuration/qualification must precede future task selection; no profile tuning
+afterward. B03 and the R5.83 candidate remain separate. Stop after R5.89.
+
 ## R5.88 — Native back-half evidence and an executable two-part freeze
 
 Implement **R5_88_SEALED_AUTHORING_VERIFICATION_PIPELINE_IMPLEMENTED** as a prospective

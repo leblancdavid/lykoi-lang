@@ -75,6 +75,34 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.89 public rehearsal closure](../benchmark/results/phase5c/R5_89-PUBLIC-REHEARSAL-CAPABILITY-CLOSURE.md)
+ends **`R5_89_PUBLIC_REHEARSAL_BLOCKED_REAL_AI_QUALIFICATION`**. The versioned
+[public capability profile](public-rehearsal-capability-r5.89.md) supports only task
+creation returning supplied title, optionally with an explicit omitted-priority
+LOW/NORMAL/HIGH default. Two closed complete mappings preserve exact V1 obligation
+IDs/relations/statements; filtering, ordering, persistence and other additional
+obligations refuse. The exact R5.87 wizard's original V1 halt is preserved.
+
+Production-facing stateless HTTPS formalizer/source-only reviewer/restricted-author
+and candidate-plan interfaces are implemented with structured output and provenance.
+Independent deterministic WHAT-side rule plans are sealed before authorship; trusted
+compiler targets run through a process/Python-API containment worker. New **33/33**
+tests and four supported mock-transport authorized calibration chains pass, with a
+wrong default visibly failing. Existing controller **34/34**, workspace **26/26**,
+pipeline **30/30**, compiler/application **31/31** and model validation/safety pass.
+Historical guarded suites retain **104 pass / 2 known physical-byte CRLF failures**;
+original evidence unchanged. No live model is configured or exercised; no demonstrated
+provider independence or hostile-code OS containment is claimed.
+
+An inactive **R5.89-PUBLIC-CANDIDATE-1** binds components/configuration/prompts/semantics
+and calibration; machine integrity passes and requirement-blind public eligibility
+fails closed. Actual role configuration, live calibration qualification and a separately
+authorized public freeze/activation remain before selecting a future requirement.
+**B03_PRISTINE / B03_NOT_EVALUATED / B03_NOT_EXPOSED_TO_LYKOI_DEVELOPMENT**, all counters
+**zero**; **R5.83-CANDIDATE-1 unactivated**. Semantics/V1/BDI families unchanged,
+core **30** inherited, Phase 5C paused. **Stop after R5.89**. Earlier boundaries below
+retain their historical scope.
+
 The [R5.88 sealed authoring/verification round](../benchmark/results/phase5c/R5_88-SEALED-AUTHORING-AND-INDEPENDENT-VERIFICATION.md)
 ends **`R5_88_SEALED_AUTHORING_VERIFICATION_PIPELINE_IMPLEMENTED`** in public synthetic
 engineering scope. [Sealed-pipeline-1](sealed-authoring-verification-r5.88.md) extends

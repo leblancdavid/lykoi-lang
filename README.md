@@ -35,6 +35,14 @@ deterministic builds and external behavioral verification with restart audit.
 at the existing faithful-V1 adapter gap before authoring. Local fixture isolation
 is not an OS sandbox or production AI qualification.
 
+The [R5.89 public rehearsal profile](docs/public-rehearsal-capability-r5.89.md) adds
+closed task-title/default mappings, structured HTTPS AI interfaces, independent
+WHAT-derived acceptance planning, trusted-target containment and a machine-verifiable
+inactive public freeze. `python -m lykoi_rehearsal.freeze check` reports infrastructure
+eligibility without inspecting a future requirement. Current status is
+`R5_89_PUBLIC_REHEARSAL_BLOCKED_REAL_AI_QUALIFICATION`: live models/calibration and
+separate public activation remain. The exact R5.87 wizard still halts before authoring.
+
 The task application lives in [`air/task_manager.json`](air/task_manager.json)
 (the `air/` path and `air_compiler` import path are retained for compatibility).
 The current v0.3 model is documented in [`docs/axiom-v0.3.md`](docs/axiom-v0.3.md),
