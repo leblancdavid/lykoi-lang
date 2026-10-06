@@ -1,5 +1,22 @@
 # Lykoi research log
 
+## R5.90 live AI worker qualification operational preflight (2026-10-05)
+
+**R5_90_LIVE_AI_WORKERS_BLOCKED_CREDENTIAL_UNAVAILABLE**. Presence-only checks of
+the designated adapter key and conventional OpenAI key in Process/User/Machine
+environment scopes found all absent. All four public R5.89 model selections are null;
+no external secret mechanism was supplied. Provider requests **0**, live runs **0**,
+qualified roles **0/4**. No semantic failure rate, correlated-error measurement,
+provider version, token usage, latency or live replacement result is available.
+
+The explicit credential-unavailability stop prevents qualification implementation
+and execution. No new corpus/prompt/criteria freeze, registry or exact-qualified-worker
+freeze integration is claimed. Existing mock evidence remains mock evidence and the
+public infrastructure remains ineligible. [Report and preflight evidence](../benchmark/results/phase5c/R5_90-LIVE-AI-WORKER-QUALIFICATION.md).
+Documentation/evidence only; no compiler or benchmark tests run. No future rehearsal
+requirement selected; B03 protection/all zero counters and R5.83 nonactivation preserved.
+Stop after R5.90 operational preflight.
+
 ## R5.89 public rehearsal capability closure (2026-10-05)
 
 Implemented a [closed public capability profile](public-rehearsal-capability-r5.89.md),

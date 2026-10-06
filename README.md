@@ -43,6 +43,11 @@ eligibility without inspecting a future requirement. Current status is
 `R5_89_PUBLIC_REHEARSAL_BLOCKED_REAL_AI_QUALIFICATION`: live models/calibration and
 separate public activation remain. The exact R5.87 wizard still halts before authoring.
 
+The [R5.90 live worker qualification preflight](benchmark/results/phase5c/R5_90-LIVE-AI-WORKER-QUALIFICATION.md)
+stops **`R5_90_LIVE_AI_WORKERS_BLOCKED_CREDENTIAL_UNAVAILABLE`**: no service credential
+is available and all role models remain unconfigured. Live runs and qualified roles
+are zero; infrastructure remains ineligible before future requirement selection.
+
 The task application lives in [`air/task_manager.json`](air/task_manager.json)
 (the `air/` path and `air_compiler` import path are retained for compatibility).
 The current v0.3 model is documented in [`docs/axiom-v0.3.md`](docs/axiom-v0.3.md),

@@ -75,6 +75,19 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.90 live worker qualification preflight](../benchmark/results/phase5c/R5_90-LIVE-AI-WORKER-QUALIFICATION.md)
+ends **`R5_90_LIVE_AI_WORKERS_BLOCKED_CREDENTIAL_UNAVAILABLE`**. Presence-only checks
+found no designated service credential or conventional OpenAI credential in process,
+user or machine environments; all four R5.89 role models remain null. No external
+secret mechanism was supplied. Provider requests/live runs **zero**, qualified roles
+**0/4**. The explicit operational stop applies before qualification implementation
+or scored runs. Registry/exact-qualified-worker freeze integration remain unimplemented;
+infrastructure remains ineligible. Provision credentials and explicit role settings
+before a separately authorized continuation freezes corpus, criteria and prompts and
+obtains live evidence and exact human-reviewed qualifications. No future requirement
+selected; B03 protection/all zero counters and R5.83 nonactivation preserved.
+**Stop after R5.90.** R5.89 below retains its historical scope.
+
 The [R5.89 public rehearsal closure](../benchmark/results/phase5c/R5_89-PUBLIC-REHEARSAL-CAPABILITY-CLOSURE.md)
 ends **`R5_89_PUBLIC_REHEARSAL_BLOCKED_REAL_AI_QUALIFICATION`**. The versioned
 [public capability profile](public-rehearsal-capability-r5.89.md) supports only task

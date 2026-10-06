@@ -1,5 +1,22 @@
 # Experimental decisions
 
+## R5.90 — Stop qualification when live credentials are unavailable
+
+Apply the requested operational stop before scored execution or qualification
+implementation. The presence-only environment probe finds no designated service key
+or conventional OpenAI key; existing role model selections are null. Record
+**R5_90_LIVE_AI_WORKERS_BLOCKED_CREDENTIAL_UNAVAILABLE**, not model failure, partial
+qualification or mock-backed success. Harness model provenance supplies neither a
+service credential nor live R5.89 role evidence. Numeric scores or worker assertions
+cannot stand in for exact declared-authority qualification approval.
+
+Replaceable, untrusted role-specific workers remain the intended policy. A materially
+changed model/version/prompt/inference configuration needs a different identity and
+independent qualification; sealed artifacts do not acquire meaning from worker names.
+Registry and exact-qualified-worker freeze integration are deferred by this stop,
+not claimed as implemented. No future requirement selected, B03 untouched/all counters
+zero, R5.83 candidate unactivated. [Report](../benchmark/results/phase5c/R5_90-LIVE-AI-WORKER-QUALIFICATION.md).
+
 ## R5.89 — Freeze a closed observation slice; fail public admission without live qualification
 
 Choose a structural task-creation/title and explicit omitted-priority subset already
