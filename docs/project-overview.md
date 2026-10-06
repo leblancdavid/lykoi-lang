@@ -75,6 +75,22 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.92A evidence-materialization preflight](../benchmark/results/phase5c/R5_92A-READINESS-AND-PROTECTED-AUTHORIZATION.md)
+ends **`R5_92A_B03_READINESS_NOT_REPRODUCED`**, with precise blocker
+**`R5_92A_PROTECTED_ADMISSION_REQUIRES_FROZEN_MACHINERY_CHANGE`**. Named non-B03
+checks reproduce R5.86–91 **34/26/30/33/14** and compiler/application **31/31** passes,
+plus **104 pass / 2 unchanged historical CRLF pin failures**. Exact R5.91 integrity
+passes, but activation is public-only and the frozen workspace/FRC validator cannot
+truthfully represent protected provenance. Synthetic nonpublic activation and protected
+provenance probes reject. Positive `R5_92_B03_EXPOSURE_READY` and protected authority
+are not established. [Persisted negative reassessment](../benchmark/results/phase5c/r5_92a/readiness.json)
+binds the evidence; [pre-access eligibility](../benchmark/results/phase5c/r5_92a/preaccess.json)
+is **false**. R5.93's correct pre-access halt is preserved, not a B03 result.
+No frozen machinery changed; B03 remains pristine/not evaluated/not development-exposed,
+all scoped access/activity counters zero. **Stop before access**; resolving the demonstrated
+admission/provenance incompatibility requires separate instructions. Earlier records
+below retain their historical scope.
+
 The [R5.91 live integration and public freeze](../benchmark/results/phase5c/R5_91-LIVE-AI-INTEGRATION-AND-PUBLIC-REHEARSAL-FREEZE.md)
 ends **`R5_91_PUBLIC_REHEARSAL_FROZEN`**. Existing OpenCode/GitHub Copilot OAuth executes
 `claude-sonnet-4.6` in fresh restricted contexts for all four roles. Final public

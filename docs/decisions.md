@@ -1,5 +1,20 @@
 # Experimental decisions
 
+## R5.92A — Protected authority must be consumed by the frozen admission boundary
+
+An owner-adopted ordinary context cannot substitute for an enforced protected gate.
+The exact R5.91 activation checks public purpose, while the workspace hardcodes
+synthetic provenance and the transitive FRC validator admits PUBLIC/SYNTHETIC only.
+Synthetic nonpublic activation/protected-provenance probes mechanically reject.
+Do not relabel protected input, reuse public activation, select calibration mode,
+or alter frozen behavior/pins to manufacture eligibility in this materialization round.
+Stop with **R5_92A_B03_READINESS_NOT_REPRODUCED** and the precise protected-admission
+machinery-change blocker. Persist the negative evidence, preserve R5.93's correct
+halt, and leave B03 pristine. This is an implemented compatibility contradiction,
+not a demand for general model governance, semantic expansion or hostile-code hardening.
+Same-model error, finite checks, narrow coverage, trusted-local containment and
+unpinned provider builds remain declared limitations. [Report](../benchmark/results/phase5c/R5_92A-READINESS-AND-PROTECTED-AUTHORIZATION.md).
+
 ## R5.91 — One live configuration; evaluate Lykoi before general model governance
 
 Full role-by-role model qualification is unnecessary before this bounded research

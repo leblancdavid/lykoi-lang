@@ -1,5 +1,33 @@
 # Lykoi research log
 
+## R5.92A readiness/authorization reproduction (2026-10-05 session)
+
+**R5_92A_B03_READINESS_NOT_REPRODUCED**. Named non-B03 R5.83–91 evidence and
+unchanged frozen code reveal a concrete protected admission incompatibility:
+R5.91 activation recognizes public purpose only, the workspace labels FRCs SYNTHETIC,
+and the frozen validator accepts only PUBLIC/SYNTHETIC provenance. Disposable
+non-B03 activation substitution rejects `FREEZE_FAILURE` before storing an artifact;
+valid synthetic bookkeeping changed only to protected classification rejects
+`MALFORMED_FRC`. No bypass, protected context or frozen-code change was introduced.
+
+Fresh controller/workspace/pipeline/mapping-containment/R5.91 checks pass
+**34/26/30/33/14**; compiler/application **31/31**; guarded historical **104 pass /
+2 known CRLF physical-byte failures**, with both read-only LF diagnostics matching
+the preserved historical pins. Model validation/safety pass. Exact snapshot integrity
+passes; actual public controller remains revision 2, no admissions, unchanged bytes.
+The negative reassessment identity is
+`40f726f1874e989508918d3182fb168a6a28299088509f4cdb4cc3b71ff51bcc`.
+[Report and evidence](../benchmark/results/phase5c/R5_92A-READINESS-AND-PROTECTED-AUTHORIZATION.md).
+
+Bounded coverage/restricted authoring/independent finite verification are implemented;
+shared semantic errors, narrow mappings, trusted-local containment and unpinned provider
+builds remain limitations, not new production-hardening benchmark gates. Protected
+admission/provenance itself remains unclosed, so affirmative R5.92 readiness and B03
+authorization were not persisted. R5.93 halt stays intact as pre-access evidence.
+All B03 activity counters zero by inherited status plus scoped operations; no protected
+ledger/content/metadata inspection, no new live role dispatch, no contamination
+transition. **Stop before access; B03 pristine and not evaluated.**
+
 ## R5.91 live AI integration and public rehearsal freeze (2026-10-05/06 UTC)
 
 **R5_91_PUBLIC_REHEARSAL_FROZEN**. Existing OpenCode 1.1.25/GitHub Copilot OAuth
