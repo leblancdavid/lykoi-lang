@@ -20,6 +20,14 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**Current research policy: R5.96.** Use compatible Python 3.10+ and the AI model
+available in the active environment. OpenCode, model/machine/runtime/transport
+qualification and protected freeze activation are not benchmark prerequisites.
+See the [simplified workflow, infrastructure classification and snapshot command](docs/research-workflow-r5.96.md).
+No held-out-informed Lykoi changes are allowed before the first recorded result.
+B03 remains unread in R5.96; the next instructed round can snapshot and benchmark it.
+The infrastructure descriptions below retain their historical experimental scope.
+
 The [R5.87 requirements workspace](docs/requirements-workspace-r5.87.md) implements
 a public synthetic human-intent → clarification → independent source review → exact
 approval → controller-sealed requirements lifecycle. With `PYTHONPATH=src`, run
@@ -118,7 +126,9 @@ python -m air_compiler.cli diff experiments/task_manager-v0.2-before-priority.js
 python -m air_compiler.cli impact air/task_manager.json field_due_date --manifest generated/task_manager.manifest.json
 python -m air_compiler.cli safety air/task_manager.json
 python -m air_compiler.cli plan experiments/phase3-due-dates.plan.json
-python -m unittest discover -s tests -v
+python -m unittest discover -s tests -p test_compiler.py -v
+python -m unittest discover -s tests -p test_application.py -v
+python -m unittest discover -s benchmark/harness -p test_baseline.py -v
 ```
 
 The Phase 3 experiment plan is pinned to the **pre-change** model. After it has

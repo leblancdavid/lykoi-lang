@@ -1,16 +1,34 @@
 # Phase 5: comparative maintenance benchmark
 
+## Current research path — R5.96
+
+The [simplified benchmark protocol](../docs/research-workflow-r5.96.md) governs
+prospective ordinary research and the next held-out evaluation. Use compatible
+current Python/tooling and the currently available model. No machine, model,
+OpenCode, runtime or transport qualification, infrastructure hash gate, protected
+activation or controller authorization merely for benchmark access is required.
+The historical comparative protocol and its amendments remain preserved below.
+
+Before B03 access, take a fresh snapshot of commit/tree, tests, core/V1 versions,
+model/provider when known, time and the declaration that B03 has never been inspected.
+Mark B03 exposed at first access. Process/formalize with existing Lykoi, implement
+if representable, independently verify and record the first terminal result before
+any B03-informed change to Lykoi. Later attempts are post-exposure diagnostics.
+R5.96 performs cleanup only: **B03 remains unread**.
+
 Two task CLIs start from equivalent observable behavior. `conventional/task_manager.py`
 is maintained as Python source. Track B's source of truth is the repository's
 `air/task_manager.json`; `generated/task_manager.py` is its disposable executable.
 Historical `experiments/` files are not benchmark working copies.
 
-Run the external baseline oracle from the repository root:
+From the repository root, use the public external baseline and core checks; broad
+historical discovery is optional and subject to held-out boundaries:
 
 ```powershell
-python -m unittest discover -s benchmark/harness -v
+python -m unittest discover -s benchmark/harness -p test_baseline.py -v
 $env:PYTHONPATH='src'
-python -m unittest discover -s tests -v
+python -m unittest discover -s tests -p test_compiler.py -v
+python -m unittest discover -s tests -p test_application.py -v
 ```
 
 Read `baseline.md` for the external behavioral contract, `requirements/README.md`

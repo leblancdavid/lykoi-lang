@@ -1,5 +1,25 @@
 # Experimental decisions
 
+## R5.96 — Return research to Lykoi; retire infrastructure prerequisites
+
+Adopt [the R5.96 workflow decision](research-workflow-r5.96.md) prospectively.
+Use compatible current tooling and the current available AI model; record identities
+as provenance. Exact Python executable/DLL/ZIP and OpenCode identities, runtime/
+adapter/transport/model/machine qualification, cross-machine freeze eligibility,
+infrastructure hashes, protected activation and benchmark-access controller grants
+are optional/deferred experiments, not prerequisites. Preserve their code, frozen
+contracts and historical evidence. Retain the product-useful requirements,
+authority/artifact, faithful-representation and independent-verification architecture.
+
+The research integrity boundary is the recorded first terminal result: no held-out-
+informed changes to Lykoi before it. Record a fresh human-readable pre-access snapshot,
+mark exposure at first access, and label subsequent informed development honestly.
+Do not intentionally switch models after reading a first-attempt benchmark to improve
+the result. This simpler audit discipline sacrifices elaborate machine enforcement,
+not semantic fidelity or failure distinctions. R5.96 does not access B03.
+
+Earlier decisions below retain their historical scope and are not current gates.
+
 ## R5.94C — Freeze AI-worker behavior, keep model and transport distinct
 
 Adopt prospective `AI_WORKER_TRANSPORT_CONTRACT_V1`: fresh isolated context, exact

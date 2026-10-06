@@ -75,6 +75,31 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R5.96 — `R5_96_RESEARCH_WORKFLOW_SIMPLIFIED`.** Current research uses compatible
+tooling and the AI model available in the active development environment. Exact
+runtime/OpenCode identities, machine/model/adapter/transport qualification,
+cross-machine freeze eligibility, infrastructure hashes, protected activation and
+controller permission merely to open a benchmark are no longer prerequisites.
+The [R5.96 decision and simplified protocol](research-workflow-r5.96.md) classify
+retained architecture and optional/deferred prototypes and provide a lightweight
+snapshot command. FRC, clarification/policies/wizard, SOI/reconciliation,
+BDI/adequacy, faithful V1, controller/workspace, independent verification and
+deterministic lowering remain useful bounded Lykoi architecture.
+
+**B03 remains unread in R5.96.** The next research step is the B03 benchmark in a
+subsequent instructed round: immediately record commit/tree/tests/core/V1/model/time
+and the held-out declaration, then expose and evaluate without B03-informed Lykoi
+changes until the first terminal result is recorded. Later development is marked
+post-exposure. No further infrastructure qualification is required. See the
+[R5.96 report](../benchmark/results/phase5c/R5_96-RESEARCH-WORKFLOW-SIMPLIFICATION.md)
+for current-environment baseline evidence.
+
+### Historical boundaries (preserved; not current infrastructure prerequisites)
+
+The records below describe their original experiments and stop conditions. Their
+blocked results remain valid; R5.96 prospectively replaces their infrastructure
+gates for ordinary research without activating or rewriting their frozen candidates.
+
 The [R5.94C provider-neutral transport repair](../benchmark/results/phase5c/R5_94C-PROVIDER-NEUTRAL-AI-WORKER-TRANSPORT.md)
 ends **`R5_94C_BLOCKED_NO_FUNCTIONING_TRANSPORT_FOR_FROZEN_MODEL`**. Prospective
 `AI_WORKER_TRANSPORT_CONTRACT_V1` and a common isolated worker interface replace

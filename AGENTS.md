@@ -7,6 +7,12 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- R5.96 current policy: `docs/research-workflow-r5.96.md`. Use compatible current
+  tooling and the available AI model; machine/model/OpenCode/runtime/transport
+  qualification and protected activation/access grants are not research gates.
+  Preserve historical evidence and useful Lykoi architecture. B03 stays unread
+  during R5.96. Before later access record a fresh snapshot; no held-out-informed
+  Lykoi changes before the first terminal result; mark exposure and later development.
 - `air/task_manager.json` is canonical; `src/air_compiler/` validates and
   generates the Python backend. Never hand-edit `generated/`. Current model
   semantics: `docs/axiom-v0.3.md` and `schema/axiom-v0.3.schema.json`; the
@@ -16,8 +22,9 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
   $env:PYTHONPATH='src'
   python -m air_compiler.cli validate air/task_manager.json
   python -m air_compiler.cli safety air/task_manager.json
-  python -m unittest discover -s tests -v
-  python -m unittest discover -s benchmark/harness -v
+  python -m unittest discover -s tests -p test_compiler.py -v
+  python -m unittest discover -s tests -p test_application.py -v
+  python -m unittest discover -s benchmark/harness -p test_baseline.py -v
   ```
   Focus a test with `python -m unittest discover -s tests -p test_compiler.py -v`
   (or `-s benchmark/harness -p test_baseline.py`). Regenerate intentional model

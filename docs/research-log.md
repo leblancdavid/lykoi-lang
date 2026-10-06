@@ -1,5 +1,27 @@
 # Lykoi research log
 
+## R5.96 research workflow simplification (2026-10-06)
+
+The research priority returns to evaluating Lykoi with the current compatible
+environment and available model. [The prospective decision](research-workflow-r5.96.md)
+retires infrastructure qualification/access gates and classifies product-useful,
+research-useful and experimental/deferred mechanisms without deleting prototypes
+or revising historical experiments. Existing bounded mappings, discovery/adequacy
+and formalization limitations remain observable research outcomes.
+
+A fixed public/synthetic snapshot command records Git/tree, UTC time, actual core/
+backend/V1 versions, model/provider provenance and full baseline output using the
+current interpreter. It makes no AI or B03 access calls. Current session provenance:
+OpenAI `openai/gpt-6.1-sol`, as reported by the active environment, not qualified
+or independently verified. [R5.96 report and baseline](../benchmark/results/phase5c/R5_96-RESEARCH-WORKFLOW-SIMPLIFICATION.md)
+record the checks actually executed and known historical failures separately.
+
+B03 remains unread/unexposed in this round by inherited history and this session's
+no-access discipline. No first benchmark result is claimed. The next instructed
+round can take a fresh snapshot and evaluate B03 without further infrastructure
+qualification; no B03-informed Lykoi change is permitted before its first result.
+Historical entries below retain their original scope.
+
 ## R5.94C provider-neutral AI worker transport (2026-10-06 session)
 
 **`R5_94C_BLOCKED_NO_FUNCTIONING_TRANSPORT_FOR_FROZEN_MODEL`**. The bounded neutral

@@ -8,6 +8,12 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Current prospective research policy is [R5.96](research-workflow-r5.96.md).**
+Historical frozen experiments retain their protocols; their infrastructure gates
+do not govern ordinary research or the next held-out benchmark. Preserve B03 until
+a later benchmark round takes the fresh snapshot. Never read held-out requirements
+merely to orient, select retained architecture or run broad historical tests.
+
 1. Read `AGENTS.md`, `README.md` and `docs/project-overview.md`. Check
    `git status` and inspect relevant local changes before editing; do not
    overwrite another person's in-progress work.
@@ -42,8 +48,9 @@ Python 3.10+ (PowerShell):
 $env:PYTHONPATH='src'
 python -m air_compiler.cli validate air/task_manager.json
 python -m air_compiler.cli safety air/task_manager.json
-python -m unittest discover -s tests -v
-python -m unittest discover -s benchmark/harness -v
+python -m unittest discover -s tests -p test_compiler.py -v
+python -m unittest discover -s tests -p test_application.py -v
+python -m unittest discover -s benchmark/harness -p test_baseline.py -v
 ```
 
 Use `inspect`, `diff` and `impact` to trace semantic IDs before editing. If the
@@ -77,6 +84,14 @@ adapters, intent interpretation and independent evaluation; they are not the
 semantic target for generated application behavior.
 
 ## Benchmark firewall
+
+For new research, use the R5.96 first-result protocol: current compatible tooling
+and available model; fresh commit/tree/tests/core/V1/model/time/held-out snapshot;
+mark first access as exposure; formalize and attempt existing-capability authoring
+and independent verification; record the first terminal result before any informed
+Lykoi development. No infrastructure qualification or protected activation is
+required. Product controller handoffs remain useful, not benchmark-access authority.
+The Phase 5C instructions below retain their historical comparative-run scope.
 
 Phase 5C compares Conventional source maintenance with a **frozen** Lykoi
 capability set on cumulative B01–B20 requests. Observable satisfaction of the
