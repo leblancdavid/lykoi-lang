@@ -1,0 +1,1401 @@
+{
+  "B03_round_counters": {
+    "admissions": 0,
+    "author_dispatches": 0,
+    "authorizations": 0,
+    "compilations": 0,
+    "content_revealing_metadata": 0,
+    "development_exposures": 0,
+    "formalizer_dispatches": 0,
+    "frc_creations": 0,
+    "observations": 0,
+    "openings": 0,
+    "projections": 0,
+    "reviewer_dispatches": 0,
+    "source_access_attempts": 0,
+    "source_reads": 0,
+    "static_consumer_accesses": 0,
+    "verification_runs": 0
+  },
+  "B03_states": [
+    "B03_PRISTINE",
+    "B03_NOT_EVALUATED",
+    "B03_NOT_EXPOSED_TO_LYKOI_DEVELOPMENT"
+  ],
+  "active": false,
+  "auxiliary_checks": [
+    {
+      "argv": [
+        "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "air_compiler.cli",
+        "validate",
+        "air/task_manager.json"
+      ],
+      "passed": true,
+      "stderr": "",
+      "stdout": "Lykoi validate: ok\n"
+    },
+    {
+      "argv": [
+        "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "air_compiler.cli",
+        "safety",
+        "air/task_manager.json"
+      ],
+      "passed": true,
+      "stderr": "",
+      "stdout": "{\n  \"capability_violations\": 0,\n  \"declared_transitions\": 1,\n  \"evidence_counts\": {\n    \"RUNTIME_ENFORCED\": 5,\n    \"SCENARIO_VERIFIED\": 0,\n    \"STRUCTURALLY_GUARANTEED\": 1,\n    \"UNVERIFIED\": 0\n  },\n  \"findings\": [\n    {\n      \"evidence\": \"RUNTIME_ENFORCED\",\n      \"id\": \"inv_unique_ids\"\n    },\n    {\n      \"evidence\": \"RUNTIME_ENFORCED\",\n      \"id\": \"inv_valid_tasks\"\n    },\n    {\n      \"evidence\": \"RUNTIME_ENFORCED\",\n      \"id\": \"inv_title\"\n    },\n    {\n      \"evidence\": \"RUNTIME_ENFORCED\",\n      \"id\": \"inv_status\"\n    },\n    {\n      \"evidence\": \"RUNTIME_ENFORCED\",\n      \"id\": \"inv_priority\"\n    },\n    {\n      \"evidence\": \"STRUCTURALLY_GUARANTEED\",\n      \"id\": \"inv_overdue_excludes_completed\"\n    }\n  ],\n  \"invalid_transitions\": 0,\n  \"invariants\": 6,\n  \"mutations\": [\n    {\n      \"behavior\": \"fn_create\",\n      \"mutates\": [\n        \"field_created_at\",\n        \"field_description\",\n        \"field_due_date\",\n        \"field_id\",\n        \"field_priority\",\n        \"field_status\",\n        \"field_title\"\n      ],\n      \"relevant_invariants\": [\n        \"inv_unique_ids\",\n        \"inv_valid_tasks\",\n        \"inv_title\",\n        \"inv_status\",\n        \"inv_priority\",\n        \"inv_overdue_excludes_completed\"\n      ]\n    },\n    {\n      \"behavior\": \"fn_complete\",\n      \"mutates\": [\n        \"field_status\"\n      ],\n      \"relevant_invariants\": [\n        \"inv_status\",\n        \"inv_overdue_excludes_completed\"\n      ]\n    },\n    {\n      \"behavior\": \"fn_delete\",\n      \"mutates\": [\n        \"field_created_at\",\n        \"field_description\",\n        \"field_due_date\",\n        \"field_id\",\n        \"field_priority\",\n        \"field_status\",\n        \"field_title\"\n      ],\n      \"relevant_invariants\": [\n        \"inv_unique_ids\",\n        \"inv_valid_tasks\",\n        \"inv_title\",\n        \"inv_status\",\n        \"inv_priority\",\n        \"inv_overdue_excludes_completed\"\n      ]\n    }\n  ],\n  \"protected_resources\": 1,\n  \"state_machines\": 1\n}\n"
+    },
+    {
+      "argv": [
+        "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "benchmark/harness",
+        "-p",
+        "test_baseline.py",
+        "-v"
+      ],
+      "passed": true,
+      "stderr": "test_lifecycle_filters_and_failures (test_baseline.BaselineOracle.test_lifecycle_filters_and_failures) ... ok\ntest_migration_and_corruption (test_baseline.BaselineOracle.test_migration_and_corruption) ... ok\ntest_overdue_boundary_fixture (test_baseline.BaselineOracle.test_overdue_boundary_fixture) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 4.060s\n\nOK\n",
+      "stdout": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "passed": true,
+      "stderr": "",
+      "stdout": ""
+    }
+  ],
+  "candidate_created": false,
+  "change_scope": {
+    "changed_tracked_paths": [],
+    "new_infrastructure_whitespace_failures": [],
+    "passed": true
+  },
+  "classification": "R5_94C_BLOCKED_NO_FUNCTIONING_TRANSPORT_FOR_FROZEN_MODEL",
+  "content": {
+    "checks": [
+      {
+        "actual_identity": "971b8ec4079d45101ff8fd7877b6ccd86e7c931124621cf4b5394e93e9dd2f14",
+        "dependency": "air/task_manager.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "971b8ec4079d45101ff8fd7877b6ccd86e7c931124621cf4b5394e93e9dd2f14"
+      },
+      {
+        "actual_identity": "e87dd006fdd786e705ac902a687f88fc5b389cbfa0657747584c7b7e3098548b",
+        "dependency": "benchmark/evaluation/__init__.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "e87dd006fdd786e705ac902a687f88fc5b389cbfa0657747584c7b7e3098548b"
+      },
+      {
+        "actual_identity": "bb8da57cb84ce4bf8422698fcf84509ce7c896f75738bc63dbde65198b70fc91",
+        "dependency": "benchmark/evaluation/behavioral_discovery_r5_82.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "bb8da57cb84ce4bf8422698fcf84509ce7c896f75738bc63dbde65198b70fc91"
+      },
+      {
+        "actual_identity": "221a33224b8c8c56dbeaf67286fd666a1e8e8aefc28b6d8711b6d7deb6bb81c8",
+        "dependency": "benchmark/evaluation/benchmark_documents_v1.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "221a33224b8c8c56dbeaf67286fd666a1e8e8aefc28b6d8711b6d7deb6bb81c8"
+      },
+      {
+        "actual_identity": "c08915a55a1b270f2ddb29afe8b17b7529a4f134147f973e14c567fbd86aeb3a",
+        "dependency": "benchmark/evaluation/formal_requirements_r5_80.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "c08915a55a1b270f2ddb29afe8b17b7529a4f134147f973e14c567fbd86aeb3a"
+      },
+      {
+        "actual_identity": "1ebdb80130d1f029522fab60a7362f5cfebdd5929b8f2cdf3283a84e236f5a6e",
+        "dependency": "benchmark/evaluation/implementation_adequacy_r5_81.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "1ebdb80130d1f029522fab60a7362f5cfebdd5929b8f2cdf3283a84e236f5a6e"
+      },
+      {
+        "actual_identity": "cccc22ce111129407c7bc064a3964ff529b85f80e5c49a04c3e79611dae6dc11",
+        "dependency": "benchmark/results/phase5c/r5_91/attempt-3/author-input.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "0504579cabe87ac954efa1baa4c0a18f7c5b94dc8cb97b9c6334ac337a00a54e"
+      },
+      {
+        "actual_identity": "36fd5dfe6ae2b46d0a95cbcfd98ac71968b45f072efe8831a9bc660a80437513",
+        "dependency": "benchmark/results/phase5c/r5_91/attempt-3/author-invocation.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "14e80c1c96c49112b68943ff345e7a3f65b5399972b0e13c33a1160b48422afa"
+      },
+      {
+        "actual_identity": "f7c66e3a9d8bc89a69c65c07aa131133c44319b0eeec2e666cce4b6a3a6aced1",
+        "dependency": "benchmark/results/phase5c/r5_91/attempt-3/formalizer-invocation.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "d19ceb8cc8517a26be640954d7a12839423cf9b60cde9916de5e4611a3b29305"
+      },
+      {
+        "actual_identity": "6ce1d8657e1d7589a07d2a64427d648f9abb50caefda9e6a0f4cf81051ce5a42",
+        "dependency": "benchmark/results/phase5c/r5_91/attempt-3/results.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "76fc14ae2a6529e7d920cb95b933ab9a67718bb74ee972e651bb4eb58c4a6d24"
+      },
+      {
+        "actual_identity": "af275d209d5ff51f2e74c3aacbdebd147ce76c0a7bff6f58f32f8ec0f46c5b28",
+        "dependency": "benchmark/results/phase5c/r5_91/attempt-3/reviewer-invocation.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "da2f9d5074d3ccfb4a50981170e5c301f681de35f604b981f9aaf41b58a370b9"
+      },
+      {
+        "actual_identity": "ef69e0420d64d6562db792df3b41ca1d289486ccc5a1c5d1cc48b2a6f8a4281b",
+        "dependency": "benchmark/results/phase5c/r5_91/attempt-3/verifier-candidate.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "443c70b11a67edf77dcd74e5fbc692562b7edb93f22c7f322f150b7a9900f054"
+      },
+      {
+        "actual_identity": "c08a43c38ce4f8d6fe899aedc34a2f13ced59c74f54aa25e35760d5d1226044f",
+        "dependency": "benchmark/results/phase5c/r5_91/attempt-3/verifier-input.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "06bfc38e637e2cc5b32e59a150f9e13e660d4473dddff91157d003f3e21b9c06"
+      },
+      {
+        "actual_identity": "cb36213f1514bbbfdfc052804df783adc45fd7616ff516c88e8684697de05221",
+        "dependency": "benchmark/results/phase5c/r5_91/attempt-3/verifier-invocation.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "c18ecd85c6a8da8bdccd3aebbde07394119dfdca96a6920d545c63b66f74c29a"
+      },
+      {
+        "actual_identity": "ddeef6c522d8de2b66480d64e476f7ba8c65514695bdcb5316b140b8299927b7",
+        "dependency": "benchmark/results/phase5c/r5_91/smoke-integration.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "c80278305b84eddb54dd72f39296307279079f8982b0e8f2f9baf6306eb10895"
+      },
+      {
+        "actual_identity": "2b36dc2c3a84db85b63cb180b9d5d300a0e1d0839c4c3aa94dc10e3df8ea2f76",
+        "dependency": "benchmark/results/phase5c/r5_94/protected-freeze-candidate.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "46af85b2c2f8e6a90919904958b10d45ff75d7fff7ae58dba702d38575c218af"
+      },
+      {
+        "actual_identity": "4f9cd14f2c0f8d5266dc03fd408f889f24b64ae2b60332409105af2dc4fcc4b2",
+        "dependency": "benchmark/results/phase5c/r5_94a/candidate-2/protected-freeze-candidate.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "4f9cd14f2c0f8d5266dc03fd408f889f24b64ae2b60332409105af2dc4fcc4b2"
+      },
+      {
+        "actual_identity": "81d029ca76712230b07451a201286a5b3867461aaff8a749aa71fa3338dd9e33",
+        "dependency": "benchmark/semantic/application_boundary_r5_39.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "81d029ca76712230b07451a201286a5b3867461aaff8a749aa71fa3338dd9e33"
+      },
+      {
+        "actual_identity": "8d9afb3896a155a45390883304ed3b7b5a310f8e79661fb23f3fa8d8af064498",
+        "dependency": "benchmark/semantic/application_boundary_r5_40.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "8d9afb3896a155a45390883304ed3b7b5a310f8e79661fb23f3fa8d8af064498"
+      },
+      {
+        "actual_identity": "c0902bb6b81725181cfc2c8b7ba3501a2da3731d2ec5ba6459a2fcc797f1e63f",
+        "dependency": "benchmark/semantic/application_boundary_r5_41.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "c0902bb6b81725181cfc2c8b7ba3501a2da3731d2ec5ba6459a2fcc797f1e63f"
+      },
+      {
+        "actual_identity": "30243e60823ef0087748969308e70203c0bca163a0e99b311c5a12744f83e0ef",
+        "dependency": "benchmark/semantic/capability_boundary_r5_22.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "30243e60823ef0087748969308e70203c0bca163a0e99b311c5a12744f83e0ef"
+      },
+      {
+        "actual_identity": "4662447497a6f235a477bf03347e995427515067c92f7999317b21bfecba85f3",
+        "dependency": "benchmark/semantic/checked_launch_r5_36.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "4662447497a6f235a477bf03347e995427515067c92f7999317b21bfecba85f3"
+      },
+      {
+        "actual_identity": "7dc1ed6a3d44a7080eb30db82e8cbc01bea8e666da5874d774cd04b0555f8daa",
+        "dependency": "benchmark/semantic/checked_transport_r5_34.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "7dc1ed6a3d44a7080eb30db82e8cbc01bea8e666da5874d774cd04b0555f8daa"
+      },
+      {
+        "actual_identity": "422b9473737199dc182c88d20b249f4a48e9ed32d79be9dd50070461a8660934",
+        "dependency": "benchmark/semantic/checked_transport_r5_35.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "422b9473737199dc182c88d20b249f4a48e9ed32d79be9dd50070461a8660934"
+      },
+      {
+        "actual_identity": "320004494a546f31f45e9ac614855c7fef1795bd58468b069581925cfc9b7b88",
+        "dependency": "benchmark/semantic/checked_transport_r5_41.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "320004494a546f31f45e9ac614855c7fef1795bd58468b069581925cfc9b7b88"
+      },
+      {
+        "actual_identity": "a04622b16cb946cde1d505c62866b6b616db58769d771e58ad60dbe1d907622d",
+        "dependency": "benchmark/semantic/current_pipeline.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "27a83b7e86c45d787822b5dd28670dd6f46fac2223d1f2ef79d9985169c56350"
+      },
+      {
+        "actual_identity": "6e8fd5e2135033c40b5bf9bfc7da68c94eeb59df55ef4011558c1ec46560cafc",
+        "dependency": "benchmark/semantic/generative_r5_13.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "6e8fd5e2135033c40b5bf9bfc7da68c94eeb59df55ef4011558c1ec46560cafc"
+      },
+      {
+        "actual_identity": "7dd74d9d830c070ef1601ff686fe6fb6d5c121ada868c9c993d7bfd17f35f5ba",
+        "dependency": "benchmark/semantic/input_binding_r5_32.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "d74e5de623112ad41b300adaba016970a3326464d3da0f90c45757e760e33665"
+      },
+      {
+        "actual_identity": "93f553677b654a80ad9f9053e4e7073d929a2a4fabbd89575f98a1ec306e100a",
+        "dependency": "benchmark/semantic/launch_runtime_r5_36.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "93f553677b654a80ad9f9053e4e7073d929a2a4fabbd89575f98a1ec306e100a"
+      },
+      {
+        "actual_identity": "337e03b12afbcff539bd4e7da5375132ca8208469e7b749f2e33eed186ab5244",
+        "dependency": "benchmark/semantic/optional_support_r5_41.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "337e03b12afbcff539bd4e7da5375132ca8208469e7b749f2e33eed186ab5244"
+      },
+      {
+        "actual_identity": "24dac8664f54187e0c3b61d8dfdb1f714cd7d0302ebb77d016b195dba8cccd2b",
+        "dependency": "benchmark/semantic/profile_audit_r5_40.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "24dac8664f54187e0c3b61d8dfdb1f714cd7d0302ebb77d016b195dba8cccd2b"
+      },
+      {
+        "actual_identity": "f1574afafe28e6bb9470c48726a7fc4b68954b8a0ff44d004f0dd8ce5e919e6d",
+        "dependency": "benchmark/semantic/profile_audit_r5_41.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "f1574afafe28e6bb9470c48726a7fc4b68954b8a0ff44d004f0dd8ce5e919e6d"
+      },
+      {
+        "actual_identity": "780bccffd4bad7e00ecd9e11131adf550b1417f96dc70b5c8eb6233facb84635",
+        "dependency": "benchmark/semantic/public_binding_r5_32.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "5d0816fafd233b88ea52b343752cee93ebd693e15f3fd499dafca79293db4270"
+      },
+      {
+        "actual_identity": "645d3e63a071b4d45be9d19ad7e7f95c6f2e866de528b70797357ee6376e8708",
+        "dependency": "benchmark/semantic/refined_evidence_r5_28.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "d77e9231dfd9a25f861bce9ae1cf814660c9a20c19a2d1ce01ec4a12e4b224fd"
+      },
+      {
+        "actual_identity": "cd772ad308beb239ada823843d573d9bdbf3d123bbb267e25f688bef89d4b7d4",
+        "dependency": "benchmark/semantic/refined_generator_r5_28.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "f78822bf31b179de67d5c7fb4deca78072d979633fceccbc48355f3606e7f7ec"
+      },
+      {
+        "actual_identity": "2099df6cb102b039e75531f59cca85a186da505141edb8745d8140cffef4d46a",
+        "dependency": "benchmark/semantic/refined_runtime_r5_28.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "897960b8cfe0e1c045edffda23c108a8c758c41ef74377d6a3e24ca80b816c47"
+      },
+      {
+        "actual_identity": "ae8be486a91d2a3ac69b7c73c478727589550f8536d17978f8eff4d0576c898e",
+        "dependency": "benchmark/semantic/state_runtime_r5_39.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "ae8be486a91d2a3ac69b7c73c478727589550f8536d17978f8eff4d0576c898e"
+      },
+      {
+        "actual_identity": "bdfa4f6b16592b40ce870bb27e53ef133d947ad3ab79bf540f6a8f67e8245aab",
+        "dependency": "benchmark/semantic/state_runtime_r5_41.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "bdfa4f6b16592b40ce870bb27e53ef133d947ad3ab79bf540f6a8f67e8245aab"
+      },
+      {
+        "actual_identity": "9769e02bbb9cae7dacc20c9817f066a55557e9d7e8b0e4ab06f36ff293adfc24",
+        "dependency": "benchmark/semantic/transport_runtime_r5_34.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "9769e02bbb9cae7dacc20c9817f066a55557e9d7e8b0e4ab06f36ff293adfc24"
+      },
+      {
+        "actual_identity": "40d1a38045e7eaa61132e75fdb47cf02f7dba7a12684ca27002b50b5004dadb1",
+        "dependency": "benchmark/semantic/transport_runtime_r5_35.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "40d1a38045e7eaa61132e75fdb47cf02f7dba7a12684ca27002b50b5004dadb1"
+      },
+      {
+        "actual_identity": "18e6c4e77c590067ec297c331022b070b4cd0dd32e6ac82b13a73e6bd89b2bcc",
+        "dependency": "benchmark/semantic/transport_runtime_r5_41.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "18e6c4e77c590067ec297c331022b070b4cd0dd32e6ac82b13a73e6bd89b2bcc"
+      },
+      {
+        "actual_identity": "3e79b67f0ce6a2e44aea3cbf1c2b340609a732ab29446b297bc6599e312077c7",
+        "dependency": "benchmark/semantic/typed_lowering_r5_12.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "3e79b67f0ce6a2e44aea3cbf1c2b340609a732ab29446b297bc6599e312077c7"
+      },
+      {
+        "actual_identity": "25e90bc57c515518811e35c47f8d58981769e58d338b8aa595095be76baa207d",
+        "dependency": "benchmark/semantic/unified_types_r5_27.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "2065a68971236b282fd4d66aefe6501f9204fbe1efc1cc70f8fed2bb49efae38"
+      },
+      {
+        "actual_identity": "1664e55c03cdc7f74cb181c96bf909998b94f058cca1a62288551760fd97caa5",
+        "dependency": "docs/axiom-v0.2.md",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "1664e55c03cdc7f74cb181c96bf909998b94f058cca1a62288551760fd97caa5"
+      },
+      {
+        "actual_identity": "c95de9a5747ed2f6a839c4ce01e2c3a650a6902c529247d8729e0750e1621740",
+        "dependency": "docs/axiom-v0.3.md",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "c95de9a5747ed2f6a839c4ce01e2c3a650a6902c529247d8729e0750e1621740"
+      },
+      {
+        "actual_identity": "59b4d68b012243d12ec4c8c8df2b6c704141794398469f74770f56805c598221",
+        "dependency": "docs/freeze-dependency-classes-v1.md",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "59b4d68b012243d12ec4c8c8df2b6c704141794398469f74770f56805c598221"
+      },
+      {
+        "actual_identity": "0e31a80f0ea1a5bb9f658d38d8dffa6078a32f74aebb13cb83d138fa29c4934f",
+        "dependency": "docs/opencode-adapter-contract-v1.md",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "0e31a80f0ea1a5bb9f658d38d8dffa6078a32f74aebb13cb83d138fa29c4934f"
+      },
+      {
+        "actual_identity": "9000e328a9571d929119bf11f199ccaa9bf32558a0cb41906e69ac37c9e72bff",
+        "dependency": "docs/protected-evaluation-r5.94.md",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "546568df20af256a9536e153e853fe1287642511f82b97c57a0587795207cf11"
+      },
+      {
+        "actual_identity": "6667551d375c094b3bdbe9853b017516d04665a9a973bb4c74c142f78766fe8c",
+        "dependency": "docs/public-rehearsal-capability-r5.89.md",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "44f76e7514bf252e1a800b782829a89fb45cb0e9414bf9a0b95b1c620dbf81ff"
+      },
+      {
+        "actual_identity": "4dd10791f94819000a63b1fc79b9bfff1dddcd801c2f17fed8913f5fecbecf63",
+        "dependency": "docs/public-rehearsal-protocol-r5.91.md",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "bba961bef2aced1068e5e8b80415e6a8505b573629612d8e398eb265d55ea373"
+      },
+      {
+        "actual_identity": "37f0eb252f7734f2d4ba012ef0e8a7e88f4d71a87e99fdc1a9d54e0ab41bab1a",
+        "dependency": "docs/python-runtime-contract-v1.md",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "37f0eb252f7734f2d4ba012ef0e8a7e88f4d71a87e99fdc1a9d54e0ab41bab1a"
+      },
+      {
+        "actual_identity": "3839704d905720a810ab7b7cf4e7b00f1df2c7733a2f38dfdb9549532aca953b",
+        "dependency": "generated/task_manager.manifest.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "3839704d905720a810ab7b7cf4e7b00f1df2c7733a2f38dfdb9549532aca953b"
+      },
+      {
+        "actual_identity": "41dee0658ad3b83d8d4cc53fb10a0dc44da8bf894d3fcdf8227c4f08605242cb",
+        "dependency": "generated/task_manager.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "41dee0658ad3b83d8d4cc53fb10a0dc44da8bf894d3fcdf8227c4f08605242cb"
+      },
+      {
+        "actual_identity": "ae68dabbd2634923eb41abe86cd34f7939df49de757ac8edc0f474715b4c98e0",
+        "dependency": "rehearsal/activate_r5_91.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "0007426c6d705c3adf60f3dd0931f565e4dc26a46936b6028eca93a085842aa4"
+      },
+      {
+        "actual_identity": "b355184296e95cce7004edf6e5816b3923b8b6574f4f062b965ad74b952c76c3",
+        "dependency": "rehearsal/calibration-corpus-1.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "66819080f7ae5196be230ab1021c1e97f0f39a6bc9da06725fd246ee62283219"
+      },
+      {
+        "actual_identity": "bd55965c72ddd0adba501551ce25a7416944f3f50a993ad3727864c9ac0e4246",
+        "dependency": "rehearsal/model-configurations-1.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "225b4dbb77282010399d7885b2dc1c19e610be7369ea6787968f5e0792310f28"
+      },
+      {
+        "actual_identity": "39c782e6d60b4c65cc5aaad9de2d432fddf0556e63117ae410486b111de48aa5",
+        "dependency": "rehearsal/model-configurations-r5.91.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "80ee9c2968d0dabc8e2889a71bfccb0795c52fc13ee9f1c57f589b17e785d5d2"
+      },
+      {
+        "actual_identity": "808380221751fd5295ea277064cc9be330d6f90224048dc5b85dd3b8a6674783",
+        "dependency": "rehearsal/opencode-adapter-contract-v1.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "808380221751fd5295ea277064cc9be330d6f90224048dc5b85dd3b8a6674783"
+      },
+      {
+        "actual_identity": "db6d1157801769629d923845c049752e936a5924a727bc9a1eb906bead0ac9fa",
+        "dependency": "rehearsal/public-capability-profile-1.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "f63ee871531652ef20f87bb5c4733ee3a11b0eafadb066bef3d4ba33ade6af42"
+      },
+      {
+        "actual_identity": "e722e22cb7ec413213a64f37df6148cc70ddf56f9580d9438403cf2dcafa9035",
+        "dependency": "rehearsal/python-runtime-contract-v1.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "e722e22cb7ec413213a64f37df6148cc70ddf56f9580d9438403cf2dcafa9035"
+      },
+      {
+        "actual_identity": "b7b3ed887b29141f31b02da24d277107147d601bc371ea6237121dac4bcc0d46",
+        "dependency": "rehearsal/qualify.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "927e57bfe216cf0acc8e61816d654a696379a13bb747ea6c852f578577b685f8"
+      },
+      {
+        "actual_identity": "531d9926761738f7ae0bce181b3b2192697dfd18e3c5668b42e3da007da8f77c",
+        "dependency": "rehearsal/semantic-qualification-1.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "20781681b1a5f980edfd088a8baf82a36062dc8e532fcd8952778d8a95d4184e"
+      },
+      {
+        "actual_identity": "def9177c75bc0ff91c519654a0c25c8bc88f6fbe8554671acb1e1e51f6f8f6ce",
+        "dependency": "rehearsal/smoke_r5_91.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "747a45e66ac9a2219e938022cf9077c9727cbea4f1684ae1a3e80277360a1ed3"
+      },
+      {
+        "actual_identity": "16992cd6febdffe286bbcacf58a1b18ca3c4663aa110e094feab22791f579aa9",
+        "dependency": "rehearsal/validate_r5_94.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "60cd354f410d6734dff5cec1c74f2e70819aab70cea14d232bfff4478d1a7420"
+      },
+      {
+        "actual_identity": "e67895f66bf9a6a840cfe49583dd3759f4a45453cd0ec633f91123d07887edb1",
+        "dependency": "rehearsal/validate_r5_94a.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "e67895f66bf9a6a840cfe49583dd3759f4a45453cd0ec633f91123d07887edb1"
+      },
+      {
+        "actual_identity": "78648c1a74e1b02aa3741bc0874e4f4065139a99c6b57afda5553090e80a7e26",
+        "dependency": "rehearsal/validate_r5_94b.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "78648c1a74e1b02aa3741bc0874e4f4065139a99c6b57afda5553090e80a7e26"
+      },
+      {
+        "actual_identity": "6263fb5cdc74c9a289a00fa54bbb2d5b9c5392ea6354e2747c2cd89da34a0405",
+        "dependency": "rehearsal/verify_r5_91.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "0f2d56d999e23f4b885f8991adbbbe4cd6fac5ebfc79712ede72ea5209998451"
+      },
+      {
+        "actual_identity": "2a2115bd74afe90f4f6fdb4548b6247348bfd07978843f5bdb8676dae5ae596e",
+        "dependency": "schema/axiom-v0.3.schema.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "2a2115bd74afe90f4f6fdb4548b6247348bfd07978843f5bdb8676dae5ae596e"
+      },
+      {
+        "actual_identity": "e095d02a66537842f994b5981754c3a12099744fc7b1da1abb89f66192c7b868",
+        "dependency": "schema/benchmark-document-contract-v1.schema.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "e095d02a66537842f994b5981754c3a12099744fc7b1da1abb89f66192c7b868"
+      },
+      {
+        "actual_identity": "91dad364b60f1a90dcd2bb3beb02e0d6ae5215ab985dcffcbc2c3065f98e0edb",
+        "dependency": "schema/formal-requirement-contract-protected-v0.1.schema.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "d32468c5660b69cc7e5dc914d18ad05ff29cf209673f08f96e5c8f1399a0c284"
+      },
+      {
+        "actual_identity": "333b06df6c0579f5722a8b4dee1116b9dc67b149fa7ff8a5ee0848bf431422c8",
+        "dependency": "schema/formal-requirement-contract-v0.1.schema.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "333b06df6c0579f5722a8b4dee1116b9dc67b149fa7ff8a5ee0848bf431422c8"
+      },
+      {
+        "actual_identity": "818b72479c8102e4601d957d3062e2d8a8c44e5b0d12e39e97d8b4c019863537",
+        "dependency": "schema/protected-evaluation-r5.94.schema.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "de0774572ba17e7cb6a1fe60ad1707c3cabda5afc3388d5dff1905f2537f2096"
+      },
+      {
+        "actual_identity": "9f736e58e0768c83f5bfec694233804eae44cf0b77bf963f2d2bd1263bdf7d5f",
+        "dependency": "schema/sealed-pipeline-v1.schema.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "6c76da4876c529084535a739fd03ffef0bb00ca05512600e878c0d64ada9b18e"
+      },
+      {
+        "actual_identity": "1553bb16e3e8248928e6fcbaed73ec254223cc2604ad3d0ac22e82175dbb2b3c",
+        "dependency": "src/air_compiler/__init__.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "1553bb16e3e8248928e6fcbaed73ec254223cc2604ad3d0ac22e82175dbb2b3c"
+      },
+      {
+        "actual_identity": "d45ee5b3a6d7e8f7144a59c92a186672de2434e013345f909f8096805abfb5ca",
+        "dependency": "src/air_compiler/cli.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "d45ee5b3a6d7e8f7144a59c92a186672de2434e013345f909f8096805abfb5ca"
+      },
+      {
+        "actual_identity": "19775cfa0d311d21261c1268e8acf873e9a9bf78ead0aac0a9a46b6328a9c949",
+        "dependency": "src/air_compiler/generator.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "19775cfa0d311d21261c1268e8acf873e9a9bf78ead0aac0a9a46b6328a9c949"
+      },
+      {
+        "actual_identity": "163ca61ed7209260d87499b6b2efac9079e8e2e2004900eb339d65655128b00b",
+        "dependency": "src/air_compiler/model.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "163ca61ed7209260d87499b6b2efac9079e8e2e2004900eb339d65655128b00b"
+      },
+      {
+        "actual_identity": "ed3f530fda5adc521291c61ba75f0480affe2b09705fdfd65669d73c0cf1358a",
+        "dependency": "src/air_compiler/parser.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "ed3f530fda5adc521291c61ba75f0480affe2b09705fdfd65669d73c0cf1358a"
+      },
+      {
+        "actual_identity": "585011c382f305aa10311b2e897db3e7bf8cba033b903ab4632f37f13d67e4bd",
+        "dependency": "src/air_compiler/planning.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "585011c382f305aa10311b2e897db3e7bf8cba033b903ab4632f37f13d67e4bd"
+      },
+      {
+        "actual_identity": "e1411f693ec1c39135460c8e4b2b84438bfc475e76ca3e710db7a71829a37496",
+        "dependency": "src/air_compiler/runtime_template.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "e1411f693ec1c39135460c8e4b2b84438bfc475e76ca3e710db7a71829a37496"
+      },
+      {
+        "actual_identity": "ecd8f0f5b1718f267fe065aec6800646aa10351f7e280790f1034e2fb43d5df5",
+        "dependency": "src/air_compiler/semantics.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "ecd8f0f5b1718f267fe065aec6800646aa10351f7e280790f1034e2fb43d5df5"
+      },
+      {
+        "actual_identity": "3697e181c0dd1c1f267d02cb850e58b673ab3b39e6bf6bdb68674f79eaaba2cb",
+        "dependency": "src/air_compiler/validator.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "3697e181c0dd1c1f267d02cb850e58b673ab3b39e6bf6bdb68674f79eaaba2cb"
+      },
+      {
+        "actual_identity": "e844f4352b5fff6e15b422b3f2a5c69ad497456f6d53079d40242b2ae6922572",
+        "dependency": "src/lykoi_controller/Controller.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "41607b44c0a69cb96556b8d61c992ffa900658a8adaf4e80cfde498c47c8187f"
+      },
+      {
+        "actual_identity": "cd39c3e5d89b01247f2ab5268eee4857e02f07ea82f59b9e6c8c9c37af392af2",
+        "dependency": "src/lykoi_controller/__init__.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "90686851c3d85f92650f88b45794a7a166114dcf4038fa348a785c3985d4d4d6"
+      },
+      {
+        "actual_identity": "e844f4352b5fff6e15b422b3f2a5c69ad497456f6d53079d40242b2ae6922572",
+        "dependency": "src/lykoi_controller/controller.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "41607b44c0a69cb96556b8d61c992ffa900658a8adaf4e80cfde498c47c8187f"
+      },
+      {
+        "actual_identity": "6903807c68cc0aeebef32b80582cb38a175c7bbf37e55ef5da2e2781b7551714",
+        "dependency": "src/lykoi_freeze/__init__.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "6903807c68cc0aeebef32b80582cb38a175c7bbf37e55ef5da2e2781b7551714"
+      },
+      {
+        "actual_identity": "70461f91dfab52cb591a160530757f038133ac8a50f404bb9157172c824064de",
+        "dependency": "src/lykoi_freeze/content.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "70461f91dfab52cb591a160530757f038133ac8a50f404bb9157172c824064de"
+      },
+      {
+        "actual_identity": "523fc92c5fef870736fd2fd1f7213817a81c49d77c577173bdb6c10a79033d48",
+        "dependency": "src/lykoi_freeze/execution.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "523fc92c5fef870736fd2fd1f7213817a81c49d77c577173bdb6c10a79033d48"
+      },
+      {
+        "actual_identity": "24d5da85fa318811ab1fce5c22de8cae91cb230f3715c9c6f9e70ce41de4c28d",
+        "dependency": "src/lykoi_freeze/freeze.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "24d5da85fa318811ab1fce5c22de8cae91cb230f3715c9c6f9e70ce41de4c28d"
+      },
+      {
+        "actual_identity": "212afce9be86120f7215dbb97edaa936ebd46943533c7c70eb866dc1be22dd1f",
+        "dependency": "src/lykoi_freeze/opencode.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "212afce9be86120f7215dbb97edaa936ebd46943533c7c70eb866dc1be22dd1f"
+      },
+      {
+        "actual_identity": "211320c52da95e839192d618666cccaa50df55896443cc9540ac86e10aff2044",
+        "dependency": "src/lykoi_pipeline/__init__.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "c44869440954887b82bc707deda70ebe2ae5cf42234c0aafbaf04aab5b010e5d"
+      },
+      {
+        "actual_identity": "7fbe07b415dcfaaa653cb44ef828fd495550947a92839674ec19f7b126010504",
+        "dependency": "src/lykoi_pipeline/author_worker.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "6113af19217ec3f50cb303e1bc79ae85997142ee968bc535be9825d43476d9ba"
+      },
+      {
+        "actual_identity": "b4a554cf340792e75002fd1b3e21ad18a3a0ab2133401eeb82489672b9345818",
+        "dependency": "src/lykoi_pipeline/contracts.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "f2971df771addb2dcb8581aa52d8aaa205269c06ec07b316accb33fd31f06e43"
+      },
+      {
+        "actual_identity": "b3552bd8bb01e0127fc34886e5dab5269b0828a530a930bac5b447a42efcc1e3",
+        "dependency": "src/lykoi_pipeline/controller.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "ee37a45802d047d2c163b7b58bc621857d90c72e89243aa06c79d1cf55a63dc8"
+      },
+      {
+        "actual_identity": "34ee3f2228157fde722e1b805d7acd8dbd2196141ecef96eeef0ba9cc6659cf3",
+        "dependency": "src/lykoi_pipeline/example.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "cc8c3513f37af207f6cf78b245cb00e06194dccbd0fcc774e2dd845d12a8a6cf"
+      },
+      {
+        "actual_identity": "3aed44aa596856af35b5a8f767810500752c4181413d59548ffca21b8bbf7951",
+        "dependency": "src/lykoi_pipeline/pipeline.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "5fca13a927b75afa38d28be555e464a5391c5d0a48537cd7638533a455099f2d"
+      },
+      {
+        "actual_identity": "caf42328177dfb8c5e18e3f4bfddd142f235f60933ca7618e20fb098d36d9be7",
+        "dependency": "src/lykoi_pipeline/plans.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "6a6374c05e17bf5d74cc42770a02d417bdcb21aa46f852cda35b5c0d877b45de"
+      },
+      {
+        "actual_identity": "63bde6905f655321b67a6c3e0c24846433a5e1b09c1276cddb64c240dbced566",
+        "dependency": "src/lykoi_protected/__init__.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "74bf157b17b06bd6e3d5230a7ea9d9ae8ba5d8812af08fe4550ad85e5e28bdf6"
+      },
+      {
+        "actual_identity": "04bbd75d1b4b8d636144c69d4d4442601515268eea3287b4445ec5ceb0f98693",
+        "dependency": "src/lykoi_protected/adapter.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "743449008a6d722f480e5b193e9c6f28cf1b9cffad5177568939b3e7dbf85a1e"
+      },
+      {
+        "actual_identity": "4cf24b2f75fe6ec3b0d39210149bd7e13fdf97d0b467482a61fe5136727766a2",
+        "dependency": "src/lykoi_protected/compatibility.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "5be0848c9df27af32354237a601e127be5893d7539f4c5b5412ac7b47484ded0"
+      },
+      {
+        "actual_identity": "25b76ef3d88e7ef06716723a404070f5d24f6186c3793dabe97573f7c061a4cd",
+        "dependency": "src/lykoi_protected/controller.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "2c400e0bfe17f1d88bc81fedbb0aff2b65b1185659b9a69b6919ba21edc70dc7"
+      },
+      {
+        "actual_identity": "3856a067e7dc467ae8978c1e5eb95606afe1dba1d2c472979ba66c0168cb1dba",
+        "dependency": "src/lykoi_protected/freeze.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "7f75dd3da057dd51fe38c749d69534418bae52b158b6bc5398f215e076516b33"
+      },
+      {
+        "actual_identity": "8f5f7c70823c40d8796d9fddd75cc87d06aaaea7444a1c8b36a2a200ab2f036c",
+        "dependency": "src/lykoi_protected/pipeline.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "240f0ff476d01ce3f8b432b4c3846b57bcbed9cdd98d561427a186c2ee8a2a5a"
+      },
+      {
+        "actual_identity": "8edaa8b39e7588d05818c418b7e2dd1efbaebde4822d38722c88f6adef79e041",
+        "dependency": "src/lykoi_protected/policy.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "42ec9f3567b5077907575abdbb10f66820d904d6eee9d3a3d6828d910ccaf83d"
+      },
+      {
+        "actual_identity": "3817eb92d11f530bdd47e2152bc7c5e56f816a9de4baa0658a1857a953867fe9",
+        "dependency": "src/lykoi_protected/portable_controller.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "3817eb92d11f530bdd47e2152bc7c5e56f816a9de4baa0658a1857a953867fe9"
+      },
+      {
+        "actual_identity": "c9805747fb41199672f7f19b70494c5c26e69a6fef31fb2212d6f4b84955d40a",
+        "dependency": "src/lykoi_protected/portable_freeze.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "c9805747fb41199672f7f19b70494c5c26e69a6fef31fb2212d6f4b84955d40a"
+      },
+      {
+        "actual_identity": "741094b9f3127f1e9fd9f4ce44b5b4eef8a4ce640325db1531d695186c23931d",
+        "dependency": "src/lykoi_protected/workspace.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "eaad832effe7854e30da762a5ea785ed0532cdda4a6e1b5dc2f330175cf4c64c"
+      },
+      {
+        "actual_identity": "93e3fb4a78d74069a46b0a22c79bbe7af3c34d64517933fede1c13e351fc3b0f",
+        "dependency": "src/lykoi_rehearsal/__init__.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "5c6d4694ef95ee8f6a1ab85a5f9b32d1e70d31f63664efd42947641480b193f2"
+      },
+      {
+        "actual_identity": "70f23ca7c9995499264a3007ef51ef1eac86105ee198745640cc9da93b7ba71c",
+        "dependency": "src/lykoi_rehearsal/adapters.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "24ca9f30df6f55f45c09e923313e4ccd7d692c9fb88ff35972e7d7244b4de175"
+      },
+      {
+        "actual_identity": "1b5c933bd7253164cb3c2e3b93c5379910ed14a5fd3ca7e7ba189a1d77187855",
+        "dependency": "src/lykoi_rehearsal/containment_worker.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "d99fb75417fc7a2a351e8b9c6ca8f938db04eff20b7027482bbcd834a191442e"
+      },
+      {
+        "actual_identity": "10d73e003e02b9bc8116df75613f60dd45ca5ac7721dbc5895d57000d1d2cb7f",
+        "dependency": "src/lykoi_rehearsal/freeze.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "8c494030696c9a46c236048f36d83742251e17391832327cc47d5e7dc402a3fb"
+      },
+      {
+        "actual_identity": "8d01687f119fd6915f31766ba0fbc53c14ca42b46a19e314a37c120b7a42c5bb",
+        "dependency": "src/lykoi_rehearsal/invoke.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "b668a9496cfb1946091c3c8a476c6a8e08348c00c0634b3077a63a027dfc9d6a"
+      },
+      {
+        "actual_identity": "672075388f964b94522121473b099959bba17b47147301466a395ac70abbf4cd",
+        "dependency": "src/lykoi_rehearsal/mappings.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "0cca75ca9db0849bdfa340c29079c2830f1afa87845812466c387d21aa689eae"
+      },
+      {
+        "actual_identity": "9383ada9e76744a1b9475e3dcd76ee2f39fecad3471ba6ff6f2a70765333f0d5",
+        "dependency": "src/lykoi_rehearsal/opencode_adapter.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "b96770a71b05bd30ca137547998240596ad435ea81a27065b7bac65f0cdd406b"
+      },
+      {
+        "actual_identity": "75ce191e434d36a0f89c2281bd94958112ffad8e69dd720828fe87a19b1ee568",
+        "dependency": "src/lykoi_rehearsal/public_freeze_r5_91.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "da7b9ca9714f7ef0f74bf7d2ab19fca019a1600657cea80d35e9cfa0d77a1279"
+      },
+      {
+        "actual_identity": "f2b5afe4812934f0ef3b3c029412376de0d4f77c4c0875a9afae870720aa5588",
+        "dependency": "src/lykoi_rehearsal/public_service_r5_91.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "1be9e671b405d6659a2f29752754d01dd1fb3a8e3cbf9f5231be4e0c14030d44"
+      },
+      {
+        "actual_identity": "fbd97dc9ad23fd0ad0cb4cbd76909e585ab30e944bfd352b78ce65c407d0ee73",
+        "dependency": "src/lykoi_rehearsal/service.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "8bf9db59f5949c2868979ad327be0e27c1be16bd8bd326ade4afa3244d9ea2af"
+      },
+      {
+        "actual_identity": "4728879e47978b97c3e2bc93c32c6c8880fa003e611319bdb9a2b87860377fa7",
+        "dependency": "src/lykoi_rehearsal/verification.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "2954ad525041c2d8d280d702f4f7ad5b80aa195122752711a9f831b9804967a5"
+      },
+      {
+        "actual_identity": "6cbe0d46364a7827b8c4b4ebc4b8be8b8f234243457d38e5f4541ce3b7322aa7",
+        "dependency": "src/lykoi_runtime/__init__.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "6cbe0d46364a7827b8c4b4ebc4b8be8b8f234243457d38e5f4541ce3b7322aa7"
+      },
+      {
+        "actual_identity": "60bb4a14ee3893e2c359b1966a6c21330285636098b52456af0598b086c6d4f5",
+        "dependency": "src/lykoi_runtime/verify.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "60bb4a14ee3893e2c359b1966a6c21330285636098b52456af0598b086c6d4f5"
+      },
+      {
+        "actual_identity": "f283488ad4077a7a87c6417acde77ed59767954efc7c00ea09c952789c594064",
+        "dependency": "src/lykoi_workspace/__init__.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "b11d2b3f6daf0d2de48d2621d8019a7b09c1c1ca59242522e64fb360122ac219"
+      },
+      {
+        "actual_identity": "a8f9909643ebdd61858c4579d39ccc3216b4799ca843c80da3bbfe713a392bc7",
+        "dependency": "src/lykoi_workspace/example.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "b0e44dafd619bcc222fb359f4363cab6c807ecace1c3c1608308ec8e09c42a05"
+      },
+      {
+        "actual_identity": "fe6265fd969217652a98fcec19bf5440ef1851b538930370e9913f147280a717",
+        "dependency": "src/lykoi_workspace/producers.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "9c20e10df36226958df661ac76641852a303600fb52b9414dfa1c08b0419d653"
+      },
+      {
+        "actual_identity": "e04647af19846410a6bbe542045b298e249985c589e26d4ab6f2d522bd462d90",
+        "dependency": "src/lykoi_workspace/worker.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "43e4370d1aca8892200efa43b4b316fe156949ccab81a93f9bf762cc4bfe5221"
+      },
+      {
+        "actual_identity": "420b08b34371d2d244e405e4ff640e5eba6328a2a05e1661b15cd8a897c3102e",
+        "dependency": "src/lykoi_workspace/workspace.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "9e515b2cc849c5bd75327c30c43699349c5536ae7079910eae7a1612acfccf07"
+      },
+      {
+        "actual_identity": "fde9384435d461d4fbee2e37fade6c14b7b5b1ea713c40be51edc71c0c24153c",
+        "dependency": "tests/test_application.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "fde9384435d461d4fbee2e37fade6c14b7b5b1ea713c40be51edc71c0c24153c"
+      },
+      {
+        "actual_identity": "966f1c67182712b569178ae18da357156f1a2bb6613e7a50c90fccd94a120918",
+        "dependency": "tests/test_authority_controller.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "84b1618e530e07cb42895c49bc9f203284f263e5c9b1ef432e2387a0df1ea947"
+      },
+      {
+        "actual_identity": "5403b8e8e7d0c4c7bc5c7e962ab3f6a314072abf772e8ca302af94ee0d448bd2",
+        "dependency": "tests/test_compiler.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "5403b8e8e7d0c4c7bc5c7e962ab3f6a314072abf772e8ca302af94ee0d448bd2"
+      },
+      {
+        "actual_identity": "409d3de9fa7fcdd8b69d9b0df2dac50ba698e99ed79d972370a0e306fcc4cade",
+        "dependency": "tests/test_live_public_freeze.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "0fcbd2e88e5d17012d6c8e6fe4ac1cd98a269f1498a7a2a388555dd155cd7f1d"
+      },
+      {
+        "actual_identity": "feed9b99ab7f802b6d167e79d629dfc10fab0fc58746bad7aadb947e1cc7a28a",
+        "dependency": "tests/test_portable_execution.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "feed9b99ab7f802b6d167e79d629dfc10fab0fc58746bad7aadb947e1cc7a28a"
+      },
+      {
+        "actual_identity": "d265075b67089c782fa9feb0d2a9250ece779e2b0639d1ad455c0bbb3c29162a",
+        "dependency": "tests/test_portable_freeze.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "d265075b67089c782fa9feb0d2a9250ece779e2b0639d1ad455c0bbb3c29162a"
+      },
+      {
+        "actual_identity": "097ef2fff961f6e7392600637da5bed31df2d62c98a766995e512d16d5e09c2a",
+        "dependency": "tests/test_portable_runtime.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "097ef2fff961f6e7392600637da5bed31df2d62c98a766995e512d16d5e09c2a"
+      },
+      {
+        "actual_identity": "1d135da32a7a08d0f914d6d1e999ca4d9f2e938c0f481d91703fcc49dcad3945",
+        "dependency": "tests/test_protected_evaluation.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "004b166ea9a23125de0cef3289fcd24aa9d6f113dfac00cbc941a8fe1f525716"
+      },
+      {
+        "actual_identity": "bea1da6c454306ed804e37e2d0d4826e50066841517eef8478d7d695a580246c",
+        "dependency": "tests/test_public_rehearsal.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "9e045bfb130342c0cc8ed52d089b23ec038acd24e61de89217992747b8221dd1"
+      },
+      {
+        "actual_identity": "79d20a51e602b6c555cd0ea92a7042a7059d48eb1c6acdc72f54ad58a1090b92",
+        "dependency": "tests/test_requirements_workspace.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "dd5ae313ed302ac8f15ba23ddc799329e28a3529b1d84951e3e6966562c993e2"
+      },
+      {
+        "actual_identity": "1c02b7574b9eb5e4bea2cee27ecf16320df98cf7d882c4226555acba3ea6575b",
+        "dependency": "experiment-semantic-envelope",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true
+      },
+      {
+        "actual_identity": "34d047c1c0a8fc61d4f876c4b341401d38c5c70fc9f5a79feb9d1857689c54c8",
+        "dependency": "worker-model-access-configuration",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true
+      },
+      {
+        "actual_identity": "5fea4469e8aa476d28b5d0cc48e8eae2b926ca6c02aaf63a754e77ed367f46a3",
+        "dependency": "docs/ai-worker-transport-contract-v1.md",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "5fea4469e8aa476d28b5d0cc48e8eae2b926ca6c02aaf63a754e77ed367f46a3"
+      },
+      {
+        "actual_identity": "e5ea731f5b47ed6cf49a8a2fe9844bb02549764864801b86c3c03f6f49cb3330",
+        "dependency": "docs/provider-neutral-freeze-r5.94c.md",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "e5ea731f5b47ed6cf49a8a2fe9844bb02549764864801b86c3c03f6f49cb3330"
+      },
+      {
+        "actual_identity": "4bd16343417b349b4fdb8fa366d5363b78595ddc599d4c12490ae24c3bb7d0a7",
+        "dependency": "rehearsal/ai-worker-transport-contract-v1.json",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "4bd16343417b349b4fdb8fa366d5363b78595ddc599d4c12490ae24c3bb7d0a7"
+      },
+      {
+        "actual_identity": "df8e95822a9397da59b8b44e9365511c07bd0ad6fb44d6487732236e932db063",
+        "dependency": "rehearsal/audit_r5_94c.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "df8e95822a9397da59b8b44e9365511c07bd0ad6fb44d6487732236e932db063"
+      },
+      {
+        "actual_identity": "e8cd43b2a2c119f5e311ab9b0f587f1fee83c37877defe5072452e81efe261d0",
+        "dependency": "rehearsal/validate_r5_94c.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "e8cd43b2a2c119f5e311ab9b0f587f1fee83c37877defe5072452e81efe261d0"
+      },
+      {
+        "actual_identity": "abd94c9130b811d38f9a6334150040b68f9cd1c4665a36503b8443b62e163a22",
+        "dependency": "src/lykoi_transport/__init__.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "abd94c9130b811d38f9a6334150040b68f9cd1c4665a36503b8443b62e163a22"
+      },
+      {
+        "actual_identity": "1342d542948ca6d036d871b96c0c482138c473298bddaf0fa850d6fcd30f257c",
+        "dependency": "src/lykoi_transport/adapter.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "1342d542948ca6d036d871b96c0c482138c473298bddaf0fa850d6fcd30f257c"
+      },
+      {
+        "actual_identity": "d539320caf2f717adbd5b76a79421377cd65e3e8de12c2a3325b210583927816",
+        "dependency": "src/lykoi_transport/execution.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "d539320caf2f717adbd5b76a79421377cd65e3e8de12c2a3325b210583927816"
+      },
+      {
+        "actual_identity": "38cfb64b2b9d00c7bd2b81e14dcfcd81460530d437f452c87cb807df622caa96",
+        "dependency": "src/lykoi_transport/freeze.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "38cfb64b2b9d00c7bd2b81e14dcfcd81460530d437f452c87cb807df622caa96"
+      },
+      {
+        "actual_identity": "eeeee7ec103a5619fa29a908a6e833cbb6f12ce1e6d0033838371a9a92294fa3",
+        "dependency": "src/lykoi_transport/opencode.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "eeeee7ec103a5619fa29a908a6e833cbb6f12ce1e6d0033838371a9a92294fa3"
+      },
+      {
+        "actual_identity": "22a21035228ca85d844c3b39e22feaeb6ea6013309cf529e55bf78fe05ca7c06",
+        "dependency": "src/lykoi_transport/verify.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "22a21035228ca85d844c3b39e22feaeb6ea6013309cf529e55bf78fe05ca7c06"
+      },
+      {
+        "actual_identity": "73a700e114a3676e23acfabe30a746ee0c86ac44eefd119bb15ea2def3526ba0",
+        "dependency": "tests/test_ai_transport.py",
+        "freeze_class": "CANONICAL_CONTENT_PIN",
+        "passed": true,
+        "physical_matches_creation": true,
+        "physical_sha256": "73a700e114a3676e23acfabe30a746ee0c86ac44eefd119bb15ea2def3526ba0"
+      }
+    ],
+    "failures": [],
+    "passed": true
+  },
+  "eligible": false,
+  "engineering_identity": "b2616184c738bd90b684d1bac66059e5ba66e7b0ef328ef70c1e89119e0f99f6",
+  "historical_installation_diagnostic": {
+    "changed_top_level_fields": [
+      "files",
+      "runtime"
+    ],
+    "snapshot_available": true
+  },
+  "non_transport_checks_passed": true,
+  "published_engineering_evidence_integrity": true,
+  "python": {
+    "checks": {
+      "audit_process_native_denial": "PASS",
+      "canonical": "PASS",
+      "filesystem_subprocess_sqlite_restart": "PASS",
+      "focused_existing_tests": "PASS",
+      "focused_test_count": 41,
+      "implementation": "PASS",
+      "platform_architecture": "PASS",
+      "sha256": "PASS",
+      "stdlib:argparse": "PASS",
+      "stdlib:ast": "PASS",
+      "stdlib:contextlib": "PASS",
+      "stdlib:copy": "PASS",
+      "stdlib:datetime": "PASS",
+      "stdlib:functools": "PASS",
+      "stdlib:hashlib": "PASS",
+      "stdlib:importlib": "PASS",
+      "stdlib:io": "PASS",
+      "stdlib:json": "PASS",
+      "stdlib:os": "PASS",
+      "stdlib:pathlib": "PASS",
+      "stdlib:sqlite3": "PASS",
+      "stdlib:ssl": "PASS",
+      "stdlib:subprocess": "PASS",
+      "stdlib:sys": "PASS",
+      "stdlib:tempfile": "PASS",
+      "stdlib:types": "PASS",
+      "stdlib:unittest": "PASS",
+      "stdlib:urllib.request": "PASS",
+      "stdlib:uuid": "PASS",
+      "version": "PASS"
+    },
+    "contract": {
+      "contract_sha256": "e722e22cb7ec413213a64f37df6148cc70ddf56f9580d9438403cf2dcafa9035",
+      "procedure_sha256": "60bb4a14ee3893e2c359b1966a6c21330285636098b52456af0598b086c6d4f5",
+      "tests": [
+        "test_authority_controller.IdentityTests",
+        "test_authority_controller.ControllerTests.test_persistence_actual_process_restart",
+        "test_authority_controller.ControllerTests.test_same_artifacts_events_reproduce_identity_and_decisions",
+        "test_authority_controller.ControllerTests.test_restart_detects_corrupt_artifact_and_journal",
+        "test_requirements_workspace.WorkspaceTests.test_producer_exact_unicode_roundtrip",
+        "test_requirements_workspace.WorkspaceTests.test_sealed_workspace_actual_process_restart",
+        "test_public_rehearsal.VerificationFreezeTests.test_containment_filesystem_and_network",
+        "test_compiler",
+        "test_application"
+      ],
+      "version": "PYTHON_RUNTIME_CONTRACT_V1"
+    },
+    "failures": [],
+    "provenance": {
+      "architecture": "AMD64",
+      "executable_path": "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+      "executable_sha256": "cce21c0e8710e304273e98ac4b2b0f5aceb639acbcd2343cbaa5c4e81619c45b",
+      "implementation": "CPython",
+      "platform": "win32",
+      "pointer_bits": 64,
+      "runtime_libraries": {
+        "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python3.dll": "be1017ca4ca8ff837efbb343d5c8f739bd67bd1c43fb41068a539b19357c0213",
+        "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python314.dll": "1ac15e2224581fc678bbd17728b9aa538d47b891b72c76499ef07e54cd74f151"
+      },
+      "sqlite_version": "3.50.4",
+      "version": "3.14.3 (tags/v3.14.3:323c59a, Feb  3 2026, 16:04:56) [MSC v.1944 64 bit (AMD64)]"
+    },
+    "stable_outputs": {
+      "canonical_sha256": "0dc48d11d33dff859472538d4270f46a4bba214d8d56f76867d2a1fb0f4731c5",
+      "canonical_utf8_hex": "7b2261223a5b747275652c6e756c6c2c2d315d2c227a223a22c3a9227d"
+    },
+    "status": "RUNTIME_COMPATIBLE"
+  },
+  "regression": {
+    "count": 241,
+    "historical_installation_assertion": {
+      "disposition": "Preserved raw first/restart failure in R5.94C engineering evidence; not a prospective runtime dependency",
+      "replacement": "test_ai_transport.TransportTests.test_freeze_exact_inherited_pins plus unchanged test_portable_freeze canonical integrity/mutation tests",
+      "test": "test_protected_evaluation.ProtectedTests.test_freeze_integrity_and_historical_identity"
+    },
+    "log": "test_unchanged_protected_pipeline_and_boundaries (test_ai_transport.NeutralPipelineTests.test_unchanged_protected_pipeline_and_boundaries) ... ok\ntest_all_four_role_allowlists (test_ai_transport.TransportTests.test_all_four_role_allowlists) ... ok\ntest_exact_inputs_and_instructions (test_ai_transport.TransportTests.test_exact_inputs_and_instructions) ... ok\ntest_failure_never_returns_candidate_and_records_provenance (test_ai_transport.TransportTests.test_failure_never_returns_candidate_and_records_provenance) ... ok\ntest_failure_with_fabricated_candidate_rejected (test_ai_transport.TransportTests.test_failure_with_fabricated_candidate_rejected) ... ok\ntest_freeze_exact_inherited_pins (test_ai_transport.TransportTests.test_freeze_exact_inherited_pins) ... ok\ntest_frozen_config_change_blocks_without_invocation (test_ai_transport.TransportTests.test_frozen_config_change_blocks_without_invocation) ... ok\ntest_model_substitution_fails (test_ai_transport.TransportTests.test_model_substitution_fails) ... ok\ntest_opencode_execution_failure_controls (test_ai_transport.TransportTests.test_opencode_execution_failure_controls) ... ok\ntest_optional_implementation_interface (test_ai_transport.TransportTests.test_optional_implementation_interface) ... ok\ntest_protected_commitment_classification_preserved (test_ai_transport.TransportTests.test_protected_commitment_classification_preserved) ... ok\ntest_qualification_bounded_failure_all_roles (test_ai_transport.TransportTests.test_qualification_bounded_failure_all_roles) ... ok\ntest_structured_binding_and_schema_reject (test_ai_transport.TransportTests.test_structured_binding_and_schema_reject) ... ok\ntest_success_provenance_and_untrusted_output (test_ai_transport.TransportTests.test_success_provenance_and_untrusted_output) ... ok\ntest_transport_drift_requires_requalification (test_ai_transport.TransportTests.test_transport_drift_requires_requalification) ... ok\ntest_transport_exception_explicit_failure (test_ai_transport.TransportTests.test_transport_exception_explicit_failure) ... ok\ntest_exact_binary_never_normalizes (test_portable_freeze.CanonicalTests.test_exact_binary_never_normalizes) ... ok\ntest_invalid_utf8_and_binary_rejected_as_text (test_portable_freeze.CanonicalTests.test_invalid_utf8_and_binary_rejected_as_text) ... ok\ntest_lf_crlf_and_physical_provenance (test_portable_freeze.CanonicalTests.test_lf_crlf_and_physical_provenance) ... ok\ntest_machine_relocation_and_crlf_verification (test_portable_freeze.CanonicalTests.test_machine_relocation_and_crlf_verification) ... ok\ntest_meaningful_mutations_invalidate_pins (test_portable_freeze.CanonicalTests.test_meaningful_mutations_invalidate_pins) ... ok\ntest_missing_unknown_class_and_escaping_locator_rejected (test_portable_freeze.CanonicalTests.test_missing_unknown_class_and_escaping_locator_rejected) ... ok\ntest_no_implicit_default_or_contract (test_portable_freeze.CanonicalTests.test_no_implicit_default_or_contract) ... ok\ntest_provenance_does_not_change_semantic_identity (test_portable_freeze.CanonicalTests.test_provenance_does_not_change_semantic_identity) ... ok\ntest_resealing_changed_semantics_cannot_match_external_pin (test_portable_freeze.CanonicalTests.test_resealing_changed_semantics_cannot_match_external_pin) ... ok\ntest_content_drift_blocks_before_worker (test_portable_execution.ExecutionTests.test_content_drift_blocks_before_worker) ... ok\ntest_invocation_and_receipt_bind_semantic_config_separately (test_portable_execution.ExecutionTests.test_invocation_and_receipt_bind_semantic_config_separately) ... ok\ntest_model_substitution_rejected (test_portable_execution.ExecutionTests.test_model_substitution_rejected) ... ok\ntest_new_process_guard_does_not_reuse_qualification (test_portable_execution.ExecutionTests.test_new_process_guard_does_not_reuse_qualification) ... ok\ntest_protected_reviewer_commitment_preserves_classification (test_portable_execution.ExecutionTests.test_protected_reviewer_commitment_preserves_classification) ... ok\ntest_runtime_change_requalifies (test_portable_execution.ExecutionTests.test_runtime_change_requalifies) ... ok\ntest_tool_change_requalifies_and_failed_contract_blocks (test_portable_execution.ExecutionTests.test_tool_change_requalifies_and_failed_contract_blocks) ... ok\ntest_transport_error_restores_semantic_configuration (test_portable_execution.ExecutionTests.test_transport_error_restores_semantic_configuration) ... ok\ntest_transport_path_not_semantic_configuration (test_portable_execution.ExecutionTests.test_transport_path_not_semantic_configuration) ... ok\ntest_unchanged_machine_does_not_requalify (test_portable_execution.ExecutionTests.test_unchanged_machine_does_not_requalify) ... ok\ntest_author_raw_source_denied (test_portable_execution.SyntheticPipelineTests.test_author_raw_source_denied) ... ok\ntest_controller_copy_cannot_reseal_a_changed_candidate (test_portable_execution.SyntheticPipelineTests.test_controller_copy_cannot_reseal_a_changed_candidate) ... ok\ntest_provenance_does_not_change_semantics (test_portable_execution.SyntheticPipelineTests.test_provenance_does_not_change_semantics) ... ok\ntest_semantic_outcomes_match_preserved_previous_runtime (test_portable_execution.SyntheticPipelineTests.test_semantic_outcomes_match_preserved_previous_runtime) ... ok\ntest_source_blind_reviewer_before_commitment (test_portable_execution.SyntheticPipelineTests.test_source_blind_reviewer_before_commitment) ... ok\ntest_supported_pipeline_and_restart (test_portable_execution.SyntheticPipelineTests.test_supported_pipeline_and_restart) ... ok\ntest_unsupported_scope_unchanged (test_portable_execution.SyntheticPipelineTests.test_unsupported_scope_unchanged) ... ok\ntest_append_only_ledger_cannot_erase_exposures (test_protected_evaluation.ProtectedTests.test_append_only_ledger_cannot_erase_exposures) ... ok\ntest_author_original_source_denied_and_audited (test_protected_evaluation.ProtectedTests.test_author_original_source_denied_and_audited) ... ok\ntest_author_role_escalation_denied (test_protected_evaluation.ProtectedTests.test_author_role_escalation_denied) ... ok\ntest_authorization_is_opaque_and_not_access (test_protected_evaluation.ProtectedTests.test_authorization_is_opaque_and_not_access) ... ok\ntest_candidate_source_substitution_and_relabeling_denied (test_protected_evaluation.ProtectedTests.test_candidate_source_substitution_and_relabeling_denied) ... ok\ntest_clarification_available_preserves_protected_revision (test_protected_evaluation.ProtectedTests.test_clarification_available_preserves_protected_revision) ... ok\ntest_clarification_unavailable_terminates (test_protected_evaluation.ProtectedTests.test_clarification_unavailable_terminates) ... ok\ntest_failed_delivery_is_still_exposure (test_protected_evaluation.ProtectedTests.test_failed_delivery_is_still_exposure) ... ok\ntest_incomplete_open_is_durable_and_not_retryable (test_protected_evaluation.ProtectedTests.test_incomplete_open_is_durable_and_not_retryable) ... ok\ntest_pre_authorized_clarification_authority (test_protected_evaluation.ProtectedTests.test_pre_authorized_clarification_authority) ... ok\ntest_protected_schema_only_extends_provenance (test_protected_evaluation.ProtectedTests.test_protected_schema_only_extends_provenance) ... ok\ntest_protected_workspace_requires_protected_controller (test_protected_evaluation.ProtectedTests.test_protected_workspace_requires_protected_controller) ... ok\ntest_provenance_invariance (test_protected_evaluation.ProtectedTests.test_provenance_invariance) ... ok\ntest_public_active_controller_cannot_reserve_protected_source (test_protected_evaluation.ProtectedTests.test_public_active_controller_cannot_reserve_protected_source) ... ok\ntest_public_scope_cannot_activate_protected (test_protected_evaluation.ProtectedTests.test_public_scope_cannot_activate_protected) ... ok\ntest_read_before_failed_admission_remains_exposed (test_protected_evaluation.ProtectedTests.test_read_before_failed_admission_remains_exposed) ... ok\ntest_restart_rejects_new_freeze (test_protected_evaluation.ProtectedTests.test_restart_rejects_new_freeze) ... ok\ntest_reviewer_candidate_before_commitment_denied (test_protected_evaluation.ProtectedTests.test_reviewer_candidate_before_commitment_denied) ... ok\ntest_reviewer_structural_candidate_side_channel_denied (test_protected_evaluation.ProtectedTests.test_reviewer_structural_candidate_side_channel_denied) ... ok\ntest_scope_rejects_unmediated_public_workflow (test_protected_evaluation.ProtectedTests.test_scope_rejects_unmediated_public_workflow) ... ok\ntest_single_open_and_authorization (test_protected_evaluation.ProtectedTests.test_single_open_and_authorization) ... ok\ntest_stale_authorization_denied (test_protected_evaluation.ProtectedTests.test_stale_authorization_denied) ... ok\ntest_synthetic_success_and_exact_roles (test_protected_evaluation.ProtectedTests.test_synthetic_success_and_exact_roles) ... ok\ntest_unsupported_mapping_halts_without_grant (test_protected_evaluation.ProtectedTests.test_unsupported_mapping_halts_without_grant) ... ok\ntest_validator_does_not_weaken_contract_checks (test_protected_evaluation.ProtectedTests.test_validator_does_not_weaken_contract_checks) ... ok\ntest_verifier_original_source_and_inventory_denied (test_protected_evaluation.ProtectedTests.test_verifier_original_source_and_inventory_denied) ... ok\ntest_without_activation_no_open (test_protected_evaluation.ProtectedTests.test_without_activation_no_open) ... ok\ntest_without_source_authorization_no_open (test_protected_evaluation.ProtectedTests.test_without_source_authorization_no_open) ... ok\ntest_wrong_identity_and_cross_source_authorization (test_protected_evaluation.ProtectedTests.test_wrong_identity_and_cross_source_authorization) ... ok\ntest_wrong_run_denied (test_protected_evaluation.ProtectedTests.test_wrong_run_denied) ... ok\ntest_wrong_worker_configuration_denies_before_exposure (test_protected_evaluation.ProtectedTests.test_wrong_worker_configuration_denies_before_exposure) ... ok\ntest_append_only_store_and_journal (test_authority_controller.ControllerTests.test_append_only_store_and_journal) ... ok\ntest_clarification_answer_replacement_invalidates_descendants (test_authority_controller.ControllerTests.test_clarification_answer_replacement_invalidates_descendants) ... ok\ntest_clarification_mismatch_across_sealed_graph (test_authority_controller.ControllerTests.test_clarification_mismatch_across_sealed_graph) ... ok\ntest_conflicting_answer_needs_explicit_resolution (test_authority_controller.ControllerTests.test_conflicting_answer_needs_explicit_resolution) ... ok\ntest_disputed_coverage_and_unsupported_what_only (test_authority_controller.ControllerTests.test_disputed_coverage_and_unsupported_what_only) ... ok\ntest_durable_reservation_crash_replay_and_completion (test_authority_controller.ControllerTests.test_durable_reservation_crash_replay_and_completion) ... ok\ntest_external_verification_and_author_self_verification (test_authority_controller.ControllerTests.test_external_verification_and_author_self_verification) ... ok\ntest_false_ai_assertions_have_no_authority (test_authority_controller.ControllerTests.test_false_ai_assertions_have_no_authority) ... ok\ntest_grant_reissue_cannot_bypass_single_use_dispatch (test_authority_controller.ControllerTests.test_grant_reissue_cannot_bypass_single_use_dispatch) ... ok\ntest_input_access_and_no_candidate_self_review (test_authority_controller.ControllerTests.test_input_access_and_no_candidate_self_review) ... ok\ntest_invalidation_all_authoritative_dependency_classes (test_authority_controller.ControllerTests.test_invalidation_all_authoritative_dependency_classes) ... ok\ntest_malformed_request_structured_and_audit_event_identity (test_authority_controller.ControllerTests.test_malformed_request_structured_and_audit_event_identity) ... ok\ntest_persistence_actual_process_restart (test_authority_controller.ControllerTests.test_persistence_actual_process_restart) ... ok\ntest_policy_adoption_and_precedence (test_authority_controller.ControllerTests.test_policy_adoption_and_precedence) ... ok\ntest_positive_synthetic_clarification_policy_chain (test_authority_controller.ControllerTests.test_positive_synthetic_clarification_policy_chain) ... ok\ntest_post_seal_dispute_denies_grant_and_dispatch (test_authority_controller.ControllerTests.test_post_seal_dispute_denies_grant_and_dispatch) ... ok\ntest_prior_clarifications_remain_normative_in_later_roots (test_authority_controller.ControllerTests.test_prior_clarifications_remain_normative_in_later_roots) ... ok\ntest_registry_cannot_be_spoofed_on_restart (test_authority_controller.ControllerTests.test_registry_cannot_be_spoofed_on_restart) ... ok\ntest_rejected_and_revision_required_lifecycle (test_authority_controller.ControllerTests.test_rejected_and_revision_required_lifecycle) ... ok\ntest_restart_detects_corrupt_artifact_and_journal (test_authority_controller.ControllerTests.test_restart_detects_corrupt_artifact_and_journal) ... ok\ntest_revision_race_rollback_and_no_partial_authority (test_authority_controller.ControllerTests.test_revision_race_rollback_and_no_partial_authority) ... ok\ntest_revocation_after_reservation_prevents_completion (test_authority_controller.ControllerTests.test_revocation_after_reservation_prevents_completion) ... ok\ntest_role_spoof_self_escalation_and_scope (test_authority_controller.ControllerTests.test_role_spoof_self_escalation_and_scope) ... ok\ntest_same_artifacts_events_reproduce_identity_and_decisions (test_authority_controller.ControllerTests.test_same_artifacts_events_reproduce_identity_and_decisions) ... ok\ntest_same_display_path_and_immutable_returned_content (test_authority_controller.ControllerTests.test_same_display_path_and_immutable_returned_content) ... ok\ntest_source_recovery_provenance_is_not_implicit_human_authority (test_authority_controller.ControllerTests.test_source_recovery_provenance_is_not_implicit_human_authority) ... ok\ntest_unresolved_clarification_and_wrong_answer (test_authority_controller.ControllerTests.test_unresolved_clarification_and_wrong_answer) ... ok\ntest_unsealed_plan_and_freeze_substitution_deny (test_authority_controller.ControllerTests.test_unsealed_plan_and_freeze_substitution_deny) ... ok\ntest_unsupported_adequacy_and_missing_evidence_do_not_grant (test_authority_controller.ControllerTests.test_unsupported_adequacy_and_missing_evidence_do_not_grant) ... ok\ntest_wrong_human_version_and_artifact_substitution (test_authority_controller.ControllerTests.test_wrong_human_version_and_artifact_substitution) ... ok\ntest_canonical_conformance_vector (test_authority_controller.IdentityTests.test_canonical_conformance_vector) ... ok\ntest_duplicate_keys_float_nonfinite_large_integer_reject (test_authority_controller.IdentityTests.test_duplicate_keys_float_nonfinite_large_integer_reject) ... ok\ntest_reformatting_not_content_and_order_is_authoritative (test_authority_controller.IdentityTests.test_reformatting_not_content_and_order_is_authoritative) ... ok\ntest_type_schema_content_and_dependencies_bound (test_authority_controller.IdentityTests.test_type_schema_content_and_dependencies_bound) ... ok\ntest_ai_status_strings_and_role_escalation_are_inert (test_requirements_workspace.WorkspaceTests.test_ai_status_strings_and_role_escalation_are_inert) ... ok\ntest_blind_request_has_no_candidate_or_controller (test_requirements_workspace.WorkspaceTests.test_blind_request_has_no_candidate_or_controller) ... ok\ntest_clarification_replacement_invalidates_old_seal (test_requirements_workspace.WorkspaceTests.test_clarification_replacement_invalidates_old_seal) ... ok\ntest_correlated_agreement_can_be_wrong (test_requirements_workspace.WorkspaceTests.test_correlated_agreement_can_be_wrong) ... ok\ntest_exact_version_approval_cannot_approve_next_frc (test_requirements_workspace.WorkspaceTests.test_exact_version_approval_cannot_approve_next_frc) ... ok\ntest_feature_requirement_overrides_waivable_policy (test_requirements_workspace.WorkspaceTests.test_feature_requirement_overrides_waivable_policy) ... ok\ntest_finite_review_budget_survives_restart (test_requirements_workspace.WorkspaceTests.test_finite_review_budget_survives_restart) ... ok\ntest_ingestion_exact_version_and_immutable_source (test_requirements_workspace.WorkspaceTests.test_ingestion_exact_version_and_immutable_source) ... ok\ntest_invented_domain_or_freedom_is_divergent (test_requirements_workspace.WorkspaceTests.test_invented_domain_or_freedom_is_divergent) ... ok\ntest_invention_with_plausible_source_quote_denied (test_requirements_workspace.WorkspaceTests.test_invention_with_plausible_source_quote_denied) ... ok\ntest_inventory_span_and_text_accountability_checks (test_requirements_workspace.WorkspaceTests.test_inventory_span_and_text_accountability_checks) ... ok\ntest_material_divergence_returns_product_question_to_human (test_requirements_workspace.WorkspaceTests.test_material_divergence_returns_product_question_to_human) ... ok\ntest_nonbehavioral_inventory_cannot_authorize_an_frc_obligation (test_requirements_workspace.WorkspaceTests.test_nonbehavioral_inventory_cannot_authorize_an_frc_obligation) ... ok\ntest_omission_detected_cannot_seal_then_corrected (test_requirements_workspace.WorkspaceTests.test_omission_detected_cannot_seal_then_corrected) ... ok\ntest_policy_exact_provenance_and_supersession (test_requirements_workspace.WorkspaceTests.test_policy_exact_provenance_and_supersession) ... ok\ntest_producer_exact_unicode_roundtrip (test_requirements_workspace.WorkspaceTests.test_producer_exact_unicode_roundtrip) ... ok\ntest_public_end_to_end_controller_seal (test_requirements_workspace.WorkspaceTests.test_public_end_to_end_controller_seal) ... ok\ntest_question_priorities_and_required_human_answer (test_requirements_workspace.WorkspaceTests.test_question_priorities_and_required_human_answer) ... ok\ntest_sealed_workspace_actual_process_restart (test_requirements_workspace.WorkspaceTests.test_sealed_workspace_actual_process_restart) ... ok\ntest_shared_session_is_rejected (test_requirements_workspace.WorkspaceTests.test_shared_session_is_rejected) ... ok\ntest_stable_logical_id_and_new_artifact_after_clarification (test_requirements_workspace.WorkspaceTests.test_stable_logical_id_and_new_artifact_after_clarification) ... ok\ntest_unadopted_or_inapplicable_policy_rejects (test_requirements_workspace.WorkspaceTests.test_unadopted_or_inapplicable_policy_rejects) ... ok\ntest_uncommitted_inventory_cannot_expose_candidate (test_requirements_workspace.WorkspaceTests.test_uncommitted_inventory_cannot_expose_candidate) ... ok\ntest_unresolved_mapping_and_umbrella_are_insufficient (test_requirements_workspace.WorkspaceTests.test_unresolved_mapping_and_umbrella_are_insufficient) ... ok\ntest_unresolved_nonwaivable_policy_conflict_blocks (test_requirements_workspace.WorkspaceTests.test_unresolved_nonwaivable_policy_conflict_blocks) ... ok\ntest_unsupported_scope_halts (test_requirements_workspace.WorkspaceTests.test_unsupported_scope_halts) ... ok\ntest_actual_process_restart_audit_by_run (test_sealed_pipeline.PipelineTests.test_actual_process_restart_audit_by_run) ... ok\ntest_author_adapter_capability_gap (test_sealed_pipeline.PipelineTests.test_author_adapter_capability_gap) ... ok\ntest_author_cannot_issue_external_authority (test_sealed_pipeline.PipelineTests.test_author_cannot_issue_external_authority) ... ok\ntest_changed_target_cannot_keep_build_binding (test_sealed_pipeline.PipelineTests.test_changed_target_cannot_keep_build_binding) ... ok\ntest_compilation_failure_is_distinct (test_sealed_pipeline.PipelineTests.test_compilation_failure_is_distinct) ... ok\ntest_component_substitution_before_author_rejects (test_sealed_pipeline.PipelineTests.test_component_substitution_before_author_rejects) ... ok\ntest_component_substitution_before_grant_rejects (test_sealed_pipeline.PipelineTests.test_component_substitution_before_grant_rejects) ... ok\ntest_default_plan_cannot_verify_component_context (test_sealed_pipeline.PipelineTests.test_default_plan_cannot_verify_component_context) ... ok\ntest_external_behavior_not_code_identity (test_sealed_pipeline.PipelineTests.test_external_behavior_not_code_identity) ... ok\ntest_hidden_plan_normal_file_api_denied (test_sealed_pipeline.PipelineTests.test_hidden_plan_normal_file_api_denied) ... ok\ntest_inadequate_contract_cannot_grant (test_sealed_pipeline.PipelineTests.test_inadequate_contract_cannot_grant) ... ok\ntest_invalid_fixture_authoring_failure_is_distinct (test_sealed_pipeline.PipelineTests.test_invalid_fixture_authoring_failure_is_distinct) ... ok\ntest_manifest_substitution_rejects (test_sealed_pipeline.PipelineTests.test_manifest_substitution_rejects) ... ok\ntest_missing_executed_case_cannot_bind_success (test_sealed_pipeline.PipelineTests.test_missing_executed_case_cannot_bind_success) ... ok\ntest_missing_plan_obligation_no_seal (test_sealed_pipeline.PipelineTests.test_missing_plan_obligation_no_seal) ... ok\ntest_native_evidence_cannot_be_text_claim (test_sealed_pipeline.PipelineTests.test_native_evidence_cannot_be_text_claim) ... ok\ntest_no_grant_no_author (test_sealed_pipeline.PipelineTests.test_no_grant_no_author) ... ok\ntest_plan_is_sealed_before_author_bundle (test_sealed_pipeline.PipelineTests.test_plan_is_sealed_before_author_bundle) ... ok\ntest_plan_replacement_does_not_preserve_run (test_sealed_pipeline.PipelineTests.test_plan_replacement_does_not_preserve_run) ... ok\ntest_public_workspace_exact_seal_halts_at_v1 (test_sealed_pipeline.PipelineTests.test_public_workspace_exact_seal_halts_at_v1) ... ok\ntest_replay_denies_second_author (test_sealed_pipeline.PipelineTests.test_replay_denies_second_author) ... ok\ntest_restart_audit_and_fixture_substitution (test_sealed_pipeline.PipelineTests.test_restart_audit_and_fixture_substitution) ... ok\ntest_runtime_failure_is_not_success (test_sealed_pipeline.PipelineTests.test_runtime_failure_is_not_success) ... ok\ntest_structural_forged_complete_bool_rejects (test_sealed_pipeline.PipelineTests.test_structural_forged_complete_bool_rejects) ... ok\ntest_structural_omission_before_bdi (test_sealed_pipeline.PipelineTests.test_structural_omission_before_bdi) ... ok\ntest_unjustified_plan_exclusion_is_not_coverage (test_sealed_pipeline.PipelineTests.test_unjustified_plan_exclusion_is_not_coverage) ... ok\ntest_unsupported_bdi_observation_halts (test_sealed_pipeline.PipelineTests.test_unsupported_bdi_observation_halts) ... ok\ntest_unsupported_structural_relation_halts (test_sealed_pipeline.PipelineTests.test_unsupported_structural_relation_halts) ... ok\ntest_upstream_invalidation_makes_grant_stale (test_sealed_pipeline.PipelineTests.test_upstream_invalidation_makes_grant_stale) ... ok\ntest_wrong_but_compilable_target_fails_behavior (test_sealed_pipeline.PipelineTests.test_wrong_but_compilable_target_fails_behavior) ... ok\ntest_allowlist_and_schema (test_public_rehearsal.AdapterTests.test_allowlist_and_schema) ... ok\ntest_binding_substitution_rejects (test_public_rehearsal.AdapterTests.test_binding_substitution_rejects) ... ok\ntest_credential_not_persisted_and_live_protocol (test_public_rehearsal.AdapterTests.test_credential_not_persisted_and_live_protocol) ... ok\ntest_provenance_and_instruction_identity (test_public_rehearsal.AdapterTests.test_provenance_and_instruction_identity) ... ok\ntest_unavailable_configuration_is_not_live_success (test_public_rehearsal.AdapterTests.test_unavailable_configuration_is_not_live_success) ... ok\ntest_ambiguity_blocks_approval (test_public_rehearsal.EndToEndTests.test_ambiguity_blocks_approval) ... ok\ntest_author_capability_failure (test_public_rehearsal.EndToEndTests.test_author_capability_failure) ... ok\ntest_author_receipt_substitution_denied (test_public_rehearsal.EndToEndTests.test_author_receipt_substitution_denied) ... ok\ntest_authorized_title_end_to_end (test_public_rehearsal.EndToEndTests.test_authorized_title_end_to_end) ... ok\ntest_blind_disagreement_and_ambiguity_block_approval (test_public_rehearsal.EndToEndTests.test_blind_disagreement_and_ambiguity_block_approval) ... ok\ntest_compilable_wrong_default_fails (test_public_rehearsal.EndToEndTests.test_compilable_wrong_default_fails) ... ok\ntest_default_success_and_wrong_author_behavior (test_public_rehearsal.EndToEndTests.test_default_success_and_wrong_author_behavior) ... ok\ntest_exact_wizard_still_halts_before_author (test_public_rehearsal.EndToEndTests.test_exact_wizard_still_halts_before_author) ... ok\ntest_high_default_authorized_calibration (test_public_rehearsal.EndToEndTests.test_high_default_authorized_calibration) ... ok\ntest_low_default_authorized_calibration (test_public_rehearsal.EndToEndTests.test_low_default_authorized_calibration) ... ok\ntest_plan_sealed_before_bundle_and_no_grant_no_author (test_public_rehearsal.EndToEndTests.test_plan_sealed_before_bundle_and_no_grant_no_author) ... ok\ntest_public_mode_blocks_before_any_requirement_or_author (test_public_rehearsal.EndToEndTests.test_public_mode_blocks_before_any_requirement_or_author) ... ok\ntest_restart_configuration_substitution_denied (test_public_rehearsal.EndToEndTests.test_restart_configuration_substitution_denied) ... ok\ntest_unsupported_structure_visibly_fails (test_public_rehearsal.EndToEndTests.test_unsupported_structure_visibly_fails) ... ok\ntest_all_mapping_boundaries_and_preservation (test_public_rehearsal.MappingTests.test_all_mapping_boundaries_and_preservation) ... ok\ntest_duplicate_context_and_domains_reject (test_public_rehearsal.MappingTests.test_duplicate_context_and_domains_reject) ... ok\ntest_extra_obligation_never_dropped (test_public_rehearsal.MappingTests.test_extra_obligation_never_dropped) ... ok\ntest_inadequacy_preserved (test_public_rehearsal.MappingTests.test_inadequacy_preserved) ... ok\ntest_near_miss_mutations_reject (test_public_rehearsal.MappingTests.test_near_miss_mutations_reject) ... ok\ntest_profile_declares_small_scope (test_public_rehearsal.MappingTests.test_profile_declares_small_scope) ... ok\ntest_activation_does_not_override_model_qualification (test_public_rehearsal.VerificationFreezeTests.test_activation_does_not_override_model_qualification) ... ok\ntest_ai_verifier_candidate_remains_untrusted (test_public_rehearsal.VerificationFreezeTests.test_ai_verifier_candidate_remains_untrusted) ... ok\ntest_all_supported_external_calibrations (test_public_rehearsal.VerificationFreezeTests.test_all_supported_external_calibrations) ... ok\ntest_containment_filesystem_and_network (test_public_rehearsal.VerificationFreezeTests.test_containment_filesystem_and_network) ... ok\ntest_coverage_assertion_without_observation_rejects (test_public_rehearsal.VerificationFreezeTests.test_coverage_assertion_without_observation_rejects) ... ok\ntest_freeze_drift_and_requirement_blind_eligibility (test_public_rehearsal.VerificationFreezeTests.test_freeze_drift_and_requirement_blind_eligibility) ... ok\ntest_runtime_failure_distinct (test_public_rehearsal.VerificationFreezeTests.test_runtime_failure_distinct) ... ok\ntest_timeout_is_containment_failure (test_public_rehearsal.VerificationFreezeTests.test_timeout_is_containment_failure) ... ok\ntest_candidate_rejected_before_cli_dispatch (test_live_public_freeze.LiveAdapterTests.test_candidate_rejected_before_cli_dispatch) ... ok\ntest_cli_error_does_not_publish_secret_headers (test_live_public_freeze.LiveAdapterTests.test_cli_error_does_not_publish_secret_headers) ... ok\ntest_cli_fresh_session_stdin_and_instruction_isolation (test_live_public_freeze.LiveAdapterTests.test_cli_fresh_session_stdin_and_instruction_isolation) ... ok\ntest_plan_identity_assignment_preserves_expectations (test_live_public_freeze.LiveAdapterTests.test_plan_identity_assignment_preserves_expectations) ... ok\ntest_scoped_source_metadata_and_no_tools (test_live_public_freeze.LiveAdapterTests.test_scoped_source_metadata_and_no_tools) ... ok\ntest_activation_predates_admission_and_survives_restart (test_live_public_freeze.PublicFreezeTests.test_activation_predates_admission_and_survives_restart) ... ok\ntest_missing_live_smoke_blocks_even_self_rehashed_freeze (test_live_public_freeze.PublicFreezeTests.test_missing_live_smoke_blocks_even_self_rehashed_freeze) ... ok\ntest_model_prompt_schema_adapter_and_mapping_drift_change_identity (test_live_public_freeze.PublicFreezeTests.test_model_prompt_schema_adapter_and_mapping_drift_change_identity) ... ok\ntest_pipeline_rejects_inactive_freeze_before_consuming_what (test_live_public_freeze.PublicFreezeTests.test_pipeline_rejects_inactive_freeze_before_consuming_what) ... ok\ntest_public_native_chain_with_mock_cli_remains_controller_gated (test_live_public_freeze.PublicFreezeTests.test_public_native_chain_with_mock_cli_remains_controller_gated) ... ok\ntest_repeat_activation_denied (test_live_public_freeze.PublicFreezeTests.test_repeat_activation_denied) ... ok\ntest_requirement_refused_before_activation_and_not_stored (test_live_public_freeze.PublicFreezeTests.test_requirement_refused_before_activation_and_not_stored) ... ok\ntest_restart_rejects_freeze_substitution (test_live_public_freeze.PublicFreezeTests.test_restart_rejects_freeze_substitution) ... ok\ntest_worker_cannot_activate_or_grant (test_live_public_freeze.PublicFreezeTests.test_worker_cannot_activate_or_grant) ... ok\ntest_dangling_reference (test_compiler.CompilerTests.test_dangling_reference) ... ok\ntest_impact_paths_and_clock_validation (test_compiler.CompilerTests.test_impact_paths_and_clock_validation) ... ok\ntest_impossible_contract (test_compiler.CompilerTests.test_impossible_contract) ... ok\ntest_incompatible_type_and_mutation (test_compiler.CompilerTests.test_incompatible_type_and_mutation) ... ok\ntest_index_and_diff (test_compiler.CompilerTests.test_index_and_diff) ... ok\ntest_invalid_filter_migration_and_contract_identity (test_compiler.CompilerTests.test_invalid_filter_migration_and_contract_identity) ... ok\ntest_least_authority_for_behaviors_and_migrations (test_compiler.CompilerTests.test_least_authority_for_behaviors_and_migrations) ... ok\ntest_lifecycle_rejects_unmodeled_and_inconsistent_changes (test_compiler.CompilerTests.test_lifecycle_rejects_unmodeled_and_inconsistent_changes) ... ok\ntest_manifest_and_schema (test_compiler.CompilerTests.test_manifest_and_schema) ... ok\ntest_manifest_provenance_is_artifact_wide (test_compiler.CompilerTests.test_manifest_provenance_is_artifact_wide) ... ok\ntest_missing_and_duplicate_ids (test_compiler.CompilerTests.test_missing_and_duplicate_ids) ... ok\ntest_optional_enum_and_effects_are_validated (test_compiler.CompilerTests.test_optional_enum_and_effects_are_validated) ... ok\ntest_parser_rejects_duplicate_keys (test_compiler.CompilerTests.test_parser_rejects_duplicate_keys) ... ok\ntest_plan_fails_without_mutating_model (test_compiler.CompilerTests.test_plan_fails_without_mutating_model) ... ok\ntest_plan_rejects_duplicate_and_stale_baseline (test_compiler.CompilerTests.test_plan_rejects_duplicate_and_stale_baseline) ... ok\ntest_plan_rejects_unauthorized_change_before_generation (test_compiler.CompilerTests.test_plan_rejects_unauthorized_change_before_generation) ... ok\ntest_predicates_safety_and_impact (test_compiler.CompilerTests.test_predicates_safety_and_impact) ... ok\ntest_renaming_preserves_identity (test_compiler.CompilerTests.test_renaming_preserves_identity) ... ok\ntest_safety_cli (test_compiler.CompilerTests.test_safety_cli) ... ok\ntest_transition_references_and_guard (test_compiler.CompilerTests.test_transition_references_and_guard) ... ok\ntest_undeclared_effect_and_dependency (test_compiler.CompilerTests.test_undeclared_effect_and_dependency) ... ok\ntest_valid_and_deterministic (test_compiler.CompilerTests.test_valid_and_deterministic) ... ok\ntest_explicit_legacy_migration (test_application.ApplicationTests.test_explicit_legacy_migration) ... ok\ntest_failures_leave_state_intact (test_application.ApplicationTests.test_failures_leave_state_intact) ... ok\ntest_high_priority_filter_and_default (test_application.ApplicationTests.test_high_priority_filter_and_default) ... ok\ntest_invariants_on_load (test_application.ApplicationTests.test_invariants_on_load) ... ok\ntest_lifecycle_and_persistence (test_application.ApplicationTests.test_lifecycle_and_persistence) ... ok\ntest_overdue_and_optional_due_date (test_application.ApplicationTests.test_overdue_and_optional_due_date) ... ok\ntest_semantic_scenario_with_fixed_clock (test_application.ApplicationTests.test_semantic_scenario_with_fixed_clock) ... ok\ntest_semantic_transition_scenario (test_application.ApplicationTests.test_semantic_transition_scenario) ... ok\ntest_version_two_migration (test_application.ApplicationTests.test_version_two_migration) ... ok\n\n----------------------------------------------------------------------\nRan 241 tests in 408.439s\n\nOK\n",
+    "passed": true,
+    "suites": [
+      "test_ai_transport",
+      "test_portable_freeze",
+      "test_portable_execution",
+      "test_protected_evaluation",
+      "test_authority_controller",
+      "test_requirements_workspace",
+      "test_sealed_pipeline",
+      "test_public_rehearsal",
+      "test_live_public_freeze",
+      "test_compiler",
+      "test_application"
+    ]
+  },
+  "target_authorizations": [],
+  "transport": {
+    "live_failure_evidence": {
+      "restart-verification.json": "37a8322f0bccd27a6ed275e5b38cfc74ee66617b61dfbc4bbf78472a29538748",
+      "verification.json": "9f2060d9c118ed3d5fa0218dd4b737e14bf49d6e0a779471ccb25e3d69bcfbcb"
+    },
+    "new_live_attempts": 0,
+    "provenance": {
+      "implementation": "lykoi-opencode-transport",
+      "installation": {
+        "path": "C:\\Users\\lblan\\AppData\\Roaming\\npm\\node_modules\\opencode-ai\\bin\\opencode.exe",
+        "sha256": "cf664aa1da32b788f9b2699b84a9bb9be30b7e025693b90f9b85829d5fe4e252",
+        "version": "1.18.32"
+      },
+      "interface_version": "r5.94c-1"
+    },
+    "status": "TRANSPORT_INCOMPATIBLE"
+  }
+}

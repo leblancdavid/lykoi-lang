@@ -1,5 +1,27 @@
 # Experimental decisions
 
+## R5.94C — Freeze AI-worker behavior, keep model and transport distinct
+
+Adopt prospective `AI_WORKER_TRANSPORT_CONTRACT_V1`: fresh isolated context, exact
+pinned instructions, allowlisted artifacts, frozen model/settings, no unauthorized
+tools/context, bound structured output or explicit failure, bounded execution and
+per-attempt provenance. Retain normal untrusted-output/controller authority. OpenCode
+wraps the common interface as an optional implementation; implementation identity is
+runtime compatibility/provenance, not artifact meaning. Keep all 137 inherited content
+pins and the model configuration exact, with additional new infrastructure pins.
+
+Do not substitute an OpenAI/Codex model merely because that access exists. No equivalent
+configured route to frozen Copilot/Sonnet was established. Preserve all eight bounded
+live CLI failures and make no further retry. Publish an engineering manifest and blocked
+eligibility evidence, not a successor freeze without a qualifying live transport.
+
+Preserve the initial 242-test execution's single historical exact R5.91 installation
+snapshot failure. Its unchanged files/runtime predicate is not a neutral eligibility
+requirement. Record that one test outside the prospective suite and retain canonical
+integrity/mutation checks; final prospective regressions pass 241/241 in each audit
+process. Never relabel the historical failure as PASS or rewrite frozen tests/results.
+No protected activation or B03 authority follows. [Report](../benchmark/results/phase5c/R5_94C-PROVIDER-NEUTRAL-AI-WORKER-TRANSPORT.md).
+
 ## R5.94B — Freeze meaning exactly, qualify transport, retain physical provenance
 
 Use explicit `CANONICAL_CONTENT_PIN`, `EXACT_BINARY_PIN`, `COMPATIBILITY_CONTRACT`

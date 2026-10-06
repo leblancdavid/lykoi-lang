@@ -75,6 +75,26 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.94C provider-neutral transport repair](../benchmark/results/phase5c/R5_94C-PROVIDER-NEUTRAL-AI-WORKER-TRANSPORT.md)
+ends **`R5_94C_BLOCKED_NO_FUNCTIONING_TRANSPORT_FOR_FROZEN_MODEL`**. Prospective
+`AI_WORKER_TRANSPORT_CONTRACT_V1` and a common isolated worker interface replace
+OpenCode as an architectural requirement; OpenCode remains one optional implementation.
+The exact `github-copilot/claude-sonnet-4.6` model/settings, role instructions and all
+**137** inherited content pins are intact. **16/16** new tests and **241/241** prospective
+regressions pass in both final audit processes, with CPython **3.14.3** qualification,
+containment, model validation/safety and **3/3** external baseline checks.
+
+Live public/synthetic smoke success is **0/4** in each of two processes: all eight
+bounded attempts return explicit `AI_EXECUTION_FAILURE / CLI_FAILURE`. No alternative
+configured supported route to the frozen model was established; no model substitution
+or further live retry occurred. Original **241 pass / 1 historical installation-bound
+failure** logs are preserved; that unchanged exact R5.91 snapshot assertion is not a
+prospective neutral eligibility dependency. Final machine eligibility is **false**;
+no successor freeze was published. **No B03 activation, authorization, access or metadata
+inspection; all 16 counters zero.** A separately instructed round must first qualify a
+functioning unchanged-model transport and verify a generic freeze before considering
+target authority. Earlier records below retain their historical scope.
+
 The [R5.94B cross-machine portability round](../benchmark/results/phase5c/R5_94B-CROSS-MACHINE-FREEZE-PORTABILITY.md)
 ends **`R5_94B_CURRENT_MACHINE_ELIGIBILITY_BLOCKED_LIVE_OPENCODE_ADAPTER_CONTRACT`**.
 **R5.94B-GENERIC-PROTECTED-CANDIDATE-2** is **content-intact and inactive**, but latest

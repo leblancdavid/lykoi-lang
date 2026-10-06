@@ -1,5 +1,36 @@
 # Lykoi research log
 
+## R5.94C provider-neutral AI worker transport (2026-10-06 session)
+
+**`R5_94C_BLOCKED_NO_FUNCTIONING_TRANSPORT_FOR_FROZEN_MODEL`**. The bounded neutral
+contract, adapter interface, optional OpenCode implementation, qualification command
+and prospective freeze/controller wiring are implemented. The architecture requires
+isolated worker behavior, not OpenCode. Fixed Copilot/Sonnet model/settings and all
+137 canonical entries remain intact; no semantic prompt/schema/authority repair occurs.
+
+Installed OpenCode 1.18.32 lists the frozen route, but all four public/synthetic roles
+fail `AI_EXECUTION_FAILURE / CLI_FAILURE` in each of two processes: eight attempts,
+zero successful roles, no further retry. Error cause remains unestablished. Presence
+of Codex/OpenAI access does not establish equivalent frozen-model access; no alternate
+live adapter, credential extraction or model substitution is claimed.
+
+New tests 16/16 mechanically reject cross-role/prohibited context, malformed output,
+failure fabrication and model substitution, retain commitments/provenance, and exercise
+unchanged synthetic protected semantics through neutral controller wiring. These are
+interface/engineering evidence, not live model qualification. Final audits pass 241/241
+prospective regressions, CPython 3.14.3's unchanged runtime contract (41 tests plus probes),
+137 inherited plus 12 new pins, containment, validation/safety and 3/3 external baseline
+in each process. Initial 242-test runs retain one historical exact R5.91 installation
+snapshot failure (changed files/runtime); no frozen test or record is altered. The
+prospective suite records that assertion separately and uses canonical integrity tests.
+
+Current eligibility is false; no successor freeze is published. Final offline audits
+carry forward failed live evidence only and make zero new live calls. All 16 scoped B03
+counters remain zero and inherited pristine/unevaluated/unexposed status remains; no
+target/metadata inspection. Passing live unchanged-model transport and generic freeze
+verification remain prerequisites before any separately authorized target continuation.
+[Report and evidence](../benchmark/results/phase5c/R5_94C-PROVIDER-NEUTRAL-AI-WORKER-TRANSPORT.md).
+
 ## R5.94B cross-machine freeze portability (2026-10-06 session)
 
 **`R5_94B_CURRENT_MACHINE_ELIGIBILITY_BLOCKED_LIVE_OPENCODE_ADAPTER_CONTRACT`**.

@@ -82,6 +82,16 @@ The configured worker model remains frozen independently. See the
 [report and preflight command](benchmark/results/phase5c/R5_94B-CROSS-MACHINE-FREEZE-PORTABILITY.md).
 The candidate is inactive; no B03 activation, authorization or access follows.
 
+The [R5.94C worker transport contract](docs/ai-worker-transport-contract-v1.md) makes
+OpenCode an optional implementation of a provider-neutral isolated-worker interface.
+With `PYTHONPATH=src`, `python -X utf8 -m lykoi_transport.verify verify --implementation
+opencode --executable <selected executable>` performs bounded public/synthetic checks.
+The frozen Copilot/Sonnet model and all 137 inherited content pins remain unchanged.
+Current status is **`R5_94C_BLOCKED_NO_FUNCTIONING_TRANSPORT_FOR_FROZEN_MODEL`**:
+all eight first/fresh-process role attempts fail explicitly; final nontransport checks
+pass, but no successor freeze or B03 authority is created. See the
+[engineering report](benchmark/results/phase5c/R5_94C-PROVIDER-NEUTRAL-AI-WORKER-TRANSPORT.md).
+
 The task application lives in [`air/task_manager.json`](air/task_manager.json)
 (the `air/` path and `air_compiler` import path are retained for compatibility).
 The current v0.3 model is documented in [`docs/axiom-v0.3.md`](docs/axiom-v0.3.md),
