@@ -20,6 +20,13 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+The [R5.87 requirements workspace](docs/requirements-workspace-r5.87.md) implements
+a public synthetic human-intent → clarification → independent source review → exact
+approval → controller-sealed requirements lifecycle. With `PYTHONPATH=src`, run
+`python -m lykoi_workspace.example` for the wizard transcript or add `--audit` for
+exact artifact bindings. This is requirements engineering, not production AI
+qualification or an implementation grant.
+
 The task application lives in [`air/task_manager.json`](air/task_manager.json)
 (the `air/` path and `air_compiler` import path are retained for compatibility).
 The current v0.3 model is documented in [`docs/axiom-v0.3.md`](docs/axiom-v0.3.md),

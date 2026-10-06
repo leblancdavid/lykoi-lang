@@ -1,5 +1,38 @@
 # Experimental decisions
 
+## R5.87 — Build a finite requirements service around authority-1
+
+Implement R5.85 stage 2 as **R5_87_REQUIREMENTS_WORKSPACE_IMPLEMENTED**, with the
+unchanged controller as sole authority mechanism. Reconstruct workspace state and
+consumed review budgets from its immutable journal instead of persisting duplicate
+approval/seal flags. Preserve existing FRC-0.1 records/validator and SOI-0.1 concepts
+inside authority wrappers, with separate exact authority ledgers. Logical obligation
+IDs persist while artifact identity changes; conservative clause/lineage checks reject
+renaming and recycled retired IDs without claiming general meaning equivalence.
+
+Select fresh deterministic producer subprocesses and an input-only model adapter.
+Source-only reviewer requests expose no candidate/controller credentials, and candidate
+access at reconciliation requires controller SOI commitment plus exact REVIEW_STARTED
+binding. Record process/context separation honestly: local Python worker containment
+does not establish OS sandboxing or model/provider independence. Prefer exact complete
+clause/context comparison and visible unresolved mappings over guessed semantic merges.
+
+Permit one initial independent inventory plus one correction/human-resolution review
+per lineage; keep its budget through restart. Material disagreements return to human
+product questions, never a third-AI vote or recursively reviewed review. Use elected
+scoped project policies with explicit waivable feature exceptions. Policy source
+precedence is visible evidence and independently controller-enforced at approval.
+
+Use R5.86's WHAT-only seal with an explicitly deferred/unsupported authoring projection;
+do not convert source reconciliation into supported structural discovery or an authoring
+grant. The correlated-error negative control can still seal an externally known wrong
+contract: independent agreement plus explicit human approval is traceable authority,
+not a proof of semantic truth. Production producer qualification, scoped authentication,
+strict blind worker containment and full author/build/verifier closure remain later work.
+See [workspace interface](requirements-workspace-r5.87.md) and
+[round report](../benchmark/results/phase5c/R5_87-AI-REQUIREMENTS-WORKSPACE.md).
+Stop after R5.87; B03 untouched, R5.83 candidate unactivated, no semantics/V1/BDI change.
+
 ## R5.86 — Implement exact-content authority with a small transactional controller
 
 Implement R5.85 stage 1 as **R5_86_AUTHORITY_CONTROLLER_IMPLEMENTED**. Select

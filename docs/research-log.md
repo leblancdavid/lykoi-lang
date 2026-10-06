@@ -1,5 +1,40 @@
 # Lykoi research log
 
+## R5.87 AI-assisted requirements workspace (2026-10-05)
+
+Implemented **R5_87_REQUIREMENTS_WORKSPACE_IMPLEMENTED** around the unchanged R5.86
+controller. [Workspace-1](requirements-workspace-r5.87.md) and
+[report/evidence](../benchmark/results/phase5c/R5_87-AI-REQUIREMENTS-WORKSPACE.md)
+record exact source/clarification/policy versions, candidate FRC-0.1 lineage, stable
+logical obligations, fresh source-only reviewer subprocesses, SOI commitment before
+reconciliation access, exact authority ledgers, deterministic bidirectional comparison,
+product-level disagreement routing, two-review maximum, human approval and WHAT seal.
+The public synthetic wizard clarifies omitted priority and “important,” reviews source
+independently, reconciles all commitments and obtains a controller-sealed exact FRC.
+
+New **26/26** challenges pass, including omission followed by human correction, invented
+ordering/domain/freedom refusal, material divergence, umbrella insufficiency, visible
+policy feature precedence/non-waivable conflict, clarification/policy invalidation,
+exact-version approval and actual separate-process restart. A deliberate correlated
+mistake misclassifies source listing as context in both producers; an approving human
+still seals a contract missing an externally declared expected obligation. This
+observed negative control limits claims: isolated agreement does not prove completeness
+or eliminate shared semantic error. Normal fixture isolation is process-separated
+allowlisted JSON, without controller inputs; OS sandbox/model/provider independence
+and production semantic reliability are not demonstrated.
+
+Unchanged R5.86 **34/34**, compiler/application **31/31**, model validation/safety pass.
+Selected historical R5.80–82/R5.84/V1 total **104 pass / 2 fail** reproduce the known
+public physical-byte CRLF pins; read-only LF diagnostics match both historical hashes.
+The physical-byte failures remain failures and all historical evidence stays preserved.
+No full authoring projection/grant or software is produced. Requirements-recovery is
+only a provenance extension point. Reviewed structure, qualified coverage/discovery/
+adequacy, faithful V1, independently sealed verifier planning, executable freeze and
+restricted author/build/verifier closure remain. All B03 access/activity counters
+**zero**; **B03_PRISTINE / B03_NOT_EVALUATED /
+B03_NOT_EXPOSED_TO_LYKOI_DEVELOPMENT**; R5.83-CANDIDATE-1 unactivated. Core **30**
+inherited, Phase 5C paused. Stop after R5.87; no semantics/V1/BDI expansion.
+
 ## R5.86 authority/artifact controller implementation (2026-10-05)
 
 Implemented **R5_86_AUTHORITY_CONTROLLER_IMPLEMENTED** against the unchanged R5.85

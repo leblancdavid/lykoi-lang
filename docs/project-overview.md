@@ -75,6 +75,35 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+The [R5.87 requirements workspace round](../benchmark/results/phase5c/R5_87-AI-REQUIREMENTS-WORKSPACE.md)
+ends **`R5_87_REQUIREMENTS_WORKSPACE_IMPLEMENTED`** in public synthetic engineering
+scope. The [workspace-1 service](requirements-workspace-r5.87.md) implements R5.85
+stage 2 around the unchanged R5.86 controller: exact source/clarification/policy
+versions, stable logical obligations, separate structured producer contexts, committed
+source-only SOI, conservative deterministic reconciliation, human dispute routing,
+finite two-review lifecycle, exact human approval and controller WHAT seal.
+The executable public wizard asks meaningful priority questions, independently reviews
+the source and seals its exact approved contract; a normal-user transcript and advanced
+audit bindings are published. **26/26** workspace challenges, unchanged controller
+**34/34**, compiler/application **31/31** and validation/safety pass. Selected historical
+R5.80–82/R5.84/V1 remain **104 pass / 2 physical-byte CRLF pin failures**; both read-only
+LF diagnostics match, with original pins/evidence preserved.
+
+Omissions, inventions, material disagreements and policy conflicts halt the automatic
+path; human correction can progress through bounded re-review. Clarification/policy
+replacement invalidates old exact authority. A correlated-agreement negative control
+still seals an externally known incomplete contract when both producers and approving
+human miss it: agreement is not semantic truth. Fixture isolation is fresh subprocess /
+allowlisted JSON with no controller credentials, **not an OS sandbox or demonstrated
+model/provider independence**. Production AI formalization remains unqualified.
+The requirements-only seal grants no authoring permission; reviewed structural
+projection, qualified coverage, supported BDI/adequacy, faithful unchanged-V1 mapping,
+sealed independent verification planning, executable freeze, controller implementation
+grant and restricted author/build/verifier closure remain. **B03_PRISTINE /
+B03_NOT_EVALUATED / B03_NOT_EXPOSED_TO_LYKOI_DEVELOPMENT**, all counters **zero**;
+**R5.83-CANDIDATE-1 unactivated**. Semantics/V1/BDI families unchanged, core **30**
+inherited, Phase 5C paused. **Stop after R5.87**. Earlier boundaries retain historical scope.
+
 The [R5.86 controller engineering round](../benchmark/results/phase5c/R5_86-AUTHORITY-AND-ARTIFACT-CONTROLLER.md)
 ends **`R5_86_AUTHORITY_CONTROLLER_IMPLEMENTED`**. The
 [authority-1 controller](authority-artifact-controller-r5.86.md) implements R5.85's
