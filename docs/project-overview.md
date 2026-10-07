@@ -96,6 +96,9 @@ is required for its internal durable audit history. Persistent relationships and
 cross-entity integrity remain the recommended R5.109 capability, only if separately
 instructed. See the [R5.108 report](../benchmark/results/phase5c/R5_108-REPORT.md).
 **Stop after the audit.** Product semantics and R5.107 frozen evidence are preserved.
+Focused verification passes **93 tests**, canonical model validation/safety and
+documentation whitespace/scope checks. The inherited full-tree whitespace failure
+remains recorded; its frozen guidance file is byte-identical.
 
 **R5.96 — `R5_96_RESEARCH_WORKFLOW_SIMPLIFIED`.** Current research uses compatible
 tooling and the AI model available in the active development environment. Exact

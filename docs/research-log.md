@@ -28,7 +28,12 @@ the recommended next family if separately instructed. No token-efficiency study,
 relationship implementation, product refactor or infrastructure work occurred.
 Existing current regression/validation/safety and scope/whitespace results are
 recorded in the [report](../benchmark/results/phase5c/R5_108-REPORT.md); the R5.107
-frozen trailing space is preserved. Stop after R5.108.
+frozen trailing space is preserved. **93 focused tests** and validation/safety pass;
+documentation whitespace and scope pass. An initial broad run timed out after
+12 suites / 148 tests reported success, without an aggregate record; those overlap
+the focused set and are not summed. Full-tree whitespace still reports the one
+inherited defect. Concurrent artifact-retention updates are separately attributed.
+Stop after R5.108.
 
 ## Experiment artifact size and retention audit (2026-10-07)
 
