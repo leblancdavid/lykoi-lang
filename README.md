@@ -20,6 +20,15 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R5.105 closes the bounded typed value/input profile.**
+[Literal/input/default sources, explicit observation stages, conditional validation
+and semantic parameters separate from CLI bindings](docs/typed-input-values-v1.md)
+execute through the normal requirements/compiler/external path. **348 tests pass**;
+four public domains publish 132 external invocations. The
+[frozen exposed transfer](benchmark/results/phase5c/R5_105-REPORT.md) has eight local
+successes (B01–B07/B10), nine structural blockers, B18 BDI and B17/B20 clarification.
+R5.104 remains preserved; no held-out/cumulative claim. Stop after R5.105.
+
 **Current research policy: R5.96.** Use compatible Python 3.10+ and the AI model
 available in the active environment. OpenCode, model/machine/runtime/transport
 qualification and protected freeze activation are not benchmark prerequisites.

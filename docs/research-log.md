@@ -1,5 +1,41 @@
 # Lykoi research log
 
+## R5.105 typed value/input closure (2026-10-06)
+
+**`R5_105_TYPED_VALUE_INPUT_PROFILE_CLOSED`**. Normal typed requirements now
+distinguish literal empty/nonempty collection initialization, required supplied
+collection input, omission defaults, RAW/TRANSFORMED/PERSISTED validation and
+presence/raw-value conditional activation. Semantic parameter/type/presence is
+separate from external flag/encoding and declared missing-input behavior.
+Explicit JSON application errors and CLI-only rejection avoid incidental parser
+semantics and invented application missing errors. Existing single-record mutation,
+atomic persistence, lifecycle and same-store CollectionQuery remain composed.
+
+**348/348 tests**, canonical validation/safety, **132 synthetic external invocations**
+across article/contact/product/profile pass. Tests dispute invented literal/trim/
+required/error/stage/binding authority, reject material binding/coverage loss and
+detect faithful V1 corruption. External observations include supplied empty arrays,
+raw empty versus whitespace, trim/stage interaction, optional omission, literal
+enum/source policies, required errors, reload/query and rejected/persistence-failed
+atomic multi-field changes. Same-agent captures/inventory/oracles and synthetic
+approval remain evidence limits; no English accuracy or held-out claim is made.
+
+A focused test timeout and a whitespace-predicate oracle correction preceded
+passing generic verification. Initial lock 1 was superseded before transfer after
+a generic audit identified CLI-only rejection's need for null application missing
+error and an explicit API rejection path. Full checks and public behavior reran;
+initial and final records remain preserved. Final lock 2 stayed unchanged throughout
+all twenty freshly source-read typed attempts. **B01–B07/B10 succeed (178 transfer
+invocations)**; **nine structural / B18 BDI / B17 and B20 clarification** remain.
+B06/B07 newly reach external verification; no product repair follows outcomes.
+
+R5.104 generic/transfer evidence and B03's immutable first result remain intact.
+The next recommendation is typed predicate/guard composition with writable-boolean/
+archive prerequisites accounted for. No next-family implementation or infrastructure
+work occurred. See [spec](typed-input-values-v1.md),
+[report](../benchmark/results/phase5c/R5_105-REPORT.md) and
+[matrix](../benchmark/results/phase5c/R5_105-CAPABILITY-MATRIX.md). Stop after R5.105.
+
 ## R5.104 typed mutable values and write transformations (2026-10-06)
 
 **`R5_104_TYPED_MUTABLE_VALUES_IMPLEMENTED`**, bounded normal compositional profile.

@@ -3,14 +3,17 @@ from .query_schema import obj, array, TEXT
 
 SCALAR = {"anyOf": [TEXT, {"type": "null"}]}
 VALUE = {"anyOf": [TEXT, {"type": "null"}, array(TEXT)]}
+STAGE = {"enum": ["RAW", "TRANSFORMED", "PERSISTED"]}
+WHEN = {"anyOf": [{"type": "null"}, obj({"stage": STAGE, "predicate": {"enum": ["present", "absent", "empty", "nonempty", "whitespace"]}})]}
 ELEMENT_PIPELINE = array({"anyOf": [
     obj({"kind": {"enum": ["transform"]}, "operation": {"enum": ["verbatim", "trim", "stable_deduplicate"]}}),
-    obj({"kind": {"enum": ["validate"]}, "rule": {"enum": ["nonempty", "nonblank", "typed"]}, "error": TEXT})]})
+    obj({"kind": {"enum": ["validate"]}, "rule": {"enum": ["nonempty", "nonblank", "typed"]}, "error": TEXT}),
+    obj({"kind": {"enum": ["validate"]}, "rule": {"enum": ["nonempty", "nonblank", "typed"]}, "error": TEXT, "stage": STAGE, "when": WHEN})]})
 PIPELINE = array({"anyOf": ELEMENT_PIPELINE["items"]["anyOf"] + [obj({"kind": {"enum": ["map_elements"]}, "pipeline": ELEMENT_PIPELINE})]})
 VALUES = {
     "collections": array(obj({"name": TEXT, "element": obj({"type": {"enum": ["string", "identifier", "enum", "timestamp"]}, "domain": array(TEXT)}),
         "ordering": {"enum": ["insertion"]}, "duplicates": {"enum": ["allow", "unique"]}, "equality": {"enum": ["exact"]},
-        "creation": obj({"input": TEXT, "encoding": {"enum": ["json", "repeated"]}, "default": array(TEXT), "pipeline": PIPELINE, "error": TEXT}),
+        "creation": {"anyOf": [obj({"input": TEXT, "encoding": {"enum": ["json", "repeated"]}, "default": array(TEXT), "pipeline": PIPELINE, "error": TEXT}), obj({"source": {"enum": ["input"]}, "input": TEXT, "encoding": {"enum": ["json", "repeated"]}, "pipeline": PIPELINE, "error": TEXT}), obj({"source": {"enum": ["literal"]}, "value": array(TEXT)})]},
         "migration": array(obj({"from": {"type": "integer"}, "to": {"type": "integer"}, "value": array(TEXT)}))})),
     "mutations": array(obj({"command": TEXT, "lookup": TEXT, "missing_error": TEXT,
         "changes": array(obj({"field": TEXT, "input": TEXT, "operation": {"enum": ["replace", "append", "add_unique"]},
@@ -19,6 +22,13 @@ VALUES = {
         "effect": obj({"atomicity": {"enum": ["single_record"]}, "persistence": {"enum": ["atomic"]}, "rejection": {"enum": ["unchanged"]}})})),
     "creation_pipelines": array(obj({"field": TEXT, "pipeline": PIPELINE, "error": TEXT})),
 }
+TYPE = obj({"type": {"enum": ["string", "identifier", "enum", "timestamp"]}, "domain": array(TEXT)})
+NULLABLE_TYPE = obj({"type": {"enum": ["string", "identifier", "enum", "timestamp"]}, "domain": array(TEXT), "nullable": {"type": "boolean"}})
+COLLECTION_TYPE = obj({"type": {"enum": ["collection"]}, "element": TYPE, "ordering": {"enum": ["insertion"]}, "duplicates": {"enum": ["allow", "unique"]}, "equality": {"enum": ["exact"]}})
+VALUES["input_contracts"] = array(obj({"operation": TEXT, "parameter": TEXT,
+    "type": {"anyOf": [TYPE, NULLABLE_TYPE, COLLECTION_TYPE]}, "presence": {"enum": ["required", "optional"]},
+    "binding": obj({"source": {"enum": ["cli_flag"]}, "flag": TEXT, "encoding": {"enum": ["text", "json", "repeated"]}}),
+    "missing": {"anyOf": [{"type": "null"}, obj({"kind": {"enum": ["application_error"]}, "error": TEXT}), obj({"kind": {"enum": ["cli_rejection"]}})]}}))
 
 
 def relation_schema():

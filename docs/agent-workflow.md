@@ -40,6 +40,15 @@ attempts; six local successes, eleven structural, B18 BDI and B17/B20 clarificat
 Literal collection creation, required CLI binding and raw-empty-sensitive validation
 remain profile seams. R5.103 stays the pre-R5.104 baseline; R5.105 is prospective.
 
+R5.105's [input/value closure](typed-input-values-v1.md) and
+[report](../benchmark/results/phase5c/R5_105-REPORT.md) supersede the remaining
+R5.104 profile seams prospectively: literals, explicit stages/conditions and
+semantic parameters separate from CLI bindings now traverse the normal path.
+Final generic lock 2 remained fixed throughout transfer: eight local successes
+(B01–B07/B10), nine structural, B18 BDI and B17/B20 clarification. Preserve R5.104
+evidence and both R5.105 pre-transfer lock histories; stop after R5.105. No new
+predicate/relationship/effect family is authorized by that recommendation.
+
 B03 was exposed in
 R5.97 and its first structural-coverage result is immutable; later B03 work is
 post-exposure research and requires separate instructions. Never read held-out requirements

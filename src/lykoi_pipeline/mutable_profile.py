@@ -6,6 +6,7 @@ from air_compiler.mutable_values import VERSION as PROFILE, compose, keys, requi
 from lykoi_controller import Failure
 
 FACETS = ("collections", "mutations", "creation_pipelines")
+INPUT_FACET = "input_contracts"
 
 
 def typed(relation):
@@ -37,9 +38,11 @@ def split(contract):
         require(o["relation"]["kind"] == "crud", "Typed mutation relation kind")
         p = o["relation"]["parameters"]
         keys(p, ("profile", "facet", "value"))
-        require(p["facet"] in FACETS and p["facet"] not in values, "Unknown or repeated mutation facet")
+        require(p["facet"] in FACETS + (INPUT_FACET,) and p["facet"] not in values, "Unknown or repeated mutation facet")
         values[p["facet"]] = copy.deepcopy(p["value"])
-    require(set(values) == set(FACETS), "Every mutation facet required; empty is explicit")
+    closure = contract["context"]["domains"].get("input_value_profile")
+    require(closure in (None, "typed-input-values-1"), "Known input/value profile")
+    require(set(values) == set(FACETS + (INPUT_FACET,)) if closure else set(values) == set(FACETS), "Every selected profile facet required; empty is explicit")
     ir = compose(base, values)
     require(ir["model"]["state"][0]["schema_version"] == f["storage"]["version"], "Declared storage version must equal composed migration boundary")
     if prior is not None:
@@ -82,12 +85,28 @@ def structural(contract, fid):
     if f:
         for o in contract["obligations"]:
             if typed(o["relation"]):
-                facets.append(dict(origin=o["id"], source_quote=o["source_quote"], kind={"collections": "CollectionMutation", "mutations": "ValueMutation", "creation_pipelines": "TransformationPipeline"}[o["relation"]["parameters"]["facet"]], value=copy.deepcopy(o["relation"]["parameters"]["value"])))
+                facets.append(dict(origin=o["id"], source_quote=o["source_quote"], kind={"collections": "CollectionMutation", "mutations": "ValueMutation", "creation_pipelines": "TransformationPipeline", "input_contracts": "SemanticParameters"}[o["relation"]["parameters"]["facet"]], value=copy.deepcopy(o["relation"]["parameters"]["value"])))
+        for o in contract["obligations"]:
+            if typed(o["relation"]) and o["relation"]["parameters"]["facet"] == INPUT_FACET:
+                for parameter in o["relation"]["parameters"]["value"]:
+                    facets += [dict(origin=o["id"], kind="ExternalBinding", value=parameter["binding"]), dict(origin=o["id"], kind="MissingInputBehavior", value=parameter["missing"])]
+            if typed(o["relation"]) and o["relation"]["parameters"]["facet"] == "collections":
+                for c in o["relation"]["parameters"]["value"]:
+                    facets.append(dict(origin=o["id"], kind="CreationValueSource", field=c["name"], value=c["creation"]))
         for m in f["mutable"]["mutations"]:
             origin = next(o["id"] for o in contract["obligations"] if typed(o["relation"]) and o["relation"]["parameters"]["facet"] == "mutations")
             facets += [dict(origin=origin, kind="InputPresence", command=m["command"], value=[dict(input=w["input"], omitted=w["omitted"], missing_error=w["missing_error"]) for w in m["changes"]]), dict(origin=origin, kind="AtomicWriteEffect", command=m["command"], value=m["effect"])]
             for w in m["changes"]:
                 facets.append(dict(origin=origin, kind="ValidationStage", command=m["command"], field=w["field"], value=w["pipeline"], final_type_error=w["invalid_error"]))
+                if INPUT_FACET in f["mutable"]:
+                    facets.append(dict(origin=origin, kind="InputValueStages", command=m["command"], field=w["field"], value={"RAW": "supplied_before_pipeline", "TRANSFORMED": "ordered_pipeline_value", "PERSISTED": "complete_candidate_before_atomic_commit"}))
+        if INPUT_FACET in f["mutable"]:
+            for facet in ("creation_pipelines", "collections"):
+                origin = next(o["id"] for o in contract["obligations"] if typed(o["relation"]) and o["relation"]["parameters"]["facet"] == facet)
+                for c in f["mutable"][facet]:
+                    field, declaration = (c["field"], c) if facet == "creation_pipelines" else (c["name"], c["creation"])
+                    if "pipeline" in declaration:
+                        facets.append(dict(origin=origin, kind="ValidationStage", command="creation", field=field, value=declaration["pipeline"], final_type_error=declaration["error"]))
     return dict(version=PROFILE, source_frc=fid, rows=rows, facts=f, facets=facets, interface=dict(version=scalar.discovery.VERSION_BDI, operations=operations), unsupported=unsupported, profile_failure=reason, observation_scope="Explicit typed single-record values, ordered pipelines and same-state readonly queries", reachability="Bounded source captures, not general formalization completeness")
 
 
@@ -115,8 +134,18 @@ def bdi(contract, projection):
                 decision(o["id"], c["name"] + "/duplicates", c["duplicates"], ["allow", "unique"])
                 decision(o["id"], c["name"] + "/ordering", "insertion", ["insertion", "sorted"], "order")
                 decision(o["id"], c["name"] + "/equality", "exact", ["exact", "casefold"])
-                sequence = scalar.json.dumps(c["creation"]["pipeline"], sort_keys=True)
+                sequence = scalar.json.dumps(c["creation"].get("pipeline", []), sort_keys=True)
                 decision(o["id"], c["name"] + "/creation_pipeline", sequence, [sequence, "unauthorized_reordering"], "error")
+                source = c["creation"].get("source", "input_default")
+                decision(o["id"], c["name"] + "/value_source", source, ["literal", "input_default", "input", "omission"])
+        if p["facet"] == INPUT_FACET:
+            for parameter in p["value"]:
+                prefix = parameter["operation"] + "/" + parameter["parameter"]
+                decision(o["id"], prefix + "/required_input", parameter["presence"], ["required", "optional"], "error")
+                missing = scalar.json.dumps(parameter["missing"], sort_keys=True)
+                decision(o["id"], prefix + "/missing_input", missing, [missing, "incidental_parser_default"], "error")
+                binding = scalar.json.dumps(parameter["binding"], sort_keys=True)
+                decision(o["id"], prefix + "/external_binding", binding, [binding, "wrong_parameter"], "error")
         entries = p["value"] if p["facet"] in ("mutations", "creation_pipelines") else []
         for m in entries:
             if p["facet"] == "mutations":
@@ -168,4 +197,12 @@ def formalizer_guidance():
             "declares field,input,operation replace/append/add_unique,omitted unchanged/reject,missing_error, "
             "pipeline,invalid_error. Ordered pipeline steps are transform operation verbatim/trim/stable_deduplicate "
             "or validate rule nonempty/nonblank/typed with error. Never infer transforms or duplicate behavior. "
-            "Missing material authority requires clarification; typed facts are candidates, not authority.")
+             "Missing material authority requires clarification; typed facts are candidates, not authority."
+               " Select input_value_profile typed-input-values-1 for the bounded input closure. Add input_contracts: "
+               "operation,parameter,type,presence required/optional,binding {source:cli_flag,flag,encoding:text/json/repeated}, "
+               "missing null for optional or {kind:application_error,error} / {kind:cli_rejection} for required. "
+               "Every creation/mutation parameter needs exactly one binding with exact type and presence. "
+               "Collections may instead have creation {source:literal,value:[typed elements]}, without a creation input or default. "
+               "Closure validate steps require stage RAW/TRANSFORMED/PERSISTED and when null or {stage,predicate:present/absent/empty/nonempty/whitespace}. "
+               "RAW is preserved before transformations, not trimmed. PERSISTED observes the final candidate before atomic commit. "
+               "No arbitrary boolean expressions or new nullability.")

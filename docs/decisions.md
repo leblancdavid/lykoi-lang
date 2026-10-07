@@ -1,5 +1,32 @@
 # Experimental decisions
 
+## R5.105 — Explicit value provenance and observation; external binding is separate
+
+Extend the existing normal mutable profile with explicitly selected
+typed-input-values-1. Represent collection literal, required runtime input and
+omission default as disjoint creation shapes. Preserve element typing, order and
+duplicate policy without computation. Retain RAW privately; declare validation
+stage and one bounded input-state condition. PERSISTED validates the final proposed
+value before atomic commit rather than introducing post-write rollback. Omitted
+optional updates skip pipelines and all-omitted operations skip persistence.
+
+Declare semantic operation parameters, exact type and presence independently of
+CLI flag/encoding. Every creation/mutation input needs one binding; literal constants
+are not inputs. Translate declared JSON application errors and explicit CLI-only
+missing-input rejection rather than adopting argparse required defaults. CLI-only
+rejection has no fabricated application error identity, including the API rejection
+path. Reconciliation and full structural/V1 recomputation retain source authority;
+new BDI decisions are bounded to provenance/presence/missing behavior/binding.
+
+Initial lock 1 was prospectively superseded after a generic pre-transfer audit of
+CLI-only rejection; both 348-test checks and 132-invocation audits are retained.
+Final lock 2 preceded all twenty source-bound captures/outcomes and stayed unchanged
+through transfer. Eight exposed local successes include B06/B07; nine structural,
+B18 BDI and B17/B20 clarification remain. R5.104 and historical results are preserved.
+See [semantics](typed-input-values-v1.md) and
+[report](../benchmark/results/phase5c/R5_105-REPORT.md). Predicate/guard composition
+is the next recommendation, with archive/boolean prerequisites visible; stop here.
+
 ## R5.104 — Typed policies and staged atomic values, not implicit normalization
 
 Compose `typed-mutable-values-1` with the established scalar normal profile and

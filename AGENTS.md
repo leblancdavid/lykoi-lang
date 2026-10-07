@@ -38,6 +38,13 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
   raw-empty validation and B07 literal collection/required-CLI-input seams remain.
   R5.103 is the preserved pre-R5.104 baseline; no held-out/cumulative claim.
   R5.105 closure is only a recommendation. Stop after R5.104.
+- R5.105 closes the bounded input/value profile:
+  `R5_105_TYPED_VALUE_INPUT_PROFILE_CLOSED`. Read `docs/typed-input-values-v1.md`
+  and `benchmark/results/phase5c/R5_105-REPORT.md` before extension. Final generic
+  lock 2 preceded all transfer outcomes and remained unchanged. Eight exposed
+  local successes B01–B07/B10; nine structural, B18 BDI, B17/B20 clarification.
+  R5.104 is preserved. Predicate/guard composition is only a recommendation;
+  no new major family or infrastructure work is authorized. Stop after R5.105.
 - `air/task_manager.json` is canonical; `src/air_compiler/` validates and
   generates the Python backend. Never hand-edit `generated/`. Current model
   semantics: `docs/axiom-v0.3.md` and `schema/axiom-v0.3.schema.json`; the

@@ -1,5 +1,16 @@
 # Phase 5: comparative maintenance benchmark
 
+## R5.105 typed value/input closure and fixed exposed transfer
+
+The [closure report](results/phase5c/R5_105-REPORT.md) and
+[matrix](results/phase5c/R5_105-CAPABILITY-MATRIX.md) record **B01–B07/B10 local
+behavioral success**, nine structural, B18 BDI and B17/B20 clarification.
+Literal/input/default distinctions, explicit input stages/conditions and separate
+semantic parameter/external bindings pass the normal path: 348 tests, 132 public
+synthetic and 178 transfer external invocations. Final generic lock 2 stayed fixed
+throughout transfer. R5.104 evidence below is preserved; no held-out or cumulative
+achievement claim follows. Stop after R5.105; no next semantic family begun.
+
 ## R5.104 fixed exposed transfer
 
 The [typed mutable-value report](results/phase5c/R5_104-REPORT.md) and

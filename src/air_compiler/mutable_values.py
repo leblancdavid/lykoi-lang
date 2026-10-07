@@ -46,7 +46,7 @@ def stable_unique(values):
 
 def pipeline(steps, typ):
     require(type(steps) is list, "Explicit ordered pipeline, including empty verbatim pipeline")
-    for step in steps:
+    for index, step in enumerate(steps):
         if step.get("kind") == "map_elements":
             keys(step, ("kind", "pipeline"))
             require(typ["type"] == "collection", "Element pipelines require a typed collection")
@@ -58,7 +58,19 @@ def pipeline(steps, typ):
             require(op != "trim" or typ["type"] in ("string", "identifier", "enum"), "Trim scalar string-like values only")
             require(op != "stable_deduplicate" or typ["type"] == "collection", "Dedup collection only")
         else:
-            keys(step, ("kind", "rule", "error"))
+            if "stage" in step:
+                keys(step, ("kind", "rule", "error", "stage", "when"))
+                require(step["stage"] in ("RAW", "TRANSFORMED", "PERSISTED"), "Explicit observation stage")
+                when = step["when"]
+                if when is not None:
+                    keys(when, ("stage", "predicate"))
+                    require(when["stage"] in ("RAW", "TRANSFORMED", "PERSISTED"), "Condition stage")
+                    require(when["predicate"] in ("present", "absent", "empty", "nonempty", "whitespace"), "Bounded input-state condition")
+                    require(when["predicate"] in ("present", "absent") or typ["type"] in ("string", "identifier", "enum"), "Raw string predicates only")
+                if step["stage"] == "PERSISTED" or (when and when["stage"] == "PERSISTED"):
+                    require(all(s.get("kind") == "validate" for s in steps[index + 1:]), "Persisted observation is final candidate, before atomic commit")
+            else:
+                keys(step, ("kind", "rule", "error"))
             require(step["kind"] == "validate" and step["rule"] in ("nonempty", "nonblank", "typed"), "Explicit validation stage")
             require(step["rule"] == "typed" or typ["type"] in ("string", "identifier", "enum"), "String validation only")
             require(type(step["error"]) is str and bool(step["error"]), "Declared stage error")
@@ -67,7 +79,7 @@ def pipeline(steps, typ):
 def compose(base, facts):
     """Validate the new algebra and lower to a typed model plus atomic-write nodes."""
     from lykoi_pipeline.scalar_profile import name, command_name
-    keys(facts, ("collections", "mutations", "creation_pipelines"))
+    keys(facts, ("collections", "mutations", "creation_pipelines", "input_contracts") if "input_contracts" in facts else ("collections", "mutations", "creation_pipelines"))
     d = copy.deepcopy(base)
     require(len(d["state"]) == 1, "Single-record, single-store profile")
     state = d["state"][0]
@@ -95,19 +107,32 @@ def compose(base, facts):
         require(c["ordering"] == "insertion" and c["duplicates"] in ("allow", "unique") and c["equality"] == "exact", "Independent explicit order/duplicate/exact case-sensitive equality policies")
         typ = dict(type="collection", element=e, ordering=c["ordering"], duplicates=c["duplicates"], equality=c["equality"])
         value_types[c["name"]] = typ
-        keys(c["creation"], ("input", "encoding", "default", "pipeline", "error"))
-        name(c["creation"]["input"])
-        require(c["creation"]["input"] not in {i["name"] for i in create["inputs"]} and c["creation"]["encoding"] in ("json", "repeated"), "Distinct declared collection input and encoding")
-        require(valid_value(c["creation"]["default"], typ), "Explicit typed creation default; never migration authority")
-        pipeline(c["creation"]["pipeline"], typ)
-        name(c["creation"]["error"])
+        literal = c["creation"].get("source") == "literal"
+        required_input = c["creation"].get("source") == "input"
+        if literal:
+            keys(c["creation"], ("source", "value"))
+            require(valid_value(c["creation"]["value"], typ), "Typed collection literal preserves order and duplicate policy")
+        else:
+            keys(c["creation"], ("source", "input", "encoding", "pipeline", "error") if required_input else ("input", "encoding", "default", "pipeline", "error"))
+            name(c["creation"]["input"])
+            require(c["creation"]["input"] not in {i["name"] for i in create["inputs"]} and c["creation"]["encoding"] in ("json", "repeated"), "Distinct declared collection input and encoding")
+            if not required_input:
+                require(valid_value(c["creation"]["default"], typ), "Explicit typed creation default; never migration authority")
+            pipeline(c["creation"]["pipeline"], typ)
+            name(c["creation"]["error"])
         fid, tid, iid = "field:mutable:" + c["name"], "type:mutable:" + c["name"], "input:mutable:create:" + c["name"]
         field = dict(id=fid, name=c["name"], type=tid)
         fields[c["name"]] = field; record["fields"].append(field)
         d["types"].append(dict(id=tid, name=c["name"], kind="value_collection", **{k: v for k, v in typ.items() if k != "type"}))
-        create["inputs"].append(dict(id=iid, name=c["creation"]["input"], type=tid))
-        create_command["arguments"].append(dict(flag="--" + c["creation"]["input"].replace("_", "-"), input=iid, required=False))
-        create["assignments"].append(dict(field=fid, source="input_default", id=iid, value=copy.deepcopy(c["creation"]["default"])))
+        if literal:
+            create["assignments"].append(dict(field=fid, source="literal", value=copy.deepcopy(c["creation"]["value"])))
+        else:
+            create["inputs"].append(dict(id=iid, name=c["creation"]["input"], type=tid))
+            create_command["arguments"].append(dict(flag="--" + c["creation"]["input"].replace("_", "-"), input=iid, required=required_input))
+            assignment = dict(field=fid, source="input" if required_input else "input_default", id=iid)
+            if not required_input:
+                assignment["value"] = copy.deepcopy(c["creation"]["default"])
+            create["assignments"].append(assignment)
         create["guarantees"].append(dict(id="guarantee:mutable:" + c["name"], kind="result_field_equals_assignment", field=fid))
         require(type(c["migration"]) is list, "Explicit collection migration authority, including no history")
         for m in c["migration"]:
@@ -162,11 +187,17 @@ def compose(base, facts):
             require(w["operation"] == "replace" or typ["type"] == "collection", "Append/add collection only")
             require(w["operation"] != "append" or typ["duplicates"] == "allow", "Append cannot violate unique policy")
             require(w["omitted"] in ("unchanged", "reject"), "Explicit input presence semantics")
-            require((w["omitted"] == "unchanged" and w["missing_error"] is None) or (w["omitted"] == "reject" and type(w["missing_error"]) is str and bool(w["missing_error"])), "Distinct missing-input authority")
+            external_rejection = any(p.get("operation") == m["command"] and p.get("parameter") == w["input"] and p.get("missing") == {"kind": "cli_rejection"} for p in facts.get("input_contracts", []))
+            require((w["omitted"] == "unchanged" and w["missing_error"] is None) or (w["omitted"] == "reject" and ((type(w["missing_error"]) is str and bool(w["missing_error"])) or (w["missing_error"] is None and external_rejection))), "Distinct missing-input authority; external rejection does not invent application error")
             pipeline(w["pipeline"], typ["element"] if w["operation"] != "replace" else typ)
+            if w["operation"] != "replace":
+                require(not any(s.get("stage") == "PERSISTED" or (s.get("when") or {}).get("stage") == "PERSISTED" for s in w["pipeline"]), "Element append pipeline is not the persisted collection; final collection type is checked at commit")
         require(type(m["guards"]) is list, "Explicit prewrite guards")
         for g in m["guards"]:
             keys(g, ("field", "value", "error"))
             require(g["field"] in fields and valid_value(g["value"], value_types[g["field"]]), "Typed equality guard")
             name(g["error"])
+    if "input_contracts" in facts:
+        from .input_values import validate_contracts
+        validate_contracts(d, value_types, facts)
     return dict(version=VERSION, base=copy.deepcopy(base), model=d, value_types=value_types, facts=copy.deepcopy(facts))

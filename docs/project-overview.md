@@ -257,6 +257,27 @@ and synthetic owner approval limit evidence; no held-out/cumulative claim follow
 Recommend bounded remaining typed-value normal-profile closure for R5.105.
 **Stop after R5.104**; no next-family or infrastructure work begun.
 
+**R5.105 — `R5_105_TYPED_VALUE_INPUT_PROFILE_CLOSED`.** The bounded
+[input/value closure](typed-input-values-v1.md) extends the normal mutable profile
+with typed literal empty/nonempty collections, required supplied collections,
+explicit RAW/TRANSFORMED/PERSISTED observations, presence/raw-value conditional
+validation and semantic parameter declarations separate from external CLI bindings.
+Declared application missing-input errors and CLI-only rejection are translated
+explicitly without parser-required defaults or invented application error identities.
+Normal authority/coverage/BDI/adequacy/V1/compiler integration, atomic rejection,
+reload and unchanged CollectionQuery behavior pass **348 tests** and **132 published
+synthetic external invocations** across article/contact/product/profile domains.
+
+The [report](../benchmark/results/phase5c/R5_105-REPORT.md) records the final
+pre-transfer generic lock 2 and [fresh exposed matrix](../benchmark/results/phase5c/R5_105-CAPABILITY-MATRIX.md):
+**B01/B02/B03/B04/B05/B06/B07/B10 succeed**, nine structural, B18 BDI and
+B17/B20 clarification. **178 transfer CLI invocations** pass; B06/B07 newly reach
+external behavior. No implementation changes followed transfer outcomes. R5.104
+is preserved; same-agent captures/inventory/oracles and synthetic approvals remain
+limits, and no held-out/cumulative claim follows. Recommend typed predicate/guard
+composition with writable-boolean/archive prerequisites accounted for; no new major
+family or infrastructure work started. **Stop after R5.105.**
+
 ### Historical boundaries (preserved; not current infrastructure prerequisites)
 
 The records below describe their original experiments and stop conditions. Their

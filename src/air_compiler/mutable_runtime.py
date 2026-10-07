@@ -7,6 +7,10 @@ _scalar_execute = execute
 _scalar_value_of = value_of
 
 
+class MissingExternalInput(ValueError):
+    """CLI-only rejection has no fabricated application error identity."""
+
+
 def value_of(assignment, inputs):
     return copy.deepcopy(_scalar_value_of(assignment, inputs))
 
@@ -44,6 +48,7 @@ def valid_state(records, state, record_type):
 
 
 def mutable_pipeline(value, steps, typ, error):
+    raw = copy.deepcopy(value)
     value = copy.deepcopy(value)
     # Raw shape must be safe for transformations. Uniqueness is validated at the
     # final/stated typed stage, so explicitly authorized dedup can repair it.
@@ -62,7 +67,15 @@ def mutable_pipeline(value, steps, typ, error):
                 value = mutable_unique(value)
         else:
             rule = step["rule"]
-            ok = mutable_value_valid(value, typ) if rule == "typed" else bool(value) if rule == "nonempty" else (type(value) is str and bool(value.strip()))
+            when = step.get("when")
+            if when:
+                observed = raw if when["stage"] == "RAW" else value
+                predicate = when["predicate"]
+                active = {"present": True, "absent": False, "empty": observed == "", "nonempty": observed != "", "whitespace": type(observed) is str and bool(observed) and observed.isspace()}[predicate]
+                if not active:
+                    continue
+            observed = raw if step.get("stage") == "RAW" else value
+            ok = mutable_value_valid(observed, typ) if rule == "typed" else bool(observed) if rule == "nonempty" else (type(observed) is str and bool(observed.strip()))
             if not ok:
                 raise Failure(step["error"])
     if not mutable_value_valid(value, typ):
@@ -82,13 +95,17 @@ def execute_mutation(mutation, inputs):
         if target[guard["field"]] != guard["value"]:
             raise Failure(guard["error"])
     candidate = copy.deepcopy(target)
+    changed = False
     for change in mutation["changes"]:
         supplied = change["input"] in inputs
         if not supplied:
             if change["omitted"] == "reject":
+                if change["missing_error"] is None:
+                    raise MissingExternalInput(change["input"])
                 raise Failure(change["missing_error"])
             continue
         typ = MUTABLE["value_types"][change["field"]]
+        changed = True
         value = mutable_pipeline(inputs[change["input"]], change["pipeline"], typ if change["operation"] == "replace" else typ["element"], change["invalid_error"])
         if change["operation"] == "replace":
             candidate[change["field"]] = value
@@ -96,6 +113,8 @@ def execute_mutation(mutation, inputs):
             candidate[change["field"]].append(value)
         if not mutable_value_valid(candidate[change["field"]], typ):
             raise Failure(change["invalid_error"])
+    if not changed:
+        return copy.deepcopy(target)
     staged = [candidate if r is target else copy.deepcopy(r) for r in records]
     write_state(staged, state, record_type, path)
     return copy.deepcopy(candidate)
@@ -104,7 +123,15 @@ def execute_mutation(mutation, inputs):
 def execute(behavior, inputs, clock=None, *, providers=None):
     inputs = copy.deepcopy(inputs)
     if behavior["kind"] == "create":
-        pipelines = MUTABLE["facts"]["creation_pipelines"] + [dict(field=c["name"], pipeline=c["creation"]["pipeline"], error=c["creation"]["error"]) for c in MUTABLE["facts"]["collections"]]
+        command = next(c["token"] for c in SPEC["commands"] if c.get("behavior") == behavior["id"])
+        for p in MUTABLE["facts"].get("input_contracts", []):
+            if p["operation"] == command and p["presence"] == "required":
+                iid = next(i["id"] for i in behavior["inputs"] if i["name"] == p["parameter"])
+                if iid not in inputs:
+                    if p["missing"]["kind"] == "cli_rejection":
+                        raise MissingExternalInput(p["parameter"])
+                    raise Failure(p["missing"]["error"])
+        pipelines = MUTABLE["facts"]["creation_pipelines"] + [dict(field=c["name"], pipeline=c["creation"]["pipeline"], error=c["creation"]["error"]) for c in MUTABLE["facts"]["collections"] if c["creation"].get("source") != "literal"]
         for p in pipelines:
             field = next(f for f in MUTABLE["model"]["types"] if f["kind"] == "record")["fields"]
             fid = next(f["id"] for f in field if f["name"] == p["field"])
@@ -124,7 +151,7 @@ def mutable_main(argv=None):
         if "migration" not in c:
             b = by_id("behaviors", c["behavior"])
             for arg in c["arguments"]:
-                decl = next((x for x in MUTABLE["facts"]["collections"] if x["creation"]["input"] == arg["flag"][2:].replace("-", "_") and b["kind"] == "create"), None)
+                decl = next((x for x in MUTABLE["facts"]["collections"] if x["creation"].get("input") == arg["flag"][2:].replace("-", "_") and b["kind"] == "create"), None)
                 sub.add_argument(arg["flag"], required=arg["required"], default=argparse.SUPPRESS, **({"action": "append"} if decl and decl["creation"]["encoding"] == "repeated" else {}))
     for token, m in mutations.items():
         sub = commands.add_parser(token)
@@ -153,7 +180,7 @@ def mutable_main(argv=None):
                     if n not in parsed:
                         continue
                     value = parsed[n]
-                    decl = next((x for x in MUTABLE["facts"]["collections"] if x["creation"]["input"] == n and b["kind"] == "create"), None)
+                    decl = next((x for x in MUTABLE["facts"]["collections"] if x["creation"].get("input") == n and b["kind"] == "create"), None)
                     if decl and decl["creation"]["encoding"] == "json":
                         try:
                             value = json.loads(value)
@@ -171,4 +198,46 @@ def mutable_main(argv=None):
         return 1
 
 
-main = mutable_main
+def input_main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    declarations = MUTABLE["facts"].get("input_contracts", [])
+    token = argv[0] if argv else None
+    parameters = [p for p in declarations if p["operation"] == token]
+    if not parameters:
+        return mutable_main(argv)
+    parser = argparse.ArgumentParser(prog=SPEC["application"]["name"] + " " + token)
+    for p in parameters:
+        parser.add_argument(p["binding"]["flag"], dest=p["parameter"], default=argparse.SUPPRESS,
+                            **({"action": "append"} if p["binding"]["encoding"] == "repeated" else {}))
+    parsed = vars(parser.parse_args(argv[1:]))
+    for p in parameters:
+        if p["presence"] == "required" and p["parameter"] not in parsed:
+            if p["missing"]["kind"] == "cli_rejection":
+                print("missing required input: " + p["binding"]["flag"], file=sys.stderr)
+                return 2
+            print(json.dumps({"error": p["missing"]["error"]}), file=sys.stderr)
+            return 1
+    try:
+        mutation = next((m for m in MUTABLE["facts"]["mutations"] if m["command"] == token), None)
+        behavior = None if mutation else by_id("behaviors", next(c["behavior"] for c in SPEC["commands"] if c["token"] == token))
+        for p in parameters:
+            n = p["parameter"]
+            if n in parsed and p["binding"]["encoding"] == "json":
+                error = next(w["invalid_error"] for w in mutation["changes"] if w["input"] == n) if mutation else next(c["creation"]["error"] for c in MUTABLE["facts"]["collections"] if c["creation"].get("input") == n)
+                try:
+                    parsed[n] = json.loads(parsed[n])
+                except ValueError:
+                    raise Failure(error)
+        if mutation:
+            result = execute_mutation(mutation, parsed)
+        else:
+            inputs = {i["id"]: parsed[i["name"]] for i in behavior["inputs"] if i["name"] in parsed}
+            result = execute(behavior, inputs)
+        print(json.dumps(result, sort_keys=True, ensure_ascii=False))
+        return 0
+    except Failure as exc:
+        print(json.dumps({"error": exc.code}), file=sys.stderr)
+        return 1
+
+
+main = input_main
