@@ -21,6 +21,8 @@ def mutable_value_valid(value, typ):
                 and (typ["duplicates"] == "allow" or mutable_unique(value) == value))
     if value is None:
         return typ.get("nullable", False)
+    if typ["type"] == "boolean":
+        return type(value) is bool
     if type(value) is not str:
         return False
     if typ["type"] == "enum":
@@ -42,9 +44,11 @@ def valid_state(records, state, record_type):
     names = {f["name"] for f in record_type["fields"]}
     if any(type(r) is not dict or set(r) != names or any(not mutable_value_valid(r[n], t) for n, t in MUTABLE["value_types"].items()) for r in records):
         return False
-    collection_names = {c["name"] for c in MUTABLE["facts"]["collections"]}
+    collection_names = {c["name"] for c in MUTABLE["facts"]["collections"]} | {b["name"] for b in MUTABLE["facts"].get("predicate_semantics", {}).get("booleans", [])}
     scalar_type = {**record_type, "fields": [f for f in record_type["fields"] if f["name"] not in collection_names]}
-    return _scalar_valid_state([{k: v for k, v in r.items() if k not in collection_names} for r in records], state, scalar_type)
+    if not _scalar_valid_state([{k: v for k, v in r.items() if k not in collection_names} for r in records], state, scalar_type):
+        return False
+    return all(predicate_eval(inv["predicate"], record=r) for inv in MUTABLE["facts"].get("predicate_semantics", {}).get("invariants", []) for r in records)
 
 
 def mutable_pipeline(value, steps, typ, error):
@@ -52,7 +56,7 @@ def mutable_pipeline(value, steps, typ, error):
     value = copy.deepcopy(value)
     # Raw shape must be safe for transformations. Uniqueness is validated at the
     # final/stated typed stage, so explicitly authorized dedup can repair it.
-    shape_ok = (type(value) is list and all(type(x) is str for x in value)) if typ["type"] == "collection" else (type(value) is str or (value is None and typ.get("nullable", False)))
+    shape_ok = (type(value) is list and all(type(x) is str for x in value)) if typ["type"] == "collection" else type(value) is bool if typ["type"] == "boolean" else (type(value) is str or (value is None and typ.get("nullable", False)))
     if not shape_ok:
         raise Failure(error)
     for step in steps:
@@ -68,7 +72,10 @@ def mutable_pipeline(value, steps, typ, error):
         else:
             rule = step["rule"]
             when = step.get("when")
-            if when:
+            if when and "result_type" in when:
+                if not predicate_eval(when, stages={"RAW": raw, "TRANSFORMED": value, "PERSISTED": value}):
+                    continue
+            elif when:
                 observed = raw if when["stage"] == "RAW" else value
                 predicate = when["predicate"]
                 active = {"present": True, "absent": False, "empty": observed == "", "nonempty": observed != "", "whitespace": type(observed) is str and bool(observed) and observed.isspace()}[predicate]
@@ -92,11 +99,16 @@ def execute_mutation(mutation, inputs):
     if target is None:
         raise Failure(mutation["missing_error"])
     for guard in mutation["guards"]:
-        if target[guard["field"]] != guard["value"]:
+        ok = predicate_eval(guard["predicate"], target, inputs) if "predicate" in guard else target[guard["field"]] == guard["value"]
+        if not ok:
             raise Failure(guard["error"])
     candidate = copy.deepcopy(target)
     changed = False
     for change in mutation["changes"]:
+        if "source" in change:
+            candidate[change["field"]] = copy.deepcopy(change["source"]["value"])
+            changed = True
+            continue
         supplied = change["input"] in inputs
         if not supplied:
             if change["omitted"] == "reject":
@@ -116,12 +128,28 @@ def execute_mutation(mutation, inputs):
     if not changed:
         return copy.deepcopy(target)
     staged = [candidate if r is target else copy.deepcopy(r) for r in records]
+    for inv in MUTABLE["facts"].get("predicate_semantics", {}).get("invariants", []):
+        if not predicate_eval(inv["predicate"], candidate):
+            raise Failure(inv["error"])
     write_state(staged, state, record_type, path)
     return copy.deepcopy(candidate)
 
 
 def execute(behavior, inputs, clock=None, *, providers=None):
     inputs = copy.deepcopy(inputs)
+    command = next(c["token"] for c in SPEC["commands"] if c.get("behavior") == behavior["id"])
+    guards = [g for g in MUTABLE["facts"].get("predicate_semantics", {}).get("guards", []) if g["command"] == command]
+    if guards:
+        state = SPEC["state"][0]
+        record_type, path = state_layout(state)
+        records = read_state(state, record_type, path)
+        lookup = behavior["lookup"]
+        target = next((r for r in records if r[field_name(record_type, lookup["field"])] == inputs.get(lookup["input"])), None)
+        if target is not None:  # existing declared lookup error retains precedence
+            named = {i["name"]: inputs[i["id"]] for i in behavior["inputs"] if i["id"] in inputs}
+            for g in guards:
+                if not predicate_eval(g["predicate"], target, named):
+                    raise Failure(g["error"])
     if behavior["kind"] == "create":
         command = next(c["token"] for c in SPEC["commands"] if c.get("behavior") == behavior["id"])
         for p in MUTABLE["facts"].get("input_contracts", []):
@@ -157,12 +185,16 @@ def mutable_main(argv=None):
         sub = commands.add_parser(token)
         sub.add_argument("--" + m["lookup"].replace("_", "-"), required=True)
         for w in m["changes"]:
+            if "source" in w:
+                continue
             sub.add_argument("--" + w["input"].replace("_", "-"), default=argparse.SUPPRESS)
     parsed = vars(parser.parse_args(argv)); token = parsed.pop("command")
     try:
         if token in mutations:
             m = mutations[token]
             for w in m["changes"]:
+                if "source" in w:
+                    continue
                 if w["input"] in parsed and w["operation"] == "replace" and MUTABLE["value_types"][w["field"]]["type"] == "collection":
                     try:
                         parsed[w["input"]] = json.loads(parsed[w["input"]])

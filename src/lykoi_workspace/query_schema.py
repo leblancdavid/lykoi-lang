@@ -33,8 +33,21 @@ VALUES = {
 
 def relation_schema():
     from air_compiler.collection_query import POLICIES
+    from .predicate_schema import tree, TYPE
+    values = dict(VALUES)
+    values["source"] = {"anyOf": [SOURCE, obj({"collection": TEXT, "fields": {"type": "object", "additionalProperties": TYPE}, "unique_key": TEXT})]}
+    values["parameters"] = {"anyOf": [PARAMETERS, {"type": "object", "additionalProperties": TYPE}]}
+    values["predicate"] = {"anyOf": [PREDICATE, tree()]}
+    values["comparison"] = {"anyOf": [VALUES["comparison"], obj({"scope": {"enum": ["predicate_nodes"]}})]}
+    base_values = dict(values)
+    values["preconditions"] = array(obj({"predicate": tree(), "error": TEXT, "stage": {"enum": ["before_selection"]}, "rejection": {"enum": ["unchanged"]}}))
+    values["resources"] = array(obj({"name": TEXT, "type": TYPE, "capability": TEXT, "sampling": {"enum": ["once_per_query"]}}))
+    values["parameter_errors"] = {"type": "object", "additionalProperties": obj({"missing": {"anyOf": [TEXT, obj({"kind": {"enum": ["cli_rejection"]}})]}, "invalid": TEXT})}
+    base = obj({"id": TEXT, **values})
+    base["required"] = ["id", *base_values]
+    values["amendment"] = obj({"base": base, "composition": {"enum": ["and", "or", "replace"]}, "predicate": tree()})
     alternatives = []
-    for facet, schema in VALUES.items():
+    for facet, schema in values.items():
         value = {"anyOf": [schema, {"type": "null"}, obj({"freedom": array(schema)})]} if facet in POLICIES else schema
         alternatives.append(obj({"kind": {"enum": ["filter_order"]}, "parameters": obj({
             "query": TEXT, "facet": {"enum": [facet]}, "value": value})}))

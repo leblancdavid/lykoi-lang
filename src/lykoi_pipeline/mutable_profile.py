@@ -7,6 +7,7 @@ from lykoi_controller import Failure
 
 FACETS = ("collections", "mutations", "creation_pipelines")
 INPUT_FACET = "input_contracts"
+PREDICATE_FACET = "predicate_semantics"
 
 
 def typed(relation):
@@ -38,17 +39,30 @@ def split(contract):
         require(o["relation"]["kind"] == "crud", "Typed mutation relation kind")
         p = o["relation"]["parameters"]
         keys(p, ("profile", "facet", "value"))
-        require(p["facet"] in FACETS + (INPUT_FACET,) and p["facet"] not in values, "Unknown or repeated mutation facet")
+        require(p["facet"] in FACETS + (INPUT_FACET, PREDICATE_FACET) and p["facet"] not in values, "Unknown or repeated mutation facet")
         values[p["facet"]] = copy.deepcopy(p["value"])
     closure = contract["context"]["domains"].get("input_value_profile")
     require(closure in (None, "typed-input-values-1"), "Known input/value profile")
-    require(set(values) == set(FACETS + (INPUT_FACET,)) if closure else set(values) == set(FACETS), "Every selected profile facet required; empty is explicit")
+    predicates = contract["context"]["domains"].get("predicate_profile")
+    require(predicates in (None, "typed-predicates-1"), "Known predicate profile")
+    require(not predicates or closure, "Predicate profile composes explicit input stages")
+    def common(value):
+        if type(value) is dict:
+            return value.get("result_type") == "boolean" or any(common(v) for v in value.values())
+        return type(value) is list and any(common(v) for v in value)
+    require(predicates is not None or not common(contract["obligations"]), "New predicates require explicit versioned profile selection")
+    require(set(values) == set(FACETS + ((INPUT_FACET,) if closure else ()) + ((PREDICATE_FACET,) if predicates else ())), "Every selected profile facet required; empty is explicit")
     ir = compose(base, values)
     require(ir["model"]["state"][0]["schema_version"] == f["storage"]["version"], "Declared storage version must equal composed migration boundary")
     if prior is not None:
         prior_version = prior["state"][0]["schema_version"]
         require(all(len(c["migration"]) == 1 and c["migration"][0]["from"] >= prior_version for c in values["collections"]), "Existing-model collection introduction needs fresh additive migration authority")
     groups = query.validate_relations(qc)
+    interfaces = contract["context"]["domains"].get("predicate_value_interface_profile")
+    require(interfaces in (None, "predicate-value-interfaces-1"), "Known interface closure profile")
+    from air_compiler.collection_query import INTERFACES
+    new_interfaces = any("source" in w for m in values["mutations"] for w in m["changes"]) or any(set(q) & set(INTERFACES) for q in groups.values())
+    require(not new_interfaces or (interfaces and predicates), "Interface closure requires explicit versioned composition selection")
     if groups:
         binding = contract["context"]["domains"].get("collection_store")
         require(binding == {"kind": "composed_scalar", "state": base["state"][0]["id"]}, "Query binds the same mutable state")
@@ -85,7 +99,7 @@ def structural(contract, fid):
     if f:
         for o in contract["obligations"]:
             if typed(o["relation"]):
-                facets.append(dict(origin=o["id"], source_quote=o["source_quote"], kind={"collections": "CollectionMutation", "mutations": "ValueMutation", "creation_pipelines": "TransformationPipeline", "input_contracts": "SemanticParameters"}[o["relation"]["parameters"]["facet"]], value=copy.deepcopy(o["relation"]["parameters"]["value"])))
+                facets.append(dict(origin=o["id"], source_quote=o["source_quote"], kind={"collections": "CollectionMutation", "mutations": "ValueMutation", "creation_pipelines": "TransformationPipeline", "input_contracts": "SemanticParameters", "predicate_semantics": "TypedPredicateSemantics"}[o["relation"]["parameters"]["facet"]], value=copy.deepcopy(o["relation"]["parameters"]["value"])))
         for o in contract["obligations"]:
             if typed(o["relation"]) and o["relation"]["parameters"]["facet"] == INPUT_FACET:
                 for parameter in o["relation"]["parameters"]["value"]:
@@ -95,8 +109,10 @@ def structural(contract, fid):
                     facets.append(dict(origin=o["id"], kind="CreationValueSource", field=c["name"], value=c["creation"]))
         for m in f["mutable"]["mutations"]:
             origin = next(o["id"] for o in contract["obligations"] if typed(o["relation"]) and o["relation"]["parameters"]["facet"] == "mutations")
-            facets += [dict(origin=origin, kind="InputPresence", command=m["command"], value=[dict(input=w["input"], omitted=w["omitted"], missing_error=w["missing_error"]) for w in m["changes"]]), dict(origin=origin, kind="AtomicWriteEffect", command=m["command"], value=m["effect"])]
+            facets += [dict(origin=origin, kind="InputPresence", command=m["command"], value=[dict(input=w["input"], omitted=w["omitted"], missing_error=w["missing_error"]) for w in m["changes"] if "input" in w]), dict(origin=origin, kind="AtomicWriteEffect", command=m["command"], value=m["effect"])]
             for w in m["changes"]:
+                if "source" in w:
+                    facets.append(dict(origin=origin, kind="CreationValueSource", command=m["command"], field=w["field"], value=w["source"]))
                 facets.append(dict(origin=origin, kind="ValidationStage", command=m["command"], field=w["field"], value=w["pipeline"], final_type_error=w["invalid_error"]))
                 if INPUT_FACET in f["mutable"]:
                     facets.append(dict(origin=origin, kind="InputValueStages", command=m["command"], field=w["field"], value={"RAW": "supplied_before_pipeline", "TRANSFORMED": "ordered_pipeline_value", "PERSISTED": "complete_candidate_before_atomic_commit"}))
@@ -146,6 +162,10 @@ def bdi(contract, projection):
                 decision(o["id"], prefix + "/missing_input", missing, [missing, "incidental_parser_default"], "error")
                 binding = scalar.json.dumps(parameter["binding"], sort_keys=True)
                 decision(o["id"], prefix + "/external_binding", binding, [binding, "wrong_parameter"], "error")
+        if p["facet"] == PREDICATE_FACET:
+            for i, guard in enumerate(p["value"]["guards"]):
+                behavior = scalar.json.dumps({k: guard[k] for k in ("command", "error", "rejection")}, sort_keys=True)
+                decision(o["id"], "guard/" + str(i) + "/rejection", behavior, [behavior, "unauthorized_error_or_partial_write"], "error")
         entries = p["value"] if p["facet"] in ("mutations", "creation_pipelines") else []
         for m in entries:
             if p["facet"] == "mutations":
@@ -155,6 +175,9 @@ def bdi(contract, projection):
                 writes = [m]
             for w in writes:
                 prefix = (m.get("command", "creation") + "/" + w["field"])
+                if "source" in w:
+                    literal = scalar.json.dumps(w["source"], sort_keys=True)
+                    decision(o["id"], prefix + "/literal_assignment", literal, [literal, "altered_literal_or_default_trigger"])
                 if "omitted" in w:
                     decision(o["id"], prefix + "/presence", w["omitted"], ["unchanged", "reject"])
                     decision(o["id"], prefix + "/operation", w["operation"], ["replace", "append", "add_unique"])
@@ -167,6 +190,21 @@ def bdi(contract, projection):
         qb = queries.bdi(qc, qp)["result"]
         for k in ("decisions", "exclusions", "unknown"):
             result[k] += qb[k]
+    from air_compiler.predicates import decisions
+    def trees(v, path):
+        if type(v) is dict:
+            if v.get("result_type") == "boolean":
+                yield path, v
+            else:
+                for k, child in v.items():
+                    yield from trees(child, path + "/" + k)
+        elif type(v) is list:
+            for i, child in enumerate(v):
+                yield from trees(child, path + "/" + str(i))
+    for o in contract["obligations"]:
+        for path, tree in trees(o["relation"]["parameters"], "condition"):
+            for family, meaning in decisions(tree, path):
+                decision(o["id"], family, meaning, [meaning, "missing_or_altered_predicate_authority"], "return")
     result["extension"] = PROFILE
     return dict(version=scalar.discovery.VERSION_BDI, outcome="UNSUPPORTED" if result["unknown"] else "SUPPORTED", result=result)
 
@@ -205,4 +243,18 @@ def formalizer_guidance():
                "Collections may instead have creation {source:literal,value:[typed elements]}, without a creation input or default. "
                "Closure validate steps require stage RAW/TRANSFORMED/PERSISTED and when null or {stage,predicate:present/absent/empty/nonempty/whitespace}. "
                "RAW is preserved before transformations, not trimmed. PERSISTED observes the final candidate before atomic commit. "
-               "No arbitrary boolean expressions or new nullability.")
+                "For predicate_profile typed-predicates-1 also declare predicate_semantics {booleans,guards,invariants}. "
+                "Conditions use closed boolean result trees compare(eq/lt/le/gt/ge), and/or(children), not(child), is_null, present, member(in). "
+                "Operands are typed field/parameter/literal or staged local value; comparison nodes declare case/normalization and nulls:false. "
+                "No != alias: use NOT eq; collection CONTAINS lowers scalar IN collection. Query comparison is {scope:predicate_nodes}, inclusion []. "
+                "Booleans have literal creation and authorized migration; mutable replace inputs use JSON boolean encoding. "
+                "Guard rejection is explicit unchanged with declared error, evaluated before mutation. "
+                "Only nullable timestamps; ordered comparisons only timestamps. No arithmetic. "
+                 "Never guess recent boundaries, inclusivity, null participation or ambiguous AND/OR grouping: request clarification. "
+                 "For predicate_value_interface_profile predicate-value-interfaces-1, literal mutation changes declare "
+                 "field,source {kind:literal,type,value},operation:replace,pipeline:[],invalid_error; no parameter or default trigger. "
+                 "Query amendment declares complete base query,composition and/or/replace,predicate; resulting selection must match "
+                 "and unrelated facets remain exact. Existing listing base must normalize its actual declared behavior. "
+                 "Query preconditions are separate {predicate,error,stage:before_selection,rejection:unchanged}; "
+                 "parameter_errors map names to {missing,invalid}. Resource bindings declare name,type,capability," 
+                 "sampling:once_per_query, with an existing UTC clock capability. Never infer composition, errors or clock authority.")

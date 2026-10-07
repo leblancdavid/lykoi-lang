@@ -20,7 +20,27 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
-**R5.105 closes the bounded typed value/input profile.**
+**R5.107 closes the bounded normal predicate/value interfaces.**
+[Typed literal writes, existing selection amendments, query preconditions/errors
+and declared clock operands](docs/predicate-value-interfaces-v1.md) compose through
+the normal source-to-external-behavior path. **361 tests**, canonical validation/
+safety and 84 public synthetic external invocations pass. The
+[locked exposed transfer](benchmark/results/phase5c/R5_107-REPORT.md) verifies
+**B01–B13**, with B08/B09/B11/B12/B13 newly successful and 358 transfer invocations.
+Four structural cases, B18 external-effect BDI and B17/B20 disputes remain. Final
+generic lock 3 stays fixed; one locked guidance trailing space is reported by the
+whitespace audit. R5.106 is preserved; no held-out/cumulative claim. Stop after R5.107.
+
+**Preserved R5.106: bounded typed predicate/guard composition.**
+[Typed comparison, AND/OR/NOT, null/presence and membership trees](docs/typed-predicates-v1.md)
+share semantics across normal queries, prewrite guards and staged validation;
+boolean storage/migration/reload is integrated. **355 tests pass**, with 124 public
+synthetic external invocations. The [locked exposed transfer](benchmark/results/phase5c/R5_106-REPORT.md)
+retains eight local successes (B01–B07/B10), eight structural, B18 BDI, B17/B20
+clarification and B12 invalid typed candidate at clock-resource binding. No new
+request-level stage progress or held-out/cumulative claim. Stop after R5.106.
+
+**Preserved R5.105 baseline: bounded typed value/input profile closure.**
 [Literal/input/default sources, explicit observation stages, conditional validation
 and semantic parameters separate from CLI bindings](docs/typed-input-values-v1.md)
 execute through the normal requirements/compiler/external path. **348 tests pass**;
@@ -185,6 +205,37 @@ are in [`benchmark/`](benchmark/README.md). Historical post-B16 histories were
 revalidated against the corrected oracle; R5.3 reconstruction remains unfrozen.
 R5.101 treats all twenty requests as exposed diagnostics, preserving those
 historical boundaries and achieved histories.
+
+## Large research evidence (Git LFS)
+
+Five R5.106/R5.107 synthetic evidence JSON files exceed GitHub's 100 MiB regular
+Git file limit. They are tracked through [Git LFS](https://git-lfs.com/) using
+the explicit paths in `.gitattributes`. LFS preserves the original file bytes
+and paths, including research hashes; Git commits contain small pointers.
+
+Install Git LFS before cloning or contributing, then initialize it and download
+the evidence in an existing checkout:
+
+```powershell
+git lfs install
+git lfs pull
+```
+
+Commit `.gitattributes` together with the evidence files. Normal `git add`,
+`git commit` and `git push` then store and upload them through LFS. GitHub LFS
+storage and bandwidth quotas apply. For future oversized evidence, add an
+explicit LFS path before its first commit; ordinary model/schema JSON remains
+in regular Git. These R5.106/R5.107 files were uncommitted when LFS was configured,
+so no history migration is needed.
+
+The [artifact size audit and retention policy](benchmark/artifacts/README.md)
+distinguishes disposable generated copies from original research observations.
+Its [compact size/hash inventory](benchmark/artifacts/storage-audit-2026-10-07.json)
+keeps provenance and reproduction references in Git. Future recreatable scratch
+outputs belong in the narrowly ignored artifact directories; published evidence
+remains preserved.
+
+## Local development
 
 Python 3.10+; no third-party dependencies. In PowerShell from the repository root:
 

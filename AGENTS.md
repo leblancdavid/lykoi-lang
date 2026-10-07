@@ -46,7 +46,27 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
   R5.104 is preserved. Predicate/guard composition is only a recommendation;
   no new major family or infrastructure work is authorized. Stop after R5.105.
 - `air/task_manager.json` is canonical; `src/air_compiler/` validates and
+  generates the Python backend. R5.106 current bounded predicate policy is
+  `R5_106_TYPED_PREDICATE_GUARD_COMPOSITION_IMPLEMENTED`; read
+  `docs/typed-predicates-v1.md` and `benchmark/results/phase5c/R5_106-REPORT.md`
+  before extension. Queries/guards/local staged validation share typed trees;
+  boolean literal creation/input replacement/migration is integrated. Generic
+  lock precedes all transfer and stays fixed. Eight exposed local successes
+  B01–B07/B10 remain; eight structural, B18 BDI, B17/B20 clarification and B12
+  invalid typed candidate/resource binding at formalization. No new stage progress.
+  R5.105 is preserved. Literal-write/listing/query-precondition/error/clock-binding
+  closure is only a recommendation for R5.107. Stop after R5.106.
+- `air/task_manager.json` is canonical; `src/air_compiler/` validates and
   generates the Python backend. Never hand-edit `generated/`. Current model
+  normal interface policy is `R5_107_PREDICATE_VALUE_INTERFACE_CLOSED`; read
+  `docs/predicate-value-interfaces-v1.md` and `benchmark/results/phase5c/R5_107-REPORT.md`
+  before extension. Final generic lock 3 predates all transfer and stays fixed:
+  13 exposed local successes B01–B13, four structural, B18 external-effect BDI,
+  B17/B20 disputes. Preserve R5.106 and all three pre-transfer R5.107 locks. One
+  frozen guidance trailing space is a recorded formatting defect; no post-outcome
+  implementation repair. Relationships/cross-entity integrity is only a recommendation.
+  Stop after R5.107; no new major family or infrastructure work authorized.
+  Current compatibility model
   semantics: `docs/axiom-v0.3.md` and `schema/axiom-v0.3.schema.json`; the
   validator also enforces rules beyond JSON Schema.
 - Python 3.10+, no third-party dependencies. From the repo root in PowerShell:

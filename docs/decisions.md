@@ -1,5 +1,102 @@
 # Experimental decisions
 
+## R5.108 — Count independent meaning, retain authority, distinguish support
+
+Adopt the [semantic-kernel audit](semantic-kernel-audit-r5.108.md) as a prospective
+architectural reference, not a language change. Recover the 30 inherited candidates
+from the exact R5.4/R5.5/R5.10 evidence, including the raw-#30 invoke versus
+core-#30 cardinality identity distinction. Retain 18 original concepts as core,
+absorb two policies, classify four compositions and leave six experimental.
+Add four previously uncounted behavioral foundations with pre-R5.41 antecedents:
+presence, capability authority, durable state and atomic commit. Proposed count 22;
+no claim of minimality, complete shared IR or normal support for all retained cores.
+
+Keep equality/order/membership and AND/NOT explicitly defined; predicate trees and
+OR/ranges compose them. Retain trim and stable-first dedup as defined operations
+rather than concealing them in an opaque Transform label. Query, pipeline,
+lifecycle and migration are compositions; stage/rejection/field authority remain
+mandatory. Distinguish new normal-path support from new conceptual primitives.
+Do not consolidate similarly named checks with different whitespace/time semantics.
+
+The bounded architecture is converging. R5.107's five new local successes support
+interface/compositional leverage, not held-out generality. Recommend prospective
+condition/type/binding consolidation and explicit Unicode/time/error/commit boundary
+definitions. Relationships remain the next recommended major capability; direct
+integrity plausibly composes, whereas reachability/quantification need research.
+B18's durable audit does not automatically demand a new external-event primitive.
+Arithmetic cannot be supplied by clock binding alone. No recommendation is
+implemented; preserve the known frozen guidance trailing-space byte. See the
+[round report](../benchmark/results/phase5c/R5_108-REPORT.md). Stop after R5.108.
+
+## 2026-10-07 — Preserve observed evidence; ignore only prospective scratch artifacts
+
+The [artifact storage audit](../benchmark/artifacts/README.md) found that large
+synthetic/transfer exports mix reproducible payloads with original observations
+and authority journals. Generation alone does not establish disposability. Keep
+existing evidence and pins exact, with the five oversized JSON originals in LFS;
+reserve narrowly named ignored directories for future recreatable scratch copies.
+Keep compact manifests, captures, hashes, failures, first-result records and
+reproduction/retrieval instructions in Git. No broad JSON/results ignore rule.
+
+Lossless compression and hash-referenced future exports are proposals, not changes
+to frozen formats or bytes. Migration would need a durable archive and verification
+against original raw hashes; hashes alone do not preserve missing evidence.
+
+## R5.107 — Close normal interfaces by explicit composition and preserved authority
+
+Reuse ValueMutation replacement with an exact typed literal source; omit parameter,
+default trigger and transformation from that shape. Preserve identity/lifecycle
+authority and existing atomic persistence. Amend selection with a complete base
+query and source-determined AND/OR/replacement, retaining unrelated facets. Bind
+existing listing bases by normalizing their actual model behavior, including
+declared before-clock filters, rather than treating command names as semantics.
+
+Keep query parameter validation, operation precondition and record selection
+distinct. Declare error/stage/rejection independently. Required CLI rejection
+composes with declared type errors without inventing missing application authority.
+Resource operands bind existing UTC capabilities and sample once per query; typed
+providers permit deterministic verification, including nullable timestamp fields.
+The existing default clock adapter remains a declared capability dependency.
+
+Final generic lock 3 follows 361 passing tests and 84 published synthetic external
+invocations and precedes all twenty transfer outcomes. Earlier locks remain
+preserved; no post-outcome product/spec/test repair. Exposed local successes are
+13, B01–B13, with five newly verified cases and 358 transfer invocations. Same-agent
+capture/owner/oracle limits and requirement-local versus cumulative scope remain
+explicit. A final whitespace check found one locked guidance trailing space; retain
+it and record cleanup as a later follow-up rather than violate the evaluated lock.
+Recommend persistent relationships/cross-entity integrity; stop after R5.107.
+See [semantics](predicate-value-interfaces-v1.md) and
+[report](../benchmark/results/phase5c/R5_107-REPORT.md).
+
+## R5.106 — Pure typed conditions shared across distinct effect contexts
+
+Select typed-predicates-1 over the existing normal mutable/input profiles. Use
+closed boolean trees, typed operands and explicit node-local comparison/null
+policies. Inequality is NOT eq; collection CONTAINS normalizes to scalar IN
+collection. Preserve grouping structurally, evaluate pure children without side
+effects and reject coercion/truthiness. Timestamp order compares parsed UTC
+instants; integer write/comparison remains outside the qualified normal profile.
+Boolean literal creation, generic input replacement and explicit additive migration
+close the store seam without archive-specific semantics or legacy schema changes.
+
+Reuse the interpreter for query selection, prewrite mutation/lifecycle/delete
+guards, local staged conditional validation and record-local invariants. Preserve
+effect/error authority separately. Reconciliation mechanically recognizes only
+same-operator associative/commutative/idempotent composition and double NOT;
+faithful V1 still retains exact serialized grouping. Node-level BDI/adequacy and
+complete coverage prevent an omitted material predicate becoming implicit authority.
+
+Verified generic content was locked before transfer and stayed fixed. The public
+normal path passes 355 tests and 124 external invocations. Exposed request successes
+remain eight; component representation does not erase archive interface demands.
+B12's unbound clock operand fails producer validation, distinct from B17/B20 source
+ambiguity. Two interrupted evidence drivers are preserved; exact locked JSON
+candidates completed without product/candidate repair. Recommend bounded literal
+write/listing/query-error/precondition/clock-binding closure for R5.107. Stop after
+R5.106. See [semantics](typed-predicates-v1.md) and
+[report](../benchmark/results/phase5c/R5_106-REPORT.md).
+
 ## R5.105 — Explicit value provenance and observation; external binding is separate
 
 Extend the existing normal mutable profile with explicitly selected

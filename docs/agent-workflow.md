@@ -49,6 +49,29 @@ Final generic lock 2 remained fixed throughout transfer: eight local successes
 evidence and both R5.105 pre-transfer lock histories; stop after R5.105. No new
 predicate/relationship/effect family is authorized by that recommendation.
 
+R5.106 is now the explicitly instructed bounded predicate family:
+`R5_106_TYPED_PREDICATE_GUARD_COMPOSITION_IMPLEMENTED`. Read
+[typed conditions](typed-predicates-v1.md) and its
+[report](../benchmark/results/phase5c/R5_106-REPORT.md) before extension. Boolean
+storage/migration, typed query trees, prewrite guards and local staged validation
+share the pure interpreter. Generic lock and candidate bytes remain fixed through
+transfer. Eight local successes remain; eight structural, B18 BDI, B17/B20
+clarification and B12 invalid typed clock-reference candidate at formalization.
+No newly reached request stage. Preserve R5.105 and interrupted-driver evidence.
+Normal predicate/value interface closure is a recommendation, not permission to
+begin R5.107. Stop after R5.106.
+
+R5.107's [interface closure](predicate-value-interfaces-v1.md) is now implemented:
+`R5_107_PREDICATE_VALUE_INTERFACE_CLOSED`. Read its
+[report](../benchmark/results/phase5c/R5_107-REPORT.md) before extension. Literal
+replacement, exact-base selection amendments (including existing clock listings),
+distinct query validation/preconditions/errors and declared UTC resource operands
+compose through the normal path. Final generic lock 3 remains unchanged through
+transfer: 13 local successes B01–B13, four structural, B18 external-effect BDI and
+B17/B20 disputes. Preserve all three pre-transfer locks and R5.106 evidence. A
+single guidance trailing space is a recorded frozen formatting defect. Persistent
+relationships/cross-entity integrity is a recommendation only; stop after R5.107.
+
 B03 was exposed in
 R5.97 and its first structural-coverage result is immutable; later B03 work is
 post-exposure research and requires separate instructions. Never read held-out requirements

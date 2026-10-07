@@ -26,6 +26,8 @@ def valid_value(value, typ):
         return typ["duplicates"] == "allow" or stable_unique(value) == value
     if value is None:
         return typ.get("nullable", False)
+    if typ["type"] == "boolean":
+        return type(value) is bool
     if type(value) is not str:
         return False
     if typ["type"] == "enum":
@@ -62,12 +64,16 @@ def pipeline(steps, typ):
                 keys(step, ("kind", "rule", "error", "stage", "when"))
                 require(step["stage"] in ("RAW", "TRANSFORMED", "PERSISTED"), "Explicit observation stage")
                 when = step["when"]
-                if when is not None:
+                if when is not None and "result_type" in when:
+                    from .predicates import validate
+                    validate(when, value_type=typ)
+                elif when is not None:
                     keys(when, ("stage", "predicate"))
                     require(when["stage"] in ("RAW", "TRANSFORMED", "PERSISTED"), "Condition stage")
                     require(when["predicate"] in ("present", "absent", "empty", "nonempty", "whitespace"), "Bounded input-state condition")
                     require(when["predicate"] in ("present", "absent") or typ["type"] in ("string", "identifier", "enum"), "Raw string predicates only")
-                if step["stage"] == "PERSISTED" or (when and when["stage"] == "PERSISTED"):
+                from .predicates import observes_persisted
+                if step["stage"] == "PERSISTED" or (when and (when.get("stage") == "PERSISTED" or observes_persisted(when))):
                     require(all(s.get("kind") == "validate" for s in steps[index + 1:]), "Persisted observation is final candidate, before atomic commit")
             else:
                 keys(step, ("kind", "rule", "error"))
@@ -79,7 +85,8 @@ def pipeline(steps, typ):
 def compose(base, facts):
     """Validate the new algebra and lower to a typed model plus atomic-write nodes."""
     from lykoi_pipeline.scalar_profile import name, command_name
-    keys(facts, ("collections", "mutations", "creation_pipelines", "input_contracts") if "input_contracts" in facts else ("collections", "mutations", "creation_pipelines"))
+    names = ("collections", "mutations", "creation_pipelines") + (("input_contracts",) if "input_contracts" in facts else ()) + (("predicate_semantics",) if "predicate_semantics" in facts else ())
+    keys(facts, names)
     d = copy.deepcopy(base)
     require(len(d["state"]) == 1, "Single-record, single-store profile")
     state = d["state"][0]
@@ -95,6 +102,10 @@ def compose(base, facts):
     identity = next(n for n, f in fields.items() if f["id"] == state["key_field"])
     create = next(b for b in d["behaviors"] if b["kind"] == "create")
     create_command = next(c for c in d["commands"] if c.get("behavior") == create["id"])
+    semantics = facts.get("predicate_semantics")
+    if semantics is not None:
+        from .predicate_integration import add_booleans
+        add_booleans(d, semantics, fields, value_types, record, create)
     require(type(facts["collections"]) is list, "Collection declarations")
     for c in facts["collections"]:
         keys(c, ("name", "element", "ordering", "duplicates", "equality", "creation", "migration"))
@@ -178,6 +189,16 @@ def compose(base, facts):
         require(type(m["changes"]) is list and bool(m["changes"]), "Nonempty simultaneous field changes")
         changed, inputs = set(), {identity}
         for w in m["changes"]:
+            if "source" in w:
+                keys(w, ("field", "source", "operation", "pipeline", "invalid_error"))
+                keys(w["source"], ("kind", "type", "value"))
+                require(w["field"] in fields and w["field"] != identity and fields[w["field"]]["id"] not in lifecycle and w["field"] not in changed, "Distinct writable literal target")
+                typ = value_types[w["field"]]
+                from .predicates import same_type
+                require(w["source"]["kind"] == "literal" and same_type(w["source"]["type"], typ) and valid_value(w["source"]["value"], typ), "Exact typed literal assignment authority")
+                require(w["operation"] == "replace" and w["pipeline"] == [], "Literal replacement writes exact value, never a default or transformed expression")
+                name(w["invalid_error"]); changed.add(w["field"])
+                continue
             keys(w, ("field", "input", "operation", "omitted", "missing_error", "pipeline", "invalid_error"))
             name(w["input"]); name(w["invalid_error"])
             require(w["field"] in fields and w["field"] != identity and fields[w["field"]]["id"] not in lifecycle and w["field"] not in changed and w["input"] not in inputs, "Distinct writable nonidentity/nonlifecycle fields and inputs")
@@ -191,12 +212,22 @@ def compose(base, facts):
             require((w["omitted"] == "unchanged" and w["missing_error"] is None) or (w["omitted"] == "reject" and ((type(w["missing_error"]) is str and bool(w["missing_error"])) or (w["missing_error"] is None and external_rejection))), "Distinct missing-input authority; external rejection does not invent application error")
             pipeline(w["pipeline"], typ["element"] if w["operation"] != "replace" else typ)
             if w["operation"] != "replace":
-                require(not any(s.get("stage") == "PERSISTED" or (s.get("when") or {}).get("stage") == "PERSISTED" for s in w["pipeline"]), "Element append pipeline is not the persisted collection; final collection type is checked at commit")
+                from .predicates import observes_persisted
+                require(not any(s.get("stage") == "PERSISTED" or (s.get("when") or {}).get("stage") == "PERSISTED" or observes_persisted(s.get("when")) for s in w["pipeline"]), "Element append pipeline is not the persisted collection; final collection type is checked at commit")
         require(type(m["guards"]) is list, "Explicit prewrite guards")
         for g in m["guards"]:
-            keys(g, ("field", "value", "error"))
-            require(g["field"] in fields and valid_value(g["value"], value_types[g["field"]]), "Typed equality guard")
+            if "predicate" in g:
+                keys(g, ("predicate", "error"))
+                from .predicates import validate
+                params = {identity: value_types[identity], **{w["input"]: value_types[w["field"]] if w["operation"] == "replace" else value_types[w["field"]]["element"] for w in m["changes"] if "input" in w}}
+                validate(g["predicate"], fields=value_types, parameters=params)
+            else:
+                keys(g, ("field", "value", "error"))
+                require(g["field"] in fields and valid_value(g["value"], value_types[g["field"]]), "Typed equality guard")
             name(g["error"])
+    if semantics is not None:
+        from .predicate_integration import validate_semantics
+        validate_semantics(d, semantics, value_types, facts)
     if "input_contracts" in facts:
         from .input_values import validate_contracts
         validate_contracts(d, value_types, facts)

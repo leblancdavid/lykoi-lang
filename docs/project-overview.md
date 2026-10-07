@@ -75,6 +75,28 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R5.108 — `R5_108_SEMANTIC_KERNEL_CONVERGING`.** The documentation-only
+[semantic-kernel audit](semantic-kernel-audit-r5.108.md) recovers the exact inherited
+R5.40/R5.41 **30 candidate concepts / 46 raw ledger entries**. Eighteen original
+concepts remain proposed core (seven active, eleven refined); two are absorbed,
+four compositions and six unresolved. Four pre-existing but previously uncounted
+concepts—presence, capability authority, durable state and atomic commit—yield a
+**22-concept proposed architectural kernel**, not a minimality proof or a fully
+integrated normal-language feature count. No genuinely new post-R5.41 irreducible
+category is established by the audit's decomposition.
+
+CollectionQuery, predicate trees, pipelines, mutation operations, lifecycle and
+migration are compositions with material stage/policy/authority obligations.
+R5.107's **8 → 13** exposed local successes demonstrate bounded compositional
+leverage, not held-out generalization. The audit records duplicated interfaces and
+Python-dependent Unicode/time/error/adapter boundaries. B14 reachability, B15
+quantification and B19 arithmetic remain unresolved normal extensions; B18's
+external-effect discovery label does not by itself prove an external-event core
+is required for its internal durable audit history. Persistent relationships and
+cross-entity integrity remain the recommended R5.109 capability, only if separately
+instructed. See the [R5.108 report](../benchmark/results/phase5c/R5_108-REPORT.md).
+**Stop after the audit.** Product semantics and R5.107 frozen evidence are preserved.
+
 **R5.96 — `R5_96_RESEARCH_WORKFLOW_SIMPLIFIED`.** Current research uses compatible
 tooling and the AI model available in the active development environment. Exact
 runtime/OpenCode identities, machine/model/adapter/transport qualification,
@@ -277,6 +299,50 @@ is preserved; same-agent captures/inventory/oracles and synthetic approvals rema
 limits, and no held-out/cumulative claim follows. Recommend typed predicate/guard
 composition with writable-boolean/archive prerequisites accounted for; no new major
 family or infrastructure work started. **Stop after R5.105.**
+
+**R5.106 — `R5_106_TYPED_PREDICATE_GUARD_COMPOSITION_IMPLEMENTED`.** The
+[bounded typed condition language](typed-predicates-v1.md) adds comparison,
+AND/OR/NOT, presence/null and canonical membership trees with typed operands,
+explicit grouping/policies and parsed UTC ordering/ranges. Queries, prewrite
+mutation/lifecycle/delete guards and local staged conditional validation share
+the pure interpreter; boolean literal creation, atomic input replacement and
+explicit migration/reload integrate through the normal mutable store. Source
+reconciliation, coverage, node-level BDI/adequacy, faithful V1 and deterministic
+normal lowering pass **355 tests** and **124 public synthetic external invocations**.
+
+The [locked transfer report](../benchmark/results/phase5c/R5_106-REPORT.md) and
+[matrix](../benchmark/results/phase5c/R5_106-CAPABILITY-MATRIX.md) retain eight local
+successes **B01–B07/B10 (178 final transfer invocations)**, eight structural,
+B18 BDI, B17/B20 clarification and **B12 invalid typed candidate/resource binding
+at formalization**. No request newly reaches a downstream stage. B08/B09/B11/B13
+gain represented components but unclosed literal-write/listing/precursor demands
+remain material. Normal common-query clock binding and query errors/preconditions
+remain seams; integer storage/comparison and relationships/effects remain outside
+scope. R5.105 and historical evidence are preserved. Two transfer interruptions
+completed against exact locked JSON candidates without product/candidate repair.
+No held-out/cumulative claim. Recommend bounded normal predicate/value interface
+closure for R5.107; **stop after R5.106**.
+
+**R5.107 — `R5_107_PREDICATE_VALUE_INTERFACE_CLOSED`.** The bounded
+[interface specification](predicate-value-interfaces-v1.md) composes exact typed
+literal replacement, source-determined existing listing/query selection amendments,
+distinct query preconditions/declared errors and explicitly bound UTC clock operands.
+Normal FRC/reconciliation, coverage, BDI/adequacy, faithful V1 and compiler/backend
+execute four public synthetic domains: **361 tests**, canonical validation/safety,
+**84 published synthetic invocations** plus controlled-clock subprocess tests.
+
+The [report](../benchmark/results/phase5c/R5_107-REPORT.md) and
+[matrix](../benchmark/results/phase5c/R5_107-CAPABILITY-MATRIX.md) record **13 exposed
+local behavioral successes, B01–B13 (358 transfer invocations)**. B08/B09/B11/B12/B13
+newly reach external behavior. Final generic lock 3 precedes all transfer outcomes
+and remains fixed; two earlier pre-transfer locks are preserved. Four structural
+cases B14/B15/B16/B19, B18 external-effect BDI and B17/B20 disputes remain.
+R5.106 and historical first results are unchanged; no held-out/cumulative claim.
+The whitespace audit reports one frozen trailing space in formalizer guidance;
+semantic checks pass and the defect is retained rather than altering post-outcome
+implementation bytes. Recommend persistent relationships/cross-entity integrity
+as the next major family. **Stop after R5.107**; no excluded family or infrastructure
+work begun.
 
 ### Historical boundaries (preserved; not current infrastructure prerequisites)
 

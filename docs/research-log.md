@@ -1,5 +1,132 @@
 # Lykoi research log
 
+## R5.108 semantic kernel audit and consolidation analysis (2026-10-07)
+
+**`R5_108_SEMANTIC_KERNEL_CONVERGING`**, a bounded analytical assessment.
+The [audit](semantic-kernel-audit-r5.108.md) traces every original candidate from
+exact repository evidence: R5.5's 29 plus R5.10 cardinality give R5.40/R5.41's 30
+(46 raw entries). Eighteen remain proposed core, two absorbed, four compositions,
+six unresolved, none deprecated. Four behavioral foundations omitted from that
+ledger have pre-R5.41 evidence; the proposed kernel is 22, with no newly established
+post-R5.41 irreducible category. This is a classification proposal, not a proof
+of minimality or a fully executable 22-feature normal path.
+
+Normal CollectionQuery/predicate/value/pipeline/lifecycle/migration capabilities
+derive from repeated typed relations and effect boundaries. R5.107's 8→13 local
+successes are concrete bounded leverage from interface closure. Graph/quantifier/
+offset prototypes must not be mistaken for current normal support. Static audit
+finds meaningful duplicated validation/binding/type surfaces and partial/backend
+dependence in Unicode, time grammar/precision/order, errors, serialization and
+output/commit behavior. No new portability experiments or repairs were performed.
+
+B14 direct integrity and B16 existence plausibly compose; B14 reachability and
+B15 related-state universal conditions need research. B18's source describes an
+internal durable audit despite the native external-effect BDI label. B19 requires
+typed arithmetic/displacement beyond resources, and broader atomic effect scope.
+B17/B20 retain their unresolved source authority. Persistent relationships remain
+the recommended next family if separately instructed. No token-efficiency study,
+relationship implementation, product refactor or infrastructure work occurred.
+Existing current regression/validation/safety and scope/whitespace results are
+recorded in the [report](../benchmark/results/phase5c/R5_108-REPORT.md); the R5.107
+frozen trailing space is preserved. Stop after R5.108.
+
+## Experiment artifact size and retention audit (2026-10-07)
+
+The [storage audit](../benchmark/artifacts/README.md) inventories 3,051 files /
+1,378,939,606 bytes across results, experiments, generated backend and rehearsal,
+including caches. Thirty-eight files are at least 1 MiB; five synthetic exports
+exceed 100 MiB. The six largest account for 1,066,214,986 bytes. In-memory gzip
+level-6 measurement totals 49,270,716 bytes for those six; no original was changed.
+Repeated whole-source quotes and full pipeline graph payloads dominate growth.
+
+No large whole-file output was proven disposable: observations, failures, chronology
+and authority journals remain evidence even when payloads have builders. The
+[compact manifest](../benchmark/artifacts/storage-audit-2026-10-07.json) records
+sizes/hashes, observed summaries and reproduction dependencies. All 215 R5.107 lock
+historical pins and 58 final-audit evidence pins match current bytes. Historical
+replay was not run; exact recreation of original observations is not claimed.
+
+Narrow future scratch directories are ignored; existing evidence stays visible,
+including five explicitly LFS-configured files. Compression and deduplicated future
+exports are proposals. No frozen driver, implementation, result or semantics was
+changed, and no irreplaceable evidence was deleted.
+
+## R5.107 normal predicate/value interface closure (2026-10-07)
+
+**`R5_107_PREDICATE_VALUE_INTERFACE_CLOSED`**. Existing typed literal replacement,
+selection amendments with preserved complete query bases, distinct preconditions
+and declared query input/application errors, and declared clock operands now
+traverse normal requirements/FRC/reconciliation/coverage/BDI/adequacy/V1/compiler
+to external behavior. No new major family or benchmark-specific product operation.
+
+Final checks pass **361/361 tests** and canonical validation/safety. Accounts,
+products, documents and sessions publish **84 external CLI invocations**; generated
+target subprocess tests inject a declared clock, validate single sampling/strict
+boundaries/null behavior and preserve persisted bytes. Same-agent source captures,
+inventory, oracles and synthetic owners remain evidence limits.
+
+Two pre-transfer audits superseded the first generic lock: existing clock-listing
+normalization and required-CLI rejection alongside declared query type errors.
+All three locks and evidence survive. Final lock 3 predates every fixed R5.107
+candidate/outcome and remains exact throughout transfer. Tool timeouts interrupted
+one verification and one audit without publishing final evidence; complete reruns
+passed. No implementation/spec/test edit followed transfer outcomes.
+
+**13 exposed local successes, B01–B13, 358 transfer invocations.** Newly verified
+B08/B09/B11/B12/B13 expose no further downstream failure. Four remaining structural
+cases need relationships/quantified guards/multiple entities/atomic successor
+semantics; B18 remains missing external-effect BDI discovery. B17/B20 retain
+unanswered migration-role/member-error authority. R5.106 and B03's immutable
+first result are preserved; no held-out/cumulative achievement claim.
+
+Final whitespace audit **fails one trailing space** at
+`src/lykoi_pipeline/mutable_profile.py:259`; the evaluated locked bytes are retained.
+This is a recorded formatting follow-up, not a passing whitespace claim. Recommend
+persistent relationships/cross-entity reference integrity as the next family; stop
+after R5.107. No relationship/event/arithmetic or infrastructure work begun.
+See [specification](predicate-value-interfaces-v1.md),
+[report](../benchmark/results/phase5c/R5_107-REPORT.md) and
+[matrix](../benchmark/results/phase5c/R5_107-CAPABILITY-MATRIX.md).
+
+## R5.106 typed predicate/guard composition (2026-10-07)
+
+**`R5_106_TYPED_PREDICATE_GUARD_COMPOSITION_IMPLEMENTED`**, bounded normal path.
+Typed comparison, AND/OR/NOT, presence/null tests and membership trees now share
+one pure interpreter across queries, mutation/lifecycle/delete guards and local
+staged conditional validation. Boolean literal creation, atomic input replacement,
+explicit migration, reload, queries and guards are integrated. Only existing
+timestamp nullability/order/ranges are supported; integer storage/arithmetic and
+normal query clock-resource binding remain separate boundaries.
+
+**355/355 tests**, model validation/safety and **124 synthetic external invocations**
+pass. Adversarial mutations challenge AND/OR, missing/extra operands, negation,
+inclusivity, null inversion, membership direction, policy and grouping. Typed FRC,
+reconciliation, recomputed coverage, BDI/adequacy and faithful V1 retain material
+facts. Source captures/inventory/oracles remain same-agent with synthetic owners;
+no live English accuracy, independent cognition or held-out generality claim.
+
+An initial generic sessions oracle incorrectly expected duplicates after an
+authorized dedup pipeline; the failed audit is preserved, corrected before lock.
+The final generic lock followed full verification and all four-domain success.
+No product/spec/test edit followed transfer outcomes. Initial transfer interrupted
+on in-memory tuple canonicalization; exact already locked JSON candidates resumed.
+B12 then exposed an uncaught producer-stage unbound clock reference; a new evidence
+wrapper recorded the native failure and completed all twenty unchanged candidates.
+Both interruption records/limitations remain alongside the complete audit.
+
+**Eight exposed local successes, B01–B07/B10, 178 final transfer invocations**.
+Eight structural blockers, B18 BDI, B17/B20 clarification and **B12 invalid typed
+candidate at formalization** remain. No request newly reaches downstream stages.
+B08/B09/B11/B13 gain represented predicate/store/guard components but retain archive
+interface precursor demands. R5.105's nine-structural baseline is preserved; B12's
+earlier native refusal is neither progress nor source ambiguity. Recommend bounded
+normal predicate/value interface closure (literal writes, listing amendments,
+query errors/preconditions, clock binding) before relationships. Stop after R5.106;
+no excluded family, benchmark-specific product primitive or infrastructure work.
+See [spec](typed-predicates-v1.md),
+[report](../benchmark/results/phase5c/R5_106-REPORT.md) and
+[matrix](../benchmark/results/phase5c/R5_106-CAPABILITY-MATRIX.md).
+
 ## R5.105 typed value/input closure (2026-10-06)
 
 **`R5_105_TYPED_VALUE_INPUT_PROFILE_CLOSED`**. Normal typed requirements now

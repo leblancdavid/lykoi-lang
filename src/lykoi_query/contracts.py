@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import copy
 
-from air_compiler.collection_query import FACETS, POLICIES, VERSION, QueryError, canonical, validate
+from air_compiler.collection_query import FACETS, INTERFACES, POLICIES, VERSION, QueryError, canonical, validate
 from benchmark.evaluation import behavioral_discovery_r5_82 as discovery
 from benchmark.evaluation import implementation_adequacy_r5_81 as adequacy
 from benchmark.evaluation import formal_requirements_r5_80 as frc
@@ -23,7 +23,7 @@ def structural(contract, frc_id):
     for o in contract["obligations"]:
         p = o["relation"]["parameters"]
         supported = (o["relation"]["kind"] == RELATION and set(p) == {"query", "facet", "value"}
-                     and type(p["query"]) is str and p["query"].strip() and p["facet"] in FACETS)
+                     and type(p["query"]) is str and p["query"].strip() and p["facet"] in FACETS + INTERFACES)
         rows.append({"obligation": o["id"], "relation": copy.deepcopy(o["relation"]),
                      "classification": "REPRESENTED" if supported else "UNSUPPORTED"})
         if supported:
@@ -72,6 +72,8 @@ def alternatives(query, facet):
     if type(value) is dict and "freedom" in value:
         return value["freedom"]
     if facet == "comparison":
+        if query["predicate"].get("result_type") == "boolean":
+            return [value, {"scope": "invented_global_policy"}]
         return [{"case": c, "normalization": n} for c in ("sensitive", "casefold") for n in ("none", "strip")]
     if facet == "effect":
         return [{"state": "read_only", "persistence": "unchanged"}, {"state": "mutating", "persistence": "write"}]
@@ -87,6 +89,8 @@ def alternatives(query, facet):
             choices.extend([list(reversed(keys)), [next(k for k in keys if k["field"] == query["source"]["unique_key"])]])
         return list({token(c): c for c in choices}.values())
     if facet == "validation":
+        if not query["parameters"]:
+            return [[], [{"invented_parameter_validation": True}]]
         values = value or [{"parameter": next(iter(query["parameters"])), "rule": "nonblank", "error": "invalid_query"}]
         return [values, []]
     if facet == "inclusion":
@@ -121,16 +125,24 @@ def bdi(contract, projection):
     for q in projection["queries"]:
         # Runtime binding is a distinct decision from matching versus nonmatching.
         oid = q["origins"]["predicate"]
-        runtime = "parameter" in q["predicate"]["operand"]
+        runtime = "parameter" in q["predicate"].get("operand", {}) or ('"kind":"parameter"' in token(q["predicate"]))
         decisions = [("runtime_binding", ["runtime_parameter", "constant"],
-                      "runtime_parameter" if runtime else "constant", oid, "return", "DETERMINED")]
+                       "runtime_parameter" if runtime else "constant", oid, "return", "DETERMINED")]
+        if q["predicate"].get("result_type") == "boolean":
+            from air_compiler.predicates import decisions as predicate_decisions
+            for path, meaning in predicate_decisions(q["predicate"]):
+                decisions.append(("condition/" + path, [meaning, "altered_or_missing_condition"], meaning, oid, "return", "DETERMINED"))
         for facet in POLICIES:
             value = q[facet]
             free = type(value) is dict and "freedom" in value
             options = [token(c) for c in alternatives(q, facet)]
             decisions.append((facet, options, options if free else token(value) if value is not None else None,
                               q["origins"][facet], "later" if facet == "effect" else "error" if facet == "validation" else
-                              "order" if facet == "ordering" else "return", "UNCONSTRAINED" if free else "DETERMINED"))
+                               "order" if facet == "ordering" else "return", "UNCONSTRAINED" if free else "DETERMINED"))
+        for facet in INTERFACES:
+            if facet in q:
+                meaning = token(q[facet])
+                decisions.append((facet, [meaning, "omitted_or_altered_interface"], meaning, q["origins"][facet], "error" if facet in ("preconditions", "parameter_errors") else "return", "DETERMINED"))
         for family, options, selected, origin, channel, mode in decisions:
             authority = None if selected is None else {"allowed": selected if type(selected) is list else [selected],
                 "authority": mode, "source_quote": obligations[origin]["source_quote"]}

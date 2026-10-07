@@ -20,8 +20,10 @@ def validate_contracts(model, types, facts):
     for m in facts["mutations"]:
         expected[(m["command"], m["lookup"])] = (types[m["lookup"]], True, "text")
         for w in m["changes"]:
+            if "source" in w:
+                continue
             typ = types[w["field"]] if w["operation"] == "replace" else types[w["field"]]["element"]
-            expected[(m["command"], w["input"])] = (typ, w["omitted"] == "reject", "json" if typ["type"] == "collection" else "text")
+            expected[(m["command"], w["input"])] = (typ, w["omitted"] == "reject", "json" if typ["type"] in ("collection", "boolean") else "text")
     seen, flags = set(), set()
     for p in declarations:
         keys(p, ("operation", "parameter", "type", "presence", "binding", "missing"))

@@ -43,8 +43,10 @@ def parameters(base, mutable):
     for m in mutable["mutations"]:
         add(m["command"], m["lookup"], types[m["lookup"]], True, "text", "missing_identity")
         for w in m["changes"]:
+            if "source" in w:
+                continue
             typ = types[w["field"]] if w["operation"] == "replace" else types[w["field"]]["element"]
-            add(m["command"], w["input"], typ, w["omitted"] == "reject", "json" if typ["type"] == "collection" else "text", w["missing_error"])
+            add(m["command"], w["input"], typ, w["omitted"] == "reject", "json" if typ["type"] in ("collection", "boolean") else "text", w["missing_error"])
     return result
 
 

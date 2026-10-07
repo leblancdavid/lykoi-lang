@@ -1,5 +1,31 @@
 # Phase 5: comparative maintenance benchmark
 
+## R5.107 normal interface closure and fixed exposed transfer
+
+The [report](results/phase5c/R5_107-REPORT.md) and
+[matrix](results/phase5c/R5_107-CAPABILITY-MATRIX.md) record **13 local behavioral
+successes, B01–B13**, four structural cases B14/B15/B16/B19, B18 external-effect
+BDI and B17/B20 disputes. B08/B09/B11/B12/B13 newly reach external verification.
+Final generic lock 3 precedes all twenty fixed captures/outcomes and remains exact:
+361 passing tests, canonical validation/safety, 84 published synthetic and 358
+transfer invocations. Earlier pre-transfer locks remain preserved. One locked
+guidance trailing space fails whitespace audit and is documented without a
+post-outcome repair. R5.106 is preserved; exposed requirement-local regression
+only, no held-out/cumulative claim. Stop after R5.107.
+
+## R5.106 typed predicate/guard composition and exact locked transfer
+
+The [report](results/phase5c/R5_106-REPORT.md) and
+[matrix](results/phase5c/R5_106-CAPABILITY-MATRIX.md) retain **eight local successes,
+B01–B07/B10**, eight structural, B18 BDI, B17/B20 clarification and B12 invalid
+typed candidate/unbound query-clock reference at formalization. No request reaches
+a new downstream stage; represented predicate components do not erase precursor
+interface gaps. Generic normal query/guard/staged-validation/boolean composition
+passes 355 tests and 124 published synthetic invocations; final transfer passes
+178 invocations. Generic implementation and all candidate bytes stayed locked,
+including across preserved driver interruptions. R5.105 is the pre-R5.106 baseline;
+no held-out/cumulative claim. Stop after R5.106.
+
 ## R5.105 typed value/input closure and fixed exposed transfer
 
 The [closure report](results/phase5c/R5_105-REPORT.md) and

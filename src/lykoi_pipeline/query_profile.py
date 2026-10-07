@@ -6,7 +6,7 @@ R5.98 semantic machinery and historical envelopes remain unchanged.
 import copy
 import re
 
-from air_compiler.collection_query import FACETS, QueryError, validate as query_validate
+from air_compiler.collection_query import FACETS, INTERFACES, QueryError, validate as query_validate
 from benchmark.evaluation import formal_requirements_r5_80 as frc
 from lykoi_controller import Failure
 from lykoi_query import contracts as query
@@ -43,7 +43,7 @@ def validate_relations(contract):
             continue
         p = r["parameters"]
         if (set(p) != {"query", "facet", "value"} or type(p["query"]) is not str
-                or not re.fullmatch(r"[a-z][a-z0-9_-]*", p["query"]) or p["facet"] not in FACETS):
+                or not re.fullmatch(r"[a-z][a-z0-9_-]*", p["query"]) or p["facet"] not in FACETS + INTERFACES):
             raise Failure("INVALID_TYPED_QUERY_RELATION", obligation=o["id"])
         group = groups.setdefault(p["query"], {"id": p["query"]})
         if p["facet"] in group:
@@ -65,8 +65,19 @@ def meaning_equal(candidate, interpretation):
     if typed(candidate["relation"]) or scalar_typed(candidate["relation"]) or model_typed(candidate["relation"]) or mutable_typed(candidate["relation"]):
         return (type(interpretation) is dict and set(interpretation) == {"statement", "relation"}
                 and type(interpretation["statement"]) is str and bool(interpretation["statement"].strip())
-                and candidate["relation"] == interpretation["relation"])
+                and predicate_meaning(candidate["relation"]) == predicate_meaning(interpretation["relation"]))
     return interpretation == {k: candidate[k] for k in ("statement", "relation")}
+
+
+def predicate_meaning(value):
+    from air_compiler.predicates import canonical_meaning
+    if type(value) is dict:
+        if value.get("result_type") == "boolean":
+            return canonical_meaning(value)
+        return {k: predicate_meaning(v) for k, v in value.items()}
+    if type(value) is list:
+        return [predicate_meaning(v) for v in value]
+    return value
 
 
 def storage(contract):
