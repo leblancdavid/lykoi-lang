@@ -33,7 +33,7 @@ def text(value):
     return type(value) is str and bool(value.strip())
 
 
-def validate(query, *, complete=False):
+def validate(query, *, complete=False, occurrence_order=False):
     """None = omission; {freedom: [...]} = explicit finite policy freedom.
 
     Structures with omission are representable but not executable. Mutating frames
@@ -41,7 +41,7 @@ def validate(query, *, complete=False):
     """
     if type(query) is dict and query.get("predicate", {}).get("result_type") == "boolean":
         from .predicate_integration import validate_query
-        return validate_query(query, complete)
+        return validate_query(query, complete, occurrence_order=occurrence_order)
     keys(query, ("id", *FACETS))
     require(text(query["id"]), "Empty query identity")
     keys(query["source"], ("collection", "fields", "unique_key"))
@@ -72,6 +72,8 @@ def validate(query, *, complete=False):
             require(value["case"] in ("sensitive", "casefold") and value["normalization"] in ("none", "strip"),
                     "Unsupported comparison policy")
         elif name == "ordering":
+            if occurrence_order and value == []:
+                return
             require(type(value) is list and bool(value), "Nonempty key sequence required")
             seen = set()
             for key in value:

@@ -14,7 +14,19 @@ do not govern ordinary research or the next held-out benchmark. **R5.101 treats
 B01–B20 as an exposed development/transfer/regression corpus, freely inspectable
 for diagnosis and regression. Their performance cannot establish held-out
 generalization; new generalization needs a new development-unexposed source.**
-**Current bounded reference policy is R5.109:
+**Current bounded atomic-state policy is R5.110:
+`R5_110_ATOMIC_DURABLE_HISTORY_IMPLEMENTED_BY_COMPOSITION`.** Read
+[atomic durable history](atomic-durable-history-v1.md) and its
+[report](../benchmark/results/phase5c/R5_110-REPORT.md) before extension.
+Existing primary writes plus 1..8 ordinary typed related creations share one local
+atomic frame; explicit occurrence/key order, clock/ID binding and append-only
+operation restriction compose existing concepts. Proposed kernel stays exactly 23.
+Generic lock is unchanged through fresh exposed transfer: 16 successes B01–B16,
+B17/B20 disputed, B18 structural numeric-history/primary-actor binding, B19 structural.
+No numeric generation, temporal successor, distributed effects or infrastructure work.
+Stop after R5.110; future numeric/cardinality and actor closure work is a recommendation.
+
+**Preserved bounded reference policy is R5.109:
 `R5_109_PERSISTENT_RELATIONSHIPS_IMPLEMENTED_KERNEL_EXTENDED`.** Read
 [persistent references](persistent-references-v1.md) and its
 [report](../benchmark/results/phase5c/R5_109-REPORT.md) before extending the bridge.

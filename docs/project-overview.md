@@ -75,6 +75,32 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R5.110 — `R5_110_ATOMIC_DURABLE_HISTORY_IMPLEMENTED_BY_COMPOSITION`.**
+The bounded [atomic durable-state profile](atomic-durable-history-v1.md) couples
+existing primary writes to one to eight ordinary typed related-record creations
+in one local atomic store replacement. Shared declared clock/ID observations,
+failure rollback, occurrence or timestamp/ID query order, append-only operation
+restriction and empty-history migration use the normal FRC/coverage/BDI/adequacy/
+V1/compiler/backend path. No event/audit/transaction primitive is added; the
+exact proposed kernel remains **23**. Numeric sequence generation is not implemented:
+cardinality-derived ordinals need missing normal integer/value bindings and source
+authority, while arbitrary counter/max successor needs arithmetic.
+
+The [report](../benchmark/results/phase5c/R5_110-REPORT.md) records **379 passing
+tests**, canonical validation/safety and **105 synthetic external invocations**
+across inventory/account/document/deployment/ledger domains. Generic semantics,
+tests and accounting locked before [fresh exposed transfer](../benchmark/results/phase5c/R5_110-CAPABILITY-MATRIX.md):
+**16/20 successes B01–B16**, **447 invocations**, no newly reached downstream stages.
+B18's fresh typed ordinary-state demand now halts structurally on numeric history
+values and inherited primary actor bindings; the old external-effect BDI diagnosis
+is preserved historically, not retained as the current blocker. B17/B20 remain
+disputed and B19 arithmetic/successor stays outside scope. No held-out/cumulative
+claim or post-outcome semantics repair. Recommend source-authorized typed numeric/
+cardinality-value boundary investigation and track primary actor composition closure.
+**Stop after R5.110; no arithmetic/B19 or infrastructure work begun.**
+
+### Preserved R5.109 baseline
+
 **R5.109 — `R5_109_PERSISTENT_RELATIONSHIPS_IMPLEMENTED_KERNEL_EXTENDED`.**
 The bounded [persistent-reference profile](persistent-references-v1.md) composes
 nominal typed fields/identities, exact existence selection, reverse-reference

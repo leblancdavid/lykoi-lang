@@ -1,5 +1,19 @@
 # Phase 5: comparative maintenance benchmark
 
+## R5.110 atomic durable history and frozen exposed transfer
+
+The [report](results/phase5c/R5_110-REPORT.md) and
+[matrix](results/phase5c/R5_110-CAPABILITY-MATRIX.md) retain **16/20 local successes
+B01–B16**, **447 transfer invocations**. B18's fresh ordinary typed history demand
+now halts structurally on numeric history values and inherited primary actor bindings;
+no new downstream stage or B18 success is claimed. B17/B20 remain disputed; B19 remains
+structural. Generic composition passes **379 tests**, validation/safety and **105
+external invocations** across five domains, then remains byte-locked through transfer.
+Typed durable records, bounded coupled writes, history ordering/querying and shared
+declared resources add no core primitive: proposed kernel remains **23**. Numeric
+generation is not implemented. Historical evidence is preserved; exposed regression,
+not held-out or cumulative achievement. Stop after R5.110.
+
 ## R5.109 persistent references and frozen exposed transfer
 
 The [report](results/phase5c/R5_109-REPORT.md) and

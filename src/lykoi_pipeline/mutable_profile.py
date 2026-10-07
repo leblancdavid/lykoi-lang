@@ -9,6 +9,7 @@ FACETS = ("collections", "mutations", "creation_pipelines")
 INPUT_FACET = "input_contracts"
 PREDICATE_FACET = "predicate_semantics"
 REFERENCE_FACET = "reference_semantics"
+ATOMIC_FACET = "atomic_state_semantics"
 
 
 def typed(relation):
@@ -40,7 +41,7 @@ def split(contract):
         require(o["relation"]["kind"] == "crud", "Typed mutation relation kind")
         p = o["relation"]["parameters"]
         keys(p, ("profile", "facet", "value"))
-        require(p["facet"] in FACETS + (INPUT_FACET, PREDICATE_FACET, REFERENCE_FACET) and p["facet"] not in values, "Unknown or repeated mutation facet")
+        require(p["facet"] in FACETS + (INPUT_FACET, PREDICATE_FACET, REFERENCE_FACET, ATOMIC_FACET) and p["facet"] not in values, "Unknown or repeated mutation facet")
         values[p["facet"]] = copy.deepcopy(p["value"])
     closure = contract["context"]["domains"].get("input_value_profile")
     require(closure in (None, "typed-input-values-1"), "Known input/value profile")
@@ -54,8 +55,10 @@ def split(contract):
     require(predicates is not None or not common(contract["obligations"]), "New predicates require explicit versioned profile selection")
     references = contract["context"]["domains"].get("reference_profile")
     require(references in (None, "persistent-references-1") and (not references or predicates), "Explicit reference composition profile")
-    require(set(values) == set(FACETS + ((INPUT_FACET,) if closure else ()) + ((PREDICATE_FACET,) if predicates else ()) + ((REFERENCE_FACET,) if references else ())), "Every selected profile facet required; empty is explicit")
-    ir = compose(base, {k: v for k, v in values.items() if k != REFERENCE_FACET})
+    atomic = contract["context"]["domains"].get("atomic_state_profile")
+    require(atomic in (None, "atomic-durable-state-1") and (not atomic or references), "Explicit atomic state composition selection")
+    require(set(values) == set(FACETS + ((INPUT_FACET,) if closure else ()) + ((PREDICATE_FACET,) if predicates else ()) + ((REFERENCE_FACET,) if references else ()) + ((ATOMIC_FACET,) if atomic else ())), "Every selected profile facet required; empty is explicit")
+    ir = compose(base, {k: v for k, v in values.items() if k not in (REFERENCE_FACET, ATOMIC_FACET)})
     reference_ir = None
     if references:
         from air_compiler.references import compose as compose_references
@@ -86,6 +89,10 @@ def split(contract):
     result = dict(scalar=f, mutable=values, ir=ir, queries=groups)
     if reference_ir is not None:
         result["references"] = reference_ir
+    if atomic:
+        from air_compiler.atomic_state import compose as compose_atomic
+        result["atomic_state"] = compose_atomic(ir, reference_ir, values[ATOMIC_FACET])
+        require(not set(groups) & {q["id"] for q in values[ATOMIC_FACET]["queries"]}, "No primary/history query command collision")
     return sc, qc, result
 
 
@@ -109,9 +116,12 @@ def structural(contract, fid):
     if f:
         for o in contract["obligations"]:
             if typed(o["relation"]):
-                facets.append(dict(origin=o["id"], source_quote=o["source_quote"], kind={"collections": "CollectionMutation", "mutations": "ValueMutation", "creation_pipelines": "TransformationPipeline", "input_contracts": "SemanticParameters", "predicate_semantics": "TypedPredicateSemantics", REFERENCE_FACET: "IdentitySelectionGuardComposition"}[o["relation"]["parameters"]["facet"]], value=copy.deepcopy(o["relation"]["parameters"]["value"])))
+                facets.append(dict(origin=o["id"], source_quote=o["source_quote"], kind={"collections": "CollectionMutation", "mutations": "ValueMutation", "creation_pipelines": "TransformationPipeline", "input_contracts": "SemanticParameters", "predicate_semantics": "TypedPredicateSemantics", REFERENCE_FACET: "IdentitySelectionGuardComposition", ATOMIC_FACET: "AtomicStateCreationComposition"}[o["relation"]["parameters"]["facet"]], value=copy.deepcopy(o["relation"]["parameters"]["value"])))
                 if o["relation"]["parameters"]["facet"] == REFERENCE_FACET:
                     for kind, v in (("TypedFieldIdentity", f["references"]["types"]), ("SelectionCardinalityGuard", f["references"]["checks"]), ("AtomicWriteEffect", f["references"]["facts"]["commit"])):
+                        facets.append(dict(origin=o["id"], kind=kind, value=copy.deepcopy(v)))
+                if o["relation"]["parameters"]["facet"] == ATOMIC_FACET:
+                    for kind, v in (("AtomicWriteEffect", f["atomic_state"]["facts"]["commit"]), ("TypedRecordCreation", f["atomic_state"]["facts"]["operations"]), ("CollectionQuery", f["atomic_state"]["facts"]["queries"]), ("OperationRestriction", f["atomic_state"]["facts"]["append_only"])):
                         facets.append(dict(origin=o["id"], kind=kind, value=copy.deepcopy(v)))
         for o in contract["obligations"]:
             if typed(o["relation"]) and o["relation"]["parameters"]["facet"] == INPUT_FACET:
@@ -185,6 +195,14 @@ def bdi(contract, projection):
             for facet, v in p["value"].items():
                 meaning = scalar.json.dumps(v, sort_keys=True)
                 decision(o["id"], "reference/" + facet, meaning, [meaning, "omitted_or_altered_reference_authority"], "error" if facet in ("references", "guards") else "later")
+        if p["facet"] == ATOMIC_FACET:
+            for facet, v in p["value"].items():
+                meaning = scalar.json.dumps(v, sort_keys=True)
+                decision(o["id"], "atomic_state/" + facet, meaning, [meaning, "omitted_or_altered_state_authority"])
+            for op in p["value"]["operations"]:
+                for facet in ("on", "sampling", "ordering", "resources", "creations"):
+                    meaning = scalar.json.dumps(op[facet], sort_keys=True)
+                    decision(o["id"], op["command"] + "/" + facet, meaning, [meaning, "omitted_or_altered_state_authority"])
         entries = p["value"] if p["facet"] in ("mutations", "creation_pipelines") else []
         for m in entries:
             if p["facet"] == "mutations":
@@ -282,4 +300,9 @@ def formalizer_guidance():
                   "Reference fields declare target, existence required/unchecked and deletion restrict/permit with authorized errors and explicit migration or null. "
                   "Related guards compose extent(select(entity,binding,predicate)) eq/ge N. EXISTS is ge 1; NONE is eq 0; ALL is eq 0 over related AND NOT P. "
                   "Declare the exact domain, missing behavior and exclusive one-store one-record commit; never infer cascade. "
-                  "Cycle guards may explicitly use reachable with same-entity typed source/target, declared field and nonempty paths; this is a new core candidate, not hidden traversal.")
+                   "Cycle guards may explicitly use reachable with same-entity typed source/target, declared field and nonempty paths; this is a new core candidate, not hidden traversal. "
+                   "Select atomic_state_profile atomic-durable-state-1 for atomic_state_semantics operations,queries,append_only,commit. "
+                   "Bind existing primary writes to 1..8 ordinary related creations with complete typed payload sources literal/parameter/before/after/resource. "
+                   "Declare success-only creation, once_per_operation resource sampling, declared_creation_occurrence order and one_store bounded_records unchanged rejection. "
+                   "Queries are existing complete CollectionQuery; empty ordering explicitly preserves occurrence order in this profile. "
+                   "No implicit history fields, ambient clock, numeric successor, JSON blob or external-effect authority. Missing record/sequence authority requires clarification.")

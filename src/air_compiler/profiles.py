@@ -61,7 +61,7 @@ def generate(source):
         contract = mutable_profile.recover(source["contract"])
         p = mutable_profile.structural(contract, mutable_profile.scalar.frc.digest(contract))
         require(mutable_profile.adequate(contract, mutable_profile.bdi(contract, p))["outcome"] == "ADEQUATE", "Mutation contract is not adequate")
-        return generate_mutable(p["facts"]["ir"], list(p["facts"]["queries"].values()), p["facts"].get("references"))
+        return generate_mutable(p["facts"]["ir"], list(p["facts"]["queries"].values()), p["facts"].get("references"), p["facts"].get("atomic_state"))
     if source["profile"] == "existing-model-1":
         from lykoi_pipeline import model_profile as amendment
         contract = amendment.recover(source["contract"])
@@ -132,7 +132,7 @@ def validate_mutable_storage(storage, queries):
     return ir
 
 
-def generate_mutable(ir, queries, references=None):
+def generate_mutable(ir, queries, references=None, atomic_state=None):
     from .mutable_values import compose
     require(compose(ir["base"], ir["facts"]) == ir, "Invalid mutable IR")
     legacy = normal_resources(generate_legacy(validate_legacy(parse(json.dumps(ir["base"])))))
@@ -141,7 +141,7 @@ def generate_mutable(ir, queries, references=None):
     runtime = runtime.replace("MUTABLE = {}  # inserted by normal compiler", "MUTABLE = " + repr(ir) + "\nSPEC = MUTABLE['model']")
     predicates = Path(__file__).with_name("predicate_runtime.py").read_text(encoding="utf-8")
     target = legacy.replace(footer, "") + "\n" + predicates + "\n" + runtime + "\n"
-    if not queries:
+    if not queries and not atomic_state:
         return reference_backend(target, "main", references) if references else target + footer + "\n"
     storage = dict(kind="mutable_state", ir=ir, state=ir["model"]["state"][0]["id"])
     validate_mutable_storage(storage, queries)
@@ -151,12 +151,16 @@ def generate_mutable(ir, queries, references=None):
     integration = Path(__file__).with_name("profile_runtime.py").read_text(encoding="utf-8")
     body = target + qr + "\n" + integration
     entry = "lambda: profile_main(" + repr(queries) + ", " + repr({"kind": "mutable_state", "state": storage["state"]}) + ")"
-    return reference_backend(body, entry, references) if references else body + "\nif __name__ == '__main__':\n    sys.exit(profile_main(" + repr(queries) + ", " + repr({"kind": "mutable_state", "state": storage["state"]}) + "))\n"
+    return reference_backend(body, entry, references, atomic_state) if references else body + "\nif __name__ == '__main__':\n    sys.exit(profile_main(" + repr(queries) + ", " + repr({"kind": "mutable_state", "state": storage["state"]}) + "))\n"
 
 
-def reference_backend(body, entry, references):
+def reference_backend(body, entry, references, atomic_state=None):
     runtime = Path(__file__).with_name("reference_runtime.py").read_text(encoding="utf-8")
     runtime = runtime.replace("REFERENCE = {}  # inserted by normal compiler", "REFERENCE = " + repr(references))
+    if atomic_state:
+        extra = Path(__file__).with_name("atomic_state_runtime.py").read_text(encoding="utf-8")
+        runtime += "\n" + extra.replace("ATOMIC_STATE = {}  # inserted by normal compiler", "ATOMIC_STATE = " + repr(atomic_state))
+        entry = "lambda: atomic_state_main(" + entry + ")"
     return body + "\n" + runtime + "\nif __name__ == '__main__':\n    sys.exit(reference_main(" + entry + "))\n"
 
 

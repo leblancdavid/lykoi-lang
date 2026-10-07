@@ -1,0 +1,1566 @@
+{
+  "case": "B05",
+  "producer_capture": {
+    "id": "B05",
+    "source": "## Source: benchmark/baseline.md\n# External baseline contract (before B01)\n\nThe interface is a subprocess CLI run from an isolated working directory.\nCommands print exactly one JSON value to stdout on success (exit 0); expected\napplication failures print `{\"error\":\"CODE\"}` to stderr (exit 1). Commands\npersist across separate processes in `tasks.json` in that directory. `list`\non missing storage returns `[]` without creating the file.\n\nEach task result has exactly `id`, `title`, `description`, `status`, `priority`,\n`created_at`, and `due_date`. IDs are unique nonempty strings; timestamps are\nUTC ISO strings ending in `Z`. Lists sort by `(created_at, id)` ascending.\n\n* `create --title T --description D [--priority LOW|NORMAL|HIGH]\n  [--due-date UTC_TIMESTAMP]`: nonblank title, verbatim description, new ID,\n  status `pending`, priority default `NORMAL`, current creation timestamp,\n  due date default `null`. Blank title fails `invalid_title`; malformed or\n  non-UTC due date fails `invalid_due_date` without changing storage.\n* `list`: return all tasks including completed tasks.\n* `list-high`: return only HIGH tasks (including completed ones).\n* `list-overdue`: return only pending tasks with a non-null due date **strictly\n  earlier** than current UTC time. Undated and completed tasks are excluded.\n* `complete --id ID`: pending task becomes completed and is persisted; a\n  missing ID fails `task_not_found`, an already completed task fails\n  `invalid_transition`, both without altering the stored file.\n* `delete --id ID`: remove and return the task (pending or completed); missing\n  ID fails `task_not_found` without altering storage.\n* `migrate`: explicit conversion of legacy unversioned records to version 3\n  (add `priority: NORMAL`, `due_date: null`) and version 2 records to version 3\n  (add `due_date: null`); return `{\"migrated\": N}`. Running on current data or\n  absent storage returns `{\"migrated\": 0}`. Legacy reads fail\n  `migration_required` without changing data. New writes use a version-3\n  envelope with `schema_version` and `records`.\n\nMalformed JSON and invalid record shape, duplicate IDs, blank IDs/titles,\ninvalid enums and timestamps fail `invalid_state` on read. Failed operations\nmust not mutate persisted bytes. An exact-time overdue boundary can be checked\nonly with a controlled clock; the external CLI oracle checks widely separated\npast and future instants instead of relying on timing-sensitive sleeps.\n\nThe oracle exercises *both* executable CLIs with fresh subprocesses and\nindependent temporary directories; it asserts this contract before comparing\nnormalized outcomes. Random IDs and wall-clock timestamps are checked for\nproperties, not falsely required to be byte-identical across tracks.\n\n\n## Source: benchmark/requirements/README.md\n# Frozen sequential change set\n\nExecute B01\u2013B20 in numeric order; a change is cumulative. Each file states an\nobservable API and acceptance criteria, not an implementation strategy. New\nfields on existing tasks require an explicit `migrate` path; ordinary reads of\nold storage must report `migration_required` without mutation. Migration is\natomic, returns the number of migrated tasks, and is idempotent. Missing IDs\nreturn `task_not_found` unless a request explicitly defines another error.\nSuccessful operations output JSON; application errors use the baseline JSON\nerror envelope and exit 1. New list commands use the baseline `(created_at,\nid)` sort unless stated otherwise. Existing commands remain compatible unless\na request expressly changes them. Errors must leave observable state intact.\n\nIDs and test cases are fixed before execution; correcting a faulty requirement\nrequires a recorded protocol deviation, never a silent retroactive edit.\nThe authoritative frozen file hashes are in `../results/BASELINE.md`.\n\n\n## Source: benchmark/requirements/B05.md\n# B05 \u2014 Status filter (local)\n\nAdd `list-status --status pending|completed`. Return precisely the tasks in\nthe requested status in normal order. An empty result is `[]`; querying does\nnot change storage. Both values include all matching tasks at this step.\n\n\n## Source: benchmark/requirements/B01.md\n# B01 \u2014 Critical priority (local)\n\nAdd `CRITICAL` above `HIGH` to accepted task priorities. `create --priority\nCRITICAL` persists and returns that value; `list` includes it. `list-high`\ncontinues to mean exactly `HIGH`. Existing LOW, NORMAL and HIGH tasks retain\ntheir values through migration. A missing priority still defaults to NORMAL.\n\n\n## Source: benchmark/requirements/B02.md\n# B02 \u2014 Task tags (local)\n\nAccept zero or more `--tag VALUE` flags on `create`. Each VALUE must be a\nnonblank string after trimming whitespace; store the trimmed value. Tags are\ncase-sensitive, deduplicated while retaining first occurrence order, and\nreturned as a `tags` array on every task. Omission and migrated older tasks\nhave `tags: []`. Empty tag input fails `invalid_tag` with no new task.\n\n\n## Source: benchmark/requirements/B03.md\n# B03 \u2014 List by tag (local)\n\nAdd `list-tag --tag VALUE`. Return tasks whose `tags` contains exactly VALUE\n(case-sensitive; query input is not trimmed), including completed tasks, in\nnormal order. Reject blank or whitespace-only query input with `invalid_tag`.\nA tag not present returns `[]`; the query never changes storage. For example,\n`work` does not select a task tagged `Work`.\n\n\n## Source: benchmark/requirements/B04.md\n# B04 \u2014 Source label (local)\n\nAdd optional `create --source VALUE` and a returned `source` string on every\ntask. Preserve the supplied value verbatim, including whitespace; omission\nand migrated tasks use `\"\"`. Listing and subsequent mutations preserve it.\nThis is a small field addition: creation timestamps already exist at baseline.\n",
+    "source_files": {
+      "benchmark/baseline.md": "d69de8d4da44c74aff1ac9c6361995ad8dc881f454271cfaedff61d3e98651e5",
+      "benchmark/requirements/README.md": "152efdaf2ddaac79ae7e87bcc0dc31327a6ff6d9ba7a45e17711f097353d1e8b",
+      "benchmark/requirements/B05.md": "fc06265789c2781c913e14dfc22a8c37a0ed627b1e1839d43ebaec31373372ff",
+      "benchmark/requirements/B01.md": "b7b2d714db5cee566e9e55982dd4c4d95d3d57f0c341e04ba1e15c24e9a8e94d",
+      "benchmark/requirements/B02.md": "8a76e276240fa840c473be60a8e7ed0e10bd0c165426b1bfc84741e69872032b",
+      "benchmark/requirements/B03.md": "56c6ac4c187962c71d5866b27f9568c8b6de055a0bab074896ef41b61a554630",
+      "benchmark/requirements/B04.md": "2c2e9e3787d53eb45df7b4b48362db2217e62c165dedda38222f5561cd859221"
+    },
+    "rows": [
+      {
+        "id": "B05/list-status/source",
+        "basis": "STATED",
+        "source_quote": "# B05 \u2014 Status filter (local)\n\nAdd `list-status --status pending|completed`. Return precisely the tasks in\nthe requested status in normal order. An empty result is `[]`; querying does\nnot change storage. Both values include all matching tasks at this step.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-status/source",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-status",
+            "facet": "source",
+            "value": {
+              "collection": "state_tasks",
+              "fields": {
+                "id": "string",
+                "created_at": "string",
+                "status": "string"
+              },
+              "unique_key": "id"
+            }
+          }
+        }
+      },
+      {
+        "id": "B05/list-status/parameters",
+        "basis": "STATED",
+        "source_quote": "# B05 \u2014 Status filter (local)\n\nAdd `list-status --status pending|completed`. Return precisely the tasks in\nthe requested status in normal order. An empty result is `[]`; querying does\nnot change storage. Both values include all matching tasks at this step.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-status/parameters",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-status",
+            "facet": "parameters",
+            "value": {
+              "status": "string"
+            }
+          }
+        }
+      },
+      {
+        "id": "B05/list-status/predicate",
+        "basis": "STATED",
+        "source_quote": "# B05 \u2014 Status filter (local)\n\nAdd `list-status --status pending|completed`. Return precisely the tasks in\nthe requested status in normal order. An empty result is `[]`; querying does\nnot change storage. Both values include all matching tasks at this step.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-status/predicate",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-status",
+            "facet": "predicate",
+            "value": {
+              "field": "status",
+              "operator": "equals",
+              "operand": {
+                "parameter": "status"
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "B05/list-status/comparison",
+        "basis": "STATED",
+        "source_quote": "# B05 \u2014 Status filter (local)\n\nAdd `list-status --status pending|completed`. Return precisely the tasks in\nthe requested status in normal order. An empty result is `[]`; querying does\nnot change storage. Both values include all matching tasks at this step.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-status/comparison",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-status",
+            "facet": "comparison",
+            "value": {
+              "case": "sensitive",
+              "normalization": "none"
+            }
+          }
+        }
+      },
+      {
+        "id": "B05/list-status/ordering",
+        "basis": "STATED",
+        "source_quote": "# B05 \u2014 Status filter (local)\n\nAdd `list-status --status pending|completed`. Return precisely the tasks in\nthe requested status in normal order. An empty result is `[]`; querying does\nnot change storage. Both values include all matching tasks at this step.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-status/ordering",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-status",
+            "facet": "ordering",
+            "value": [
+              {
+                "field": "created_at",
+                "direction": "ASC"
+              },
+              {
+                "field": "id",
+                "direction": "ASC"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "B05/list-status/validation",
+        "basis": "STATED",
+        "source_quote": "# B05 \u2014 Status filter (local)\n\nAdd `list-status --status pending|completed`. Return precisely the tasks in\nthe requested status in normal order. An empty result is `[]`; querying does\nnot change storage. Both values include all matching tasks at this step.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-status/validation",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-status",
+            "facet": "validation",
+            "value": []
+          }
+        }
+      },
+      {
+        "id": "B05/list-status/inclusion",
+        "basis": "STATED",
+        "source_quote": "# B05 \u2014 Status filter (local)\n\nAdd `list-status --status pending|completed`. Return precisely the tasks in\nthe requested status in normal order. An empty result is `[]`; querying does\nnot change storage. Both values include all matching tasks at this step.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-status/inclusion",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-status",
+            "facet": "inclusion",
+            "value": []
+          }
+        }
+      },
+      {
+        "id": "B05/list-status/effect",
+        "basis": "STATED",
+        "source_quote": "# B05 \u2014 Status filter (local)\n\nAdd `list-status --status pending|completed`. Return precisely the tasks in\nthe requested status in normal order. An empty result is `[]`; querying does\nnot change storage. Both values include all matching tasks at this step.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-status/effect",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-status",
+            "facet": "effect",
+            "value": {
+              "state": "read_only",
+              "persistence": "unchanged"
+            }
+          }
+        }
+      },
+      {
+        "id": "B05/list-status/result",
+        "basis": "STATED",
+        "source_quote": "# B05 \u2014 Status filter (local)\n\nAdd `list-status --status pending|completed`. Return precisely the tasks in\nthe requested status in normal order. An empty result is `[]`; querying does\nnot change storage. Both values include all matching tasks at this step.\n",
+        "derived_from": [],
+        "statement": "Fresh source-authorized list-status/result",
+        "relation": {
+          "kind": "filter_order",
+          "parameters": {
+            "query": "list-status",
+            "facet": "result",
+            "value": {
+              "shape": "collection",
+              "cardinality": "zero_or_more",
+              "no_match": "empty"
+            }
+          }
+        }
+      }
+    ],
+    "question": null,
+    "domains": {
+      "evaluation_scope": "requirement-local against canonical baseline; precursor demands explicit, not achieved",
+      "baseline_model_sha256": "971b8ec4079d45101ff8fd7877b6ccd86e7c931124621cf4b5394e93e9dd2f14",
+      "capability_profile": "collection-query-1",
+      "collection_store": {
+        "kind": "model_state",
+        "model": {
+          "axiom_version": "0.3",
+          "application": {
+            "id": "app_tasks",
+            "name": "task_manager"
+          },
+          "types": [
+            {
+              "id": "type_status",
+              "name": "TaskStatus",
+              "kind": "enum",
+              "values": [
+                "pending",
+                "completed"
+              ]
+            },
+            {
+              "id": "type_priority",
+              "name": "Priority",
+              "kind": "enum",
+              "values": [
+                "LOW",
+                "NORMAL",
+                "HIGH"
+              ]
+            },
+            {
+              "id": "type_task",
+              "name": "Task",
+              "kind": "record",
+              "fields": [
+                {
+                  "id": "field_id",
+                  "name": "id",
+                  "type": "prim:string"
+                },
+                {
+                  "id": "field_title",
+                  "name": "title",
+                  "type": "prim:string"
+                },
+                {
+                  "id": "field_description",
+                  "name": "description",
+                  "type": "prim:string"
+                },
+                {
+                  "id": "field_status",
+                  "name": "status",
+                  "type": "type_status"
+                },
+                {
+                  "id": "field_priority",
+                  "name": "priority",
+                  "type": "type_priority"
+                },
+                {
+                  "id": "field_created_at",
+                  "name": "created_at",
+                  "type": "prim:timestamp"
+                },
+                {
+                  "id": "field_due_date",
+                  "name": "due_date",
+                  "type": "prim:timestamp",
+                  "nullable": true
+                }
+              ]
+            },
+            {
+              "id": "type_task_list",
+              "name": "TaskList",
+              "kind": "list",
+              "item_type": "type_task"
+            }
+          ],
+          "capabilities": [
+            {
+              "id": "cap_store",
+              "kind": "json_file",
+              "path": "tasks.json",
+              "missing_file": "empty_collection"
+            },
+            {
+              "id": "cap_clock",
+              "kind": "utc_clock"
+            },
+            {
+              "id": "cap_ids",
+              "kind": "uuid_v4"
+            },
+            {
+              "id": "cap_task_read",
+              "kind": "resource_access",
+              "resource": "cap_store",
+              "action": "read"
+            },
+            {
+              "id": "cap_task_write",
+              "kind": "resource_access",
+              "resource": "cap_store",
+              "action": "write"
+            }
+          ],
+          "state_machines": [
+            {
+              "id": "ax:machine:task_lifecycle",
+              "name": "TaskLifecycle",
+              "field": "field_status",
+              "initial": "pending",
+              "transitions": [
+                "ax:transition:task_complete"
+              ]
+            }
+          ],
+          "transitions": [
+            {
+              "id": "ax:transition:task_complete",
+              "machine": "ax:machine:task_lifecycle",
+              "source": "pending",
+              "target": "completed",
+              "trigger": "fn_complete",
+              "guard": "pre_complete_pending",
+              "effects": [
+                "state_write"
+              ]
+            }
+          ],
+          "errors": [
+            {
+              "id": "err_invalid_title",
+              "code": "invalid_title"
+            },
+            {
+              "id": "err_id_collision",
+              "code": "id_collision"
+            },
+            {
+              "id": "err_invalid_state",
+              "code": "invalid_state"
+            },
+            {
+              "id": "err_persistence_failure",
+              "code": "persistence_failure"
+            },
+            {
+              "id": "err_migration_required",
+              "code": "migration_required"
+            },
+            {
+              "id": "err_task_not_found",
+              "code": "task_not_found"
+            },
+            {
+              "id": "err_invalid_transition",
+              "code": "invalid_transition"
+            },
+            {
+              "id": "err_invalid_due_date",
+              "code": "invalid_due_date"
+            }
+          ],
+          "state": [
+            {
+              "id": "state_tasks",
+              "name": "tasks",
+              "type": "type_task_list",
+              "storage": "cap_store",
+              "key_field": "field_id",
+              "schema_version": 3,
+              "invariants": [
+                "inv_unique_ids",
+                "inv_valid_tasks",
+                "inv_title",
+                "inv_status",
+                "inv_priority",
+                "inv_overdue_excludes_completed"
+              ]
+            }
+          ],
+          "invariants": [
+            {
+              "id": "inv_unique_ids",
+              "kind": "unique_field",
+              "state": "state_tasks",
+              "field": "field_id"
+            },
+            {
+              "id": "inv_valid_tasks",
+              "kind": "all_records_valid",
+              "state": "state_tasks",
+              "field_rules": [
+                {
+                  "kind": "nonblank",
+                  "field": "field_id"
+                },
+                {
+                  "kind": "nonblank",
+                  "field": "field_title"
+                },
+                {
+                  "kind": "timestamp_utc",
+                  "field": "field_created_at"
+                },
+                {
+                  "kind": "timestamp_utc",
+                  "field": "field_due_date"
+                }
+              ]
+            },
+            {
+              "id": "inv_title",
+              "kind": "predicate",
+              "state": "state_tasks",
+              "predicate": {
+                "operator": "NOT_EMPTY",
+                "field": "field_title"
+              }
+            },
+            {
+              "id": "inv_status",
+              "kind": "predicate",
+              "state": "state_tasks",
+              "predicate": {
+                "operator": "LIFECYCLE_STATE",
+                "field": "field_status",
+                "machine": "ax:machine:task_lifecycle"
+              }
+            },
+            {
+              "id": "inv_priority",
+              "kind": "predicate",
+              "state": "state_tasks",
+              "predicate": {
+                "operator": "IN",
+                "field": "field_priority",
+                "values": [
+                  "LOW",
+                  "NORMAL",
+                  "HIGH"
+                ]
+              }
+            },
+            {
+              "id": "inv_overdue_excludes_completed",
+              "kind": "query_exclusion",
+              "state": "state_tasks",
+              "behavior": "fn_list_overdue",
+              "field": "field_status",
+              "value": "completed"
+            }
+          ],
+          "behaviors": [
+            {
+              "id": "fn_create",
+              "requires": [
+                "cap_task_read",
+                "cap_task_write",
+                "cap_clock",
+                "cap_ids"
+              ],
+              "name": "create_task",
+              "kind": "create",
+              "state": "state_tasks",
+              "inputs": [
+                {
+                  "id": "arg_title",
+                  "name": "title",
+                  "type": "prim:string"
+                },
+                {
+                  "id": "arg_description",
+                  "name": "description",
+                  "type": "prim:string"
+                },
+                {
+                  "id": "arg_priority",
+                  "name": "priority",
+                  "type": "type_priority"
+                },
+                {
+                  "id": "arg_due_date",
+                  "name": "due_date",
+                  "type": "prim:timestamp",
+                  "nullable": true
+                }
+              ],
+              "output": "type_task",
+              "dependencies": [
+                "state_tasks",
+                "cap_store",
+                "cap_clock",
+                "cap_ids"
+              ],
+              "reads": [
+                "state_tasks"
+              ],
+              "writes": [
+                "state_tasks"
+              ],
+              "effects": [
+                "state_read",
+                "state_write",
+                "file_read",
+                "file_write",
+                "clock_read",
+                "random_id"
+              ],
+              "conditions": [
+                {
+                  "id": "pre_create_title",
+                  "kind": "nonblank_input",
+                  "input": "arg_title",
+                  "failure": "err_invalid_title"
+                },
+                {
+                  "id": "pre_due_date_valid",
+                  "kind": "timestamp_input",
+                  "input": "arg_due_date",
+                  "failure": "err_invalid_due_date"
+                }
+              ],
+              "assignments": [
+                {
+                  "field": "field_id",
+                  "source": "capability",
+                  "id": "cap_ids"
+                },
+                {
+                  "field": "field_title",
+                  "source": "input",
+                  "id": "arg_title"
+                },
+                {
+                  "field": "field_description",
+                  "source": "input",
+                  "id": "arg_description"
+                },
+                {
+                  "field": "field_status",
+                  "source": "literal",
+                  "value": "pending"
+                },
+                {
+                  "field": "field_priority",
+                  "source": "input_default",
+                  "id": "arg_priority",
+                  "value": "NORMAL"
+                },
+                {
+                  "field": "field_created_at",
+                  "source": "capability",
+                  "id": "cap_clock"
+                },
+                {
+                  "field": "field_due_date",
+                  "source": "input_default",
+                  "id": "arg_due_date",
+                  "value": null
+                }
+              ],
+              "guarantees": [
+                {
+                  "id": "contract_create_status",
+                  "kind": "result_field_equals",
+                  "field": "field_status",
+                  "value": "pending"
+                },
+                {
+                  "id": "contract_create_persisted",
+                  "kind": "result_in_state",
+                  "state": "state_tasks"
+                },
+                {
+                  "id": "contract_create_priority",
+                  "kind": "result_field_equals_assignment",
+                  "field": "field_priority"
+                },
+                {
+                  "id": "contract_create_due_date",
+                  "kind": "result_field_equals_assignment",
+                  "field": "field_due_date"
+                }
+              ],
+              "failures": [
+                "err_invalid_title",
+                "err_id_collision",
+                "err_invalid_state",
+                "err_persistence_failure",
+                "err_migration_required",
+                "err_invalid_due_date"
+              ]
+            },
+            {
+              "id": "fn_list",
+              "requires": [
+                "cap_task_read"
+              ],
+              "name": "list_tasks",
+              "kind": "list",
+              "state": "state_tasks",
+              "inputs": [],
+              "output": "type_task_list",
+              "dependencies": [
+                "state_tasks",
+                "cap_store"
+              ],
+              "reads": [
+                "state_tasks"
+              ],
+              "writes": [],
+              "effects": [
+                "state_read",
+                "file_read"
+              ],
+              "conditions": [],
+              "assignments": [],
+              "order_by": [
+                "field_created_at",
+                "field_id"
+              ],
+              "guarantees": [
+                {
+                  "id": "contract_list_sorted",
+                  "kind": "result_equals_state_sorted",
+                  "state": "state_tasks"
+                }
+              ],
+              "failures": [
+                "err_invalid_state",
+                "err_persistence_failure",
+                "err_migration_required"
+              ]
+            },
+            {
+              "id": "fn_list_high",
+              "requires": [
+                "cap_task_read"
+              ],
+              "name": "list_high_priority_tasks",
+              "kind": "list",
+              "state": "state_tasks",
+              "inputs": [],
+              "output": "type_task_list",
+              "dependencies": [
+                "state_tasks",
+                "cap_store"
+              ],
+              "reads": [
+                "state_tasks"
+              ],
+              "writes": [],
+              "effects": [
+                "state_read",
+                "file_read"
+              ],
+              "conditions": [],
+              "assignments": [],
+              "order_by": [
+                "field_created_at",
+                "field_id"
+              ],
+              "filter": {
+                "kind": "field_equals",
+                "field": "field_priority",
+                "value": "HIGH"
+              },
+              "guarantees": [
+                {
+                  "id": "contract_high_sorted",
+                  "kind": "result_equals_state_sorted",
+                  "state": "state_tasks"
+                }
+              ],
+              "failures": [
+                "err_invalid_state",
+                "err_persistence_failure",
+                "err_migration_required"
+              ]
+            },
+            {
+              "id": "fn_complete",
+              "requires": [
+                "cap_task_read",
+                "cap_task_write"
+              ],
+              "performs": "ax:transition:task_complete",
+              "name": "complete_task",
+              "kind": "update",
+              "state": "state_tasks",
+              "inputs": [
+                {
+                  "id": "arg_complete_id",
+                  "name": "id",
+                  "type": "prim:string"
+                }
+              ],
+              "output": "type_task",
+              "dependencies": [
+                "state_tasks",
+                "cap_store"
+              ],
+              "reads": [
+                "state_tasks"
+              ],
+              "writes": [
+                "state_tasks"
+              ],
+              "effects": [
+                "state_read",
+                "state_write",
+                "file_read",
+                "file_write"
+              ],
+              "lookup": {
+                "field": "field_id",
+                "input": "arg_complete_id"
+              },
+              "conditions": [
+                {
+                  "id": "pre_complete_exists",
+                  "kind": "record_exists",
+                  "failure": "err_task_not_found"
+                },
+                {
+                  "id": "pre_complete_pending",
+                  "kind": "record_field_equals",
+                  "field": "field_status",
+                  "value": "pending",
+                  "failure": "err_invalid_transition"
+                }
+              ],
+              "assignments": [
+                {
+                  "field": "field_status",
+                  "source": "literal",
+                  "value": "completed"
+                }
+              ],
+              "guarantees": [
+                {
+                  "id": "contract_complete_status",
+                  "kind": "result_field_equals",
+                  "field": "field_status",
+                  "value": "completed"
+                },
+                {
+                  "id": "contract_complete_persisted",
+                  "kind": "result_in_state",
+                  "state": "state_tasks"
+                }
+              ],
+              "failures": [
+                "err_task_not_found",
+                "err_invalid_transition",
+                "err_invalid_state",
+                "err_persistence_failure",
+                "err_migration_required"
+              ]
+            },
+            {
+              "id": "fn_delete",
+              "requires": [
+                "cap_task_read",
+                "cap_task_write"
+              ],
+              "name": "delete_task",
+              "kind": "delete",
+              "state": "state_tasks",
+              "inputs": [
+                {
+                  "id": "arg_delete_id",
+                  "name": "id",
+                  "type": "prim:string"
+                }
+              ],
+              "output": "type_task",
+              "dependencies": [
+                "state_tasks",
+                "cap_store"
+              ],
+              "reads": [
+                "state_tasks"
+              ],
+              "writes": [
+                "state_tasks"
+              ],
+              "effects": [
+                "state_read",
+                "state_write",
+                "file_read",
+                "file_write"
+              ],
+              "lookup": {
+                "field": "field_id",
+                "input": "arg_delete_id"
+              },
+              "conditions": [
+                {
+                  "id": "pre_delete_exists",
+                  "kind": "record_exists",
+                  "failure": "err_task_not_found"
+                }
+              ],
+              "assignments": [],
+              "guarantees": [
+                {
+                  "id": "contract_delete_absent",
+                  "kind": "result_id_absent_from_state",
+                  "state": "state_tasks"
+                }
+              ],
+              "failures": [
+                "err_task_not_found",
+                "err_invalid_state",
+                "err_persistence_failure",
+                "err_migration_required"
+              ]
+            },
+            {
+              "id": "fn_list_overdue",
+              "requires": [
+                "cap_task_read",
+                "cap_clock"
+              ],
+              "name": "list_overdue_tasks",
+              "kind": "list",
+              "state": "state_tasks",
+              "inputs": [],
+              "output": "type_task_list",
+              "dependencies": [
+                "state_tasks",
+                "cap_store",
+                "cap_clock"
+              ],
+              "reads": [
+                "state_tasks"
+              ],
+              "writes": [],
+              "effects": [
+                "state_read",
+                "file_read",
+                "clock_read"
+              ],
+              "conditions": [],
+              "assignments": [],
+              "order_by": [
+                "field_created_at",
+                "field_id"
+              ],
+              "filter": {
+                "kind": "all",
+                "predicates": [
+                  {
+                    "kind": "field_equals",
+                    "field": "field_status",
+                    "value": "pending"
+                  },
+                  {
+                    "kind": "field_before_clock",
+                    "field": "field_due_date",
+                    "clock": "cap_clock"
+                  }
+                ]
+              },
+              "guarantees": [
+                {
+                  "id": "contract_overdue_sorted",
+                  "kind": "result_equals_state_sorted",
+                  "state": "state_tasks"
+                }
+              ],
+              "failures": [
+                "err_invalid_state",
+                "err_persistence_failure",
+                "err_migration_required"
+              ]
+            }
+          ],
+          "commands": [
+            {
+              "id": "cmd_create",
+              "token": "create",
+              "behavior": "fn_create",
+              "arguments": [
+                {
+                  "flag": "--title",
+                  "input": "arg_title",
+                  "required": true
+                },
+                {
+                  "flag": "--description",
+                  "input": "arg_description",
+                  "required": true
+                },
+                {
+                  "flag": "--priority",
+                  "input": "arg_priority",
+                  "required": false
+                },
+                {
+                  "flag": "--due-date",
+                  "input": "arg_due_date",
+                  "required": false
+                }
+              ]
+            },
+            {
+              "id": "cmd_list",
+              "token": "list",
+              "behavior": "fn_list",
+              "arguments": []
+            },
+            {
+              "id": "cmd_list_high",
+              "token": "list-high",
+              "behavior": "fn_list_high",
+              "arguments": []
+            },
+            {
+              "id": "cmd_migrate",
+              "token": "migrate",
+              "migration": "migration_task_due_date",
+              "arguments": []
+            },
+            {
+              "id": "cmd_complete",
+              "token": "complete",
+              "behavior": "fn_complete",
+              "arguments": [
+                {
+                  "flag": "--id",
+                  "input": "arg_complete_id",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "id": "cmd_delete",
+              "token": "delete",
+              "behavior": "fn_delete",
+              "arguments": [
+                {
+                  "flag": "--id",
+                  "input": "arg_delete_id",
+                  "required": true
+                }
+              ]
+            },
+            {
+              "id": "cmd_list_overdue",
+              "token": "list-overdue",
+              "behavior": "fn_list_overdue",
+              "arguments": []
+            }
+          ],
+          "migrations": [
+            {
+              "id": "migration_task_priority",
+              "requires": [
+                "cap_task_read",
+                "cap_task_write"
+              ],
+              "state": "state_tasks",
+              "from_version": 1,
+              "to_version": 2,
+              "add_fields": [
+                {
+                  "field": "field_priority",
+                  "value": "NORMAL"
+                }
+              ],
+              "effects": [
+                "state_read",
+                "state_write",
+                "file_read",
+                "file_write"
+              ]
+            },
+            {
+              "id": "migration_task_due_date",
+              "requires": [
+                "cap_task_read",
+                "cap_task_write"
+              ],
+              "state": "state_tasks",
+              "from_version": 2,
+              "to_version": 3,
+              "add_fields": [
+                {
+                  "field": "field_due_date",
+                  "value": null
+                }
+              ],
+              "effects": [
+                "state_read",
+                "state_write",
+                "file_read",
+                "file_write"
+              ]
+            }
+          ],
+          "scenarios": [
+            {
+              "id": "scenario_complete_transition",
+              "transition": "ax:transition:task_complete",
+              "lookup_value": "pending-task",
+              "record": {
+                "field_id": "pending-task",
+                "field_title": "Complete me",
+                "field_description": "x",
+                "field_status": "pending",
+                "field_priority": "NORMAL",
+                "field_created_at": "2026-09-01T00:00:00Z",
+                "field_due_date": null
+              }
+            },
+            {
+              "id": "scenario_overdue_mixed",
+              "behavior": "fn_list_overdue",
+              "clock": "2026-10-01T12:00:00Z",
+              "records": [
+                {
+                  "field_id": "past",
+                  "field_title": "Past",
+                  "field_description": "x",
+                  "field_status": "pending",
+                  "field_priority": "NORMAL",
+                  "field_created_at": "2026-09-01T00:00:00Z",
+                  "field_due_date": "2026-10-01T11:59:59Z"
+                },
+                {
+                  "field_id": "future",
+                  "field_title": "Future",
+                  "field_description": "x",
+                  "field_status": "pending",
+                  "field_priority": "NORMAL",
+                  "field_created_at": "2026-09-01T00:00:00Z",
+                  "field_due_date": "2026-10-01T12:00:01Z"
+                },
+                {
+                  "field_id": "equal",
+                  "field_title": "Equal",
+                  "field_description": "x",
+                  "field_status": "pending",
+                  "field_priority": "NORMAL",
+                  "field_created_at": "2026-09-01T00:00:00Z",
+                  "field_due_date": "2026-10-01T12:00:00Z"
+                },
+                {
+                  "field_id": "none",
+                  "field_title": "None",
+                  "field_description": "x",
+                  "field_status": "pending",
+                  "field_priority": "NORMAL",
+                  "field_created_at": "2026-09-01T00:00:00Z",
+                  "field_due_date": null
+                },
+                {
+                  "field_id": "done",
+                  "field_title": "Done",
+                  "field_description": "x",
+                  "field_status": "completed",
+                  "field_priority": "NORMAL",
+                  "field_created_at": "2026-09-01T00:00:00Z",
+                  "field_due_date": "2026-10-01T11:59:59Z"
+                }
+              ],
+              "expected_ids": [
+                "past"
+              ]
+            }
+          ]
+        },
+        "state": "state_tasks"
+      }
+    },
+    "capture_round": "R5.110 fresh typed source-reviewed capture after generic lock",
+    "capture_note": "Frozen source files freshly read; supported facts reviewed in current semantics, never saved FRC replay"
+  },
+  "external_plan": {
+    "version": "external-cli-plan-1",
+    "outcome": "READY",
+    "producer": "R5.103-fresh-source-side-literal-oracle",
+    "source_sha256": "a17bc0567e86ea3ae8b949fd08d5eef7d5f6a3f70997a0e9dfdc640e0e9647ea",
+    "cases": [
+      {
+        "id": "status-partition",
+        "obligations": [
+          "B05/list-status/source",
+          "B05/list-status/parameters",
+          "B05/list-status/predicate",
+          "B05/list-status/comparison",
+          "B05/list-status/ordering",
+          "B05/list-status/validation",
+          "B05/list-status/inclusion",
+          "B05/list-status/effect",
+          "B05/list-status/result"
+        ],
+        "initial_state": "fresh_directory",
+        "initial_files": [
+          {
+            "path": "tasks.json",
+            "json": {
+              "schema_version": 3,
+              "records": [
+                {
+                  "id": "c",
+                  "title": "c",
+                  "description": "  unchanged  ",
+                  "status": "completed",
+                  "priority": "NORMAL",
+                  "created_at": "2026-01-01T00:00:00Z",
+                  "due_date": null
+                },
+                {
+                  "id": "b",
+                  "title": "b",
+                  "description": "  unchanged  ",
+                  "status": "pending",
+                  "priority": "HIGH",
+                  "created_at": "2026-01-01T00:00:00Z",
+                  "due_date": null
+                },
+                {
+                  "id": "a",
+                  "title": "a",
+                  "description": "  unchanged  ",
+                  "status": "pending",
+                  "priority": "LOW",
+                  "created_at": "2026-01-01T00:00:00Z",
+                  "due_date": null
+                }
+              ]
+            }
+          }
+        ],
+        "steps": [
+          {
+            "argv": [
+              "list-status",
+              "--status",
+              "pending"
+            ],
+            "returncode": 0,
+            "contains": [],
+            "preserved": [
+              "tasks.json"
+            ],
+            "absent": [],
+            "stdout_json": [
+              {
+                "id": "a",
+                "title": "a",
+                "description": "  unchanged  ",
+                "status": "pending",
+                "priority": "LOW",
+                "created_at": "2026-01-01T00:00:00Z",
+                "due_date": null
+              },
+              {
+                "id": "b",
+                "title": "b",
+                "description": "  unchanged  ",
+                "status": "pending",
+                "priority": "HIGH",
+                "created_at": "2026-01-01T00:00:00Z",
+                "due_date": null
+              }
+            ],
+            "stderr_exact": ""
+          },
+          {
+            "argv": [
+              "list-status",
+              "--status",
+              "completed"
+            ],
+            "returncode": 0,
+            "contains": [],
+            "preserved": [
+              "tasks.json"
+            ],
+            "absent": [],
+            "stdout_json": [
+              {
+                "id": "c",
+                "title": "c",
+                "description": "  unchanged  ",
+                "status": "completed",
+                "priority": "NORMAL",
+                "created_at": "2026-01-01T00:00:00Z",
+                "due_date": null
+              }
+            ],
+            "stderr_exact": ""
+          },
+          {
+            "argv": [
+              "list"
+            ],
+            "returncode": 0,
+            "contains": [],
+            "preserved": [
+              "tasks.json"
+            ],
+            "absent": [],
+            "stdout_json": [
+              {
+                "id": "a",
+                "title": "a",
+                "description": "  unchanged  ",
+                "status": "pending",
+                "priority": "LOW",
+                "created_at": "2026-01-01T00:00:00Z",
+                "due_date": null
+              },
+              {
+                "id": "b",
+                "title": "b",
+                "description": "  unchanged  ",
+                "status": "pending",
+                "priority": "HIGH",
+                "created_at": "2026-01-01T00:00:00Z",
+                "due_date": null
+              },
+              {
+                "id": "c",
+                "title": "c",
+                "description": "  unchanged  ",
+                "status": "completed",
+                "priority": "NORMAL",
+                "created_at": "2026-01-01T00:00:00Z",
+                "due_date": null
+              }
+            ],
+            "stderr_exact": ""
+          }
+        ],
+        "invariants": [
+          "Exact whole records; rejected/read bytes or absence unchanged"
+        ],
+        "transitions": "Declared baseline lifecycle",
+        "rejections": "Source-authorized error envelopes",
+        "identity": "d2f24b1849e7e8d659d16fc15ba2b367f60a2bf2d7bf16664b75978e3e3c9675"
+      },
+      {
+        "id": "empty",
+        "obligations": [
+          "B05/list-status/source",
+          "B05/list-status/parameters",
+          "B05/list-status/predicate",
+          "B05/list-status/comparison",
+          "B05/list-status/ordering",
+          "B05/list-status/validation",
+          "B05/list-status/inclusion",
+          "B05/list-status/effect",
+          "B05/list-status/result"
+        ],
+        "initial_state": "fresh_directory",
+        "initial_files": [
+          {
+            "path": "tasks.json",
+            "json": {
+              "schema_version": 3,
+              "records": []
+            }
+          }
+        ],
+        "steps": [
+          {
+            "argv": [
+              "list-status",
+              "--status",
+              "pending"
+            ],
+            "returncode": 0,
+            "contains": [],
+            "preserved": [
+              "tasks.json"
+            ],
+            "absent": [],
+            "stdout_json": [],
+            "stderr_exact": ""
+          },
+          {
+            "argv": [
+              "list-status",
+              "--status",
+              "completed"
+            ],
+            "returncode": 0,
+            "contains": [],
+            "preserved": [
+              "tasks.json"
+            ],
+            "absent": [],
+            "stdout_json": [],
+            "stderr_exact": ""
+          }
+        ],
+        "invariants": [
+          "Exact whole records; rejected/read bytes or absence unchanged"
+        ],
+        "transitions": "Declared baseline lifecycle",
+        "rejections": "Source-authorized error envelopes",
+        "identity": "62ea9f9f4e44e5bd23dfa74b0fe0dbcddd706a32c026eb74f2887e04859e0fa1"
+      },
+      {
+        "id": "no-match",
+        "obligations": [
+          "B05/list-status/source",
+          "B05/list-status/parameters",
+          "B05/list-status/predicate",
+          "B05/list-status/comparison",
+          "B05/list-status/ordering",
+          "B05/list-status/validation",
+          "B05/list-status/inclusion",
+          "B05/list-status/effect",
+          "B05/list-status/result"
+        ],
+        "initial_state": "fresh_directory",
+        "initial_files": [
+          {
+            "path": "tasks.json",
+            "json": {
+              "schema_version": 3,
+              "records": [
+                {
+                  "id": "a",
+                  "title": "a",
+                  "description": "  unchanged  ",
+                  "status": "pending",
+                  "priority": "LOW",
+                  "created_at": "2026-01-01T00:00:00Z",
+                  "due_date": null
+                }
+              ]
+            }
+          }
+        ],
+        "steps": [
+          {
+            "argv": [
+              "list-status",
+              "--status",
+              "completed"
+            ],
+            "returncode": 0,
+            "contains": [],
+            "preserved": [
+              "tasks.json"
+            ],
+            "absent": [],
+            "stdout_json": [],
+            "stderr_exact": ""
+          }
+        ],
+        "invariants": [
+          "Exact whole records; rejected/read bytes or absence unchanged"
+        ],
+        "transitions": "Declared baseline lifecycle",
+        "rejections": "Source-authorized error envelopes",
+        "identity": "b984589656f2b9b253fd214021533fa32d37dc426e621b486a86a3c382e05c42"
+      },
+      {
+        "id": "missing-store",
+        "obligations": [
+          "B05/list-status/source",
+          "B05/list-status/parameters",
+          "B05/list-status/predicate",
+          "B05/list-status/comparison",
+          "B05/list-status/ordering",
+          "B05/list-status/validation",
+          "B05/list-status/inclusion",
+          "B05/list-status/effect",
+          "B05/list-status/result"
+        ],
+        "initial_state": "fresh_directory",
+        "initial_files": [],
+        "steps": [
+          {
+            "argv": [
+              "list-status",
+              "--status",
+              "completed"
+            ],
+            "returncode": 0,
+            "contains": [],
+            "preserved": [
+              "tasks.json"
+            ],
+            "absent": [],
+            "stdout_json": [],
+            "stderr_exact": ""
+          }
+        ],
+        "invariants": [
+          "Exact whole records; rejected/read bytes or absence unchanged"
+        ],
+        "transitions": "Declared baseline lifecycle",
+        "rejections": "Source-authorized error envelopes",
+        "identity": "33e5aba030fc640d9979598a9994dd6362dbf9200a06f5df707e5d88cefa4588"
+      },
+      {
+        "id": "invalid-state",
+        "obligations": [
+          "B05/list-status/source",
+          "B05/list-status/parameters",
+          "B05/list-status/predicate",
+          "B05/list-status/comparison",
+          "B05/list-status/ordering",
+          "B05/list-status/validation",
+          "B05/list-status/inclusion",
+          "B05/list-status/effect",
+          "B05/list-status/result"
+        ],
+        "initial_state": "fresh_directory",
+        "initial_files": [
+          {
+            "path": "tasks.json",
+            "json": {
+              "schema_version": 3,
+              "records": [
+                {
+                  "id": "bad"
+                }
+              ]
+            }
+          }
+        ],
+        "steps": [
+          {
+            "argv": [
+              "list-status",
+              "--status",
+              "completed"
+            ],
+            "returncode": 1,
+            "contains": [],
+            "preserved": [
+              "tasks.json"
+            ],
+            "absent": [],
+            "stderr_json": {
+              "error": "invalid_state"
+            },
+            "stdout_exact": ""
+          }
+        ],
+        "invariants": [
+          "Exact whole records; rejected/read bytes or absence unchanged"
+        ],
+        "transitions": "Declared baseline lifecycle",
+        "rejections": "Source-authorized error envelopes",
+        "identity": "0e386daf6592e05c2a0b990afb123f598591a8682be12f82e023deb18a85a123"
+      }
+    ],
+    "coverage": [
+      {
+        "obligation": "B05/list-status/source",
+        "classification": "EXERCISED",
+        "justification": "Source-derived enum/default/verbatim/query/migration/baseline regression observations",
+        "cases": [
+          "d2f24b1849e7e8d659d16fc15ba2b367f60a2bf2d7bf16664b75978e3e3c9675",
+          "62ea9f9f4e44e5bd23dfa74b0fe0dbcddd706a32c026eb74f2887e04859e0fa1",
+          "b984589656f2b9b253fd214021533fa32d37dc426e621b486a86a3c382e05c42",
+          "33e5aba030fc640d9979598a9994dd6362dbf9200a06f5df707e5d88cefa4588",
+          "0e386daf6592e05c2a0b990afb123f598591a8682be12f82e023deb18a85a123"
+        ]
+      },
+      {
+        "obligation": "B05/list-status/parameters",
+        "classification": "EXERCISED",
+        "justification": "Source-derived enum/default/verbatim/query/migration/baseline regression observations",
+        "cases": [
+          "d2f24b1849e7e8d659d16fc15ba2b367f60a2bf2d7bf16664b75978e3e3c9675",
+          "62ea9f9f4e44e5bd23dfa74b0fe0dbcddd706a32c026eb74f2887e04859e0fa1",
+          "b984589656f2b9b253fd214021533fa32d37dc426e621b486a86a3c382e05c42",
+          "33e5aba030fc640d9979598a9994dd6362dbf9200a06f5df707e5d88cefa4588",
+          "0e386daf6592e05c2a0b990afb123f598591a8682be12f82e023deb18a85a123"
+        ]
+      },
+      {
+        "obligation": "B05/list-status/predicate",
+        "classification": "EXERCISED",
+        "justification": "Source-derived enum/default/verbatim/query/migration/baseline regression observations",
+        "cases": [
+          "d2f24b1849e7e8d659d16fc15ba2b367f60a2bf2d7bf16664b75978e3e3c9675",
+          "62ea9f9f4e44e5bd23dfa74b0fe0dbcddd706a32c026eb74f2887e04859e0fa1",
+          "b984589656f2b9b253fd214021533fa32d37dc426e621b486a86a3c382e05c42",
+          "33e5aba030fc640d9979598a9994dd6362dbf9200a06f5df707e5d88cefa4588",
+          "0e386daf6592e05c2a0b990afb123f598591a8682be12f82e023deb18a85a123"
+        ]
+      },
+      {
+        "obligation": "B05/list-status/comparison",
+        "classification": "EXERCISED",
+        "justification": "Source-derived enum/default/verbatim/query/migration/baseline regression observations",
+        "cases": [
+          "d2f24b1849e7e8d659d16fc15ba2b367f60a2bf2d7bf16664b75978e3e3c9675",
+          "62ea9f9f4e44e5bd23dfa74b0fe0dbcddd706a32c026eb74f2887e04859e0fa1",
+          "b984589656f2b9b253fd214021533fa32d37dc426e621b486a86a3c382e05c42",
+          "33e5aba030fc640d9979598a9994dd6362dbf9200a06f5df707e5d88cefa4588",
+          "0e386daf6592e05c2a0b990afb123f598591a8682be12f82e023deb18a85a123"
+        ]
+      },
+      {
+        "obligation": "B05/list-status/ordering",
+        "classification": "EXERCISED",
+        "justification": "Source-derived enum/default/verbatim/query/migration/baseline regression observations",
+        "cases": [
+          "d2f24b1849e7e8d659d16fc15ba2b367f60a2bf2d7bf16664b75978e3e3c9675",
+          "62ea9f9f4e44e5bd23dfa74b0fe0dbcddd706a32c026eb74f2887e04859e0fa1",
+          "b984589656f2b9b253fd214021533fa32d37dc426e621b486a86a3c382e05c42",
+          "33e5aba030fc640d9979598a9994dd6362dbf9200a06f5df707e5d88cefa4588",
+          "0e386daf6592e05c2a0b990afb123f598591a8682be12f82e023deb18a85a123"
+        ]
+      },
+      {
+        "obligation": "B05/list-status/validation",
+        "classification": "EXERCISED",
+        "justification": "Source-derived enum/default/verbatim/query/migration/baseline regression observations",
+        "cases": [
+          "d2f24b1849e7e8d659d16fc15ba2b367f60a2bf2d7bf16664b75978e3e3c9675",
+          "62ea9f9f4e44e5bd23dfa74b0fe0dbcddd706a32c026eb74f2887e04859e0fa1",
+          "b984589656f2b9b253fd214021533fa32d37dc426e621b486a86a3c382e05c42",
+          "33e5aba030fc640d9979598a9994dd6362dbf9200a06f5df707e5d88cefa4588",
+          "0e386daf6592e05c2a0b990afb123f598591a8682be12f82e023deb18a85a123"
+        ]
+      },
+      {
+        "obligation": "B05/list-status/inclusion",
+        "classification": "EXERCISED",
+        "justification": "Source-derived enum/default/verbatim/query/migration/baseline regression observations",
+        "cases": [
+          "d2f24b1849e7e8d659d16fc15ba2b367f60a2bf2d7bf16664b75978e3e3c9675",
+          "62ea9f9f4e44e5bd23dfa74b0fe0dbcddd706a32c026eb74f2887e04859e0fa1",
+          "b984589656f2b9b253fd214021533fa32d37dc426e621b486a86a3c382e05c42",
+          "33e5aba030fc640d9979598a9994dd6362dbf9200a06f5df707e5d88cefa4588",
+          "0e386daf6592e05c2a0b990afb123f598591a8682be12f82e023deb18a85a123"
+        ]
+      },
+      {
+        "obligation": "B05/list-status/effect",
+        "classification": "EXERCISED",
+        "justification": "Source-derived enum/default/verbatim/query/migration/baseline regression observations",
+        "cases": [
+          "d2f24b1849e7e8d659d16fc15ba2b367f60a2bf2d7bf16664b75978e3e3c9675",
+          "62ea9f9f4e44e5bd23dfa74b0fe0dbcddd706a32c026eb74f2887e04859e0fa1",
+          "b984589656f2b9b253fd214021533fa32d37dc426e621b486a86a3c382e05c42",
+          "33e5aba030fc640d9979598a9994dd6362dbf9200a06f5df707e5d88cefa4588",
+          "0e386daf6592e05c2a0b990afb123f598591a8682be12f82e023deb18a85a123"
+        ]
+      },
+      {
+        "obligation": "B05/list-status/result",
+        "classification": "EXERCISED",
+        "justification": "Source-derived enum/default/verbatim/query/migration/baseline regression observations",
+        "cases": [
+          "d2f24b1849e7e8d659d16fc15ba2b367f60a2bf2d7bf16664b75978e3e3c9675",
+          "62ea9f9f4e44e5bd23dfa74b0fe0dbcddd706a32c026eb74f2887e04859e0fa1",
+          "b984589656f2b9b253fd214021533fa32d37dc426e621b486a86a3c382e05c42",
+          "33e5aba030fc640d9979598a9994dd6362dbf9200a06f5df707e5d88cefa4588",
+          "0e386daf6592e05c2a0b990afb123f598591a8682be12f82e023deb18a85a123"
+        ]
+      }
+    ],
+    "limitations": [
+      "Same-agent finite source-side oracle and synthetic owner authority; not independent cognition or cumulative achievement"
+    ]
+  }
+}

@@ -52,7 +52,7 @@ def validate_semantics(model, semantics, types, facts):
         require(inv["error"] == "invalid_state", "Record-local invariant uses existing invalid-state rejection at read/write boundaries")
 
 
-def validate_query(q, complete=False):
+def validate_query(q, complete=False, *, occurrence_order=False):
     from .collection_query import keys as qkeys, validate as old_validate
     from .predicates import scalar_type
     from .collection_query import FACETS, INTERFACES
@@ -107,5 +107,5 @@ def validate_query(q, complete=False):
     proxy["parameters"] = {n: "string" for n in params} or {"unused": "string"}
     proxy["predicate"] = dict(field=key, operator="equals", operand={"constant": ""})
     proxy["comparison"] = dict(case="sensitive", normalization="none")
-    old_validate(proxy, complete=complete)
+    old_validate(proxy, complete=complete, occurrence_order=occurrence_order)
     return copy.deepcopy(q)

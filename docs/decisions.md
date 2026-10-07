@@ -1,5 +1,28 @@
 # Experimental decisions
 
+## R5.110 — Compose ordinary durable records under one atomic frame
+
+History describes persistent state created with a successful operation. Reuse
+ordinary typed related entities, before/after/input/literal/resource bindings,
+finite creation occurrence order, closed operation authority and one existing
+store replacement. Refine K22's declared bounded frame to primary plus up to eight
+record creations; no Event/Audit/Log/Transaction/Effect core is warranted. Shared
+declared capability observation is once per operation, including primary creation.
+Append-only is a restricted operation interface; queries remain CollectionQuery.
+
+Keep numeric sequence values distinct from order. An authorized append-only ordinal
+may derive from cardinality, but current normal integer/value-source integration is
+absent. Arbitrary stored counter/max successor would need arithmetic. Neither an
+implicit max+1 rule nor a numeric value backend shortcut is added. Exact inherited
+kernel stays 23. Lock semantics before exposed transfer; no outcome-driven repair.
+
+Tradeoff: the bounded generic family executes, while B18's required numeric fields
+and inherited primary actor parameter/authorization binding still reject coverage.
+Its new structural halt is a more precise prospective diagnosis, not stage progress
+or success. Preserve B17/B20 ambiguities and B19's arithmetic boundary. Future typed
+numeric/cardinality and actor composition work requires separate authorization.
+See the [R5.110 report](../benchmark/results/phase5c/R5_110-REPORT.md).
+
 ## 2026-10-07 — Use family-level LFS rules and a staged-size guard
 
 Replace per-file LFS entries with round-independent patterns for bulk evidence and

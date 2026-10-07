@@ -20,7 +20,18 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
-**R5.109 implements bounded persistent references and cross-entity integrity.**
+**R5.110 implements bounded atomic durable history by composition.**
+[Ordinary typed history records and atomic coupled creations](docs/atomic-durable-history-v1.md)
+execute through the normal pipeline with declared shared clocks, rollback, history
+queries and append-only operation restrictions. No new core primitive; proposed
+kernel stays **23**. **379 tests**, canonical validation/safety and **105 synthetic
+external invocations** pass. [Fresh locked transfer](benchmark/results/phase5c/R5_110-REPORT.md)
+retains **16/20 successes B01–B16**, **447 invocations**. B18 is now structurally
+blocked by numeric history values and primary actor bindings; numeric generation
+is not implemented. B17/B20 remain disputed, B19 remains outside implemented scope.
+No held-out/cumulative claim; stop after R5.110.
+
+**Preserved R5.109 implements bounded persistent references and cross-entity integrity.**
 [Typed reference fields, existence, restrictive deletion and related-state guards](docs/persistent-references-v1.md)
 compose through the normal pipeline; cycle rejection justifies one explicit
 finite nonempty-path reachability candidate. Proposed kernel **22 → 23**.

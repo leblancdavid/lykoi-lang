@@ -38,7 +38,8 @@ VALUES["predicate_semantics"] = semantics()
 def relation_schema():
     from lykoi_pipeline.mutable_profile import PROFILE
     from .reference_schema import schema as reference_schema
-    values = {**VALUES, "reference_semantics": reference_schema()}
+    from .atomic_state_schema import schema as atomic_schema
+    values = {**VALUES, "reference_semantics": reference_schema(), "atomic_state_semantics": atomic_schema()}
     return {"anyOf": [obj({"kind": {"enum": ["crud"]}, "parameters": obj({"profile": {"enum": [PROFILE]}, "facet": {"enum": [facet]}, "value": schema})}) for facet, schema in values.items()]}
 
 

@@ -1,5 +1,32 @@
 # Lykoi research log
 
+## R5.110 atomic durable history by composition (2026-10-07)
+
+**`R5_110_ATOMIC_DURABLE_HISTORY_IMPLEMENTED_BY_COMPOSITION`.** Ordinary typed
+durable record creation composes with existing primary writes under one local atomic
+replacement. Declared shared clock/ID resources, explicit occurrence or timestamp/ID
+query order, closed append-only operation authority and empty migration initialization
+execute through normal FRC/coverage/BDI/adequacy/V1/compiler/backend. No new core
+primitive; proposed count remains exactly 23.
+
+Verification passes **379 tests**, canonical validation/safety and **105 published
+external invocations** in five domains. Controlled subprocess probes verify shared
+primary/history clocks, multiple creations, failure rollback and query reload.
+Generic implementation/spec/tests/accounting locked before all fresh exposed
+captures/outcomes; byte identity survives transfer. **16/20 local successes B01–B16**,
+**447 invocations**. B18's ordinary-state numeric/actor requirements now halt at
+structural coverage, with no newly reached downstream stage; its old external-effect
+BDI result remains historical. B17/B20 remain disputed, B19 remains structural.
+
+Numeric generation is not implemented. Cardinality-derived ordinals might compose
+the existing kernel under explicit authority but need normal integer/value binding;
+arbitrary counter/max successor needs computation outside this round. Related actor
+inputs do not supply inherited primary actor/authorization bindings. Same-agent
+captures/inventories/plans and synthetic approval remain limits; no held-out or
+cumulative achievement claim. Stop after R5.110, with numeric/cardinality boundary
+and actor composition closure only recommended. No infrastructure or arithmetic/B19
+work began. See the [report](../benchmark/results/phase5c/R5_110-REPORT.md).
+
 ## Recurring artifact storage handling (2026-10-07)
 
 R5.109's `TRANSFER-EVIDENCE.json` reached 151,027,731 bytes and escaped the earlier

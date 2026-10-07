@@ -7,7 +7,18 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
-- Current bounded reference policy is R5.109:
+- Current bounded atomic-state policy is R5.110:
+  `R5_110_ATOMIC_DURABLE_HISTORY_IMPLEMENTED_BY_COMPOSITION`. Read
+  `docs/atomic-durable-history-v1.md` and `benchmark/results/phase5c/R5_110-REPORT.md`
+  before extension. Ordinary typed durable state + bounded related creations share
+  one existing local atomic commit. Explicit occurrence/key query order, shared
+  declared clock/ID capabilities and append-only operation restriction compose;
+  exact R5.109 kernel 23 stays 23. Generic content remains locked through transfer:
+  16 successes B01–B16, B17/B20 disputes, B18 structural numeric-history/primary-actor
+  binding and B19 structural. Numeric sequence generation is not implemented;
+  cardinality-value normal binding and arbitrary arithmetic successor are distinct.
+  Stop after R5.110; no arithmetic/B19, distributed/external effects or infrastructure work.
+- Preserved bounded reference policy is R5.109:
   `R5_109_PERSISTENT_RELATIONSHIPS_IMPLEMENTED_KERNEL_EXTENDED`. Read
   `docs/persistent-references-v1.md` and `benchmark/results/phase5c/R5_109-REPORT.md`
   before extending it. Exact R5.108 baseline 22 is preserved; one explicit finite
