@@ -20,7 +20,18 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
-**R5.111 implements bounded typed computation with an explicit kernel extension.**
+**R5.112 partially integrates primary value/actor/successor interfaces by composition.**
+[Primary signed-64/nullable numeric state, supplied actor context, numeric history
+and same-primary successors](docs/primary-value-interfaces-v1.md) traverse the normal
+pipeline. Explicit absolute UTC-day decoding is separate from unsupported runtime
+N-day duration conversion. Proposed kernel remains **25**. **389 tests**, validation/
+safety and **115 synthetic external invocations** pass. [Fresh locked transfer](benchmark/results/phase5c/R5_112-REPORT.md)
+retains **16/20 successes B01–B16**, **447 invocations**. B18 prewrite authorization
+and B19 conditional duration/effect/image interfaces remain structural; B17/B20
+remain disputed. No new downstream stages; `R5_112_PRIMARY_INTERFACE_COMPOSITION_PARTIAL`.
+Stop after R5.112; no held-out/cumulative claim or new infrastructure.
+
+**Preserved R5.111 implements bounded typed computation with an explicit kernel extension.**
 [Signed-64 integers, cardinality bindings, checked addition and typed fixed-second
 UTC displacement](docs/typed-computation-v1.md) feed related mutation/predicate/
 creation graphs under existing atomicity. No unrestricted expressions; increment,

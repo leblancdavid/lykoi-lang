@@ -14,7 +14,19 @@ do not govern ordinary research or the next held-out benchmark. **R5.101 treats
 B01–B20 as an exposed development/transfer/regression corpus, freely inspectable
 for diagnosis and regression. Their performance cannot establish held-out
 generalization; new generalization needs a new development-unexposed source.**
-**Current bounded computation policy is R5.111:
+**Current primary interface policy is R5.112:
+`R5_112_PRIMARY_INTERFACE_COMPOSITION_PARTIAL`.** Read
+[primary value interfaces](primary-value-interfaces-v1.md) and its
+[report](../benchmark/results/phase5c/R5_112-REPORT.md) before extension. Signed-64/
+nullable primary fields, explicit supplied actor context, cardinality history and
+unconditional same-primary successors compose through the normal path. Absolute
+UTC-day midnight representation is separate from unsupported runtime N-day scaling.
+Kernel remains 25; final generic lock stays exact through transfer: 16 successes,
+B17/B20 disputes, B18 prewrite authorization and B19 conditional duration/effect/image
+bindings structural. No new downstream stages. Stop after R5.112; R5.113 is a
+recommendation only. No new infrastructure or unrestricted/calendar arithmetic.
+
+**Preserved bounded computation policy is R5.111:
 `R5_111_TYPED_COMPUTATION_IMPLEMENTED_KERNEL_EXTENDED`.** Read
 [typed computation](typed-computation-v1.md) and its
 [report](../benchmark/results/phase5c/R5_111-REPORT.md) before extension.

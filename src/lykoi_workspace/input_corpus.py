@@ -37,8 +37,11 @@ def parameters(base, mutable):
             binding=dict(source="cli_flag", flag="--" + n.replace("_", "-"), encoding=encoding),
             missing=dict(kind="application_error", error=error) if required else None))
     for i in create["inputs"]:
+        context = next((p for p in mutable.get("primary_interfaces", {}).get("context_inputs", []) if p["command"] == command and p["name"] == i["name"]), None)
+        if context:
+            continue
         a = next(a for a in create["assignments"] if a.get("id") == i["id"])
-        encoding = next((c["creation"]["encoding"] for c in mutable["collections"] if c["creation"].get("input") == i["name"]), "text")
+        encoding = "json" if types[fields[a["field"]]]["type"] == "integer" else next((c["creation"]["encoding"] for c in mutable["collections"] if c["creation"].get("input") == i["name"]), "text")
         add(command, i["name"], types[fields[a["field"]]], a["source"] == "input", encoding, "missing_" + i["name"])
     for m in mutable["mutations"]:
         add(m["command"], m["lookup"], types[m["lookup"]], True, "text", "missing_identity")
@@ -46,7 +49,15 @@ def parameters(base, mutable):
             if "source" in w:
                 continue
             typ = types[w["field"]] if w["operation"] == "replace" else types[w["field"]]["element"]
-            add(m["command"], w["input"], typ, w["omitted"] == "reject", "json" if typ["type"] in ("collection", "boolean") else "text", w["missing_error"])
+            add(m["command"], w["input"], typ, w["omitted"] == "reject", "json" if typ["type"] in ("collection", "boolean", "integer") else "text", w["missing_error"])
+    from air_compiler.references import erase
+    for p in mutable.get("primary_interfaces", {}).get("context_inputs", []):
+        add(p["command"], p["name"], erase(p["type"]), True, "text", p["missing_error"])
+        behavior = next((b for b in model["behaviors"] if any(c.get("behavior") == b["id"] and c["token"] == p["command"] for c in model["commands"])), None)
+        if behavior and behavior["kind"] != "create":
+            for i in behavior["inputs"]:
+                if i["name"] != p["name"]:
+                    add(p["command"], i["name"], types[i["name"]], True, "text", "missing_identity")
     return result
 
 

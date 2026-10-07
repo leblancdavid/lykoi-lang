@@ -1,5 +1,37 @@
 # Lykoi research log
 
+## R5.112 primary interface composition (2026-10-07)
+
+**`R5_112_PRIMARY_INTERFACE_COMPOSITION_PARTIAL`.** Normal typed primary signed-64/
+nullable fields, distinct creation and migration values, supplied actor context,
+cardinality-derived history and unconditional same-primary successors execute by
+composition. Exact absolute Gregorian UTC-day input denotes midnight UTC under
+declared conversion policy. Runtime N-day duration dimension/scaling is separately
+unsupported; no new core meaning is smuggled into a backend conversion. Kernel **25**.
+
+**389 passing tests**, canonical validation/safety and **115 published synthetic
+external invocations** across Inventory/Document/Account/Session/Renewal precede the
+generic lock. Tests challenge reconciliation, structural/V1 loss, missing BDI authority,
+numeric host leaks, nullable presence, independent historical values, failed persistence,
+corrupted reload and rejected-operation byte preservation. Pre-lock diagnostics repaired
+a synthetic query's missing tie-break key. Timed-out focused/full verification commands
+were superseded/resumed on exact source-bound receipts; final suites passed. A generic
+publication invocation needed the repo root in PYTHONPATH, corrected before locking.
+
+Fresh exposed transfer retains **16/20 B01–B16**, **447 invocations**. B18's six numeric
+history operations and actor parameters now project structurally, leaving one unsupported
+prewrite role/owner authorization demand. B19's numeric field/migration projects, leaving
+authorization and conditional duration/refinement/effect/image integration. No newly
+reached downstream stage or partial benchmark success. B17/B20 still disputed. Transfer
+timeout after B13 resumed locked candidates; generic/history pins remained exact.
+
+Full closure is not claimed: computed legacy creation, nullable arithmetic refinement,
+authenticated actor adapters, prewrite role policies, conditional effect membership and
+secondary-created-image bindings remain. Recommend bounded source-authorized context/
+permission and effect/image composition plus a separate dimensioned-duration investigation
+for R5.113. No next round, benchmark-specific primitive or infrastructure work begun.
+See the [R5.112 report](../benchmark/results/phase5c/R5_112-REPORT.md).
+
 ## R5.111 typed computation and arithmetic boundary (2026-10-07)
 
 **`R5_111_TYPED_COMPUTATION_IMPLEMENTED_KERNEL_EXTENDED`.** Signed-64 integers,

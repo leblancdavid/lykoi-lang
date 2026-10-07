@@ -190,9 +190,13 @@ def compose(ir, f):
         require(op["kind"] in ("create", "update", "delete", "list"), "Bounded one-record effects")
         e = op["entity"]
         for n, p in op["parameters"].items():
-            keys(p, ("type", "flag", "encoding", "missing_error", "invalid_error"))
+            keys(p, ("type", "flag", "encoding", "missing_error", "invalid_error") + (("conversion",) if "conversion" in p else ()))
             value_type(p["type"], types)
-            require(p["flag"].startswith("--") and p["encoding"] in ("text", "json") and all(type(p[k]) is str and bool(p[k]) for k in ("missing_error", "invalid_error")), "Explicit parameter transport/errors")
+            require(p["flag"].startswith("--") and p["encoding"] in ("text", "json", "utc_day") and all(type(p[k]) is str and bool(p[k]) for k in ("missing_error", "invalid_error")), "Explicit parameter transport/errors")
+            if p["encoding"] == "utc_day":
+                require(same_type(p["type"], dict(type="timestamp", domain=[])) and p.get("conversion") == dict(source="gregorian_utc_day", target="instant", boundary="start_of_day", timezone="UTC", precision="seconds", invalid="reject"), "Exact date-to-instant representation authority")
+            else:
+                require("conversion" not in p, "No undeclared transport conversion")
         require(len({p["flag"] for p in op["parameters"].values()}) == len(op["parameters"]), "Unique parameter flags")
         params = {n: p["type"] for n, p in op["parameters"].items()}
         computed = {}

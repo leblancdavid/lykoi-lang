@@ -43,8 +43,10 @@ def compose(ir, references, facts):
             require(kind in ("create", "transition", "delete", "update"), "No creation on readonly command")
             params = {p["parameter"]: p["type"] for p in ir["facts"].get("input_contracts", []) if p["operation"] == cmd}
             if cmd in behaviors and kind != "create":
-                params = {i["name"]: identity(primary) for i in behaviors[cmd]["inputs"]}
+                params = {i["name"]: params.get(i["name"], identity(primary)) for i in behaviors[cmd]["inputs"]}
             if ids[primary] in params: params[ids[primary]] = identity(primary)
+            from .primary_interfaces import contexts
+            params.update(contexts(ir["facts"], cmd))
         require(op["parameters"] == params, "Exact existing primary input authority")
         resources = {}
         for r in op["resources"]:
@@ -62,7 +64,7 @@ def compose(ir, references, facts):
         for creation in op["creations"]:
             keys(creation, ("entity", "bindings", "duplicate_error"))
             e = creation["entity"]
-            require(e in types and e != primary, "Ordinary related record creation")
+            require(e in types, "Ordinary typed record creation, including same-primary successor")
             require(type(creation["duplicate_error"]) is str and bool(creation["duplicate_error"]), "Declared duplicate error")
             require(set(creation["bindings"]) == set(types[e]), "Complete authorized typed payload; no JSON blob")
             for n, b in creation["bindings"].items():

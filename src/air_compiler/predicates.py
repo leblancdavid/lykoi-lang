@@ -29,7 +29,7 @@ def scalar_type(t):
     else:
         require(set(t) in ({"type", "domain"}, {"type", "domain", "nullable"}), "Explicit scalar type/domain")
         require(t["type"] in ("string", "identifier", "enum", "boolean", "timestamp", "integer"), "Closed scalar value types")
-        require(type(t.get("nullable", False)) is bool and (not t.get("nullable", False) or t["type"] == "timestamp"), "Timestamp nullability only")
+        require(type(t.get("nullable", False)) is bool and (not t.get("nullable", False) or t["type"] in ("timestamp", "integer")), "Bounded timestamp/integer nullability")
         require((t["type"] == "enum" and type(t["domain"]) is list and bool(t["domain"]) and all(type(x) is str for x in t["domain"]) and len(set(t["domain"])) == len(t["domain"])) or (t["type"] != "enum" and t["domain"] == []), "Exact scalar domain")
     return t
 

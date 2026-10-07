@@ -223,8 +223,28 @@ def migrate():
     return {"migrated": len(records) if changed else 0}
 
 
+def reference_inputs(op, inputs):
+    inputs = copy.deepcopy(inputs)
+    for n, p in op["parameters"].items():
+        if n not in inputs:
+            raise Failure(p["missing_error"])
+        if p["encoding"] == "utc_day":
+            try:
+                day = inputs[n]
+                if type(day) is not str or not re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}", day):
+                    raise ValueError()
+                datetime.strptime(day, "%Y-%m-%d")
+                inputs[n] = day + "T00:00:00Z"
+            except (ValueError, TypeError):
+                raise Failure(p["invalid_error"])
+        if not mutable_value_valid(inputs[n], p["type"]):
+            raise Failure(p["invalid_error"])
+    return inputs
+
+
 def reference_operation(op, inputs):
     global _reference_touched
+    inputs = reference_inputs(op, inputs)
     before = reference_rows()
     rows = before[op["entity"]]
     key = REFERENCE["identities"][op["entity"]]
@@ -290,7 +310,7 @@ def reference_main(base_main):
             if p["encoding"] == "json":
                 try: inputs[n] = json.loads(inputs[n])
                 except ValueError: raise Failure(p["invalid_error"])
-            if not mutable_value_valid(inputs[n], p["type"]): raise Failure(p["invalid_error"])
+            if p["encoding"] != "utc_day" and not mutable_value_valid(inputs[n], p["type"]): raise Failure(p["invalid_error"])
         result = reference_operation(op, inputs)
         print(json.dumps(result, sort_keys=True, ensure_ascii=False))
         return 0

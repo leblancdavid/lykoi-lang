@@ -87,7 +87,7 @@ def pipeline(steps, typ):
 def compose(base, facts):
     """Validate the new algebra and lower to a typed model plus atomic-write nodes."""
     from lykoi_pipeline.scalar_profile import name, command_name
-    names = ("collections", "mutations", "creation_pipelines") + (("input_contracts",) if "input_contracts" in facts else ()) + (("predicate_semantics",) if "predicate_semantics" in facts else ())
+    names = ("collections", "mutations", "creation_pipelines") + tuple(n for n in ("input_contracts", "predicate_semantics", "primary_interfaces") if n in facts)
     keys(facts, names)
     d = copy.deepcopy(base)
     require(len(d["state"]) == 1, "Single-record, single-store profile")
@@ -104,6 +104,9 @@ def compose(base, facts):
     identity = next(n for n, f in fields.items() if f["id"] == state["key_field"])
     create = next(b for b in d["behaviors"] if b["kind"] == "create")
     create_command = next(c for c in d["commands"] if c.get("behavior") == create["id"])
+    if "primary_interfaces" in facts:
+        from .primary_interfaces import integrate
+        integrate(d, facts["primary_interfaces"], fields, value_types, record, create)
     semantics = facts.get("predicate_semantics")
     if semantics is not None:
         from .predicate_integration import add_booleans
@@ -233,4 +236,9 @@ def compose(base, facts):
     if "input_contracts" in facts:
         from .input_values import validate_contracts
         validate_contracts(d, value_types, facts)
+    for p in facts.get("primary_interfaces", {}).get("context_inputs", []):
+        require(p["command"] in commands, "Context binds an existing primary operation")
+        mutation = next((m for m in facts["mutations"] if m["command"] == p["command"]), None)
+        if mutation:
+            require(p["name"] not in {mutation["lookup"]} | {w["input"] for w in mutation["changes"] if "input" in w}, "Context cannot shadow mutation inputs")
     return dict(version=VERSION, base=copy.deepcopy(base), model=d, value_types=value_types, facts=copy.deepcopy(facts))

@@ -46,7 +46,7 @@ def valid_state(records, state, record_type):
     names = {f["name"] for f in record_type["fields"]}
     if any(type(r) is not dict or set(r) != names or any(not mutable_value_valid(r[n], t) for n, t in MUTABLE["value_types"].items()) for r in records):
         return False
-    collection_names = {c["name"] for c in MUTABLE["facts"]["collections"]} | {b["name"] for b in MUTABLE["facts"].get("predicate_semantics", {}).get("booleans", [])}
+    collection_names = {c["name"] for c in MUTABLE["facts"]["collections"]} | {b["name"] for b in MUTABLE["facts"].get("predicate_semantics", {}).get("booleans", [])} | {n["name"] for n in MUTABLE["facts"].get("primary_interfaces", {}).get("integers", [])}
     scalar_type = {**record_type, "fields": [f for f in record_type["fields"] if f["name"] not in collection_names]}
     if not _scalar_valid_state([{k: v for k, v in r.items() if k not in collection_names} for r in records], state, scalar_type):
         return False
@@ -58,7 +58,7 @@ def mutable_pipeline(value, steps, typ, error):
     value = copy.deepcopy(value)
     # Raw shape must be safe for transformations. Uniqueness is validated at the
     # final/stated typed stage, so explicitly authorized dedup can repair it.
-    shape_ok = (type(value) is list and all(type(x) is str for x in value)) if typ["type"] == "collection" else type(value) is bool if typ["type"] == "boolean" else (type(value) is str or (value is None and typ.get("nullable", False)))
+    shape_ok = (type(value) is list and all(type(x) is str for x in value)) if typ["type"] == "collection" else mutable_value_valid(value, typ) if typ["type"] in ("boolean", "integer", "duration") else (type(value) is str or (value is None and typ.get("nullable", False)))
     if not shape_ok:
         raise Failure(error)
     for step in steps:
@@ -93,6 +93,7 @@ def mutable_pipeline(value, steps, typ, error):
 
 
 def execute_mutation(mutation, inputs):
+    primary_context_validate(mutation["command"], inputs)
     state = SPEC["state"][0]
     record_type, path = state_layout(state)
     records = read_state(state, record_type, path)
@@ -140,6 +141,7 @@ def execute_mutation(mutation, inputs):
 def execute(behavior, inputs, clock=None, *, providers=None):
     inputs = copy.deepcopy(inputs)
     command = next(c["token"] for c in SPEC["commands"] if c.get("behavior") == behavior["id"])
+    primary_context_validate(command, {i["name"]: inputs[i["id"]] for i in behavior["inputs"] if i["id"] in inputs})
     guards = [g for g in MUTABLE["facts"].get("predicate_semantics", {}).get("guards", []) if g["command"] == command]
     if guards:
         state = SPEC["state"][0]
@@ -161,7 +163,7 @@ def execute(behavior, inputs, clock=None, *, providers=None):
                     if p["missing"]["kind"] == "cli_rejection":
                         raise MissingExternalInput(p["parameter"])
                     raise Failure(p["missing"]["error"])
-        pipelines = MUTABLE["facts"]["creation_pipelines"] + [dict(field=c["name"], pipeline=c["creation"]["pipeline"], error=c["creation"]["error"]) for c in MUTABLE["facts"]["collections"] if c["creation"].get("source") != "literal"]
+        pipelines = MUTABLE["facts"]["creation_pipelines"] + [dict(field=c["name"], pipeline=c["creation"]["pipeline"], error=c["creation"]["error"]) for c in MUTABLE["facts"]["collections"] if c["creation"].get("source") != "literal"] + [dict(field=c["name"], pipeline=c["creation"]["pipeline"], error=c["creation"]["error"]) for c in MUTABLE["facts"].get("primary_interfaces", {}).get("integers", []) if c["creation"]["source"] != "literal"]
         for p in pipelines:
             field = next(f for f in MUTABLE["model"]["types"] if f["kind"] == "record")["fields"]
             fid = next(f["id"] for f in field if f["name"] == p["field"])
@@ -221,7 +223,7 @@ def mutable_main(argv=None):
                         except ValueError:
                             raise Failure(decl["creation"]["error"])
                     inp = next(i for i in b["inputs"] if i["id"] == arg["input"])
-                    if inp["type"] not in ("prim:string", "prim:timestamp") and by_id("types", inp["type"])["kind"] == "enum" and value not in by_id("types", inp["type"])["values"]:
+                    if inp["type"] not in ("prim:string", "prim:timestamp", "prim:integer") and by_id("types", inp["type"])["kind"] == "enum" and value not in by_id("types", inp["type"])["values"]:
                         parser.error("invalid choice: " + value)
                     inputs[arg["input"]] = value
                 result = execute(b, inputs)
@@ -257,7 +259,7 @@ def input_main(argv=None):
         for p in parameters:
             n = p["parameter"]
             if n in parsed and p["binding"]["encoding"] == "json":
-                error = next(w["invalid_error"] for w in mutation["changes"] if w["input"] == n) if mutation else next(c["creation"]["error"] for c in MUTABLE["facts"]["collections"] if c["creation"].get("input") == n)
+                error = next(w["invalid_error"] for w in mutation["changes"] if w.get("input") == n) if mutation else next(c["creation"]["error"] for c in MUTABLE["facts"]["collections"] + MUTABLE["facts"].get("primary_interfaces", {}).get("integers", []) if c["creation"].get("input") == n)
                 try:
                     parsed[n] = json.loads(parsed[n])
                 except ValueError:
@@ -275,3 +277,14 @@ def input_main(argv=None):
 
 
 main = input_main
+
+
+def primary_context_validate(command, inputs):
+    for p in MUTABLE["facts"].get("primary_interfaces", {}).get("context_inputs", []):
+        if p["command"] != command:
+            continue
+        if p["name"] not in inputs:
+            raise Failure(p["missing_error"])
+        v = inputs[p["name"]]
+        if not mutable_value_valid(v, p["type"]) or not v.strip():
+            raise Failure(p["invalid_error"])

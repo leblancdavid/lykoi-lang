@@ -120,7 +120,7 @@ def execute_mutation(mutation, inputs, *, providers=None):
 
 
 def reference_operation(op, inputs, *, providers=None):
-    return atomic_call(op["command"], inputs, lambda: _atomic_related(op, inputs), providers)
+    return atomic_call(op["command"], reference_inputs(op, inputs), lambda: _atomic_related(op, inputs), providers)
 
 
 def atomic_state_main(base_main):

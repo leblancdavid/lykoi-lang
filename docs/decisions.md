@@ -1,5 +1,27 @@
 # Experimental decisions
 
+## R5.112 — Bind primary interfaces explicitly; distinguish dates from durations
+
+Introduce primary signed-64/nullable field and explicit supplied actor-context facets
+through existing normal typed profiles. Keep creation defaults independent from
+historical migration values. Extend existing atomic typed creation to the primary
+entity type; require complete field provenance, nominal identity and declared resources.
+History remains ordinary durable state with operation-before cardinality plus a checked
+offset. These are compositions/interfaces, not new Event/Audit/RecurringTask primitives.
+Proposed kernel stays **25**.
+
+An absolute UTC day denotes an instant only under an explicit start-of-day policy;
+admit exact midnight UTC representation, reject invalid date/timezone spellings.
+Do not hide runtime N-day-to-seconds scaling in an adapter: duration dimension and
+scale are separate authority. No core growth is proposed without further evidence.
+
+Tradeoff: explicit primary actor transport is verified, but commit-time history
+integrity is not prewrite role/owner authorization. Unconditional same-primary creation
+is verified, but conditional membership and secondary-created-image consumers remain
+unclosed. Classify **`R5_112_PRIMARY_INTERFACE_COMPOSITION_PARTIAL`**, retain B17/B20
+disputes and B18/B19 structural halts, and preserve generic content after transfer.
+See the [R5.112 report](../benchmark/results/phase5c/R5_112-REPORT.md).
+
 ## R5.111 — Count operation meanings, keep computation graphs bounded
 
 Define integers mathematically as signed-64 values with negative values, JSON integer

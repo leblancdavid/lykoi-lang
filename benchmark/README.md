@@ -1,6 +1,20 @@
 # Phase 5: comparative maintenance benchmark
 
-## R5.111 typed computation and frozen exposed transfer
+## R5.112 primary interface composition and frozen exposed transfer
+
+The [report](results/phase5c/R5_112-REPORT.md) and
+[matrix](results/phase5c/R5_112-CAPABILITY-MATRIX.md) retain **16/20 local successes
+B01–B16**, **447 fresh transfer invocations**. Primary numeric/null state, supplied
+actor context, cardinality history and unconditional same-primary successors compose;
+absolute UTC-day decoding is explicitly defined. Kernel remains **25**. **389 tests**,
+validation/safety and **115 synthetic external invocations** precede the content lock.
+B18 prewrite authorization and B19 duration/refinement/conditional effect/image bindings
+remain structural; no new downstream stages. B17/B20 remain disputed. Classification
+is `R5_112_PRIMARY_INTERFACE_COMPOSITION_PARTIAL`, not full closure. Historical evidence
+preserved; no post-outcome repair, held-out/cumulative claim or infrastructure work.
+Stop after R5.112.
+
+## Preserved R5.111 typed computation and frozen exposed transfer
 
 The [report](results/phase5c/R5_111-REPORT.md) and
 [matrix](results/phase5c/R5_111-CAPABILITY-MATRIX.md) retain **16/20 local successes

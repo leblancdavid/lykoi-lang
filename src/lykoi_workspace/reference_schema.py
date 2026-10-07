@@ -26,12 +26,13 @@ def condition(selection=True):
 def schema():
     fields = {"type": "object", "additionalProperties": TYPE}
     parameter = obj({"type": TYPE, "flag": TEXT, "encoding": {"enum": ["text", "json"]}, "missing_error": TEXT, "invalid_error": TEXT})
+    day_parameter = obj({"type": TYPE, "flag": TEXT, "encoding": {"enum": ["utc_day"]}, "missing_error": TEXT, "invalid_error": TEXT, "conversion": obj({"source": {"enum": ["gregorian_utc_day"]}, "target": {"enum": ["instant"]}, "boundary": {"enum": ["start_of_day"]}, "timezone": {"enum": ["UTC"]}, "precision": {"enum": ["seconds"]}, "invalid": {"enum": ["reject"]}})})
     policy = obj({"policy": {"enum": ["required", "unchecked", "restrict", "permit", "unavailable"]}, "error": ERROR})
     guard = obj({"predicate": condition(), "error": TEXT})
     result = obj({"primary": TEXT,
         "entities": array(obj({"name": TEXT, "key": TEXT, "fields": fields, "initial": array({"type": "object", "additionalProperties": VALUE})})),
         "references": array(obj({"entity": TEXT, "field": TEXT, "target": TEXT, "existence": policy, "deletion": policy, "migration": {"anyOf": [{"type": "null"}, obj({"when": {"enum": ["missing_or_empty"]}, "value": VALUE})]}})),
-        "operations": array(obj({"command": TEXT, "entity": TEXT, "kind": {"enum": ["create", "update", "delete", "list"]}, "parameters": {"type": "object", "additionalProperties": parameter}, "lookup": ERROR, "missing_error": ERROR, "duplicate_error": ERROR, "changes": array(obj({"field": TEXT, "source": SOURCE, "operation": {"enum": ["replace", "append", "add_unique", "remove"]}, "invalid_error": TEXT})), "guards": array(guard), "order": array(TEXT)})),
+        "operations": array(obj({"command": TEXT, "entity": TEXT, "kind": {"enum": ["create", "update", "delete", "list"]}, "parameters": {"type": "object", "additionalProperties": {"anyOf": [parameter, day_parameter]}}, "lookup": ERROR, "missing_error": ERROR, "duplicate_error": ERROR, "changes": array(obj({"field": TEXT, "source": SOURCE, "operation": {"enum": ["replace", "append", "add_unique", "remove"]}, "invalid_error": TEXT})), "guards": array(guard), "order": array(TEXT)})),
         "guards": array(obj({"command": TEXT, "parameters": fields, "predicate": condition(), "error": TEXT})),
         "commit": obj({"scope": {"enum": ["one_store"]}, "mutation": {"enum": ["one_record"]}, "isolation": {"enum": ["exclusive_operation"]}, "rejection": {"enum": ["unchanged"]}})})
     from .computation_schema import graph

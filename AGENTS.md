@@ -7,7 +7,19 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
-- Current bounded computation policy is R5.111:
+- Current primary interface policy is R5.112:
+  `R5_112_PRIMARY_INTERFACE_COMPOSITION_PARTIAL`. Read
+  `docs/primary-value-interfaces-v1.md` and `benchmark/results/phase5c/R5_112-REPORT.md`
+  before extension. Signed-64/nullable primary fields, explicitly supplied primary
+  actor context, cardinality history and unconditional same-primary successors
+  compose through the normal path. Absolute UTC-day midnight decoding is defined;
+  runtime N-day duration scaling, nullable refinement, conditional atomic membership,
+  secondary-created-image bindings and prewrite role/owner authorization remain gaps.
+  Proposed kernel stays 25; generic lock unchanged through fresh transfer: 16 successes
+  B01–B16, B17/B20 disputes, B18 authorization and B19 conditional duration/effect/image
+  interfaces structural. No new downstream stages. Stop after R5.112; R5.113 remains
+  a recommendation. No new infrastructure, calendar recurrence or unrestricted arithmetic.
+- Preserved bounded computation policy is R5.111:
   `R5_111_TYPED_COMPUTATION_IMPLEMENTED_KERNEL_EXTENDED`. Read
   `docs/typed-computation-v1.md` and `benchmark/results/phase5c/R5_111-REPORT.md`
   before extension. Signed-64 integers/cardinality bindings, checked addition and

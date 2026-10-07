@@ -1,7 +1,7 @@
 """Closed bounded producer schema for typed conditions, not executable prose."""
 from .query_schema import obj, array, TEXT
 
-SCALAR = obj({"type": {"enum": ["string", "identifier", "enum", "boolean", "timestamp"]}, "domain": array(TEXT), "nullable": {"type": "boolean"}})
+SCALAR = obj({"type": {"enum": ["string", "identifier", "enum", "boolean", "timestamp", "integer"]}, "domain": array(TEXT), "nullable": {"type": "boolean"}})
 ELEMENT = obj({"type": {"enum": ["string", "identifier", "enum", "timestamp", "integer"]}, "domain": array(TEXT)})
 TYPE = {"anyOf": [SCALAR, ELEMENT, obj({"type": {"enum": ["duration"]}, "domain": array(TEXT), "unit": {"enum": ["seconds"]}}), obj({"type": {"enum": ["collection"]}, "element": ELEMENT, "ordering": {"enum": ["insertion"]}, "duplicates": {"enum": ["allow", "unique"]}, "equality": {"enum": ["exact"]}})]}
 VALUE = {"anyOf": [TEXT, {"type": "boolean"}, {"type": "integer"}, {"type": "null"}, array(TEXT)]}

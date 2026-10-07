@@ -75,7 +75,26 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
-**R5.111 — `R5_111_TYPED_COMPUTATION_IMPLEMENTED_KERNEL_EXTENDED`.**
+**R5.112 — `R5_112_PRIMARY_INTERFACE_COMPOSITION_PARTIAL`.**
+The normal [primary value interface](primary-value-interfaces-v1.md) composes
+signed-64/nullable primary numeric creation/migration/mutation/query, explicitly
+supplied primary actor context, cardinality-derived history and complete same-primary
+successor creation. Absolute Gregorian UTC-day decoding explicitly means midnight
+UTC; runtime integer N-day-to-duration conversion is separately unsupported. Proposed
+kernel remains **25**, with no new core candidate admitted.
+
+The [report](../benchmark/results/phase5c/R5_112-REPORT.md) records **389 passing
+tests**, canonical validation/safety and **115 synthetic external invocations**.
+Generic content/evidence/accounting locks before [fresh exposed transfer](../benchmark/results/phase5c/R5_112-CAPABILITY-MATRIX.md):
+**16/20 successes B01–B16**, **447 invocations**. B18 actor/history facets are now
+represented, leaving inherited prewrite role/owner authorization structural. B19's
+nullable numeric field is represented; runtime duration/refinement, conditional effects,
+secondary-created-image bindings and actor authorization remain structural. No newly
+reached downstream stage. B17/B20 disputes and historical evidence are preserved.
+Recommend composition-first context/permission, conditional effect/image and separately
+dimensioned-duration investigation for R5.113. **Stop after R5.112; no next round begun.**
+
+**Preserved R5.111 — `R5_111_TYPED_COMPUTATION_IMPLEMENTED_KERNEL_EXTENDED`.**
 The bounded [typed computation profile](typed-computation-v1.md) defines signed-64
 integers, finite selection cardinality as a value, checked integer addition and
 separately typed fixed-second UTC displacement. Explicit acyclic local graphs feed

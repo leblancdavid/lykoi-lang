@@ -13,9 +13,14 @@ def validate_contracts(model, types, facts):
     record = next(t for t in model["types"] if t["kind"] == "record")
     fields = {f["id"]: f["name"] for f in record["fields"]}
     expected = {}
+    from .primary_interfaces import contexts
+    from .references import erase
+    context_names = contexts(facts, command["token"])
     for i in create["inputs"]:
+        if i["name"] in context_names:
+            continue
         assignment = next(a for a in create["assignments"] if a.get("id") == i["id"])
-        encoding = next((c["creation"]["encoding"] for c in facts["collections"] if c["creation"].get("input") == i["name"]), "text")
+        encoding = "json" if types[fields[assignment["field"]]]["type"] == "integer" else next((c["creation"]["encoding"] for c in facts["collections"] if c["creation"].get("input") == i["name"]), "text")
         expected[(command["token"], i["name"])] = (types[fields[assignment["field"]]], assignment["source"] == "input", encoding)
     for m in facts["mutations"]:
         expected[(m["command"], m["lookup"])] = (types[m["lookup"]], True, "text")
@@ -23,7 +28,14 @@ def validate_contracts(model, types, facts):
             if "source" in w:
                 continue
             typ = types[w["field"]] if w["operation"] == "replace" else types[w["field"]]["element"]
-            expected[(m["command"], w["input"])] = (typ, w["omitted"] == "reject", "json" if typ["type"] in ("collection", "boolean") else "text")
+            expected[(m["command"], w["input"])] = (typ, w["omitted"] == "reject", "json" if typ["type"] in ("collection", "boolean", "integer") else "text")
+    for p in facts.get("primary_interfaces", {}).get("context_inputs", []):
+        expected[(p["command"], p["name"])] = (erase(p["type"]), True, "text")
+        behavior = next((b for b in model["behaviors"] if any(c.get("behavior") == b["id"] and c["token"] == p["command"] for c in model["commands"])), None)
+        if behavior and behavior["kind"] != "create":
+            for i in behavior["inputs"]:
+                if i["name"] != p["name"]:
+                    expected[(p["command"], i["name"])] = (types[i["name"]], True, "text")
     seen, flags = set(), set()
     for p in declarations:
         keys(p, ("operation", "parameter", "type", "presence", "binding", "missing"))
@@ -45,14 +57,14 @@ def validate_contracts(model, types, facts):
             if p["missing"].get("kind") == "application_error":
                 keys(p["missing"], ("kind", "error")); name(p["missing"]["error"])
                 mutation = next((m for m in facts["mutations"] if m["command"] == p["operation"]), None)
-                if mutation and p["parameter"] != mutation["lookup"]:
+                if mutation and p["parameter"] != mutation["lookup"] and p["parameter"] not in contexts(facts, p["operation"]):
                     w = next(w for w in mutation["changes"] if w["input"] == p["parameter"])
                     require(w["missing_error"] == p["missing"]["error"], "Missing-input authority agrees across API and external binding")
             else:
                 keys(p["missing"], ("kind",))
                 require(p["missing"]["kind"] == "cli_rejection", "Declared structured application error or external missing-input rejection")
                 mutation = next((m for m in facts["mutations"] if m["command"] == p["operation"]), None)
-                if mutation and p["parameter"] != mutation["lookup"]:
+                if mutation and p["parameter"] != mutation["lookup"] and p["parameter"] not in contexts(facts, p["operation"]):
                     w = next(w for w in mutation["changes"] if w["input"] == p["parameter"])
                     require(w["missing_error"] is None, "CLI rejection must not fabricate an API application error")
         else:

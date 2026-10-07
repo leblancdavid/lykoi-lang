@@ -10,6 +10,7 @@ INPUT_FACET = "input_contracts"
 PREDICATE_FACET = "predicate_semantics"
 REFERENCE_FACET = "reference_semantics"
 ATOMIC_FACET = "atomic_state_semantics"
+PRIMARY_FACET = "primary_interfaces"
 
 
 def typed(relation):
@@ -41,7 +42,7 @@ def split(contract):
         require(o["relation"]["kind"] == "crud", "Typed mutation relation kind")
         p = o["relation"]["parameters"]
         keys(p, ("profile", "facet", "value"))
-        require(p["facet"] in FACETS + (INPUT_FACET, PREDICATE_FACET, REFERENCE_FACET, ATOMIC_FACET) and p["facet"] not in values, "Unknown or repeated mutation facet")
+        require(p["facet"] in FACETS + (INPUT_FACET, PREDICATE_FACET, REFERENCE_FACET, ATOMIC_FACET, PRIMARY_FACET) and p["facet"] not in values, "Unknown or repeated mutation facet")
         values[p["facet"]] = copy.deepcopy(p["value"])
     closure = contract["context"]["domains"].get("input_value_profile")
     require(closure in (None, "typed-input-values-1"), "Known input/value profile")
@@ -64,7 +65,9 @@ def split(contract):
         return type(v) is list and any(numeric(x) for x in v)
     require(not numeric(values) or computation, "Numeric computation requires selected versioned semantics")
     require(atomic in (None, "atomic-durable-state-1") and (not atomic or references), "Explicit atomic state composition selection")
-    require(set(values) == set(FACETS + ((INPUT_FACET,) if closure else ()) + ((PREDICATE_FACET,) if predicates else ()) + ((REFERENCE_FACET,) if references else ()) + ((ATOMIC_FACET,) if atomic else ())), "Every selected profile facet required; empty is explicit")
+    primary = contract["context"]["domains"].get("primary_interface_profile")
+    require(primary in (None, "primary-value-interfaces-1") and (not primary or computation), "Explicit primary computation interfaces")
+    require(set(values) == set(FACETS + ((INPUT_FACET,) if closure else ()) + ((PREDICATE_FACET,) if predicates else ()) + ((REFERENCE_FACET,) if references else ()) + ((ATOMIC_FACET,) if atomic else ()) + ((PRIMARY_FACET,) if primary else ())), "Every selected profile facet required; empty is explicit")
     ir = compose(base, {k: v for k, v in values.items() if k not in (REFERENCE_FACET, ATOMIC_FACET)})
     reference_ir = None
     if references:
@@ -123,7 +126,7 @@ def structural(contract, fid):
     if f:
         for o in contract["obligations"]:
             if typed(o["relation"]):
-                facets.append(dict(origin=o["id"], source_quote=o["source_quote"], kind={"collections": "CollectionMutation", "mutations": "ValueMutation", "creation_pipelines": "TransformationPipeline", "input_contracts": "SemanticParameters", "predicate_semantics": "TypedPredicateSemantics", REFERENCE_FACET: "IdentitySelectionGuardComposition", ATOMIC_FACET: "AtomicStateCreationComposition"}[o["relation"]["parameters"]["facet"]], value=copy.deepcopy(o["relation"]["parameters"]["value"])))
+                facets.append(dict(origin=o["id"], source_quote=o["source_quote"], kind={"collections": "CollectionMutation", "mutations": "ValueMutation", "creation_pipelines": "TransformationPipeline", "input_contracts": "SemanticParameters", "predicate_semantics": "TypedPredicateSemantics", REFERENCE_FACET: "IdentitySelectionGuardComposition", ATOMIC_FACET: "AtomicStateCreationComposition", PRIMARY_FACET: "PrimaryValueContextComposition"}[o["relation"]["parameters"]["facet"]], value=copy.deepcopy(o["relation"]["parameters"]["value"])))
                 if o["relation"]["parameters"]["facet"] == REFERENCE_FACET:
                     for kind, v in (("TypedFieldIdentity", f["references"]["types"]), ("SelectionCardinalityGuard", f["references"]["checks"]), ("AtomicWriteEffect", f["references"]["facts"]["commit"])):
                         facets.append(dict(origin=o["id"], kind=kind, value=copy.deepcopy(v)))
@@ -175,6 +178,10 @@ def bdi(contract, projection):
         if not typed(o["relation"]):
             continue
         p = o["relation"]["parameters"]
+        if p["facet"] == PRIMARY_FACET:
+            for facet, v in p["value"].items():
+                meaning = scalar.json.dumps(v, sort_keys=True)
+                decision(o["id"], "primary/" + facet, meaning, [meaning, "altered_numeric_null_migration_or_actor_authority"], "error")
         if p["facet"] == "collections":
             for c in p["value"]:
                 decision(o["id"], c["name"] + "/duplicates", c["duplicates"], ["allow", "unique"])
