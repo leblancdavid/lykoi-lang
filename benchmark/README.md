@@ -1,5 +1,18 @@
 # Phase 5: comparative maintenance benchmark
 
+## R5.109 persistent references and frozen exposed transfer
+
+The [report](results/phase5c/R5_109-REPORT.md) and
+[matrix](results/phase5c/R5_109-CAPABILITY-MATRIX.md) record **16 local behavioral
+successes B01–B16**, with B14/B15/B16 newly successful, one B19 structural halt,
+B18 external-effect BDI and B17/B20 disputes. Generic implementation/spec/tests
+and exact kernel accounting were locked before all fixed captures/outcomes and
+remain unchanged: **372 tests**, validation/safety, **182 synthetic** and **447
+transfer invocations**. Reference integrity and quantification compose; finite
+nonempty-path reachability is the sole admitted core candidate, taking proposed
+kernel **22 → 23**. Historical results remain intact. Exposed requirement-local
+regression only, no held-out/cumulative claim. Stop after R5.109.
+
 ## R5.107 normal interface closure and fixed exposed transfer
 
 The [report](results/phase5c/R5_107-REPORT.md) and

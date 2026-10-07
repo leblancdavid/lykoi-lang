@@ -1,5 +1,52 @@
 # Experimental decisions
 
+## 2026-10-07 — Use family-level LFS rules and a staged-size guard
+
+Replace per-file LFS entries with round-independent patterns for bulk evidence and
+per-case result JSON under `benchmark/results/`. R5.109's 151 MB transfer export
+exposed the recurring gap in manual filename tracking. Preserve local bytes,
+original observations and pinned records; keep compact captures, locks, manifests
+and reports in regular Git. No historical rewrite or evidence deletion.
+
+A checkout-local pre-commit guard inspects actual staged blobs, rejects at least
+100 MiB ordinary blobs, and detects raw data at paths marked LFS by staged
+attributes. Its installer preserves custom hooks and does not change Git config.
+Family rules handle routine rounds automatically; the guard diagnoses new naming
+families before commit. LFS quotas remain distinct from Git's regular file limit.
+See the [current workflow](../benchmark/artifacts/README.md).
+
+## R5.109 — Compose references; admit only explicit finite-path reachability
+
+Preserve R5.108's exact 22-concept baseline. Refine existing identifier domains
+with nominal target metadata; compose reference fields, sequence policies,
+existence lookup and reverse deletion restriction from typed selection/cardinality
+and outcome/commit authority. Keep errors and deletion policy independently
+source-authorized. No database default supplies missing behavior. A target with
+no exposed deletion may declare deletion unavailable, not guess restrict/permit.
+
+Expose bounded extent as selection/cardinality composition: EXISTS ≥1, NONE =0,
+ALL =0 counterexamples over an explicit related domain. The source/predicate
+defines scope; no Quantifier or finite-domain-scope core is required. One coherent
+store reservation covers related reads, checks and single-record atomic replacement;
+this is not unrestricted transactional authority or serializability evidence.
+
+A fixed-depth selection unroll fails on longer finite paths; the kernel has no
+recursive/fixpoint relation. Reject backend-only graph search as hidden meaning.
+Admit **K23 finite nonempty-path reachability**, typed to one declared self-reference
+projection, with deterministic finite termination. Project prerequisites and
+category parents plus 81-record paths provide bounded multi-domain evidence.
+Proposed kernel **23**, not a minimality proof. No Relationship/ForeignKey/Graph
+primitive, unrestricted recursion, cascade, events or arithmetic is introduced.
+
+The 372-test/182-invocation generic implementation/spec/test lock precedes all
+transfer outcomes and remains exact. Sixteen exposed local successes B01–B16,
+447 invocations, include new B14/B15/B16 results. Same-agent capture/oracle/owner
+limits and requirement-local scope remain explicit. B17/B20 retain missing
+authority; B18/B19 remain outside scope. Recommend bounded atomic effect/durable
+audit composition with explicit sequence authority; stop after R5.109.
+See [semantics](persistent-references-v1.md) and
+[report](../benchmark/results/phase5c/R5_109-REPORT.md).
+
 ## R5.108 — Count independent meaning, retain authority, distinguish support
 
 Adopt the [semantic-kernel audit](semantic-kernel-audit-r5.108.md) as a prospective

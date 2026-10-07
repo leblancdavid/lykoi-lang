@@ -1,5 +1,59 @@
 # Lykoi research log
 
+## Recurring artifact storage handling (2026-10-07)
+
+R5.109's `TRANSFER-EVIDENCE.json` reached 151,027,731 bytes and escaped the earlier
+per-file LFS rules. Family-level evidence/result attributes now cover current and
+future rounds automatically while compact provenance records remain regular Git.
+The local size hook checks staged blobs and LFS pointers before commits. No source
+semantics, frozen publisher or original evidence bytes were changed. Existing Git
+history remains intact. The [storage workflow](../benchmark/artifacts/README.md)
+documents one-time setup, re-staging and manual verification.
+
+## R5.109 persistent references and cross-entity integrity (2026-10-07)
+
+**`R5_109_PERSISTENT_RELATIONSHIPS_IMPLEMENTED_KERNEL_EXTENDED`.** Typed references,
+existence, reverse restrictive deletion and related EXISTS/NONE/ALL execute by
+composition through normal FRC/reconciliation/coverage/BDI/adequacy/V1/compiler.
+Nominal entity metadata distinguishes physically equal IDs; reference collections
+retain independent ordering/duplicate policies. One-store read/check/single-record
+commit uses the existing atomic-commit foundation with an exclusive cooperative
+operation boundary. Migration/retry, reload, stale-target rejection, authority
+losses and failed-commit byte preservation are verified.
+
+Finite domain is an explicit selection obligation. Cycle rejection cannot be
+faithfully reduced to a fixed-depth local selection unroll: no transitive/fixpoint
+meaning exists in the inherited kernel. One core candidate is admitted explicitly,
+**finite nonempty-path reachability**, evidenced in project/category domains and
+81-record paths. Exact pre-round **22** is preserved; proposed kernel now **23**.
+No Relationship, ForeignKey, Graph or Quantifier core was added.
+
+Generic checks pass **372/372 tests**, canonical validation/safety, and six-domain
+external verification across **182 invocations**. Two broad attempts hit the
+inherited per-suite timeout without a complete aggregate; final individual receipts
+and aggregate count passing tests once. A migration-dispatch bug and same-value
+stale-target check were repaired before the generic lock. The new reference schema
+uses native closed-node recursion rather than an exponential schema expansion.
+
+Generic implementation/spec/tests and kernel accounting locked before transfer.
+The capture builder had two construction failures before corpus locking; it was
+corrected without implementation changes. Transfer was interrupted after B01–B13
+receipts and resumed unchanged fixed bytes. Final **16 exposed local successes,
+B01–B16**, **447 invocations**; B14/B15/B16 newly pass every stage. No outcome-driven
+product/candidate/oracle repairs. B17/B20 remain disputed; B18 BDI and B19 structural
+remain. Same-agent capture/inventory/oracle and synthetic-owner limits persist;
+no held-out generalization or cumulative historical achievement is claimed.
+
+Known limits include cooperating single-store isolation, abandoned reservations,
+legacy stored-string filter adapters and related-record creation while an arbitrary
+primary historical schema is unreadable. These are not broader transaction or
+cross-version guarantees. Introduced-line/new-file whitespace checks pass; the
+inherited frozen guidance trailing space remains. Recommend bounded atomic effect
+composition/durable audit with explicit sequence authority; **stop after R5.109**.
+See [specification](persistent-references-v1.md),
+[report](../benchmark/results/phase5c/R5_109-REPORT.md) and
+[matrix](../benchmark/results/phase5c/R5_109-CAPABILITY-MATRIX.md).
+
 ## R5.108 semantic kernel audit and consolidation analysis (2026-10-07)
 
 **`R5_108_SEMANTIC_KERNEL_CONVERGING`**, a bounded analytical assessment.

@@ -8,6 +8,7 @@ from lykoi_controller import Failure
 FACETS = ("collections", "mutations", "creation_pipelines")
 INPUT_FACET = "input_contracts"
 PREDICATE_FACET = "predicate_semantics"
+REFERENCE_FACET = "reference_semantics"
 
 
 def typed(relation):
@@ -39,7 +40,7 @@ def split(contract):
         require(o["relation"]["kind"] == "crud", "Typed mutation relation kind")
         p = o["relation"]["parameters"]
         keys(p, ("profile", "facet", "value"))
-        require(p["facet"] in FACETS + (INPUT_FACET, PREDICATE_FACET) and p["facet"] not in values, "Unknown or repeated mutation facet")
+        require(p["facet"] in FACETS + (INPUT_FACET, PREDICATE_FACET, REFERENCE_FACET) and p["facet"] not in values, "Unknown or repeated mutation facet")
         values[p["facet"]] = copy.deepcopy(p["value"])
     closure = contract["context"]["domains"].get("input_value_profile")
     require(closure in (None, "typed-input-values-1"), "Known input/value profile")
@@ -51,8 +52,14 @@ def split(contract):
             return value.get("result_type") == "boolean" or any(common(v) for v in value.values())
         return type(value) is list and any(common(v) for v in value)
     require(predicates is not None or not common(contract["obligations"]), "New predicates require explicit versioned profile selection")
-    require(set(values) == set(FACETS + ((INPUT_FACET,) if closure else ()) + ((PREDICATE_FACET,) if predicates else ())), "Every selected profile facet required; empty is explicit")
-    ir = compose(base, values)
+    references = contract["context"]["domains"].get("reference_profile")
+    require(references in (None, "persistent-references-1") and (not references or predicates), "Explicit reference composition profile")
+    require(set(values) == set(FACETS + ((INPUT_FACET,) if closure else ()) + ((PREDICATE_FACET,) if predicates else ()) + ((REFERENCE_FACET,) if references else ())), "Every selected profile facet required; empty is explicit")
+    ir = compose(base, {k: v for k, v in values.items() if k != REFERENCE_FACET})
+    reference_ir = None
+    if references:
+        from air_compiler.references import compose as compose_references
+        reference_ir = compose_references(ir, values[REFERENCE_FACET])
     require(ir["model"]["state"][0]["schema_version"] == f["storage"]["version"], "Declared storage version must equal composed migration boundary")
     if prior is not None:
         prior_version = prior["state"][0]["schema_version"]
@@ -76,7 +83,10 @@ def split(contract):
         p = o["relation"]["parameters"]
         if p["facet"] == "storage":
             p["value"] = copy.deepcopy(scalar_f["storage"])
-    return sc, qc, dict(scalar=f, mutable=values, ir=ir, queries=groups)
+    result = dict(scalar=f, mutable=values, ir=ir, queries=groups)
+    if reference_ir is not None:
+        result["references"] = reference_ir
+    return sc, qc, result
 
 
 def facts(contract):
@@ -99,7 +109,10 @@ def structural(contract, fid):
     if f:
         for o in contract["obligations"]:
             if typed(o["relation"]):
-                facets.append(dict(origin=o["id"], source_quote=o["source_quote"], kind={"collections": "CollectionMutation", "mutations": "ValueMutation", "creation_pipelines": "TransformationPipeline", "input_contracts": "SemanticParameters", "predicate_semantics": "TypedPredicateSemantics"}[o["relation"]["parameters"]["facet"]], value=copy.deepcopy(o["relation"]["parameters"]["value"])))
+                facets.append(dict(origin=o["id"], source_quote=o["source_quote"], kind={"collections": "CollectionMutation", "mutations": "ValueMutation", "creation_pipelines": "TransformationPipeline", "input_contracts": "SemanticParameters", "predicate_semantics": "TypedPredicateSemantics", REFERENCE_FACET: "IdentitySelectionGuardComposition"}[o["relation"]["parameters"]["facet"]], value=copy.deepcopy(o["relation"]["parameters"]["value"])))
+                if o["relation"]["parameters"]["facet"] == REFERENCE_FACET:
+                    for kind, v in (("TypedFieldIdentity", f["references"]["types"]), ("SelectionCardinalityGuard", f["references"]["checks"]), ("AtomicWriteEffect", f["references"]["facts"]["commit"])):
+                        facets.append(dict(origin=o["id"], kind=kind, value=copy.deepcopy(v)))
         for o in contract["obligations"]:
             if typed(o["relation"]) and o["relation"]["parameters"]["facet"] == INPUT_FACET:
                 for parameter in o["relation"]["parameters"]["value"]:
@@ -166,6 +179,12 @@ def bdi(contract, projection):
             for i, guard in enumerate(p["value"]["guards"]):
                 behavior = scalar.json.dumps({k: guard[k] for k in ("command", "error", "rejection")}, sort_keys=True)
                 decision(o["id"], "guard/" + str(i) + "/rejection", behavior, [behavior, "unauthorized_error_or_partial_write"], "error")
+        if p["facet"] == REFERENCE_FACET:
+            # Independently inspectable authority for target, existence, deletion,
+            # bindings, finite selection domain and transitive path policy.
+            for facet, v in p["value"].items():
+                meaning = scalar.json.dumps(v, sort_keys=True)
+                decision(o["id"], "reference/" + facet, meaning, [meaning, "omitted_or_altered_reference_authority"], "error" if facet in ("references", "guards") else "later")
         entries = p["value"] if p["facet"] in ("mutations", "creation_pipelines") else []
         for m in entries:
             if p["facet"] == "mutations":
@@ -257,4 +276,10 @@ def formalizer_guidance():
                  "and unrelated facets remain exact. Existing listing base must normalize its actual declared behavior. "
                  "Query preconditions are separate {predicate,error,stage:before_selection,rejection:unchanged}; "
                  "parameter_errors map names to {missing,invalid}. Resource bindings declare name,type,capability," 
-                 "sampling:once_per_query, with an existing UTC clock capability. Never infer composition, errors or clock authority.")
+                  "sampling:once_per_query, with an existing UTC clock capability. Never infer composition, errors or clock authority. "
+                  "For reference_profile persistent-references-1 declare reference_semantics with primary, entities, references, operations, guards, commit. "
+                  "Identity operands retain type identifier, domain [], entity nominal target. Related fields use explicit alias.field namespaces. "
+                  "Reference fields declare target, existence required/unchecked and deletion restrict/permit with authorized errors and explicit migration or null. "
+                  "Related guards compose extent(select(entity,binding,predicate)) eq/ge N. EXISTS is ge 1; NONE is eq 0; ALL is eq 0 over related AND NOT P. "
+                  "Declare the exact domain, missing behavior and exclusive one-store one-record commit; never infer cascade. "
+                  "Cycle guards may explicitly use reachable with same-entity typed source/target, declared field and nonempty paths; this is a new core candidate, not hidden traversal.")

@@ -1,5 +1,55 @@
 # Lykoi experiment artifact storage audit — 2026-10-07
 
+## Current automatic storage workflow
+
+The original audit below is preserved. The subsequent R5.109 transfer export grew
+to 151,027,731 bytes, demonstrating that per-filename LFS rules were insufficient.
+The current `.gitattributes` now automatically routes these families to LFS for
+**all rounds and nested result directories**:
+
+```gitattributes
+benchmark/results/**/*-EVIDENCE*.json filter=lfs diff=lfs merge=lfs -text
+benchmark/results/**/*-B[0-9][0-9]-RESULT.json filter=lfs diff=lfs merge=lfs -text
+```
+
+This preserves raw evidence bytes, research hashes and JSON-reading tools. It
+handles synthetic/initial/final/transfer evidence and per-case terminal results
+without per-round edits. Captures, locks, compact manifests, comparisons, reports,
+source and canonical models stay ordinary Git. Small evidence records in these
+bulk families use LFS too; attributes select by path, not file size.
+
+One-time checkout setup (Git LFS must be installed):
+
+```powershell
+git lfs install
+python benchmark/artifacts/git_storage.py install-hook
+```
+
+The second command installs a local pre-commit check and the LFS upload hook,
+without modifying Git configuration. It refuses to replace a custom pre-commit
+hook. If one already exists, invoke `python benchmark/artifacts/git_storage.py check`
+from that hook. Re-run setup after cloning or moving to a different Python path.
+
+Then stage intended changes and commit/push normally. Commit the updated
+`.gitattributes` with the evidence. Re-add already-staged raw files after the new
+attributes are in place. Older matched regular-Git evidence can appear modified
+as its representation changes to an LFS pointer; ordinary re-addition migrates
+the next revision without altering local evidence or historical commits.
+
+The pre-commit guard checks **actual index blobs**, including files outside the
+LFS families. It rejects blobs at least 100 MiB and staged raw content at a path
+marked `filter=lfs` in the **staged** attributes. This catches missing filters,
+outdated staging and new artifact families locally. Manual/CI command:
+
+```powershell
+python benchmark/artifacts/git_storage.py check
+```
+
+For a genuinely new bulk naming family, add a family-level LFS rule once. Do not
+silently discard observations. Disposable scratch copies still belong in the
+narrowly ignored directories below. This workflow prevents ordinary Git size
+failures; it does not eliminate LFS storage/bandwidth quotas or remote upload errors.
+
 ## Findings
 
 The [compact inventory](storage-audit-2026-10-07.json) records **3,051 files /
@@ -95,9 +145,10 @@ first-result receipts, failures and reports visible to Git. Do not blanket-ignor
 `*.json`, `*-EVIDENCE.json`, `benchmark/results/`, or `generated/`. A hash is an
 integrity commitment, not a backup. Ignore rules do not remove tracked history.
 
-The five oversized originals remain explicitly configured for LFS in
-`.gitattributes`. Future large original evidence should use an explicit LFS path
-or a durable archive with a checked-in retrieval record, rather than be ignored.
+The five oversized originals identified in this audit remain in LFS, now covered
+by the recurring family patterns above. Future original evidence in these families
+is covered automatically; other families need a family-level LFS rule or a durable
+archive with a checked-in retrieval record, rather than being ignored.
 
 ### Proposed future evidence format (not implemented)
 

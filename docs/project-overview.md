@@ -75,6 +75,30 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R5.109 — `R5_109_PERSISTENT_RELATIONSHIPS_IMPLEMENTED_KERNEL_EXTENDED`.**
+The bounded [persistent-reference profile](persistent-references-v1.md) composes
+nominal typed fields/identities, exact existence selection, reverse-reference
+restriction, finite related-state guards and one-store read/check/one-record commit
+through the normal FRC/coverage/BDI/adequacy/V1/compiler/backend. EXISTS/NONE/ALL
+derive from selection/cardinality/predicate/NOT; finite domain remains explicit
+profile authority. Cycle rejection exposes the absent transitive-path relation,
+justifying one new proposed core candidate: finite nonempty-path reachability.
+The exact R5.108 baseline remains **22**; proposed kernel is now **23**.
+
+The [report](../benchmark/results/phase5c/R5_109-REPORT.md) records **372 passing
+tests**, canonical validation/safety and **182 synthetic external invocations**
+across six domains. Generic content and kernel accounting locked before the
+[twenty-case exposed transfer](../benchmark/results/phase5c/R5_109-CAPABILITY-MATRIX.md):
+**16 local successes B01–B16**, with B14/B15/B16 newly verified, **447 invocations**.
+B17/B20 remain disputed, B18 external-effect BDI and B19 structural arithmetic/
+successor gaps remain. No held-out/cumulative claim or post-outcome repair.
+One inherited guidance trailing space remains; new-line whitespace checks pass.
+Atomicity evidence is bounded to cooperating single-store operations, not general
+transactions or crash recovery. Recommend bounded atomic effect composition and
+durable audit history, composition-first; **stop after R5.109**.
+
+### Preserved R5.108 baseline
+
 **R5.108 — `R5_108_SEMANTIC_KERNEL_CONVERGING`.** The documentation-only
 [semantic-kernel audit](semantic-kernel-audit-r5.108.md) recovers the exact inherited
 R5.40/R5.41 **30 candidate concepts / 46 raw ledger entries**. Eighteen original

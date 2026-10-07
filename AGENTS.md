@@ -7,6 +7,17 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Current bounded reference policy is R5.109:
+  `R5_109_PERSISTENT_RELATIONSHIPS_IMPLEMENTED_KERNEL_EXTENDED`. Read
+  `docs/persistent-references-v1.md` and `benchmark/results/phase5c/R5_109-REPORT.md`
+  before extending it. Exact R5.108 baseline 22 is preserved; one explicit finite
+  nonempty-path reachability candidate makes 23. References, existence, restriction
+  and EXISTS/NONE/ALL compose existing core meanings. Generic lock precedes all
+  transfer and stays exact: 16 exposed local successes B01–B16, B17/B20 disputes,
+  B18 external-effect BDI and B19 structural remain. Cooperating one-store/one-record
+  commit is bounded; no arbitrary multi-record effects, cascade or unrestricted
+  recursion. Atomic effect/durable audit composition is a recommendation only.
+  Stop after R5.109; no event/arithmetic or infrastructure work is authorized.
 - R5.96 current policy: `docs/research-workflow-r5.96.md`. Use compatible current
   tooling and the available AI model; machine/model/OpenCode/runtime/transport
   qualification and protected activation/access grants are not research gates.

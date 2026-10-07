@@ -61,7 +61,7 @@ def generate(source):
         contract = mutable_profile.recover(source["contract"])
         p = mutable_profile.structural(contract, mutable_profile.scalar.frc.digest(contract))
         require(mutable_profile.adequate(contract, mutable_profile.bdi(contract, p))["outcome"] == "ADEQUATE", "Mutation contract is not adequate")
-        return generate_mutable(p["facts"]["ir"], list(p["facts"]["queries"].values()))
+        return generate_mutable(p["facts"]["ir"], list(p["facts"]["queries"].values()), p["facts"].get("references"))
     if source["profile"] == "existing-model-1":
         from lykoi_pipeline import model_profile as amendment
         contract = amendment.recover(source["contract"])
@@ -132,7 +132,7 @@ def validate_mutable_storage(storage, queries):
     return ir
 
 
-def generate_mutable(ir, queries):
+def generate_mutable(ir, queries, references=None):
     from .mutable_values import compose
     require(compose(ir["base"], ir["facts"]) == ir, "Invalid mutable IR")
     legacy = normal_resources(generate_legacy(validate_legacy(parse(json.dumps(ir["base"])))))
@@ -142,14 +142,22 @@ def generate_mutable(ir, queries):
     predicates = Path(__file__).with_name("predicate_runtime.py").read_text(encoding="utf-8")
     target = legacy.replace(footer, "") + "\n" + predicates + "\n" + runtime + "\n"
     if not queries:
-        return target + footer + "\n"
+        return reference_backend(target, "main", references) if references else target + footer + "\n"
     storage = dict(kind="mutable_state", ir=ir, state=ir["model"]["state"][0]["id"])
     validate_mutable_storage(storage, queries)
     target += "\nlegacy_main = main\n"
     qr = Path(__file__).with_name("collection_query_runtime.py").read_text(encoding="utf-8")
     qr = qr.replace("def execute(", "def execute_query(").replace("execute(model, records, args)", "execute_query(model, records, args)").replace("def main(model):", "def standalone_query_main(model):")
     integration = Path(__file__).with_name("profile_runtime.py").read_text(encoding="utf-8")
-    return target + qr + "\n" + integration + "\nif __name__ == '__main__':\n    sys.exit(profile_main(" + repr(queries) + ", " + repr({"kind": "mutable_state", "state": storage["state"]}) + "))\n"
+    body = target + qr + "\n" + integration
+    entry = "lambda: profile_main(" + repr(queries) + ", " + repr({"kind": "mutable_state", "state": storage["state"]}) + ")"
+    return reference_backend(body, entry, references) if references else body + "\nif __name__ == '__main__':\n    sys.exit(profile_main(" + repr(queries) + ", " + repr({"kind": "mutable_state", "state": storage["state"]}) + "))\n"
+
+
+def reference_backend(body, entry, references):
+    runtime = Path(__file__).with_name("reference_runtime.py").read_text(encoding="utf-8")
+    runtime = runtime.replace("REFERENCE = {}  # inserted by normal compiler", "REFERENCE = " + repr(references))
+    return body + "\n" + runtime + "\nif __name__ == '__main__':\n    sys.exit(reference_main(" + entry + "))\n"
 
 
 def generate_bound(queries, storage):

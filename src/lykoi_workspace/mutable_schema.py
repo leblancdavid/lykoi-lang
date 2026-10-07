@@ -37,7 +37,9 @@ VALUES["predicate_semantics"] = semantics()
 
 def relation_schema():
     from lykoi_pipeline.mutable_profile import PROFILE
-    return {"anyOf": [obj({"kind": {"enum": ["crud"]}, "parameters": obj({"profile": {"enum": [PROFILE]}, "facet": {"enum": [facet]}, "value": schema})}) for facet, schema in VALUES.items()]}
+    from .reference_schema import schema as reference_schema
+    values = {**VALUES, "reference_semantics": reference_schema()}
+    return {"anyOf": [obj({"kind": {"enum": ["crud"]}, "parameters": obj({"profile": {"enum": [PROFILE]}, "facet": {"enum": [facet]}, "value": schema})}) for facet, schema in values.items()]}
 
 
 def validate_output(output):
@@ -46,3 +48,6 @@ def validate_output(output):
     for o in output["obligations"]:
         if typed(o["relation"]):
             check_schema(o["relation"], relation_schema())
+            if o["relation"]["parameters"]["facet"] == "reference_semantics":
+                from .reference_schema import validate_value
+                validate_value(o["relation"]["parameters"]["value"])

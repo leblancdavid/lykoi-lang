@@ -20,7 +20,17 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
-**R5.107 closes the bounded normal predicate/value interfaces.**
+**R5.109 implements bounded persistent references and cross-entity integrity.**
+[Typed reference fields, existence, restrictive deletion and related-state guards](docs/persistent-references-v1.md)
+compose through the normal pipeline; cycle rejection justifies one explicit
+finite nonempty-path reachability candidate. Proposed kernel **22 → 23**.
+**372 tests**, canonical validation/safety and **182 synthetic external invocations**
+pass. The [frozen exposed transfer](benchmark/results/phase5c/R5_109-REPORT.md)
+verifies **B01–B16**, with B14/B15/B16 newly successful and **447 invocations**.
+B17/B20 remain disputed, B18 BDI and B19 structural remain. No held-out/cumulative
+claim. Generic content stays exact; stop after R5.109.
+
+**Preserved R5.107 closes the bounded normal predicate/value interfaces.**
 [Typed literal writes, existing selection amendments, query preconditions/errors
 and declared clock operands](docs/predicate-value-interfaces-v1.md) compose through
 the normal source-to-external-behavior path. **361 tests**, canonical validation/
@@ -208,10 +218,12 @@ historical boundaries and achieved histories.
 
 ## Large research evidence (Git LFS)
 
-Five R5.106/R5.107 synthetic evidence JSON files exceed GitHub's 100 MiB regular
-Git file limit. They are tracked through [Git LFS](https://git-lfs.com/) using
-the explicit paths in `.gitattributes`. LFS preserves the original file bytes
-and paths, including research hashes; Git commits contain small pointers.
+Bulk evidence and per-case result JSON under `benchmark/results/` automatically
+use [Git LFS](https://git-lfs.com/) through round-independent patterns in
+`.gitattributes`. No new rule is needed for each experiment round. Compact
+captures, locks, comparisons, manifests, reports and application models remain
+ordinary Git files. LFS preserves original bytes and paths, including research
+hashes; Git commits contain small pointers instead of oversized JSON blobs.
 
 Install Git LFS before cloning or contributing, then initialize it and download
 the evidence in an existing checkout:
@@ -219,14 +231,25 @@ the evidence in an existing checkout:
 ```powershell
 git lfs install
 git lfs pull
+python benchmark/artifacts/git_storage.py install-hook
 ```
 
 Commit `.gitattributes` together with the evidence files. Normal `git add`,
-`git commit` and `git push` then store and upload them through LFS. GitHub LFS
-storage and bandwidth quotas apply. For future oversized evidence, add an
-explicit LFS path before its first commit; ordinary model/schema JSON remains
-in regular Git. These R5.106/R5.107 files were uncommitted when LFS was configured,
-so no history migration is needed.
+`git commit` and `git push` then store and upload bulk observations through LFS.
+The optional local hook checks actual staged blob sizes and rejects raw data
+accidentally staged for an LFS path. Install it once per checkout; hooks are not
+cloned by Git. The installer preserves custom hooks and does not change Git config.
+GitHub LFS storage and bandwidth quotas still apply.
+
+If files were staged before these patterns changed, re-add the affected files
+after staging `.gitattributes`. Older matched evidence may appear modified because
+its new Git representation is an LFS pointer; re-adding preserves its local bytes
+and records the storage conversion in the next commit. Existing history is not
+rewritten. Run the check manually at any time:
+
+```powershell
+python benchmark/artifacts/git_storage.py check
+```
 
 The [artifact size audit and retention policy](benchmark/artifacts/README.md)
 distinguishes disposable generated copies from original research observations.

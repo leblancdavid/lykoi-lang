@@ -14,6 +14,17 @@ do not govern ordinary research or the next held-out benchmark. **R5.101 treats
 B01–B20 as an exposed development/transfer/regression corpus, freely inspectable
 for diagnosis and regression. Their performance cannot establish held-out
 generalization; new generalization needs a new development-unexposed source.**
+**Current bounded reference policy is R5.109:
+`R5_109_PERSISTENT_RELATIONSHIPS_IMPLEMENTED_KERNEL_EXTENDED`.** Read
+[persistent references](persistent-references-v1.md) and its
+[report](../benchmark/results/phase5c/R5_109-REPORT.md) before extending the bridge.
+Exact R5.108 kernel 22 is preserved; one finite nonempty-path reachability candidate
+makes 23. References/existence/restriction/EXISTS/NONE/ALL compose existing meanings.
+Generic implementation/spec/tests stay locked through transfer: 16 exposed local
+successes B01–B16, B17/B20 disputes, B18 BDI, B19 structural. No arbitrary
+multi-record effects, cascade, unrestricted recursive query or infrastructure work.
+Stop after R5.109; atomic effect/durable audit work is only a recommendation.
+
 R5.102's bounded existing-scalar profile is **partial**, not full language-path
 closure. Its [versioned semantics](existing-scalar-normal-path-v1.md) and
 [report](../benchmark/results/phase5c/R5_102-NORMAL-PATH-REPORT.md) distinguish
