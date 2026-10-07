@@ -1,5 +1,19 @@
 # Phase 5: comparative maintenance benchmark
 
+## R5.111 typed computation and frozen exposed transfer
+
+The [report](results/phase5c/R5_111-REPORT.md) and
+[matrix](results/phase5c/R5_111-CAPABILITY-MATRIX.md) retain **16/20 local successes
+B01–B16**, **447 fresh transfer invocations**. B18 numeric/cardinality behavior
+works generically; inherited primary-history/actor integration remains structural.
+B19 primary numeric/day/successor/actor integration remains structural. B17/B20
+remain disputed; no new downstream stages. **386 passing tests**, validation/safety
+and **75 synthetic external invocations** precede the immutable generic lock.
+Checked integer addition and fixed-duration displacement (`offset`) justify proposed
+kernel **23 → 25**; numeric history/successor/atomicity compose. No unrestricted
+expression language, post-outcome repair or infrastructure work. Historical evidence
+preserved; exposed regression, not held-out/cumulative achievement. Stop after R5.111.
+
 ## R5.110 atomic durable history and frozen exposed transfer
 
 The [report](results/phase5c/R5_110-REPORT.md) and

@@ -7,7 +7,19 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
-- Current bounded atomic-state policy is R5.110:
+- Current bounded computation policy is R5.111:
+  `R5_111_TYPED_COMPUTATION_IMPLEMENTED_KERNEL_EXTENDED`. Read
+  `docs/typed-computation-v1.md` and `benchmark/results/phase5c/R5_111-REPORT.md`
+  before extension. Signed-64 integers/cardinality bindings, checked addition and
+  typed fixed-second UTC displacement execute through normal related/atomic profiles.
+  Explicit graphs have at most 16 nodes; no unrestricted expressions. Exact R5.110
+  kernel 23 becomes 25: checked integer addition and fixed-duration displacement
+  (`offset`). Generic successor/history/atomicity remain compositions. Generic lock
+  stays unchanged through fresh transfer: 16 successes B01–B16, B17/B20 disputes,
+  B18 primary-history/actor integration and B19 primary numeric/day/successor/actor
+  interfaces structural. Stop after R5.111; primary-interface closure is only a
+  recommendation. No distributed/calendar recurrence or infrastructure work.
+- Preserved bounded atomic-state policy is R5.110:
   `R5_110_ATOMIC_DURABLE_HISTORY_IMPLEMENTED_BY_COMPOSITION`. Read
   `docs/atomic-durable-history-v1.md` and `benchmark/results/phase5c/R5_110-REPORT.md`
   before extension. Ordinary typed durable state + bounded related creations share

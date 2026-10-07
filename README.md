@@ -20,7 +20,18 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
-**R5.110 implements bounded atomic durable history by composition.**
+**R5.111 implements bounded typed computation with an explicit kernel extension.**
+[Signed-64 integers, cardinality bindings, checked addition and typed fixed-second
+UTC displacement](docs/typed-computation-v1.md) feed related mutation/predicate/
+creation graphs under existing atomicity. No unrestricted expressions; increment,
+numeric history and generic successor compose. Checked addition and fixed-duration
+displacement (`offset`) take proposed kernel **23 → 25**. **386 tests**, validation/
+safety and **75 synthetic external invocations** pass. [Fresh locked transfer](benchmark/results/phase5c/R5_111-REPORT.md)
+retains **16/20 successes B01–B16**, **447 invocations**. B18 primary-history/actor
+and B19 primary numeric/day/successor/actor interfaces remain structural; B17/B20
+remain disputed. No held-out/cumulative claim; stop after R5.111.
+
+**Preserved R5.110 implements bounded atomic durable history by composition.**
 [Ordinary typed history records and atomic coupled creations](docs/atomic-durable-history-v1.md)
 execute through the normal pipeline with declared shared clocks, rollback, history
 queries and append-only operation restrictions. No new core primitive; proposed

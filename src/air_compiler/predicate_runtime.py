@@ -8,7 +8,7 @@ def predicate_value(o, record, inputs, stages, resources):
         return o["value"]
     if k == "value":
         return stages[o["stage"]]
-    return (record if k == "field" else inputs if k == "parameter" else resources).get(o["name"])
+    return (record if k == "field" else inputs if k in ("parameter", "computed") else resources).get(o["name"])
 
 
 def predicate_eval(tree, record=None, inputs=None, stages=None, resources=None):

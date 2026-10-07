@@ -27,7 +27,7 @@ def compose(ir, references, facts):
     require(all(o["kind"] == "list" for o in related.values() if o["entity"] in facts["append_only"]), "Append-only disallows standalone write operations")
     seen = set()
     for op in facts["operations"]:
-        keys(op, ("command", "entity", "parameters", "resources", "on", "sampling", "ordering", "creations"))
+        keys(op, ("command", "entity", "parameters", "resources", "on", "sampling", "ordering", "creations") + (("computations",) if "computations" in op else ()))
         cmd, entity = op["command"], op["entity"]
         require(cmd not in seen and cmd in commands and cmd != "migrate", "Existing unique primary write command")
         seen.add(cmd)
@@ -54,6 +54,10 @@ def compose(ir, references, facts):
             k = capabilities[r["capability"]]
             require((k == "utc_clock" and erase(r["type"]) == dict(type="timestamp", domain=[])) or (k == "uuid_v4" and r["type"]["type"] == "identifier"), "Existing clock/identity capability")
             resources[r["name"]] = r["type"]
+        computed = {}
+        if "computations" in op:
+            from .computation import validate as validate_computation
+            computed = validate_computation(op["computations"], types, entity, params, resources, images=("after",) if kind == "create" else ("before",) if kind == "delete" else ("before", "after"))
         require(type(op["creations"]) is list and 1 <= len(op["creations"]) <= 8, "Bounded nonempty creation sequence")
         for creation in op["creations"]:
             keys(creation, ("entity", "bindings", "duplicate_error"))
@@ -65,6 +69,10 @@ def compose(ir, references, facts):
                 keys(b, ("source", "invalid_error"))
                 require(type(b["invalid_error"]) is str and bool(b["invalid_error"]), "Declared record validation failure")
                 s = b["source"]
+                if s.get("kind") == "computed":
+                    from .computation import bound
+                    bound(s, computed, types[e][n])
+                    continue
                 require(s.get("kind") in ("literal", "parameter", "before", "after", "resource"), "Existing typed value sources only; no arithmetic")
                 keys(s, ("kind", "type", "value") if s["kind"] == "literal" else ("kind", "type", "name"))
                 require(same_type(s["type"], types[e][n]), "Exact nominal payload type")

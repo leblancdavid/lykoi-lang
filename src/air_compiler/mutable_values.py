@@ -28,6 +28,8 @@ def valid_value(value, typ):
         return typ.get("nullable", False)
     if typ["type"] == "boolean":
         return type(value) is bool
+    if typ["type"] in ("integer", "duration"):
+        return type(value) is int and -(2 ** 63) <= value < 2 ** 63
     if type(value) is not str:
         return False
     if typ["type"] == "enum":

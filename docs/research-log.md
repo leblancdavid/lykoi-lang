@@ -1,5 +1,40 @@
 # Lykoi research log
 
+## R5.111 typed computation and arithmetic boundary (2026-10-07)
+
+**`R5_111_TYPED_COMPUTATION_IMPLEMENTED_KERNEL_EXTENDED`.** Signed-64 integers,
+cardinality value bindings, checked addition and dimensioned fixed-second UTC
+displacement execute through normal typed related/atomic profiles. Explicit acyclic
+graphs compose with predicates, mutation, ordinary history/successor creation and
+atomic replacement. Increment/history/successor add no primitive. Finite map does
+not supply addition/displacement meaning: proposed kernel **23 → 25**, K24 checked
+addition and K25 fixed-duration displacement (`offset`). Broader calendar offsets
+remain unresolved; no unrestricted expression language.
+
+**386 passing tests**, validation/safety and **75 published synthetic external
+invocations** across Inventory/Retry/Session/Subscription/Ledger. Integer vectors
+reject Python bool/float/arbitrary precision; temporal vectors specify UTC Gregorian
+leap-year/fraction/range behavior. Duplicate creation, overflow, predicate failure,
+invalid reload, stale compile-time observation and injected persistence failure are
+challenged externally. First diagnostics found missing integer query runtime support;
+pre-lock regression found an obsolete integer-rejection test, prospectively updated.
+Completed unchanged suites are reused under a reconstructed exact-tree proof; the
+affected predicate suite reruns. A verification-driver timeout and transfer timeout
+resume fixed receipts/bytes, with no post-lock semantic repair.
+
+Fresh exposed transfer retains **16/20 successes B01–B16**, **447 invocations**;
+B17/B20 disputes remain. B18 numeric schema/cardinality is represented generically,
+but native structural blockers are primary-history integration and primary actor
+binding. B19 nullable primary numeric/day conversion/same-primary successor/actor
+integration remains structural. No new downstream stages or B18/B19 success. Generic
+implementation/spec/tests and earlier evidence stay byte-identical through transfer.
+Same-agent captures/inventories/plans, synthetic approval, shared fixture shape and
+single backend limit claims. Existing broad timestamp parsing and standalone untyped
+query unbounded integers remain compatibility leaks outside the new typed boundary.
+Recommend source-authorized primary value/actor/interface closure for R5.112.
+**Stop after R5.111; no next round or infrastructure work.**
+See the [report](../benchmark/results/phase5c/R5_111-REPORT.md).
+
 ## R5.110 atomic durable history by composition (2026-10-07)
 
 **`R5_110_ATOMIC_DURABLE_HISTORY_IMPLEMENTED_BY_COMPOSITION`.** Ordinary typed

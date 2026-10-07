@@ -59,7 +59,7 @@ def flat_types(bindings, types):
     return {a + "." + n: t for a, entity in bindings.items() for n, t in types[entity].items()}
 
 
-def validate_condition(tree, types, bindings, parameters, depth=0):
+def validate_condition(tree, types, bindings, parameters, depth=0, computed=None):
     require(depth < 24, "Bounded condition depth")
     require(type(tree) is dict and tree.get("result_type") == "boolean", "Explicit boolean condition")
     kind = tree.get("kind")
@@ -68,7 +68,7 @@ def validate_condition(tree, types, bindings, parameters, depth=0):
         children = [tree["child"]] if kind == "not" else tree["children"]
         require(type(children) is list and 1 <= len(children) <= 64 and (kind == "not" or len(children) >= 2), "Explicit grouping")
         for c in children:
-            validate_condition(c, types, bindings, parameters, depth + 1)
+            validate_condition(c, types, bindings, parameters, depth + 1, computed)
     elif kind == "extent":
         keys(tree, ("kind", "result_type", "selection", "relation", "value"))
         require(tree["relation"] in ("eq", "ge") and type(tree["value"]) is int and tree["value"] >= 0, "Nonnegative cardinality relation; no arithmetic")
@@ -76,7 +76,7 @@ def validate_condition(tree, types, bindings, parameters, depth=0):
         keys(s, ("entity", "binding", "predicate"))
         require(s["entity"] in types and s["binding"] not in bindings, "Explicit finite entity domain and fresh binding")
         # No recursive selection/query nesting in a selection predicate.
-        validate_atom(s["predicate"], types, {**bindings, s["binding"]: s["entity"]}, parameters)
+        validate_atom(s["predicate"], types, {**bindings, s["binding"]: s["entity"]}, parameters, computed)
     elif kind == "reachable":
         keys(tree, ("kind", "result_type", "entity", "field", "source", "target", "paths"))
         require(tree["entity"] in types and tree["field"] in types[tree["entity"]], "Declared relation projection")
@@ -84,14 +84,14 @@ def validate_condition(tree, types, bindings, parameters, depth=0):
         atom = t["element"] if t["type"] == "collection" else t
         require(atom == identity(tree["entity"]) and tree["paths"] == "nonempty", "Same-entity nominal edges; nonempty finite paths")
         synthetic = dict(kind="compare", result_type="boolean", operator="eq", left=tree["source"], right=tree["target"], policy=dict(case="sensitive", normalization="none"), nulls="false")
-        validate_atom(synthetic, types, bindings, parameters)
+        validate_atom(synthetic, types, bindings, parameters, computed)
         require(tree["source"]["type"] == tree["target"]["type"] == identity(tree["entity"]), "Reachability endpoint type")
     else:
-        validate_atom(tree, types, bindings, parameters)
+        validate_atom(tree, types, bindings, parameters, computed)
     return copy.deepcopy(tree)
 
 
-def validate_atom(tree, types, bindings, parameters):
+def validate_atom(tree, types, bindings, parameters, computed=None):
     fields = flat_types(bindings, types)
     def nominal(node):
         if type(node) is dict:
@@ -101,8 +101,8 @@ def validate_atom(tree, types, bindings, parameters):
                 atom = l.get("element", l)
                 if "entity" in atom:
                     require(node["policy"] == dict(case="sensitive", normalization="none"), "Identity comparison is exact")
-            if node.get("kind") in ("field", "parameter"):
-                env = fields if node["kind"] == "field" else parameters
+            if node.get("kind") in ("field", "parameter", "computed"):
+                env = fields if node["kind"] == "field" else (computed or {}) if node["kind"] == "computed" else parameters
                 require(node["name"] in env and same_type(node["type"], env[node["name"]]), "Explicit nominal binding and field namespace")
             for v in node.values(): nominal(v)
         elif type(node) is list:
@@ -110,9 +110,9 @@ def validate_atom(tree, types, bindings, parameters):
     nominal(tree)
     def lower(node):
         if type(node) is dict:
-            return {k: erase(v) if k == "type" and type(v) is dict else lower(v) for k, v in node.items()}
+            return {k: "parameter" if k == "kind" and v == "computed" else erase(v) if k == "type" and type(v) is dict else lower(v) for k, v in node.items()}
         return [lower(x) for x in node] if type(node) is list else node
-    predicate_validate(lower(tree), fields={n: erase(t) for n, t in fields.items()}, parameters={n: erase(t) for n, t in parameters.items()})
+    predicate_validate(lower(tree), fields={n: erase(t) for n, t in fields.items()}, parameters={n: erase(t) for n, t in {**parameters, **(computed or {})}.items()})
 
 
 def compose(ir, f):
@@ -184,7 +184,7 @@ def compose(ir, f):
             ids.append(value)
     commands = {"migrate"} | {c["token"] for c in model["commands"]} | {m["command"] for m in ir["facts"]["mutations"]}
     for op in f["operations"]:
-        keys(op, ("command", "entity", "kind", "parameters", "lookup", "missing_error", "duplicate_error", "changes", "guards", "order"))
+        keys(op, ("command", "entity", "kind", "parameters", "lookup", "missing_error", "duplicate_error", "changes", "guards", "order") + (("computations",) if "computations" in op else ()))
         require(op["command"] not in commands and op["entity"] in types, "Explicit unique operation/entity scope")
         commands.add(op["command"])
         require(op["kind"] in ("create", "update", "delete", "list"), "Bounded one-record effects")
@@ -195,6 +195,11 @@ def compose(ir, f):
             require(p["flag"].startswith("--") and p["encoding"] in ("text", "json") and all(type(p[k]) is str and bool(p[k]) for k in ("missing_error", "invalid_error")), "Explicit parameter transport/errors")
         require(len({p["flag"] for p in op["parameters"].values()}) == len(op["parameters"]), "Unique parameter flags")
         params = {n: p["type"] for n, p in op["parameters"].items()}
+        computed = {}
+        if "computations" in op:
+            from .computation import validate as validate_computation
+            require(op["kind"] in ("create", "update"), "Computation on write operations only")
+            computed = validate_computation(op["computations"], types, e, params, images=("before",) if op["kind"] == "update" else ())
         if op["kind"] in ("update", "delete"):
             require(op["lookup"] in params and params[op["lookup"]] == identity(e) and type(op["missing_error"]) is str and bool(op["missing_error"]), "Typed primary lookup and missing authority")
         else: require(op["lookup"] is None and op["missing_error"] is None, "No implicit lookup")
@@ -217,6 +222,11 @@ def compose(ir, f):
                 require(target["type"] == "collection", "Element mutation needs finite sequence")
                 target = target["element"]
             s = w["source"]
+            if s.get("kind") == "computed":
+                from .computation import bound
+                bound(s, computed, target)
+                require(type(w["invalid_error"]) is str and bool(w["invalid_error"]), "Declared invalid candidate error")
+                continue
             require(s.get("kind") in ("parameter", "literal"), "Typed write source")
             keys(s, ("kind", "type", "name") if s["kind"] == "parameter" else ("kind", "type", "value"))
             require(same_type(s["type"], target), "Exact nominal write type")
@@ -226,7 +236,8 @@ def compose(ir, f):
         for g in op["guards"]:
             keys(g, ("predicate", "error"))
             require(type(g["error"]) is str and bool(g["error"]), "Declared guard error")
-            validate_condition(g["predicate"], types, {"primary": e} if op["kind"] in ("update", "delete") else {}, params)
+            validate_condition(g["predicate"], types, {"primary": e} if op["kind"] in ("update", "delete") else {}, params, computed=computed)
+        require(not set(params) & set(computed), "Computed bindings cannot shadow inputs")
     for g in f["guards"]:
         keys(g, ("command", "parameters", "predicate", "error"))
         require(g["command"] in {c["token"] for c in model["commands"]} | {m["command"] for m in ir["facts"]["mutations"]}, "Guard binds existing primary operation")

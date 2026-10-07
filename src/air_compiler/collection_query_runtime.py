@@ -89,6 +89,8 @@ def predicate_matches_type(v, t):
                 and (t["duplicates"] == "allow" or len({json.dumps(x) for x in v}) == len(v)))
     if k == "boolean":
         return type(v) is bool
+    if k in ("integer", "duration"):
+        return type(v) is int and -(2 ** 63) <= v < 2 ** 63
     if type(v) is not str:
         return False
     if k == "enum":

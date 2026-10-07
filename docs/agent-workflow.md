@@ -14,7 +14,20 @@ do not govern ordinary research or the next held-out benchmark. **R5.101 treats
 B01–B20 as an exposed development/transfer/regression corpus, freely inspectable
 for diagnosis and regression. Their performance cannot establish held-out
 generalization; new generalization needs a new development-unexposed source.**
-**Current bounded atomic-state policy is R5.110:
+**Current bounded computation policy is R5.111:
+`R5_111_TYPED_COMPUTATION_IMPLEMENTED_KERNEL_EXTENDED`.** Read
+[typed computation](typed-computation-v1.md) and its
+[report](../benchmark/results/phase5c/R5_111-REPORT.md) before extension.
+Signed-64 integers, cardinality value bindings, checked addition and dimensioned
+fixed-second UTC displacement use explicit graphs with at most 16 nodes. Computed
+values feed related mutations/predicates/creations under inherited atomicity.
+Proposed kernel 23 → 25; successor/history remain compositions. Generic lock is
+unchanged through fresh transfer: 16 successes B01–B16, B17/B20 disputes, B18
+primary-history/actor and B19 primary numeric/day/successor/actor integration
+structural. Stop after R5.111; further primary-interface closure is a recommendation.
+No unrestricted expressions, broad calendar recurrence or infrastructure work.
+
+**Preserved bounded atomic-state policy is R5.110:
 `R5_110_ATOMIC_DURABLE_HISTORY_IMPLEMENTED_BY_COMPOSITION`.** Read
 [atomic durable history](atomic-durable-history-v1.md) and its
 [report](../benchmark/results/phase5c/R5_110-REPORT.md) before extension.

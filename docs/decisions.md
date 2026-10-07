@@ -1,5 +1,28 @@
 # Experimental decisions
 
+## R5.111 — Count operation meanings, keep computation graphs bounded
+
+Define integers mathematically as signed-64 values with negative values, JSON integer
+serialization and unchanged rejection on overflow. Bind existing finite selection
+cardinality as a value; do not add another count primitive. Reuse typed binding,
+predicate, mutation, ordinary creation and local atomic commit. Explicit graph
+dependencies and at most 16 nodes avoid an unrestricted expression language.
+
+Composition-first does not mean constant kernel count. Finite pointwise map supplies
+no integer sum or temporal translation meaning. Admit K24 checked integer addition
+and K25 fixed-duration instant displacement: **23 → 25**. Integer/duration types and
+graph policies do not each become primitives. Original `offset` is resolved only for
+typed fixed-second displacement; local/calendar offsets remain unresolved. Subtraction
+is not independently required by signed-adjustment fixtures; this does not eliminate
+the general variable-subtraction question. `for_each`/finite domain scope unchanged.
+
+Tradeoff: useful numeric history and related successor construction are verified,
+while legacy primary nullable numeric inputs/migration, runtime day conversion,
+same-primary successor and actor authority are unclosed integration seams. Preserve
+B17/B20 ambiguity and explicit B18/B19 structural halts. Lock generic implementation,
+tests/spec/accounting before fresh transfer, with no outcome-driven repair.
+See the [R5.111 report](../benchmark/results/phase5c/R5_111-REPORT.md).
+
 ## R5.110 — Compose ordinary durable records under one atomic frame
 
 History describes persistent state created with a successful operation. Reuse

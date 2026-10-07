@@ -71,7 +71,11 @@ class PredicateTests(unittest.TestCase):
         present = unary("present", operand("parameter", s, name="optional"))
         validate(present, parameters={"optional": s})
         self.assertFalse(predicate_eval(present)); self.assertTrue(predicate_eval(present, inputs={"optional": ""}))
-        for typ in (dict(type="integer", domain=[]), dict(type="boolean", domain=[], nullable=True)):
+        # R5.111 admits explicitly bounded integer equality/order; the old
+        # pre-computation rejection is superseded, not a historical result edit.
+        integer = dict(type="integer", domain=[])
+        validate(compare(operand("literal", integer, value=1), operand("literal", integer, value=1)))
+        for typ in (dict(type="boolean", domain=[], nullable=True),):
             with self.assertRaises(Failure): validate(compare(operand("literal", typ, value=1), operand("literal", typ, value=1)))
         with self.assertRaises(Failure): validate(compare(operand("literal", dict(type="boolean", domain=[]), value=1), operand("literal", dict(type="boolean", domain=[]), value=True)))
         with self.assertRaises(Failure): validate(unary("is_null", operand("literal", s, value="")))

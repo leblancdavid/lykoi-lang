@@ -2,9 +2,9 @@
 from .query_schema import obj, array, TEXT
 
 SCALAR = obj({"type": {"enum": ["string", "identifier", "enum", "boolean", "timestamp"]}, "domain": array(TEXT), "nullable": {"type": "boolean"}})
-ELEMENT = obj({"type": {"enum": ["string", "identifier", "enum", "timestamp"]}, "domain": array(TEXT)})
-TYPE = {"anyOf": [SCALAR, ELEMENT, obj({"type": {"enum": ["collection"]}, "element": ELEMENT, "ordering": {"enum": ["insertion"]}, "duplicates": {"enum": ["allow", "unique"]}, "equality": {"enum": ["exact"]}})]}
-VALUE = {"anyOf": [TEXT, {"type": "boolean"}, {"type": "null"}, array(TEXT)]}
+ELEMENT = obj({"type": {"enum": ["string", "identifier", "enum", "timestamp", "integer"]}, "domain": array(TEXT)})
+TYPE = {"anyOf": [SCALAR, ELEMENT, obj({"type": {"enum": ["duration"]}, "domain": array(TEXT), "unit": {"enum": ["seconds"]}}), obj({"type": {"enum": ["collection"]}, "element": ELEMENT, "ordering": {"enum": ["insertion"]}, "duplicates": {"enum": ["allow", "unique"]}, "equality": {"enum": ["exact"]}})]}
+VALUE = {"anyOf": [TEXT, {"type": "boolean"}, {"type": "integer"}, {"type": "null"}, array(TEXT)]}
 OPERAND = {"anyOf": [obj({"kind": {"enum": ["field", "parameter", "resource"]}, "name": TEXT, "type": TYPE}), obj({"kind": {"enum": ["literal"]}, "type": TYPE, "value": VALUE}), obj({"kind": {"enum": ["value"]}, "type": TYPE, "stage": {"enum": ["RAW", "TRANSFORMED", "PERSISTED"]}})]}
 POLICY = obj({"case": {"enum": ["sensitive", "casefold"]}, "normalization": {"enum": ["none", "strip"]}})
 

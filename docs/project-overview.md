@@ -75,7 +75,29 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
-**R5.110 — `R5_110_ATOMIC_DURABLE_HISTORY_IMPLEMENTED_BY_COMPOSITION`.**
+**R5.111 — `R5_111_TYPED_COMPUTATION_IMPLEMENTED_KERNEL_EXTENDED`.**
+The bounded [typed computation profile](typed-computation-v1.md) defines signed-64
+integers, finite selection cardinality as a value, checked integer addition and
+separately typed fixed-second UTC displacement. Explicit acyclic local graphs feed
+ordinary related mutations, predicates, history and successor creations under the
+existing atomic commit. No unrestricted expression language. Composition cannot
+supply the new mathematical sum/displacement meanings: two core candidates take
+the exact R5.110 kernel **23 → 25**. Original `offset` is admitted as fixed-duration
+displacement; broader calendar offsets stay unresolved. Increment/successor/history
+remain compositions; `for_each` and finite cardinality scope remain existing profiles.
+
+The [report](../benchmark/results/phase5c/R5_111-REPORT.md) records **386 passing
+tests**, canonical validation/safety and **75 published synthetic external invocations**.
+Generic content/accounting locks before [fresh exposed transfer](../benchmark/results/phase5c/R5_111-CAPABILITY-MATRIX.md):
+**16/20 successes B01–B16**, **447 invocations**, no newly reached B18/B19 stages.
+B18 numeric schema/cardinality works generically; complete inherited primary-history
+and actor integration remains structural. B19 needs nullable primary integer fields,
+runtime UTC-day conversion, same-primary coupled successor and actor/history interfaces.
+B17/B20 remain disputed. No post-outcome repair or held-out/cumulative claim.
+Recommend R5.112 investigate source-authorized primary value/actor/interface closure.
+**Stop after R5.111; no next round or infrastructure work begun.**
+
+**Preserved R5.110 — `R5_110_ATOMIC_DURABLE_HISTORY_IMPLEMENTED_BY_COMPOSITION`.**
 The bounded [atomic durable-state profile](atomic-durable-history-v1.md) couples
 existing primary writes to one to eight ordinary typed related-record creations
 in one local atomic store replacement. Shared declared clock/ID observations,

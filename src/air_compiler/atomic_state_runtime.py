@@ -85,12 +85,13 @@ def reference_commit(before, after, *, migration=False):
             except (ValueError, AttributeError): raise Failure("invalid_state")
         resources[r["name"]] = v
     candidate = copy.deepcopy(after)
+    computed = computation_evaluate(op["computations"], before, images, context["inputs"], resources) if "computations" in op else {}
     for creation in op["creations"]:
         e = creation["entity"]
         row = {}
         for n, b in creation["bindings"].items():
             s = b["source"]
-            v = s["value"] if s["kind"] == "literal" else (context["inputs"] if s["kind"] == "parameter" else resources if s["kind"] == "resource" else images[s["kind"]])[s["name"]]
+            v = s["value"] if s["kind"] == "literal" else (computed if s["kind"] == "computed" else context["inputs"] if s["kind"] == "parameter" else resources if s["kind"] == "resource" else images[s["kind"]])[s["name"]]
             if not mutable_value_valid(v, REFERENCE["types"][e][n]):
                 raise Failure(b["invalid_error"])
             row[n] = copy.deepcopy(v)
@@ -131,7 +132,7 @@ def atomic_state_main(base_main):
     inputs = vars(parser.parse_args(sys.argv[2:]))
     try:
         for n, t in q["parameters"].items():
-            if n in inputs and t["type"] in ("boolean", "collection"):
+            if n in inputs and t["type"] in ("boolean", "collection", "integer", "duration"):
                 try: inputs[n] = json.loads(inputs[n])
                 except ValueError: raise ApplicationError("invalid_input")
         result = execute_query(q, reference_rows()[q["source"]["collection"]], inputs)

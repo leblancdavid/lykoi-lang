@@ -18,6 +18,9 @@ def keys(v, names):
 
 def scalar_type(t):
     require(type(t) is dict, "Typed operand required")
+    if t.get("type") == "duration":
+        require(t == dict(type="duration", domain=[], unit="seconds"), "Fixed elapsed-second duration only")
+        return t
     if t.get("type") == "collection":
         keys(t, ("type", "element", "ordering", "duplicates", "equality"))
         scalar_type(t["element"])
@@ -25,7 +28,7 @@ def scalar_type(t):
         require(t["ordering"] == "insertion" and t["duplicates"] in ("allow", "unique") and t["equality"] == "exact", "Existing collection policies")
     else:
         require(set(t) in ({"type", "domain"}, {"type", "domain", "nullable"}), "Explicit scalar type/domain")
-        require(t["type"] in ("string", "identifier", "enum", "boolean", "timestamp"), "No writable integer/arithmetic profile")
+        require(t["type"] in ("string", "identifier", "enum", "boolean", "timestamp", "integer"), "Closed scalar value types")
         require(type(t.get("nullable", False)) is bool and (not t.get("nullable", False) or t["type"] == "timestamp"), "Timestamp nullability only")
         require((t["type"] == "enum" and type(t["domain"]) is list and bool(t["domain"]) and all(type(x) is str for x in t["domain"]) and len(set(t["domain"])) == len(t["domain"])) or (t["type"] != "enum" and t["domain"] == []), "Exact scalar domain")
     return t
@@ -87,7 +90,7 @@ def validate(tree, *, fields=None, parameters=None, value_type=None, resources=N
             compatible = same_type(left, right) or (left["type"] == right["type"] == "timestamp" and {k: v for k, v in left.items() if k != "nullable"} == {k: v for k, v in right.items() if k != "nullable"})
             require(tree["operator"] in ("eq", "lt", "le", "gt", "ge") and compatible and left["type"] != "collection", "Compatible scalar comparison; inequality is NOT eq")
             t = left
-            require(tree["operator"] == "eq" or t["type"] == "timestamp", "Timestamp ordering only; integers remain a storage gap")
+            require(tree["operator"] == "eq" or t["type"] in ("timestamp", "integer"), "Typed timestamp/integer ordering")
         require(t["type"] in ("string", "identifier", "enum") or tree["policy"] == {"case": "sensitive", "normalization": "none"}, "No normalization/coercion for booleans or timestamps")
     else:
         require(False, "Unknown predicate kind")

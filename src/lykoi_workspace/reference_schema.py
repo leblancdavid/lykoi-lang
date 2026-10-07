@@ -5,8 +5,8 @@ from functools import lru_cache
 
 IDENTITY = obj({"type": {"enum": ["identifier"]}, "domain": array(TEXT), "entity": TEXT})
 TYPE = {"anyOf": [OLD_TYPE, IDENTITY, obj({"type": {"enum": ["collection"]}, "element": IDENTITY, "ordering": {"enum": ["insertion"]}, "duplicates": {"enum": ["allow", "unique"]}, "equality": {"enum": ["exact"]}})]}
-OPERAND = {"anyOf": [obj({"kind": {"enum": ["field", "parameter"]}, "name": TEXT, "type": TYPE}), obj({"kind": {"enum": ["literal"]}, "type": TYPE, "value": VALUE})]}
-SOURCE = OPERAND
+OPERAND = {"anyOf": [obj({"kind": {"enum": ["field", "parameter", "computed"]}, "name": TEXT, "type": TYPE}), obj({"kind": {"enum": ["literal"]}, "type": TYPE, "value": VALUE})]}
+SOURCE = {"anyOf": [OPERAND, obj({"kind": {"enum": ["computed"]}, "name": TEXT, "type": TYPE})]}
 ERROR = {"anyOf": [TEXT, {"type": "null"}]}
 
 
@@ -28,12 +28,16 @@ def schema():
     parameter = obj({"type": TYPE, "flag": TEXT, "encoding": {"enum": ["text", "json"]}, "missing_error": TEXT, "invalid_error": TEXT})
     policy = obj({"policy": {"enum": ["required", "unchecked", "restrict", "permit", "unavailable"]}, "error": ERROR})
     guard = obj({"predicate": condition(), "error": TEXT})
-    return obj({"primary": TEXT,
+    result = obj({"primary": TEXT,
         "entities": array(obj({"name": TEXT, "key": TEXT, "fields": fields, "initial": array({"type": "object", "additionalProperties": VALUE})})),
         "references": array(obj({"entity": TEXT, "field": TEXT, "target": TEXT, "existence": policy, "deletion": policy, "migration": {"anyOf": [{"type": "null"}, obj({"when": {"enum": ["missing_or_empty"]}, "value": VALUE})]}})),
         "operations": array(obj({"command": TEXT, "entity": TEXT, "kind": {"enum": ["create", "update", "delete", "list"]}, "parameters": {"type": "object", "additionalProperties": parameter}, "lookup": ERROR, "missing_error": ERROR, "duplicate_error": ERROR, "changes": array(obj({"field": TEXT, "source": SOURCE, "operation": {"enum": ["replace", "append", "add_unique", "remove"]}, "invalid_error": TEXT})), "guards": array(guard), "order": array(TEXT)})),
         "guards": array(obj({"command": TEXT, "parameters": fields, "predicate": condition(), "error": TEXT})),
         "commit": obj({"scope": {"enum": ["one_store"]}, "mutation": {"enum": ["one_record"]}, "isolation": {"enum": ["exclusive_operation"]}, "rejection": {"enum": ["unchanged"]}})})
+    from .computation_schema import graph
+    op = result["properties"]["operations"]["items"]
+    op["properties"]["computations"] = graph(TYPE, VALUE)
+    return result
 
 
 def validate_value(value):

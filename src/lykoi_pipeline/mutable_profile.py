@@ -56,6 +56,13 @@ def split(contract):
     references = contract["context"]["domains"].get("reference_profile")
     require(references in (None, "persistent-references-1") and (not references or predicates), "Explicit reference composition profile")
     atomic = contract["context"]["domains"].get("atomic_state_profile")
+    computation = contract["context"]["domains"].get("computation_profile")
+    require(computation in (None, "typed-computation-1") and (not computation or references), "Explicit typed computation composition")
+    def numeric(v):
+        if type(v) is dict:
+            return v.get("type") in ("integer", "duration") or "computations" in v or v.get("kind") == "computed" or any(numeric(x) for x in v.values())
+        return type(v) is list and any(numeric(x) for x in v)
+    require(not numeric(values) or computation, "Numeric computation requires selected versioned semantics")
     require(atomic in (None, "atomic-durable-state-1") and (not atomic or references), "Explicit atomic state composition selection")
     require(set(values) == set(FACETS + ((INPUT_FACET,) if closure else ()) + ((PREDICATE_FACET,) if predicates else ()) + ((REFERENCE_FACET,) if references else ()) + ((ATOMIC_FACET,) if atomic else ())), "Every selected profile facet required; empty is explicit")
     ir = compose(base, {k: v for k, v in values.items() if k not in (REFERENCE_FACET, ATOMIC_FACET)})
@@ -195,6 +202,12 @@ def bdi(contract, projection):
             for facet, v in p["value"].items():
                 meaning = scalar.json.dumps(v, sort_keys=True)
                 decision(o["id"], "reference/" + facet, meaning, [meaning, "omitted_or_altered_reference_authority"], "error" if facet in ("references", "guards") else "later")
+        if p["facet"] in (REFERENCE_FACET, ATOMIC_FACET):
+            for op in p["value"]["operations"]:
+                if "computations" in op:
+                    for facet, v in op["computations"].items():
+                        meaning = scalar.json.dumps(v, sort_keys=True)
+                        decision(o["id"], "computation/" + op["command"] + "/" + facet, meaning, [meaning, "altered_operator_operand_binding_domain_unit_or_snapshot"], "error")
         if p["facet"] == ATOMIC_FACET:
             for facet, v in p["value"].items():
                 meaning = scalar.json.dumps(v, sort_keys=True)
@@ -305,4 +318,8 @@ def formalizer_guidance():
                    "Bind existing primary writes to 1..8 ordinary related creations with complete typed payload sources literal/parameter/before/after/resource. "
                    "Declare success-only creation, once_per_operation resource sampling, declared_creation_occurrence order and one_store bounded_records unchanged rejection. "
                    "Queries are existing complete CollectionQuery; empty ordering explicitly preserves occurrence order in this profile. "
-                   "No implicit history fields, ambient clock, numeric successor, JSON blob or external-effect authority. Missing record/sequence authority requires clarification.")
+                    "No implicit history fields, ambient clock, JSON blob or external-effect authority. Missing record/sequence authority requires clarification. "
+                    "Select computation_profile typed-computation-1 for signed-64 integer fields/JSON parameters and optional computations on reference/atomic operations. "
+                    "Graph has 1..16 nodes, explicit binding/operator/type/operands/depends_on/error and policy integer_domain:signed_64,overflow:reject,snapshot:operation_before,rejection:unchanged. "
+                    "Operators value(integer), add(integer,integer), shift_utc_seconds(timestamp,duration {type:duration,domain:[],unit:seconds}) only. Operands literal/parameter/before/after/resource/computed/cardinality with explicit finite selection. "
+                    "Computed source names must bind an earlier node; exact dependencies are acyclic. No expressions, implicit coercion, clock arithmetic or calendar month policy.")

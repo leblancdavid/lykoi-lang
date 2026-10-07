@@ -155,6 +155,7 @@ def generate_mutable(ir, queries, references=None, atomic_state=None):
 
 
 def reference_backend(body, entry, references, atomic_state=None):
+    body += "\n" + Path(__file__).with_name("computation_runtime.py").read_text(encoding="utf-8")
     runtime = Path(__file__).with_name("reference_runtime.py").read_text(encoding="utf-8")
     runtime = runtime.replace("REFERENCE = {}  # inserted by normal compiler", "REFERENCE = " + repr(references))
     if atomic_state:

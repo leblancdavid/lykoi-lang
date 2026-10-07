@@ -231,15 +231,16 @@ def reference_operation(op, inputs):
     target = next((r for r in rows if r[key] == inputs.get(op["lookup"])), None) if op["lookup"] else None
     if op["kind"] in ("update", "delete") and target is None:
         raise Failure(op["missing_error"])
+    computed = computation_evaluate(op["computations"], before, {"before": target}, inputs) if "computations" in op else {}
     for g in op["guards"]:
-        if not reference_condition(g["predicate"], before, {"primary": target} if target else {}, inputs):
+        if not reference_condition(g["predicate"], before, {"primary": target} if target else {}, {**inputs, **computed}):
             raise Failure(g["error"])
     if op["kind"] == "list":
         return sorted(copy.deepcopy(rows), key=lambda r: tuple(r[n] for n in op["order"]))
     candidate = copy.deepcopy(target) if target else {}
     for w in op["changes"]:
         s = w["source"]
-        value = copy.deepcopy(inputs[s["name"]] if s["kind"] == "parameter" else s["value"])
+        value = copy.deepcopy(computed[s["name"]] if s["kind"] == "computed" else inputs[s["name"]] if s["kind"] == "parameter" else s["value"])
         n = w["field"]
         if w["operation"] == "replace": candidate[n] = value
         elif w["operation"] == "remove": candidate[n] = [x for x in candidate[n] if x != value]

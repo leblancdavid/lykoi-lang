@@ -1,0 +1,69 @@
+{
+  "baseline_round": "R5.110",
+  "baseline_source_sha256": "81711f3b7adc2c9a892f0288ff4b28e4f43c995be79bab4202a53d024d8973cf",
+  "baseline_kernel": [
+    "record schema",
+    "field",
+    "finite sequence",
+    "var",
+    "literal",
+    "equals",
+    "and",
+    "not",
+    "contains",
+    "selection",
+    "trim",
+    "map(trim)",
+    "stable_unique",
+    "transition",
+    "instant",
+    "before",
+    "operation contract",
+    "cardinality",
+    "input presence",
+    "typed resource/capability authority",
+    "durable state",
+    "atomic commit",
+    "finite nonempty-path reachability"
+  ],
+  "baseline_count": 23,
+  "additions": [
+    {
+      "id": "K24",
+      "concept": "checked_integer_addition",
+      "reason": "Finite map does not supply the deterministic mathematical sum; replacing stored values cannot construct x+adjustment without this meaning",
+      "evidence": [
+        "inventory signed adjustment",
+        "retry successor",
+        "cardinality-derived ordinal"
+      ]
+    },
+    {
+      "id": "K25",
+      "concept": "fixed_duration_instant_displacement",
+      "original_candidate": "offset",
+      "reason": "Instant observation/ordering and integer addition do not define dimensioned UTC instant translation; fixed elapsed-second displacement adds independently observable meaning",
+      "evidence": [
+        "session/subscription expiry",
+        "ordinary synthetic successor",
+        "Gregorian/negative/fraction/range vectors"
+      ]
+    }
+  ],
+  "final_count": 25,
+  "constructs": {
+    "integer_duration_types": "typed domains/policies",
+    "value_binding_DAG": "K04/K17 composition",
+    "cardinality_value": "K18/K10 composition",
+    "computed_mutation_creation": "K04/K14/K17/K21/K22 composition",
+    "increment": "K24 plus K05 literal one",
+    "successor": "ordinary entity creation + computed fields + atomic coupled effects",
+    "for_each": "existing finite pointwise map; unchanged",
+    "finite_cardinality_domain": "K03/K10/K18 profile",
+    "Event_Expression_Counter_Sequence": "not admitted",
+    "subtraction": "not independently justified; signed adjustments suffice for tested authority",
+    "calendar_month_year": "unresolved/not admitted",
+    "offset": "K25 fixed-duration displacement admitted; broad calendar offsets unresolved"
+  },
+  "pressure": "Do not count map as a license for arbitrary transformations; two exact new operator meanings, not a general expression language"
+}
