@@ -75,6 +75,17 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R5.119 — `R5_119_P6_A03_RESEARCH_REVIEW_PREPARED`.**
+[Preparation report](../benchmark/results/phase6/R5_119-REPORT.md) and
+[owner review](../benchmark/results/phase6/r5_119/HUMAN-REVIEW.md) bind the exact
+preserved Redis issue to an unsealed typed FRC and pre-author acceptance candidate.
+Project owner appointed research approver by the user; no artifact approval given.
+SELECT permission through @read/@write is source-supported; grant/revoke compatibility
+is a blocking source question. Same-agent/same-model source-only review, not independent
+cognition or held-out evidence. Kernel 26; historical results preserved; zero authoring,
+compilation or behavioral checks. **Stop at review; needs clarification before approval.**
+P6-A04/P6-A05 content remains unaccessed in this round.
+
 **R5.118A — `R5_118A_RESEARCH_EVALUATION_AUTHORITY_READY`.**
 [Research-only approval](research-evaluation-approval-v1.md) and
 [Phase 6 protocol 2](phase6-generalization-protocol-r5.118a.md) separate source

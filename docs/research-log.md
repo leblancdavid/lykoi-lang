@@ -1,5 +1,22 @@
 # Lykoi research log
 
+## R5.119 P6-A03 research review preparation (2026-10-08)
+
+**`R5_119_P6_A03_RESEARCH_REVIEW_PREPARED`**; see the
+[report](../benchmark/results/phase6/R5_119-REPORT.md) and
+[human review](../benchmark/results/phase6/r5_119/HUMAN-REVIEW.md).
+Clean pre-access snapshot, exact selected Redis capture verification, existing typed
+FRC envelope and source-only acceptance candidates prepared. Source proposes SELECT
+permission in each of @read/@write and explicitly leaves category removal compatibility
+open. Q1 needs clarification; no Redis precedence guessed from implementation or memory.
+Owner appointed research approver by user, but no candidate approval, credentials,
+evaluator, grant or seal supplied. SAME_AGENT/SAME_MODEL preparation; no generated
+implementation, independent-cognition or held-out claim. Four determined checks and
+two conditional check groups; zero executed. Fresh envelope/hash/binding/publication
+checks pass, historical baseline tests recorded without rerunning prohibited stages.
+No semantic/compiler/backend/prompt change, next-source access or first evaluation
+result. Stop after review, kernel 26, prior evidence unchanged.
+
 ## R5.118A research-only evaluation authority (2026-10-08)
 
 **`R5_118A_RESEARCH_EVALUATION_AUTHORITY_READY`**; see the

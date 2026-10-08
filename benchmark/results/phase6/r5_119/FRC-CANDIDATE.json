@@ -1,0 +1,92 @@
+{
+  "schema_version": "FormalRequirementContract-0.1",
+  "contract_id": "R5.119/P6-A03/candidate",
+  "revision": 1,
+  "source": {
+    "id": "P6-A03/redis/redis#13736/preserved-body",
+    "text": "The `@read` and `@write` ACL categories do not currently include `select`. This may be very confusing and may lead to non-obvious outcomes, since specifying the correct database is a fundamental requirement of successful read and write operations, and can lead to confusion, as demonstrated by [tickets like this](https://github.com/StackExchange/StackExchange.Redis/issues/2835) where the user had configured:\r\n\r\n```\r\nACL SETUSER cacheUser on >myPass ~AppCache* -@all +@pubsub +@read +@write +echo +info +SET +GET +eval +ping\r\n```\r\n\r\nIn the above case, the `-@all @read +@write` had the effect that `GET`, `SET` etc worked, but the `SELECT` did not, causing activity to happen incorrectly on DB0. Obviously a workaround here is to add `+select`, but I propose that this should be implicit in `@read` / `@write`.\r\n\r\nAdditional: I note that `select` *is* in `@keyspace` (which also includes things like `flushdb`, so: use-with-caution). I do not know whether there are implementation details that may cause problems such as \"a command can only be in a single ACL category\" (edit: upon further investigation I do not believe this to be a problem - `del` is in both `@write` and `@keyspace`, for example).\r\n\r\nOne potential gotcha; I do not know the order in which ACLs are applied; if it is left-to-right, then pre-existing setups like `+select +@read -@write` would presumably (if `select` was included in `@read` and `@write`) lead to not having `select`. Not sure if this is considered a problem. ",
+    "sha256": "568764f7390f21f06b50682fc385168116f572b764615dada8b0893963ef3952",
+    "classification": "PUBLIC"
+  },
+  "context": {
+    "scope": "Research-only candidate delta: SELECT permission through each of @read and @write in Redis ACLs. Ordered grant/revoke compatibility remains a blocking source question. No complete Redis replacement specification or approval.",
+    "domains": {
+      "repository": "redis/redis",
+      "issue": 13736,
+      "title": "[BUG] ACL @read and @write - should they include \"select\" ?",
+      "source_capture_sha256": "90132320ad5aa7e7c3996ed97096a798a9ecceea76927a9f9c1948bda58d9970",
+      "source_provenance_sha256": "6e80510ddc07ea3acfa8819d470e6eafc761d8e676215d8849677e81c3ff6fc4",
+      "retrieved_utc": "2026-10-08T13:55:07.762848+00:00",
+      "inputs": ["authorized ACL configuration containing +@read and/or +@write", "authenticated connection for that user", "explicit SELECT of an available database"],
+      "outputs": ["SELECT permission outcome", "connection-selected database observable through permitted database operations"],
+      "state": ["ACL command permissions", "connection-selected database"],
+      "inherited_context": "Reporter-supplied configuration and observed GET/SET versus SELECT distinction only. No ACL ordering, error-code, persistence or Redis implementation policy imported from memory."
+    },
+    "assumptions": [
+      "A later experiment uses a valid authorized ACL setup and an authenticated user on an environment with an available nonzero database. These are fixture prerequisites, not new authentication or database-range requirements.",
+      "The complete configuration's +@read token is used as the input example. The prose token @read without + is retained verbatim as an imprecise description, not accepted as a second required syntax."
+    ],
+    "component_authority": null
+  },
+  "obligations": [
+    {
+      "id": "A03-E1",
+      "basis": "STATED",
+      "source_quote": "I propose that this should be implicit in `@read` / `@write`.",
+      "derived_from": [],
+      "relation": {"kind": "invariant", "parameters": {"domain": "Redis ACL command permission", "condition": "Otherwise valid +@read grant with no conflicting revocation", "input_category": "@read", "required_command_permission": "SELECT", "observable": "SELECT is not denied solely for lack of explicit +select"}},
+      "statement": "Granting @read includes SELECT permission in the unopposed category-grant case. This does not resolve grant/revoke ordering or other SELECT validation."
+    },
+    {
+      "id": "A03-E2",
+      "basis": "STATED",
+      "source_quote": "I propose that this should be implicit in `@read` / `@write`.",
+      "derived_from": [],
+      "relation": {"kind": "invariant", "parameters": {"domain": "Redis ACL command permission", "condition": "Otherwise valid +@write grant with no conflicting revocation", "input_category": "@write", "required_command_permission": "SELECT", "observable": "SELECT is not denied solely for lack of explicit +select"}},
+      "statement": "Granting @write includes SELECT permission in the unopposed category-grant case. This does not resolve grant/revoke ordering or other SELECT validation."
+    },
+    {
+      "id": "A03-I1",
+      "basis": "NECESSARY_IMPLICATION",
+      "source_quote": "Obviously a workaround here is to add `+select`, but I propose that this should be implicit",
+      "derived_from": ["A03-E1", "A03-E2"],
+      "relation": {"kind": "invariant", "parameters": {"domain": "A03-E1/A03-E2 unopposed grants", "condition": "All other command preconditions satisfied", "input": "SELECT with no explicit +select in user configuration", "required_result": "SELECT permitted through the granted category", "forbidden_reason": "Explicit +select is required despite the granted @read or @write category"}},
+      "statement": "No separate +select grant is necessary solely to obtain SELECT permission from either category, including when both are granted."
+    },
+    {
+      "id": "A03-I2",
+      "basis": "NECESSARY_IMPLICATION",
+      "source_quote": "specifying the correct database is a fundamental requirement of successful read and write operations",
+      "derived_from": ["A03-E1", "A03-E2", "A03-I1"],
+      "relation": {"kind": "transition", "parameters": {"domain": "Authenticated connection in the unopposed category-grant cases", "input": "Explicit valid SELECT d for available database d", "precondition": "Other SELECT preconditions satisfied", "postcondition": "Connection selects requested database d; subsequent permitted operations address d", "observable": "Database-specific externally observed read or write, not a permission-only success claim", "limits": "No automatic database selection, new key-permission policy or durable persistence claim"}},
+      "statement": "The newly permitted valid SELECT must enable selecting the intended database, not merely report permission success while continuing on DB0. The requested delta concerns permission for an explicit SELECT, not an implicit SELECT executed by GET or SET."
+    }
+  ],
+  "issues": [
+    {
+      "id": "A03-Q1",
+      "category": "AMBIGUITY",
+      "description": "The source explicitly raises but does not settle category grant/revoke ordering and compatibility for +select +@read -@write. Determine whether SELECT must be revoked or retained, and the behavioral rule governing reversed order and explicit -select. Research approval cannot waive this material source question.",
+      "affects": ["A03-E1", "A03-E2", "A03-I1", "A03-I2"],
+      "alternatives": ["Ordered category updates: later -@write can revoke SELECT, including a preceding explicit grant", "SELECT remains allowed when independently or explicitly granted under a source-authorized compatibility rule", "Supply another externally justified observable grant/revoke rule"],
+      "witness": {"acl_suffix": "+select +@read -@write", "observable_difference": "SELECT d succeeds and selects d versus permission denial and no successful selection", "source_quote": "Not sure if this is considered a problem."},
+      "resolved": false
+    }
+  ],
+  "unspecified": [
+    "The source's existing @keyspace/flushdb/del observations are context, not requests to add permissions for those commands, move SELECT out of @keyspace, or redefine other category membership. No whole-application preservation guarantee is invented.",
+    "No ACL persistence/reload, historical-user migration, server restart or retroactive category-update policy is established. The candidate is scoped to ACLs configured for the experiment; it makes no rollout claim.",
+    "No exact SELECT success/error string, error code, authentication response, invalid-index behavior, supported database range, cluster mode or Redis-version matrix is established. Valid fixture inputs avoid specifying those unrelated behaviors.",
+    "No new ACL syntax for the prose @read token is specified; full configuration spelling is authoritative as an example, without a claim that malformed syntax must work.",
+    "Key access rules and GET/SET validation remain inherited prerequisites rather than newly formalized policies. The plan does not infer unrestricted database or key access from SELECT permission.",
+    "Grant/revoke outcomes and compatibility are unresolved in A03-Q1; no presumed Redis algorithm, precedence or default settles them."
+  ],
+  "implementation_choices": [
+    "Internal category representation, command lookup, data structures and algorithms are free subject to the eventual clarified observable obligations.",
+    "Fixture names, values and available database indices may vary without changing required permission and selection observations.",
+    "ACL ordering and preservation of grants are material behavior, not delegated internal implementation choices."
+  ],
+  "lineage": [],
+  "formalizer": "OpenCode/openai/gpt-6.1-sol/R5.119/same-agent-candidate",
+  "review": null
+}

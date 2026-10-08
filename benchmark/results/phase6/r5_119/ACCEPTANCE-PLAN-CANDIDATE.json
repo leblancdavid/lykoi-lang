@@ -1,0 +1,99 @@
+{
+  "candidate_id": "R5.119/P6-A03/acceptance-candidate/1",
+  "purpose": "research-evaluation-only",
+  "status": "CANDIDATE_CLARIFICATION_REQUIRED_NOT_EXECUTABLE",
+  "fixed_before_authoring": true,
+  "expectation_basis": "preserved-source",
+  "source": {"id": "P6-A03/redis/redis#13736/preserved-body", "capture_sha256": "90132320ad5aa7e7c3996ed97096a798a9ecceea76927a9f9c1948bda58d9970", "body_sha256": "568764f7390f21f06b50682fc385168116f572b764615dada8b0893963ef3952"},
+  "frc": {"candidate_id": "R5.119/P6-A03/candidate", "revision": 1, "canonical_sha256": "69fe6dd3816c184be9af73ad1b8863a6881f579543cd4c99d80cca402b7bc5ab"},
+  "independence": {"generated_implementation_access": false, "expectations": "Source-only, pre-author behavioral checks; no generated implementation or external observations available", "review_context": "SAME_AGENT", "same_model": true, "cognitive_independence": "NOT_ESTABLISHED", "role_separation": "Unregistered preparation candidate; later controller verifier principal must differ from FRC producer and author. No verifier credential or independent author is fabricated."},
+  "fixture": {
+    "prerequisites": ["Isolated research test environment with valid available databases 0 and d=1, or an equivalent nonzero available index", "Authorized administrator can configure fresh test users using source ACL syntax", "Authenticated test-user connection; other SELECT preconditions satisfied", "Externally controlled permitted key AppCacheProbe and distinct database marker values"],
+    "read_only_observation": "Administrator seeds AppCacheProbe with zero-marker in DB0 and d-marker in d; test user GET after SELECT d observes d-marker. Additional GET permission may be used as a fixture aid but must not grant SELECT.",
+    "write_observation": "Test user SET AppCacheProbe to write-marker after SELECT d; independent administrator observes write-marker in d and unchanged zero-marker in DB0. Explicit fixture GET/SET grants do not replace the tested category grant.",
+    "state_interpretation": "Selection is connection state; observation keys are fixture probes. Category permission is ACL state. No durability or restart test is specified."
+  },
+  "checks": [
+    {
+      "id": "A03-T1",
+      "obligations": ["A03-E1", "A03-I1", "A03-I2"],
+      "source_quote": "I propose that this should be implicit in `@read` / `@write`.",
+      "inputs": ["Fresh enabled user with valid credentials and ~AppCache* -@all +@read +GET; +GET is an observation aid, with no +@write, +@keyspace, +@all or +select", "Authenticate fresh connection", "Explicit SELECT d", "Permitted GET AppCacheProbe"],
+      "observable": "SELECT outcome and subsequent database-specific read",
+      "expected": "Valid SELECT is permitted without +select; GET returns d-marker, not zero-marker.",
+      "state_effects": "ACL allows SELECT through @read; explicit SELECT changes connection-selected DB to d; SELECT itself is not tested as a key write.",
+      "error_behavior": "No permission denial solely for absence of +select; exact success/error wire representation not prescribed.",
+      "status": "SOURCE_DETERMINED_CANDIDATE_NOT_RUN"
+    },
+    {
+      "id": "A03-T2",
+      "obligations": ["A03-E2", "A03-I1", "A03-I2"],
+      "source_quote": "I propose that this should be implicit in `@read` / `@write`.",
+      "inputs": ["Fresh enabled user with valid credentials and ~AppCache* -@all +@write +SET; +SET is an observation aid, with no +@read, +@keyspace, +@all or +select", "Authenticate fresh connection", "Explicit SELECT d", "Permitted SET AppCacheProbe write-marker", "Independent administrator reads DB0 and d"],
+      "observable": "SELECT outcome and destination database of permitted write",
+      "expected": "Valid SELECT permitted without +select; write-marker appears in d, and DB0 retains zero-marker.",
+      "state_effects": "ACL allows SELECT through @write; connection selects d; fixture write affects selected d.",
+      "error_behavior": "No permission denial solely for absence of +select; no exact error identity invented.",
+      "status": "SOURCE_DETERMINED_CANDIDATE_NOT_RUN"
+    },
+    {
+      "id": "A03-T3",
+      "obligations": ["A03-E1", "A03-E2", "A03-I1", "A03-I2"],
+      "source_quote": "ACL SETUSER cacheUser on >myPass ~AppCache* -@all +@pubsub +@read +@write +echo +info +SET +GET +eval +ping",
+      "inputs": ["Reporter configuration verbatim on fresh cacheUser in isolated fixture; no added +select", "Authenticate", "SELECT d; SET AppCacheProbe write-marker; GET AppCacheProbe", "Administrator checks DB0 and d"],
+      "observable": "Reporter scenario no longer fails SELECT solely due to missing permission, and subsequent activity addresses requested DB",
+      "expected": "SELECT permitted; read/write probe is in d rather than DB0. Explicit +SET/+GET in the source example do not substitute for the missing SELECT grant.",
+      "state_effects": "ACL category grant and connection selection; fixture key write in d.",
+      "error_behavior": "No SELECT permission denial caused by omission of explicit +select.",
+      "status": "SOURCE_DETERMINED_CANDIDATE_NOT_RUN"
+    },
+    {
+      "id": "A03-T4",
+      "obligations": ["A03-I2"],
+      "source_quote": "specifying the correct database is a fundamental requirement of successful read and write operations",
+      "inputs": ["T1 valid category-granted connection", "Explicit SELECT d and marker GET", "Explicit SELECT 0 and marker GET"],
+      "observable": "Explicit selection targets, using DB0 and nonzero database as finite boundary witnesses",
+      "expected": "First marker read is d-marker; after explicit SELECT 0 it is zero-marker. Permission change must not force a fixed database.",
+      "state_effects": "Connection selection follows explicit valid targets; read-only probe adds no key mutation.",
+      "error_behavior": "No permission denial solely for missing +select; invalid indices not covered.",
+      "status": "SOURCE_DETERMINED_CANDIDATE_NOT_RUN"
+    },
+    {
+      "id": "A03-T5",
+      "obligations": ["A03-E1", "A03-E2", "A03-I1", "A03-I2"],
+      "source_quote": "pre-existing setups like `+select +@read -@write`",
+      "inputs": ["Fresh valid user, -@all +select +@read -@write", "Authenticate and issue valid SELECT d"],
+      "observable": "SELECT permission and actual selection under source-raised compatibility case",
+      "expected": {"unresolved_question": "A03-Q1", "ordered_revocation_interpretation": "SELECT permission denied after -@write; no successful selection", "preserved_grant_interpretation": "SELECT permitted and selects d", "selected_expectation": null},
+      "state_effects": "Permission and connection-state effects depend on clarified rule; denial atomicity/error text not independently specified.",
+      "error_behavior": "Permission denial versus success is material and unresolved; no expected code/text chosen.",
+      "status": "BLOCKED_EXPECTATION_NOT_RUN"
+    },
+    {
+      "id": "A03-T6",
+      "obligations": ["A03-E1", "A03-E2", "A03-I1"],
+      "source_quote": "I do not know the order in which ACLs are applied",
+      "inputs": ["Fresh users for suffixes +@read -@write, -@write +@read, +@read -select, -select +@read, +@write -select, -select +@write, each after -@all", "Authenticate each and issue valid SELECT d"],
+      "observable": "Positive/negative order-sensitive outcomes distinguishing clarified grant/revoke rule",
+      "expected": {"unresolved_question": "A03-Q1", "required_resolution": "An observable rule must determine each permission outcome before executable acceptance is fixed", "selected_expectation": null},
+      "state_effects": "Per-user ACL and explicit SELECT outcomes; no unresolved outcome treated as pass or failure.",
+      "error_behavior": "Category or explicit denial outcomes depend on clarified rule, exact error identity outside scope.",
+      "status": "BLOCKED_EXPECTATION_NOT_RUN"
+    }
+  ],
+  "preservation_review": {
+    "source_authorized_scope": "Reporter GET/SET-versus-SELECT configuration grounds T3's valid permitted-operation witnesses. Issue does not explicitly promise every pre-existing ACL remains unchanged; its ordering gotcha contradicts assuming such a promise.",
+    "not_acceptance_obligations": ["No guessed universal preservation of @keyspace, flushdb, del, key restrictions or other ACL categories", "No automatic selection on GET/SET is requested or supplied as a substitute for explicit SELECT", "No cluster, reload, restart, persistence or rollout acceptance"]
+  },
+  "coverage_limitations": [
+    "Six candidate checks, zero executed. T5/T6 expectations unresolved; this is not a complete executable oracle or approval-ready research_plan.",
+    "Each FRC obligation has source-grounded check bindings, but finite checks do not prove all ACL combinations or faithful natural-language interpretation.",
+    "Keyspace permission, unrelated commands, invalid credentials/syntax/indices, transaction behavior, concurrency, clustered deployments, versions and persistence are not specified by this bounded delta.",
+    "Fixture preconditions need legitimate environment/context before later execution; expected results are logical observations, not assumed Redis wire strings.",
+    "No native_plan/V1 payload generated: projecting or running the native stages is outside preparation. Later plan completion and any expectation change require newly identified artifacts and review before explicit approval.",
+    "Same-agent/same-model candidate and review; independence from implementation is established by no authoring, not by an independent human or cognitive review."
+  ],
+  "native_plan": null,
+  "approved": false,
+  "sealed": false
+}

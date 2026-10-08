@@ -20,6 +20,14 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R5.119 prepares P6-A03 for human research review only.**
+[Preparation report](benchmark/results/phase6/R5_119-REPORT.md) and
+[owner review](benchmark/results/phase6/r5_119/HUMAN-REVIEW.md) contain the exact
+source-bound candidate FRC and acceptance plan. The owner is appointed research
+approver; no approval given. Redis SELECT category grant/revoke compatibility needs
+clarification. Kernel 26 unchanged, historical results preserved, zero authoring or
+evaluation. Stop after review; subsequent exact-artifact human decision required.
+
 **R5.118A establishes research-only evaluation authority readiness.**
 The [report](benchmark/results/phase6/R5_118A-REPORT.md),
 [approval specification](docs/research-evaluation-approval-v1.md) and

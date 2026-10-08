@@ -1,5 +1,17 @@
 # Experimental decisions
 
+## R5.119 — Preserve the source's material question in preparation
+
+The [P6-A03 review](../benchmark/results/phase6/r5_119/HUMAN-REVIEW.md) is prepared
+for the appointed project-owner research approver. Keep category grant obligations
+and the source-raised `+select +@read -@write` compatibility question separate:
+review-ready does not mean approval-ready. Do not infer a default ACL ordering or
+hide its unresolved outcomes in implementation freedoms. Conditional acceptance
+witnesses make the behavioral choice inspectable without executing them or fabricating
+a complete oracle. Tradeoff: this prepares finite source-grounded material but cannot
+advance to evaluation until legitimate clarification and exact linked artifact approval.
+Same-agent reasoning is disclosed; no semantics, prompts or native stages changed.
+
 ## R5.118A — Approve experiments separately from product decisions
 
 Adopt [research evaluation approval 1](research-evaluation-approval-v1.md) and
