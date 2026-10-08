@@ -1,5 +1,23 @@
 # Experimental decisions
 
+## R5.120A — Local experiments consume human decisions without production authority
+
+Adopt [local execution 1](local-research-execution-v1.md) and
+[prospective protocol 3](phase6-generalization-protocol-r5.120a.md). A plain exact-bound
+receipt and direct existing semantic-function dispatch avoid making production role
+provisioning a local research prerequisite. Keep production authorization unchanged;
+the local runner has no controller connection, grant/seal API or authentication role.
+Retain exact source/FRC/acceptance/human statement/evaluator/snapshot and native first
+blockers. External classification owns behavior; missing executable acceptance halts.
+
+Tradeoff: human provenance/evaluator names are declarations, not cryptographic identity,
+and local records are not controller-authenticated semantic receipts or single-use
+tokens. Substantive source-only review and separate attempt permission remain human
+research obligations. Synthetic same-agent evidence establishes bounded interface
+readiness; it does not establish Redis compatibility or production suitability.
+One local module instead of a second authority system. Stop after synthetic qualification;
+all historical first results and the 26-concept kernel remain unchanged.
+
 ## R5.119A — Preserve documented ACL processing, not every old allowance
 
 [P6-A03 revision review](../benchmark/results/phase6/r5_119a/HUMAN-REVIEW.md)

@@ -20,6 +20,17 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R5.120A qualifies lightweight local research execution.**
+[Report](benchmark/results/phase6/R5_120A-REPORT.md),
+[local interface](docs/local-research-execution-v1.md) and
+[protocol 3](docs/phase6-generalization-protocol-r5.120a.md): exact human-approved
+research artifacts can traverse existing semantics without production credentials or
+grants. Synthetic success, native halts, wrong-compilable behavioral failure and
+production isolation verified; 146 distinct tests and validation/safety pass.
+Kernel 26/history/security unchanged. Stop after synthetic qualification; no P6-A03
+execution or P6-A04/P6-A05 inspection. Later execution needs separate linked-attempt
+authorization and exact executable acceptance integration.
+
 **R5.120 records the P6-A03 first approval-boundary result.**
 [Report](benchmark/results/phase6/R5_120-REPORT.md): `NEEDS_CLARIFICATION /
 RESEARCH_APPROVER_UNAVAILABLE`. Exact human approval and artifact identities recorded;

@@ -1,5 +1,24 @@
 # Lykoi research log
 
+## R5.120A local research execution qualification (2026-10-08)
+
+**`R5_120A_LOCAL_RESEARCH_EXECUTION_READY`**;
+[report](../benchmark/results/phase6/R5_120A-REPORT.md),
+[specification](local-research-execution-v1.md),
+[evidence](../benchmark/results/phase6/r5_120a/SYNTHETIC-EVIDENCE.json).
+Exact human decision/provenance and source/FRC/plan/evaluator/snapshot bindings feed
+unchanged native semantics without controller credentials or grants. Public synthetic
+library: 5 cases/17 external steps pass. Wrong-but-compilable public P01 target fails
+fixed store verification; unsupported stages retain native blockers. Production rejects
+local receipts/approval imitations; local execution leaves test production database
+bytes/revision/journal unchanged. 146 distinct tests plus validation/safety pass.
+Same-agent/model known-answer interpretation disclosed; external process observation
+is not independent cognition. No semantics/backend/security changes, kernel 26.
+Historical first results preserved; stop after synthetic qualification. No Redis/P6-A03
+execution or P6-A04/P6-A05 inspection. Local interface ready, source-specific executable
+acceptance integration still unestablished; a later attempt needs separate authorization
+and explicit post-first-result linkage.
+
 ## R5.120 P6-A03 first approval-boundary result (2026-10-08)
 
 **`R5_120_P6_A03_FIRST_EVALUATION_COMPLETE`**; [report](../benchmark/results/phase6/R5_120-REPORT.md),

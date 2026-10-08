@@ -1,5 +1,16 @@
 # Phase 5: comparative maintenance benchmark
 
+## R5.120A prospective local research execution
+
+[Local execution 1](../docs/local-research-execution-v1.md),
+[protocol 3](../docs/phase6-generalization-protocol-r5.120a.md) and
+[report](results/phase6/R5_120A-REPORT.md) qualify exact-bound local synthetic
+execution without production credentials/grants/seals. Existing semantic and external
+verification gates remain authoritative; production security/kernel 26/history unchanged.
+Stop after synthetic qualification. No P6-A03 execution or P6-A04/P6-A05 inspection;
+later use requires separately authorized post-first-result linkage and exact executable
+acceptance, not a replacement first result or changed oracle.
+
 ## R5.118A prospective Phase 6 research-only approval
 
 [Research approval 1](../docs/research-evaluation-approval-v1.md),

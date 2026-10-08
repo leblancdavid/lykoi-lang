@@ -8,6 +8,16 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R5.120A — `R5_120A_LOCAL_RESEARCH_EXECUTION_READY`.**
+Read the [report](../benchmark/results/phase6/R5_120A-REPORT.md),
+[local interface](local-research-execution-v1.md) and
+[protocol 3](phase6-generalization-protocol-r5.120a.md). Synthetic-only exact-bound
+local execution is qualified without production authority; controller security and
+kernel 26/history unchanged. Human provenance is not cryptographic authentication.
+Stop after synthetic qualification; no P6-A03 execution/authoring/compilation or
+P6-A04/P6-A05 inspection. Separate authorization and linked post-first-result label
+are required later; P6-A03 executable acceptance/backend readiness remains unestablished.
+
 **Latest round: R5.120 — `R5_120_P6_A03_FIRST_EVALUATION_COMPLETE`.**
 Read the [report](../benchmark/results/phase6/R5_120-REPORT.md) and immutable
 P6-A03 first result: NEEDS_CLARIFICATION / RESEARCH_APPROVER_UNAVAILABLE.

@@ -7,6 +7,16 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R5.120A: `R5_120A_LOCAL_RESEARCH_EXECUTION_READY`.
+  Read `docs/local-research-execution-v1.md`,
+  `docs/phase6-generalization-protocol-r5.120a.md` and
+  `benchmark/results/phase6/R5_120A-REPORT.md`. Plain exact-bound human research
+  receipts call existing semantic stages without controller credentials/grants/seals;
+  production security unchanged. Synthetic success/native halts/wrong-compilable
+  behavioral failure/isolation qualified; kernel 26/history unchanged. Stop after
+  synthetic qualification. No P6-A03 evaluation/authoring/compilation or P6-A04/P6-A05
+  inspection. Later P6-A03 needs separate authorization and explicit linked
+  post-first-result labeling; approved executable acceptance integration still required.
 - Latest round R5.120: `R5_120_P6_A03_FIRST_EVALUATION_COMPLETE`.
   Read `benchmark/results/phase6/R5_120-REPORT.md` and immutable
   `r5_120/P6_A03_FIRST_RESULT.json`: NEEDS_CLARIFICATION /

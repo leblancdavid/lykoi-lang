@@ -75,6 +75,18 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R5.120A — `R5_120A_LOCAL_RESEARCH_EXECUTION_READY`.**
+[Report](../benchmark/results/phase6/R5_120A-REPORT.md),
+[local interface](local-research-execution-v1.md) and
+[prospective protocol 3](phase6-generalization-protocol-r5.120a.md): exact retained
+human-approved contracts may execute locally without production credentials. No
+controller connection/grants/seals; production security unchanged. Synthetic native
+success (5 cases/17 external steps), legitimate stage halts and wrong-compilable
+behavioral failure qualified; 146 distinct tests, validation/safety pass. Kernel 26
+and historical records unchanged. Stop after synthetic qualification; no P6-A03
+execution or P6-A04/P6-A05 inspection. A separately authorized linked post-first-result
+attempt still needs exact executable acceptance integration; Redis readiness unmeasured.
+
 **R5.120 — `R5_120_P6_A03_FIRST_EVALUATION_COMPLETE`.**
 [Report](../benchmark/results/phase6/R5_120-REPORT.md) and
 [first result](../benchmark/results/phase6/r5_120/P6_A03_FIRST_RESULT.json):
