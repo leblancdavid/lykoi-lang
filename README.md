@@ -1,10 +1,11 @@
 # Lykoi
 
-Lykoi is an AI-native semantic representation for software. This experimental
-software-development system is designed around AI authorship: an AI maintains a
-semantic model of a software system, validates its relationships and contracts,
-and generates disposable implementation artifacts. The model, not Python, is
-the source of truth. Python is the first backend, not the definition of Lykoi.
+Lykoi investigates local, provider-independent, AI-native symbolic software
+construction. AI interprets requirements and constructs explicit symbolic software;
+deterministic tools validate and lower it to executables that run without an LLM.
+R6.17 proposes testing reusable AI-selected compositions against fixed symbols and
+direct Python. Human readability is optional; execution meaning must be defined.
+This revised direction is a research proposal, not a demonstrated adaptive system.
 
 Lykoi (pronounced “lie-KOY”) is named after the Lykoi cat breed. Its central
 question is: what should software look like when AI, rather than humans, is the
@@ -19,6 +20,15 @@ reproducible research records.
 Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
+
+**R6.17 publishes a revised charter and falsifiable experiment design.**
+[Charter](docs/symbolic-research-charter-r6.17.md) and
+[report](benchmark/results/phase6/R6_17-REPORT.md):
+`R6_17_SYMBOLIC_RESEARCH_DESIGN_READY`. Typed graph/ordered-sequence candidate;
+development discovery, vocabulary freeze, unseen evaluation, fixed-capacity macro
+control and full discovery/retrieval/tooling accounting. No implementation, model
+selection, inference or training; kernel26/production/VM/history preserved. Ready
+means design sufficiency for separate authorization. Stopped after publication.
 
 **R6.14 constructs finite relations on the unchanged experimental VM.**
 [Report](benchmark/results/phase6/R6_14-REPORT.md):

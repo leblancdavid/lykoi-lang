@@ -7,6 +7,18 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R6.17: `R6_17_SYMBOLIC_RESEARCH_DESIGN_READY`.
+  Read `docs/symbolic-research-charter-r6.17.md` and
+  `benchmark/results/phase6/R6_17-REPORT.md`, plus the r6_17 design/lifecycle.
+  Documentation-only proposal: local provider-independent AI-native symbolic
+  construction, deterministic validation/lowering and LLM-free execution. Typed
+  DAG/ordered-sequence hybrid recommended; only compositions of fixed meanings
+  may be discovered. Three-track development/freeze/unseen design includes
+  capacity-matched fixed macros and complete discovery/retrieval/tooling costs.
+  No model selected, task commissioned, architecture implemented or experiment run.
+  Kernel26/production/R6.10/R6.3–R6.16 preserved. Ready means design sufficiency
+  for separate authorization, not demonstrated adaptive benefit. Stop after
+  publication; no implementation/training/P6-A04 acceptance/P6-A05 access.
 - Latest round R6.16: `R6_16_ARCHITECTURAL_COMPARISON_INCONCLUSIVE`.
   Read `benchmark/results/phase6/R6_16-REPORT.md` and
   `experiments/value_added_r6_16/PROTOCOL.md`. Two new persistent applications:

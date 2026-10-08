@@ -1,5 +1,17 @@
 # Phase 5: comparative maintenance benchmark
 
+## R6.17 local symbolic construction — design only
+
+[Charter](../docs/symbolic-research-charter-r6.17.md),
+[report](results/phase6/R6_17-REPORT.md) and
+[experiment design](results/phase6/r6_17/EXPERIMENT-DESIGN.md):
+`R6_17_SYMBOLIC_RESEARCH_DESIGN_READY`. Python/fixed/adaptive composition tracks,
+capacity-matched fixed macros and expanded-template ablation; development/freeze/
+unseen phases, local model/resource controls and full vocabulary cost accounting.
+No tasks commissioned, model selected, implementation or benchmark run. Existing
+results/classifications and kernel26/production/R6.10 preserved. Design readiness
+is not adaptive-symbol evidence; stop pending explicit implementation authorization.
+
 ## R6.16 value-added architecture experiment
 
 [Report](results/phase6/R6_16-REPORT.md) and

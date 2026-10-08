@@ -8,42 +8,33 @@ that saved models, hashes and checkpoints remain reproducible.
 
 ## Long-term goal
 
-Lykoi is an experiment in AI-native programming-language design. Its central
-research question is: **what is the smallest general-purpose semantic
-vocabulary from which an AI can reliably compose complex software?** The
-proposed direction is to distill programming into general, composable,
-unambiguous, machine-friendly concepts rather than imitate human-oriented
-syntax, assemble code-generation templates, or add a benchmark-specific
-primitive for each new feature. This is a research hypothesis, not an
-established minimum or a claim that the current vocabulary is general-purpose.
+R6.17 proposes Lykoi as a **local, provider-independent, AI-native symbolic software
+construction system**: human requirements → AI interpretation → AI-constructed
+symbolic representation → deterministic semantic validation → compilation/lowering
+→ executable software. Execution requires no LLM. Human readability is optional.
+See the [revised charter proposal](symbolic-research-charter-r6.17.md).
 
-The intended architecture is human intent → AI requirements wizard with approved
-project policies → candidate Formal Requirement Contract ↔ independent source-only
-obligation inventory → coverage reconciliation / human clarification → owner-approved,
-sealed FRC → reviewed structural projection → bounded behavioral-decision discovery
-→ implementation adequacy → faithful V1 projection → restricted Lykoi authoring
-→ deterministic validation/lowering → software → independent external verification.
-A content-bound authority/artifact controller enforces handoffs and halts; independent
-verification is planned and sealed before authoring. Formal requirements define WHAT;
-the program defines HOW. Lykoi is AI-native, not AI-dependent. The semantic model,
-rather than a generated Python file, is the source of truth. Python is the first
-backend, not the definition of the language.
+The primary hypothesis is that AI-selected reusable compositions of an explicitly
+defined foundation transfer to unseen tasks with a correctness or fully costed
+development advantage over fixed symbols. Direct Python remains a comparison.
+Initial discovery permits only compositions, never invented execution meanings.
+Recommend a typed DAG with ordered sequence regions; this is a design candidate,
+not an implemented or adopted production language.
 
-The goal is to make changes easier to reason about and safer to maintain:
-identify affected behavior by stable semantic relationships, reject known
-invalid states and unauthorized effects before generation, make migrations
-explicit, and connect generated artifacts and verification evidence to their
-model. Longer term, correctness should move into language semantics,
-constraints, compiler/runtime guarantees and validated infrastructure
-adapters, so more properties hold by construction rather than by repeatedly
-repairing generated application code. Tests remain important for Lykoi's
-semantics, compiler/runtime, adapters, intent interpretation and independent
-evaluation; they are not a target to fit. This is a research direction, not
-a claim of general correctness or that Lykoi already outperforms conventional
-programming. The current language supports a bounded task-management domain;
-broader operations, stronger verification, more precise provenance and other
-backends require further language and compiler work. Core semantics and
-external resources such as storage, time and IDs should remain distinguishable.
+The earlier smallest-general-purpose-kernel question remains historical research;
+minimization is no longer the default architecture criterion. Existing FRC/source
+authority, semantic validation, stable identity, impact and deterministic lowering
+findings remain reusable. Mandatory traversal of the entire FRC/controller/production
+stack is not assumed for the new comparison. Their original product/authority
+contracts and historical evidence remain intact. Python is an existing backend,
+not the meaning of symbolic programs. Core semantics and external resources remain
+distinguishable; passing validation does not establish requirements fidelity.
+
+The unchanged production language has a bounded stateful profile and 26-construct
+kernel. R6.10 is a separate partial experimental VM. No general-purpose completeness,
+adaptive benefit or superiority is established. Tests remain important for semantic
+machinery, interpretation and external acceptance; new task-specific primitives
+and unverified host callbacks cannot substitute for specified meaning.
 
 ## Work completed
 
@@ -74,6 +65,19 @@ external resources such as storage, time and IDs should remain distinguishable.
   and [post-B16 corrected boundary](../benchmark/results/phase5c/R5_2_2-POST-B16-CORRECTED-CONTINUATION.md).
 
 ## Current boundary and next steps
+
+**R6.17 — `R6_17_SYMBOLIC_RESEARCH_DESIGN_READY`.**
+[Design report](../benchmark/results/phase6/R6_17-REPORT.md): documentation-only
+charter revision and falsifiable local experiment. Three tracks: Python, fixed
+symbols and adaptive compositions; required capacity-matched fixed macro control
+and expanded-template ablation. Eight development tasks, frozen vocabulary/machinery,
+24 unseen evaluation tasks across transfer/combination/stress strata, three seeds
+and staged changes are specified, not commissioned or run. Discovery failures,
+retrieval, tooling and setup costs must be counted. Local resource inventory precedes
+model selection; no training/provider dependency. Kernel26/production/VM and
+R6.3–R6.16 preserved. Ready means design sufficiency, not demonstrated hypotheses.
+Smallest next step is separately authorized isolated composition-wrapper qualification.
+Stopped after publication; no implementation, P6-A04 acceptance or P6-A05 access.
 
 **R6.16 — `R6_16_ARCHITECTURAL_COMPARISON_INCONCLUSIVE`.**
 [Architecture comparison](../benchmark/results/phase6/R6_16-REPORT.md): two new

@@ -1,5 +1,24 @@
 # Lykoi research log
 
+## R6.17 symbolic construction charter/design (2026-10-08)
+
+**`R6_17_SYMBOLIC_RESEARCH_DESIGN_READY`**;
+[report](../benchmark/results/phase6/R6_17-REPORT.md) and
+[charter](symbolic-research-charter-r6.17.md). Documentation-only revision proposes
+local AI-native symbolic construction with deterministic lowering and model-free
+execution. Inventory preserves early kernel/FRC/validation/impact and R6.10/14/15/16
+evidence and limitations. Hybrid typed DAG/ordered sequences recommended, only
+composition of unchanged meanings admitted. Lifecycle covers proposal through
+versioned storage, retrieval, bounded expansion and provenance audit. Design defines
+three tracks plus fixed-capacity macros/expanded-template controls, eight development
+and 24 unseen tasks, three seeds and staged modifications. These counts are design
+parameters, not executed observations. Full discovery/retrieval/tooling effort and
+failed proposals are required; local resource/model selection remains future work.
+No implementation, inference, training, tasks or historical reruns. Initial Git tree
+clean; production/kernel26/VM and R6.3–R6.16 dedicated records preserved. Ready means
+design sufficiency for separate authorization. Stopped; smallest next executable
+step is an isolated typed composition-wrapper qualification, awaiting authorization.
+
 ## R6.16 value-added architecture experiment (2026-10-08)
 
 **`R6_16_ARCHITECTURAL_COMPARISON_INCONCLUSIVE`**;

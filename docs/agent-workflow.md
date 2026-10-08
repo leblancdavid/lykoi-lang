@@ -8,6 +8,18 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R6.17 — `R6_17_SYMBOLIC_RESEARCH_DESIGN_READY`.**
+Read the [charter proposal](symbolic-research-charter-r6.17.md),
+[report](../benchmark/results/phase6/R6_17-REPORT.md) and linked design/lifecycle.
+Documentation-only local symbolic construction proposal; deterministic LLM-free
+execution, provider independence and composition-only discovery. Proposed hybrid
+graph/sequence representation and three-track development/freeze/unseen experiment
+include fixed-capacity macro controls and fully costed discovery/retrieval/tooling.
+No implementation, tasks, model selection or inference. Historical evidence and
+kernel26/production/R6.10 preserved. Stop after publication; a wrapper qualification
+is the smallest separately authorizable next step, not permission to begin it.
+No training, P6-A04 acceptance or P6-A05 access.
+
 **Latest round: R6.16 — `R6_16_ARCHITECTURAL_COMPARISON_INCONCLUSIVE`.**
 Read the [architecture report](../benchmark/results/phase6/R6_16-REPORT.md) and
 experimental frozen protocol. Two stateful domains share a semantic skeleton:
@@ -443,10 +455,12 @@ expected to reject reapplication.
 
 ## Language design and research discipline
 
-The research question is whether a small general-purpose semantic vocabulary
-can compose complex software reliably. Prefer typed, explicit, reusable
-primitives and their composition to a new operation for each application
-feature. Before proposing an extension, identify the precise expressiveness
+The R6.17 proposed research question is whether AI-selected compositions of a
+fixed deterministic foundation transfer to unseen requirements with a correctness
+or fully costed development benefit over fixed symbols and direct Python. Kernel
+minimization and human readability are not default selection criteria. Prefer
+explicit typed meaning and reusable composition. Before proposing an extension,
+identify the precise expressiveness
 gap, examples beyond the triggering requirement, interactions with existing
 semantics, validator/runtime obligations, migration/compatibility costs, and a
 way to challenge generality with unseen problems. Do not imitate a host

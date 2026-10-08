@@ -1,5 +1,21 @@
 # Experimental decisions
 
+## R6.17 — Test adaptive composition without inventing execution meanings
+
+[Charter](symbolic-research-charter-r6.17.md) and
+[design report](../benchmark/results/phase6/R6_17-REPORT.md):
+`R6_17_SYMBOLIC_RESEARCH_DESIGN_READY`. Propose local provider-independent symbolic
+construction and LLM-free execution. Recommend typed DAGs with ordered regions;
+compare utility rather than select by kernel count, readability or compactness.
+Composition discovery is distinct from new primitives and aliases. Exact dependency
+pins, conservative typing, bounded hygienic expansion and immutable vocabulary
+versions define meaning. Require fixed-capacity human macro control and expanded
+template ablation before attributing an advantage to AI discovery. Charge failed
+proposals, human effort, retrieval and validation/lowering with amortization curves.
+Existing results remain scoped observations, including Python advantages and R6.16
+outcome priming. No implementation/model/task preparation occurs. Stop after design;
+isolated wrapper qualification is a separately authorizable next step.
+
 ## R6.16 — Require incremental semantic benefit before mandatory layering
 
 [Report](../benchmark/results/phase6/R6_16-REPORT.md):
