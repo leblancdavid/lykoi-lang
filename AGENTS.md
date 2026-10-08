@@ -7,6 +7,16 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R5.118A: `R5_118A_RESEARCH_EVALUATION_AUTHORITY_READY`.
+  Read `docs/research-evaluation-approval-v1.md`,
+  `docs/phase6-generalization-protocol-r5.118a.md` and
+  `benchmark/results/phase6/R5_118A-REPORT.md`. Research approval binds exact source,
+  FRC, review, pre-author acceptance and evaluator; appointed research role required,
+  no producer self-approval or product/deployment authority. Native semantic and
+  external verification gates remain. Synthetic known-answer/same-agent evidence,
+  no actual approver appointed for external sources. R5.117/R5.118 first results and
+  R5.116A curation preserved; kernel 26 unchanged. Stop after methodology verification;
+  no P6-A01/P6-A02 rerun or P6-A03–P6-A05 content access/evaluation authorized.
 - Latest round R5.118: `R5_118_P6_A02_FIRST_EVALUATION_COMPLETE`.
   Read `benchmark/results/phase6/R5_118-REPORT.md` and preserved
   `r5_118/P6_A02_FIRST_RESULT.json`: NEEDS_CLARIFICATION at FRC review/approval,

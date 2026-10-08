@@ -20,6 +20,16 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R5.118A establishes research-only evaluation authority readiness.**
+The [report](benchmark/results/phase6/R5_118A-REPORT.md),
+[approval specification](docs/research-evaluation-approval-v1.md) and
+[prospective Phase 6 protocol](docs/phase6-generalization-protocol-r5.118a.md)
+separate appointed experimental permission from upstream/product approval. Synthetic
+native-path and negative controls pass with 146 relevant tests, validation and safety;
+research approval cannot confer production authority or waive semantic/verification
+gates. No actual approver appointed for external sources; first results preserved,
+kernel 26 unchanged. Stop after methodology; no external evaluation or P6-A03 access.
+
 **R5.118 preserves P6-A02's first result: `NEEDS_CLARIFICATION`.**
 The [report](benchmark/results/phase6/R5_118-REPORT.md) records
 `R5_118_P6_A02_FIRST_EVALUATION_COMPLETE`: exact curl source verified, bounded-change

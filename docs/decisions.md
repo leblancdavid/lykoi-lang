@@ -1,5 +1,23 @@
 # Experimental decisions
 
+## R5.118A — Approve experiments separately from product decisions
+
+Adopt [research evaluation approval 1](research-evaluation-approval-v1.md) and
+[prospective protocol 2](phase6-generalization-protocol-r5.118a.md). An appointed
+research role can permit source-grounded experiments without upstream maintainer
+approval; it cannot invent missing material decisions or certify definitive upstream
+intent. Bind exact source/FRC/review/pre-author acceptance/evaluator and explicit
+assumptions/unknowns. Reuse existing controller wrappers, credentials, journal and
+native pipeline; distinctly label research seals/grants and refuse production use.
+
+Tradeoff: finite same-agent review is inspectable but can share interpretation errors.
+Disclose that evidence strength instead of requiring unavailable independent cognition
+as an infrastructure gate. External observations and fixed source-derived expectations
+remain mandatory; natural-language entailment is not established by quote/binding
+checks. AI recommendations cannot supply an approver appointment. Synthetic role
+simulation establishes interface readiness, not real external approval. Preserve all
+first results; no external evaluation or next-source access in this methodology round.
+
 ## R5.116A — Precommit procedural selection and disclose exposure
 
 Prospectively replace R5.116's unavailable blinded-curator prerequisite with a fixed,

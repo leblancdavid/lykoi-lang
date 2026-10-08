@@ -116,7 +116,20 @@ class PipelineController(Controller):
         self._fresh(seal)
         approval = self.artifact(a["dependencies"]["approval"])
         fid = approval["dependencies"]["frc"]
-        self._need(fid, "ARTIFACT_SEALED")
+        if a["content"].get("purpose") == "research-evaluation-only":
+            if approval["type"] != "research_approval":
+                raise Failure("RESEARCH_IDENTITY_MISMATCH")
+            self._need(a["dependencies"]["approval"], "RESEARCH_EVALUATION_APPROVED")
+            self._need(fid, "RESEARCH_FRC_SEALED")
+            evaluation = self._subject(a["content"]["evaluation"], a["project"], "research_evaluation")
+            if evaluation["dependencies"]["approval"] != a["dependencies"]["approval"]:
+                raise Failure("RESEARCH_IDENTITY_MISMATCH")
+            d = approval["dependencies"]
+            self._research_binding(a["project"], d["source"], fid, d["plan"], d["review"])
+        else:
+            if a["content"].get("purpose") != "WHAT" or approval["type"] != "approval":
+                raise Failure("MISSING_WHAT_SEAL")
+            self._need(fid, "ARTIFACT_SEALED")
         content = self.artifact(fid)["content"]
         contracts.frc.validate(content["contract"])
         from .query_profile import validate_relations
@@ -127,6 +140,10 @@ class PipelineController(Controller):
         from .model_profile import applies as model_applies, facts as model_facts
         if model_applies(content["contract"]):
             model_facts(content["contract"])
+        if approval["type"] == "research_approval":
+            plan = self.artifact(approval["dependencies"]["plan"])["content"]
+            if plan.get("native_plan") != self.expected_plan(content["contract"]):
+                raise Failure("RESEARCH_ACCEPTANCE_BINDING_REQUIRED", reason="Native plan differs from approved pre-author plan")
         return fid, content["contract"]
 
     def expected_plan(self, contract):
@@ -360,7 +377,9 @@ class PipelineController(Controller):
                     raise Failure("RUN_IDENTITY_REUSE", run=run)
         self._check_policies(self.what(self.artifact(a["dependencies"]["adequacy"])["dependencies"]["seal"])[0])
         graph = self.closure(subject, authoritative=True)
-        grant = self._put("grant", project, {"purpose": "implementation", "action": "author",
+        seal = self.artifact(a["content"]["manifest"]["what_seal"])
+        purpose = "research-implementation" if seal["content"]["purpose"] == "research-evaluation-only" else "implementation"
+        grant = self._put("grant", project, {"purpose": purpose, "action": "author",
                                            "prerequisite_closure": sorted(graph), "authority_events": self._evidence_ids(subject)},
                           {"bundle": subject, "freeze": a["dependencies"]["freeze"]}, actor)
         self._event("GRANT_ISSUED", subject, actor, "controller", "IMPLEMENTATION_AUTHORIZED", evidence=grant)
@@ -376,7 +395,7 @@ class PipelineController(Controller):
             self._need(subject, "GRANT_ISSUED")
             manifest = self.check_bundle(subject)
             approval = self.artifact(self.artifact(manifest["what_seal"])["dependencies"]["approval"])
-            what_only = approval["dependencies"]["structural"]
+            what_only = approval["dependencies"].get("structural")
             for aid in self.closure(grant, authoritative=True):
                 if aid == what_only and self.artifact(aid)["content"].get("scope") == "requirements-only; no V1/BDI support asserted":
                     if any(self._has(aid, "REVIEW_COMMITTED", x) for x in ("DISPUTED", "REJECTED", "REVISION_REQUIRED")):

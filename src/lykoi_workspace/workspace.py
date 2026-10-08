@@ -434,6 +434,18 @@ class Workspace:
             raise Failure("WRONG_CANDIDATE_VERSION")
         return self._call("controller", "seal_frc", subject=exact_frc)
 
+    def approve_research(self, credential, exact_frc, *, plan, review, evaluation_actor):
+        """Explicit approver credential; service/producer output cannot approve."""
+        self.approval_summary(exact_frc)
+        return self._human(credential, "approve_research", subject=exact_frc,
+                           source=self.source, plan=plan, review=review,
+                           evaluation_actor=evaluation_actor)
+
+    def begin_research_evaluation(self, credential, approval, *, exact_frc, plan):
+        self.approval_summary(exact_frc)
+        return self._human(credential, "begin_research_evaluation", subject=approval,
+                           source=self.source, frc=exact_frc, plan=plan)
+
     def status(self):
         try:
             candidate = self.candidate

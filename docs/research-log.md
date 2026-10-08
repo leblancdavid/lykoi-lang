@@ -1,5 +1,26 @@
 # Lykoi research log
 
+## R5.118A research-only evaluation authority (2026-10-08)
+
+**`R5_118A_RESEARCH_EVALUATION_AUTHORITY_READY`**; see the
+[report](../benchmark/results/phase6/R5_118A-REPORT.md),
+[specification](research-evaluation-approval-v1.md) and
+[protocol amendment](phase6-generalization-protocol-r5.118a.md). Exact source/FRC/
+review/acceptance-plan/evaluator binding and explicit research roles reuse existing
+authority/artifacts. Synthetic approval is consumed through the native unchanged-
+capability pipeline with no product approval event. A wrong but compilable fixture
+is externally rejected; native structural/BDI/adequacy/V1 refusals remain blocking.
+Deployment/replay/substitution/stale authority/self-approval controls pass.
+
+146 focused/relevant tests, model validation and safety passed. Same-agent known-answer
+review is disclosed, not independent cognition or held-out evidence; no real research
+approver appointed for the external batch. Interpretation completeness remains a
+source-review judgment, not a quote-check proof. R5.117/R5.118 immutable first results
+and R5.116A curation unchanged; no external rerun/evaluation or P6-A03–P6-A05 content
+access. Kernel/compiler/backend remain R5.114/26. No new qualification, isolation,
+runtime freeze or protected-source infrastructure. Stop at methodology verification;
+a later source attempt requires separate authorization and legitimate exact approval.
+
 ## R5.118 P6-A02 first external evaluation (2026-10-08)
 
 **`R5_118_P6_A02_FIRST_EVALUATION_COMPLETE`**;

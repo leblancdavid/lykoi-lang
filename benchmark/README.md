@@ -1,5 +1,18 @@
 # Phase 5: comparative maintenance benchmark
 
+## R5.118A prospective Phase 6 research-only approval
+
+[Research approval 1](../docs/research-evaluation-approval-v1.md),
+[protocol 2](../docs/phase6-generalization-protocol-r5.118a.md) and
+[report](results/phase6/R5_118A-REPORT.md) establish
+`R5_118A_RESEARCH_EVALUATION_AUTHORITY_READY` through synthetic native-path controls.
+Appointed research permission is distinct from product WHAT/deployment authority;
+source-grounded fixed acceptance, material clarification and native stage/external
+verification gates remain. No real external approver appointed, external requirement
+evaluated or P6-A03–P6-A05 content accessed. Earlier first results/curation preserved;
+kernel 26 unchanged. Stop after methodology; a subsequent attempt needs separate
+authorization and source-specific approval/acceptance.
+
 ## R5.115 Phase 6 planning transition
 
 **`R5_115_PHASE6_RESEARCH_READY`** records methodology readiness only. The

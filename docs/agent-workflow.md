@@ -8,6 +8,17 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R5.118A — `R5_118A_RESEARCH_EVALUATION_AUTHORITY_READY`.**
+Read the [report](../benchmark/results/phase6/R5_118A-REPORT.md),
+[research approval interface](research-evaluation-approval-v1.md) and
+[prospective Phase 6 protocol 2](phase6-generalization-protocol-r5.118a.md).
+Appointed research permission is separate from source behavioral and product WHAT
+authority; no AI self-appointment, material ambiguity waiver or deployment grant.
+Native structural/BDI/adequacy/V1 and external checks remain gates. Same-agent
+synthetic evidence disclosed, no actual external approver appointed. Preserve
+R5.117/R5.118 first results and R5.116A curation. Stop after methodology verification;
+no external evaluation/rerun or P6-A03–P6-A05 content access. Kernel 26 unchanged.
+
 **Latest round: R5.118 — `R5_118_P6_A02_FIRST_EVALUATION_COMPLETE`.** See the
 [report](../benchmark/results/phase6/R5_118-REPORT.md). P6-A02 first result is
 NEEDS_CLARIFICATION at FRC review/approval: required approval unavailable, separately

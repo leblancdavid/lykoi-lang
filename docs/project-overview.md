@@ -75,6 +75,21 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R5.118A — `R5_118A_RESEARCH_EVALUATION_AUTHORITY_READY`.**
+[Research-only approval](research-evaluation-approval-v1.md) and
+[Phase 6 protocol 2](phase6-generalization-protocol-r5.118a.md) separate source
+behavioral authority, appointed research permission and product WHAT approval.
+Exact source/FRC/review/pre-author plan/evaluator binding reaches the existing native
+pipeline in synthetic tests; structural/BDI/adequacy/V1 and external verification
+remain gates. Research grants do not authorize production. **146 focused/relevant
+tests**, validation and safety pass; see the
+[report](../benchmark/results/phase6/R5_118A-REPORT.md). Same-agent known-answer
+review disclosed; no actual approver appointed for the external batch. R5.117/R5.118
+first results and R5.116A curation preserved; no external evaluation or P6-A03–P6-A05
+content access. Kernel/compiler/backend remain unchanged at 26. Stop after methodology
+verification; P6-A03 needs separate authorization, source-specific review, appointed
+approval and fixed acceptance before any authoring.
+
 **R5.118 — `R5_118_P6_A02_FIRST_EVALUATION_COMPLETE`.** Exact preserved
 `curl/curl#15914` verified; source-bound candidate treats allowance of `*.internal`
 TLS certificates as a bounded change rather than requiring a whole TLS specification.

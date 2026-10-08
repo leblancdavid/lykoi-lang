@@ -12,6 +12,8 @@ import json
 import sqlite3
 from datetime import datetime, timezone
 
+from .research import ResearchAuthority
+
 
 class Failure(Exception):
     """Stable structured refusal; does not coerce a failed transition."""
@@ -106,8 +108,11 @@ EDGES = {
     "model": {"bundle": "bundle", "grant": "grant"},
     "target": {"model": "model", "freeze": "freeze"},
     "verification": {"target": "target", "plan_seal": "plan_seal", "freeze": "freeze"},
+    "research_plan": {"source": "source", "frc": "frc"},
+    "research_review": {"source": "source", "frc": "frc", "plan": "research_plan"},
 }
-INTERNAL = {"approval", "frc_seal", "plan_seal", "policy_seal", "grant", "reservation"}
+INTERNAL = {"approval", "frc_seal", "plan_seal", "policy_seal", "grant", "reservation",
+            "research_approval", "research_evaluation"}
 PRODUCERS = {
     "message": {"owner"}, "policy": {"owner", "formalizer"},
     "source": {"owner", "formalizer"}, "question": {"formalizer", "reviewer"},
@@ -117,10 +122,11 @@ PRODUCERS = {
     "adequacy": {"mechanical"}, "v1": {"formalizer"}, "plan": {"verifier"},
     "bundle": {"formalizer"}, "model": {"author"}, "target": {"mechanical"},
     "verification": {"verifier"}, "freeze": {"controller"}, "context": {"owner"},
+    "research_plan": {"verifier"}, "research_review": {"reviewer"},
 }
 
 
-class Controller:
+class Controller(ResearchAuthority):
     """One trusted service instance per connection; concurrent instances use CAS.
 
     Principals: {name: {credential: secret, roles: [...], projects: [...]}}.
@@ -322,7 +328,8 @@ class Controller:
             handlers = {name: getattr(self, "_" + name) for name in (
                 "register", "adopt", "review", "validate", "begin_review", "approve",
                 "seal_frc", "seal_plan", "clarify", "answer", "supersede", "invalidate",
-                "grant", "reserve", "complete", "bind_verification")}
+                "grant", "reserve", "complete", "bind_verification",
+                "approve_research", "begin_research_evaluation", "seal_research_frc")}
             if command not in handlers:
                 raise Failure("UNKNOWN_COMMAND", command=command)
             try:
@@ -362,6 +369,14 @@ class Controller:
             raise Failure("RESERVED_OR_UNKNOWN_TYPE", type=kind)
         self._role(actor, PRODUCERS[kind])
         deps = dependencies or {}
+        if kind == "research_plan" and "author" in self.principals[actor]["roles"]:
+            raise Failure("AUTHOR_VERIFICATION_ROLE_CONFLICT")
+        if kind == "research_review":
+            prior = [e["subject"] for e in self.events() if e["type"] == "ARTIFACT_REGISTERED"
+                     and e["subject"] and self.artifact(e["subject"])["type"] == "research_review"
+                     and self.artifact(e["subject"])["dependencies"].get("frc") == deps.get("frc")]
+            if len(prior) >= self.MAX_RESEARCH_REVIEWS:
+                raise Failure("FINITE_RESEARCH_REVIEW_EXHAUSTED")
         if type(content) is bytes:
             content = {"encoding": "base64-exact-bytes", "bytes": base64.b64encode(content).decode("ascii")}
         for name, required in EDGES[kind].items():
@@ -650,6 +665,8 @@ class Controller:
         seals = [x for x in graph if self.artifact(x)["type"] == "frc_seal"]
         if len(seals) != 1:
             raise Failure("MISSING_WHAT_SEAL")
+        if self.artifact(seals[0])["content"].get("purpose") != "WHAT":
+            raise Failure("RESEARCH_NATIVE_PIPELINE_REQUIRED")
         frc = next(x for x in graph if self.artifact(x)["type"] == "frc")
         self._need(frc, "ARTIFACT_SEALED")
         self._check_policies(frc)
