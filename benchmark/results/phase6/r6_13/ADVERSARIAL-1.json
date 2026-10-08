@@ -1,0 +1,2858 @@
+{
+  "version": "r6.13-adversarial-1",
+  "utc": "2026-10-08T21:58:32.886972+00:00",
+  "source": "R6.12 contracts and VERIFICATION-REVIEW omissions",
+  "cases": [
+    {
+      "id": "T1-base-nested",
+      "task": "T1",
+      "stage": "base",
+      "input": {
+        "stock": [
+          null
+        ],
+        "ops": []
+      },
+      "expected": {
+        "error": "shape",
+        "at": -1
+      },
+      "rationale": "Whole-request strict shape/type phase rejects this valid-JSON malformed input."
+    },
+    {
+      "id": "T1-base-float",
+      "task": "T1",
+      "stage": "base",
+      "input": {
+        "stock": [
+          {
+            "sku": "A",
+            "qty": 1.0
+          }
+        ],
+        "ops": []
+      },
+      "expected": {
+        "error": "shape",
+        "at": -1
+      },
+      "rationale": "Whole-request strict shape/type phase rejects this valid-JSON malformed input."
+    },
+    {
+      "id": "T1-base-empty",
+      "task": "T1",
+      "stage": "base",
+      "input": {
+        "stock": [],
+        "ops": []
+      },
+      "expected": {
+        "error": "shape",
+        "at": -1
+      },
+      "rationale": "Whole-request strict shape/type phase rejects this valid-JSON malformed input."
+    },
+    {
+      "id": "T1-base-extra",
+      "task": "T1",
+      "stage": "base",
+      "input": {
+        "stock": [
+          {
+            "sku": "A",
+            "qty": 1
+          }
+        ],
+        "ops": [],
+        "extra": 0
+      },
+      "expected": {
+        "error": "shape",
+        "at": -1
+      },
+      "rationale": "Whole-request strict shape/type phase rejects this valid-JSON malformed input."
+    },
+    {
+      "id": "T1-base-max-state",
+      "task": "T1",
+      "stage": "base",
+      "input": {
+        "stock": [
+          {
+            "sku": "H",
+            "qty": 100
+          },
+          {
+            "sku": "G",
+            "qty": 100
+          },
+          {
+            "sku": "F",
+            "qty": 100
+          },
+          {
+            "sku": "E",
+            "qty": 100
+          },
+          {
+            "sku": "D",
+            "qty": 100
+          },
+          {
+            "sku": "C",
+            "qty": 100
+          },
+          {
+            "sku": "B",
+            "qty": 100
+          },
+          {
+            "sku": "A",
+            "qty": 100
+          }
+        ],
+        "ops": [
+          {
+            "kind": "reserve",
+            "id": "h",
+            "sku": "H",
+            "n": 100
+          },
+          {
+            "kind": "reserve",
+            "id": "g",
+            "sku": "G",
+            "n": 100
+          },
+          {
+            "kind": "reserve",
+            "id": "f",
+            "sku": "F",
+            "n": 100
+          },
+          {
+            "kind": "reserve",
+            "id": "e",
+            "sku": "E",
+            "n": 100
+          },
+          {
+            "kind": "reserve",
+            "id": "d",
+            "sku": "D",
+            "n": 100
+          },
+          {
+            "kind": "reserve",
+            "id": "c",
+            "sku": "C",
+            "n": 100
+          },
+          {
+            "kind": "reserve",
+            "id": "b",
+            "sku": "B",
+            "n": 100
+          },
+          {
+            "kind": "reserve",
+            "id": "a",
+            "sku": "A",
+            "n": 100
+          },
+          {
+            "kind": "ship",
+            "id": "h"
+          },
+          {
+            "kind": "release",
+            "id": "g"
+          },
+          {
+            "kind": "ship",
+            "id": "f"
+          },
+          {
+            "kind": "release",
+            "id": "e"
+          },
+          {
+            "kind": "ship",
+            "id": "d"
+          },
+          {
+            "kind": "release",
+            "id": "c"
+          },
+          {
+            "kind": "ship",
+            "id": "b"
+          },
+          {
+            "kind": "release",
+            "id": "a"
+          }
+        ]
+      },
+      "expected": {
+        "stock": [
+          {
+            "sku": "A",
+            "free": 100,
+            "held": 0,
+            "shipped": 0
+          },
+          {
+            "sku": "B",
+            "free": 0,
+            "held": 0,
+            "shipped": 100
+          },
+          {
+            "sku": "C",
+            "free": 100,
+            "held": 0,
+            "shipped": 0
+          },
+          {
+            "sku": "D",
+            "free": 0,
+            "held": 0,
+            "shipped": 100
+          },
+          {
+            "sku": "E",
+            "free": 100,
+            "held": 0,
+            "shipped": 0
+          },
+          {
+            "sku": "F",
+            "free": 0,
+            "held": 0,
+            "shipped": 100
+          },
+          {
+            "sku": "G",
+            "free": 100,
+            "held": 0,
+            "shipped": 0
+          },
+          {
+            "sku": "H",
+            "free": 0,
+            "held": 0,
+            "shipped": 100
+          }
+        ],
+        "holds": []
+      },
+      "rationale": "Eight SKUs/16 operations/qty100; interleaved histories ship H,F,D,B and release G,E,C,A; stock output sorted."
+    },
+    {
+      "id": "T1-base-ids-order",
+      "task": "T1",
+      "stage": "base",
+      "input": {
+        "stock": [
+          {
+            "sku": "ZZZZ",
+            "qty": 100
+          },
+          {
+            "sku": "A",
+            "qty": 0
+          }
+        ],
+        "ops": [
+          {
+            "kind": "reserve",
+            "id": "zzzz",
+            "sku": "ZZZZ",
+            "n": 99
+          },
+          {
+            "kind": "reserve",
+            "id": "a",
+            "sku": "ZZZZ",
+            "n": 1
+          }
+        ]
+      },
+      "expected": {
+        "stock": [
+          {
+            "sku": "A",
+            "free": 0,
+            "held": 0,
+            "shipped": 0
+          },
+          {
+            "sku": "ZZZZ",
+            "free": 0,
+            "held": 100,
+            "shipped": 0
+          }
+        ],
+        "holds": [
+          {
+            "id": "a",
+            "sku": "ZZZZ",
+            "n": 1
+          },
+          {
+            "id": "zzzz",
+            "sku": "ZZZZ",
+            "n": 99
+          }
+        ]
+      },
+      "rationale": "One/four-character identifier boundaries; holds sorted independently of insertion."
+    },
+    {
+      "id": "T1-base-used-before-sku",
+      "task": "T1",
+      "stage": "base",
+      "input": {
+        "stock": [
+          {
+            "sku": "A",
+            "qty": 1
+          }
+        ],
+        "ops": [
+          {
+            "kind": "reserve",
+            "id": "x",
+            "sku": "A",
+            "n": 1
+          },
+          {
+            "kind": "ship",
+            "id": "x"
+          },
+          {
+            "kind": "reserve",
+            "id": "x",
+            "sku": "Z",
+            "n": 100
+          }
+        ]
+      },
+      "expected": {
+        "error": "duplicate_id",
+        "at": 2
+      },
+      "rationale": "Used-ID persists after ship; duplicate precedes unknown SKU and insufficient."
+    },
+    {
+      "id": "T1-base-duplicates-before-ops",
+      "task": "T1",
+      "stage": "base",
+      "input": {
+        "stock": [
+          {
+            "sku": "A",
+            "qty": 0
+          },
+          {
+            "sku": "A",
+            "qty": 0
+          }
+        ],
+        "ops": [
+          {
+            "kind": "release",
+            "id": "x"
+          }
+        ]
+      },
+      "expected": {
+        "error": "duplicate_sku",
+        "at": -1
+      },
+      "rationale": "Duplicate stock phase precedes operation lookup."
+    },
+    {
+      "id": "T1-base-late-shape",
+      "task": "T1",
+      "stage": "base",
+      "input": {
+        "stock": [
+          {
+            "sku": "A",
+            "qty": 0
+          },
+          {
+            "sku": "A",
+            "qty": 0
+          }
+        ],
+        "ops": [
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "reserve",
+            "id": "z",
+            "sku": "A",
+            "n": 101
+          }
+        ]
+      },
+      "expected": {
+        "error": "shape",
+        "at": -1
+      },
+      "rationale": "Late range violation outranks duplicate stock and early unknown hold."
+    },
+    {
+      "id": "T1-base-ops17",
+      "task": "T1",
+      "stage": "base",
+      "input": {
+        "stock": [
+          {
+            "sku": "A",
+            "qty": 0
+          }
+        ],
+        "ops": [
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          }
+        ]
+      },
+      "expected": {
+        "error": "shape",
+        "at": -1
+      },
+      "rationale": "Operation upper bound overrides runtime errors."
+    },
+    {
+      "id": "T1-modification-repeat-resize",
+      "task": "T1",
+      "stage": "modification",
+      "input": {
+        "stock": [
+          {
+            "sku": "A",
+            "qty": 100
+          }
+        ],
+        "ops": [
+          {
+            "kind": "reserve",
+            "id": "x",
+            "sku": "A",
+            "n": 100
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 1
+          },
+          {
+            "kind": "reserve",
+            "id": "y",
+            "sku": "A",
+            "n": 99
+          },
+          {
+            "kind": "release",
+            "id": "y"
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 100
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 100
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 1
+          },
+          {
+            "kind": "ship",
+            "id": "x"
+          }
+        ]
+      },
+      "expected": {
+        "stock": [
+          {
+            "sku": "A",
+            "free": 99,
+            "held": 0,
+            "shipped": 1
+          }
+        ],
+        "holds": []
+      },
+      "rationale": "Shrink/grow/equality interleave with another hold, then ship; conservation 99+1=100."
+    },
+    {
+      "id": "T1-modification-coupled-insufficient",
+      "task": "T1",
+      "stage": "modification",
+      "input": {
+        "stock": [
+          {
+            "sku": "A",
+            "qty": 100
+          }
+        ],
+        "ops": [
+          {
+            "kind": "reserve",
+            "id": "x",
+            "sku": "A",
+            "n": 1
+          },
+          {
+            "kind": "reserve",
+            "id": "y",
+            "sku": "A",
+            "n": 99
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 2
+          }
+        ]
+      },
+      "expected": {
+        "error": "insufficient",
+        "at": 2
+      },
+      "rationale": "Increase tests shared free=0, not original quantity."
+    },
+    {
+      "id": "T1-modification-removed-hold",
+      "task": "T1",
+      "stage": "modification",
+      "input": {
+        "stock": [
+          {
+            "sku": "A",
+            "qty": 100
+          }
+        ],
+        "ops": [
+          {
+            "kind": "reserve",
+            "id": "x",
+            "sku": "A",
+            "n": 1
+          },
+          {
+            "kind": "release",
+            "id": "x"
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 100
+          }
+        ]
+      },
+      "expected": {
+        "error": "unknown_hold",
+        "at": 2
+      },
+      "rationale": "Used historical ID is not an active resize target."
+    },
+    {
+      "id": "T1-modification-shape-first",
+      "task": "T1",
+      "stage": "modification",
+      "input": {
+        "stock": [
+          {
+            "sku": "A",
+            "qty": 100
+          }
+        ],
+        "ops": [
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 1
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": true
+          }
+        ]
+      },
+      "expected": {
+        "error": "shape",
+        "at": -1
+      },
+      "rationale": "Late Boolean n outranks early unknown hold."
+    },
+    {
+      "id": "T1-modification-resize-extra",
+      "task": "T1",
+      "stage": "modification",
+      "input": {
+        "stock": [
+          {
+            "sku": "A",
+            "qty": 100
+          }
+        ],
+        "ops": [
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 1,
+            "sku": "A"
+          }
+        ]
+      },
+      "expected": {
+        "error": "shape",
+        "at": -1
+      },
+      "rationale": "Extended union branch still rejects extra keys."
+    },
+    {
+      "id": "T1-modification-max16",
+      "task": "T1",
+      "stage": "modification",
+      "input": {
+        "stock": [
+          {
+            "sku": "A",
+            "qty": 100
+          }
+        ],
+        "ops": [
+          {
+            "kind": "reserve",
+            "id": "x",
+            "sku": "A",
+            "n": 1
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 100
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 1
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 100
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 1
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 100
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 1
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 100
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 1
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 100
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 1
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 100
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 1
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 100
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 1
+          },
+          {
+            "kind": "resize",
+            "id": "x",
+            "n": 100
+          }
+        ]
+      },
+      "expected": {
+        "stock": [
+          {
+            "sku": "A",
+            "free": 0,
+            "held": 100,
+            "shipped": 0
+          }
+        ],
+        "holds": [
+          {
+            "id": "x",
+            "sku": "A",
+            "n": 100
+          }
+        ]
+      },
+      "rationale": "Sixteen operations with repeated resize at both quantity boundaries."
+    },
+    {
+      "id": "T2-base-nonobject",
+      "task": "T2",
+      "stage": "base",
+      "input": {
+        "jobs": [
+          null
+        ]
+      },
+      "expected": {
+        "error": "shape"
+      },
+      "rationale": "Strict nested/numeric/cardinality validation precedes scheduling."
+    },
+    {
+      "id": "T2-base-bool",
+      "task": "T2",
+      "stage": "base",
+      "input": {
+        "jobs": [
+          {
+            "id": "A",
+            "duration": true,
+            "weight": 0,
+            "deadline": 63,
+            "deps": []
+          }
+        ]
+      },
+      "expected": {
+        "error": "shape"
+      },
+      "rationale": "Strict nested/numeric/cardinality validation precedes scheduling."
+    },
+    {
+      "id": "T2-base-float",
+      "task": "T2",
+      "stage": "base",
+      "input": {
+        "jobs": [
+          {
+            "id": "A",
+            "duration": 1,
+            "weight": 1.0,
+            "deadline": 63,
+            "deps": []
+          }
+        ]
+      },
+      "expected": {
+        "error": "shape"
+      },
+      "rationale": "Strict nested/numeric/cardinality validation precedes scheduling."
+    },
+    {
+      "id": "T2-base-eight",
+      "task": "T2",
+      "stage": "base",
+      "input": {
+        "jobs": [
+          {
+            "id": "A",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "B",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "C",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "D",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "E",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "F",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "G",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "H",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 63,
+            "deps": []
+          }
+        ]
+      },
+      "expected": {
+        "error": "shape"
+      },
+      "rationale": "Strict nested/numeric/cardinality validation precedes scheduling."
+    },
+    {
+      "id": "T2-base-seven-optimum",
+      "task": "T2",
+      "stage": "base",
+      "input": {
+        "jobs": [
+          {
+            "id": "A",
+            "duration": 1,
+            "weight": 1,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "B",
+            "duration": 1,
+            "weight": 2,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "C",
+            "duration": 1,
+            "weight": 3,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "D",
+            "duration": 1,
+            "weight": 4,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "E",
+            "duration": 1,
+            "weight": 5,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "F",
+            "duration": 1,
+            "weight": 6,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "G",
+            "duration": 1,
+            "weight": 7,
+            "deadline": 63,
+            "deps": []
+          }
+        ]
+      },
+      "expected": {
+        "order": [
+          "G",
+          "F",
+          "E",
+          "D",
+          "C",
+          "B",
+          "A"
+        ],
+        "completion": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "cost": 84
+      },
+      "rationale": "Seven independent jobs allow 5040 orders; equal durations require descending weights by adjacent-swap argument; cost 7+12+15+16+15+12+7=84."
+    },
+    {
+      "id": "T2-base-seven-tie",
+      "task": "T2",
+      "stage": "base",
+      "input": {
+        "jobs": [
+          {
+            "id": "G",
+            "duration": 9,
+            "weight": 0,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "F",
+            "duration": 9,
+            "weight": 0,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "E",
+            "duration": 9,
+            "weight": 0,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "D",
+            "duration": 9,
+            "weight": 0,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "C",
+            "duration": 9,
+            "weight": 0,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "B",
+            "duration": 9,
+            "weight": 0,
+            "deadline": 63,
+            "deps": []
+          },
+          {
+            "id": "A",
+            "duration": 9,
+            "weight": 0,
+            "deadline": 63,
+            "deps": []
+          }
+        ]
+      },
+      "expected": {
+        "order": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G"
+        ],
+        "completion": [
+          9,
+          18,
+          27,
+          36,
+          45,
+          54,
+          63
+        ],
+        "cost": 0
+      },
+      "rationale": "5040 equal-cost orders, lexical winner independent of input order, final inclusive deadline63."
+    },
+    {
+      "id": "T2-base-cycle",
+      "task": "T2",
+      "stage": "base",
+      "input": {
+        "jobs": [
+          {
+            "id": "A",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 63,
+            "deps": [
+              "B"
+            ]
+          },
+          {
+            "id": "B",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 63,
+            "deps": [
+              "C"
+            ]
+          },
+          {
+            "id": "C",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 63,
+            "deps": [
+              "A"
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "error": "cycle"
+      },
+      "rationale": "Pure three-job cycle, no missing dependencies."
+    },
+    {
+      "id": "T2-base-phase-combination",
+      "task": "T2",
+      "stage": "base",
+      "input": {
+        "jobs": [
+          {
+            "id": "A",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 63,
+            "deps": [
+              "B",
+              "Z"
+            ]
+          },
+          {
+            "id": "B",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 63,
+            "deps": [
+              "A"
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "error": "unknown_dep"
+      },
+      "rationale": "Unknown dependency phase beats existing two-node cycle."
+    },
+    {
+      "id": "T2-base-dependency-tie-deadline",
+      "task": "T2",
+      "stage": "base",
+      "input": {
+        "jobs": [
+          {
+            "id": "C",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 3,
+            "deps": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "B",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 2,
+            "deps": []
+          },
+          {
+            "id": "A",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 1,
+            "deps": []
+          }
+        ]
+      },
+      "expected": {
+        "order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "completion": [
+          1,
+          2,
+          3
+        ],
+        "cost": 0
+      },
+      "rationale": "Inclusive deadlines force AB before dependent C; all costs tie."
+    },
+    {
+      "id": "T2-base-shape-before-duplicate",
+      "task": "T2",
+      "stage": "base",
+      "input": {
+        "jobs": [
+          {
+            "id": "A",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 63,
+            "deps": [
+              "Z"
+            ]
+          },
+          {
+            "id": "A",
+            "duration": 1,
+            "weight": 0,
+            "deadline": 64,
+            "deps": []
+          }
+        ]
+      },
+      "expected": {
+        "error": "shape"
+      },
+      "rationale": "Late deadline64 outranks duplicate ID and unknown dependency."
+    },
+    {
+      "id": "T3-base-max-message",
+      "task": "T3",
+      "stage": "base",
+      "input": {
+        "hex": "01080008FF00FF01018000028A0108FF00FF01018000028B0208FF00FF0101800002880008FF00FF01018000028A0108FF00FF01018000028B0208FF00FF0101800002880008FF00FF01018000028A0108FF00FF01018000028B",
+        "action": "normalize"
+      },
+      "expected": {
+        "hex": "01080008ff00ff01018000028a01080200800101ff00ff8b0208000001010280ffff880008ff00ff01018000028a01080200800101ff00ff8b0208000001010280ffff880008ff00ff01018000028a01080200800101ff00ff8b",
+        "records": 8,
+        "payloadBytes": 64
+      },
+      "rationale": "Eight records,64 payload bytes,180 hex chars; reversal, unsigned duplicate-preserving sort, uppercase decode and checksum re-encoding."
+    },
+    {
+      "id": "T3-base-missing-tag",
+      "task": "T3",
+      "stage": "base",
+      "input": {
+        "hex": "0101",
+        "action": "normalize"
+      },
+      "expected": {
+        "error": "truncated"
+      },
+      "rationale": "Record-phase precedence from contract 2; missing tag/length checked before tag range, then length, payload/checksum, trailing."
+    },
+    {
+      "id": "T3-base-missing-length",
+      "task": "T3",
+      "stage": "base",
+      "input": {
+        "hex": "010100",
+        "action": "normalize"
+      },
+      "expected": {
+        "error": "truncated"
+      },
+      "rationale": "Record-phase precedence from contract 2; missing tag/length checked before tag range, then length, payload/checksum, trailing."
+    },
+    {
+      "id": "T3-base-tag-before-length",
+      "task": "T3",
+      "stage": "base",
+      "input": {
+        "hex": "010103",
+        "action": "normalize"
+      },
+      "expected": {
+        "error": "truncated"
+      },
+      "rationale": "Record-phase precedence from contract 2; missing tag/length checked before tag range, then length, payload/checksum, trailing."
+    },
+    {
+      "id": "T3-base-tag-with-length",
+      "task": "T3",
+      "stage": "base",
+      "input": {
+        "hex": "01010309",
+        "action": "normalize"
+      },
+      "expected": {
+        "error": "tag"
+      },
+      "rationale": "Record-phase precedence from contract 2; missing tag/length checked before tag range, then length, payload/checksum, trailing."
+    },
+    {
+      "id": "T3-base-length-before-truncated",
+      "task": "T3",
+      "stage": "base",
+      "input": {
+        "hex": "01010009",
+        "action": "normalize"
+      },
+      "expected": {
+        "error": "length"
+      },
+      "rationale": "Record-phase precedence from contract 2; missing tag/length checked before tag range, then length, payload/checksum, trailing."
+    },
+    {
+      "id": "T3-base-checksum-before-trailing",
+      "task": "T3",
+      "stage": "base",
+      "input": {
+        "hex": "010100010100ff",
+        "action": "normalize"
+      },
+      "expected": {
+        "error": "trailing"
+      },
+      "rationale": "Record-phase precedence from contract 2; missing tag/length checked before tag range, then length, payload/checksum, trailing."
+    },
+    {
+      "id": "T3-base-bad-checksum-later-tag",
+      "task": "T3",
+      "stage": "base",
+      "input": {
+        "hex": "0102000101ff0300",
+        "action": "prune"
+      },
+      "expected": {
+        "error": "checksum"
+      },
+      "rationale": "First record bad checksum beats later invalid tag; validation precedes prune."
+    },
+    {
+      "id": "T3-base-overlong-before-version",
+      "task": "T3",
+      "stage": "base",
+      "input": {
+        "hex": "02000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "action": "normalize"
+      },
+      "expected": {
+        "error": "shape"
+      },
+      "rationale": "182 hex characters fail shape even with wrong binary version."
+    },
+    {
+      "id": "T3-base-wrong-action-shape",
+      "task": "T3",
+      "stage": "base",
+      "input": {
+        "hex": "02ff",
+        "action": []
+      },
+      "expected": {
+        "error": "shape"
+      },
+      "rationale": "Valid JSON wrong action type beats binary version/count."
+    },
+    {
+      "id": "T3-modification-exact8",
+      "task": "T3",
+      "stage": "modification",
+      "input": {
+        "hex": "0102020404030201020204080706050a",
+        "action": "coalesce"
+      },
+      "expected": {
+        "hex": "01010208010203040506070802",
+        "records": 1,
+        "payloadBytes": 8
+      },
+      "rationale": "Exact length8 merge accepted."
+    },
+    {
+      "id": "T3-modification-split-then-merge",
+      "task": "T3",
+      "stage": "modification",
+      "input": {
+        "hex": "0103000701010101010101060002020202000603030303030306",
+        "action": "coalesce"
+      },
+      "expected": {
+        "hex": "0102000701010101010101060008020203030303030308",
+        "records": 2,
+        "payloadBytes": 15
+      },
+      "rationale": "7+2 splits, newly last length2 then merges6; never reconsider earlier output."
+    },
+    {
+      "id": "T3-modification-not-resort",
+      "task": "T3",
+      "stage": "modification",
+      "input": {
+        "hex": "010202020908010202020103",
+        "action": "coalesce"
+      },
+      "expected": {
+        "hex": "010102040809010204",
+        "records": 1,
+        "payloadBytes": 4
+      },
+      "rationale": "Normalize each original, concatenate without global resort."
+    },
+    {
+      "id": "T3-modification-empty-cap",
+      "task": "T3",
+      "stage": "modification",
+      "input": {
+        "hex": "0103010800010203040506070901000101010909",
+        "action": "coalesce"
+      },
+      "expected": {
+        "hex": "0102010807060504030201000901010909",
+        "records": 2,
+        "payloadBytes": 9
+      },
+      "rationale": "Empty merges into full8; next byte creates new record."
+    },
+    {
+      "id": "T3-modification-eight-empties",
+      "task": "T3",
+      "stage": "modification",
+      "input": {
+        "hex": "0108000000000000000000000000000000000000000000000000",
+        "action": "coalesce"
+      },
+      "expected": {
+        "hex": "0101000000",
+        "records": 1,
+        "payloadBytes": 0
+      },
+      "rationale": "Eight same-tag empty records coalesce to one, not prune."
+    },
+    {
+      "id": "T3-modification-alternating",
+      "task": "T3",
+      "stage": "modification",
+      "input": {
+        "hex": "0108000000010001000000010001000000010001000000010001",
+        "action": "coalesce"
+      },
+      "expected": {
+        "hex": "0108000000010001000000010001000000010001000000010001",
+        "records": 8,
+        "payloadBytes": 0
+      },
+      "rationale": "Alternating empty tags remain eight records."
+    },
+    {
+      "id": "T4-base-max160",
+      "task": "T4",
+      "stage": "base",
+      "input": {
+        "hex": "0000000000000000000000000000000000000000000000000000000000000000",
+        "patches": [
+          {
+            "at": 0,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "always"
+          },
+          {
+            "at": 1,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "always"
+          },
+          {
+            "at": 2,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "always"
+          },
+          {
+            "at": 3,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "always"
+          },
+          {
+            "at": 4,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "always"
+          },
+          {
+            "at": 5,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "always"
+          },
+          {
+            "at": 6,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "always"
+          },
+          {
+            "at": 7,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "always"
+          },
+          {
+            "at": 8,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "always"
+          },
+          {
+            "at": 9,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "always"
+          },
+          {
+            "at": 10,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "always"
+          },
+          {
+            "at": 11,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "always"
+          },
+          {
+            "at": 12,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "always"
+          },
+          {
+            "at": 13,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "always"
+          },
+          {
+            "at": 14,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "always"
+          },
+          {
+            "at": 15,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "always"
+          }
+        ]
+      },
+      "expected": {
+        "hex": "ffffffffffffffff00ffffffffffffffff00ffffffffffffffff00ffffffffffffffff00ffffffffffffffff00ffffffffffffffff00ffffffffffffffff00ffffffffffffffff00ffffffffffffffff00ffffffffffffffff00ffffffffffffffff00ffffffffffffffff00ffffffffffffffff00ffffffffffffffff00ffffffffffffffff00ffffffffffffffff0000000000000000000000000000000000",
+        "applied": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "skipped": []
+      },
+      "rationale": "Sixteen distinct insertions add128 bytes to32;160-byte result, all original zeros retained."
+    },
+    {
+      "id": "T4-base-pair-precedence",
+      "task": "T4",
+      "stage": "base",
+      "input": {
+        "hex": "00000000",
+        "patches": [
+          {
+            "at": 2,
+            "old": "0000",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "0000",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 1,
+            "old": "0000",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 2,
+            "old": "00",
+            "new": "",
+            "when": "always"
+          }
+        ]
+      },
+      "expected": {
+        "error": "conflict",
+        "at": 0,
+        "other": 2
+      },
+      "rationale": "Several conflicts: (0,2) wins before (0,3) and (1,2), irrespective of position order."
+    },
+    {
+      "id": "T4-base-unsorted-inserts",
+      "task": "T4",
+      "stage": "base",
+      "input": {
+        "hex": "0102",
+        "patches": [
+          {
+            "at": 2,
+            "old": "",
+            "new": "ee",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "ff",
+            "when": "always"
+          },
+          {
+            "at": 1,
+            "old": "",
+            "new": "aa",
+            "when": "always"
+          }
+        ]
+      },
+      "expected": {
+        "hex": "ff01aa02ee",
+        "applied": [
+          0,
+          1,
+          2
+        ],
+        "skipped": []
+      },
+      "rationale": "Assembly sorted by position; applied indices retain original order."
+    },
+    {
+      "id": "T4-base-skipped-overlap",
+      "task": "T4",
+      "stage": "base",
+      "input": {
+        "hex": "0102",
+        "patches": [
+          {
+            "at": 0,
+            "old": "ffff",
+            "new": "aa",
+            "when": "match"
+          },
+          {
+            "at": 0,
+            "old": "0102",
+            "new": "bb",
+            "when": "always"
+          }
+        ]
+      },
+      "expected": {
+        "hex": "bb",
+        "applied": [
+          1
+        ],
+        "skipped": [
+          0
+        ]
+      },
+      "rationale": "Skipped mismatching patch overlaps applied span but cannot conflict."
+    },
+    {
+      "id": "T4-base-bounds-before-mismatch",
+      "task": "T4",
+      "stage": "base",
+      "input": {
+        "hex": "0102",
+        "patches": [
+          {
+            "at": 0,
+            "old": "ff",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 2,
+            "old": "01",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 3,
+            "old": "",
+            "new": "",
+            "when": "always"
+          }
+        ]
+      },
+      "expected": {
+        "error": "bounds",
+        "at": 1
+      },
+      "rationale": "First bounds at1 outranks earlier mismatch and later bounds."
+    },
+    {
+      "id": "T4-base-mismatch-before-conflict",
+      "task": "T4",
+      "stage": "base",
+      "input": {
+        "hex": "0102",
+        "patches": [
+          {
+            "at": 0,
+            "old": "01",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "0102",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 1,
+            "old": "ff",
+            "new": "",
+            "when": "always"
+          }
+        ]
+      },
+      "expected": {
+        "error": "mismatch",
+        "at": 2
+      },
+      "rationale": "All always comparisons before pair conflicts."
+    },
+    {
+      "id": "T4-base-bool",
+      "task": "T4",
+      "stage": "base",
+      "input": {
+        "hex": "",
+        "patches": [
+          {
+            "at": true,
+            "old": "",
+            "new": "",
+            "when": "always"
+          }
+        ]
+      },
+      "expected": {
+        "error": "shape",
+        "at": -1
+      },
+      "rationale": "Strict shape/type/cardinality boundaries precede patch effects."
+    },
+    {
+      "id": "T4-base-nested",
+      "task": "T4",
+      "stage": "base",
+      "input": {
+        "hex": "",
+        "patches": [
+          null
+        ]
+      },
+      "expected": {
+        "error": "shape",
+        "at": -1
+      },
+      "rationale": "Strict shape/type/cardinality boundaries precede patch effects."
+    },
+    {
+      "id": "T4-base-over32",
+      "task": "T4",
+      "stage": "base",
+      "input": {
+        "hex": "000000000000000000000000000000000000000000000000000000000000000000",
+        "patches": []
+      },
+      "expected": {
+        "error": "shape",
+        "at": -1
+      },
+      "rationale": "Strict shape/type/cardinality boundaries precede patch effects."
+    },
+    {
+      "id": "T4-base-patch17",
+      "task": "T4",
+      "stage": "base",
+      "input": {
+        "hex": "",
+        "patches": [
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          },
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": "always"
+          }
+        ]
+      },
+      "expected": {
+        "error": "shape",
+        "at": -1
+      },
+      "rationale": "Strict shape/type/cardinality boundaries precede patch effects."
+    },
+    {
+      "id": "T4-modification-all-empty-absent",
+      "task": "T4",
+      "stage": "modification",
+      "input": {
+        "hex": "0000000000000000000000000000000000000000000000000000000000000000",
+        "patches": [
+          {
+            "at": 0,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "absent"
+          },
+          {
+            "at": 1,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "absent"
+          },
+          {
+            "at": 2,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "absent"
+          },
+          {
+            "at": 3,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "absent"
+          },
+          {
+            "at": 4,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "absent"
+          },
+          {
+            "at": 5,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "absent"
+          },
+          {
+            "at": 6,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "absent"
+          },
+          {
+            "at": 7,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "absent"
+          },
+          {
+            "at": 8,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "absent"
+          },
+          {
+            "at": 9,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "absent"
+          },
+          {
+            "at": 10,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "absent"
+          },
+          {
+            "at": 11,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "absent"
+          },
+          {
+            "at": 12,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "absent"
+          },
+          {
+            "at": 13,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "absent"
+          },
+          {
+            "at": 14,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "absent"
+          },
+          {
+            "at": 15,
+            "old": "",
+            "new": "ffffffffffffffff",
+            "when": "absent"
+          }
+        ]
+      },
+      "expected": {
+        "hex": "0000000000000000000000000000000000000000000000000000000000000000",
+        "applied": [],
+        "skipped": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "rationale": "Sixteen empty-old absent patches skip, no insertions or conflicts."
+    },
+    {
+      "id": "T4-modification-original-slices",
+      "task": "T4",
+      "stage": "modification",
+      "input": {
+        "hex": "010203",
+        "patches": [
+          {
+            "at": 2,
+            "old": "ff",
+            "new": "aa",
+            "when": "absent"
+          },
+          {
+            "at": 0,
+            "old": "00",
+            "new": "",
+            "when": "absent"
+          },
+          {
+            "at": 1,
+            "old": "02",
+            "new": "bb",
+            "when": "absent"
+          }
+        ]
+      },
+      "expected": {
+        "hex": "02aa",
+        "applied": [
+          0,
+          1
+        ],
+        "skipped": [
+          2
+        ]
+      },
+      "rationale": "Original coordinates for differing deletions/replacements; equal middle absent skips."
+    },
+    {
+      "id": "T4-modification-absent-pair",
+      "task": "T4",
+      "stage": "modification",
+      "input": {
+        "hex": "0000",
+        "patches": [
+          {
+            "at": 0,
+            "old": "ff",
+            "new": "aa",
+            "when": "absent"
+          },
+          {
+            "at": 1,
+            "old": "ff",
+            "new": "bb",
+            "when": "absent"
+          },
+          {
+            "at": 0,
+            "old": "ffff",
+            "new": "cc",
+            "when": "absent"
+          }
+        ]
+      },
+      "expected": {
+        "error": "conflict",
+        "at": 0,
+        "other": 2
+      },
+      "rationale": "Applied absence predicates produce first overlapping pair (0,2)."
+    },
+    {
+      "id": "T4-modification-bounds-skipped",
+      "task": "T4",
+      "stage": "modification",
+      "input": {
+        "hex": "00",
+        "patches": [
+          {
+            "at": 1,
+            "old": "ff",
+            "new": "aa",
+            "when": "absent"
+          }
+        ]
+      },
+      "expected": {
+        "error": "bounds",
+        "at": 0
+      },
+      "rationale": "Bounds checked even if predicate would otherwise be consulted."
+    },
+    {
+      "id": "T4-modification-always-precedence",
+      "task": "T4",
+      "stage": "modification",
+      "input": {
+        "hex": "0000",
+        "patches": [
+          {
+            "at": 0,
+            "old": "ff",
+            "new": "aa",
+            "when": "absent"
+          },
+          {
+            "at": 0,
+            "old": "ffff",
+            "new": "bb",
+            "when": "absent"
+          },
+          {
+            "at": 1,
+            "old": "ff",
+            "new": "",
+            "when": "always"
+          }
+        ]
+      },
+      "expected": {
+        "error": "mismatch",
+        "at": 2
+      },
+      "rationale": "Always mismatch precedes conflict among two applied absent spans."
+    },
+    {
+      "id": "T4-modification-wrong-enum",
+      "task": "T4",
+      "stage": "modification",
+      "input": {
+        "hex": "",
+        "patches": [
+          {
+            "at": 0,
+            "old": "",
+            "new": "",
+            "when": {}
+          }
+        ]
+      },
+      "expected": {
+        "error": "shape",
+        "at": -1
+      },
+      "rationale": "Malformed union enum type remains shape error."
+    },
+    {
+      "id": "T5-base-six-round-max",
+      "task": "T5",
+      "stage": "base",
+      "input": {
+        "candidates": [
+          "F",
+          "E",
+          "D",
+          "C",
+          "B",
+          "A"
+        ],
+        "ballots": [
+          {
+            "ranks": [
+              "F"
+            ],
+            "weight": 9
+          },
+          {
+            "ranks": [
+              "F"
+            ],
+            "weight": 9
+          },
+          {
+            "ranks": [
+              "E"
+            ],
+            "weight": 9
+          },
+          {
+            "ranks": [
+              "E"
+            ],
+            "weight": 9
+          },
+          {
+            "ranks": [
+              "D"
+            ],
+            "weight": 9
+          },
+          {
+            "ranks": [
+              "D"
+            ],
+            "weight": 9
+          },
+          {
+            "ranks": [
+              "C"
+            ],
+            "weight": 9
+          },
+          {
+            "ranks": [
+              "C"
+            ],
+            "weight": 9
+          },
+          {
+            "ranks": [
+              "B"
+            ],
+            "weight": 9
+          },
+          {
+            "ranks": [
+              "B"
+            ],
+            "weight": 9
+          },
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 9
+          },
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 9
+          }
+        ]
+      },
+      "expected": {
+        "winner": "A",
+        "rounds": [
+          {
+            "totals": [
+              {
+                "id": "A",
+                "votes": 18
+              },
+              {
+                "id": "B",
+                "votes": 18
+              },
+              {
+                "id": "C",
+                "votes": 18
+              },
+              {
+                "id": "D",
+                "votes": 18
+              },
+              {
+                "id": "E",
+                "votes": 18
+              },
+              {
+                "id": "F",
+                "votes": 18
+              }
+            ],
+            "exhausted": 0,
+            "eliminated": "F"
+          },
+          {
+            "totals": [
+              {
+                "id": "A",
+                "votes": 18
+              },
+              {
+                "id": "B",
+                "votes": 18
+              },
+              {
+                "id": "C",
+                "votes": 18
+              },
+              {
+                "id": "D",
+                "votes": 18
+              },
+              {
+                "id": "E",
+                "votes": 18
+              }
+            ],
+            "exhausted": 18,
+            "eliminated": "E"
+          },
+          {
+            "totals": [
+              {
+                "id": "A",
+                "votes": 18
+              },
+              {
+                "id": "B",
+                "votes": 18
+              },
+              {
+                "id": "C",
+                "votes": 18
+              },
+              {
+                "id": "D",
+                "votes": 18
+              }
+            ],
+            "exhausted": 36,
+            "eliminated": "D"
+          },
+          {
+            "totals": [
+              {
+                "id": "A",
+                "votes": 18
+              },
+              {
+                "id": "B",
+                "votes": 18
+              },
+              {
+                "id": "C",
+                "votes": 18
+              }
+            ],
+            "exhausted": 54,
+            "eliminated": "C"
+          },
+          {
+            "totals": [
+              {
+                "id": "A",
+                "votes": 18
+              },
+              {
+                "id": "B",
+                "votes": 18
+              }
+            ],
+            "exhausted": 72,
+            "eliminated": "B"
+          },
+          {
+            "totals": [
+              {
+                "id": "A",
+                "votes": 18
+              }
+            ],
+            "exhausted": 90,
+            "eliminated": null
+          }
+        ]
+      },
+      "rationale": "Six candidates,12 ballots,max weight9; equal18 totals eliminate F,E,D,C,B; exhaustion18 per round; final A18 wins over nonexhausted18."
+    },
+    {
+      "id": "T5-base-transfer-not-exhaust",
+      "task": "T5",
+      "stage": "base",
+      "input": {
+        "candidates": [
+          "C",
+          "B",
+          "A"
+        ],
+        "ballots": [
+          {
+            "ranks": [
+              "B",
+              "A"
+            ],
+            "weight": 2
+          },
+          {
+            "ranks": [
+              "C",
+              "A"
+            ],
+            "weight": 2
+          },
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 2
+          }
+        ]
+      },
+      "expected": {
+        "winner": "A",
+        "rounds": [
+          {
+            "totals": [
+              {
+                "id": "A",
+                "votes": 2
+              },
+              {
+                "id": "B",
+                "votes": 2
+              },
+              {
+                "id": "C",
+                "votes": 2
+              }
+            ],
+            "exhausted": 0,
+            "eliminated": "C"
+          },
+          {
+            "totals": [
+              {
+                "id": "A",
+                "votes": 4
+              },
+              {
+                "id": "B",
+                "votes": 2
+              }
+            ],
+            "exhausted": 0,
+            "eliminated": null
+          }
+        ]
+      },
+      "rationale": "Tied first round eliminates C, its weight transfers to A, no exhaustion."
+    },
+    {
+      "id": "T5-base-half-exhausted",
+      "task": "T5",
+      "stage": "base",
+      "input": {
+        "candidates": [
+          "B",
+          "A"
+        ],
+        "ballots": [
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 9
+          },
+          {
+            "ranks": [
+              "B"
+            ],
+            "weight": 9
+          },
+          {
+            "ranks": [],
+            "weight": 9
+          }
+        ]
+      },
+      "expected": {
+        "winner": "A",
+        "rounds": [
+          {
+            "totals": [
+              {
+                "id": "A",
+                "votes": 9
+              },
+              {
+                "id": "B",
+                "votes": 9
+              }
+            ],
+            "exhausted": 9,
+            "eliminated": "B"
+          },
+          {
+            "totals": [
+              {
+                "id": "A",
+                "votes": 9
+              }
+            ],
+            "exhausted": 18,
+            "eliminated": null
+          }
+        ]
+      },
+      "rationale": "Exactly half18 is not majority; empty ballot excluded; second round counts newly exhausted B weight."
+    },
+    {
+      "id": "T5-base-all-exhaust-max",
+      "task": "T5",
+      "stage": "base",
+      "input": {
+        "candidates": [
+          "F",
+          "E",
+          "D",
+          "C",
+          "B",
+          "A"
+        ],
+        "ballots": [
+          {
+            "ranks": [],
+            "weight": 9
+          },
+          {
+            "ranks": [],
+            "weight": 9
+          },
+          {
+            "ranks": [],
+            "weight": 9
+          },
+          {
+            "ranks": [],
+            "weight": 9
+          },
+          {
+            "ranks": [],
+            "weight": 9
+          },
+          {
+            "ranks": [],
+            "weight": 9
+          },
+          {
+            "ranks": [],
+            "weight": 9
+          },
+          {
+            "ranks": [],
+            "weight": 9
+          },
+          {
+            "ranks": [],
+            "weight": 9
+          },
+          {
+            "ranks": [],
+            "weight": 9
+          },
+          {
+            "ranks": [],
+            "weight": 9
+          },
+          {
+            "ranks": [],
+            "weight": 9
+          }
+        ]
+      },
+      "expected": {
+        "winner": null,
+        "rounds": [
+          {
+            "totals": [
+              {
+                "id": "A",
+                "votes": 0
+              },
+              {
+                "id": "B",
+                "votes": 0
+              },
+              {
+                "id": "C",
+                "votes": 0
+              },
+              {
+                "id": "D",
+                "votes": 0
+              },
+              {
+                "id": "E",
+                "votes": 0
+              },
+              {
+                "id": "F",
+                "votes": 0
+              }
+            ],
+            "exhausted": 108,
+            "eliminated": null
+          }
+        ]
+      },
+      "rationale": "All108 exhausted ends immediately with sorted zero totals."
+    },
+    {
+      "id": "T5-base-nested",
+      "task": "T5",
+      "stage": "base",
+      "input": {
+        "candidates": [
+          "A"
+        ],
+        "ballots": [
+          null
+        ]
+      },
+      "expected": {
+        "error": "shape"
+      },
+      "rationale": "Nested shape/types/ballot upper boundary validated before rounds."
+    },
+    {
+      "id": "T5-base-ranks-type",
+      "task": "T5",
+      "stage": "base",
+      "input": {
+        "candidates": [
+          "A"
+        ],
+        "ballots": [
+          {
+            "ranks": "A",
+            "weight": 1
+          }
+        ]
+      },
+      "expected": {
+        "error": "shape"
+      },
+      "rationale": "Nested shape/types/ballot upper boundary validated before rounds."
+    },
+    {
+      "id": "T5-base-weight-float",
+      "task": "T5",
+      "stage": "base",
+      "input": {
+        "candidates": [
+          "A"
+        ],
+        "ballots": [
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 1.0
+          }
+        ]
+      },
+      "expected": {
+        "error": "shape"
+      },
+      "rationale": "Nested shape/types/ballot upper boundary validated before rounds."
+    },
+    {
+      "id": "T5-base-thirteen",
+      "task": "T5",
+      "stage": "base",
+      "input": {
+        "candidates": [
+          "A"
+        ],
+        "ballots": [
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 1
+          },
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 1
+          },
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 1
+          },
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 1
+          },
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 1
+          },
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 1
+          },
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 1
+          },
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 1
+          },
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 1
+          },
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 1
+          },
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 1
+          },
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 1
+          },
+          {
+            "ranks": [
+              "A"
+            ],
+            "weight": 1
+          }
+        ]
+      },
+      "expected": {
+        "error": "shape"
+      },
+      "rationale": "Nested shape/types/ballot upper boundary validated before rounds."
+    },
+    {
+      "id": "T5-base-shape-before-duplicate",
+      "task": "T5",
+      "stage": "base",
+      "input": {
+        "candidates": [
+          "A",
+          "A"
+        ],
+        "ballots": [
+          {
+            "ranks": [
+              "Z",
+              "Z"
+            ],
+            "weight": 1
+          }
+        ]
+      },
+      "expected": {
+        "error": "shape"
+      },
+      "rationale": "Repeated rank shape violation precedes duplicate candidate and unknown rank."
+    },
+    {
+      "id": "T5-base-duplicate-before-unknown",
+      "task": "T5",
+      "stage": "base",
+      "input": {
+        "candidates": [
+          "B",
+          "B"
+        ],
+        "ballots": [
+          {
+            "ranks": [
+              "Z"
+            ],
+            "weight": 9
+          }
+        ]
+      },
+      "expected": {
+        "error": "duplicate_candidate"
+      },
+      "rationale": "Domain duplicate candidate phase precedes unknown rank."
+    }
+  ]
+}

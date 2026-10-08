@@ -8,6 +8,34 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R6.14 — `R6_14_FINITE_RELATIONS_SUPPORTED`.**
+Read the [construction report](../benchmark/results/phase6/R6_14-REPORT.md) and both
+frozen experiment protocols in r6_14. XOR8/addmod8/parity8 exhaustively pass three runs
+on unchanged VM; first XOR8 static-progress failure and one separately frozen consuming
+Atom repair remain distinct. Preserve all original/follow-up plans, failures and freezes.
+Validation visits/selector comparisons differ from runtime work and validate-once timing
+differs from public execute cost. Kernel26/VM/history preserved. Stop after publication;
+further representation work or replay requires explicit authorization. No P6-A05 access.
+
+**Latest round: R6.13 — `R6_13_SCORING_AND_REPLAY_QUALIFIED`.**
+Read the [report](../benchmark/results/phase6/R6_13-REPORT.md) and successor protocol.
+Frozen scorer/suite/candidate identities and raw replay distinguish 152 original
+and 98 adversarial observations from historical outcomes and partial semantic probes.
+65 additional task inputs; repeats explicitly identified. B/C have no full executable.
+Duplicate-key rejection and direct-process/cooperative-session budgets qualified,
+not independent task/model qualification or hard AI-session containment. Preserve
+interrupted/timeout probe evidence, production/R6.10/R6.12 bytes and kernel 26.
+No new authoring-efficiency measurement. Stop pending explicit owner authorization.
+
+**Latest round: R6.12 — `R6_12_EXPLORATORY_COMPARISON_ONLY`.**
+Read the [instrumented comparison report](../benchmark/results/phase6/R6_12-REPORT.md)
+and frozen protocol. Python passes five tasks/three staged changes, first attempts,
+zero repairs/regressions; production and frozen VM each record static gaps, with no
+scored executables. Actual exported tokens are available; billing and controlled
+isolation/configuration are not. No matched-success efficiency conclusion. Kernel 26
+and production/R6.10/R6.3–R6.11 unchanged. Stop after publication; subsequent benchmark
+or language development needs explicit owner authorization. No P6-A05 access.
+
 **Latest round: R6.11 — `R6_11_EXPLORATORY_COMPARISON_ONLY`.**
 Read the [pilot report](../benchmark/results/phase6/R6_11-REPORT.md) and its frozen
 protocol. Python and the unchanged experimental VM each pass four base tasks and

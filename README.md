@@ -20,6 +20,29 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R6.14 constructs finite relations on the unchanged experimental VM.**
+[Report](benchmark/results/phase6/R6_14-REPORT.md):
+`R6_14_FINITE_RELATIONS_SUPPORTED`. XOR8/modulo-256 addition/parity8 fit57/9/43 nodes
+and pass their complete finite domains on three deterministic runs. Failed Take-progress
+construction, separately frozen one-Atom repair and naive lookup timeout are preserved.
+Validation cost and validate-once runtime are distinct. Kernel26/VM/history unchanged;
+finite support, not universal expressiveness. Stopped pending explicit authorization.
+
+**R6.13 repairs scoring and replays frozen candidates.**
+[Report](benchmark/results/phase6/R6_13-REPORT.md):
+`R6_13_SCORING_AND_REPLAY_QUALIFIED`. Duplicate output keys reject; Python passes
+152 original and 98 adversarial observations, with repeats explicitly accounted.
+B/C retain static full-task gaps; bounded probes narrow their interpretation.
+No new authoring-efficiency measurement or independent qualification. Kernel 26
+and historical bytes preserved. Stopped pending explicit owner authorization.
+
+**R6.12 publishes a bounded instrumented three-track comparison.**
+[Report](benchmark/results/phase6/R6_12-REPORT.md):
+`R6_12_EXPLORATORY_COMPARISON_ONLY`. Python passes five tasks/three staged changes;
+production and frozen VM record static capability gaps, with no scored executables.
+Actual session tokens recovered; billing unavailable, no matched-success efficiency
+ranking. Kernel 26/history preserved. Stopped pending explicit owner authorization.
+
 **R6.11 publishes an exploratory AI-assisted development comparison.**
 [Report](benchmark/results/phase6/R6_11-REPORT.md):
 `R6_11_EXPLORATORY_COMPARISON_ONLY`. Python and the unchanged experimental VM each

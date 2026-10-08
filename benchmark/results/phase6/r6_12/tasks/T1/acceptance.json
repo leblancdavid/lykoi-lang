@@ -1,0 +1,17 @@
+[
+  {"input":{"stock":[{"sku":"A","qty":5}],"ops":[]},"expected":{"stock":[{"sku":"A","free":5,"held":0,"shipped":0}],"holds":[]}},
+  {"input":{"stock":[{"sku":"B","qty":0},{"sku":"A","qty":100}],"ops":[]},"expected":{"stock":[{"sku":"A","free":100,"held":0,"shipped":0},{"sku":"B","free":0,"held":0,"shipped":0}],"holds":[]}},
+  {"input":{"stock":[{"sku":"A","qty":5}],"ops":[{"kind":"reserve","id":"x","sku":"A","n":5}]},"expected":{"stock":[{"sku":"A","free":0,"held":5,"shipped":0}],"holds":[{"id":"x","sku":"A","n":5}]}},
+  {"input":{"stock":[{"sku":"A","qty":5}],"ops":[{"kind":"reserve","id":"x","sku":"A","n":3},{"kind":"release","id":"x"}]},"expected":{"stock":[{"sku":"A","free":5,"held":0,"shipped":0}],"holds":[]}},
+  {"input":{"stock":[{"sku":"A","qty":5}],"ops":[{"kind":"reserve","id":"x","sku":"A","n":3},{"kind":"ship","id":"x"}]},"expected":{"stock":[{"sku":"A","free":2,"held":0,"shipped":3}],"holds":[]}},
+  {"input":{"stock":[{"sku":"A","qty":5}],"ops":[{"kind":"reserve","id":"z","sku":"A","n":2},{"kind":"reserve","id":"a","sku":"A","n":3}]},"expected":{"stock":[{"sku":"A","free":0,"held":5,"shipped":0}],"holds":[{"id":"a","sku":"A","n":3},{"id":"z","sku":"A","n":2}]}},
+  {"input":{"stock":[{"sku":"A","qty":5}],"ops":[{"kind":"reserve","id":"x","sku":"A","n":3},{"kind":"reserve","id":"y","sku":"A","n":3}]},"expected":{"error":"insufficient","at":1}},
+  {"input":{"stock":[{"sku":"A","qty":0}],"ops":[{"kind":"reserve","id":"x","sku":"B","n":1}]},"expected":{"error":"unknown_sku","at":0}},
+  {"input":{"stock":[{"sku":"A","qty":5}],"ops":[{"kind":"reserve","id":"x","sku":"A","n":1},{"kind":"release","id":"x"},{"kind":"reserve","id":"x","sku":"B","n":9}]},"expected":{"error":"duplicate_id","at":2}},
+  {"input":{"stock":[{"sku":"A","qty":5}],"ops":[{"kind":"release","id":"x"}]},"expected":{"error":"unknown_hold","at":0}},
+  {"input":{"stock":[{"sku":"A","qty":5}],"ops":[{"kind":"reserve","id":"x","sku":"A","n":1},{"kind":"ship","id":"x"},{"kind":"ship","id":"x"}]},"expected":{"error":"unknown_hold","at":2}},
+  {"input":{"stock":[{"sku":"A","qty":1},{"sku":"A","qty":2}],"ops":[]},"expected":{"error":"duplicate_sku","at":-1}},
+  {"input":{"stock":[{"sku":"A","qty":1},{"sku":"A","qty":2}],"ops":[{"kind":"reserve","id":"x","sku":"A","n":0}]},"expected":{"error":"shape","at":-1}},
+  {"input":{"stock":[{"sku":"A","qty":true}],"ops":[]},"expected":{"error":"shape","at":-1}},
+  {"input":{"stock":[{"sku":"A","qty":2},{"sku":"B","qty":4}],"ops":[{"kind":"reserve","id":"x","sku":"A","n":2},{"kind":"release","id":"x"},{"kind":"reserve","id":"y","sku":"A","n":2},{"kind":"reserve","id":"z","sku":"B","n":4},{"kind":"ship","id":"y"}]},"expected":{"stock":[{"sku":"A","free":0,"held":0,"shipped":2},{"sku":"B","free":0,"held":4,"shipped":0}],"holds":[{"id":"z","sku":"B","n":4}]}}
+]

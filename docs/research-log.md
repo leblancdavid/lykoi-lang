@@ -1,5 +1,58 @@
 # Lykoi research log
 
+## R6.14 generic finite-relation construction (2026-10-08)
+
+**`R6_14_FINITE_RELATIONS_SUPPORTED`**;
+[report](../benchmark/results/phase6/R6_14-REPORT.md). Baseline verifies unchanged VM,
+642 protected/history identities and historical21-node nibble witness256/256. Frozen
+XOR8/addmod8/parity8 definitions; original six-attempt budget preserves naive timeout,
+nonconsuming-repeat XOR8 rejection and node/expression-limit controls. Separately frozen
+one-attempt follow-up replaces Take with UInt8 Atom, no VM edits. Final plans57/9/43
+nodes pass65,536/65,536/256 unique inputs three times; complete envelope/work digests
+match. XOR8 validation median25.819ms,602 expression visits,195,840 selector comparisons;
+runtime176–1196 events, approximately15s/exhaustive pass after validation once. Invalid
+boundary/native inputs, malformed plans and all representative work cutoffs pass. Public
+API boundary-grid equivalence and sampled traced memory are explicitly separate metrics.
+126 regression methods pass; kernel26/history unchanged. Finite support, not universal
+expressiveness or optimality. Stopped; proposed representation comparison unauthorized.
+
+## R6.13 scoring repair and frozen replay (2026-10-08)
+
+**`R6_13_SCORING_AND_REPLAY_QUALIFIED`**;
+[report](../benchmark/results/phase6/R6_13-REPORT.md). Historical freeze/publication/
+candidate/protected identities verified before successor scorer/suite preparation.
+Duplicate output keys reject at every depth; 10 scorer regressions pass. Unchanged
+Python passes 152 original and 98 adversarial observations, zero candidate failures,
+timeouts or scorer errors. Successor 68 entries include 3 old-input overlaps, 65 new
+task inputs and 30 separately counted base repeats on modified candidates. B/C whole
+acceptance remains NOT_REACHED. Partial production NOT equality 3/3 and VM nibble
+XOR 256/256 (21 nodes) execute; closed direct-interface probes reject. Initial combined
+probe interrupted by 120-second terminal limit; method 2 preserves naive full-byte
+lookup 10-second timeout. This limits that construction, not all finite strategies.
+No AI authoring/effort remeasurement or independent qualification; practical Python
+coverage finding unchanged, full-composition uncertainty explicit. 116 baseline methods,
+validation/safety and diff checks pass; 614 protected/history identities and kernel 26
+preserved. Stopped awaiting separate authorization.
+
+## R6.12 instrumented three-track comparison (2026-10-08)
+
+**`R6_12_EXPLORATORY_COMPARISON_ONLY`**;
+[report](../benchmark/results/phase6/R6_12-REPORT.md). Five separately prompted
+synthetic contracts/80 base cases and three separately staged changes were frozen
+before fresh-session authors. Python passes five bases and three changes (48 original
+and 24 new observations), first attempts, zero repairs/regressions. Production and
+frozen VM each record five base/three modification static capability gaps; all their
+acceptance is NOT_REACHED. Actual sanitized OpenCode usage was discovered after scoring:
+A base/modification input 170739/133629, output 8855/9693, with cache/reasoning separately
+reported. Billing remains unknown despite harness cost=0. A terminal intervals total
+298.795 seconds including 5.164 seconds scored tests; gap-assessment times are not
+successful development. No common success supports an efficiency ranking. Operational
+Python coverage advantage on this batch, not general superiority. 116 baseline methods,
+152 exact replays and manual expectation review pass; kernel 26/production/R6.10/history
+unchanged. Incomplete prospective telemetry inventory, unattested session isolation,
+configuration and static noncomposition proof limits disclosed. Stop after publication;
+further benchmark or language work requires explicit authorization.
+
 ## R6.11 comparative development pilot (2026-10-08)
 
 **`R6_11_EXPLORATORY_COMPARISON_ONLY`**;

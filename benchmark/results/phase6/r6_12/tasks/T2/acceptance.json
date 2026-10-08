@@ -1,0 +1,19 @@
+[
+  {"input":{"jobs":[]},"expected":{"order":[],"completion":[],"cost":0}},
+  {"input":{"jobs":[{"id":"D","duration":1,"weight":2,"deadline":9,"deps":["A"]},{"id":"C","duration":1,"weight":9,"deadline":9,"deps":["B"]},{"id":"B","duration":2,"weight":0,"deadline":9,"deps":[]},{"id":"A","duration":2,"weight":1,"deadline":9,"deps":[]}]},"expected":{"order":["B","C","A","D"],"completion":[2,3,5,6],"cost":44}},
+  {"input":{"jobs":[{"id":"D","duration":1,"weight":2,"deadline":9,"deps":["A"]},{"id":"C","duration":1,"weight":9,"deadline":9,"deps":["B"]},{"id":"B","duration":2,"weight":0,"deadline":9,"deps":[]},{"id":"A","duration":2,"weight":1,"deadline":4,"deps":[]}]},"expected":{"order":["A","B","C","D"],"completion":[2,4,5,6],"cost":59}},
+  {"input":{"jobs":[{"id":"A","duration":9,"weight":9,"deadline":9,"deps":[]}]},"expected":{"order":["A"],"completion":[9],"cost":81}},
+  {"input":{"jobs":[{"id":"A","duration":1,"weight":1,"deadline":0,"deps":[]}]},"expected":{"error":"infeasible"}},
+  {"input":{"jobs":[{"id":"A","duration":3,"weight":1,"deadline":10,"deps":[]},{"id":"B","duration":1,"weight":4,"deadline":10,"deps":[]}]},"expected":{"order":["B","A"],"completion":[1,4],"cost":8}},
+  {"input":{"jobs":[{"id":"B","duration":2,"weight":2,"deadline":10,"deps":[]},{"id":"A","duration":1,"weight":1,"deadline":10,"deps":[]}]},"expected":{"order":["A","B"],"completion":[1,3],"cost":7}},
+  {"input":{"jobs":[{"id":"A","duration":3,"weight":1,"deadline":3,"deps":[]},{"id":"B","duration":1,"weight":4,"deadline":4,"deps":[]}]},"expected":{"order":["A","B"],"completion":[3,4],"cost":19}},
+  {"input":{"jobs":[{"id":"A","duration":3,"weight":1,"deadline":10,"deps":[]},{"id":"B","duration":1,"weight":4,"deadline":10,"deps":["A"]}]},"expected":{"order":["A","B"],"completion":[3,4],"cost":19}},
+  {"input":{"jobs":[{"id":"C","duration":1,"weight":2,"deadline":9,"deps":["A","B"]},{"id":"B","duration":1,"weight":3,"deadline":9,"deps":[]},{"id":"A","duration":2,"weight":1,"deadline":9,"deps":[]}]},"expected":{"order":["B","A","C"],"completion":[1,3,4],"cost":14}},
+  {"input":{"jobs":[{"id":"C","duration":1,"weight":0,"deadline":9,"deps":[]},{"id":"B","duration":2,"weight":0,"deadline":9,"deps":[]},{"id":"A","duration":3,"weight":0,"deadline":9,"deps":[]}]},"expected":{"order":["A","B","C"],"completion":[3,5,6],"cost":0}},
+  {"input":{"jobs":[{"id":"A","duration":2,"weight":1,"deadline":2,"deps":[]},{"id":"B","duration":2,"weight":1,"deadline":3,"deps":[]}]},"expected":{"error":"infeasible"}},
+  {"input":{"jobs":[{"id":"A","duration":1,"weight":1,"deadline":9,"deps":["A"]}]},"expected":{"error":"cycle"}},
+  {"input":{"jobs":[{"id":"A","duration":1,"weight":1,"deadline":9,"deps":["B"]},{"id":"B","duration":1,"weight":1,"deadline":9,"deps":["A","Z"]}]},"expected":{"error":"unknown_dep"}},
+  {"input":{"jobs":[{"id":"A","duration":1,"weight":1,"deadline":9,"deps":["Z"]},{"id":"A","duration":1,"weight":1,"deadline":9,"deps":[]}]},"expected":{"error":"duplicate_id"}},
+  {"input":{"jobs":[{"id":"A","duration":1,"weight":1,"deadline":9,"deps":["Z","Z"]},{"id":"A","duration":1,"weight":1,"deadline":9,"deps":[]}]},"expected":{"error":"shape"}},
+  {"input":{"jobs":[{"id":"G","duration":9,"weight":1,"deadline":63,"deps":["F"]},{"id":"F","duration":9,"weight":1,"deadline":54,"deps":["E"]},{"id":"E","duration":9,"weight":1,"deadline":45,"deps":["D"]},{"id":"D","duration":9,"weight":1,"deadline":36,"deps":["C"]},{"id":"C","duration":9,"weight":1,"deadline":27,"deps":["B"]},{"id":"B","duration":9,"weight":1,"deadline":18,"deps":["A"]},{"id":"A","duration":9,"weight":1,"deadline":9,"deps":[]}]},"expected":{"order":["A","B","C","D","E","F","G"],"completion":[9,18,27,36,45,54,63],"cost":252}}
+]

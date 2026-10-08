@@ -1,5 +1,35 @@
 # Phase 5: comparative maintenance benchmark
 
+## R6.14 generic finite-relation construction
+
+[Report](results/phase6/R6_14-REPORT.md) and [protocol](results/phase6/r6_14/PROTOCOL.md):
+`R6_14_FINITE_RELATIONS_SUPPORTED`. Unchanged VM XOR8/addmod8/parity8 plans fit57/9/43
+nodes and pass65,536/65,536/256 unique inputs on three full deterministic runs. Preserve
+first Take-progress rejection, separately frozen consuming-Atom repair, naive timeout
+and limit controls. Structural size, validation traversal and runtime work are separate;
+validate-once exhaustive timing is not public-API throughput. Kernel26/history preserved;
+126 regression methods pass. Stopped; later representation experiments need authorization.
+
+## R6.13 benchmark validity and scoring repair
+
+[Report](results/phase6/R6_13-REPORT.md) and [protocol](results/phase6/r6_13/PROTOCOL.md):
+`R6_13_SCORING_AND_REPLAY_QUALIFIED`. Successor duplicate-key rejection and budgeted
+frozen replay: 152 original/98 adversarial observations pass; 65 additional inputs,
+explicit repeats. B/C have no frozen executable; partial capability probes are separate,
+including successful nibble XOR and unsuccessful naive full-byte lookup. No authoring
+efficiency remeasurement or independent qualification. Kernel 26/history unchanged.
+Stopped; further work requires explicit owner authorization.
+
+## R6.12 instrumented three-track research comparison
+
+[Report](results/phase6/R6_12-REPORT.md) and
+[frozen protocol](results/phase6/r6_12/PROTOCOL.md):
+`R6_12_EXPLORATORY_COMPARISON_ONLY`. Python passes five harder tasks/three changes;
+production and frozen VM each record static capability gaps without scored execution.
+Actual exported session usage is available; API billing/attested separation are not.
+No matched-success efficiency ranking. Kernel 26 and all historical records preserved.
+Stopped; further benchmark or language work requires explicit owner authorization.
+
 ## R6.11 exploratory comparative development pilot
 
 [Report](results/phase6/R6_11-REPORT.md) and

@@ -1,0 +1,12 @@
+{
+  "track": "B",
+  "task": "T3",
+  "stage": "base",
+  "utc": "2026-10-08T21:24:22.316830+00:00",
+  "elapsed_seconds": 32.56526589393616,
+  "status": "CAPABILITY_GAP",
+  "code": "PRODUCTION_BINARY_CURSOR_CODEC_PROFILE_GAP",
+  "evidence": "T3 clauses 2-4 require data-dependent binary cursor parsing with ordered truncation/tag/length/XOR-checksum failures, payload reverse/sort, and exact re-encoding. Current normal profiles admit scalar inputs/scalar collections (predicates.py:19-34), verbatim/trim/stable_deduplicate pipelines (mutable_values.py:51-84), local closed integer/time computations (computation.py:14-58), and selection/order over decoded records (collection_query.py:36-133). No production byte cursor/slice/framing or binary encode interface binds these observations; finite XOR relations or decoded-state guards alone do not close parsing. Python parsing/checksum/transformation is central behavior, not JSON transport. Static gap; acceptance unexecuted; no impossibility claim.",
+  "acceptance_executed": false,
+  "repairs": 0
+}

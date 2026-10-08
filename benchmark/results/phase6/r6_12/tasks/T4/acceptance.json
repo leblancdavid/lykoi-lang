@@ -1,0 +1,18 @@
+[
+  {"input":{"hex":"","patches":[]},"expected":{"hex":"","applied":[],"skipped":[]}},
+  {"input":{"hex":"414243","patches":[{"at":1,"old":"42","new":"7879","when":"always"}]},"expected":{"hex":"41787943","applied":[0],"skipped":[]}},
+  {"input":{"hex":"414243","patches":[{"at":2,"old":"43","new":"","when":"always"},{"at":0,"old":"41","new":"ff","when":"always"}]},"expected":{"hex":"ff42","applied":[0,1],"skipped":[]}},
+  {"input":{"hex":"414243","patches":[{"at":1,"old":"00","new":"ff","when":"match"}]},"expected":{"hex":"414243","applied":[],"skipped":[0]}},
+  {"input":{"hex":"414243","patches":[{"at":1,"old":"00","new":"ff","when":"always"}]},"expected":{"error":"mismatch","at":0}},
+  {"input":{"hex":"414243","patches":[{"at":3,"old":"","new":"00","when":"always"},{"at":0,"old":"","new":"ff","when":"match"}]},"expected":{"hex":"ff41424300","applied":[0,1],"skipped":[]}},
+  {"input":{"hex":"414243","patches":[{"at":0,"old":"4142","new":"00","when":"always"},{"at":1,"old":"42","new":"ff","when":"always"}]},"expected":{"error":"conflict","at":0,"other":1}},
+  {"input":{"hex":"414243","patches":[{"at":0,"old":"41","new":"00","when":"always"},{"at":1,"old":"42","new":"ff","when":"always"}]},"expected":{"hex":"00ff43","applied":[0,1],"skipped":[]}},
+  {"input":{"hex":"4142","patches":[{"at":0,"old":"41","new":"","when":"always"},{"at":1,"old":"","new":"ff","when":"always"}]},"expected":{"hex":"ff42","applied":[0,1],"skipped":[]}},
+  {"input":{"hex":"4142","patches":[{"at":0,"old":"41","new":"","when":"always"},{"at":0,"old":"","new":"ff","when":"always"}]},"expected":{"error":"conflict","at":0,"other":1}},
+  {"input":{"hex":"","patches":[{"at":0,"old":"","new":"01","when":"always"},{"at":0,"old":"","new":"02","when":"match"}]},"expected":{"error":"conflict","at":0,"other":1}},
+  {"input":{"hex":"4142","patches":[{"at":0,"old":"00","new":"01","when":"always"},{"at":2,"old":"00","new":"02","when":"match"}]},"expected":{"error":"bounds","at":1}},
+  {"input":{"hex":"4142","patches":[{"at":2,"old":"00","new":"01","when":"always"},{"at":0,"old":"41","new":"0","when":"always"}]},"expected":{"error":"shape","at":-1}},
+  {"input":{"hex":"aAbB","patches":[{"at":0,"old":"AABB","new":"FF","when":"match"},{"at":1,"old":"00","new":"22","when":"match"}]},"expected":{"hex":"ff","applied":[0],"skipped":[1]}},
+  {"input":{"hex":"414243","patches":[{"at":0,"old":"41","new":"42","when":"always"},{"at":1,"old":"41","new":"44","when":"match"},{"at":2,"old":"43","new":"41","when":"always"}]},"expected":{"hex":"424241","applied":[0,2],"skipped":[1]}},
+  {"input":{"hex":"000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f","patches":[{"at":32,"old":"","new":"ff","when":"always"}]},"expected":{"hex":"000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1fff","applied":[0],"skipped":[]}}
+]

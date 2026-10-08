@@ -1,0 +1,125 @@
+{
+  "utc": "2026-10-08T22:24:16.140427+00:00",
+  "checks": [
+    {
+      "command": [
+        "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-B",
+        "-m",
+        "air_compiler.cli",
+        "validate",
+        "air/task_manager.json"
+      ],
+      "returncode": 0,
+      "stdout": "Lykoi validate: ok\n",
+      "stderr": "",
+      "seconds": 0.09145209996495396
+    },
+    {
+      "command": [
+        "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-B",
+        "-m",
+        "air_compiler.cli",
+        "safety",
+        "air/task_manager.json"
+      ],
+      "returncode": 0,
+      "stdout": "{\n  \"capability_violations\": 0,\n  \"declared_transitions\": 1,\n  \"evidence_counts\": {\n    \"RUNTIME_ENFORCED\": 5,\n    \"SCENARIO_VERIFIED\": 0,\n    \"STRUCTURALLY_GUARANTEED\": 1,\n    \"UNVERIFIED\": 0\n  },\n  \"findings\": [\n    {\n      \"evidence\": \"RUNTIME_ENFORCED\",\n      \"id\": \"inv_unique_ids\"\n    },\n    {\n      \"evidence\": \"RUNTIME_ENFORCED\",\n      \"id\": \"inv_valid_tasks\"\n    },\n    {\n      \"evidence\": \"RUNTIME_ENFORCED\",\n      \"id\": \"inv_title\"\n    },\n    {\n      \"evidence\": \"RUNTIME_ENFORCED\",\n      \"id\": \"inv_status\"\n    },\n    {\n      \"evidence\": \"RUNTIME_ENFORCED\",\n      \"id\": \"inv_priority\"\n    },\n    {\n      \"evidence\": \"STRUCTURALLY_GUARANTEED\",\n      \"id\": \"inv_overdue_excludes_completed\"\n    }\n  ],\n  \"invalid_transitions\": 0,\n  \"invariants\": 6,\n  \"mutations\": [\n    {\n      \"behavior\": \"fn_create\",\n      \"mutates\": [\n        \"field_created_at\",\n        \"field_description\",\n        \"field_due_date\",\n        \"field_id\",\n        \"field_priority\",\n        \"field_status\",\n        \"field_title\"\n      ],\n      \"relevant_invariants\": [\n        \"inv_unique_ids\",\n        \"inv_valid_tasks\",\n        \"inv_title\",\n        \"inv_status\",\n        \"inv_priority\",\n        \"inv_overdue_excludes_completed\"\n      ]\n    },\n    {\n      \"behavior\": \"fn_complete\",\n      \"mutates\": [\n        \"field_status\"\n      ],\n      \"relevant_invariants\": [\n        \"inv_status\",\n        \"inv_overdue_excludes_completed\"\n      ]\n    },\n    {\n      \"behavior\": \"fn_delete\",\n      \"mutates\": [\n        \"field_created_at\",\n        \"field_description\",\n        \"field_due_date\",\n        \"field_id\",\n        \"field_priority\",\n        \"field_status\",\n        \"field_title\"\n      ],\n      \"relevant_invariants\": [\n        \"inv_unique_ids\",\n        \"inv_valid_tasks\",\n        \"inv_title\",\n        \"inv_status\",\n        \"inv_priority\",\n        \"inv_overdue_excludes_completed\"\n      ]\n    }\n  ],\n  \"protected_resources\": 1,\n  \"state_machines\": 1\n}\n",
+      "stderr": "",
+      "seconds": 0.0891256999457255
+    },
+    {
+      "command": [
+        "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_compiler.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_dangling_reference (test_compiler.CompilerTests.test_dangling_reference) ... ok\ntest_impact_paths_and_clock_validation (test_compiler.CompilerTests.test_impact_paths_and_clock_validation) ... ok\ntest_impossible_contract (test_compiler.CompilerTests.test_impossible_contract) ... ok\ntest_incompatible_type_and_mutation (test_compiler.CompilerTests.test_incompatible_type_and_mutation) ... ok\ntest_index_and_diff (test_compiler.CompilerTests.test_index_and_diff) ... ok\ntest_invalid_filter_migration_and_contract_identity (test_compiler.CompilerTests.test_invalid_filter_migration_and_contract_identity) ... ok\ntest_least_authority_for_behaviors_and_migrations (test_compiler.CompilerTests.test_least_authority_for_behaviors_and_migrations) ... ok\ntest_lifecycle_rejects_unmodeled_and_inconsistent_changes (test_compiler.CompilerTests.test_lifecycle_rejects_unmodeled_and_inconsistent_changes) ... ok\ntest_manifest_and_schema (test_compiler.CompilerTests.test_manifest_and_schema) ... ok\ntest_manifest_provenance_is_artifact_wide (test_compiler.CompilerTests.test_manifest_provenance_is_artifact_wide) ... ok\ntest_missing_and_duplicate_ids (test_compiler.CompilerTests.test_missing_and_duplicate_ids) ... ok\ntest_optional_enum_and_effects_are_validated (test_compiler.CompilerTests.test_optional_enum_and_effects_are_validated) ... ok\ntest_parser_rejects_duplicate_keys (test_compiler.CompilerTests.test_parser_rejects_duplicate_keys) ... ok\ntest_plan_fails_without_mutating_model (test_compiler.CompilerTests.test_plan_fails_without_mutating_model) ... ok\ntest_plan_rejects_duplicate_and_stale_baseline (test_compiler.CompilerTests.test_plan_rejects_duplicate_and_stale_baseline) ... ok\ntest_plan_rejects_unauthorized_change_before_generation (test_compiler.CompilerTests.test_plan_rejects_unauthorized_change_before_generation) ... ok\ntest_predicates_safety_and_impact (test_compiler.CompilerTests.test_predicates_safety_and_impact) ... ok\ntest_renaming_preserves_identity (test_compiler.CompilerTests.test_renaming_preserves_identity) ... ok\ntest_safety_cli (test_compiler.CompilerTests.test_safety_cli) ... ok\ntest_transition_references_and_guard (test_compiler.CompilerTests.test_transition_references_and_guard) ... ok\ntest_undeclared_effect_and_dependency (test_compiler.CompilerTests.test_undeclared_effect_and_dependency) ... ok\ntest_valid_and_deterministic (test_compiler.CompilerTests.test_valid_and_deterministic) ... ok\n\n----------------------------------------------------------------------\nRan 22 tests in 0.054s\n\nOK\n",
+      "seconds": 0.15468180004972965
+    },
+    {
+      "command": [
+        "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_application.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_explicit_legacy_migration (test_application.ApplicationTests.test_explicit_legacy_migration) ... ok\ntest_failures_leave_state_intact (test_application.ApplicationTests.test_failures_leave_state_intact) ... ok\ntest_high_priority_filter_and_default (test_application.ApplicationTests.test_high_priority_filter_and_default) ... ok\ntest_invariants_on_load (test_application.ApplicationTests.test_invariants_on_load) ... ok\ntest_lifecycle_and_persistence (test_application.ApplicationTests.test_lifecycle_and_persistence) ... ok\ntest_overdue_and_optional_due_date (test_application.ApplicationTests.test_overdue_and_optional_due_date) ... ok\ntest_semantic_scenario_with_fixed_clock (test_application.ApplicationTests.test_semantic_scenario_with_fixed_clock) ... ok\ntest_semantic_transition_scenario (test_application.ApplicationTests.test_semantic_transition_scenario) ... ok\ntest_version_two_migration (test_application.ApplicationTests.test_version_two_migration) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 2.627s\n\nOK\n",
+      "seconds": 2.7085911999456584
+    },
+    {
+      "command": [
+        "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "benchmark/harness",
+        "-p",
+        "test_baseline.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_lifecycle_filters_and_failures (test_baseline.BaselineOracle.test_lifecycle_filters_and_failures) ... ok\ntest_migration_and_corruption (test_baseline.BaselineOracle.test_migration_and_corruption) ... ok\ntest_overdue_boundary_fixture (test_baseline.BaselineOracle.test_overdue_boundary_fixture) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 4.301s\n\nOK\n",
+      "seconds": 4.384651800035499
+    },
+    {
+      "command": [
+        "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/semantic_interpreter",
+        "-p",
+        "test_interpreter.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_all_uint16_values (test_interpreter.AtomicAndReuse.test_all_uint16_values) ... ok\ntest_ascii_all_values (test_interpreter.AtomicAndReuse.test_ascii_all_values) ... ok\ntest_decimal_boundaries (test_interpreter.AtomicAndReuse.test_decimal_boundaries) ... ok\ntest_k24_signed_add_and_overflow (test_interpreter.AtomicAndReuse.test_k24_signed_add_and_overflow) ... ok\ntest_kernel_predicate_correspondence (test_interpreter.AtomicAndReuse.test_kernel_predicate_correspondence) ... ok\ntest_negative_take (test_interpreter.AtomicAndReuse.test_negative_take) ... ok\ntest_wrong_atomic_types_ranges (test_interpreter.AtomicAndReuse.test_wrong_atomic_types_ranges) ... ok\ntest_all_truncations (test_interpreter.Formats.test_all_truncations) ... ok\ntest_bxc_bad_name (test_interpreter.Formats.test_bxc_bad_name) ... ok\ntest_bxc_count (test_interpreter.Formats.test_bxc_count) ... ok\ntest_bxc_duplicate (test_interpreter.Formats.test_bxc_duplicate) ... ok\ntest_bxc_echo (test_interpreter.Formats.test_bxc_echo) ... ok\ntest_bxc_empty (test_interpreter.Formats.test_bxc_empty) ... ok\ntest_bxc_length_before_truncation (test_interpreter.Formats.test_bxc_length_before_truncation) ... ok\ntest_bxc_name_before_truncation (test_interpreter.Formats.test_bxc_name_before_truncation) ... ok\ntest_bxc_nested_opaque (test_interpreter.Formats.test_bxc_nested_opaque) ... ok\ntest_bxc_select_empty_witness (test_interpreter.Formats.test_bxc_select_empty_witness) ... ok\ntest_bxc_total (test_interpreter.Formats.test_bxc_total) ... ok\ntest_bxc_trailing (test_interpreter.Formats.test_bxc_trailing) ... ok\ntest_bxc_truncated (test_interpreter.Formats.test_bxc_truncated) ... ok\ntest_bxc_version (test_interpreter.Formats.test_bxc_version) ... ok\ntest_bxc_witness (test_interpreter.Formats.test_bxc_witness) ... ok\ntest_bxc_zero (test_interpreter.Formats.test_bxc_zero) ... ok\ntest_bxc_zero_name (test_interpreter.Formats.test_bxc_zero_name) ... ok\ntest_cfg_bad_encoding_precedence (test_interpreter.Formats.test_cfg_bad_encoding_precedence) ... ok\ntest_cfg_cr (test_interpreter.Formats.test_cfg_cr) ... ok\ntest_cfg_duplicate (test_interpreter.Formats.test_cfg_duplicate) ... ok\ntest_cfg_empty (test_interpreter.Formats.test_cfg_empty) ... ok\ntest_cfg_escape (test_interpreter.Formats.test_cfg_escape) ... ok\ntest_cfg_keyword_boundary (test_interpreter.Formats.test_cfg_keyword_boundary) ... ok\ntest_cfg_name_bound (test_interpreter.Formats.test_cfg_name_bound) ... ok\ntest_cfg_nested (test_interpreter.Formats.test_cfg_nested) ... ok\ntest_cfg_ninth (test_interpreter.Formats.test_cfg_ninth) ... ok\ntest_cfg_overflow (test_interpreter.Formats.test_cfg_overflow) ... ok\ntest_cfg_overflow_before_bad_suffix (test_interpreter.Formats.test_cfg_overflow_before_bad_suffix) ... ok\ntest_cfg_span (test_interpreter.Formats.test_cfg_span) ... ok\ntest_cfg_tab (test_interpreter.Formats.test_cfg_tab) ... ok\ntest_cfg_text_bound (test_interpreter.Formats.test_cfg_text_bound) ... ok\ntest_cfg_truncated (test_interpreter.Formats.test_cfg_truncated) ... ok\ntest_cfg_value (test_interpreter.Formats.test_cfg_value) ... ok\ntest_cfg_witness (test_interpreter.Formats.test_cfg_witness) ... ok\ntest_dsv_bad_close (test_interpreter.Formats.test_dsv_bad_close) ... ok\ntest_dsv_bad_encoding (test_interpreter.Formats.test_dsv_bad_encoding) ... ok\ntest_dsv_conversion_before_key (test_interpreter.Formats.test_dsv_conversion_before_key) ... ok\ntest_dsv_duplicate (test_interpreter.Formats.test_dsv_duplicate) ... ok\ntest_dsv_duplicate_before_later_empty (test_interpreter.Formats.test_dsv_duplicate_before_later_empty) ... ok\ntest_dsv_duplicate_before_quantity (test_interpreter.Formats.test_dsv_duplicate_before_quantity) ... ok\ntest_dsv_empty (test_interpreter.Formats.test_dsv_empty) ... ok\ntest_dsv_empty_quantity (test_interpreter.Formats.test_dsv_empty_quantity) ... ok\ntest_dsv_nested_looking_literal (test_interpreter.Formats.test_dsv_nested_looking_literal) ... ok\ntest_dsv_provenance (test_interpreter.Formats.test_dsv_provenance) ... ok\ntest_dsv_provenance_decimal (test_interpreter.Formats.test_dsv_provenance_decimal) ... ok\ntest_dsv_quantity_limit (test_interpreter.Formats.test_dsv_quantity_limit) ... ok\ntest_dsv_select_increment_witness (test_interpreter.Formats.test_dsv_select_increment_witness) ... ok\ntest_dsv_syntax_before_semantic (test_interpreter.Formats.test_dsv_syntax_before_semantic) ... ok\ntest_dsv_truncated (test_interpreter.Formats.test_dsv_truncated) ... ok\ntest_dsv_witness (test_interpreter.Formats.test_dsv_witness) ... ok\ntest_fixed_depth_generic_plan (test_interpreter.Formats.test_fixed_depth_generic_plan) ... ok\ntest_low_work_every_boundary (test_interpreter.Formats.test_low_work_every_boundary) ... ok\ntest_optional_empty_and_false (test_interpreter.Formats.test_optional_empty_and_false) ... ok\ntest_ordered_conflicting_checks (test_interpreter.Formats.test_ordered_conflicting_checks) ... ok\ntest_private_failure (test_interpreter.Formats.test_private_failure) ... ok\ntest_roundtrip_and_determinism (test_interpreter.Formats.test_roundtrip_and_determinism) ... ok\ntest_same_length_tamper_accepted (test_interpreter.Formats.test_same_length_tamper_accepted) ... ok\ntest_ambiguous_prefix (test_interpreter.PlanValidation.test_ambiguous_prefix) ... ok\ntest_cycle (test_interpreter.PlanValidation.test_cycle) ... ok\ntest_empty_repeat (test_interpreter.PlanValidation.test_empty_repeat) ... ok\ntest_filesystem_callback (test_interpreter.PlanValidation.test_filesystem_callback) ... ok\ntest_input_limit_before_encoding (test_interpreter.PlanValidation.test_input_limit_before_encoding) ... ok\ntest_malformed_and_limits (test_interpreter.PlanValidation.test_malformed_and_limits) ... ok\ntest_missing_result_dependency (test_interpreter.PlanValidation.test_missing_result_dependency) ... ok\ntest_occurrence_limit_declared (test_interpreter.PlanValidation.test_occurrence_limit_declared) ... ok\ntest_output_limit_private (test_interpreter.PlanValidation.test_output_limit_private) ... ok\ntest_oversized_plan (test_interpreter.PlanValidation.test_oversized_plan) ... ok\ntest_plan_node_bounds (test_interpreter.PlanValidation.test_plan_node_bounds) ... ok\ntest_prefix_overlap (test_interpreter.PlanValidation.test_prefix_overlap) ... ok\ntest_script_expression (test_interpreter.PlanValidation.test_script_expression) ... ok\ntest_shadowing (test_interpreter.PlanValidation.test_shadowing) ... ok\ntest_undeclared_dependency (test_interpreter.PlanValidation.test_undeclared_dependency) ... ok\ntest_unknown_codec (test_interpreter.PlanValidation.test_unknown_codec) ... ok\ntest_unknown_operation (test_interpreter.PlanValidation.test_unknown_operation) ... ok\ntest_work_precedes_depth (test_interpreter.PlanValidation.test_work_precedes_depth) ... ok\n\n----------------------------------------------------------------------\nRan 82 tests in 3.772s\n\nOK\n",
+      "seconds": 3.8579389000078663
+    },
+    {
+      "command": [
+        "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "benchmark/results/phase6/r6_13",
+        "-p",
+        "test_scorer.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_actual_process_timeout_retains_raw_output (test_scorer.ScorerTests.test_actual_process_timeout_retains_raw_output) ... ok\ntest_deadline_completion_cannot_pass (test_scorer.ScorerTests.test_deadline_completion_cannot_pass) ... ok\ntest_duplicate_keys_all_depths_and_tracks (test_scorer.ScorerTests.test_duplicate_keys_all_depths_and_tracks) ... ok\ntest_invalid_utf8_is_output_failure (test_scorer.ScorerTests.test_invalid_utf8_is_output_failure) ... ok\ntest_launch_error_is_distinct (test_scorer.ScorerTests.test_launch_error_is_distinct) ... ok\ntest_malformed_nonfinite_and_extra_stdout (test_scorer.ScorerTests.test_malformed_nonfinite_and_extra_stdout) ... ok\ntest_object_order_only_is_irrelevant (test_scorer.ScorerTests.test_object_order_only_is_irrelevant) ... ok\ntest_scorer_error_is_distinct (test_scorer.ScorerTests.test_scorer_error_is_distinct) ... ok\ntest_session_remaining_bounds_process_and_stops_dispatch (test_scorer.ScorerTests.test_session_remaining_bounds_process_and_stops_dispatch) ... ok\ntest_strict_types_extra_keys_exit (test_scorer.ScorerTests.test_strict_types_extra_keys_exit) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.646s\n\nOK\n",
+      "seconds": 0.7801890999544412
+    }
+  ],
+  "preserved_identities": 642,
+  "kernel": 26
+}

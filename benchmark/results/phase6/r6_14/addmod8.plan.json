@@ -1,0 +1,101 @@
+{
+  "version": "semantic-plan-1",
+  "text": false,
+  "rules": {},
+  "decode": {
+    "id": "addmod8",
+    "op": "seq",
+    "steps": [
+      {
+        "node": {
+          "id": "a",
+          "op": "atom",
+          "codec": "uint8"
+        },
+        "bind": "a"
+      },
+      {
+        "node": {
+          "id": "b",
+          "op": "atom",
+          "codec": "uint8"
+        },
+        "bind": "b"
+      },
+      {
+        "node": {
+          "id": "end",
+          "op": "end"
+        }
+      },
+      {
+        "node": {
+          "id": "sum",
+          "op": "value",
+          "expr": {
+            "add": [
+              {
+                "ref": "a"
+              },
+              {
+                "ref": "b"
+              }
+            ]
+          }
+        },
+        "bind": "sum"
+      },
+      {
+        "node": {
+          "id": "wrap",
+          "op": "dispatch",
+          "expr": {
+            "le": [
+              {
+                "ref": "sum"
+              },
+              {
+                "const": 255
+              }
+            ]
+          },
+          "branches": {
+            "True": {
+              "id": "unwrapped",
+              "op": "value",
+              "expr": {
+                "ref": "sum"
+              }
+            },
+            "False": {
+              "id": "wrapped",
+              "op": "value",
+              "expr": {
+                "add": [
+                  {
+                    "ref": "sum"
+                  },
+                  {
+                    "const": -256
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "bind": "answer"
+      }
+    ],
+    "result": {
+      "ref": "answer"
+    }
+  },
+  "encode": {
+    "id": "emit",
+    "op": "emit",
+    "codec": "uint8",
+    "expr": {
+      "ref": "root"
+    }
+  }
+}

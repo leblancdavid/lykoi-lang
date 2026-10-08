@@ -7,6 +7,38 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R6.14: `R6_14_FINITE_RELATIONS_SUPPORTED`.
+  Read `benchmark/results/phase6/R6_14-REPORT.md` and both r6_14 frozen protocols.
+  Unchanged VM XOR8/addmod8/parity8 plans57/9/43 nodes pass65,536/65,536/256 unique
+  inputs on three deterministic exhaustive runs. Preserve first XOR8 nonconsuming
+  Take rejection, separate one-Atom repair experiment and naive lookup timeout.
+  Validation602 visits/195,840 comparisons for XOR8 differs from runtime176–1196
+  work; validate-once execution differs from public execute. 126 regression methods
+  pass; kernel26 and642 protected/history identities unchanged. Finite support only,
+  no universal expressiveness/optimality. Stop after publication; subsequent work or
+  replay needs explicit owner authorization. No VM/production edits or P6-A05 access.
+- Latest round R6.13: `R6_13_SCORING_AND_REPLAY_QUALIFIED`.
+  Read `benchmark/results/phase6/R6_13-REPORT.md` and `r6_13/PROTOCOL.md` beside it.
+  Successor scorer rejects duplicate output keys; unchanged Python snapshots pass
+  152 original and 98 adversarial observations (68 entries, 30 repeats; 65 inputs
+  additional to the original suite). B/C acceptance NOT_REACHED; partial probes
+  demonstrate production NOT equality and 21-node VM nibble XOR, not full tasks.
+  Naive full-byte lookup probe times out; original interrupted attempt preserved.
+  No new authoring/efficiency measurement or independent qualification. 10 scorer
+  and 116 baseline methods pass; 614 protected/history identities match, kernel 26.
+  Stop after publication; no language changes, scored repairs or automatic expansion.
+  Further work needs explicit owner authorization. No P6-A04 acceptance/P6-A05 access.
+- Latest round R6.12: `R6_12_EXPLORATORY_COMPARISON_ONLY`.
+  Read `benchmark/results/phase6/R6_12-REPORT.md` and `r6_12/PROTOCOL.md` beside it.
+  Fresh-session Python passes five tasks (80 cases) and three staged changes
+  (48 original + 24 new), first attempts, zero repairs/regressions. Production and
+  frozen VM each have five base/three modification static capability assessments;
+  no scored executables or acceptance execution. Actual session tokens recovered
+  post-evaluation; API billing unavailable, isolation/reasoning configuration unattested,
+  no matched-success efficiency comparison. Kernel 26/production/R6.10/R6.3–R6.11
+  unchanged; 116 baseline methods and 152 exact replays pass. Stop after publication;
+  no automatic benchmark expansion, language work, P6-A04 acceptance or P6-A05 access.
+  Further work requires explicit owner authorization.
 - Latest round R6.11: `R6_11_EXPLORATORY_COMPARISON_ONLY`.
   Read `benchmark/results/phase6/R6_11-REPORT.md` and `r6_11/PROTOCOL.md` beside it.
   Same-session Python/experimental-VM pilot: each passes four base tasks (49 cases)

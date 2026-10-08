@@ -1,5 +1,46 @@
 # Experimental decisions
 
+## R6.14 — Compose finite relations before inferring missing meaning
+
+[Report](../benchmark/results/phase6/R6_14-REPORT.md):
+`R6_14_FINITE_RELATIONS_SUPPORTED`. Existing unary projections, Boolean equality,
+selection cardinality and bound Horner addition compose full XOR8; modular addition
+and parity exercise different reusable compositions. Tradeoff:57 nodes fit, but512
+selectors cause195,840 validator comparisons and indirect authoring. Explicitly separate
+integer input adaptation, structural size, validation traversal, logical work, public
+API timing and validate-once runtime. Preserve first Take-progress failure and record
+the one-Atom repair as a separate frozen budget-change experiment, not first success.
+No VM/production change. Recommend a later representation comparison, not a specialized
+opcode; finite success is not universal expressiveness. Stop after publication.
+
+## R6.13 — Repair external scoring without rewriting historical success or gap evidence
+
+[Report](../benchmark/results/phase6/R6_13-REPORT.md):
+`R6_13_SCORING_AND_REPLAY_QUALIFIED`. Freeze successor duplicate-key scoring and
+adversarial expectations before unchanged-candidate execution; preserve raw output
+and repeated-input denominators. Equivalent observable rules do not imply B/C have
+matched executables. Enforce direct-process timeouts/cooperative replay deadlines,
+disclose unsupported whole-AI-session supervision and historical observational caps.
+Tradeoff: stronger finite coverage (65 additional task inputs) still cannot measure
+new authoring efficiency. Partial NOT equality/nibble XOR constructions narrow gap
+confidence; preserve interrupted/timeout naive lookup evidence rather than silently
+repairing it. No kernel, compiler or VM extension; stop after publication.
+
+## R6.12 — Preserve capability outcomes and recover actual usage without ranking unmatched effort
+
+[Report](../benchmark/results/phase6/R6_12-REPORT.md):
+`R6_12_EXPLORATORY_COMPARISON_ONLY`. Fresh prompted task preparation and separate
+base/modification sessions improve operational disclosure, without inventing isolation.
+Freeze five richer contracts and three changes; retain language gaps as overall coverage
+outcomes while excluding them from successful-development averages. Tradeoff: Python
+completes all tasks, but no semantic-track executable means matched efficiency remains
+unanswered. Sanitized CLI exports recover actual response tokens post-evaluation;
+retain earlier null-at-the-time records and disclose the incomplete prospective inventory.
+Reported zero harness cost is not authoritative API billing. Publish cached/input/output/
+reasoning separately and do not fractionally estimate boundary-straddling response usage.
+No language repair or tailored task substitution follows from the gaps. Stop after
+publication; new benchmark/development requires explicit owner authorization.
+
 ## R6.11 — Report exploratory behavior without inventing efficiency telemetry
 
 [Report](../benchmark/results/phase6/R6_11-REPORT.md):

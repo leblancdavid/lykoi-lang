@@ -75,6 +75,41 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R6.14 — `R6_14_FINITE_RELATIONS_SUPPORTED`.**
+[Construction report](../benchmark/results/phase6/R6_14-REPORT.md): unchanged R6.10
+VM composes XOR8 (57 nodes), modulo-256 addition (9) and parity8 (43). Three exhaustive
+passes each cover 65,536/65,536/256 valid inputs with identical full-result/work digests.
+First XOR8 rejects conservative Take progress; one separately frozen follow-up uses
+existing UInt8 Atom. Naive lookup times out; node/expression limit controls reject.
+Selector-heavy validation costs 602 expression visits/195,840 comparisons for XOR8;
+validate-once runtime and public-API cost remain distinct. No universal expressiveness
+or optimality claim. Kernel26, VM/history preserved; 126 regression methods pass.
+Stopped; representation-comparison proposal requires explicit owner authorization.
+
+**R6.13 — `R6_13_SCORING_AND_REPLAY_QUALIFIED`.**
+[Scoring/replay report](../benchmark/results/phase6/R6_13-REPORT.md): successor
+scorer rejects duplicate output keys. Unchanged Python snapshots pass 152 original
+and 98 adversarial observations (68 successor entries/30 repeats, 65 additional
+task inputs). B/C acceptance stays NOT_REACHED. New partial probes support NOT
+equality and finite VM nibble XOR, while a naive full-byte lookup times out during
+its validation path; no full-task composition or impossibility demonstrated.
+No new authoring/token/repair efficiency measurement or independent qualification.
+10 scorer and 116 baseline methods pass; 614 protected/history identities and kernel 26
+preserved. Stop after publication; further experiments or language development need
+explicit owner authorization. No P6-A04 acceptance or P6-A05 access.
+
+**R6.12 — `R6_12_EXPLORATORY_COMPARISON_ONLY`.**
+[Instrumented report](../benchmark/results/phase6/R6_12-REPORT.md): fresh-session
+Python completes five harder tasks (80 cases) and three changes (48 original/24 new),
+first attempts, zero repairs/regressions. Production and frozen experimental VM each
+record five base/three modification capability assessments with no scored executable.
+Actual exported token usage recovered after evaluation; billing and attested isolation/
+reasoning configuration remain unavailable. No common successful task permits an
+efficiency ranking. Python has a practical coverage advantage on this synthetic batch,
+not demonstrated general superiority. 116 baseline methods/152 exact replays pass;
+kernel 26, production/R6.10/history preserved. **Stop after publication; await explicit
+authorization before further benchmark or language work.**
+
 **R6.11 — `R6_11_EXPLORATORY_COMPARISON_ONLY`.**
 [Pilot report](../benchmark/results/phase6/R6_11-REPORT.md): Python and the unchanged
 R6.10 experimental VM each pass four base tasks (49 cases) and two modifications
