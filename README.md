@@ -20,6 +20,17 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R6.7 publishes a qualified reduction review; independence not established.**
+[Audit report](benchmark/results/phase6/R6_7-REPORT.md) and
+[operation matrix](benchmark/results/phase6/r6_7/REDUCTION-MATRIX.md):
+`R6_7_INDEPENDENCE_NOT_ESTABLISHED`. A terminal clarification confirmed inherited
+substantive R6.7 verdict/findings before reviewer judgments. Original judgments,
+exposure correction and disagreements are retained. Qualified analysis of finite escape tables
+and UInt16BE decode arithmetic admit qualified reductions; exact work, conversion/
+provenance, assembly typing and round-trip domains remain incomplete. No minimum or
+irreducibility proof; kernel 26 and implementation/history unchanged, executions
+NOT_RUN. Stopped after publication; further specification work needs explicit authorization.
+
 **R6.6 supports a bounded semantic composition candidate.**
 [Specification report](benchmark/results/phase6/R6_6-REPORT.md) and
 [definitions](benchmark/results/phase6/r6_6/CANDIDATE-SEMANTICS.md):

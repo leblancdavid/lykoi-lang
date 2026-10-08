@@ -1,5 +1,24 @@
 # Lykoi research log
 
+## R6.7 independent specification reduction audit (2026-10-08)
+
+**`R6_7_INDEPENDENCE_NOT_ESTABLISHED`**;
+[report](../benchmark/results/phase6/R6_7-REPORT.md) and
+[retained reviewer](../benchmark/results/phase6/r6_7/REVIEWER-JUDGMENTS.md).
+Six R6.6 identities verified before a predeclared separated-review procedure;
+terminal clarification confirmed inherited substantive R6.7 verdict/findings before
+judgment formation. Independence is not established; original disclosure, judgments,
+separate correction and disagreements retained.
+Operation inventory finds finite scalar/record/check reductions and nine-add
+UInt16BE numeric decoding, with raw binding/encoding/error/cost qualifications.
+Three-format sketches remain conditional; 27 cells and 16 attacks reviewed as
+specifications, all execution NOT_RUN. Exact event traces, derived-buffer conversion,
+provenance/prefix interfaces, assembly/result typing and legal round-trip domains
+require repair. No proof/minimum/family irreducibility or implementation verdict.
+Kernel 26 and historical bytes preserved; publication integrity/whitespace checks only,
+acceptance executions 0. Stop after publication; next bounded specification challenge
+requires explicit authorization.
+
 ## R6.6 general semantic composition challenge (2026-10-08)
 
 **`R6_6_COMPOSITION_CANDIDATE_SUPPORTED`**;

@@ -75,6 +75,20 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R6.7 — `R6_7_INDEPENDENCE_NOT_ESTABLISHED`.**
+[Independent audit](../benchmark/results/phase6/R6_7-REPORT.md) and
+[reduction matrix](../benchmark/results/phase6/r6_7/REDUCTION-MATRIX.md):
+frozen R6.6 inputs received separated-context review, but terminal clarification
+confirmed inherited substantive R6.7 findings/verdict before judgment formation.
+Independence is not established; original judgments and correction are retained.
+Qualified analysis of finite escape
+relations and UInt16BE decode arithmetic admit qualified subrelation reductions;
+exact cost, DSV conversion/provenance, assembly typing and round-trip domains need
+repair. No complete family reduction, minimum or irreducibility proof. All executions
+NOT_RUN; kernel 26 and implementation/history preserved. Recommend separately
+authorized specification repair with complete typed plans and normative event traces.
+**Stop after publication; no implementation, compilation, acceptance or P6-A05 access.**
+
 **R6.6 — `R6_6_COMPOSITION_CANDIDATE_SUPPORTED`.**
 [Report](../benchmark/results/phase6/R6_6-REPORT.md) and
 [candidate definitions](../benchmark/results/phase6/r6_6/CANDIDATE-SEMANTICS.md):

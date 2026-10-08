@@ -7,6 +7,18 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R6.7: `R6_7_INDEPENDENCE_NOT_ESTABLISHED`.
+  Read `benchmark/results/phase6/R6_7-REPORT.md` and
+  `r6_7/REDUCTION-MATRIX.md`. Frozen R6.6 inputs reviewed under separated nonblind
+  same-platform protocol; terminal clarification confirmed inherited substantive
+  R6.7 verdict/findings before review, so independence is not established. Original
+  judgments/disclosures and separate correction retained. Finite escapes and UInt16BE
+  decode arithmetic admit qualified subrelation
+  reductions; no whole-family reduction/minimum/irreducibility proof. Exact cost,
+  DSV conversion/provenance, assembly typing and round-trip domains need repair.
+  All executions NOT_RUN, kernel 26/implementation/history unchanged. Stop after
+  publication; prospective specification repair needs explicit authorization.
+  No implementation, compilation, acceptance or P6-A05 access.
 - Latest round R6.6: `R6_6_COMPOSITION_CANDIDATE_SUPPORTED`.
   Read `benchmark/results/phase6/R6_6-REPORT.md` and
   `r6_6/CANDIDATE-SEMANTICS.md`. Specification-only bounded structural

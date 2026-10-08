@@ -1,5 +1,21 @@
 # Experimental decisions
 
+## R6.7 — Repair observable semantics before claiming exact reductions
+
+[Audit](../benchmark/results/phase6/R6_7-REPORT.md) retains separated precomparison
+judgments and differences from the frozen sufficiency/precision claims. Terminal
+clarification confirmed substantive R6.7 verdict/findings in inherited reviewer context;
+independence is not established despite separate tasking. Value-level
+factoring is useful: finite escape tables, typed construction/validation and UInt16BE
+numeric decode can reuse supplied meanings. Tradeoff: errors/provenance/resource limits
+are observable, so inlining or flattening can invalidate an exact reduction. Publish
+that loss explicitly rather than concealing it in a host codec or cost abstraction.
+Prioritize a prospective specification-only repair of event traces, DSV conversion/
+maps, layout/result typing and encode-domain/round-trip laws. Procedural independence
+was not established; a later audit needs demonstrably controlled context. No new construct count,
+minimum or irreducibility claim; kernel 26/implementation/history preserved.
+Stop after publication; further work requires separate explicit authorization.
+
 ## R6.6 — Share bounded structural interpretation; expose atomic codec meanings
 
 [Composition challenge](../benchmark/results/phase6/R6_6-REPORT.md) supports a hybrid

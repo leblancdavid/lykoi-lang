@@ -8,6 +8,18 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R6.7 — `R6_7_INDEPENDENCE_NOT_ESTABLISHED`.**
+Read the [audit](../benchmark/results/phase6/R6_7-REPORT.md) and
+[operation matrix](../benchmark/results/phase6/r6_7/REDUCTION-MATRIX.md).
+Separated-context judgments were retained before comparison, but terminal clarification
+confirmed substantive R6.7 findings/verdict were inherited before review. Independence
+is not established; original disclosures and correction remain explicit. Qualified scalar/
+construction reductions do not eliminate full families or prove a minimum. Cost events,
+DSV conversion/provenance, assembly typing and admissible round-trip domains require
+specification repair. Kernel 26/implementation/history unchanged; all executions NOT_RUN.
+Stop after publication. A prospective specification repair/reduction challenge needs
+explicit authorization; no implementation, compilation, acceptance or P6-A05 access.
+
 **Latest round: R6.6 — `R6_6_COMPOSITION_CANDIDATE_SUPPORTED`.**
 Read the [report](../benchmark/results/phase6/R6_6-REPORT.md) and
 [candidate definitions](../benchmark/results/phase6/r6_6/CANDIDATE-SEMANTICS.md).
