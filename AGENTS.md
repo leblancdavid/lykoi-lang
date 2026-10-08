@@ -7,6 +7,16 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R6.8: `R6_8_INDEPENDENCE_NOT_ESTABLISHED`.
+  Read `benchmark/results/phase6/R6_8-REPORT.md` and
+  `r6_8/ISOLATION-EVIDENCE.md`. Pre-assignment isolation gate not established;
+  source inventory/neutral prompt prepared, isolated export not released. No reviewer
+  assigned, independent judgments/seal/reconciliation NOT_REACHED. Available task
+  controls do not attest exclusion of inherited guidance, repository/retrieval or
+  memory. No independently supported reductions or semantic verdict. Kernel 26,
+  implementation and R6.3–R6.7 preserved; executions 0. Stop after publication;
+  explicit authorization and auditable input control required before a later review.
+  No implementation, compilation, acceptance or P6-A05 access.
 - Latest round R6.7: `R6_7_INDEPENDENCE_NOT_ESTABLISHED`.
   Read `benchmark/results/phase6/R6_7-REPORT.md` and
   `r6_7/REDUCTION-MATRIX.md`. Frozen R6.6 inputs reviewed under separated nonblind

@@ -1,5 +1,17 @@
 # Experimental decisions
 
+## R6.8 — Require verifiable input control before assigning review
+
+[Terminal report](../benchmark/results/phase6/R6_8-REPORT.md):
+`R6_8_INDEPENDENCE_NOT_ESTABLISHED`. Prefer a pre-assignment halt to contaminated
+judgments. A neutral task message, fresh session or source hash does not attest the
+effective harness, filesystem, retrieval and memory boundary. Preserve finding-bearing
+historical guidance and isolate a future export instead of rewriting history.
+Tradeoff: no independent semantic evidence or repair priorities this round. A later
+provider-neutral process must document inspectable project-controlled inputs and
+explicit provider-side limits before review; seal judgments before reconciliation.
+No infrastructure built or semantic repair undertaken. Stop; await explicit authority.
+
 ## R6.7 — Repair observable semantics before claiming exact reductions
 
 [Audit](../benchmark/results/phase6/R6_7-REPORT.md) retains separated precomparison

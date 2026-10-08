@@ -8,7 +8,16 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
-**Latest round: R6.7 — `R6_7_INDEPENDENCE_NOT_ESTABLISHED`.**
+**Latest round: R6.8 — `R6_8_INDEPENDENCE_NOT_ESTABLISHED`.**
+See the [terminal report](../benchmark/results/phase6/R6_8-REPORT.md) and
+[isolation evidence](../benchmark/results/phase6/r6_8/ISOLATION-EVIDENCE.md).
+The pre-assignment input-control gate could not be established with available task
+controls. No reviewer assignment, judgments, seal or post-seal reconciliation;
+no independently supported reductions. Input inventory is not a released isolated
+package. Kernel 26/implementation/history unchanged; executions 0. Stop after
+publication; a later input-controlled review requires explicit authorization.
+
+**Preserved round: R6.7 — `R6_7_INDEPENDENCE_NOT_ESTABLISHED`.**
 Read the [audit](../benchmark/results/phase6/R6_7-REPORT.md) and
 [operation matrix](../benchmark/results/phase6/r6_7/REDUCTION-MATRIX.md).
 Separated-context judgments were retained before comparison, but terminal clarification

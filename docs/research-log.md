@@ -1,5 +1,19 @@
 # Lykoi research log
 
+## R6.8 input-controlled independent review (2026-10-08)
+
+**`R6_8_INDEPENDENCE_NOT_ESTABLISHED`**;
+[report](../benchmark/results/phase6/R6_8-REPORT.md) and
+[evidence](../benchmark/results/phase6/r6_8/ISOLATION-EVIDENCE.md).
+Verified exact R6.6 candidate/example hashes and recorded kernel/interface identities.
+Prepared source inventory and neutral assignment text, but did not release an isolated
+package. Pre-assignment Task controls do not attest exclusion of inherited guidance,
+repository/retrieval access or shared context. Publisher already exposed; no reviewer
+assigned, judgments/seal/reconciliation NOT_REACHED. No independent semantic reduction
+or contradiction established. Hidden provider context not claimed controlled.
+Kernel 26, implementation and R6.3–R6.7 preserved; semantic/acceptance executions 0.
+Stop after terminal publication; input-controlled resumption needs explicit authority.
+
 ## R6.7 independent specification reduction audit (2026-10-08)
 
 **`R6_7_INDEPENDENCE_NOT_ESTABLISHED`**;

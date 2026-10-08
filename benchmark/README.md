@@ -1,5 +1,14 @@
 # Phase 5: comparative maintenance benchmark
 
+## R6.8 input-controlled independent review — pre-assignment halt
+
+[Report](results/phase6/R6_8-REPORT.md) and
+[isolation evidence](results/phase6/r6_8/ISOLATION-EVIDENCE.md):
+`R6_8_INDEPENDENCE_NOT_ESTABLISHED`. No reviewer assignment or semantic review;
+seal/reconciliation NOT_REACHED. Canonical inventory prepared, isolated export not
+released. Kernel 26 and historical records preserved; executions 0. Stop after
+publication; separately authorized input-control qualification required to resume.
+
 ## R6.6 general semantic composition challenge
 
 [Report](results/phase6/R6_6-REPORT.md),

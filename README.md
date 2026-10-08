@@ -20,6 +20,14 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R6.8 halts before reviewer assignment: independence not established.**
+[Report](benchmark/results/phase6/R6_8-REPORT.md) and
+[isolation evidence](benchmark/results/phase6/r6_8/ISOLATION-EVIDENCE.md):
+`R6_8_INDEPENDENCE_NOT_ESTABLISHED`. Input inventory prepared; available task
+controls cannot attest exclusion of finding-bearing inherited context or access.
+No independent judgments, seal or reconciliation; kernel 26/history/implementation
+preserved, executions 0. Stopped; later review needs explicit authorization.
+
 **R6.7 publishes a qualified reduction review; independence not established.**
 [Audit report](benchmark/results/phase6/R6_7-REPORT.md) and
 [operation matrix](benchmark/results/phase6/r6_7/REDUCTION-MATRIX.md):

@@ -75,6 +75,17 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R6.8 — `R6_8_INDEPENDENCE_NOT_ESTABLISHED`.**
+[Terminal report](../benchmark/results/phase6/R6_8-REPORT.md) and
+[input-control evidence](../benchmark/results/phase6/r6_8/ISOLATION-EVIDENCE.md):
+the required reviewer isolation could not be established before assignment.
+Canonical input inventory and neutral assignment text are retained; isolated export
+was not released. No independent review, seal or reconciliation was reached; no
+independently supported reductions or contradictions. Kernel 26 and implementation/
+R6.3–R6.7 artifacts preserved; executions 0. Next proposed experiment is auditable
+input control followed by separately authorized review, before independently selecting
+specification repairs. **Stop after publication; await explicit authorization.**
+
 **R6.7 — `R6_7_INDEPENDENCE_NOT_ESTABLISHED`.**
 [Independent audit](../benchmark/results/phase6/R6_7-REPORT.md) and
 [reduction matrix](../benchmark/results/phase6/r6_7/REDUCTION-MATRIX.md):
