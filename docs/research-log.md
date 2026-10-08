@@ -1,5 +1,19 @@
 # Lykoi research log
 
+## R6.3 P6-A04 human-clarified research contract (2026-10-08)
+
+**`R6_3_P6_A04_CLARIFIED_RESEARCH_CONTRACT_READY`**;
+[report](../benchmark/results/phase6/R6_3-REPORT.md),
+[final review](../benchmark/results/phase6/r6_3/HUMAN-REVIEW.md).
+Exact owner research clarification resolves Q1/Q2 without asserting upstream intent.
+New composite-source revision preserves five source obligations and adds attributed
+raw-space/token requirements. Source-designated wheel and bounded tool/prerequisite
+fixtures hash-pinned; original input unchanged. Four fixed executable observation
+predicates await approval, all NOT_RUN. Native package-install payload is unprepared,
+an execution integration limitation rather than behavioral ambiguity. Same-agent/model
+preparation; no approval/receipt/evaluation/authoring or semantic change. Kernel 26 and
+all historical evidence preserved. Stopped after publication; no P6-A05 access.
+
 ## R6.2 P6-A04 literal-input clarification review (2026-10-08)
 
 **`R6_2_P6_A04_LITERAL_INPUT_CLARIFICATION_REQUIRED`**;

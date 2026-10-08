@@ -20,6 +20,14 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R6.3 prepares the human-clarified P6-A04 contract.**
+[Report](benchmark/results/phase6/R6_3-REPORT.md) and
+[final review](benchmark/results/phase6/r6_3/HUMAN-REVIEW.md):
+`R6_3_P6_A04_CLARIFIED_RESEARCH_CONTRACT_READY`. Exact declaration retained;
+revision 2, pinned fixture and fixed acceptance expectations await explicit approval.
+Native execution integration unprepared; no approval or evaluation. Kernel 26 unchanged.
+Stop after publication; no P6-A05 access.
+
 **R6.2 retains P6-A04's material input questions.**
 [Report](benchmark/results/phase6/R6_2-REPORT.md) and
 [revised review](benchmark/results/phase6/r6_2/HUMAN-REVIEW.md):

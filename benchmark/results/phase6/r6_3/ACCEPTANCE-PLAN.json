@@ -1,0 +1,77 @@
+{
+  "id": "R6.3/P6-A04/fixed-acceptance/1",
+  "purpose": "local-research-only",
+  "status": "FIXED_EXPECTATIONS_NOT_RUN_NOT_APPROVED",
+  "fixed_before_authoring": true,
+  "original_source": {
+    "id": "P6-A04/pypa/pip#13139/preserved-body",
+    "capture_sha256": "811cd95034444011f50e13572ebd10c810692b9e26b6355863d1aae3aa1af747",
+    "body_sha256": "f252041309b04c2c95b5cb3dbf3211d108b8793c92f560a43ee389b89f323a2b",
+    "source_record_sha256": "89835744da01e163649a40de1d08d99c7a5b11766ad2d5f0fd7d68325ff04f19",
+    "provenance_sha256": "b70fc3dc58c4c8aba54c96e04e8cd6d0ea040768408ea7d16f1ccf4aff43eee5"
+  },
+  "human_clarification_sha256": "232fef22356ed5b743c0e3e572c69c76ed6669ff7dcceab7989c5e7fbc9d48d8",
+  "frc": {
+    "contract_id": "R6.1/P6-A04/candidate",
+    "revision": 2,
+    "canonical_sha256": "aa2af92cf77073f1f42a70065d64135d211bf7bc6889aeeb4a033ce3aa449aba"
+  },
+  "fixture_manifest_sha256": "d3f38f5cdcf4aac2602e83ce66de6b227200f7e12185a42f2d3ece83efb4c6e1",
+  "executable_procedure_file": "ACCEPTANCE-PROCEDURE.md",
+  "executable_procedure_sha256": "d734dc0f69041e58f17cd8acf85d23809e7cd96c349c9269c53eb54b2e88ff2f",
+  "observation_program_sha256": "7e7a0bfdcead056eeb84c9e251ff6f5568ddb7d4f3109245041de476dd97816d",
+  "checks": [
+    {
+      "id": "A04-PARSE",
+      "obligations": [
+        "A04-E1",
+        "A04-I1",
+        "A04-H1",
+        "A04-H2"
+      ],
+      "expected": "Exact unchanged setup input is accepted, dependency metadata prepared without syntax error; metadata identifies the local dependency.",
+      "evidence": "Input byte hashes before/after, containing metadata Requires-Dist and completed metadata stage in install report; no separately normalized parser probe."
+    },
+    {
+      "id": "A04-RESOLVE",
+      "obligations": [
+        "A04-I2"
+      ],
+      "expected": "Report selects pipefunc 0.46.0 from exact local file path and SHA-256 pinned in fixture.",
+      "evidence": "Installer report download_info URL and archive_info hashes; fail closed if unavailable."
+    },
+    {
+      "id": "A04-CONTAINING-INSTALL",
+      "obligations": [
+        "A04-I3"
+      ],
+      "expected": "Containing installation command succeeds and my-local-package 0.1.0/my_module is observable in target venv.",
+      "evidence": "Command successful outcome and independent importlib.metadata observation."
+    },
+    {
+      "id": "A04-DEPENDENCY-INSTALL",
+      "obligations": [
+        "A04-E2",
+        "A04-I2"
+      ],
+      "expected": "Previously absent pipefunc becomes installed at 0.46.0; installed payload hashes match designated wheel.",
+      "evidence": "Independent pre/post distribution inventory, direct_url local provenance, payload byte comparisons."
+    }
+  ],
+  "negative_controls": [
+    {
+      "id": "A04-N0",
+      "kind": "observer/fixture sanity, not extra pip semantics",
+      "procedure": "Before command, assert containing and designated dependency absent; post-state success predicates cannot pass on this fresh environment.",
+      "expected": "Both absent, therefore no successful behavioral verdict before installation."
+    }
+  ],
+  "excluded_controls": "No invented malformed wheel, missing-file, encoded-URL or normalized-name success/rejection oracle; neither alternate spelling is an eligible substitute.",
+  "verdict": "PASS only if all four checks pass in the same exact-input run; parsing alone insufficient. Missing observations/setup incompatibility are recorded limitations, not success.",
+  "independence": "Source plus human clarification fixed before authoring; same agent/model, not cognitively independent. No generated software accessed.",
+  "native_plan": null,
+  "integration_limit": "Executable shell/observation procedure is fixed; existing native local verifier has no bound package-install payload here. No claim of native execution readiness; later integration needs separate authorization and exact identity approval, without changing expectations.",
+  "approved": false,
+  "sealed": false,
+  "execution_receipt": null
+}

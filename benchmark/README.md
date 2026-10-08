@@ -1,5 +1,14 @@
 # Phase 5: comparative maintenance benchmark
 
+## R6.3 P6-A04 human-clarified contract preparation
+
+[Report](results/phase6/R6_3-REPORT.md) and
+[final review](results/phase6/r6_3/HUMAN-REVIEW.md):
+`R6_3_P6_A04_CLARIFIED_RESEARCH_CONTRACT_READY`. Exact human Q1/Q2 clarification,
+source-faithful revision 2, pinned fixture and fixed four-stage expectations await
+subsequent exact approval. Native package-install payload remains unprepared; no
+approval/evaluation or implementation change. Stop after publication; no P6-A05 access.
+
 ## R6.2 P6-A04 literal-input clarification review
 
 [Report](results/phase6/R6_2-REPORT.md) and

@@ -8,6 +8,14 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R6.3 — `R6_3_P6_A04_CLARIFIED_RESEARCH_CONTRACT_READY`.**
+Read the [report](../benchmark/results/phase6/R6_3-REPORT.md) and
+[final approval review](../benchmark/results/phase6/r6_3/HUMAN-REVIEW.md).
+Exact human clarification resolves Q1/Q2 for research; revised contract, pinned fixture
+and fixed expectations await subsequent exact approval. Native package-install payload
+is not prepared; contract readiness is not execution readiness. Kernel 26/history
+unchanged. Stop after publication; no approval/evaluation or P6-A05 access.
+
 **Latest round: R6.2 — `R6_2_P6_A04_LITERAL_INPUT_CLARIFICATION_REQUIRED`.**
 Read the [report](../benchmark/results/phase6/R6_2-REPORT.md) and
 [revised review](../benchmark/results/phase6/r6_2/HUMAN-REVIEW.md).

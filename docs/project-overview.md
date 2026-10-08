@@ -75,6 +75,15 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R6.3 — `R6_3_P6_A04_CLARIFIED_RESEARCH_CONTRACT_READY`.**
+[Report](../benchmark/results/phase6/R6_3-REPORT.md),
+[final approval review](../benchmark/results/phase6/r6_3/HUMAN-REVIEW.md): exact human
+research clarification resolves raw-space URL and wheel-filename token acceptance.
+Source-faithful revision 2, pinned fixture and fixed parsing/resolution/installation
+checks are ready for subsequent exact approval. Native execution integration remains
+unprepared and disclosed; no behavioral execution or approval. Implementation/kernel 26
+and all history preserved. **Stop after preparation/publication; no P6-A05 access.**
+
 **R6.2 — `R6_2_P6_A04_LITERAL_INPUT_CLARIFICATION_REQUIRED`.**
 [Report](../benchmark/results/phase6/R6_2-REPORT.md),
 [revised review](../benchmark/results/phase6/r6_2/HUMAN-REVIEW.md): source reverified;

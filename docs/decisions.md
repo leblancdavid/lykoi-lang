@@ -1,5 +1,17 @@
 # Experimental decisions
 
+## R6.3 — Attribute experimental syntax authority and keep exact input
+
+[Final review](../benchmark/results/phase6/r6_3/HUMAN-REVIEW.md) records owner Q1/Q2
+clarification separately from preserved reporter intent. Use a new composite-source
+FRC revision with declared lineage and fresh identities; never overwrite historical
+ambiguity records or normalize the caller's declaration. Pin ordinary fixture choices
+without inventing product requirements. Tradeoff: fixed shell/observer expectations
+make the bounded contract testable, but do not supply a native package-install adapter
+or establish stock-backend success. Disclose that execution limitation and require
+later exact approval/authorization, rather than expand infrastructure during preparation.
+No implementation or authority mechanism changed.
+
 ## R6.2 — Do not promote failing reproduction syntax into a fixed oracle
 
 [Source analysis](../benchmark/results/phase6/r6_2/SOURCE-EVIDENCE.md) distinguishes

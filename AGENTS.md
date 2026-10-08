@@ -7,6 +7,13 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R6.3: `R6_3_P6_A04_CLARIFIED_RESEARCH_CONTRACT_READY`.
+  Read `benchmark/results/phase6/R6_3-REPORT.md` and `r6_3/HUMAN-REVIEW.md`.
+  Exact human Q1/Q2 clarification recorded; source-faithful revision 2, pinned fixture
+  and fixed four-stage acceptance expectations await subsequent exact approval.
+  Native package-install execution payload remains unprepared; do not infer execution
+  readiness. Kernel 26/implementation/history unchanged. Stop after publication;
+  no approval, receipt, evaluation, authoring, compilation or P6-A05 access.
 - Latest round R6.2: `R6_2_P6_A04_LITERAL_INPUT_CLARIFICATION_REQUIRED`.
   Read `benchmark/results/phase6/R6_2-REPORT.md` and `r6_2/HUMAN-REVIEW.md`.
   Exact preserved pip source verified; Q1/Q2 remain underdetermined by desired
