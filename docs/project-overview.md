@@ -75,6 +75,15 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R6.2 — `R6_2_P6_A04_LITERAL_INPUT_CLARIFICATION_REQUIRED`.**
+[Report](../benchmark/results/phase6/R6_2-REPORT.md),
+[revised review](../benchmark/results/phase6/r6_2/HUMAN-REVIEW.md): source reverified;
+path-space installation is explicit, exact URL/name syntax remains unresolved.
+No revised FRC/fixed acceptance plan justified; original R6.1 identities preserved.
+Kernel 26/implementation/history unchanged. **Stop after clarification review; no
+approval or evaluation.** Later contract preparation needs legitimate Q1/Q2 answers
+and source-faithful fixture pins. No tests or P6-A05 access.
+
 **R6.1 — `R6_1_P6_A04_RESEARCH_REVIEW_PREPARED`.**
 [Report](../benchmark/results/phase6/R6_1-REPORT.md),
 [human review](../benchmark/results/phase6/r6_1/HUMAN-REVIEW.md): exact preserved

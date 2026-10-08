@@ -7,6 +7,12 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R6.2: `R6_2_P6_A04_LITERAL_INPUT_CLARIFICATION_REQUIRED`.
+  Read `benchmark/results/phase6/R6_2-REPORT.md` and `r6_2/HUMAN-REVIEW.md`.
+  Exact preserved pip source verified; Q1/Q2 remain underdetermined by desired
+  path-space behavior and failing reproduction. No revised FRC/fixed plan justified;
+  R6.1 identities preserved. Kernel 26/implementation/history unchanged. Stop after
+  clarification review; no approval, receipt, evaluation, tests or P6-A05 access.
 - Latest round R6.1: `R6_1_P6_A04_RESEARCH_REVIEW_PREPARED`.
   Read `benchmark/results/phase6/R6_1-REPORT.md` and `r6_1/HUMAN-REVIEW.md`.
   Exact R5.116A P6-A04 pip source verified; valid unapproved FRC and conditional

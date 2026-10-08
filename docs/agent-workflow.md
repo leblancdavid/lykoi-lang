@@ -8,6 +8,13 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R6.2 — `R6_2_P6_A04_LITERAL_INPUT_CLARIFICATION_REQUIRED`.**
+Read the [report](../benchmark/results/phase6/R6_2-REPORT.md) and
+[revised review](../benchmark/results/phase6/r6_2/HUMAN-REVIEW.md).
+Q1/Q2 remain unresolved after exact preserved-source review; no revised FRC or fixed
+plan justified. Preserve R6.1 identities and kernel 26/implementation/history.
+Stop at clarification review; no approval, receipt, evaluation/tests or P6-A05 access.
+
 **Latest round: R6.1 — `R6_1_P6_A04_RESEARCH_REVIEW_PREPARED`.**
 Read the [report](../benchmark/results/phase6/R6_1-REPORT.md) and
 [owner review](../benchmark/results/phase6/r6_1/HUMAN-REVIEW.md).

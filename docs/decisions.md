@@ -1,5 +1,16 @@
 # Experimental decisions
 
+## R6.2 — Do not promote failing reproduction syntax into a fixed oracle
+
+[Source analysis](../benchmark/results/phase6/r6_2/SOURCE-EVIDENCE.md) distinguishes
+explicit path-space installation behavior from unresolved URL/left-token spellings.
+Preserve the exact example and R6.1 candidates; withhold revisions when source
+authority cannot select either literal support or correction. Tradeoff: literal
+fidelity is a plausible research proposal but cannot itself resolve material intent.
+No standard-validity ruling is needed to request unusual input, and lack of one is
+not the blocker. Legitimate clarification and faithful fixture pinning precede a
+new exact-bound contract/plan/review. No implementation or authority change.
+
 ## R6.1 — Keep pip accepted-input decisions visible before research approval
 
 [P6-A04 review](../benchmark/results/phase6/r6_1/HUMAN-REVIEW.md) proposes the

@@ -1,5 +1,14 @@
 # Phase 5: comparative maintenance benchmark
 
+## R6.2 P6-A04 literal-input clarification review
+
+[Report](results/phase6/R6_2-REPORT.md) and
+[revised review](results/phase6/r6_2/HUMAN-REVIEW.md):
+`R6_2_P6_A04_LITERAL_INPUT_CLARIFICATION_REQUIRED`. Exact source verified;
+path-space installation objective does not settle raw URL or left-token acceptance.
+Q1/Q2 remain; no revised FRC/fixed plan justified. R6.1/history/kernel 26 unchanged.
+Stop after clarification review; no approval, receipt, evaluation/tests or P6-A05 access.
+
 ## R6.1 P6-A04 research approval preparation
 
 [Report](results/phase6/R6_1-REPORT.md) and

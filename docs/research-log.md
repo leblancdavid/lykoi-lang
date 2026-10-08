@@ -1,5 +1,18 @@
 # Lykoi research log
 
+## R6.2 P6-A04 literal-input clarification review (2026-10-08)
+
+**`R6_2_P6_A04_LITERAL_INPUT_CLARIFICATION_REQUIRED`**;
+[report](../benchmark/results/phase6/R6_2-REPORT.md),
+[source analysis](../benchmark/results/phase6/r6_2/SOURCE-EVIDENCE.md).
+Reverified original preserved source. Desired filesystem path-space installation
+does not sufficiently select raw-space URL spelling; wheel-filename left token is
+incidental reproduction syntax without an explicit support request. Both material
+questions remain. No new FRC or fixed plan justified; R6.1 unchanged. Compatible
+fixture selection is delegated within source fidelity, not input correction authority.
+Same-agent/model review, no tests/evaluation/approval; implementation/kernel 26 preserved.
+Stopped after revised human review; no P6-A05 access.
+
 ## R6.1 P6-A04 research review preparation (2026-10-08)
 
 **`R6_1_P6_A04_RESEARCH_REVIEW_PREPARED`**;

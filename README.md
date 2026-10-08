@@ -20,6 +20,14 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R6.2 retains P6-A04's material input questions.**
+[Report](benchmark/results/phase6/R6_2-REPORT.md) and
+[revised review](benchmark/results/phase6/r6_2/HUMAN-REVIEW.md):
+`R6_2_P6_A04_LITERAL_INPUT_CLARIFICATION_REQUIRED`. Preserved source verified;
+literal raw-space URL/wheel-filename-token acceptance insufficiently determined.
+No revised contract or fixed plan justified; R6.1 and implementation/kernel 26
+preserved. Stop after clarification review; no approval, evaluation or tests.
+
 **R6.1 prepares P6-A04 for human research review.**
 [Report](benchmark/results/phase6/R6_1-REPORT.md) and
 [review](benchmark/results/phase6/r6_1/HUMAN-REVIEW.md):
