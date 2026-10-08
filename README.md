@@ -20,7 +20,15 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
-**R5.116A curated five externally authored, procedurally selected requirements.**
+**R5.117 preserves P6-A01's first result: `NEEDS_CLARIFICATION`.**
+The [report](benchmark/results/phase6/R5_117-REPORT.md) records
+`R5_117_P6_A01_FIRST_EVALUATION_COMPLETE`: exact source verified, source-bound candidate
+envelope valid, unresolved scope/format/activation authority. No approved FRC or downstream
+pipeline/behavioral verification; implementation remains unchanged at 26 concepts.
+This is procedurally selected external evidence, not blinded/held-out. Stop after
+first-result publication; no repair or P6-A02 evaluation.
+
+**Preserved R5.116A curated five externally authored, procedurally selected requirements.**
 The [report](benchmark/results/phase6/R5_116A-REPORT.md) records
 `R5_116A_PROCEDURAL_OPEN_SOURCE_BATCH_CURATED` under a policy committed before issue
 inspection: five projects, 12 inspected candidates, seven rule-based exclusions,

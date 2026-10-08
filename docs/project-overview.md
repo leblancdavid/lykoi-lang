@@ -75,6 +75,19 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R5.117 — `R5_117_P6_A01_FIRST_EVALUATION_COMPLETE`.** The separately authorized
+first evaluation of preserved `jqlang/jq#3228` verified the exact source and produced
+a source-bound, envelope-valid candidate. **`P6_A01_FIRST_RESULT = NEEDS_CLARIFICATION`**
+at formalization/clarification: activation/scope/formatting/format authority remains
+unanswered; no human-approved FRC or implementation authority. Structural coverage and
+every downstream stage are NOT_REACHED; no P6-A01 executable or external behavioral
+verification. See the [report](../benchmark/results/phase6/R5_117-REPORT.md).
+Material is externally authored, procedurally selected, not independently blinded or
+pristine held-out. Implementation remains R5.114, kernel 26; R5.115 and curation evidence
+are preserved. Stop after first-result publication, no repairs or P6-A02 evaluation.
+Next proposed action is legitimate clarification/approval and independent acceptance,
+followed only by a separately authorized linked post-exposure attempt.
+
 **R5.116A — `R5_116A_PROCEDURAL_OPEN_SOURCE_BATCH_CURATED`.** A prospective
 procedural amendment produced five externally authored public issue requests from jq,
 curl, Redis, pip and pytest. The selection policy was committed before issue inspection;

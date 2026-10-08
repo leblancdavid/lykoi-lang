@@ -7,6 +7,14 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R5.117: `R5_117_P6_A01_FIRST_EVALUATION_COMPLETE`.
+  Read `benchmark/results/phase6/R5_117-REPORT.md` and the preserved
+  `r5_117/P6_A01_FIRST_RESULT.json`: `NEEDS_CLARIFICATION` at formalization/clarification.
+  Exact P6-A01 verified; source-bound candidate envelope valid, no human approval or
+  implementation authority. All downstream stages NOT_REACHED. No semantics changed,
+  kernel 26; material is procedurally selected external evidence, not blinded/held-out.
+  Stop after first-result publication; no repair or P6-A02–P6-A05 access/evaluation.
+  Further clarification or linked post-exposure attempt requires separate authorization.
 - Latest round R5.116A: `R5_116A_PROCEDURAL_OPEN_SOURCE_BATCH_CURATED`.
   Read `benchmark/results/phase6/R5_116A-REPORT.md`. Five externally authored,
   procedurally selected issues are hash-bound under precommitted policy

@@ -1,5 +1,28 @@
 # Lykoi research log
 
+## R5.117 P6-A01 first external evaluation (2026-10-08)
+
+**`R5_117_P6_A01_FIRST_EVALUATION_COMPLETE`**;
+**`P6_A01_FIRST_RESULT = NEEDS_CLARIFICATION`**. See the
+[report and evidence](../benchmark/results/phase6/R5_117-REPORT.md). Fresh clean
+snapshot, unchanged 26-concept implementation identities, validation/safety and 34
+baseline regression passes preceded preserved-source access. Exact P6-A01 hashes and
+issue/author identity matched. Three source-traceable obligations retain the requested
+comma, values/order and absence of array wrapping; the existing FRC envelope validator
+passed the candidate. Same-agent formalization/reconciliation is not independent approval.
+
+Activation/default-versus-mode, domain/cardinality scope, exact formatting and intended
+format/validity remain unanswered by the source or approved policies; no human answers
+or implementation approval supplied. The first result was persisted before reporting,
+with FRC approval/structural/BDI/adequacy/V1/authoring/compilation/external verification
+NOT_REACHED. Zero P6-A01 behavioral cases/invocations; no repair or model switch.
+This observes an authority/specification halt, not semantic incapability or executable
+generalization. Material remains externally authored, procedurally selected, not blinded
+or pristine held-out. Implementation, R5.115 and all curation identities are preserved.
+Stop here; P6-A02–P6-A05 not opened/evaluated. Next proposed action: legitimate
+clarification/approval and independently reviewed acceptance, with any later attempt
+separately authorized and linked without overwriting this first result.
+
 ## R5.116A procedural public-source curation (2026-10-08)
 
 **`R5_116A_PROCEDURAL_OPEN_SOURCE_BATCH_CURATED`.** Prospective amendment to

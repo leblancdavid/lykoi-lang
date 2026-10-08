@@ -8,6 +8,15 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R5.117 — `R5_117_P6_A01_FIRST_EVALUATION_COMPLETE`.** Read the
+[report](../benchmark/results/phase6/R5_117-REPORT.md). P6-A01's immutable first result
+is NEEDS_CLARIFICATION at formalization/clarification. Exact source verified; valid
+candidate envelope, no approved FRC or implementation authority. Structural coverage
+and every downstream stage NOT_REACHED; no behavioral verification. The implementation
+remains R5.114/26 concepts and the source is procedurally selected external material,
+not blinded/held-out. Stop after evidence publication; no repair or next-source access.
+Further clarification/linked attempt requires separate authorization.
+
 **Latest round: R5.116A — `R5_116A_PROCEDURAL_OPEN_SOURCE_BATCH_CURATED`.**
 Read the [report](../benchmark/results/phase6/R5_116A-REPORT.md). This prospective
 methodological amendment uses a precommitted selection policy and fully logged public
