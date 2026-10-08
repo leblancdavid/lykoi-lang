@@ -20,7 +20,20 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
-**R5.114 closes bounded historical-state and trusted-host verification interfaces.**
+**R5.115 establishes Phase 6 generalization research readiness.**
+The [preserved Phase 5 baseline](docs/phase5-baseline-r5.115.md),
+[research plan/source-independence policy](docs/phase6-research-plan-r5.115.md) and
+[lightweight first-result protocol](docs/phase6-generalization-protocol-r5.115.md)
+prioritize unfamiliar-software representation, kernel stability and independent
+behavioral correctness; AI efficiency is a later comparison. R5.114's 26 concepts,
+397-test receipt and 16/20 exposed successes remain unchanged; 34 default tests,
+validation and safety pass freshly. B01–B20 remain exposed development/regression
+evidence. `R5_115_PHASE6_RESEARCH_READY` means methodology readiness only.
+Stop after planning: no new requirement sourced, inspected or evaluated and no
+capability/infrastructure implementation. See the
+[transition report](benchmark/results/phase5c/R5_115-REPORT.md).
+
+**Preserved R5.114 closes bounded historical-state and trusted-host verification interfaces.**
 [Explicit related-field migrations and sealed controlled-host execution](docs/historical-state-trusted-verification-v1.md)
 traverse the normal requirements-to-external-behavior path. Creation defaults never
 authorize history; controlled-host assertion is not authentication. Proposed kernel

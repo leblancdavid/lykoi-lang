@@ -1,5 +1,33 @@
 # Experimental decisions
 
+## R5.115 — Test unfamiliar software before expanding or optimizing
+
+Preserve R5.114 as the exact implementation baseline and transition to independent
+multi-domain generalization methodology. Q1 representation, Q2 kernel stability and
+Q3 source-derived accepted behavior take priority; Q4 AI efficiency is a later matched
+comparison. B01–B20 remain exposed regression evidence, not a source of held-out claims.
+See the [plan](phase6-research-plan-r5.115.md) and
+[protocol](phase6-generalization-protocol-r5.115.md).
+
+Choose independent curator/source authoring without Lykoi capability guidance, exact
+source provenance and no development semantic previews. Candidate domains encourage
+diversity, not specifications that fit today's profiles. Keep difficult/ambiguous cases
+and all first outcomes in denominators. Acceptance derives independently from source
+authority and is fixed before authorship; generated code cannot certify its own behavior.
+
+Use lightweight snapshots and immutable first-result records with native classifications
+and exact first blockers. Preserve all historical evidence and distinguish contract
+checks, independent finite acceptance and unverified behavior. Stage support, interface
+integration, backend behavior and irreducible semantic meaning are separate accounting
+axes. Neither force 26 to remain fixed nor treat every new feature as a core concept.
+Tradeoff: procedural independence and inspectable records replace elaborate eligibility
+machinery; they do not prove independent cognition, universal correctness or production
+security. Optional telemetry cannot block generalization. Defer UI, compiler targets,
+requirements recovery, context optimization/compression and backend independence.
+
+**R5.115 is planning only.** No new source, semantics, framework or experiment is begun.
+All modest entry criteria are established: `R5_115_PHASE6_RESEARCH_READY`.
+
 ## R5.114 — Explicit historical sources and verifier-owned host execution
 
 Close additive related-state evolution using current nominal typing, explicit version

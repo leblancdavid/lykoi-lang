@@ -1,5 +1,19 @@
 # Phase 5: comparative maintenance benchmark
 
+## R5.115 Phase 6 planning transition
+
+**`R5_115_PHASE6_RESEARCH_READY`** records methodology readiness only. The
+[transition report](results/phase5c/R5_115-REPORT.md),
+[baseline](../docs/phase5-baseline-r5.115.md),
+[plan/source policy](../docs/phase6-research-plan-r5.115.md) and
+[protocol/taxonomy](../docs/phase6-generalization-protocol-r5.115.md) preserve R5.114
+and establish independently sourced unfamiliar-software first attempts. B01–B20 are
+permanently **Exposed development/regression corpus**; their 16/20 performance is not
+held-out generalization. Existing corpus regression use continues. Independent criteria
+must derive from source authority, with immutable first blockers and NOT_REACHED
+downstream stages. No new source selected/generated/inspected/evaluated, no telemetry,
+semantics or qualification infrastructure implemented. Stop after R5.115 documentation.
+
 ## R5.114 historical-state/trusted verification and locked exposed transfer
 
 The [report](results/phase5c/R5_114-REPORT.md) and

@@ -1,5 +1,31 @@
 # Lykoi research log
 
+## R5.115 Phase 6 research transition (2026-10-08)
+
+**`R5_115_PHASE6_RESEARCH_READY`.** Preserved exact clean R5.114 commit
+`694c4e02f13111e65781e48e69da97c1ea6f4502`, root tree, 26-concept ledger, profile/
+compiler/backend identities and supported boundaries in the
+[baseline record](phase5-baseline-r5.115.md). R5.114's 397-pass receipt, 133 synthetic
+invocations and 16/20 exposed successes (447 invocations) remain historical evidence.
+Fresh default checks pass 34 tests (22 compiler, 9 application, 3 external baseline),
+canonical validation and safety; no 397-test rerun is claimed. An unquoted PowerShell
+root-tree query misparsed and was corrected, without repository mutation.
+
+The [plan](phase6-research-plan-r5.115.md) and
+[protocol](phase6-generalization-protocol-r5.115.md) establish independently sourced
+unfamiliar requirements, small domain-diverse evaluation, source-only acceptance,
+unchanged-capability attempts and immutable first terminal results. Source ambiguity,
+stage coverage, integration debt, backend faults and irreducible semantic candidates
+are distinct. All downstream unexecuted stages retain NOT_REACHED. B01–B20 are
+permanently exposed development/regression corpus, never held-out generalization.
+
+Observation: Phase 5 supports bounded feasibility/reuse, not independent unfamiliar
+software generality or efficiency. Q1–Q3 are immediate; optional token/context/call/
+repair/time/diff/correctness comparisons and broader representation/backend work are
+deferred. Entry criteria are modest methodology facts, not machine/model qualification
+or universal correctness. No new requirement selected/generated/inspected/evaluated,
+no capabilities or telemetry implemented. **Stop after R5.115 documentation.**
+
 ## R5.114 historical-state and trusted verification closure (2026-10-08)
 
 **`R5_114_HISTORICAL_STATE_TRUSTED_VERIFICATION_CLOSED`.** Explicit additive related

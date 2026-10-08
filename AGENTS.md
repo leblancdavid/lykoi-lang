@@ -7,6 +7,17 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Current research transition is R5.115: `R5_115_PHASE6_RESEARCH_READY`.
+  Read `docs/phase5-baseline-r5.115.md`, `docs/phase6-research-plan-r5.115.md`
+  and `docs/phase6-generalization-protocol-r5.115.md`. This is a documentation-only
+  transition; R5.114 remains the implementation baseline (26 concepts, 397 tests,
+  16/20 exposed successes). B01–B20 are permanently exposed development/regression
+  evidence, never held-out generalization. Future independent sources come from an
+  external curator without capability tailoring, with no development semantic access
+  before a fresh snapshot/evaluation. Preserve native first-blocker codes/stages and
+  immutable first results; unexecuted downstream stages are NOT_REACHED. Stop after
+  R5.115 planning: no source selection/generation/inspection/evaluation, semantic
+  implementation, telemetry or qualification/activation infrastructure authorized.
 - Current historical-state/verification policy is R5.114:
   `R5_114_HISTORICAL_STATE_TRUSTED_VERIFICATION_CLOSED`. Read
   `docs/historical-state-trusted-verification-v1.md` and

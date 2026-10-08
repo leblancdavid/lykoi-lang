@@ -8,6 +8,19 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Current research transition is R5.115: `R5_115_PHASE6_RESEARCH_READY`.**
+The [Phase 5 baseline](phase5-baseline-r5.115.md),
+[Phase 6 plan and source policy](phase6-research-plan-r5.115.md) and
+[lightweight first-result protocol](phase6-generalization-protocol-r5.115.md)
+establish methodology only. R5.114 remains the unchanged implementation baseline.
+B01–B20 are permanently exposed development/regression evidence. Future requirements
+must be independently sourced without capability guidance and withheld from development
+until a fresh snapshot/evaluation. Preserve source authority, independent pre-author
+acceptance, native blocker stages and immutable first results; downstream NOT_REACHED
+is not failure. No exact-machine/model qualification or protected activation is needed.
+**Stop after R5.115 documentation**, before selecting/generating/inspecting/evaluating
+new requirements or implementing capabilities, infrastructure or telemetry.
+
 **Current historical-state/verification policy is R5.114:
 `R5_114_HISTORICAL_STATE_TRUSTED_VERIFICATION_CLOSED`.** Read the
 [versioned interface](historical-state-trusted-verification-v1.md) and

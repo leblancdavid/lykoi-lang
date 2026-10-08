@@ -75,6 +75,29 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R5.115 — `R5_115_PHASE6_RESEARCH_READY`.** Documentation-only transition to
+testing unfamiliar-software generalization before broad semantic expansion.
+The [Phase 5 baseline](phase5-baseline-r5.115.md) preserves exact clean commit
+`694c4e02f13111e65781e48e69da97c1ea6f4502`, the **26-concept** kernel, versions,
+supported families/limits and R5.114's **397-test / 16-of-20 exposed-success** evidence.
+Fresh default checks pass **34 tests**, validation and safety; the broader receipt
+remains preserved rather than claimed as a new rerun.
+
+The [Phase 6 research plan](phase6-research-plan-r5.115.md) prioritizes **Q1
+generalization, Q2 kernel stability and Q3 independently accepted behavior**; Q4
+AI efficiency is a later optional comparison. An independent curator will source a
+small multi-domain batch without knowledge-driven capability tailoring, retaining it
+outside development context until evaluation. Candidate domain labels do not determine
+actual behavior. B01–B20 remain permanently **Exposed development/regression corpus**.
+The [lightweight protocol](phase6-generalization-protocol-r5.115.md) fixes snapshots,
+legitimate source/clarification authority, unchanged-capability attempts, independent
+acceptance and immutable first terminal records; it separates integration/backend
+gaps from new irreducible semantics. No telemetry or qualification framework is needed.
+See the [transition report](../benchmark/results/phase5c/R5_115-REPORT.md).
+**Stop after R5.115 planning.** No new requirement or capability is begun. Next, only
+in a separately instructed round: independent sourcing, then a fresh snapshot before
+first requirement delivery. Methodology readiness is not demonstrated generalization.
+
 **R5.114 — `R5_114_HISTORICAL_STATE_TRUSTED_VERIFICATION_CLOSED`.**
 The [historical-state and trusted verification interface](historical-state-trusted-verification-v1.md)
 closes both targeted normal-path seams by composition: explicit additive related
