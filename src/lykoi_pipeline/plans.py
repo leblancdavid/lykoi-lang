@@ -94,6 +94,19 @@ def review_coverage(contract, plan):
         if len({f["path"] for f in case.get("initial_files", [])}) != len(case.get("initial_files", [])):
             raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Duplicate fixture state")
         for step in case["steps"]:
+            if "host" in step:
+                host = step["host"]
+                if type(host) is not dict or set(host) != {"command", "inputs", "execution_context"} or type(host["inputs"]) is not dict or step["argv"]:
+                    raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Closed host request, separate from CLI inputs")
+                if not mutable_applies(contract):
+                    raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="No declared trusted host interface")
+                f = mutable_facts(contract)
+                op = next((o for o in f.get("authorization", {}).get("facts", {}).get("operations", []) if o["command"] == host["command"]), None)
+                if op is None or op["actor"]["source"] != "trusted_context":
+                    raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Host command lacks exact trusted-source authority")
+                ctx = host["execution_context"]
+                if ctx is not None and (type(ctx) is not dict or set(ctx) != {"source", "actor"} or type(ctx["source"]) is not str or type(ctx["actor"]) is not str):
+                    raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Closed controlled-host context")
             if (not isinstance(step["argv"], list) or not all(type(x) is str for x in step["argv"])
                     or type(step["returncode"]) is not int or not all(type(x) is str for x in step["contains"])):
                 raise Failure("VERIFICATION_PLAN_COVERAGE_GAP", reason="Invalid executable case")

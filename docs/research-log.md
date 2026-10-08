@@ -1,5 +1,40 @@
 # Lykoi research log
 
+## R5.114 historical-state and trusted verification closure (2026-10-08)
+
+**`R5_114_HISTORICAL_STATE_TRUSTED_VERIFICATION_CLOSED`.** Explicit additive related
+role/enum, nominal reference/collection, nullable numeric and supported checked computed
+historical sources traverse normal FRC/reconciliation/coverage/BDI/adequacy/V1/compiler
+and external behavior. Related-only version steps compose the existing migration chain;
+current roles, historical observations, absent history, explicit migrations and creation
+defaults remain separate. Private candidates validate every transition and atomically
+replace once; invalid data, overflow and injected persistence failure preserve bytes.
+
+The normal pre-author sealed verification plan now carries controlled-host requests.
+A verifier-owned pinned adapter supplies exact declared actor context to the generated
+entrypoint; the parent observes outputs and durable effects and the controller checks
+bindings/classification. Generated success strings and forged pass bits supply no
+authority. Host assertion is not authenticated identity; CLI flags remain selectors.
+The trust/one-store frame is unchanged, with no authentication or OS sandbox built.
+
+**397 tests**, canonical validation/safety and **133 published synthetic invocations**
+cover Inventory/Stock, Document/DocumentRevision, Account/Employee, Renewal/Subscription
+and Project/Membership. Four starting versions, idempotence/restart, role/reference/null
+introductions, explicit and derived historical values, invalid histories and externally
+rejected permission/context operations pass. An ambiguous capture halts formalization
+with all downstream stages NOT_REACHED. Same-agent captures/inventories/oracles and
+shared primary scaffolding limit the generality claim. Kernel stays **26**, no new core.
+
+Generic verification/evidence/accounting locked before twenty fresh typed source captures
+and transfer. **16/20 B01–B16**, **447 invocations**, unchanged first blockers. B17–B20
+remain disputed; B18/B19 historical-role authority still unanswered, downstream
+NOT_REACHED, actual clarified implementations unverified. No post-transfer semantic
+repair or historical-evidence change. One broad-test timeout preserved 18 complete
+receipts and resumed the remainder; a missing-root PYTHONPATH invocation failed before
+generic publication and was corrected. Final scope/whitespace/content audit records
+preservation. Broader unexposed, shape-varying software domains are recommended only.
+**Stop after R5.114.**
+
 ## R5.113 authorization and conditional composition (2026-10-07)
 
 **`R5_113_AUTHORIZATION_CONDITIONAL_EFFECT_COMPOSITION_PARTIAL`.** Declared prewrite

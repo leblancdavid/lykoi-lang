@@ -1,6 +1,19 @@
 # Phase 5: comparative maintenance benchmark
 
-## R5.113 authorization/conditional composition and locked exposed transfer
+## R5.114 historical-state/trusted verification and locked exposed transfer
+
+The [report](results/phase5c/R5_114-REPORT.md) and
+[matrix](results/phase5c/R5_114-CAPABILITY-MATRIX.md) retain **16/20 B01–B16**,
+**447 fresh transfer invocations**. Explicit additive related-role/reference/nullable
+migrations and sealed controlled-host external execution now use the normal path;
+creation defaults never supply history and host actors are not authenticated by Lykoi.
+Kernel stays **26**. **397 tests**, validation/safety and **133 synthetic invocations**
+precede generic lock. B17–B20 remain disputed, B18/B19 downstream NOT_REACHED.
+`R5_114_HISTORICAL_STATE_TRUSTED_VERIFICATION_CLOSED` is bounded targeted closure,
+not source-authorized B18/B19 success or held-out generality. Preserve all historical
+evidence; stop after R5.114, no next round or infrastructure begun.
+
+## Preserved R5.113 authorization/conditional composition and locked exposed transfer
 
 The [report](results/phase5c/R5_113-REPORT.md) and
 [matrix](results/phase5c/R5_113-CAPABILITY-MATRIX.md) retain **16/20 local successes**,

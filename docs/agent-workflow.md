@@ -8,7 +8,21 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
-**Current authorization/effect policy is R5.113:
+**Current historical-state/verification policy is R5.114:
+`R5_114_HISTORICAL_STATE_TRUSTED_VERIFICATION_CLOSED`.** Read the
+[versioned interface](historical-state-trusted-verification-v1.md) and
+[report](../benchmark/results/phase5c/R5_114-REPORT.md) before extension. Related
+enum/role, nominal reference/collection and nullable/computed fields migrate only
+with explicit historical sources; creation defaults never authorize history.
+Version chains, rejected bytes, idempotence and restart use ordinary one-store
+composition. The sealed verifier owns host contexts and external classification;
+host actor assertion is not authentication, and CLI flags cannot establish it.
+Kernel remains 26; 397 tests, validation/safety and 133 synthetic invocations precede
+the generic lock. Fresh transfer retains 16 successes, 447 invocations; B17–B20
+remain disputed, B18/B19 downstream NOT_REACHED. Preserve history and all locks;
+**stop after R5.114**, no next evaluation or infrastructure begun.
+
+**Preserved authorization/effect policy is R5.113:
 `R5_113_AUTHORIZATION_CONDITIONAL_EFFECT_COMPOSITION_PARTIAL`.** Read the
 [prewrite/conditional specification](prewrite-conditional-composition-v1.md) and
 [report](../benchmark/results/phase5c/R5_113-REPORT.md) before extension. Role/owner/set

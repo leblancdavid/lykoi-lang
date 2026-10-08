@@ -7,7 +7,20 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
-- Current authorization/effect policy is R5.113:
+- Current historical-state/verification policy is R5.114:
+  `R5_114_HISTORICAL_STATE_TRUSTED_VERIFICATION_CLOSED`. Read
+  `docs/historical-state-trusted-verification-v1.md` and
+  `benchmark/results/phase5c/R5_114-REPORT.md` before extension. Explicit additive
+  related role/reference/collection/nullable and checked computed migration sources
+  use one-store version chains and atomic replacement. Creation defaults never
+  authorize history. Normal sealed external verification includes verifier-owned
+  controlled-host actor contexts; host assertion is not authentication and CLI has
+  no trusted source. Kernel stays 26. 397 tests and 133 synthetic external invocations
+  precede content lock; fresh transfer retains 16 successes B01–B16, 447 invocations.
+  B17–B20 disputed, B18/B19 downstream NOT_REACHED. Preserve historical evidence,
+  obtain actual role/error authority before further authoring. Stop after R5.114;
+  no next round, new infrastructure or benchmark-specific primitives authorized.
+- Preserved authorization/effect policy is R5.113:
   `R5_113_AUTHORIZATION_CONDITIONAL_EFFECT_COMPOSITION_PARTIAL`. Read
   `docs/prewrite-conditional-composition-v1.md` and `benchmark/results/phase5c/R5_113-REPORT.md`
   before extension. Prewrite role/owner/set predicates, controlled-host actor binding,

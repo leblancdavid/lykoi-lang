@@ -1,5 +1,29 @@
 # Experimental decisions
 
+## R5.114 — Explicit historical sources and verifier-owned host execution
+
+Close additive related-state evolution using current nominal typing, explicit version
+introductions, historical literal/copy/computed sources and one private whole-store
+candidate. Related-only steps share the existing version chain. Historical schemas
+exclude only explicitly later-introduced fields; current persisted roles are never
+rederived from creation defaults. Reject invalid historical data and failed replacements
+without durable prefixes. Keep legacy missing-or-empty repair separate rather than
+silently overwrite historical evidence. No arbitrary schema converter is introduced.
+
+Connect R5.113 controlled-host actor binding to the existing pre-author sealed external
+plan. Pin a verifier-owned subprocess adapter and bind WHAT, exact target, plan, context,
+actor source, inputs, observed channels and durable effects. Classify outside the target;
+stdout cannot be a verification grant. Reuse the existing host trust/one-store boundary;
+no authentication or hostile-code containment system is built.
+
+Classify these as existing-core composition, profile/interface integration and backend
+implementation: kernel **26 remains 26**, no new candidate. Choose targeted closed
+classification because both supported interfaces traverse the normal pipeline. Retain
+finite same-agent evidence limits and unverified actual B18/B19 downstream behavior.
+B17–B20 authority disputes cannot be repaired with synthetic roles or oracle errors.
+Recommend separately supplied unexposed broader domains rather than further primitives
+fitted to this saturated corpus. **Stop after R5.114.**
+
 ## R5.113 — Compose permission/effect graphs; count exact duration scaling
 
 Keep actor identity, authenticated principal, role, owner, permission predicate and

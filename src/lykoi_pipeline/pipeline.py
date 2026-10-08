@@ -25,6 +25,8 @@ def classify_observations(plan, observations):
         if observed["identity"] != case["identity"] or len(observed["steps"]) != len(case["steps"]):
             raise Failure("VERIFICATION_PLAN_COVERAGE_GAP")
         for expected, actual in zip(case["steps"], observed["steps"]):
+            if "host" in expected and actual.get("execution") != expected["host"]:
+                raise Failure("VERIFICATION_BINDING_FAILURE", reason="Host source/context/input mismatch")
             if actual.get("unexecutable"):
                 actual["passed"] = False
                 failure = "RUNTIME_FAILURE"
@@ -55,7 +57,7 @@ def classify_observations(plan, observations):
 def external_execute(target_source, plan):
     """Fresh application processes, case-local directories, persisted step state.
 
-    No import, internal state inspection, source comparison or author claims.
+    CLI or verifier-owned controlled host, no author success claims.
     Standard subprocess environment is intentionally bounded, not OS sandboxed.
     """
     observations = []
@@ -70,10 +72,15 @@ def external_execute(target_source, plan):
                 (state / fixture["path"]).write_text(json.dumps(fixture["json"], ensure_ascii=False), encoding="utf-8")
             steps = []
             for step in case["steps"]:
+                observed_paths = set(step.get("preserved", [])) | {f["path"] for f in step.get("files", [])}
+                durable_before = {p: (state / p).read_bytes() if (state / p).exists() else None for p in observed_paths}
                 before = {p: (state / p).read_bytes() if (state / p).exists() else None
                           for p in step.get("preserved", [])}
                 try:
-                    result = subprocess.run([sys.executable, "-I", "-S", str(target), *step["argv"]],
+                    host = step.get("host")
+                    runner = Path(__file__).with_name("host_verifier.py")
+                    argv = [str(runner), str(target)] if host is not None else [str(target), *step["argv"]]
+                    result = subprocess.run([sys.executable, "-I", "-S", *argv], input=canonical(host).decode() if host is not None else None,
                                             cwd=state, env={}, text=True, capture_output=True, timeout=10)
                     files = []
                     for observation in step.get("files", []):
@@ -86,13 +93,28 @@ def external_execute(target_source, plan):
                     steps.append({"returncode": result.returncode, "stdout": result.stdout,
                                   "stderr": result.stderr, "unexecutable": None, "files": files,
                                   "preserved": {p: ((state / p).read_bytes() if (state / p).exists() else None) == b
-                                                for p, b in before.items()}})
+                                                 for p, b in before.items()}})
+                    if host is not None:
+                        steps[-1]["execution"] = copy.deepcopy(host)
+                        steps[-1]["durable_sha256"] = {p: {"before": hashlib.sha256(b).hexdigest() if b is not None else None,
+                            "after": hashlib.sha256((state / p).read_bytes()).hexdigest() if (state / p).exists() else None} for p, b in durable_before.items()}
                 except (OSError, subprocess.TimeoutExpired) as exc:
                     steps.append({"returncode": None, "stdout": "", "stderr": "",
-                                  "unexecutable": type(exc).__name__})
+                                   "unexecutable": type(exc).__name__})
+                    if "host" in step: steps[-1]["execution"] = copy.deepcopy(step["host"])
             observations.append({"identity": case["identity"], "steps": steps})
     outcome = classify_observations(plan, observations)
     return outcome, observations
+
+
+def trusted_binding(target, plan_seal, plan):
+    """Bind the sealed source-side host requests and exact verifier adapter bytes."""
+    if not any("host" in s for c in plan["cases"] for s in c["steps"]): return None
+    return {"version": "controlled-host-verification-1", "target_sha256": target["target_sha256"],
+            "what_seal": target["manifest"]["what_seal"], "plan_seal": plan_seal,
+            "adapter_sha256": hashlib.sha256(Path(__file__).with_name("host_verifier.py").read_bytes()).hexdigest(),
+            "requests": [s["host"] for c in plan["cases"] for s in c["steps"] if "host" in s],
+            "actor_source": "verifier-owned sealed controlled-host fixture; no authentication inference"}
 
 
 class Pipeline:
@@ -228,7 +250,9 @@ class Pipeline:
         plan = self.c.artifact(plan_id)["content"]
         # The separate verifier bundle contains no author self-assessment.
         bundle = {"target": target, "plan_seal": plan_seal, "environment": "CPython isolated fresh subprocess",
-                  "fixtures": "fresh per-case directory; shared persisted state only within a case"}
+                   "fixtures": "fresh per-case directory; shared persisted state only within a case"}
+        binding = trusted_binding(self.c.artifact(target)["content"], plan_seal, plan)
+        if binding is not None: bundle["trusted_context"] = binding
         outcome, observations = external_execute(self.c.artifact(target)["content"]["target_source"], plan)
         self.c.check_freeze(freeze)
         result = self.reg("verifier", "verification", {"outcome": outcome, "target": target, "plan": plan_id,

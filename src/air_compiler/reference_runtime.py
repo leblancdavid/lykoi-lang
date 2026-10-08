@@ -197,6 +197,8 @@ def execute_mutation(mutation, inputs):
 
 
 def migrate():
+    if "historical" in REFERENCE:
+        return historical_migrate()
     state = SPEC["state"][0]
     rt, path = state_layout(state)
     payload = reference_payload()

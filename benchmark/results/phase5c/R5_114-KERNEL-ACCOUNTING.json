@@ -1,0 +1,80 @@
+{
+  "baseline_round": "R5.113",
+  "baseline_source_sha256": "9a06d9c382be79d3e387f0cc81fd8e78216c3eab871b420e103d7b1380ed91f0",
+  "baseline_kernel": [
+    "record schema",
+    "field",
+    "finite sequence",
+    "var",
+    "literal",
+    "equals",
+    "and",
+    "not",
+    "contains",
+    "selection",
+    "trim",
+    "map(trim)",
+    "stable_unique",
+    "transition",
+    "instant",
+    "before",
+    "operation contract",
+    "cardinality",
+    "input presence",
+    "typed resource/capability authority",
+    "durable state",
+    "atomic commit",
+    "finite nonempty-path reachability"
+  ],
+  "preserved_additions": [
+    {
+      "id": "K24",
+      "concept": "checked_integer_addition",
+      "reason": "Finite map does not supply the deterministic mathematical sum; replacing stored values cannot construct x+adjustment without this meaning",
+      "evidence": [
+        "inventory signed adjustment",
+        "retry successor",
+        "cardinality-derived ordinal"
+      ]
+    },
+    {
+      "id": "K25",
+      "concept": "fixed_duration_instant_displacement",
+      "original_candidate": "offset",
+      "reason": "Instant observation/ordering and integer addition do not define dimensioned UTC instant translation; fixed elapsed-second displacement adds independently observable meaning",
+      "evidence": [
+        "session/subscription expiry",
+        "ordinary synthetic successor",
+        "Gregorian/negative/fraction/range vectors"
+      ]
+    },
+    {
+      "id": "K26",
+      "concept": "checked_elapsed_day_duration_conversion",
+      "relation": "seconds=N*86400",
+      "input": "signed_64_integer_elapsed_days",
+      "output": "signed_64_duration_seconds",
+      "negative": "preserve",
+      "overflow": "reject",
+      "reason": "16 additions can produce a coefficient of N at most 2^16=65536 < 86400. Constants do not increase that coefficient. K25 accepts duration, not an integer. Exact dimensioned conversion is new meaning; no loop or host coercion is licensed.",
+      "evidence": [
+        "Five-domain normal pipeline successor displacement",
+        "Native signed-64 positive/negative boundaries",
+        "Selected null and conversion overflow preserve durable bytes",
+        "UTC leap-day and upper-year rejection"
+      ]
+    }
+  ],
+  "baseline_count": 26,
+  "additions": [],
+  "final_count": 26,
+  "constructs": {
+    "historical_literal_copy_role_reference_nullable_values": "existing-core composition: type/value/presence/guard/operation/durable-state/atomic K01-K22",
+    "computed_migration_values": "existing-core composition K24-K26; no new operators",
+    "related_only_version_chain_and_frc_v1": "profile/interface integration; source authority explicit",
+    "sealed_controlled_host_requests_and_verification_binding": "profile/interface integration of existing K17/K20 authority and R5.113 actor adapter",
+    "private_store_candidate_validation_and_atomic_replace": "backend implementation of existing durable/atomic semantics",
+    "verifier_owned_subprocess_host_loading_and_parent_observations": "backend implementation; no authentication or OS containment"
+  },
+  "claim": "Exact proposed 26-concept architectural kernel preserved; no new core candidate or benchmark primitive; no minimality proof"
+}

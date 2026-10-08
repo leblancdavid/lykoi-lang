@@ -264,4 +264,8 @@ def compose(ir, f):
     deletable = {o["entity"] for o in f["operations"] if o["kind"] == "delete"}
     if any(b["kind"] == "delete" for b in model["behaviors"]): deletable.add(primary)
     require(all(r["target"] not in deletable for r in f["references"] if r["deletion"]["policy"] == "unavailable"), "Deletion unavailable only when no target delete effect is exposed; do not invent a policy")
-    return dict(version=VERSION, facts=copy.deepcopy(f), types=types, identities=identities, checks=checks, storage=copy.deepcopy(state))
+    result = dict(version=VERSION, facts=copy.deepcopy(f), types=types, identities=identities, checks=checks, storage=copy.deepcopy(state))
+    if "historical_state_semantics" in ir["facts"]:
+        from .historical_state import validate
+        result["historical"] = validate(ir["facts"]["historical_state_semantics"], result, model)
+    return result

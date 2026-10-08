@@ -87,7 +87,7 @@ def pipeline(steps, typ):
 def compose(base, facts):
     """Validate the new algebra and lower to a typed model plus atomic-write nodes."""
     from lykoi_pipeline.scalar_profile import name, command_name
-    names = ("collections", "mutations", "creation_pipelines") + tuple(n for n in ("input_contracts", "predicate_semantics", "primary_interfaces") if n in facts)
+    names = ("collections", "mutations", "creation_pipelines") + tuple(n for n in ("input_contracts", "predicate_semantics", "primary_interfaces", "historical_state_semantics") if n in facts)
     keys(facts, names)
     d = copy.deepcopy(base)
     require(len(d["state"]) == 1, "Single-record, single-store profile")
@@ -164,6 +164,18 @@ def compose(base, facts):
         require(state["schema_version"] == 1 or len(c["migration"]) == 1, "One explicit historical introduction per added collection")
     if d["migrations"] and not any("migration" in c for c in d["commands"]):
         d["commands"].append(dict(id="command:mutable:migrate", token="migrate", migration=max(d["migrations"], key=lambda x: x["to_version"])["id"], arguments=[]))
+    history = facts.get("historical_state_semantics")
+    if history is not None:
+        from .references import keys as history_keys
+        history_keys(history, ("steps", "invalid", "rejection", "preservation"))
+        for step in history["steps"]:
+            require(type(step["from"]) is int and step["from"] >= 1 and step["to"] == step["from"] + 1, "Additive related migration boundary")
+            state["schema_version"] = max(state["schema_version"], step["to"])
+            if not any(m["from_version"] == step["from"] for m in d["migrations"]):
+                access = [x["id"] for x in d["capabilities"] if x["kind"] == "resource_access" and x["resource"] == state["storage"]]
+                d["migrations"].append(dict(id="migration:related:" + str(step["from"]), state=state["id"], from_version=step["from"], to_version=step["to"], add_fields=[], requires=access, effects=["state_read", "state_write", "file_read", "file_write"]))
+        if not any("migration" in c for c in d["commands"]):
+            d["commands"].append(dict(id="command:related:migrate", token="migrate", migration=max(d["migrations"], key=lambda x: x["to_version"])["id"], arguments=[]))
     require(sorted(m["to_version"] for m in d["migrations"]) == list(range(2, state["schema_version"] + 1)), "Complete additive migration chain")
     for c in d["commands"]:
         if "migration" in c:

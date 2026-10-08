@@ -41,7 +41,8 @@ def relation_schema():
     from .atomic_state_schema import schema as atomic_schema
     from .primary_schema import schema as primary_schema
     from .authorization_schema import schema as authorization_schema
-    values = {**VALUES, "reference_semantics": reference_schema(), "atomic_state_semantics": atomic_schema(), "primary_interfaces": primary_schema(), "authorization_semantics": authorization_schema()}
+    from .historical_schema import schema as historical_schema
+    values = {**VALUES, "reference_semantics": reference_schema(), "atomic_state_semantics": atomic_schema(), "primary_interfaces": primary_schema(), "authorization_semantics": authorization_schema(), "historical_state_semantics": historical_schema()}
     return {"anyOf": [obj({"kind": {"enum": ["crud"]}, "parameters": obj({"profile": {"enum": [PROFILE]}, "facet": {"enum": [facet]}, "value": schema})}) for facet, schema in values.items()]}
 
 

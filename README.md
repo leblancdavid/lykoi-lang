@@ -20,7 +20,18 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
-**R5.113 implements bounded prewrite authorization and conditional effect composition.**
+**R5.114 closes bounded historical-state and trusted-host verification interfaces.**
+[Explicit related-field migrations and sealed controlled-host execution](docs/historical-state-trusted-verification-v1.md)
+traverse the normal requirements-to-external-behavior path. Creation defaults never
+authorize history; controlled-host assertion is not authentication. Proposed kernel
+stays **26**. **397 tests**, validation/safety and **133 synthetic external invocations**
+pass before lock. [Fresh exposed transfer](benchmark/results/phase5c/R5_114-REPORT.md)
+retains **16/20 B01–B16**, **447 invocations**. B17–B20 remain disputed, B18/B19
+downstream NOT_REACHED. `R5_114_HISTORICAL_STATE_TRUSTED_VERIFICATION_CLOSED` is scoped
+to explicit additive evolution and the existing trusted-local host boundary.
+Stop after R5.114; historical evidence preserved, no held-out/cumulative claim.
+
+**Preserved R5.113 implements bounded prewrite authorization and conditional effect composition.**
 [Declared role/owner/set predicates, controlled-host actor binding, conditional atomic
 effects, created-record dependencies and nullable refinement](docs/prewrite-conditional-composition-v1.md)
 compose existing meanings. Supplied actors are selectors, not authenticated principals;

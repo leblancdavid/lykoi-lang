@@ -36,6 +36,7 @@ COMPONENTS = (
     "src/air_compiler/collection_query.py", "src/air_compiler/collection_query_runtime.py",
     "src/lykoi_query/contracts.py", "schema/frc-collection-query-1.schema.json",
     "src/air_compiler/creation_provider_runtime.py",
+    "src/lykoi_pipeline/host_verifier.py", "src/air_compiler/historical_runtime.py",
 )
 
 
@@ -271,7 +272,10 @@ class PipelineController(Controller):
                 raise Failure("VERIFICATION_BINDING_FAILURE")
             if [c["identity"] for c in value["cases"]] != [c["identity"] for c in plan["cases"]]:
                 raise Failure("VERIFICATION_PLAN_COVERAGE_GAP")
-            from .pipeline import classify_observations
+            from .pipeline import classify_observations, trusted_binding
+            binding = trusted_binding(self.artifact(d["target"])["content"], d["plan_seal"], plan)
+            if binding is not None and value["bundle"].get("trusted_context") != binding:
+                raise Failure("VERIFICATION_BINDING_FAILURE", reason="Trusted execution binding mismatch")
             expected = classify_observations(plan, value["cases"])
             if value["outcome"] != expected:
                 raise Failure("VERIFICATION_BINDING_FAILURE")

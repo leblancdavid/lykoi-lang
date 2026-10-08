@@ -158,6 +158,8 @@ def reference_backend(body, entry, references, atomic_state=None, authorization=
     body += "\n" + Path(__file__).with_name("computation_runtime.py").read_text(encoding="utf-8")
     runtime = Path(__file__).with_name("reference_runtime.py").read_text(encoding="utf-8")
     runtime = runtime.replace("REFERENCE = {}  # inserted by normal compiler", "REFERENCE = " + repr(references))
+    if "historical" in references:
+        runtime += "\n" + Path(__file__).with_name("historical_runtime.py").read_text(encoding="utf-8")
     if atomic_state:
         extra = Path(__file__).with_name("atomic_state_runtime.py").read_text(encoding="utf-8")
         runtime += "\n" + extra.replace("ATOMIC_STATE = {}  # inserted by normal compiler", "ATOMIC_STATE = " + repr(atomic_state))

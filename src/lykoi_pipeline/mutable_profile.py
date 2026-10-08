@@ -12,6 +12,7 @@ REFERENCE_FACET = "reference_semantics"
 ATOMIC_FACET = "atomic_state_semantics"
 PRIMARY_FACET = "primary_interfaces"
 AUTHORIZATION_FACET = "authorization_semantics"
+HISTORICAL_FACET = "historical_state_semantics"
 
 
 def typed(relation):
@@ -43,7 +44,7 @@ def split(contract):
         require(o["relation"]["kind"] == "crud", "Typed mutation relation kind")
         p = o["relation"]["parameters"]
         keys(p, ("profile", "facet", "value"))
-        require(p["facet"] in FACETS + (INPUT_FACET, PREDICATE_FACET, REFERENCE_FACET, ATOMIC_FACET, PRIMARY_FACET, AUTHORIZATION_FACET) and p["facet"] not in values, "Unknown or repeated mutation facet")
+        require(p["facet"] in FACETS + (INPUT_FACET, PREDICATE_FACET, REFERENCE_FACET, ATOMIC_FACET, PRIMARY_FACET, AUTHORIZATION_FACET, HISTORICAL_FACET) and p["facet"] not in values, "Unknown or repeated mutation facet")
         values[p["facet"]] = copy.deepcopy(p["value"])
     closure = contract["context"]["domains"].get("input_value_profile")
     require(closure in (None, "typed-input-values-1"), "Known input/value profile")
@@ -82,7 +83,9 @@ def split(contract):
     require(effects or not any("when" in w for o in values.get(REFERENCE_FACET, {}).get("operations", []) for w in o["changes"]), "Conditional primary assignments need versioned semantics")
     require(effects or not any("observation" in r for o in values.get(ATOMIC_FACET, {}).get("operations", []) for r in o["resources"]), "Named identity observations need versioned authority")
     require(authorization in (None, "prewrite-authorization-1") and (not authorization or (references and atomic)), "Explicit prewrite atomic composition")
-    require(set(values) == set(FACETS + ((INPUT_FACET,) if closure else ()) + ((PREDICATE_FACET,) if predicates else ()) + ((REFERENCE_FACET,) if references else ()) + ((ATOMIC_FACET,) if atomic else ()) + ((PRIMARY_FACET,) if primary else ()) + ((AUTHORIZATION_FACET,) if authorization else ())), "Every selected profile facet required; empty is explicit")
+    historical = contract["context"]["domains"].get("historical_state_profile")
+    require(historical in (None, "historical-related-state-1") and (not historical or references), "Explicit historical related-state selection")
+    require(set(values) == set(FACETS + ((INPUT_FACET,) if closure else ()) + ((PREDICATE_FACET,) if predicates else ()) + ((REFERENCE_FACET,) if references else ()) + ((ATOMIC_FACET,) if atomic else ()) + ((PRIMARY_FACET,) if primary else ()) + ((AUTHORIZATION_FACET,) if authorization else ()) + ((HISTORICAL_FACET,) if historical else ())), "Every selected profile facet required; empty is explicit")
     ir = compose(base, {k: v for k, v in values.items() if k not in (REFERENCE_FACET, ATOMIC_FACET, AUTHORIZATION_FACET)})
     reference_ir = None
     if references:
@@ -144,7 +147,7 @@ def structural(contract, fid):
     if f:
         for o in contract["obligations"]:
             if typed(o["relation"]):
-                facets.append(dict(origin=o["id"], source_quote=o["source_quote"], kind={"collections": "CollectionMutation", "mutations": "ValueMutation", "creation_pipelines": "TransformationPipeline", "input_contracts": "SemanticParameters", "predicate_semantics": "TypedPredicateSemantics", REFERENCE_FACET: "IdentitySelectionGuardComposition", ATOMIC_FACET: "AtomicStateCreationComposition", PRIMARY_FACET: "PrimaryValueContextComposition", AUTHORIZATION_FACET: "PrewritePermissionComposition"}[o["relation"]["parameters"]["facet"]], value=copy.deepcopy(o["relation"]["parameters"]["value"])))
+                facets.append(dict(origin=o["id"], source_quote=o["source_quote"], kind={"collections": "CollectionMutation", "mutations": "ValueMutation", "creation_pipelines": "TransformationPipeline", "input_contracts": "SemanticParameters", "predicate_semantics": "TypedPredicateSemantics", REFERENCE_FACET: "IdentitySelectionGuardComposition", ATOMIC_FACET: "AtomicStateCreationComposition", PRIMARY_FACET: "PrimaryValueContextComposition", AUTHORIZATION_FACET: "PrewritePermissionComposition", HISTORICAL_FACET: "HistoricalStateEvolutionComposition"}[o["relation"]["parameters"]["facet"]], value=copy.deepcopy(o["relation"]["parameters"]["value"])))
                 if o["relation"]["parameters"]["facet"] == REFERENCE_FACET:
                     for kind, v in (("TypedFieldIdentity", f["references"]["types"]), ("SelectionCardinalityGuard", f["references"]["checks"]), ("AtomicWriteEffect", f["references"]["facts"]["commit"])):
                         facets.append(dict(origin=o["id"], kind=kind, value=copy.deepcopy(v)))
@@ -204,6 +207,10 @@ def bdi(contract, projection):
                 if "checks" in op:
                     meaning = scalar.json.dumps(op["checks"], sort_keys=True)
                     decision(o["id"], "authorization/" + op["command"] + "/checks", meaning, [meaning, "omitted_or_reordered_prewrite_checks"], "error")
+        if p["facet"] == HISTORICAL_FACET:
+            for facet, v in p["value"].items():
+                meaning = scalar.json.dumps(v, sort_keys=True)
+                decision(o["id"], "historical/" + facet, meaning, [meaning, "invented_creation_default_or_historical_value"], "error")
         if p["facet"] == PRIMARY_FACET:
             for facet, v in p["value"].items():
                 meaning = scalar.json.dumps(v, sort_keys=True)
@@ -370,4 +377,9 @@ def formalizer_guidance():
                      "Created sources declare kind created,type,effect,entity,field,alternative null/typed literal. Reject cycles, missing dependencies and potentially unselected images without explicit alternative. "
                      "Per-creation computations run only if selected; graph order and declared occurrence order are distinct. "
                      "duration_conversion_profile elapsed-day-conversion-1 admits refine_integer(nullable integer, null reject/authorized literal) and "
-                     "days_to_seconds with exact elapsed_days/elapsed_seconds,seconds_per_day 86400,negative preserve,overflow reject. No arbitrary multiplication.")
+                      "days_to_seconds with exact elapsed_days/elapsed_seconds,seconds_per_day 86400,negative preserve,overflow reject. No arbitrary multiplication. "
+                      "R5.114 historical_state_profile historical-related-state-1 requires historical_state_semantics steps,invalid invalid_state,rejection unchanged,preservation unrelated_fields. "
+                      "Each additive step declares from,to,entities; each entity declares entity,add_fields,computations null/typed bounded graph. "
+                      "Each field declares field,source literal/before/computed with exact nominal type. Before sources observe only persisted transition-before fields. "
+                      "Creation defaults never authorize historical values. Missing role authority requires visible clarification, not a guessed role. "
+                      "Trusted-host verification requests are independently sealed source-side plans, never generated success claims or ordinary actor flags.")

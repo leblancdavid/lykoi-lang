@@ -75,7 +75,30 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
-**R5.113 — `R5_113_AUTHORIZATION_CONDITIONAL_EFFECT_COMPOSITION_PARTIAL`.**
+**R5.114 — `R5_114_HISTORICAL_STATE_TRUSTED_VERIFICATION_CLOSED`.**
+The [historical-state and trusted verification interface](historical-state-trusted-verification-v1.md)
+closes both targeted normal-path seams by composition: explicit additive related
+role/enum, nominal reference/collection, nullable numeric and checked computed values
+migrate atomically across the existing one-store version chain; the sealed normal
+external verifier supplies controlled-host actor context and owns classification.
+Creation defaults never authorize historical values. Host assertion does not establish
+authentication, and ordinary CLI actors remain selectors. Kernel stays **26**.
+
+The [report](../benchmark/results/phase5c/R5_114-REPORT.md) records **397 passing tests**,
+validation/safety and **133 synthetic external invocations** across five varied related
+domains, plus an authority clarification halt, before content lock.
+[Fresh exposed transfer](../benchmark/results/phase5c/R5_114-CAPABILITY-MATRIX.md)
+retains **16/20 B01–B16**, **447 invocations**. B17–B20 remain disputed; B18/B19 still
+halt on missing non-system historical role authority and downstream stays NOT_REACHED.
+No creation default, oracle answer or synthetic assumption resolves that authority.
+Actual clarified B18/B19 behavior remains unverified. Arbitrary state/type evolution,
+general conditional implication and external authenticated-principal mapping remain
+outside this bounded profile. Historical evidence is preserved. The exposed corpus
+now has limited marginal semantic yield; recommend a separately supplied unexposed
+multi-domain evaluation with explicit historical/context authority and varied workflow
+shapes. **Stop after R5.114; no next round or infrastructure begun.**
+
+**Preserved R5.113 — `R5_113_AUTHORIZATION_CONDITIONAL_EFFECT_COMPOSITION_PARTIAL`.**
 The normal [prewrite and conditional composition profile](prewrite-conditional-composition-v1.md)
 implements declared role/owner/permitted-set guards, controlled-host actor binding,
 conditional reference updates/atomic creations, acyclic created-record images and
