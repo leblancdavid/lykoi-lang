@@ -75,6 +75,16 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R5.119A — `R5_119A_REDIS_RESEARCH_CONTRACT_READY_FOR_APPROVAL`.**
+[Revision report](../benchmark/results/phase6/R5_119A-REPORT.md) and
+[human review](../benchmark/results/phase6/r5_119a/HUMAN-REVIEW.md) resolve P6-A03
+Q1 within pre-issue documented simple ACL semantics: left-to-right command/category
+additions and removals. Add SELECT to @read/@write with that processor preserved,
+without a SELECT-specific exception; twelve mixed-rule outcomes fixed pre-author.
+Original R5.116A/R5.119 evidence unchanged; same-agent review, no runtime probes,
+approval, grant, seal, authoring or evaluation. Kernel 26. **Stop after review; await
+explicit exact-artifact human approval and separately authorized later execution.**
+
 **R5.119 — `R5_119_P6_A03_RESEARCH_REVIEW_PREPARED`.**
 [Preparation report](../benchmark/results/phase6/R5_119-REPORT.md) and
 [owner review](../benchmark/results/phase6/r5_119/HUMAN-REVIEW.md) bind the exact

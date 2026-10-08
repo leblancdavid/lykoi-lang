@@ -1,0 +1,97 @@
+{
+  "schema_version": "FormalRequirementContract-0.1",
+  "contract_id": "R5.119/P6-A03/candidate",
+  "revision": 2,
+  "source": {
+    "id": "P6-A03/preserved-issue-plus-preexisting-ACL-documentation/R5.119A/1",
+    "text": "The `@read` and `@write` ACL categories do not currently include `select`. This may be very confusing and may lead to non-obvious outcomes, since specifying the correct database is a fundamental requirement of successful read and write operations, and can lead to confusion, as demonstrated by [tickets like this](https://github.com/StackExchange/StackExchange.Redis/issues/2835) where the user had configured:\r\n\r\n```\r\nACL SETUSER cacheUser on >myPass ~AppCache* -@all +@pubsub +@read +@write +echo +info +SET +GET +eval +ping\r\n```\r\n\r\nIn the above case, the `-@all @read +@write` had the effect that `GET`, `SET` etc worked, but the `SELECT` did not, causing activity to happen incorrectly on DB0. Obviously a workaround here is to add `+select`, but I propose that this should be implicit in `@read` / `@write`.\r\n\r\nAdditional: I note that `select` *is* in `@keyspace` (which also includes things like `flushdb`, so: use-with-caution). I do not know whether there are implementation details that may cause problems such as \"a command can only be in a single ACL category\" (edit: upon further investigation I do not believe this to be a problem - `del` is in both `@write` and `@keyspace`, for example).\r\n\r\nOne potential gotcha; I do not know the order in which ACLs are applied; if it is left-to-right, then pre-existing setups like `+select +@read -@write` would presumably (if `select` was included in `@read` and `@write`) lead to not having `select`. Not sure if this is considered a problem. \n\n[Inherited documentation, not issue-author text: redis/redis-doc@7277deb0a858a6384d8a069fc654c61fcda32b34]\nD1 topics/acl.md:\nSuch rules are always implemented from the\nfirst to the last, left-to-right, because sometimes the order of the rules is\nimportant to understand what the user is really able to do.\n`+<command>`: Add the command to the list of commands the user can call.\n`-<command>`: Remove the command to the list of commands the user can call.\n`+@<category>`: Add all the commands in such category to be called by the user\n`-@<category>`: Like `+@<category>` but removes the commands from the list of commands the client can call.\nD2 commands/acl-setuser.md:\n`+@<category>`: add all the commands in the specified category to the list of commands the user is able to execute.\n`-@<category>`: Like `+@<category>` but removes all the commands in the category instead of adding them.\nD3 commands/select.md:\nSelect the Redis logical database having the specified zero-based numeric index.\nNew connections always use the database 0.\nWhen using Redis Cluster, the `SELECT` command cannot be used, since Redis Cluster only supports database zero.\nSince the currently selected database is a property of the connection, clients should track the currently selected database and re-select it on reconnection.",
+    "sha256": "61f939652d67777081306ee0c9d3caeca47872f49af155bab9f2723838f3819a",
+    "classification": "PUBLIC"
+  },
+  "context": {
+    "scope": "Bounded research candidate: add SELECT membership to @read and @write while retaining the pinned pre-existing simple command/category ACL rule semantics. Original issue exact body preserved at the beginning of explicitly attributed composite source; documentary text is inherited context, not a new issue revision. No controller approval or evaluation.",
+    "domains": {
+      "repository": "redis/redis",
+      "issue": 13736,
+      "original_source_id": "P6-A03/redis/redis#13736/preserved-body",
+      "original_source_capture_sha256": "90132320ad5aa7e7c3996ed97096a798a9ecceea76927a9f9c1948bda58d9970",
+      "original_body_sha256": "568764f7390f21f06b50682fc385168116f572b764615dada8b0893963ef3952",
+      "original_provenance_sha256": "6e80510ddc07ea3acfa8819d470e6eafc761d8e676215d8849677e81c3ff6fc4",
+      "original_retrieved_utc": "2026-10-08T13:55:07.762848+00:00",
+      "inherited_evidence_id": "R5.119A/P6-A03/inherited-evidence/1",
+      "inherited_evidence_canonical_sha256": "bd0487a9c2e90f7cfa31124c3071ffe98c630099382c99e692190d5dcfd6c348",
+      "documentation_revision": "7277deb0a858a6384d8a069fc654c61fcda32b34",
+      "documentation_utc": "2022-01-02T16:21:04Z",
+      "prior_frc_canonical_sha256": "69fe6dd3816c184be9af73ad1b8863a6881f579543cd4c99d80cca402b7bc5ab",
+      "clarification": {"question": "A03-Q1", "status": "RESOLVED_FOR_DOCUMENTED_RULE_SCOPE", "basis": "D1-Q1 through D1-Q6 and D2-Q1 through D2-Q5, plus source E1/E2; no new maintainer decision or SELECT exception", "consequence": "+select +@read -@write denies SELECT after the membership addition"},
+      "source_traceability": {"A03-E1": "Original issue proposal", "A03-E2": "Original issue proposal", "A03-I1": "Original workaround/proposal plus inherited command permissions", "A03-I2": "Original intended database context plus D3-Q1/Q3", "A03-H1": "D1-Q1", "A03-H2": "D1-Q2 through D1-Q5; D2-Q2/Q3", "A03-I3": "Original membership-only request plus H1/H2 and R5.119A narrow-preservation instruction"},
+      "state": ["user allowed-command set under ordinary ACL rules", "connection-selected database"],
+      "observation_surface": "SELECT permission result and database-specific permitted read/write probes",
+      "baseline_strength": "Documentation-derived, no Redis runtime observations or all-version equivalence claim"
+    },
+    "assumptions": [
+      "Valid authorized configuration of fresh users with ordinary command/category rules, no alternate selectors, first-argument restrictions, modules or cluster mode. Test connections are authenticated and support available databases 0 and a nonzero d.",
+      "Full reporter configuration's +@read is the example input; prose @read spelling is retained but not made valid new syntax.",
+      "Fixture GET/SET grants and matching keys are observation aids and do not independently grant SELECT. The contract preserves this scoped documented processor, not every permission outcome after changed membership."
+    ],
+    "component_authority": null
+  },
+  "obligations": [
+    {
+      "id": "A03-E1", "basis": "STATED", "source_quote": "I propose that this should be implicit in `@read` / `@write`.", "derived_from": [],
+      "relation": {"kind": "invariant", "parameters": {"domain": "Redis ACL category membership", "category": "@read", "required_member": "SELECT", "permission_effect": "Applied through inherited H1/H2 rules, not an irrevocable allowance"}},
+      "statement": "SELECT is included in @read. A +@read rule grants it at that rule's position, subject to subsequent applicable revocations."
+    },
+    {
+      "id": "A03-E2", "basis": "STATED", "source_quote": "I propose that this should be implicit in `@read` / `@write`.", "derived_from": [],
+      "relation": {"kind": "invariant", "parameters": {"domain": "Redis ACL category membership", "category": "@write", "required_member": "SELECT", "permission_effect": "Applied through inherited H1/H2 rules, not an irrevocable allowance"}},
+      "statement": "SELECT is included in @write. A +@write rule grants it at that rule's position, subject to subsequent applicable revocations."
+    },
+    {
+      "id": "A03-I1", "basis": "NECESSARY_IMPLICATION", "source_quote": "Obviously a workaround here is to add `+select`, but I propose that this should be implicit", "derived_from": ["A03-E1", "A03-E2", "A03-H1", "A03-H2"],
+      "relation": {"kind": "invariant", "parameters": {"domain": "Documented-rule ACL grants", "condition": "Final applicable SELECT-affecting rule is a grant through either category; all other command preconditions satisfied", "forbidden_requirement": "Separate explicit +select solely to obtain SELECT permission", "observable": "SELECT allowed without explicit +select"}},
+      "statement": "A surviving category grant alone supplies SELECT permission, including the unopposed reporter configuration; no extra +select is required."
+    },
+    {
+      "id": "A03-I2", "basis": "NECESSARY_IMPLICATION", "source_quote": "specifying the correct database is a fundamental requirement of successful read and write operations", "derived_from": ["A03-E1", "A03-E2", "A03-I1", "A03-H1", "A03-H2"],
+      "relation": {"kind": "transition", "parameters": {"domain": "Authenticated non-cluster connection", "input": "Explicit valid SELECT d", "precondition": "Effective ACL allows SELECT; requested database d is available and other preconditions satisfied", "postcondition": "Connection selects d and subsequent permitted operations address d", "frame": "No automatic SELECT executed by GET/SET; SELECT is not a key mutation"}},
+      "statement": "When effective permission allows a valid explicit SELECT, it selects the requested database rather than merely reporting success while remaining on DB0."
+    },
+    {
+      "id": "A03-H1", "basis": "STATED", "source_quote": "Such rules are always implemented from the\nfirst to the last, left-to-right", "derived_from": [],
+      "relation": {"kind": "invariant", "parameters": {"domain": "Inherited simple Redis ACL rule list", "required_behavior": "Effects of rules apply first-to-last, left-to-right", "observable": "Reversing applicable grant/removal order can change final effective command permissions", "authority": "Pre-existing Redis documentation D1-Q1, not issue-author assertion"}},
+      "statement": "Preserve the documented left-to-right behavior; rule order remains material to effective permissions."
+    },
+    {
+      "id": "A03-H2", "basis": "STATED", "source_quote": "`-@<category>`: Like `+@<category>` but removes all the commands in the category instead of adding them.", "derived_from": [],
+      "relation": {"kind": "effects", "parameters": {"domain": "Inherited allowed-command list for one ordinary ACL rule context", "explicit_grant": "Add named command", "explicit_removal": "Remove named command", "category_grant": "Add all category members", "category_removal": "Remove all category members regardless of prior grant origin", "effective_rule": "Last applicable add/remove for each command determines its allowance", "priority_exceptions": "None: an earlier explicit denial is not permanent; an earlier explicit grant is not protected from category removal", "authority": "D1-Q2/Q3/Q4/Q5 and D2-Q2/Q3"}},
+      "statement": "Preserve inherited command-list effects. Category removal can remove an earlier explicit grant, and a later category grant can restore an earlier explicit removal."
+    },
+    {
+      "id": "A03-I3", "basis": "NECESSARY_IMPLICATION", "source_quote": "I propose that this should be implicit in `@read` / `@write`.", "derived_from": ["A03-E1", "A03-E2", "A03-H1", "A03-H2"],
+      "relation": {"kind": "invariant", "parameters": {"domain": "Narrow requested ACL delta", "membership_change": "Only add SELECT to @read and @write; retain existing other memberships", "preserved_processor": "Inherited H1/H2, for SELECT and other commands alike", "other_commands": "No membership or command-rule permission changes for unrelated commands", "forbidden_extension": "Special SELECT precedence or compatibility exception", "limits": "Does not preserve every old SELECT allowance under changed membership or assert whole-application equivalence"}},
+      "statement": "Keep the membership change narrow and preserve inherited processing rather than adding a new permission-precedence policy. The named mixed configuration may lose SELECT permission as the ordinary consequence of the requested membership addition."
+    }
+  ],
+  "issues": [],
+  "unspecified": [
+    "Nonblocking uncertainty: reporter Redis version is not identified. Evidence is an exact pre-issue documentation revision, not an empirical release matrix. No later-version or different ACL-rule-family behavior is certified.",
+    "No new ACL reload, migration, historical-user conversion, durable state, restart or retroactive membership-update policy. Configure fresh users in the experiment; no rollout guarantee.",
+    "No exact success/error wire spelling, invalid-index/syntax/authentication policy or concurrency/transaction behavior specified. Permission denial is distinct from successful selection; unrelated validation is not relaxed.",
+    "No changes to key access, authentication, other category memberships or commands are requested; no unrestricted key access inferred from SELECT permission.",
+    "Modules, alternate selectors, first-argument/subcommand rules, cluster mode and universal version compatibility are outside this bounded interpretation; expanding scope requires fresh evidence and review."
+  ],
+  "implementation_choices": [
+    "Internal data structures, lookup and compilation strategy are free if the observable documented-rule processing and requested membership change are preserved.",
+    "Available nonzero database index, matching probe key and marker values are fixture choices, not product constants.",
+    "Effective permission precedence and rule-order outcomes are fixed behavior, not implementation freedoms."
+  ],
+  "lineage": [
+    {"change": "meaning_change", "previous": ["A03-E1"], "current": ["A03-E1"], "reason": "Original @read obligation retained and completed with independently documented grant/revoke scope."},
+    {"change": "meaning_change", "previous": ["A03-E2"], "current": ["A03-E2"], "reason": "Original @write obligation retained and completed with independently documented grant/revoke scope."},
+    {"change": "meaning_change", "previous": ["A03-I1"], "current": ["A03-I1"], "reason": "Replace unopposed-only interpretation with surviving-grant condition under inherited H1/H2."},
+    {"change": "meaning_change", "previous": ["A03-I2"], "current": ["A03-I2"], "reason": "Bind selected-database consequence to final effective permission and documented connection context."}
+  ],
+  "formalizer": "OpenCode/openai/gpt-6.1-sol/R5.119A/same-agent-revision",
+  "review": null
+}

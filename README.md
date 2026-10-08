@@ -20,6 +20,14 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R5.119A resolves P6-A03 ACL ordering for bounded human research approval.**
+[Revision report](benchmark/results/phase6/R5_119A-REPORT.md) and
+[human review](benchmark/results/phase6/r5_119a/HUMAN-REVIEW.md) use pinned pre-issue
+Redis documentation: preserve left-to-right ACL processing while adding SELECT to
+@read/@write, with no special precedence. Revised contract and acceptance expectations
+are ready for explicit human approval; no approval or evaluation has occurred.
+Kernel 26, original evidence preserved. Stop after review.
+
 **R5.119 prepares P6-A03 for human research review only.**
 [Preparation report](benchmark/results/phase6/R5_119-REPORT.md) and
 [owner review](benchmark/results/phase6/r5_119/HUMAN-REVIEW.md) contain the exact

@@ -1,5 +1,22 @@
 # Lykoi research log
 
+## R5.119A inherited Redis ACL evidence and candidate revision (2026-10-08)
+
+**`R5_119A_REDIS_RESEARCH_CONTRACT_READY_FOR_APPROVAL`**; see the
+[report](../benchmark/results/phase6/R5_119A-REPORT.md) and
+[review](../benchmark/results/phase6/r5_119a/HUMAN-REVIEW.md). Pre-issue Redis
+documentation pinned at 2022-01-02 establishes left-to-right command/category
+add/remove effects. Q1 is resolved within that simple-rule scope: a later category
+removal can revoke an explicit SELECT grant; a later category grant restores an
+earlier explicit denial. No SELECT-specific priority invented. Three raw document
+identities and 15 extracts verified; no runtime probes or Redis fixes inspected.
+New FRC revision 2 preserves old evidence, binds an attributed composite source,
+retains original obligation IDs with declared lineage, and fixes twelve mixed-rule
+expectations independently of generated software. Same-agent/same-model review,
+documentation-derived rather than empirical all-version evidence. No approval/grant/
+seal, native stage, authoring, compilation or acceptance execution. Stop at human
+review; kernel 26 and historical results unchanged.
+
 ## R5.119 P6-A03 research review preparation (2026-10-08)
 
 **`R5_119_P6_A03_RESEARCH_REVIEW_PREPARED`**; see the

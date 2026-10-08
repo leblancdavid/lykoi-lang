@@ -1,5 +1,19 @@
 # Experimental decisions
 
+## R5.119A — Preserve documented ACL processing, not every old allowance
+
+[P6-A03 revision review](../benchmark/results/phase6/r5_119a/HUMAN-REVIEW.md)
+uses independently identified pre-issue documentation to resolve inherited rule
+processing. Adopt the requested membership-only delta within that documented scope:
+later additions/removals determine effective commands, including SELECT. Do not
+invent explicit-grant immunity or permanent explicit-denial priority to preserve a
+mixed configuration. Tradeoff: adding category membership changes some old SELECT
+allowances even with the processor unchanged; disclose that consequence before
+human research approval. Public documentation and finite same-agent review support
+bounded interpretation, not an empirical version matrix or upstream decision.
+Original identities preserved; revised attributed source/FRC/plan separately bound;
+no Lykoi implementation or evaluation authorized by this recommendation.
+
 ## R5.119 — Preserve the source's material question in preparation
 
 The [P6-A03 review](../benchmark/results/phase6/r5_119/HUMAN-REVIEW.md) is prepared

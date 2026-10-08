@@ -1,0 +1,114 @@
+{
+  "candidate_id": "R5.119A/P6-A03/acceptance-candidate/2",
+  "purpose": "research-evaluation-only",
+  "status": "EXPECTATIONS_FIXED_CANDIDATE_NOT_APPROVED_NOT_EXECUTED",
+  "fixed_before_authoring": true,
+  "expectation_basis": "Exact preserved issue plus independently identified pre-issue documentation; no Lykoi implementation access",
+  "original_source_capture_sha256": "90132320ad5aa7e7c3996ed97096a798a9ecceea76927a9f9c1948bda58d9970",
+  "original_body_sha256": "568764f7390f21f06b50682fc385168116f572b764615dada8b0893963ef3952",
+  "composite_source_sha256": "61f939652d67777081306ee0c9d3caeca47872f49af155bab9f2723838f3819a",
+  "inherited_evidence_canonical_sha256": "bd0487a9c2e90f7cfa31124c3071ffe98c630099382c99e692190d5dcfd6c348",
+  "frc": {"contract_id": "R5.119/P6-A03/candidate", "revision": 2, "canonical_sha256": "69d32178bb065e1fa80ac6bb319a1147e3ac7c699a99bb0f56a6db52129ce0f8"},
+  "previous_plan_canonical_sha256": "c50f461fa53046fe8da3fe75307061b9a345818f6bbe21453e6e58a3292ae0b0",
+  "independence": {"review_context": "SAME_AGENT", "same_model": true, "generated_implementation_access": false, "cognitive_independence": "NOT_ESTABLISHED", "role_provisioning": "No principals or credentials invented. Later authoritative verifier must be distinct from candidate producer/author under existing research policy."},
+  "fixture": {
+    "scope": "Fresh enabled users, valid credentials, ordinary base-command/category ACL list, no selectors, modules, first-argument/subcommand rules or cluster mode. Available databases 0 and d=1 (or a legitimately equivalent available nonzero d).",
+    "setup": "Authorized external administrator seeds AppCacheProbe with zero-marker in DB0 and d-marker in d. Each test gets a fresh authenticated connection initially on DB0 and fresh ACL user. Probe aids never independently grant SELECT except where the case explicitly includes +select.",
+    "positive_observation": "SELECT d must be allowed and a permitted GET must read d-marker, or a permitted SET must affect only d when independently checked by the administrator.",
+    "negative_observation": "SELECT d must fail as a command-permission denial; it must not execute selection. A fixture +GET granted after the suffix confirms zero-marker on the fresh DB0 connection. No successful selection receipt or d-marker may be reported.",
+    "error_surface": "Command-permission denial versus valid successful selection is fixed. Exact wire error/success strings, authentication errors and invalid-index behavior are not prescribed.",
+    "state_surface": "ACL effective command permission and connection selection; marker keys are externally controlled observations. No persistence/restart test. Denied SELECT is not an authorized key or database-selection effect.",
+    "documentation_basis": ["D1-Q1 through D1-Q6", "D2-Q1 through D2-Q5", "D3-Q1 through D3-Q3"]
+  },
+  "checks": [
+    {
+      "id": "A03-R2-T1", "obligations": ["A03-E1", "A03-I1", "A03-I2"],
+      "inputs": ["Fresh enabled user, valid credentials, ~AppCache* -@all +@read +GET; no +@write, +@keyspace, +@all or +select", "Authenticate; SELECT d; GET AppCacheProbe"],
+      "expected": "SELECT allowed without +select; subsequent GET returns d-marker, not zero-marker.",
+      "state_effects": "@read supplies SELECT permission and explicit SELECT sets connection DB to d; read-only key probe.",
+      "error_behavior": "No command-permission denial for SELECT with other preconditions satisfied.",
+      "source_basis": ["Original E1 proposal", "D1-Q1/Q4", "D3-Q1/Q3"], "executed": false
+    },
+    {
+      "id": "A03-R2-T2", "obligations": ["A03-E2", "A03-I1", "A03-I2"],
+      "inputs": ["Fresh enabled user, valid credentials, ~AppCache* -@all +@write +SET; no +@read, +@keyspace, +@all or +select", "Authenticate; SELECT d; SET AppCacheProbe write-marker", "External administrator checks both databases"],
+      "expected": "SELECT allowed without +select; d contains write-marker while DB0 retains zero-marker.",
+      "state_effects": "@write supplies SELECT permission; connection selects d; permitted fixture write affects d.",
+      "error_behavior": "No command-permission denial for SELECT with other preconditions satisfied.",
+      "source_basis": ["Original E2 proposal", "D1-Q1/Q4", "D3-Q1/Q3"], "executed": false
+    },
+    {
+      "id": "A03-R2-T3", "obligations": ["A03-E1", "A03-E2", "A03-I1", "A03-I2"],
+      "inputs": ["ACL SETUSER cacheUser on >myPass ~AppCache* -@all +@pubsub +@read +@write +echo +info +SET +GET +eval +ping", "Fresh authenticated connection; SELECT d; SET/GET AppCacheProbe; independent administrator observes DB0 and d"],
+      "expected": "Reporter configuration, without added +select, permits SELECT. Probe activity addresses d rather than DB0.",
+      "state_effects": "Category permissions allow explicit selection; fixture read/write effects are in selected d.",
+      "error_behavior": "No SELECT command-permission denial solely for missing +select.",
+      "source_basis": ["Exact original configuration and GET/SET-versus-SELECT report", "D1-Q1/Q4", "D3-Q1/Q3"], "executed": false
+    },
+    {
+      "id": "A03-R2-T4", "obligations": ["A03-I2"],
+      "inputs": ["T1 ordinary category-granted fixture", "SELECT d; GET AppCacheProbe", "SELECT 0; GET AppCacheProbe"],
+      "expected": "First GET returns d-marker; after valid SELECT 0 it returns zero-marker. Both explicit selections allowed.",
+      "state_effects": "Connection selection follows each requested valid index, not a fixed database; key contents unchanged.",
+      "error_behavior": "No SELECT permission denial; invalid indices not tested.",
+      "source_basis": ["Original intended-database requirement", "D3-Q1/Q3"], "executed": false
+    },
+    {
+      "id": "A03-R2-T5", "obligations": ["A03-E1", "A03-E2", "A03-I1", "A03-I2", "A03-H1", "A03-H2", "A03-I3"],
+      "inputs": ["For each row, fresh enabled authenticated user with valid credentials and ~AppCache* -@all followed by the suffix, then +GET solely as an observation aid", "Issue valid SELECT d and GET AppCacheProbe on fresh DB0 connection"],
+      "cases": [
+        {"id": "M01", "suffix": "+select +@read -@write", "expected_select": "DENY", "expected_marker": "zero-marker"},
+        {"id": "M02", "suffix": "+@read -@write +select", "expected_select": "ALLOW", "expected_marker": "d-marker"},
+        {"id": "M03", "suffix": "-select +@read", "expected_select": "ALLOW", "expected_marker": "d-marker"},
+        {"id": "M04", "suffix": "+@read -select", "expected_select": "DENY", "expected_marker": "zero-marker"},
+        {"id": "M05", "suffix": "+@read -@write", "expected_select": "DENY", "expected_marker": "zero-marker"},
+        {"id": "M06", "suffix": "-@write +@read", "expected_select": "ALLOW", "expected_marker": "d-marker"},
+        {"id": "M07", "suffix": "+@write -@read", "expected_select": "DENY", "expected_marker": "zero-marker"},
+        {"id": "M08", "suffix": "-@read +@write", "expected_select": "ALLOW", "expected_marker": "d-marker"},
+        {"id": "M09", "suffix": "-select +@write", "expected_select": "ALLOW", "expected_marker": "d-marker"},
+        {"id": "M10", "suffix": "+@write -select", "expected_select": "DENY", "expected_marker": "zero-marker"},
+        {"id": "M11", "suffix": "+select +@write -@read", "expected_select": "DENY", "expected_marker": "zero-marker"},
+        {"id": "M12", "suffix": "+@write -@read +select", "expected_select": "ALLOW", "expected_marker": "d-marker"}
+      ],
+      "expected": "All row-specific outcomes fixed before any Lykoi authoring. Last applicable documented add/remove determines SELECT allowance; no explicit-grant immunity or permanent explicit-denial priority.",
+      "state_effects": "Allowed SELECT selects d; denied SELECT does not execute selection and connection remains on initial DB0. Read-only probe keys unchanged.",
+      "error_behavior": "DENY rows must produce command-permission rejection, not successful selection or unrelated validation failure. ALLOW rows must allow valid selection.",
+      "source_basis": ["Original Q1 witness and E1/E2 membership proposal", "D1-Q1 through D1-Q6", "D2-Q1 through D2-Q5", "D3-Q1/Q3"], "executed": false
+    },
+    {
+      "id": "A03-R2-T6", "obligations": ["A03-H1", "A03-H2", "A03-I3"],
+      "inputs": ["Fresh authenticated users, matching keys, -@all followed by each suffix below; no category grants or unlisted command-grant aids", "For SELECT rows issue SELECT d; for GET rows issue GET AppCacheProbe on fresh DB0 connection"],
+      "cases": [
+        {"id": "P01", "suffix": "+select -select", "command": "SELECT d", "expected_permission": "DENY"},
+        {"id": "P02", "suffix": "-select +select", "command": "SELECT d", "expected_permission": "ALLOW"},
+        {"id": "P03", "suffix": "+GET -GET", "command": "GET AppCacheProbe", "expected_permission": "DENY"},
+        {"id": "P04", "suffix": "-GET +GET", "command": "GET AppCacheProbe", "expected_permission": "ALLOW", "expected_marker": "zero-marker"}
+      ],
+      "expected": "Direct command grant/removal retains ordinary order behavior for SELECT and an unrelated command. No category addition or special priority changes these controls.",
+      "state_effects": "Only allowed SELECT selects d; denied commands do not execute their operation. GET controls are read-only and address initial DB0.",
+      "error_behavior": "DENY is command-permission rejection; ALLOW permits the otherwise valid specified command. No exact wire text asserted.",
+      "source_basis": ["D1-Q1/Q2/Q3", "D2-Q4/Q5", "Narrow membership-only E1/E2 request"], "executed": false
+    },
+    {
+      "id": "A03-R2-T7", "obligations": ["A03-E1", "A03-E2", "A03-I3"],
+      "inputs": ["Authorized external administrator queries ACL CAT read and ACL CAT write"],
+      "expected": "Each requested category contains SELECT. This is supplementary membership observation, not a substitute for positive/negative permission and selection checks.",
+      "state_effects": "Read-only category inspection; no user permission, key or connection-selection changes requested by this query.",
+      "error_behavior": "Valid authorized category queries succeed; unknown category and administrator permission errors not newly specified.",
+      "source_basis": ["Original E1/E2 proposal", "D1 command-category documentation"], "executed": false
+    }
+  ],
+  "coverage_limitations": [
+    "Seven candidate groups: four primary selection groups, twelve mixed-rule rows, four direct-command controls and a two-category membership group; zero executed. Finite coverage is not universal proof.",
+    "Other membership preservation is a frame requirement, not exhaustively checked against a complete independently observed baseline category inventory; T6 samples processor preservation, T7 samples the requested addition.",
+    "Runtime/version differences, alternate selectors, modules, first-argument/subcommand restrictions, cluster behavior, persistence, reload, migration and rollout remain outside the declared documented-rule scope.",
+    "No generated implementation or baseline Redis probe executed. Old-membership results in Q1 analysis are deductions using the issue's report, not test observations.",
+    "Candidate producer/reviewer are the same agent/model. Later authenticated verifier/evaluator identities and native execution bindings are not fabricated here.",
+    "No native V1/structural projection or executable payload prepared. Approval recommendation concerns this declared contract and fixed behavioral expectations; all unchanged native pipeline gates and separately authorized execution remain required."
+  ],
+  "material_questions": [],
+  "approved": false,
+  "sealed": false,
+  "native_plan": null,
+  "acceptance_tests_executed": 0
+}
