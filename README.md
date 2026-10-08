@@ -20,6 +20,13 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R5.118 preserves P6-A02's first result: `NEEDS_CLARIFICATION`.**
+The [report](benchmark/results/phase6/R5_118-REPORT.md) records
+`R5_118_P6_A02_FIRST_EVALUATION_COMPLETE`: exact curl source verified, bounded-change
+candidate valid; required FRC approval unavailable, separately from semantic incompleteness.
+No implementation authority or downstream verification. Kernel 26 and R5.117 preserved;
+procedurally selected external evidence, not blinded/held-out. Stop; no repair or P6-A03 access.
+
 **R5.117 preserves P6-A01's first result: `NEEDS_CLARIFICATION`.**
 The [report](benchmark/results/phase6/R5_117-REPORT.md) records
 `R5_117_P6_A01_FIRST_EVALUATION_COMPLETE`: exact source verified, source-bound candidate

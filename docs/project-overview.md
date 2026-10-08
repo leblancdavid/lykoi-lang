@@ -75,6 +75,18 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R5.118 — `R5_118_P6_A02_FIRST_EVALUATION_COMPLETE`.** Exact preserved
+`curl/curl#15914` verified; source-bound candidate treats allowance of `*.internal`
+TLS certificates as a bounded change rather than requiring a whole TLS specification.
+**`P6_A02_FIRST_RESULT = NEEDS_CLARIFICATION`** at FRC review/approval: required
+independent/owner approval unavailable, separately from semantic incompleteness.
+No demonstrated material ambiguity in the bounded delta; no approved FRC or
+implementation authority. All downstream stages NOT_REACHED, no behavioral trial.
+See the [report](../benchmark/results/phase6/R5_118-REPORT.md). Implementation/kernel
+26 and R5.117 preserved; material is procedurally selected external evidence, not
+blinded/held-out. Stop; no repair or P6-A03–P6-A05 access. Next is legitimate approval
+and independent context/acceptance review, only then a separately authorized linked attempt.
+
 **R5.117 — `R5_117_P6_A01_FIRST_EVALUATION_COMPLETE`.** The separately authorized
 first evaluation of preserved `jqlang/jq#3228` verified the exact source and produced
 a source-bound, envelope-valid candidate. **`P6_A01_FIRST_RESULT = NEEDS_CLARIFICATION`**

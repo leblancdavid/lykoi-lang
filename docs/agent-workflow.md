@@ -8,6 +8,15 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R5.118 — `R5_118_P6_A02_FIRST_EVALUATION_COMPLETE`.** See the
+[report](../benchmark/results/phase6/R5_118-REPORT.md). P6-A02 first result is
+NEEDS_CLARIFICATION at FRC review/approval: required approval unavailable, separately
+from semantic incompleteness. Exact source and coherent bounded-change candidate
+verified; no approved FRC or implementation authority. Downstream NOT_REACHED.
+R5.117 preserved, implementation/kernel 26 unchanged; procedurally selected external
+evidence, not blinded/held-out. Stop; no repair or P6-A03–P6-A05 access. Further
+approval or linked attempt requires separate authorization.
+
 **Latest round: R5.117 — `R5_117_P6_A01_FIRST_EVALUATION_COMPLETE`.** Read the
 [report](../benchmark/results/phase6/R5_117-REPORT.md). P6-A01's immutable first result
 is NEEDS_CLARIFICATION at formalization/clarification. Exact source verified; valid

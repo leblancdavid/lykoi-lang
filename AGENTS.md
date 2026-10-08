@@ -7,6 +7,14 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R5.118: `R5_118_P6_A02_FIRST_EVALUATION_COMPLETE`.
+  Read `benchmark/results/phase6/R5_118-REPORT.md` and preserved
+  `r5_118/P6_A02_FIRST_RESULT.json`: NEEDS_CLARIFICATION at FRC review/approval,
+  required approval unavailable. Exact source and bounded-change candidate verified;
+  no demonstrated material ambiguity in the delta, no approved FRC or implementation
+  authority. Downstream NOT_REACHED; implementation/kernel 26 unchanged. Procedurally
+  selected external evidence, not blinded/held-out. Preserve R5.117. Stop; no repair or
+  P6-A03–P6-A05 access. Further approval/linked attempt requires separate authorization.
 - Latest round R5.117: `R5_117_P6_A01_FIRST_EVALUATION_COMPLETE`.
   Read `benchmark/results/phase6/R5_117-REPORT.md` and the preserved
   `r5_117/P6_A01_FIRST_RESULT.json`: `NEEDS_CLARIFICATION` at formalization/clarification.

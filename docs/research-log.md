@@ -1,5 +1,27 @@
 # Lykoi research log
 
+## R5.118 P6-A02 first external evaluation (2026-10-08)
+
+**`R5_118_P6_A02_FIRST_EVALUATION_COMPLETE`**;
+**`P6_A02_FIRST_RESULT = NEEDS_CLARIFICATION`**. See the
+[report/evidence](../benchmark/results/phase6/R5_118-REPORT.md). Snapshot before source
+access records pre-existing publication work becoming externally committed r5.117;
+implementation identities remain unchanged. Validation/safety and 34 fresh regressions
+passed; exact preserved curl/curl#15914 hashes/identities verified. The source requests
+allowance of *.internal wildcard TLS certificates; bounded-change interpretation need
+not respecify curl's entire TLS behavior. No explicit global preservation frame, exact
+errors or new matching/trust policy was invented. Candidate envelope validated once.
+
+No demonstrated material ambiguity in the bounded delta; this same-agent judgment
+is not independent approval. Required owner/benchmark review and approval unavailable:
+first blocker FRC_REVIEW_APPROVAL / REQUIRED_APPROVAL_UNAVAILABLE, separately from
+semantic incompleteness. First result persisted before report/status edits. Downstream
+NOT_REACHED; no requirement executable or behavioral invocation. Kernel 26, semantics,
+profiles/compiler/prompts and R5.117 preserved. Procedurally selected external material,
+not blinded/held-out. No semantic gap inferred. Stop; no repair, retry or P6-A03–P6-A05
+access. Next is legitimate approval and independent inherited-context/acceptance review;
+any later attempt separately authorized and linked.
+
 ## R5.117 P6-A01 first external evaluation (2026-10-08)
 
 **`R5_117_P6_A01_FIRST_EVALUATION_COMPLETE`**;

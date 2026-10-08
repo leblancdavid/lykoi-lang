@@ -1,0 +1,88 @@
+{
+  "schema_version": "FormalRequirementContract-0.1",
+  "contract_id": "R5.118/P6-A02/candidate",
+  "revision": 1,
+  "source": {
+    "id": "P6-A02/curl/curl#15914/preserved-body",
+    "text": "### Problem\r\n\r\n.internal is officially revered by [ICANN](https://www.icann.org/en/board-activities-and-meetings/materials/approved-resolutions-special-meeting-of-the-icann-board-29-07-2024-en#section2.a) and [IETF](https://datatracker.ietf.org/doc/draft-davies-internal-tld/) for private use. Please consider allow *.internal wildcard TLS certificates.",
+    "sha256": "98fc761a734f2288a5487d4807c2f57ec33cd15f7c379032d2b0c290e6ccdf28",
+    "classification": "PUBLIC"
+  },
+  "context": {
+    "scope": "Bounded candidate change to curl certificate allowance for the literal wildcard identity *.internal; not a standalone TLS specification or approved implementation contract. Externally authored, procedurally selected material, not blinded/held-out.",
+    "domains": {
+      "repository": "curl/curl",
+      "issue": 15914,
+      "title": "Allow *.internal wildcard TLS certificate",
+      "certificate_identity": "*.internal",
+      "input_surface": "TLS connection attempt, destination hostname, presented certificate and existing verification configuration",
+      "observation_surface": "certificate allowance or verification rejection attributable to the requested wildcard identity",
+      "inherited_context": "The surrounding curl application is the change target. No precise hostname matching, trust, identity-field or backend policy is imported from memory or implementation."
+    },
+    "assumptions": [],
+    "component_authority": null
+  },
+  "obligations": [
+    {
+      "id": "A02-E1",
+      "basis": "STATED",
+      "source_quote": "Please consider allow *.internal wildcard TLS certificates.",
+      "derived_from": [],
+      "relation": {
+        "kind": "invariant",
+        "parameters": {
+          "domain": "curl TLS certificate verification involving the literal wildcard identity *.internal",
+          "condition": "The requested feature is adopted in an authorized scope; other applicable verification conditions are satisfied",
+          "observable": "allowance of the requested wildcard certificate identity",
+          "required_change": "*.internal is not categorically disallowed as a wildcard certificate identity",
+          "frame": "No whole-application preservation guarantee or new TLS trust/hostname policy is asserted"
+        }
+      },
+      "statement": "Allow *.internal wildcard TLS certificates as a bounded curl software change. This is not a requirement to accept every certificate carrying that identity irrespective of other verification conditions."
+    },
+    {
+      "id": "A02-I1",
+      "basis": "NECESSARY_IMPLICATION",
+      "source_quote": "allow *.internal wildcard TLS certificates.",
+      "derived_from": ["A02-E1"],
+      "relation": {
+        "kind": "invariant",
+        "parameters": {
+          "domain": "A02-E1",
+          "condition": "An otherwise admissible TLS verification scenario in the authorized change scope",
+          "observable": "verification rejection reason",
+          "forbidden_reason": "Categorical exclusion solely because the wildcard identity is *.internal",
+          "frame": "Other verification conditions are not resolved or disabled by this obligation"
+        }
+      },
+      "statement": "An otherwise admissible certificate must not be rejected solely because its wildcard identity is *.internal. Denying all such identities would deny A02-E1. No concrete hostname, trust fixture or success code is invented."
+    }
+  ],
+  "issues": [
+    {
+      "id": "A02-Q1",
+      "category": "QUESTION",
+      "description": "Required independent/source-owner or appointed benchmark-owner approval of this exact bounded-change interpretation is unavailable. Confirm the adopted scope and authorized inherited verification context before sealing a complete FRC. This is an authority boundary, not a demonstrated material behavioral contradiction in the source.",
+      "affects": ["A02-E1", "A02-I1"],
+      "alternatives": ["Approve the exact bounded-change candidate with identified inherited context", "Supply an authorized different scope/context in a separately linked record", "Withhold approval"],
+      "witness": null,
+      "resolved": false
+    }
+  ],
+  "unspecified": [
+    "No existing behavior is explicitly required by the source to remain unchanged; no universal preservation obligation is invented.",
+    "Hostname examples, SAN/common-name treatment and concrete inherited trust/expiry validation rules are not supplied. This change request need not restate them; any later oracle needs legitimate contextual authority rather than conventional curl behavior assumed from memory.",
+    "Exact error text/code, HTTP payload, TLS version, target curl version and backend enumeration are not source requirements. Their omission alone does not demonstrate material ambiguity.",
+    "No durable-state effects, migration, audit or restart behavior is specified; silence does not imply an effect prohibition.",
+    "No explicit choice of default/option activation or broad matching expansion is delegated. The candidate does not select a new flag, disable verification, admit nested/apex names or alter other TLDs.",
+    "The ICANN/IETF links supply attributed rationale only; their contents were not opened or accepted as new normative authority."
+  ],
+  "implementation_choices": [
+    "Internal algorithm, data representation, helper organization and implementation strategy may vary provided the approved observable change is met; no source-required internal design exists.",
+    "Verification fixtures and internal test organization may vary after expectations are independently authorized; fixture selection cannot redefine required hostname or trust behavior.",
+    "No permission to choose new observable TLS matching/trust/activation policy is inferred from unspecified implementation details."
+  ],
+  "lineage": [],
+  "formalizer": "OpenCode/openai/gpt-6.1-sol/R5.118/same-agent-candidate",
+  "review": null
+}
