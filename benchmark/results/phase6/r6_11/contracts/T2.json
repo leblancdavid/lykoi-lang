@@ -1,0 +1,44 @@
+{
+  "schema_version": "FormalRequirementContract-0.1",
+  "contract_id": "R6.11-T2",
+  "revision": 1,
+  "source": {
+    "id": "T2",
+    "text": "# Shared formal requirements \u2014 R6.11\n\n## Common contract\n\nInputs are bytes of length 0..64, delivered as hexadecimal by an unscored JSON\ntransport. Above 64 bytes reject INPUT_LIMIT at byte 64 before any task behavior.\nSuccessful observation is {status: success, value: V}. Failure observation is\n{status: reject, code: C, offset: N}; no partial value is published. Offsets are\nzero-based bytes; EOF offset is input length. Inputs are immutable. No persistence,\nfiles, clock, randomness, locale or network are required. Output records have exactly\nthe named fields; list order and multiplicity matter, object key order does not.\nUnexpected process exceptions, plan rejection or non-JSON output fail acceptance.\nThe input type is guaranteed by transport; malformed transport is outside scoring.\n\n\n## T2 \u2014 Sample validation\n\nThe first byte must be ASCII A. Empty input rejects TRUNCATED at 0; any other\nfirst byte rejects SYNTAX at 0. Following bytes are zero to eight unsigned 8-bit\nsample values, in input order. Read and check each sample immediately: values\ngreater than 10 reject RANGE at that sample's byte, before later samples. Before\nreading a ninth sample reject OCCURRENCE_LIMIT at byte 9, even if it exceeds 10.\nReturn the ordered integer list, preserving duplicates. Empty sample list is valid.\n",
+    "sha256": "272f608fb5e054de35a1cdcde0ca0bc821c064cd4b7dec21d8f44f0934489108",
+    "classification": "SYNTHETIC"
+  },
+  "context": {
+    "scope": "exploratory pure byte-input pilot",
+    "domains": {
+      "input": "bytes <=64"
+    },
+    "assumptions": [
+      "Same-agent synthetic source; no independent review"
+    ],
+    "component_authority": null
+  },
+  "obligations": [
+    {
+      "id": "T2-behavior",
+      "basis": "STATED",
+      "source_quote": "T2 \u2014 Sample validation\n\nThe first byte must be ASCII A. Empty input rejects TRUNCATED at 0; any other\nfirst byte rejects SYNTAX at 0. Following bytes are zero to eight unsigned 8-bit\nsample values, in input order. Read and check each sample immediately: values\ngreater than 10 reject RANGE at that sample's byte, before later samples. Before\nreading a ninth sample reject OCCURRENCE_LIMIT at byte 9, even if it exceeds 10.\nReturn the ordered integer list, preserving duplicates. Empty sample list is valid.\n",
+      "derived_from": [],
+      "relation": {
+        "kind": "effects",
+        "parameters": {
+          "observation_specification": "T2 \u2014 Sample validation\n\nThe first byte must be ASCII A. Empty input rejects TRUNCATED at 0; any other\nfirst byte rejects SYNTAX at 0. Following bytes are zero to eight unsigned 8-bit\nsample values, in input order. Read and check each sample immediately: values\ngreater than 10 reject RANGE at that sample's byte, before later samples. Before\nreading a ninth sample reject OCCURRENCE_LIMIT at byte 9, even if it exceeds 10.\nReturn the ordered integer list, preserving duplicates. Empty sample list is valid.\n"
+        }
+      },
+      "statement": "T2 \u2014 Sample validation\n\nThe first byte must be ASCII A. Empty input rejects TRUNCATED at 0; any other\nfirst byte rejects SYNTAX at 0. Following bytes are zero to eight unsigned 8-bit\nsample values, in input order. Read and check each sample immediately: values\ngreater than 10 reject RANGE at that sample's byte, before later samples. Before\nreading a ninth sample reject OCCURRENCE_LIMIT at byte 9, even if it exceeds 10.\nReturn the ordered integer list, preserving duplicates. Empty sample list is valid.\n"
+    }
+  ],
+  "issues": [],
+  "unspecified": [],
+  "implementation_choices": [
+    "Python or explicit semantic-plan-1"
+  ],
+  "lineage": [],
+  "formalizer": "OpenAI gpt-6.1-sol active session",
+  "review": null
+}

@@ -75,6 +75,16 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R6.11 — `R6_11_EXPLORATORY_COMPARISON_ONLY`.**
+[Pilot report](../benchmark/results/phase6/R6_11-REPORT.md): Python and the unchanged
+R6.10 experimental VM each pass four base tasks (49 cases) and two modifications
+(40 original/new cases), on first attempts with zero observed regressions. Production
+Lykoi not scored. Recorded total intervals are 104.014/119.325 seconds respectively;
+tokens/cost unavailable, shared context and synthetic capability-aware selection prevent
+controlled efficiency/superiority claims. 116 baseline methods and 178 exact replays
+pass; kernel 26 and production/R6.10/history unchanged. Better-instrumented, separated
+comparison is proposed only. **Stop after publication; await owner authorization.**
+
 **R6.10 — `R6_10_PROTOTYPE_PARTIAL`.**
 [Experimental report](../benchmark/results/phase6/R6_10-REPORT.md): one bounded VM
 executes explicit CFG66/DSV66/BXC66 plans outside production. 82 tests pass, including

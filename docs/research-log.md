@@ -1,5 +1,20 @@
 # Lykoi research log
 
+## R6.11 comparative development pilot (2026-10-08)
+
+**`R6_11_EXPLORATORY_COMPARISON_ONLY`**;
+[report](../benchmark/results/phase6/R6_11-REPORT.md). Four synthetic shared contracts,
+frozen acceptance and two frozen modifications were executed by the active model in
+one context. Python and the unchanged R6.10 VM each pass 49/49 base and 40/40 combined
+modification observations; 12 first candidates, zero repairs/regressions. Production
+not scored because these raw-input tasks need the experimental recognition profile.
+Intervals total 104.014 seconds Python versus 119.325 VM; tokens/cost and independent
+track/source control unavailable, so efficiency and superiority are unestablished.
+116 fresh baseline methods pass; 178 exact acceptance replays pass. 446 protected
+files and 47 historical hashes preserved; production kernel 26 unchanged. Same-agent
+oracle, anticipation and equality-checker type weakness disclosed. Stop after publication;
+instrumented comparison is a recommendation requiring separate authorization.
+
 ## R6.10 experimental semantic prototype (2026-10-08)
 
 **`R6_10_PROTOTYPE_PARTIAL`**;

@@ -1,0 +1,55 @@
+{
+  "T1": [
+    ["0000", {"left":0,"right":0,"total":0}],
+    ["0102", {"left":1,"right":2,"total":3}],
+    ["0201", {"left":2,"right":1,"total":3}],
+    ["ff00", {"left":255,"right":0,"total":255}],
+    ["00ff", {"left":0,"right":255,"total":255}],
+    ["ffff", {"left":255,"right":255,"total":510}],
+    ["7f80", {"left":127,"right":128,"total":255}],
+    ["", "TRUNCATED", 0], ["01", "TRUNCATED", 1],
+    ["010203", "TRAILING", 2]
+  ],
+  "T2": [
+    ["41", []], ["4100010a01", [0,1,10,1]],
+    ["410a0a0a0a0a0a0a0a", [10,10,10,10,10,10,10,10]],
+    ["", "TRUNCATED", 0], ["43", "SYNTAX", 0],
+    ["410b", "RANGE", 1], ["41000bff", "RANGE", 2],
+    ["41000000000000000000", "OCCURRENCE_LIMIT", 9],
+    ["410000000000000000ff", "OCCURRENCE_LIMIT", 9],
+    ["41ff00", "RANGE", 1]
+  ],
+  "T3": [
+    ["", []], ["030502000104", [{"id":3,"priority":5},{"id":2,"priority":0},{"id":1,"priority":4}]],
+    ["010602050300", [{"id":2,"priority":5},{"id":3,"priority":0}]],
+    ["ff0000ff", [{"id":255,"priority":0}]],
+    ["010602ff", []], ["01", "TRUNCATED", 1],
+    ["01010102", "DUPLICATE", 2], ["01060100", "DUPLICATE", 2],
+    ["0101010203", "TRUNCATED", 5],
+    ["01000200030004000500060007000800", [{"id":1,"priority":0},{"id":2,"priority":0},{"id":3,"priority":0},{"id":4,"priority":0},{"id":5,"priority":0},{"id":6,"priority":0},{"id":7,"priority":0},{"id":8,"priority":0}]],
+    ["0100020003000400050006000700080009", "OCCURRENCE_LIMIT", 16]
+  ],
+  "T4": [
+    ["6f6e3a300a", {"enabled":true,"limit":0}],
+    ["6f66663a350a", {"enabled":false,"limit":5}],
+    ["6f6e3a350a", {"enabled":true,"limit":5}],
+    ["", "TRUNCATED", 0], ["6f", "SYNTAX", 0],
+    ["6f6e3a", "TRUNCATED", 3], ["6f6e3a35", "TRUNCATED", 4],
+    ["6f6e3a780a", "DIGIT", 3], ["6f6e3a350d", "SYNTAX", 4],
+    ["6f6e3a350a00", "TRAILING", 5], ["6f6e3a360a", "RANGE", 3],
+    ["6f6e3a390a00", "TRAILING", 5], ["7878ff", "ENCODING", 2],
+    ["756e6b6e6f776e3a300a", "SYNTAX", 0]
+  ],
+  "M2": [
+    ["42", []], ["42000a140a", [0,10,20,10]],
+    ["421414141414141414", [20,20,20,20,20,20,20,20]],
+    ["4215", "RANGE", 1], ["420000000000000000ff", "OCCURRENCE_LIMIT", 9],
+    ["43", "SYNTAX", 0]
+  ],
+  "M4": [
+    ["6175746f3a300a", {"enabled":true,"limit":0}],
+    ["6175746f3a350a", {"enabled":true,"limit":5}],
+    ["6175746f3a360a", "RANGE", 5], ["6175746f3a350a00", "TRAILING", 7],
+    ["617574", "SYNTAX", 0], ["6175746f3a", "TRUNCATED", 5]
+  ]
+}

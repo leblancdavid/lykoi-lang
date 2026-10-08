@@ -8,6 +8,14 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R6.11 — `R6_11_EXPLORATORY_COMPARISON_ONLY`.**
+Read the [pilot report](../benchmark/results/phase6/R6_11-REPORT.md) and its frozen
+protocol. Python and the unchanged experimental VM each pass four base tasks and
+two modifications, first attempts, zero observed regressions. Production not scored;
+same-session contamination, synthetic selection and missing token/cost metering limit
+interpretation. Kernel 26 and production/R6.10/history preserved. Stop after publication;
+benchmark expansion, rerun or semantic work requires separate owner authorization.
+
 **Latest round: R6.10 — `R6_10_PROTOTYPE_PARTIAL`.**
 Read the [experimental report](../benchmark/results/phase6/R6_10-REPORT.md) and
 [semantic contract](../experiments/semantic_interpreter/CONTRACT-1.md). One experimental

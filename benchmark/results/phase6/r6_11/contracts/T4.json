@@ -1,0 +1,44 @@
+{
+  "schema_version": "FormalRequirementContract-0.1",
+  "contract_id": "R6.11-T4",
+  "revision": 1,
+  "source": {
+    "id": "T4",
+    "text": "# Shared formal requirements \u2014 R6.11\n\n## Common contract\n\nInputs are bytes of length 0..64, delivered as hexadecimal by an unscored JSON\ntransport. Above 64 bytes reject INPUT_LIMIT at byte 64 before any task behavior.\nSuccessful observation is {status: success, value: V}. Failure observation is\n{status: reject, code: C, offset: N}; no partial value is published. Offsets are\nzero-based bytes; EOF offset is input length. Inputs are immutable. No persistence,\nfiles, clock, randomness, locale or network are required. Output records have exactly\nthe named fields; list order and multiplicity matter, object key order does not.\nUnexpected process exceptions, plan rejection or non-JSON output fail acceptance.\nThe input type is guaranteed by transport; malformed transport is outside scoring.\n\n\n## T4 \u2014 Configuration interpretation\n\nWhole-input ASCII preflight precedes syntax; first byte above 127 rejects ENCODING\nat its byte. Choose a prefix from the complete spellings on: or off:; a nonempty\ninput matching neither complete prefix rejects SYNTAX at 0 (including partial\nspellings); empty input rejects TRUNCATED at 0. Consume the selected prefix,\none ASCII digit 0..9, then LF, then require EOF. Missing digit/LF rejects TRUNCATED\nat EOF. Non-digit rejects DIGIT at its byte. Wrong LF rejects SYNTAX at its byte.\nExtra bytes reject TRAILING at the first extra byte. Only after structural reading\nvalidate digit <=5; otherwise RANGE at the digit byte. Return {enabled: Boolean,\nlimit: integer}; on means true, off means false. No whitespace normalization.\n",
+    "sha256": "0e7f608123bb370f085586923ba6a88ab5b5828b4a993c053fc40870fa8acd0c",
+    "classification": "SYNTHETIC"
+  },
+  "context": {
+    "scope": "exploratory pure byte-input pilot",
+    "domains": {
+      "input": "bytes <=64"
+    },
+    "assumptions": [
+      "Same-agent synthetic source; no independent review"
+    ],
+    "component_authority": null
+  },
+  "obligations": [
+    {
+      "id": "T4-behavior",
+      "basis": "STATED",
+      "source_quote": "T4 \u2014 Configuration interpretation\n\nWhole-input ASCII preflight precedes syntax; first byte above 127 rejects ENCODING\nat its byte. Choose a prefix from the complete spellings on: or off:; a nonempty\ninput matching neither complete prefix rejects SYNTAX at 0 (including partial\nspellings); empty input rejects TRUNCATED at 0. Consume the selected prefix,\none ASCII digit 0..9, then LF, then require EOF. Missing digit/LF rejects TRUNCATED\nat EOF. Non-digit rejects DIGIT at its byte. Wrong LF rejects SYNTAX at its byte.\nExtra bytes reject TRAILING at the first extra byte. Only after structural reading\nvalidate digit <=5; otherwise RANGE at the digit byte. Return {enabled: Boolean,\nlimit: integer}; on means true, off means false. No whitespace normalization.\n",
+      "derived_from": [],
+      "relation": {
+        "kind": "effects",
+        "parameters": {
+          "observation_specification": "T4 \u2014 Configuration interpretation\n\nWhole-input ASCII preflight precedes syntax; first byte above 127 rejects ENCODING\nat its byte. Choose a prefix from the complete spellings on: or off:; a nonempty\ninput matching neither complete prefix rejects SYNTAX at 0 (including partial\nspellings); empty input rejects TRUNCATED at 0. Consume the selected prefix,\none ASCII digit 0..9, then LF, then require EOF. Missing digit/LF rejects TRUNCATED\nat EOF. Non-digit rejects DIGIT at its byte. Wrong LF rejects SYNTAX at its byte.\nExtra bytes reject TRAILING at the first extra byte. Only after structural reading\nvalidate digit <=5; otherwise RANGE at the digit byte. Return {enabled: Boolean,\nlimit: integer}; on means true, off means false. No whitespace normalization.\n"
+        }
+      },
+      "statement": "T4 \u2014 Configuration interpretation\n\nWhole-input ASCII preflight precedes syntax; first byte above 127 rejects ENCODING\nat its byte. Choose a prefix from the complete spellings on: or off:; a nonempty\ninput matching neither complete prefix rejects SYNTAX at 0 (including partial\nspellings); empty input rejects TRUNCATED at 0. Consume the selected prefix,\none ASCII digit 0..9, then LF, then require EOF. Missing digit/LF rejects TRUNCATED\nat EOF. Non-digit rejects DIGIT at its byte. Wrong LF rejects SYNTAX at its byte.\nExtra bytes reject TRAILING at the first extra byte. Only after structural reading\nvalidate digit <=5; otherwise RANGE at the digit byte. Return {enabled: Boolean,\nlimit: integer}; on means true, off means false. No whitespace normalization.\n"
+    }
+  ],
+  "issues": [],
+  "unspecified": [],
+  "implementation_choices": [
+    "Python or explicit semantic-plan-1"
+  ],
+  "lineage": [],
+  "formalizer": "OpenAI gpt-6.1-sol active session",
+  "review": null
+}

@@ -1,5 +1,18 @@
 # Experimental decisions
 
+## R6.11 — Report exploratory behavior without inventing efficiency telemetry
+
+[Report](../benchmark/results/phase6/R6_11-REPORT.md):
+`R6_11_EXPLORATORY_COMPARISON_ONLY`. Freeze shared synthetic task/acceptance and
+modification identities before authoring; retain first candidates/results and use
+unchanged production/experimental capability boundaries. Same-context tracks permit
+execution feasibility evidence but not controlled comparisons. Tradeoff: Python and
+VM each pass four tasks/two changes, but production is unscored, full prompt/tokens/
+cost cannot be exported and requirements lack independent sourcing. Report descriptive
+wall intervals and null telemetry rather than estimated tokens or a winner. Exact
+JSON-type replay validates unchanged observations despite frozen equality-checker
+weakness. No automatic language changes; stop pending separately authorized comparison.
+
 ## R6.10 — Execute shared plans outside production and expose contract gaps
 
 [Report](../benchmark/results/phase6/R6_10-REPORT.md): `R6_10_PROTOTYPE_PARTIAL`.

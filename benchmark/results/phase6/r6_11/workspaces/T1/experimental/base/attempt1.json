@@ -1,0 +1,16 @@
+{
+  "version": "semantic-plan-1", "text": false, "rules": {},
+  "decode": {
+    "id": "aggregate", "op": "seq",
+    "steps": [
+      {"bind": "x", "node": {"id": "left", "op": "atom", "codec": "uint8"}},
+      {"bind": "y", "node": {"id": "right", "op": "atom", "codec": "uint8"}},
+      {"node": {"id": "eof", "op": "end"}}
+    ],
+    "result": {"record": {
+      "left": {"ref": "x"}, "right": {"ref": "y"},
+      "total": {"add": [{"ref": "x"}, {"ref": "y"}]}
+    }}
+  },
+  "encode": {"id": "unused_layout", "op": "value", "expr": {"const": null}}
+}

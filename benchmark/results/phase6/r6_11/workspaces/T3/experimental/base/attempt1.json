@@ -1,0 +1,20 @@
+{
+  "version": "semantic-plan-1", "text": false, "rules": {},
+  "decode": {
+    "id": "tickets", "op": "seq", "steps": [
+      {"bind": "records", "node": {
+        "id": "ordered_records", "op": "repeat", "stop": [], "eof": true,
+        "max": 8, "occurrence_limit": true,
+        "body": {"id": "record", "op": "seq", "steps": [
+          {"bind": "key", "node": {"id": "key_byte", "op": "atom", "codec": "uint8"}},
+          {"bind": "priority", "node": {"id": "priority_byte", "op": "atom", "codec": "uint8"}}
+        ], "result": {"record": {"id": {"ref": "key"}, "priority": {"ref": "priority"}}}}
+      }},
+      {"node": {"id": "eof", "op": "end"}},
+      {"node": {"id": "unique_keys", "op": "unique", "source": {"ref": "records"}, "field": "id", "code": "DUPLICATE"}},
+      {"bind": "retained", "node": {"id": "selection", "op": "select", "source": {"ref": "records"},
+        "test": {"le": [{"ref": "item.priority"}, {"const": 5}]}}}
+    ], "result": {"ref": "retained"}
+  },
+  "encode": {"id": "unused_layout", "op": "value", "expr": {"const": null}}
+}

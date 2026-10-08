@@ -1,0 +1,44 @@
+{
+  "schema_version": "FormalRequirementContract-0.1",
+  "contract_id": "R6.11-T3",
+  "revision": 1,
+  "source": {
+    "id": "T3",
+    "text": "# Shared formal requirements \u2014 R6.11\n\n## Common contract\n\nInputs are bytes of length 0..64, delivered as hexadecimal by an unscored JSON\ntransport. Above 64 bytes reject INPUT_LIMIT at byte 64 before any task behavior.\nSuccessful observation is {status: success, value: V}. Failure observation is\n{status: reject, code: C, offset: N}; no partial value is published. Offsets are\nzero-based bytes; EOF offset is input length. Inputs are immutable. No persistence,\nfiles, clock, randomness, locale or network are required. Output records have exactly\nthe named fields; list order and multiplicity matter, object key order does not.\nUnexpected process exceptions, plan rejection or non-JSON output fail acceptance.\nThe input type is guaranteed by transport; malformed transport is outside scoring.\n\n\n## T3 \u2014 Ordered ticket processing\n\nInput is zero to eight two-byte records: unsigned 8-bit id, then unsigned 8-bit\npriority. Empty list is valid. Missing priority rejects TRUNCATED at EOF. Before\nreading a ninth record reject OCCURRENCE_LIMIT at byte 16. Complete structural\nreading precedes uniqueness validation, so an incomplete later record wins over\nan earlier duplicate. Duplicate id rejects DUPLICATE at the second id's byte;\nthe first duplicate in occurrence order wins. Uniqueness includes excluded records.\nAfter validation, retain records whose priority is at most 5, preserving occurrence\norder, and return [{id: integer, priority: integer}, ...]. No sorting or deduplication.\n",
+    "sha256": "15b13f31c6f91a6bc373fa2eaa4737be5b32f7fff0f77d06ed5fda1062f89413",
+    "classification": "SYNTHETIC"
+  },
+  "context": {
+    "scope": "exploratory pure byte-input pilot",
+    "domains": {
+      "input": "bytes <=64"
+    },
+    "assumptions": [
+      "Same-agent synthetic source; no independent review"
+    ],
+    "component_authority": null
+  },
+  "obligations": [
+    {
+      "id": "T3-behavior",
+      "basis": "STATED",
+      "source_quote": "T3 \u2014 Ordered ticket processing\n\nInput is zero to eight two-byte records: unsigned 8-bit id, then unsigned 8-bit\npriority. Empty list is valid. Missing priority rejects TRUNCATED at EOF. Before\nreading a ninth record reject OCCURRENCE_LIMIT at byte 16. Complete structural\nreading precedes uniqueness validation, so an incomplete later record wins over\nan earlier duplicate. Duplicate id rejects DUPLICATE at the second id's byte;\nthe first duplicate in occurrence order wins. Uniqueness includes excluded records.\nAfter validation, retain records whose priority is at most 5, preserving occurrence\norder, and return [{id: integer, priority: integer}, ...]. No sorting or deduplication.\n",
+      "derived_from": [],
+      "relation": {
+        "kind": "effects",
+        "parameters": {
+          "observation_specification": "T3 \u2014 Ordered ticket processing\n\nInput is zero to eight two-byte records: unsigned 8-bit id, then unsigned 8-bit\npriority. Empty list is valid. Missing priority rejects TRUNCATED at EOF. Before\nreading a ninth record reject OCCURRENCE_LIMIT at byte 16. Complete structural\nreading precedes uniqueness validation, so an incomplete later record wins over\nan earlier duplicate. Duplicate id rejects DUPLICATE at the second id's byte;\nthe first duplicate in occurrence order wins. Uniqueness includes excluded records.\nAfter validation, retain records whose priority is at most 5, preserving occurrence\norder, and return [{id: integer, priority: integer}, ...]. No sorting or deduplication.\n"
+        }
+      },
+      "statement": "T3 \u2014 Ordered ticket processing\n\nInput is zero to eight two-byte records: unsigned 8-bit id, then unsigned 8-bit\npriority. Empty list is valid. Missing priority rejects TRUNCATED at EOF. Before\nreading a ninth record reject OCCURRENCE_LIMIT at byte 16. Complete structural\nreading precedes uniqueness validation, so an incomplete later record wins over\nan earlier duplicate. Duplicate id rejects DUPLICATE at the second id's byte;\nthe first duplicate in occurrence order wins. Uniqueness includes excluded records.\nAfter validation, retain records whose priority is at most 5, preserving occurrence\norder, and return [{id: integer, priority: integer}, ...]. No sorting or deduplication.\n"
+    }
+  ],
+  "issues": [],
+  "unspecified": [],
+  "implementation_choices": [
+    "Python or explicit semantic-plan-1"
+  ],
+  "lineage": [],
+  "formalizer": "OpenAI gpt-6.1-sol active session",
+  "review": null
+}

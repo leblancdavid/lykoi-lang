@@ -1,5 +1,15 @@
 # Phase 5: comparative maintenance benchmark
 
+## R6.11 exploratory comparative development pilot
+
+[Report](results/phase6/R6_11-REPORT.md) and
+[frozen pilot protocol](results/phase6/r6_11/PROTOCOL.md):
+`R6_11_EXPLORATORY_COMPARISON_ONLY`. Python and the experimental R6.10 VM each pass
+four base tasks and two modifications, first attempts, no repairs/regressions. Production
+not scored; same-context synthetic pilot, tokens/cost unavailable, no superiority claim.
+Historical Phase 5 requirements/oracles/protocols unchanged; kernel stays 26. Stopped;
+benchmark expansion or language development needs explicit owner authorization.
+
 ## R6.8 input-controlled independent review — pre-assignment halt
 
 [Report](results/phase6/R6_8-REPORT.md) and

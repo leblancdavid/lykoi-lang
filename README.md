@@ -20,6 +20,13 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R6.11 publishes an exploratory AI-assisted development comparison.**
+[Report](benchmark/results/phase6/R6_11-REPORT.md):
+`R6_11_EXPLORATORY_COMPARISON_ONLY`. Python and the unchanged experimental VM each
+pass four tasks and two modifications on first attempts, with zero observed regressions.
+Production not scored; shared-context/synthetic selection and missing token/cost data
+prevent superiority claims. Kernel 26/history preserved. Stopped pending authorization.
+
 **R6.10 executes an experimental shared semantic interpreter.**
 [Report](benchmark/results/phase6/R6_10-REPORT.md): `R6_10_PROTOTYPE_PARTIAL`.
 Explicit CFG66/DSV66/BXC66 plans use one bounded VM; 82 tests pass. Static typing,

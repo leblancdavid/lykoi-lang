@@ -7,6 +7,14 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R6.11: `R6_11_EXPLORATORY_COMPARISON_ONLY`.
+  Read `benchmark/results/phase6/R6_11-REPORT.md` and `r6_11/PROTOCOL.md` beside it.
+  Same-session Python/experimental-VM pilot: each passes four base tasks (49 cases)
+  and two modifications (40 combined cases), first attempts, zero repairs/regressions.
+  Production not scored; no controlled separation, independent sourcing or token/cost
+  telemetry. Kernel 26, production/R6.10/history unchanged; 116 baseline methods pass.
+  Stop after publication. No automatic expansion, rerun, semantic improvement or P6-A05
+  access; subsequent work requires explicit owner authorization.
 - Latest round R6.10: `R6_10_PROTOTYPE_PARTIAL`.
   Read `benchmark/results/phase6/R6_10-REPORT.md` and
   `experiments/semantic_interpreter/CONTRACT-1.md`. Dedicated experimental VM executes

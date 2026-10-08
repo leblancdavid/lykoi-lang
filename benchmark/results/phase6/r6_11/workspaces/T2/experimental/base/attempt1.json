@@ -1,0 +1,21 @@
+{
+  "version": "semantic-plan-1", "text": false, "rules": {},
+  "decode": {
+    "id": "samples", "op": "seq",
+    "steps": [
+      {"node": {"id": "prefix", "op": "literal", "bytes": [65]}},
+      {"bind": "samples", "node": {
+        "id": "ordered_samples", "op": "repeat", "stop": [], "eof": true,
+        "max": 8, "occurrence_limit": true,
+        "body": {"id": "sample", "op": "seq", "steps": [
+          {"bind": "number", "node": {"id": "sample_byte", "op": "atom", "codec": "uint8"}},
+          {"node": {"id": "range", "op": "check",
+            "test": {"le": [{"ref": "number"}, {"const": 10}]},
+            "code": "RANGE", "site": {"ref": "number"}}}
+        ], "result": {"ref": "number"}}
+      }},
+      {"node": {"id": "eof", "op": "end"}}
+    ], "result": {"ref": "samples"}
+  },
+  "encode": {"id": "unused_layout", "op": "value", "expr": {"const": null}}
+}

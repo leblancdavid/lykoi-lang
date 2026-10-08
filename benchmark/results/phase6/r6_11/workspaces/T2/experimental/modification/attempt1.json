@@ -1,0 +1,24 @@
+{
+  "version": "semantic-plan-1", "text": false, "rules": {},
+  "decode": {
+    "id": "samples", "op": "seq",
+    "steps": [
+      {"bind": "maximum", "node": {"id": "prefix_choice", "op": "choice", "code": "SYNTAX", "branches": [
+        {"prefixes": [[65]], "node": {"id": "prefix", "op": "literal", "bytes": [65], "value": {"const": 10}}},
+        {"prefixes": [[66]], "node": {"id": "prefix_b", "op": "literal", "bytes": [66], "value": {"const": 20}}}
+      ]}},
+      {"bind": "samples", "node": {
+        "id": "ordered_samples", "op": "repeat", "stop": [], "eof": true,
+        "max": 8, "occurrence_limit": true,
+        "body": {"id": "sample", "op": "seq", "steps": [
+          {"bind": "number", "node": {"id": "sample_byte", "op": "atom", "codec": "uint8"}},
+          {"node": {"id": "range", "op": "check",
+            "test": {"le": [{"ref": "number"}, {"ref": "maximum"}]},
+            "code": "RANGE", "site": {"ref": "number"}}}
+        ], "result": {"ref": "number"}}
+      }},
+      {"node": {"id": "eof", "op": "end"}}
+    ], "result": {"ref": "samples"}
+  },
+  "encode": {"id": "unused_layout", "op": "value", "expr": {"const": null}}
+}

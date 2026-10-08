@@ -1,0 +1,19 @@
+{
+  "version": "semantic-plan-1", "text": true, "rules": {},
+  "decode": {
+    "id": "config", "op": "seq", "steps": [
+      {"bind": "enabled", "node": {"id": "mode", "op": "choice", "code": "SYNTAX", "branches": [
+        {"prefixes": [[111,110,58]], "node": {"id": "on", "op": "literal", "bytes": [111,110,58], "value": {"const": true}}},
+        {"prefixes": [[111,102,102,58]], "node": {"id": "off", "op": "literal", "bytes": [111,102,102,58], "value": {"const": false}}}
+      ]}},
+      {"bind": "digit", "node": {"id": "digit_byte", "op": "take", "length": {"const": 1}, "max": 1,
+        "allowed": [48,49,50,51,52,53,54,55,56,57], "code": "DIGIT"}},
+      {"bind": "number", "node": {"id": "decimal", "op": "value", "expr": {"decode": ["decimal15", {"ref": "digit"}]}}},
+      {"node": {"id": "lf", "op": "literal", "bytes": [10]}},
+      {"node": {"id": "eof", "op": "end"}},
+      {"node": {"id": "range", "op": "check", "code": "RANGE", "site": {"ref": "digit"},
+        "test": {"le": [{"ref": "number"}, {"const": 5}]}}}
+    ], "result": {"record": {"enabled": {"ref": "enabled"}, "limit": {"ref": "number"}}}
+  },
+  "encode": {"id": "unused_layout", "op": "value", "expr": {"const": null}}
+}
