@@ -75,7 +75,27 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
-**R5.112 — `R5_112_PRIMARY_INTERFACE_COMPOSITION_PARTIAL`.**
+**R5.113 — `R5_113_AUTHORIZATION_CONDITIONAL_EFFECT_COMPOSITION_PARTIAL`.**
+The normal [prewrite and conditional composition profile](prewrite-conditional-composition-v1.md)
+implements declared role/owner/permitted-set guards, controlled-host actor binding,
+conditional reference updates/atomic creations, acyclic created-record images and
+explicit nullable refinement. A supplied actor is a selector, not authentication;
+the CLI has no trustworthy authentication source. Exact checked elapsed-day conversion
+requires K26, proposed kernel **25 → 26**. No permission, audit or recurrence primitive.
+
+The [report](../benchmark/results/phase5c/R5_113-REPORT.md) records **393 passing tests**,
+canonical validation/safety and **144 synthetic external invocations** before the generic
+content/accounting lock. [Fresh exposed transfer](../benchmark/results/phase5c/R5_113-CAPABILITY-MATRIX.md)
+retains **16/20 successes B01–B16**, **447 invocations**. B17/B20 remain disputed.
+B18/B19 now halt at formalization on inherited unanswered non-system historical role
+authority; no role is inferred from new-user defaults, no downstream stage or success
+is claimed. Historical related-field migration and sealed normal trusted-host-success
+verification remain integration seams; controlled generated-host probes are separate
+evidence. Actual clarified B18/B19 authoring/behavior remains unverified. Recommend
+source-authorized historical-state and trusted verification interface investigation
+for R5.114 only. **Stop after R5.113; no next round or new family begun.**
+
+**Preserved R5.112 — `R5_112_PRIMARY_INTERFACE_COMPOSITION_PARTIAL`.**
 The normal [primary value interface](primary-value-interfaces-v1.md) composes
 signed-64/nullable primary numeric creation/migration/mutation/query, explicitly
 supplied primary actor context, cardinality-derived history and complete same-primary

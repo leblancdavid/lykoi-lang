@@ -76,7 +76,11 @@ def reference_commit(before, after, *, migration=False):
     images = dict(before=old.get(rid), after=new.get(rid))
     resources = {}
     for r in op["resources"]:
-        v = value_of(dict(source="capability", id=r["capability"]), {})
+        if r.get("observation") == "binding":
+            provider = context["providers"].get(r["capability"])
+            v = provider() if provider else _atomic_value_of(dict(source="capability", id=r["capability"]), {})
+        else:
+            v = value_of(dict(source="capability", id=r["capability"]), {})
         if not mutable_value_valid(v, r["type"]):
             raise Failure("invalid_state")
         if by_id("capabilities", r["capability"])["kind"] == "uuid_v4":
@@ -86,21 +90,37 @@ def reference_commit(before, after, *, migration=False):
         resources[r["name"]] = v
     candidate = copy.deepcopy(after)
     computed = computation_evaluate(op["computations"], before, images, context["inputs"], resources) if "computations" in op else {}
-    for creation in op["creations"]:
+    selected = [c for c in op["creations"] if c.get("when") is None or reference_condition(c["when"], before, {"primary": images["before"]} if images["before"] else {}, context["inputs"])]
+    pending = list(selected)
+    created = {}
+    built = {}
+    while pending:
+        ready = next((c for c in pending if all(d in created or not any(s.get("binding") == d for s in selected) for d in c.get("depends_on", []))), None)
+        if ready is None: raise Failure("invalid_state")
+        creation = ready
+        pending.remove(creation)
         e = creation["entity"]
+        local = {**computed, **computation_evaluate(creation["computations"], before, images, context["inputs"], resources)} if "computations" in creation else computed
         row = {}
         for n, b in creation["bindings"].items():
             s = b["source"]
-            v = s["value"] if s["kind"] == "literal" else (computed if s["kind"] == "computed" else context["inputs"] if s["kind"] == "parameter" else resources if s["kind"] == "resource" else images[s["kind"]])[s["name"]]
+            if s["kind"] == "created":
+                v = created[s["effect"]][s["field"]] if s["effect"] in created else s["alternative"]["value"]
+            else:
+                v = s["value"] if s["kind"] == "literal" else (local if s["kind"] == "computed" else context["inputs"] if s["kind"] == "parameter" else resources if s["kind"] == "resource" else images[s["kind"]])[s["name"]]
             if not mutable_value_valid(v, REFERENCE["types"][e][n]):
                 raise Failure(b["invalid_error"])
             row[n] = copy.deepcopy(v)
         k = REFERENCE["identities"][e]
         if not row[k].strip():
             raise Failure(creation["bindings"][k]["invalid_error"])
-        if any(r[k] == row[k] for r in candidate[e]):
+        if any(r[k] == row[k] for r in candidate[e]) or any(other["entity"] == e and built[id(other)][k] == row[k] for other in selected if id(other) in built):
             raise Failure(creation["duplicate_error"])
-        candidate[e].append(row)
+        built[id(creation)] = row
+        if "binding" in creation: created[creation["binding"]] = row
+    # Occurrence order is contract order, independent of topological build order.
+    for creation in selected:
+        candidate[creation["entity"]].append(built[id(creation)])
     return _atomic_commit(before, candidate)
 
 

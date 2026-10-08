@@ -26,6 +26,7 @@ def condition(selection=True):
 def schema():
     fields = {"type": "object", "additionalProperties": TYPE}
     parameter = obj({"type": TYPE, "flag": TEXT, "encoding": {"enum": ["text", "json"]}, "missing_error": TEXT, "invalid_error": TEXT})
+    parameter["properties"]["default"] = VALUE
     day_parameter = obj({"type": TYPE, "flag": TEXT, "encoding": {"enum": ["utc_day"]}, "missing_error": TEXT, "invalid_error": TEXT, "conversion": obj({"source": {"enum": ["gregorian_utc_day"]}, "target": {"enum": ["instant"]}, "boundary": {"enum": ["start_of_day"]}, "timezone": {"enum": ["UTC"]}, "precision": {"enum": ["seconds"]}, "invalid": {"enum": ["reject"]}})})
     policy = obj({"policy": {"enum": ["required", "unchecked", "restrict", "permit", "unavailable"]}, "error": ERROR})
     guard = obj({"predicate": condition(), "error": TEXT})
@@ -38,6 +39,7 @@ def schema():
     from .computation_schema import graph
     op = result["properties"]["operations"]["items"]
     op["properties"]["computations"] = graph(TYPE, VALUE)
+    op["properties"]["changes"]["items"]["properties"]["when"] = condition()
     return result
 
 
@@ -55,3 +57,5 @@ def validate_value(value):
     for g in value["guards"]: tree(g["predicate"])
     for op in value["operations"]:
         for g in op["guards"]: tree(g["predicate"])
+        for w in op["changes"]:
+            if "when" in w: tree(w["when"])

@@ -23,7 +23,7 @@ def predicate_eval(tree, record=None, inputs=None, stages=None, resources=None):
         return not ev(tree["child"])
     if k == "present":
         o = tree["operand"]
-        return o["stage"] in stages if o["kind"] == "value" else o["name"] in inputs
+        return o["stage"] in stages if o["kind"] == "value" else o["name"] in getattr(inputs, "supplied", inputs)
     def value(o):
         return predicate_value(o, record, inputs, stages, resources)
     if k == "is_null":

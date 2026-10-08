@@ -21,6 +21,12 @@ def computation_evaluate(graph, rows, images, inputs, resources=None):
                 raise ValueError("operand domain")
             if n["operator"] == "value": result = args[0]
             elif n["operator"] == "add": result = args[0] + args[1]
+            elif n["operator"] in ("refine_integer", "refine_instant"):
+                if args[0] is None and n["null"]["policy"] == "reject": raise ValueError("null is not an integer")
+                result = n["null"]["value"] if args[0] is None else args[0]
+            elif n["operator"] == "days_to_seconds":
+                # The exact scale and dimension are declared language meaning K26.
+                result = args[0] * n["conversion"]["seconds_per_day"]
             else:
                 # UTC instants only; elapsed SI-like seconds, no leap seconds,
                 # timezone/DST/calendar months or implicit clock observation.

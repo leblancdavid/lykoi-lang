@@ -20,7 +20,20 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
-**R5.112 partially integrates primary value/actor/successor interfaces by composition.**
+**R5.113 implements bounded prewrite authorization and conditional effect composition.**
+[Declared role/owner/set predicates, controlled-host actor binding, conditional atomic
+effects, created-record dependencies and nullable refinement](docs/prewrite-conditional-composition-v1.md)
+compose existing meanings. Supplied actors are selectors, not authenticated principals;
+the CLI has no trusted authentication source. Exact elapsed-day conversion justifies
+K26, proposed kernel **25 → 26**. **393 tests**, validation/safety and **144 synthetic
+external invocations** pass before lock. [Fresh exposed transfer](benchmark/results/phase5c/R5_113-REPORT.md)
+retains **16/20 successes**, **447 invocations**. B17/B20 remain disputed; B18/B19 now
+halt on inherited historical role authority at formalization, with no new downstream
+stages or behavioral success. Historical related-field migration and sealed trusted-host
+success verification remain seams: `R5_113_AUTHORIZATION_CONDITIONAL_EFFECT_COMPOSITION_PARTIAL`.
+Stop after R5.113; no next family, infrastructure or held-out/cumulative claim.
+
+**Preserved R5.112 partially integrates primary value/actor/successor interfaces by composition.**
 [Primary signed-64/nullable numeric state, supplied actor context, numeric history
 and same-primary successors](docs/primary-value-interfaces-v1.md) traverse the normal
 pipeline. Explicit absolute UTC-day decoding is separate from unsupported runtime

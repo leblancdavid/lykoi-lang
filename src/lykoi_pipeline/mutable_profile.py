@@ -11,6 +11,7 @@ PREDICATE_FACET = "predicate_semantics"
 REFERENCE_FACET = "reference_semantics"
 ATOMIC_FACET = "atomic_state_semantics"
 PRIMARY_FACET = "primary_interfaces"
+AUTHORIZATION_FACET = "authorization_semantics"
 
 
 def typed(relation):
@@ -42,7 +43,7 @@ def split(contract):
         require(o["relation"]["kind"] == "crud", "Typed mutation relation kind")
         p = o["relation"]["parameters"]
         keys(p, ("profile", "facet", "value"))
-        require(p["facet"] in FACETS + (INPUT_FACET, PREDICATE_FACET, REFERENCE_FACET, ATOMIC_FACET, PRIMARY_FACET) and p["facet"] not in values, "Unknown or repeated mutation facet")
+        require(p["facet"] in FACETS + (INPUT_FACET, PREDICATE_FACET, REFERENCE_FACET, ATOMIC_FACET, PRIMARY_FACET, AUTHORIZATION_FACET) and p["facet"] not in values, "Unknown or repeated mutation facet")
         values[p["facet"]] = copy.deepcopy(p["value"])
     closure = contract["context"]["domains"].get("input_value_profile")
     require(closure in (None, "typed-input-values-1"), "Known input/value profile")
@@ -67,8 +68,22 @@ def split(contract):
     require(atomic in (None, "atomic-durable-state-1") and (not atomic or references), "Explicit atomic state composition selection")
     primary = contract["context"]["domains"].get("primary_interface_profile")
     require(primary in (None, "primary-value-interfaces-1") and (not primary or computation), "Explicit primary computation interfaces")
-    require(set(values) == set(FACETS + ((INPUT_FACET,) if closure else ()) + ((PREDICATE_FACET,) if predicates else ()) + ((REFERENCE_FACET,) if references else ()) + ((ATOMIC_FACET,) if atomic else ()) + ((PRIMARY_FACET,) if primary else ())), "Every selected profile facet required; empty is explicit")
-    ir = compose(base, {k: v for k, v in values.items() if k not in (REFERENCE_FACET, ATOMIC_FACET)})
+    authorization = contract["context"]["domains"].get("authorization_profile")
+    effects = contract["context"]["domains"].get("effect_composition_profile")
+    duration = contract["context"]["domains"].get("duration_conversion_profile")
+    require(duration in (None, "elapsed-day-conversion-1") and (not duration or computation), "Explicit duration/refinement selection")
+    def conversion(v):
+        if type(v) is dict:
+            return v.get("operator") in ("refine_integer", "refine_instant", "days_to_seconds") or any(conversion(x) for x in v.values())
+        return type(v) is list and any(conversion(x) for x in v)
+    require(duration or not conversion(values), "New typed conversion/refinement needs versioned authority")
+    require(effects in (None, "conditional-created-effects-1") and (not effects or atomic), "Explicit conditional image profile")
+    require(effects or not any("binding" in c or "computations" in c for o in values.get(ATOMIC_FACET, {}).get("operations", []) for c in o["creations"]), "Conditional/dependent effects need selected versioned semantics")
+    require(effects or not any("when" in w for o in values.get(REFERENCE_FACET, {}).get("operations", []) for w in o["changes"]), "Conditional primary assignments need versioned semantics")
+    require(effects or not any("observation" in r for o in values.get(ATOMIC_FACET, {}).get("operations", []) for r in o["resources"]), "Named identity observations need versioned authority")
+    require(authorization in (None, "prewrite-authorization-1") and (not authorization or (references and atomic)), "Explicit prewrite atomic composition")
+    require(set(values) == set(FACETS + ((INPUT_FACET,) if closure else ()) + ((PREDICATE_FACET,) if predicates else ()) + ((REFERENCE_FACET,) if references else ()) + ((ATOMIC_FACET,) if atomic else ()) + ((PRIMARY_FACET,) if primary else ()) + ((AUTHORIZATION_FACET,) if authorization else ())), "Every selected profile facet required; empty is explicit")
+    ir = compose(base, {k: v for k, v in values.items() if k not in (REFERENCE_FACET, ATOMIC_FACET, AUTHORIZATION_FACET)})
     reference_ir = None
     if references:
         from air_compiler.references import compose as compose_references
@@ -103,6 +118,9 @@ def split(contract):
         from air_compiler.atomic_state import compose as compose_atomic
         result["atomic_state"] = compose_atomic(ir, reference_ir, values[ATOMIC_FACET])
         require(not set(groups) & {q["id"] for q in values[ATOMIC_FACET]["queries"]}, "No primary/history query command collision")
+    if authorization:
+        from air_compiler.authorization import compose as compose_authorization
+        result["authorization"] = compose_authorization(ir, reference_ir, values[AUTHORIZATION_FACET])
     return sc, qc, result
 
 
@@ -126,7 +144,7 @@ def structural(contract, fid):
     if f:
         for o in contract["obligations"]:
             if typed(o["relation"]):
-                facets.append(dict(origin=o["id"], source_quote=o["source_quote"], kind={"collections": "CollectionMutation", "mutations": "ValueMutation", "creation_pipelines": "TransformationPipeline", "input_contracts": "SemanticParameters", "predicate_semantics": "TypedPredicateSemantics", REFERENCE_FACET: "IdentitySelectionGuardComposition", ATOMIC_FACET: "AtomicStateCreationComposition", PRIMARY_FACET: "PrimaryValueContextComposition"}[o["relation"]["parameters"]["facet"]], value=copy.deepcopy(o["relation"]["parameters"]["value"])))
+                facets.append(dict(origin=o["id"], source_quote=o["source_quote"], kind={"collections": "CollectionMutation", "mutations": "ValueMutation", "creation_pipelines": "TransformationPipeline", "input_contracts": "SemanticParameters", "predicate_semantics": "TypedPredicateSemantics", REFERENCE_FACET: "IdentitySelectionGuardComposition", ATOMIC_FACET: "AtomicStateCreationComposition", PRIMARY_FACET: "PrimaryValueContextComposition", AUTHORIZATION_FACET: "PrewritePermissionComposition"}[o["relation"]["parameters"]["facet"]], value=copy.deepcopy(o["relation"]["parameters"]["value"])))
                 if o["relation"]["parameters"]["facet"] == REFERENCE_FACET:
                     for kind, v in (("TypedFieldIdentity", f["references"]["types"]), ("SelectionCardinalityGuard", f["references"]["checks"]), ("AtomicWriteEffect", f["references"]["facts"]["commit"])):
                         facets.append(dict(origin=o["id"], kind=kind, value=copy.deepcopy(v)))
@@ -178,6 +196,14 @@ def bdi(contract, projection):
         if not typed(o["relation"]):
             continue
         p = o["relation"]["parameters"]
+        if p["facet"] == AUTHORIZATION_FACET:
+            for op in p["value"]["operations"]:
+                for facet in ("actor", "predicate", "error", "observation", "parameters", "lookup", "rejection"):
+                    meaning = scalar.json.dumps(op[facet], sort_keys=True)
+                    decision(o["id"], "authorization/" + op["command"] + "/" + facet, meaning, [meaning, "unauthorized_source_permission_or_failure_frame"], "error")
+                if "checks" in op:
+                    meaning = scalar.json.dumps(op["checks"], sort_keys=True)
+                    decision(o["id"], "authorization/" + op["command"] + "/checks", meaning, [meaning, "omitted_or_reordered_prewrite_checks"], "error")
         if p["facet"] == PRIMARY_FACET:
             for facet, v in p["value"].items():
                 meaning = scalar.json.dumps(v, sort_keys=True)
@@ -223,6 +249,12 @@ def bdi(contract, projection):
                 for facet in ("on", "sampling", "ordering", "resources", "creations"):
                     meaning = scalar.json.dumps(op[facet], sort_keys=True)
                     decision(o["id"], op["command"] + "/" + facet, meaning, [meaning, "omitted_or_altered_state_authority"])
+                for creation in op["creations"]:
+                    if "binding" in creation:
+                        for facet in ("when", "depends_on", "bindings", "computations"):
+                            if facet in creation:
+                                meaning = scalar.json.dumps(creation[facet], sort_keys=True)
+                                decision(o["id"], "effect/" + op["command"] + "/" + creation["binding"] + "/" + facet, meaning, [meaning, "altered_selection_image_refinement_or_conversion_boundary"], "error")
         entries = p["value"] if p["facet"] in ("mutations", "creation_pipelines") else []
         for m in entries:
             if p["facet"] == "mutations":
@@ -329,4 +361,13 @@ def formalizer_guidance():
                     "Select computation_profile typed-computation-1 for signed-64 integer fields/JSON parameters and optional computations on reference/atomic operations. "
                     "Graph has 1..16 nodes, explicit binding/operator/type/operands/depends_on/error and policy integer_domain:signed_64,overflow:reject,snapshot:operation_before,rejection:unchanged. "
                     "Operators value(integer), add(integer,integer), shift_utc_seconds(timestamp,duration {type:duration,domain:[],unit:seconds}) only. Operands literal/parameter/before/after/resource/computed/cardinality with explicit finite selection. "
-                    "Computed source names must bind an earlier node; exact dependencies are acyclic. No expressions, implicit coercion, clock arithmetic or calendar month policy.")
+                     "Computed source names must bind an earlier node; exact dependencies are acyclic. No expressions, implicit coercion, clock arithmetic or calendar month policy. "
+                     "R5.113 selects authorization_profile prewrite-authorization-1 with authorization_semantics operations: "
+                     "command,entity,lookup,actor,parameters,predicate,error,observation committed_operation_before,rejection unchanged. "
+                     "Actor declares name,type,source explicit_parameter/trusted_context,context null/authorized host source,missing_error,invalid_error. "
+                     "Explicit parameters are selectors, not authenticated principals; CLI has no trusted source. Never infer historical roles from new-entity defaults. "
+                     "effect_composition_profile conditional-created-effects-1 names every creation with binding,when null/typed pre-state predicate,depends_on. "
+                     "Created sources declare kind created,type,effect,entity,field,alternative null/typed literal. Reject cycles, missing dependencies and potentially unselected images without explicit alternative. "
+                     "Per-creation computations run only if selected; graph order and declared occurrence order are distinct. "
+                     "duration_conversion_profile elapsed-day-conversion-1 admits refine_integer(nullable integer, null reject/authorized literal) and "
+                     "days_to_seconds with exact elapsed_days/elapsed_seconds,seconds_per_day 86400,negative preserve,overflow reject. No arbitrary multiplication.")

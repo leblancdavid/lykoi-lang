@@ -1,5 +1,42 @@
 # Lykoi research log
 
+## R5.113 authorization and conditional composition (2026-10-07)
+
+**`R5_113_AUTHORIZATION_CONDITIONAL_EFFECT_COMPOSITION_PARTIAL`.** Declared prewrite
+role/owner/permitted-set predicates, controlled-host actor binding, conditional reference
+updates and atomic creations, created-record field/identity graphs and explicit nullable
+refinement execute through existing compositions. Ordinary actor inputs remain selectors,
+not authenticated principals. Trusted hosts assert actor identity through an explicitly
+authorized separate context; the CLI has no trusted authentication source. Historical
+role migration cannot derive from a new-user default. Selected effects commit together;
+unselected effects do not appear, and failed/stale/persistence operations preserve bytes.
+
+Exact elapsed-day conversion adds proposed K26: **25 → 26**. Sixteen additions cannot
+reach coefficient 86400 for arbitrary runtime N; fixed-duration literals cannot cover
+runtime values or provide missing duration dimension. Negative/overflow/UTC behavior
+is explicit, with no arbitrary multiplication or calendar-month/year recurrence.
+Independent named UUID observations are K20 binding scope, not implicit resampling.
+
+**393 passing tests**, canonical validation/safety and **144 synthetic external
+invocations** across Inventory/Document/Account/Renewal/Project precede generic lock.
+Source reconciliation, structural/V1 loss, missing BDI authority, dependency/type/cycle/
+selection failures, null/scale boundaries, creation-role default versus missing historical
+role, restart and rollback are challenged. Controlled generated-host probes separately
+exercise trusted success and forged/stale/persistence rejection; their successful path
+is not a sealed external-CLI verification artifact. Historical related-field migration
+and normal trusted-host success verification remain seams, so full closure is not claimed.
+
+Fresh locked transfer retains **16/20 B01–B16**, **447 invocations**. B17/B20 remain
+disputed. B18/B19 move from generic structural blockers to formalization disputes on
+actual inherited non-system historical role authority. Their typed candidates are
+diagnostic, unsealed and not downstream verified; no stage progress/success is claimed.
+All historical/product/spec/test/candidate/evidence locks remain exact. Pre-lock fixture
+and invocation defects were corrected; interrupted verification resumed source-bound
+receipts. Shared fixture shape/same-agent capture/inventory/oracle limit generality.
+Recommend explicit source-authorized historical-state/trusted-verification interfaces
+for R5.114; **stop after R5.113**, with no next family or infrastructure work.
+See the [R5.113 report](../benchmark/results/phase5c/R5_113-REPORT.md).
+
 ## R5.112 primary interface composition (2026-10-07)
 
 **`R5_112_PRIMARY_INTERFACE_COMPOSITION_PARTIAL`.** Normal typed primary signed-64/

@@ -8,13 +8,27 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Current authorization/effect policy is R5.113:
+`R5_113_AUTHORIZATION_CONDITIONAL_EFFECT_COMPOSITION_PARTIAL`.** Read the
+[prewrite/conditional specification](prewrite-conditional-composition-v1.md) and
+[report](../benchmark/results/phase5c/R5_113-REPORT.md) before extension. Role/owner/set
+guards, trusted controlled-host binding, conditional updates/creations and dependent
+created images compose; actors supplied on CLI remain selectors, not authenticated
+principals. Exact elapsed-day duration conversion justifies K26, kernel 25 -> 26.
+393 tests and 144 synthetic external invocations precede the generic lock. Fresh
+transfer retains 16 successes, 447 invocations; B17/B20 disputes remain and B18/B19
+now halt on inherited historical-role authority at formalization, no new downstream
+stages. Never infer migration roles from creation defaults. Related historical-field
+migration and sealed trusted-host-success verification remain seams. Preserve all
+earlier records; **stop after R5.113**, with R5.114 only recommended.
+
 **Current prospective research policy is [R5.96](research-workflow-r5.96.md).**
 Historical frozen experiments retain their protocols; their infrastructure gates
 do not govern ordinary research or the next held-out benchmark. **R5.101 treats
 B01–B20 as an exposed development/transfer/regression corpus, freely inspectable
 for diagnosis and regression. Their performance cannot establish held-out
 generalization; new generalization needs a new development-unexposed source.**
-**Current primary interface policy is R5.112:
+**Preserved primary interface policy is R5.112:
 `R5_112_PRIMARY_INTERFACE_COMPOSITION_PARTIAL`.** Read
 [primary value interfaces](primary-value-interfaces-v1.md) and its
 [report](../benchmark/results/phase5c/R5_112-REPORT.md) before extension. Signed-64/

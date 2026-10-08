@@ -1,6 +1,21 @@
 # Phase 5: comparative maintenance benchmark
 
-## R5.112 primary interface composition and frozen exposed transfer
+## R5.113 authorization/conditional composition and locked exposed transfer
+
+The [report](results/phase5c/R5_113-REPORT.md) and
+[matrix](results/phase5c/R5_113-CAPABILITY-MATRIX.md) retain **16/20 local successes**,
+**447 fresh transfer invocations**. Declared prewrite role/owner/set guards, controlled
+trusted-host actor binding, conditional effects and created-image graphs compose;
+exact elapsed-day conversion justifies K26, kernel **25 → 26**. **393 tests**,
+validation/safety and **144 synthetic external invocations** precede the generic lock.
+B17/B20 remain disputed. B18/B19 now stop at formalization on inherited unanswered
+historical role authority, with no downstream-stage or behavioral success. Related
+historical-field migration and sealed trusted-host-success verification remain seams;
+classification is `R5_113_AUTHORIZATION_CONDITIONAL_EFFECT_COMPOSITION_PARTIAL`.
+Historical evidence and frozen harness preserved; no held-out/cumulative claim,
+post-outcome product repair or infrastructure work. Stop after R5.113.
+
+## Preserved R5.112 primary interface composition and frozen exposed transfer
 
 The [report](results/phase5c/R5_112-REPORT.md) and
 [matrix](results/phase5c/R5_112-CAPABILITY-MATRIX.md) retain **16/20 local successes

@@ -12,6 +12,19 @@ _reference_mutation = execute_mutation
 _reference_touched = set()
 
 
+class ReferenceInputs(dict):
+    def __init__(self, values, supplied=None):
+        super().__init__(values)
+        self.supplied = set(values) if supplied is None else set(supplied)
+
+
+def reference_defaults(op, inputs):
+    inputs = ReferenceInputs(copy.deepcopy(inputs), getattr(inputs, "supplied", set(inputs)))
+    for n, p in op["parameters"].items():
+        if n not in inputs and "default" in p: inputs[n] = copy.deepcopy(p["default"])
+    return inputs
+
+
 def reference_entities(payload):
     declared = {e["name"]: e for e in REFERENCE["facts"]["entities"]}
     entities = copy.deepcopy(payload.get("entities", {n: e["initial"] for n, e in declared.items()})) if type(payload) is dict else {n: copy.deepcopy(e["initial"]) for n, e in declared.items()}
@@ -224,10 +237,11 @@ def migrate():
 
 
 def reference_inputs(op, inputs):
-    inputs = copy.deepcopy(inputs)
+    inputs = reference_defaults(op, inputs)
     for n, p in op["parameters"].items():
         if n not in inputs:
-            raise Failure(p["missing_error"])
+            if "default" not in p: raise Failure(p["missing_error"])
+            inputs[n] = copy.deepcopy(p["default"])
         if p["encoding"] == "utc_day":
             try:
                 day = inputs[n]
@@ -253,12 +267,13 @@ def reference_operation(op, inputs):
         raise Failure(op["missing_error"])
     computed = computation_evaluate(op["computations"], before, {"before": target}, inputs) if "computations" in op else {}
     for g in op["guards"]:
-        if not reference_condition(g["predicate"], before, {"primary": target} if target else {}, {**inputs, **computed}):
+        if not reference_condition(g["predicate"], before, {"primary": target} if target else {}, ReferenceInputs({**inputs, **computed}, inputs.supplied | set(computed))):
             raise Failure(g["error"])
     if op["kind"] == "list":
         return sorted(copy.deepcopy(rows), key=lambda r: tuple(r[n] for n in op["order"]))
     candidate = copy.deepcopy(target) if target else {}
     for w in op["changes"]:
+        if "when" in w and not reference_condition(w["when"], before, {"primary": target}, inputs): continue
         s = w["source"]
         value = copy.deepcopy(computed[s["name"]] if s["kind"] == "computed" else inputs[s["name"]] if s["kind"] == "parameter" else s["value"])
         n = w["field"]
@@ -304,9 +319,12 @@ def reference_main(base_main):
             return base_main()
         parser = argparse.ArgumentParser(prog=op["command"])
         for n, p in op["parameters"].items(): parser.add_argument(p["flag"], dest=n, default=argparse.SUPPRESS)
-        inputs = vars(parser.parse_args(sys.argv[2:]))
+        inputs = ReferenceInputs(vars(parser.parse_args(sys.argv[2:])))
         for n, p in op["parameters"].items():
-            if n not in inputs: raise Failure(p["missing_error"])
+            if n not in inputs:
+                if "default" not in p: raise Failure(p["missing_error"])
+                inputs[n] = copy.deepcopy(p["default"])
+                continue
             if p["encoding"] == "json":
                 try: inputs[n] = json.loads(inputs[n])
                 except ValueError: raise Failure(p["invalid_error"])

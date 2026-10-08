@@ -190,8 +190,9 @@ def compose(ir, f):
         require(op["kind"] in ("create", "update", "delete", "list"), "Bounded one-record effects")
         e = op["entity"]
         for n, p in op["parameters"].items():
-            keys(p, ("type", "flag", "encoding", "missing_error", "invalid_error") + (("conversion",) if "conversion" in p else ()))
+            keys(p, ("type", "flag", "encoding", "missing_error", "invalid_error") + (("conversion",) if "conversion" in p else ()) + (("default",) if "default" in p else ()))
             value_type(p["type"], types)
+            if "default" in p: require(valid_value(p["default"], erase(p["type"])) and p["encoding"] != "utc_day", "Explicit typed omission default, not null coercion or migration authority")
             require(p["flag"].startswith("--") and p["encoding"] in ("text", "json", "utc_day") and all(type(p[k]) is str and bool(p[k]) for k in ("missing_error", "invalid_error")), "Explicit parameter transport/errors")
             if p["encoding"] == "utc_day":
                 require(same_type(p["type"], dict(type="timestamp", domain=[])) and p.get("conversion") == dict(source="gregorian_utc_day", target="instant", boundary="start_of_day", timezone="UTC", precision="seconds", invalid="reject"), "Exact date-to-instant representation authority")
@@ -213,7 +214,10 @@ def compose(ir, f):
         require(set(op["order"]) <= set(types[e]) and len(set(op["order"])) == len(op["order"]), "Declared listing key projection")
         fields = []
         for w in op["changes"]:
-            keys(w, ("field", "source", "operation", "invalid_error"))
+            keys(w, ("field", "source", "operation", "invalid_error") + (("when",) if "when" in w else ()))
+            if "when" in w:
+                require(op["kind"] == "update", "Conditional primary assignments only on existing update contracts")
+                validate_condition(w["when"], types, {"primary": e}, params)
             require(w["field"] in types[e] and w["field"] not in fields, "Unique typed write target")
             fields.append(w["field"])
             require(op["kind"] == "create" or w["field"] != identities[e], "Identity is immutable")

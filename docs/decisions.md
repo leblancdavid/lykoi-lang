@@ -1,5 +1,38 @@
 # Experimental decisions
 
+## R5.113 — Compose permission/effect graphs; count exact duration scaling
+
+Keep actor identity, authenticated principal, role, owner, permission predicate and
+authorization decision distinct. A declared ordinary actor input is a selector, not
+authentication. Bind trusted actors only from an explicitly authorized controlled
+embedding context; the CLI cannot supply one. Reuse finite selection, nominal typed
+predicates and guards for role/owner/set checks. Recheck committed observations at
+the existing one-store commit; permission failure is a declared unchanged error.
+
+Condition bounded existing update assignments and ordinary creations on typed before
+state. Name created images and require exact acyclic dependencies; derive build order
+without changing declared durable occurrence order. Potentially unselected image sources
+need identical selection authority or an explicit typed literal alternative. Separate
+shared operation observations from independently named UUID observations. No Policy,
+Audit, Event or Recurrence core primitive is warranted.
+
+Nullable-to-nonnull refinement needs explicit rejection or authorized fallback. Preserve
+supplied presence through omission defaults and admit only safe directional nullable
+target widening. Historical roles and creation defaults remain separate authorities.
+The 16-node inherited addition profile cannot define arbitrary N*86400, and integer
+values do not themselves acquire duration dimension. Admit the smallest explicit
+checked elapsed-day-to-seconds relation as K26: proposed kernel **25 → 26**.
+
+Tradeoff: bounded generic CLI interfaces traverse the complete normal path, while
+trusted-host successful execution remains a separate generated-host probe and related
+historical-field migration is not integrated. Choose partial classification. B18/B19
+now stop at inherited source-role disputes before sealing; their conditional/permission
+candidates do not establish authoring or behavioral success. Preserve B17/B20 disputes,
+all historical results and generic lock through transfer. R5.114 should investigate
+explicit historical-state and trusted execution-verification interfaces only after
+source authority is obtained; it is not begun.
+See the [R5.113 report](../benchmark/results/phase5c/R5_113-REPORT.md).
+
 ## R5.112 — Bind primary interfaces explicitly; distinguish dates from durations
 
 Introduce primary signed-64/nullable field and explicit supplied actor-context facets

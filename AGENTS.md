@@ -7,7 +7,20 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
-- Current primary interface policy is R5.112:
+- Current authorization/effect policy is R5.113:
+  `R5_113_AUTHORIZATION_CONDITIONAL_EFFECT_COMPOSITION_PARTIAL`. Read
+  `docs/prewrite-conditional-composition-v1.md` and `benchmark/results/phase5c/R5_113-REPORT.md`
+  before extension. Prewrite role/owner/set predicates, controlled-host actor binding,
+  conditional reference updates/atomic creations, acyclic created images and explicit
+  nullable refinement compose. Supplied actors are selectors, not authenticated principals;
+  CLI has no trusted authentication source. Exact elapsed-day conversion admits K26:
+  proposed kernel 25 -> 26. Related historical-field migration and sealed trusted-host
+  success verification remain seams. Generic lock stays fixed through transfer: 16
+  successes B01–B16, B17/B20 disputes, B18/B19 now inherited historical-role authority
+  disputes at formalization, no new downstream stages. No role migration is guessed from
+  new-user defaults. Preserve all historical evidence. Stop after R5.113; R5.114 is a
+  recommendation only. No new infrastructure, unrestricted arithmetic or semantic family.
+- Preserved primary interface policy is R5.112:
   `R5_112_PRIMARY_INTERFACE_COMPOSITION_PARTIAL`. Read
   `docs/primary-value-interfaces-v1.md` and `benchmark/results/phase5c/R5_112-REPORT.md`
   before extension. Signed-64/nullable primary fields, explicitly supplied primary

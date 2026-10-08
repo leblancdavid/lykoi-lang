@@ -1,0 +1,82 @@
+{
+  "baseline_round": "R5.112",
+  "baseline_source_sha256": "06f1b28f3e6fad1fc4b945672ccf07d9e36da1b01ae98b519683f366475d7e15",
+  "baseline_kernel": [
+    "record schema",
+    "field",
+    "finite sequence",
+    "var",
+    "literal",
+    "equals",
+    "and",
+    "not",
+    "contains",
+    "selection",
+    "trim",
+    "map(trim)",
+    "stable_unique",
+    "transition",
+    "instant",
+    "before",
+    "operation contract",
+    "cardinality",
+    "input presence",
+    "typed resource/capability authority",
+    "durable state",
+    "atomic commit",
+    "finite nonempty-path reachability"
+  ],
+  "preserved_additions": [
+    {
+      "id": "K24",
+      "concept": "checked_integer_addition",
+      "reason": "Finite map does not supply the deterministic mathematical sum; replacing stored values cannot construct x+adjustment without this meaning",
+      "evidence": [
+        "inventory signed adjustment",
+        "retry successor",
+        "cardinality-derived ordinal"
+      ]
+    },
+    {
+      "id": "K25",
+      "concept": "fixed_duration_instant_displacement",
+      "original_candidate": "offset",
+      "reason": "Instant observation/ordering and integer addition do not define dimensioned UTC instant translation; fixed elapsed-second displacement adds independently observable meaning",
+      "evidence": [
+        "session/subscription expiry",
+        "ordinary synthetic successor",
+        "Gregorian/negative/fraction/range vectors"
+      ]
+    }
+  ],
+  "baseline_count": 25,
+  "additions": [
+    {
+      "id": "K26",
+      "concept": "checked_elapsed_day_duration_conversion",
+      "relation": "seconds=N*86400",
+      "input": "signed_64_integer_elapsed_days",
+      "output": "signed_64_duration_seconds",
+      "negative": "preserve",
+      "overflow": "reject",
+      "reason": "16 additions can produce a coefficient of N at most 2^16=65536 < 86400. Constants do not increase that coefficient. K25 accepts duration, not an integer. Exact dimensioned conversion is new meaning; no loop or host coercion is licensed.",
+      "evidence": [
+        "Five-domain normal pipeline successor displacement",
+        "Native signed-64 positive/negative boundaries",
+        "Selected null and conversion overflow preserve durable bytes",
+        "UTC leap-day and upper-year rejection"
+      ]
+    }
+  ],
+  "final_count": 26,
+  "constructs": {
+    "prewrite_role_owner_permitted_set": "existing predicate/selection/cardinality/type/guard composition K01-K10/K17-K22",
+    "trusted_actor_host_source": "K04/K17/K20 interface authority, no authentication infrastructure",
+    "conditional_update_and_creation": "selection/predicate/operation/atomic composition K10/K17/K21/K22",
+    "created_record_dependency_images": "typed value and operation bindings K01/K02/K04/K17/K20/K22; backend topological assembly",
+    "nullable_integer_and_instant_refinement": "K04/K05/K17/K19/K20 type/presence/guard/literal composition; no coercion",
+    "related_parameter_omission_defaults": "existing K05/K19/K17 authority; not historical migration",
+    "runtime_elapsed_day_conversion": "new explicit K26; not calendar recurrence or unrestricted multiplication"
+  },
+  "claim": "Proposed architectural kernel 25 to 26; not minimum proof. No benchmark-specific primitive."
+}
