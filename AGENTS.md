@@ -7,6 +7,14 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R6.1: `R6_1_P6_A04_RESEARCH_REVIEW_PREPARED`.
+  Read `benchmark/results/phase6/R6_1-REPORT.md` and `r6_1/HUMAN-REVIEW.md`.
+  Exact R5.116A P6-A04 pip source verified; valid unapproved FRC and conditional
+  acceptance plan prepared. CLARIFY raw-space URL and wheel-filename name token;
+  fixture identities unfixed. No approval/evaluation/test execution or semantic work.
+  Kernel 26/model 0.3/compiler 0.3.0/history preserved. R5 numbering ends at R5.121;
+  new rounds use R6.x without renumbering history. Stop after preparation; owner
+  decision and separate authorization required before any later attempt. No P6-A05 access.
 - Latest round R5.121: `R5_121_P6_A03_POST_FIRST_EVALUATION_COMPLETE`.
   Read `benchmark/results/phase6/R5_121-REPORT.md` and immutable
   `r5_121/P6_A03_POST_FIRST_RESULT.json`. Separately authorized linked local attempt:

@@ -1,0 +1,160 @@
+{
+  "candidate_id": "R6.1/P6-A04/acceptance-candidate/1",
+  "purpose": "research-evaluation-only",
+  "status": "CANDIDATE_CLARIFICATION_REQUIRED_NOT_EXECUTABLE",
+  "fixed_before_authoring": true,
+  "expectation_basis": "preserved-source",
+  "source": {
+    "id": "P6-A04/pypa/pip#13139/preserved-body",
+    "capture_sha256": "811cd95034444011f50e13572ebd10c810692b9e26b6355863d1aae3aa1af747",
+    "body_sha256": "f252041309b04c2c95b5cb3dbf3211d108b8793c92f560a43ee389b89f323a2b"
+  },
+  "frc": {
+    "candidate_id": "R6.1/P6-A04/candidate",
+    "revision": 1,
+    "canonical_sha256": "ec79136bf1c1bcee109e9d739299bd594587029c6b70203fcac1a768edc801a0"
+  },
+  "independence": {
+    "generated_implementation_access": false,
+    "review_context": "SAME_AGENT",
+    "same_model": true,
+    "cognitive_independence": "NOT_ESTABLISHED",
+    "role_separation": "Unregistered source-only preparation; no verifier credential fabricated"
+  },
+  "checks": [
+    {
+      "id": "A04-T1",
+      "obligations": [
+        "A04-E1",
+        "A04-I1"
+      ],
+      "source_quote": "`pip` should correctly parse the `install_requires` and install the local wheel, even if its path contains spaces.",
+      "inputs": [
+        "Exact source setup.py with shell-expanded working directory and raw-space local file URL",
+        "Accessible source-designated wheel under my folder",
+        "pip install --verbose ."
+      ],
+      "observable": "Requirement parsing and metadata preparation outcome",
+      "expected": {
+        "selected_expectation": "No space-caused parsing rejection for the clarified accepted input",
+        "condition": "Resolve A04-Q1 and A04-Q2 and pin fixture prerequisites",
+        "alternatives": []
+      },
+      "state_effects": "Parsing alone does not establish installation; T2 observes target state",
+      "error_behavior": "Reported requirement parsing/metadata failure must not occur solely due to the space",
+      "status": "CONDITIONAL_NOT_RUN"
+    },
+    {
+      "id": "A04-T2",
+      "obligations": [
+        "A04-E2",
+        "A04-I2",
+        "A04-I3"
+      ],
+      "source_quote": "`pip` should correctly parse the `install_requires` and install the local wheel, even if its path contains spaces.",
+      "inputs": [
+        "T1 source recipe in isolated target environment with all other prerequisites satisfied",
+        "Locally pinned source-designated wheel; no preinstalled dependency masking installation"
+      ],
+      "observable": "Install outcome and independently inspected containing-package/dependency state and local-artifact correspondence",
+      "expected": {
+        "selected_expectation": "Containing package my-local-package 0.1.0 and designated local wheel installed; no remote or wrong-artifact substitute",
+        "condition": "Resolve A04-Q1 and A04-Q2 and pin fixture prerequisites",
+        "alternatives": []
+      },
+      "state_effects": "Target environment gains containing package and designated dependency; source files need no modification to satisfy the accepted-input branch",
+      "error_behavior": "No successful verdict from parsing alone; unrelated errors have no invented expected outcomes",
+      "status": "CONDITIONAL_NOT_RUN"
+    },
+    {
+      "id": "A04-T3",
+      "obligations": [
+        "A04-E1",
+        "A04-I1",
+        "A04-E2",
+        "A04-I2",
+        "A04-I3"
+      ],
+      "source_quote": "pipefunc-0.46.0-py3-none-any.whl @ file://$(pwd)/my folder/pipefunc-0.46.0-py3-none-any.whl",
+      "inputs": [
+        "Compare original raw-space URL with a space-encoded URL while holding artifact and name constant"
+      ],
+      "observable": "Which input is required to parse and install",
+      "expected": {
+        "selected_expectation": null,
+        "condition": "Resolve A04-Q1 and A04-Q2 and pin fixture prerequisites",
+        "alternatives": [
+          [
+            "Accept the source raw-space URL unchanged",
+            "Require a legitimately clarified encoded URL; revise source/contract identities"
+          ],
+          [
+            "Retain exact wheel-filename token and require the specified artifact installation",
+            "Use a clarified project-name token; new linked candidate needed"
+          ]
+        ]
+      },
+      "state_effects": "Installation effects required only for a clarified eligible input",
+      "error_behavior": "No pass/fail expectation for the excluded spelling without authority",
+      "status": "CONDITIONAL_NOT_RUN"
+    },
+    {
+      "id": "A04-T4",
+      "obligations": [
+        "A04-E1",
+        "A04-E2",
+        "A04-I1",
+        "A04-I2",
+        "A04-I3"
+      ],
+      "source_quote": "pipefunc-0.46.0-py3-none-any.whl @ file://$(pwd)/my folder/pipefunc-0.46.0-py3-none-any.whl",
+      "inputs": [
+        "Compare original wheel-filename token before @ with an authoritatively clarified project-name token while holding URL/artifact constant"
+      ],
+      "observable": "Which name spelling is required to parse and select/install the wheel",
+      "expected": {
+        "selected_expectation": null,
+        "condition": "Resolve A04-Q1 and A04-Q2 and pin fixture prerequisites",
+        "alternatives": [
+          [
+            "Accept the source raw-space URL unchanged",
+            "Require a legitimately clarified encoded URL; revise source/contract identities"
+          ],
+          [
+            "Retain exact wheel-filename token and require the specified artifact installation",
+            "Use a clarified project-name token; new linked candidate needed"
+          ]
+        ]
+      },
+      "state_effects": "Correct designated artifact required in either clarified successful branch",
+      "error_behavior": "No rejection or success oracle for the alternate name is supplied by the issue",
+      "status": "CONDITIONAL_NOT_RUN"
+    }
+  ],
+  "fixture": {
+    "prerequisites": [
+      "Accessible genuine local wheel and otherwise satisfiable containing-package installation are fixture prerequisites, not inferred guarantees for malformed wheels or unrelated dependency failures.",
+      "The reproduction shell expands $(pwd) before setup.py execution; replacing that placeholder with the working directory preserves the source recipe, not an encoding/name correction."
+    ],
+    "unfixed": "Wheel URL preserved, not fetched. Wheel/backend/dependency hashes and compatible versions not provided; must be fixed before executable acceptance.",
+    "reported_platforms": [
+      "macOS",
+      "Ubuntu"
+    ],
+    "platform_limit": "Reported environments are source context, not an exhaustive platform guarantee"
+  },
+  "preservation_requirements": [
+    "Keep the designated local artifact and containing-package recipe in the exact-input interpretation; accepting a different package is not success.",
+    "Retain the intended path including its space and local-wheel selection; no renaming directory as a workaround.",
+    "No blanket no-space/invalid-requirement/unrelated pip behavior is inferred; controlled comparisons are conditional, not invented regression oracles."
+  ],
+  "coverage_limitations": [
+    "Four proposed groups, all conditional, zero executed; not a complete executable research_plan.",
+    "No universal package-manager correctness, pip backend responsibility, upstream endorsement or held-out generalization established.",
+    "Same-agent/model source interpretation; acceptance independent of generated software, not independent cognition.",
+    "No native payload; clarified exact expectations and fixture identities require a newly bound plan/review before approval or evaluation."
+  ],
+  "native_plan": null,
+  "approved": false,
+  "sealed": false
+}

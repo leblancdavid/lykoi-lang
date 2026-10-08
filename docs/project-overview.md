@@ -75,6 +75,17 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R6.1 — `R6_1_P6_A04_RESEARCH_REVIEW_PREPARED`.**
+[Report](../benchmark/results/phase6/R6_1-REPORT.md),
+[human review](../benchmark/results/phase6/r6_1/HUMAN-REVIEW.md): exact preserved
+`pypa/pip#13139` source verified; valid unapproved FRC and source-derived conditional
+acceptance plan prepared. Requested local-wheel parsing/installation despite path
+spaces; raw-space URL and wheel-filename name-token acceptance need clarification.
+No approval, evaluation or test execution. Kernel 26/model 0.3/compiler 0.3.0 and
+16/20 exposed historical successes preserved. R5 ends historically at R5.121;
+new work uses R6.x without renumbering history. **Stop after preparation; await owner
+clarification and exact approval before a separately authorized attempt.** No P6-A05 access.
+
 **R5.121 — `R5_121_P6_A03_POST_FIRST_EVALUATION_COMPLETE`.**
 [Report](../benchmark/results/phase6/R5_121-REPORT.md),
 [terminal linked record](../benchmark/results/phase6/r5_121/P6_A03_POST_FIRST_RESULT.json):

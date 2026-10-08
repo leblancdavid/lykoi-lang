@@ -1,5 +1,15 @@
 # Phase 5: comparative maintenance benchmark
 
+## R6.1 P6-A04 research approval preparation
+
+[Report](results/phase6/R6_1-REPORT.md) and
+[human review](results/phase6/r6_1/HUMAN-REVIEW.md):
+`R6_1_P6_A04_RESEARCH_REVIEW_PREPARED`. Preserved pip source verified;
+unapproved valid FRC and conditional source-derived acceptance. Recommendation:
+clarify raw-space URL and wheel-filename name-token acceptance. No evaluation/tests,
+new semantics or infrastructure; kernel 26/history unchanged. R6.x begins after
+historical R5.121. Stop after preparation, no P6-A05 access.
+
 ## R5.121 P6-A03 linked post-first-result evaluation
 
 [Report](results/phase6/R5_121-REPORT.md) and

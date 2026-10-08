@@ -1,5 +1,16 @@
 # Experimental decisions
 
+## R6.1 — Keep pip accepted-input decisions visible before research approval
+
+[P6-A04 review](../benchmark/results/phase6/r6_1/HUMAN-REVIEW.md) proposes the
+literal source reproduction and retains raw-space URL/name-token questions. Prefer
+source fidelity, but do not silently normalize the URL or substitute a project name
+using remembered packaging behavior. Tradeoff: a conditional non-executable plan
+cannot yet support evaluation, while preserving the actual externally authored input
+and avoiding an invented validity ruling. Internal fixing-layer choice remains free;
+fixture identities need fixing before executable approval. No approval or semantics
+added; source changes would require linked clarification and fresh exact identities.
+
 ## R5.120A — Local experiments consume human decisions without production authority
 
 Adopt [local execution 1](local-research-execution-v1.md) and

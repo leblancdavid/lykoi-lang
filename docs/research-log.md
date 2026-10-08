@@ -1,5 +1,19 @@
 # Lykoi research log
 
+## R6.1 P6-A04 research review preparation (2026-10-08)
+
+**`R6_1_P6_A04_RESEARCH_REVIEW_PREPARED`**;
+[report](../benchmark/results/phase6/R6_1-REPORT.md),
+[owner review](../benchmark/results/phase6/r6_1/HUMAN-REVIEW.md).
+Exact R5.116A-preserved pip issue verified. Existing FRC tooling validates the
+unapproved five-obligation candidate; four acceptance groups remain conditional.
+Raw-space URL/name-token acceptance need explicit clarification; source does not
+incorporate standards to settle validity. Subprocess failure context does not mandate
+a particular fixing layer. Same-agent/model source-only review; no cognitive independence,
+upstream endorsement or held-out claim. No tests/evaluation/authoring/compiler/backend
+work. Kernel 26/history preserved; fresh clean Git identity and unchanged implementation
+manifest retained with honest recording chronology. Stop at preparation; no P6-A05 access.
+
 ## R5.121 P6-A03 linked post-first-result evaluation (2026-10-08)
 
 **`R5_121_P6_A03_POST_FIRST_EVALUATION_COMPLETE`**;

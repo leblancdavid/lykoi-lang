@@ -20,6 +20,15 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R6.1 prepares P6-A04 for human research review.**
+[Report](benchmark/results/phase6/R6_1-REPORT.md) and
+[review](benchmark/results/phase6/r6_1/HUMAN-REVIEW.md):
+`R6_1_P6_A04_RESEARCH_REVIEW_PREPARED`. Exact preserved pip source verified;
+valid unapproved contract and conditional acceptance plan. Clarify raw-space URL
+and requirement-name spelling before approval. No evaluation/tests or semantic work;
+kernel 26/history preserved. New numbering is R6.x; R5 records retain their identities.
+Stop after preparation; no P6-A05 access.
+
 **R5.121 records the linked P6-A03 semantic evaluation.**
 [Report](benchmark/results/phase6/R5_121-REPORT.md):
 `R5_121_P6_A03_POST_FIRST_EVALUATION_COMPLETE`; post-first-result

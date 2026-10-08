@@ -8,6 +8,15 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R6.1 — `R6_1_P6_A04_RESEARCH_REVIEW_PREPARED`.**
+Read the [report](../benchmark/results/phase6/R6_1-REPORT.md) and
+[owner review](../benchmark/results/phase6/r6_1/HUMAN-REVIEW.md).
+Exact preserved pip source verified; unapproved valid candidate and conditional
+plan await clarification of raw-space URL/name-token acceptance. No evaluation or
+tests executed; implementation/kernel 26/history unchanged. New identifiers are
+R6.x; historical R5 records retain their identities. Stop after preparation; no
+approval, evaluation, semantic development or P6-A05 access authorized.
+
 **Latest round: R5.121 — `R5_121_P6_A03_POST_FIRST_EVALUATION_COMPLETE`.**
 Read the [report](../benchmark/results/phase6/R5_121-REPORT.md) and immutable
 [post-first-result record](../benchmark/results/phase6/r5_121/P6_A03_POST_FIRST_RESULT.json).
