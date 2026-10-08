@@ -75,6 +75,19 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R5.121 — `R5_121_P6_A03_POST_FIRST_EVALUATION_COMPLETE`.**
+[Report](../benchmark/results/phase6/R5_121-REPORT.md),
+[terminal linked record](../benchmark/results/phase6/r5_121/P6_A03_POST_FIRST_RESULT.json):
+`STRUCTURAL_COVERAGE_FAILURE`. Exact revision-2 artifacts/human permission/local
+receipt verified; fresh unchanged implementation snapshot and 146 baseline tests,
+validation/safety pass. FRC passed, structural coverage rejected six unmapped obligations;
+BDI/adequacy/V1/authoring/compilation/acceptance NOT_REACHED. No Redis-compatible target
+or behavioral verdict; qualified mapping/composition boundary, not proven kernel
+insufficiency. Kernel 26, original approval-boundary first result and history preserved.
+Previously exposed linked research, not blinded generalization. Stop after publication;
+general ordered-transformation/mapping/session-scope research is only a separately
+authorizable recommendation, with no repairs or other-source access in this round.
+
 **R5.120A — `R5_120A_LOCAL_RESEARCH_EXECUTION_READY`.**
 [Report](../benchmark/results/phase6/R5_120A-REPORT.md),
 [local interface](local-research-execution-v1.md) and

@@ -8,6 +8,16 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R5.121 — `R5_121_P6_A03_POST_FIRST_EVALUATION_COMPLETE`.**
+Read the [report](../benchmark/results/phase6/R5_121-REPORT.md) and immutable
+[post-first-result record](../benchmark/results/phase6/r5_121/P6_A03_POST_FIRST_RESULT.json).
+Exact approval/local receipt valid; FRC passed, structural coverage halted with six
+unmapped obligations. BDI through verification NOT_REACHED. No authoring/compiler/
+Redis acceptance or repairs; kernel 26 and original first result preserved. This is
+linked exposed research, not a replacement/blinded attempt or kernel impossibility.
+Stop after publication; general capability work or another attempt requires separate
+authorization. No other-source access is authorized.
+
 **Latest round: R5.120A — `R5_120A_LOCAL_RESEARCH_EXECUTION_READY`.**
 Read the [report](../benchmark/results/phase6/R5_120A-REPORT.md),
 [local interface](local-research-execution-v1.md) and

@@ -7,6 +7,15 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R5.121: `R5_121_P6_A03_POST_FIRST_EVALUATION_COMPLETE`.
+  Read `benchmark/results/phase6/R5_121-REPORT.md` and immutable
+  `r5_121/P6_A03_POST_FIRST_RESULT.json`. Separately authorized linked local attempt:
+  exact revision-2 approval/artifacts and receipt valid, FRC PASS, structural coverage
+  `STRUCTURAL_COVERAGE_FAILURE` (six unmapped obligations). All downstream NOT_REACHED;
+  no authoring/compiler/Redis acceptance, no kernel-impossibility claim. Kernel 26 and
+  original first result NEEDS_CLARIFICATION / RESEARCH_APPROVER_UNAVAILABLE preserved.
+  Stop after terminal publication; no repairs/retries or other-source access. General
+  mapping/ordered transformation/session-scope investigation needs separate authorization.
 - Latest round R5.120A: `R5_120A_LOCAL_RESEARCH_EXECUTION_READY`.
   Read `docs/local-research-execution-v1.md`,
   `docs/phase6-generalization-protocol-r5.120a.md` and

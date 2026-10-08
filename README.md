@@ -20,6 +20,15 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R5.121 records the linked P6-A03 semantic evaluation.**
+[Report](benchmark/results/phase6/R5_121-REPORT.md):
+`R5_121_P6_A03_POST_FIRST_EVALUATION_COMPLETE`; post-first-result
+`STRUCTURAL_COVERAGE_FAILURE`. Exact approval/artifacts/local receipt verified;
+FRC passed, six obligations unmapped at structural coverage. All downstream stages
+NOT_REACHED, no executable or Redis acceptance. Kernel 26 and original first result
+preserved; 146 baseline tests and validation/safety pass. Stop after publication;
+general capability investigation requires separate authorization.
+
 **R5.120A qualifies lightweight local research execution.**
 [Report](benchmark/results/phase6/R5_120A-REPORT.md),
 [local interface](docs/local-research-execution-v1.md) and

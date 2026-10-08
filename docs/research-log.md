@@ -1,5 +1,23 @@
 # Lykoi research log
 
+## R5.121 P6-A03 linked post-first-result evaluation (2026-10-08)
+
+**`R5_121_P6_A03_POST_FIRST_EVALUATION_COMPLETE`**;
+[report](../benchmark/results/phase6/R5_121-REPORT.md),
+[immutable linked result](../benchmark/results/phase6/r5_121/P6_A03_POST_FIRST_RESULT.json):
+`STRUCTURAL_COVERAGE_FAILURE`. Retained exact project-owner approval plus current
+separate attempt permission legitimately consumed locally. Artifact identities and
+receipt valid; fresh unchanged 26-concept snapshot, 146 baseline tests, validation/safety
+pass. FRC validates; six obligations lack qualified structural mappings. H2 generic
+effect retention is not an executed ACL processor. All downstream stages NOT_REACHED;
+no executable, Redis probe/acceptance or behavioral verdict. Actual limitation is
+structural semantic integration, not proven new-kernel meaning or infrastructure failure.
+Ordered rule/set processing, membership/precedence and scoped session state deserve
+separate general composability investigation; no implementation or adapter repair here.
+Previously exposed procedural source and same-agent/model interpretation disclosed.
+Original NEEDS_CLARIFICATION / RESEARCH_APPROVER_UNAVAILABLE first result, approved
+artifacts and history preserved. Stopped at terminal publication; no other-source access.
+
 ## R5.120A local research execution qualification (2026-10-08)
 
 **`R5_120A_LOCAL_RESEARCH_EXECUTION_READY`**;

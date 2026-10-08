@@ -1,5 +1,16 @@
 # Phase 5: comparative maintenance benchmark
 
+## R5.121 P6-A03 linked post-first-result evaluation
+
+[Report](results/phase6/R5_121-REPORT.md) and
+[immutable linked result](results/phase6/r5_121/P6_A03_POST_FIRST_RESULT.json):
+`R5_121_P6_A03_POST_FIRST_EVALUATION_COMPLETE` / `STRUCTURAL_COVERAGE_FAILURE`.
+Exact-approved local receipt valid, FRC passes, structural coverage halts on six
+unmapped obligations. Downstream NOT_REACHED, no authoring/compiler/Redis execution.
+Kernel 26 and original approval-boundary first result preserved; exposed linked research,
+not blinded generalization or proof of kernel insufficiency. Stop after publication;
+no repairs, retries or other-source access.
+
 ## R5.120A prospective local research execution
 
 [Local execution 1](../docs/local-research-execution-v1.md),
