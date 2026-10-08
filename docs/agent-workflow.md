@@ -8,6 +8,15 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R5.120 — `R5_120_P6_A03_FIRST_EVALUATION_COMPLETE`.**
+Read the [report](../benchmark/results/phase6/R5_120-REPORT.md) and immutable
+P6-A03 first result: NEEDS_CLARIFICATION / RESEARCH_APPROVER_UNAVAILABLE.
+Exact human approval and approved identities recorded; no authenticated controller
+credentials supplied. No evaluation/seal or semantic stages reached, no Redis
+capability verdict; kernel 26/history unchanged. Stop after publication, no repair
+or retry. A linked later attempt requires separate authorization and legitimate
+authority provisioning under the existing R5.118A mechanism.
+
 **Latest round: R5.118A — `R5_118A_RESEARCH_EVALUATION_AUTHORITY_READY`.**
 Read the [report](../benchmark/results/phase6/R5_118A-REPORT.md),
 [research approval interface](research-evaluation-approval-v1.md) and

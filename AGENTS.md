@@ -7,6 +7,14 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R5.120: `R5_120_P6_A03_FIRST_EVALUATION_COMPLETE`.
+  Read `benchmark/results/phase6/R5_120-REPORT.md` and immutable
+  `r5_120/P6_A03_FIRST_RESULT.json`: NEEDS_CLARIFICATION /
+  RESEARCH_APPROVER_UNAVAILABLE at authenticated approval. Exact human statement
+  and revision-2 hashes verified; no legitimate controller credentials or evaluation
+  authority. All semantic stages NOT_REACHED; no Redis capability verdict. Kernel 26,
+  historical results preserved. Stop; no repair/retry or other-source evaluation.
+  Later linked attempt needs separate authorization and real authority provisioning.
 - Latest round R5.118A: `R5_118A_RESEARCH_EVALUATION_AUTHORITY_READY`.
   Read `docs/research-evaluation-approval-v1.md`,
   `docs/phase6-generalization-protocol-r5.118a.md` and

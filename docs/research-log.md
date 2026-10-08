@@ -1,5 +1,19 @@
 # Lykoi research log
 
+## R5.120 P6-A03 first approval-boundary result (2026-10-08)
+
+**`R5_120_P6_A03_FIRST_EVALUATION_COMPLETE`**; [report](../benchmark/results/phase6/R5_120-REPORT.md),
+[first result](../benchmark/results/phase6/r5_120/P6_A03_FIRST_RESULT.json):
+`NEEDS_CLARIFICATION / RESEARCH_APPROVER_UNAVAILABLE`. Exact user/project-owner
+approval recorded as conversation evidence; no authenticated controller approver/
+evaluator credentials supplied. Approved FRC/acceptance/source identities and
+pre-author expectations verified. No approval/evaluation/seal issued, all semantic
+stages NOT_REACHED; Redis expressiveness/backend/behavior not measured. Fresh snapshot,
+146 baseline tests and validation/safety pass; kernel 26 and historical results
+unchanged. First result persisted before publication/audit; no repair or retry.
+Stop; legitimate authority provisioning and separate linked-attempt authorization
+are prerequisites to later capability investigation.
+
 ## R5.119A inherited Redis ACL evidence and candidate revision (2026-10-08)
 
 **`R5_119A_REDIS_RESEARCH_CONTRACT_READY_FOR_APPROVAL`**; see the

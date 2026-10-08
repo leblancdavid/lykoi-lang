@@ -20,6 +20,14 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R5.120 records the P6-A03 first approval-boundary result.**
+[Report](benchmark/results/phase6/R5_120-REPORT.md): `NEEDS_CLARIFICATION /
+RESEARCH_APPROVER_UNAVAILABLE`. Exact human approval and artifact identities recorded;
+authenticated controller credentials unavailable. No evaluation authority or native
+semantic stage reached, zero Redis acceptance executions. Kernel 26 unchanged,
+146 fresh baseline tests and validation/safety pass; historical evidence preserved.
+Stop; separate linked authorization and legitimate authority provisioning required.
+
 **R5.119A resolves P6-A03 ACL ordering for bounded human research approval.**
 [Revision report](benchmark/results/phase6/R5_119A-REPORT.md) and
 [human review](benchmark/results/phase6/r5_119a/HUMAN-REVIEW.md) use pinned pre-issue

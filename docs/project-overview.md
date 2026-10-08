@@ -75,6 +75,17 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R5.120 — `R5_120_P6_A03_FIRST_EVALUATION_COMPLETE`.**
+[Report](../benchmark/results/phase6/R5_120-REPORT.md) and
+[first result](../benchmark/results/phase6/r5_120/P6_A03_FIRST_RESULT.json):
+`NEEDS_CLARIFICATION / RESEARCH_APPROVER_UNAVAILABLE` at research authorization.
+Exact human approval preserved and revision-2 identities verified; authenticated
+administrator-provisioned approver/evaluator credentials unavailable. No controller
+approval/evaluation/seal; all semantic stages NOT_REACHED, zero Redis acceptance.
+Kernel 26 unchanged; 146 fresh baseline tests and validation/safety pass. Historical
+evidence preserved. Stop; a linked later attempt needs separate authorization and
+legitimate authority provisioning. Redis representability remains unmeasured.
+
 **R5.119A — `R5_119A_REDIS_RESEARCH_CONTRACT_READY_FOR_APPROVAL`.**
 [Revision report](../benchmark/results/phase6/R5_119A-REPORT.md) and
 [human review](../benchmark/results/phase6/r5_119a/HUMAN-REVIEW.md) resolve P6-A03
