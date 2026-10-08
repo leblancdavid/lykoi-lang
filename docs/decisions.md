@@ -1,5 +1,36 @@
 # Experimental decisions
 
+## R5.116A — Precommit procedural selection and disclose exposure
+
+Prospectively replace R5.116's unavailable blinded-curator prerequisite with a fixed,
+committed public-source selection frame/order/budget, full candidate dispositions and
+source-derived candidate obligations. Retain R5.116's blocked record unchanged. See the
+[policy](../benchmark/results/phase6/r5_116a/SELECTION-POLICY.md) and
+[report](../benchmark/results/phase6/R5_116A-REPORT.md).
+
+Tradeoff: transparent procedure limits outcome-driven cherry-picking without proving
+independent cognition or eliminating eligibility judgment. The curator/development
+context sees sources; opaque summaries do not undo exposure. Five project functions
+are represented, not a population sample. Reporter requests may lack upstream authority;
+retain original desired behavior and clarification rather than correcting it from
+solutions or selecting replacements for difficulty. Hash-bound ordinary files and one
+policy commit suffice; no isolation, qualification or controller expansion. Stop after
+curation with implementation unchanged and no requirement evaluated.
+
+## R5.116 — Stop when curator independence cannot be established
+
+Apply the explicit pre-selection stop rule rather than treating a fresh subagent
+session as proof of separation. The available interface supplies no documented means
+to exclude Lykoi repository guidance/access or establish curator-only artifact storage.
+The development agent cannot curate after receiving capability/history context.
+See the [audit/report](../benchmark/results/phase6/R5_116-REPORT.md).
+
+Record the limitation with zero selected sources and no artificial manifest. Retain
+R5.115 methodology readiness and R5.114 implementation evidence. Ordinary external
+curator separation with simple retained files/hashes is the outstanding prerequisite;
+no new qualification, activation or transport framework is justified. Stop before
+source inspection, requirement exposure or evaluation.
+
 ## R5.115 — Test unfamiliar software before expanding or optimizing
 
 Preserve R5.114 as the exact implementation baseline and transition to independent

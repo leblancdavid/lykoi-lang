@@ -8,6 +8,21 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R5.116A — `R5_116A_PROCEDURAL_OPEN_SOURCE_BATCH_CURATED`.**
+Read the [report](../benchmark/results/phase6/R5_116A-REPORT.md). This prospective
+methodological amendment uses a precommitted selection policy and fully logged public
+issue curation. Five selected sources/candidate acceptance records are hash-bound;
+all require clarification. The curation agent saw sources: no blinded or pristine
+held-out claim. Implementation stays R5.114. Stop after curation; no R5.117 or source-
+informed capability development authorized. Do not overwrite fixed batch records.
+
+**Preserved R5.116 — `R5_116_BLOCKED_CURATOR_SEPARATION_UNAVAILABLE`.**
+Read the [separation audit/report](../benchmark/results/phase6/R5_116-REPORT.md).
+No requirement was selected or inspected and no batch manifest exists. The available
+subagent interface does not establish exclusion of repository guidance/access;
+a fresh session alone is insufficient. Stop before sourcing or exposure until a
+genuinely separate curator is available. No R5.117 evaluation is ready or authorized.
+
 **Current research transition is R5.115: `R5_115_PHASE6_RESEARCH_READY`.**
 The [Phase 5 baseline](phase5-baseline-r5.115.md),
 [Phase 6 plan and source policy](phase6-research-plan-r5.115.md) and

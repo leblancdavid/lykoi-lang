@@ -7,6 +7,19 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R5.116A: `R5_116A_PROCEDURAL_OPEN_SOURCE_BATCH_CURATED`.
+  Read `benchmark/results/phase6/R5_116A-REPORT.md`. Five externally authored,
+  procedurally selected issues are hash-bound under precommitted policy
+  `c840083469efc9f94920ebce41103a51092ac915`; no blinded/held-out claim. All five
+  candidate acceptance records require clarification; this curation session saw sources.
+  Implementation remains R5.114 (26 concepts, 16/20 exposed successes). Stop after
+  curation; no R5.117 evaluation or semantic development authorized. R5.116 preserved.
+- Preserved R5.116: `R5_116_BLOCKED_CURATOR_SEPARATION_UNAVAILABLE`.
+  Read `benchmark/results/phase6/R5_116-REPORT.md`. No source selected/inspected,
+  no acceptance records or batch manifests, no requirement delivery. Available
+  subagents do not establish exclusion of repository guidance/access; fresh sessions
+  alone are insufficient. Stop before sourcing/exposure until a genuinely separated
+  curator is available. R5.117 is not ready; implementation remains R5.114.
 - Current research transition is R5.115: `R5_115_PHASE6_RESEARCH_READY`.
   Read `docs/phase5-baseline-r5.115.md`, `docs/phase6-research-plan-r5.115.md`
   and `docs/phase6-generalization-protocol-r5.115.md`. This is a documentation-only

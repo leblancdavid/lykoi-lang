@@ -20,6 +20,21 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R5.116A curated five externally authored, procedurally selected requirements.**
+The [report](benchmark/results/phase6/R5_116A-REPORT.md) records
+`R5_116A_PROCEDURAL_OPEN_SOURCE_BATCH_CURATED` under a policy committed before issue
+inspection: five projects, 12 inspected candidates, seven rule-based exclusions,
+exact source hashes and five candidate acceptance records. All require clarification.
+This is not blinded curation or held-out evidence; implementation is unchanged and
+no requirement was evaluated. Stop after curation; R5.117 needs separate authorization.
+
+**Preserved R5.116 stopped before curation: curator separation unavailable.**
+The [independence audit/report](benchmark/results/phase6/R5_116-REPORT.md)
+records `R5_116_BLOCKED_CURATOR_SEPARATION_UNAVAILABLE`: no requirements were
+searched, selected or inspected; no acceptance records or batch manifests exist.
+Development received no requirement semantics. Implementation is unchanged and
+the first requirement is not ready for R5.117. Independent curation remains outstanding.
+
 **R5.115 establishes Phase 6 generalization research readiness.**
 The [preserved Phase 5 baseline](docs/phase5-baseline-r5.115.md),
 [research plan/source-independence policy](docs/phase6-research-plan-r5.115.md) and

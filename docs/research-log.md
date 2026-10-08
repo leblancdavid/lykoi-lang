@@ -1,5 +1,38 @@
 # Lykoi research log
 
+## R5.116A procedural public-source curation (2026-10-08)
+
+**`R5_116A_PROCEDURAL_OPEN_SOURCE_BATCH_CURATED`.** Prospective amendment to
+R5.116's unchanged blocked result: externally authored, procedurally selected material,
+not independently blinded curation. Policy commit `c840083469efc9f94920ebce41103a51092ac915`
+predates the first issue request. Oldest-first since 2025-01-01 within five preselected
+project functions produced five sources from 12 inspected candidates/seven recorded
+exclusions. Source/acceptance/provenance hashes, manifest and opaque summary are fixed.
+See the [report](../benchmark/results/phase6/R5_116A-REPORT.md).
+
+All five candidate obligation records retain material clarification needs. Source
+authority is reporter-level, not upstream approval. Development curation saw bodies,
+including an excluded solution-containing jq issue; no linked fixes/comments or project
+implementation files opened. No source rewriting, evaluation or Lykoi changes. A console
+Unicode display failure was corrected using the existing saved capture, without refetch.
+Preserve 26 proposed concepts, existing profiles and 16/20 exposed-success evidence.
+Stop after curation; no R5.117 authorization or held-out generalization claim.
+
+## R5.116 independent curation separation assessment (2026-10-08)
+
+**`R5_116_BLOCKED_CURATOR_SEPARATION_UNAVAILABLE`.** The development context
+already contains prohibited capability/history information, and the available task
+interface provides no documented repository-guidance/access exclusion or curator-only
+artifact retention control. No independent external curator was supplied. A fresh
+agent context alone cannot establish the requested independence. See the
+[audit/report](../benchmark/results/phase6/R5_116-REPORT.md).
+
+Stopped before public-source search or inspection: zero screened/selected requirements,
+no source/acceptance records, no batch manifest, no source exposure or evaluation.
+Only limitation/status documentation changes; implementation remains unchanged.
+Independent curation is still outstanding and R5.117 is not ready. No success
+classification, candidate hashes, independent acceptance or generalization claim.
+
 ## R5.115 Phase 6 research transition (2026-10-08)
 
 **`R5_115_PHASE6_RESEARCH_READY`.** Preserved exact clean R5.114 commit

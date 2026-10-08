@@ -75,6 +75,26 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R5.116A — `R5_116A_PROCEDURAL_OPEN_SOURCE_BATCH_CURATED`.** A prospective
+procedural amendment produced five externally authored public issue requests from jq,
+curl, Redis, pip and pytest. The selection policy was committed before issue inspection;
+12 candidates were inspected, five selected and seven excluded under fixed rules.
+Sources, provenance and candidate acceptance records are hash-bound; the
+[report](../benchmark/results/phase6/R5_116A-REPORT.md) records all ambiguities/exposure.
+This is **externally authored, procedurally selected evaluation material**, not blinded
+curation or held-out evidence. All five require clarification. Implementation stays
+R5.114; no requirement evaluation or informed semantic change occurred. Stop after
+curation. R5.117 requires separate authorization, snapshot and clarification authority.
+
+**Preserved R5.116 — `R5_116_BLOCKED_CURATOR_SEPARATION_UNAVAILABLE`.** The available
+agent interface does not establish a curator context/access boundary excluding Lykoi
+guidance and repository information. Per the round's stop rule, no source was searched,
+selected or inspected; zero requirements, acceptance records or batch manifests exist.
+No requirement semantics were delivered and the implementation remains unchanged.
+See the [separation audit/report](../benchmark/results/phase6/R5_116-REPORT.md).
+Independent curation remains outstanding; the first requirement is not ready for R5.117.
+Stop before selection/exposure until an independently separated curator is available.
+
 **R5.115 — `R5_115_PHASE6_RESEARCH_READY`.** Documentation-only transition to
 testing unfamiliar-software generalization before broad semantic expansion.
 The [Phase 5 baseline](phase5-baseline-r5.115.md) preserves exact clean commit
