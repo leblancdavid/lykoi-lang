@@ -1,0 +1,469 @@
+[
+  {
+    "id": "missing-list",
+    "steps": [
+      {
+        "op": "list",
+        "args": {},
+        "expected": {
+          "ok": []
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "blank-create",
+    "steps": [
+      {
+        "op": "create",
+        "args": {
+          "label": " \t ",
+          "witness": "present",
+          "material": "routine"
+        },
+        "expected": {
+          "error": "invalid_label"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "missing-id",
+    "steps": [
+      {
+        "op": "seal",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "not_found"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "allowed-sequence",
+    "steps": [
+      {
+        "op": "create",
+        "args": {
+          "label": "  Batch A  ",
+          "witness": "present",
+          "material": "routine"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "unsealed",
+            "witness": "present",
+            "material": "routine"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "list",
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "created_at": "2026-01-01T00:00:00Z",
+              "label": "  Batch A  ",
+              "phase": "unsealed",
+              "witness": "present",
+              "material": "routine"
+            }
+          ]
+        },
+        "unchanged": true
+      },
+      {
+        "op": "seal",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "sealed",
+            "witness": "present",
+            "material": "routine"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "seal",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_transition"
+        },
+        "unchanged": true
+      },
+      {
+        "op": "set_gate",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "absent"
+        },
+        "expected": {
+          "error": "gate_locked"
+        },
+        "unchanged": true
+      },
+      {
+        "op": "set_gate",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "present"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "sealed",
+            "witness": "present",
+            "material": "routine"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "list",
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "created_at": "2026-01-01T00:00:00Z",
+              "label": "  Batch A  ",
+              "phase": "sealed",
+              "witness": "present",
+              "material": "routine"
+            }
+          ]
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "blocked-start",
+    "steps": [
+      {
+        "op": "create",
+        "args": {
+          "label": "  Batch A  ",
+          "witness": "absent",
+          "material": "routine"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "unsealed",
+            "witness": "absent",
+            "material": "routine"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "seal",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "gate_required"
+        },
+        "unchanged": true
+      },
+      {
+        "op": "set_gate",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "present"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "unsealed",
+            "witness": "present",
+            "material": "routine"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "seal",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "sealed",
+            "witness": "present",
+            "material": "routine"
+          }
+        },
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "id": "special-no-implicit-exception",
+    "steps": [
+      {
+        "op": "create",
+        "args": {
+          "label": "  Batch A  ",
+          "witness": "absent",
+          "material": "fragile"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "unsealed",
+            "witness": "absent",
+            "material": "fragile"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "seal",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "gate_required"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "invalid-gate",
+    "steps": [
+      {
+        "op": "create",
+        "args": {
+          "label": "  Batch A  ",
+          "witness": "present",
+          "material": "routine"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "unsealed",
+            "witness": "present",
+            "material": "routine"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "set_gate",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "invalid"
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "missing-gate",
+    "steps": [
+      {
+        "op": "create",
+        "args": {
+          "label": "  Batch A  ",
+          "witness": "present",
+          "material": "routine"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "unsealed",
+            "witness": "present",
+            "material": "routine"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "set_gate",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "corrupt-domain",
+    "initial": [
+      {
+        "id": "00000000-0000-4000-8000-000000000001",
+        "created_at": "2026-01-01T00:00:00Z",
+        "label": "  Batch A  ",
+        "phase": "bogus",
+        "witness": "present",
+        "material": "routine"
+      }
+    ],
+    "steps": [
+      {
+        "op": "list",
+        "args": {},
+        "expected": {
+          "error": "invalid_state"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "corrupt-duplicate",
+    "initial": [
+      {
+        "id": "00000000-0000-4000-8000-000000000001",
+        "created_at": "2026-01-01T00:00:00Z",
+        "label": "  Batch A  ",
+        "phase": "unsealed",
+        "witness": "present",
+        "material": "routine"
+      },
+      {
+        "id": "00000000-0000-4000-8000-000000000001",
+        "created_at": "2026-01-01T00:00:00Z",
+        "label": "  Batch A  ",
+        "phase": "unsealed",
+        "witness": "present",
+        "material": "routine"
+      }
+    ],
+    "steps": [
+      {
+        "op": "list",
+        "args": {},
+        "expected": {
+          "error": "invalid_state"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "corrupt-invariant",
+    "initial": [
+      {
+        "id": "00000000-0000-4000-8000-000000000001",
+        "created_at": "2026-01-01T00:00:00Z",
+        "label": "  Batch A  ",
+        "phase": "sealed",
+        "witness": "absent",
+        "material": "routine"
+      }
+    ],
+    "steps": [
+      {
+        "op": "list",
+        "args": {},
+        "expected": {
+          "error": "invalid_state"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "corrupt-blank",
+    "initial": [
+      {
+        "id": "00000000-0000-4000-8000-000000000001",
+        "created_at": "2026-01-01T00:00:00Z",
+        "label": " ",
+        "phase": "unsealed",
+        "witness": "present",
+        "material": "routine"
+      }
+    ],
+    "steps": [
+      {
+        "op": "list",
+        "args": {},
+        "expected": {
+          "error": "invalid_state"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "collision",
+    "steps": [
+      {
+        "op": "create",
+        "args": {
+          "label": "  Batch A  ",
+          "witness": "present",
+          "material": "routine"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "unsealed",
+            "witness": "present",
+            "material": "routine"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "create",
+        "args": {
+          "label": "  Batch A  ",
+          "witness": "present",
+          "material": "routine"
+        },
+        "expected": {
+          "error": "id_collision"
+        },
+        "unchanged": true
+      }
+    ]
+  }
+]

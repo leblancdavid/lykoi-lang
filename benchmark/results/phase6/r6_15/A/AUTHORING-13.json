@@ -1,0 +1,105 @@
+{
+  "round": "R6.15",
+  "session": "AUTHORING-13",
+  "track": "A",
+  "task_order": ["T1", "T3"],
+  "phase": "base",
+  "handoff": "FINAL_IMMUTABLE",
+  "start_utc": "2026-10-08T22:38:49.6867604Z",
+  "end_utc": "2026-10-08T22:40:09.230030Z",
+  "timing_disclosure": {
+    "start_basis": "First explicit UTC clock observation, after initial authorized reads and git status; exact first-tool timestamp unavailable in visible tool output.",
+    "first_tool_start_utc": null,
+    "end_basis": "UTC clock observation after final code hash/whitespace check, before writing this handoff record.",
+    "deadline": "600 seconds from first tool; work completed promptly, but exact full-session elapsed time requires harness metadata.",
+    "cooperative_limit": "Model reasoning and dispatch cannot be forcibly interrupted by the task tool."
+  },
+  "tool_accounting": {
+    "leaf_tool_calls_including_this_record_write": 11,
+    "parallel_wrapper_calls": 1,
+    "tokens": null,
+    "token_disclosure": "No token counts or API cost estimated; coordinator may recover actual telemetry afterward."
+  },
+  "tasks": {
+    "T1": {
+      "first_candidate": "A/first/T1.py",
+      "final_candidate": "A/base/T1.py",
+      "sha256_first_and_final": "928a66c8de9cf8fae9df3ef6df5e74d644f65d4b59be557828c61df98ebf495b",
+      "first_frozen_before_tests": true,
+      "first_candidate_self_test_outcome": "PASS",
+      "acceptance_outcome": "NOT_RUN_BY_AUTHOR",
+      "repair_count": 0,
+      "actual_failures": [],
+      "test_batches": [
+        {
+          "batch": 1,
+          "subprocess": "python -B -c (inline author-chosen assertions, runpy loads frozen first candidate)",
+          "timeout_ms": 30000,
+          "outcome": "PASS",
+          "observations": 132601,
+          "coverage": [
+            "All 131072 admitted mode/x/y triples; exact envelopes, output hex, strict amount int and clipped bool types.",
+            "Empty input; modes 0/1 at lengths 1,2,4,64,65.",
+            "Every mode 3..255 at lengths 1,2,3,4,64,65; input-limit precedence.",
+            "Reserved mode 2 excluded from contract assertions; implementation rejects it as MODE."
+          ],
+          "stdout": "T1 batch1 PASS 132601 observations; first/base identical; SHA256 928a66c8de9cf8fae9df3ef6df5e74d644f65d4b59be557828c61df98ebf495b"
+        }
+      ],
+      "difficulties": "No implementation blocker. Care required for structural error precedence, nonwrapping addition, and raw > 200 rather than >= 200.",
+      "capabilities_used": ["Byte indexing", "Integer addition and saturation", "Boolean comparison", "Exact dictionaries", "Bytes-to-hex output"]
+    },
+    "T3": {
+      "first_candidate": "A/first/T3.py",
+      "final_candidate": "A/base/T3.py",
+      "sha256_first_and_final": "7e15a803ae7a1ed1b42a9973a1d90414aa49296f12f6a146fb13b613a98738b8",
+      "first_frozen_before_tests": true,
+      "first_candidate_self_test_outcome": "PASS",
+      "acceptance_outcome": "NOT_RUN_BY_AUTHOR",
+      "repair_count": 0,
+      "actual_failures": [],
+      "test_batches": [
+        {
+          "batch": 1,
+          "subprocess": "python -B -c (inline author-chosen assertions, runpy loads frozen first candidate)",
+          "timeout_ms": 30000,
+          "outcome": "PASS",
+          "observations": 131549,
+          "coverage": [
+            "Empty input, all 256 one-byte inputs, all 65536 two-byte inputs.",
+            "All 65536 four-byte inputs whose bytes are in 0..15; ORDER before OVERLAP and mandatory input order.",
+            "Repeated zero-width windows at every endpoint 0..15, counts 1..8.",
+            "Ninth-record occurrence-limit precedence over invalid/missing fields, lengths through 64; input-limit precedence above 64.",
+            "Nine directed later-record range/truncation/order/overlap cases and three oversized invalid inputs.",
+            "Exact envelopes and output hex, strict window integer and rejection offset types."
+          ],
+          "stdout": "T3 batch1 PASS 131549 observations; first/base identical; SHA256 7e15a803ae7a1ed1b42a9973a1d90414aa49296f12f6a146fb13b613a98738b8"
+        }
+      ],
+      "difficulties": "No implementation blocker. Care required for immediate per-field checks, ninth-record precedence, all-earlier-end comparison, and valid duplicate zero-width windows.",
+      "capabilities_used": ["Sequential bounded parsing", "Ordered list construction", "Comparison against every prior window", "Early rejection", "Original-byte output preservation"]
+    }
+  },
+  "checks": {
+    "first_and_final_bytes_identical": true,
+    "code_sha256_and_trailing_whitespace_check": "PASS",
+    "test_execution": "Two direct Python subprocesses total, one batch per task, each with 30000 ms timeout; neither timed out.",
+    "additional_execution": "One final Python subprocess hashes and checks authored code whitespace and reports UTC; does not execute solve.",
+    "bytecode_files": "Python invoked with -B."
+  },
+  "disclosure": {
+    "fresh_context": "No prior conversational scored implementation supplied in this authoring context; inherited harness/repository guidance present.",
+    "inherited": "Full repository AGENTS.md guidance supplied by harness, including historical research summaries, kernel/VM capability descriptions and benchmark boundaries. This is known inherited guidance, not an independent isolation attestation.",
+    "authorized_reads": ["tasks/COMMON.md", "tasks/T1.md", "tasks/T3.md", "PROTOCOL.md"],
+    "other_reads": "git status --short reports untracked r6_15 directory only; self-authored first/base code read for testing, equality, hashes and whitespace.",
+    "unauthorized_accesses": [],
+    "other_track_or_other_task_content": "Not inspected.",
+    "historical_scored_code_acceptance_sealed_prepare_coordinator_transcripts": "Not inspected.",
+    "coordinator_feedback": "None received or used.",
+    "model": "Harness declares openai/gpt-6.1-sol; actual routing/model identity not independently attested.",
+    "reasoning": "Harness default reasoning used; configuration cannot be attested.",
+    "isolation": "Cooperative filesystem/inherited-guidance firewall, not OS-enforced isolation.",
+    "delegation": "None.",
+    "edits": "Only own A/base code, A/first snapshots and this record; apply_patch used for all edits."
+  }
+}

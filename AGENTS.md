@@ -7,6 +7,33 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R6.16: `R6_16_ARCHITECTURAL_COMPARISON_INCONCLUSIVE`.
+  Read `benchmark/results/phase6/R6_16-REPORT.md` and
+  `experiments/value_added_r6_16/PROTOCOL.md`. Two new persistent applications:
+  direct Python executable but0/2 full base acceptance (wrong blank-label error);
+  shared intent B and genuine production-semantic C each2/2, all four new changes
+  pass for every track, no regressions. C base first candidates rejected/one repair
+  each; no C-specific scored behavioral advantage. Static type/binding/effect checks
+  real; legacy impact omits extension facts. Actual author telemetry; setup usage/
+  billing and attested isolation/reasoning unavailable, stages CONTAMINATED_UNENFORCED.
+  Kernel26/production/VM/775 protected-history identities preserved. Lean B-shaped
+  path locally sufficient, broader architecture unresolved. Stop after publication;
+  no automatic architectural changes/replay/P6-A04 acceptance/P6-A05 access.
+  Further work requires explicit owner authorization.
+  Read `r6_16/INHERITED-CONTEXT-SUPPLEMENT.md` beside the report: coordinator's
+  harness guidance already supplied R6.16 findings before this run. Author exclusion
+  unattested; INHERITED_R6_16_OUTCOME_PRIMING, no independent replication/causal claim.
+- Latest round R6.15: `R6_15_EXPLORATORY_COMPARISON_ONLY`.
+  Read `benchmark/results/phase6/R6_15-REPORT.md` and `r6_15/PROTOCOL.md`.
+  Fresh synthetic tasks: Python4/4, frozen VM3/4; changes2/2 versus1/2, zero
+  passing-to-failing regressions. Actual per-call tokens recovered for six fresh
+  contexts; billing/attested separation/reasoning unavailable. Staged comparison
+  CONTAMINATED_UNENFORCED despite no premature-access markers. Preserve failed
+  T2/native-list limitation, initial snapshots, seals and raw results. Matched
+  T1/T3 pair locally favors Python; no general superiority. Kernel26/VM/687
+  protected/history identities unchanged. Stop after publication; no automatic
+  language changes/replay/P6-A04 acceptance/P6-A05 access. Further work needs
+  explicit owner authorization.
 - Latest round R6.14: `R6_14_FINITE_RELATIONS_SUPPORTED`.
   Read `benchmark/results/phase6/R6_14-REPORT.md` and both r6_14 frozen protocols.
   Unchanged VM XOR8/addmod8/parity8 plans57/9/43 nodes pass65,536/65,536/256 unique

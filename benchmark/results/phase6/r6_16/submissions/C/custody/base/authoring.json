@@ -1,0 +1,57 @@
+{
+  "round": "R6.16",
+  "track": "C",
+  "application": "custody",
+  "scope": "BASE_ONLY",
+  "intent": "benchmark/results/phase6/r6_16/submissions/C/custody/base/intent.json",
+  "schema": "experiments/value_added_r6_16/intent-2.schema.json",
+  "started_at_utc": null,
+  "first_recorded_clock_utc": "2026-10-08T23:18:31.5574235Z",
+  "last_verification_at_utc": "2026-10-08T23:19:19.7059153Z",
+  "timestamp_note": "First tool was git status; its exact start timestamp was not captured. Recorded clocks bound 48.1484918 seconds of subsequent work; this metadata was written afterward.",
+  "tools": {
+    "individual_calls_including_this_metadata_write": 12,
+    "parallel_dispatch_wrappers": 1,
+    "breakdown": {"bash": 5, "read": 4, "apply_patch": 3},
+    "available_and_used": ["git status", "read", "apply_patch", "PowerShell", "python -B", "snapshot.py", "generate.py"]
+  },
+  "model": "openai/gpt-6.1-sol",
+  "tokens": null,
+  "api_cost": null,
+  "initial_candidate": {
+    "sealed_before_any_selftest": true,
+    "sha256": "a60bb4c33c42df3fc030f51d608549fd4fe3874b5aab09df799efb36305f026d",
+    "seal_method": "python -B experiments/value_added_r6_16/snapshot.py <intent path>",
+    "parent_verified": true
+  },
+  "repairs": 1,
+  "repair_description": "Changed creation input binding values for label, witness and material from their field names to null, as required by production scalar input preservation. Initial snapshot retained; final intent remains at the handoff path.",
+  "selftests": {
+    "batches": 2,
+    "timeout_seconds_per_batch": 30,
+    "behavioral_batches": 0,
+    "results": [
+      {
+        "batch": 1,
+        "kind": "genuine Track C production validation/lowering/generation",
+        "result": "failed",
+        "error": "INVALID_TYPED_SCALAR_RELATION",
+        "reason": "Input preservation has no transform",
+        "observed_at_utc": "2026-10-08T23:19:04.9270146Z"
+      },
+      {
+        "batch": 2,
+        "kind": "genuine Track C production validation/lowering/generation",
+        "result": "completed_without_error",
+        "observed_at_utc": "2026-10-08T23:19:19.7059153Z",
+        "outputs": [
+          "benchmark/results/phase6/r6_16/submissions/C/custody/base/selftest.py",
+          "benchmark/results/phase6/r6_16/submissions/C/custody/base/selftest.ir.json"
+        ]
+      }
+    ]
+  },
+  "unsupported_semantics_observed": [],
+  "qualification": "Successful production generation only; generated application behavior was not executed and acceptance was not inspected or run.",
+  "handoff": "BASE_ONLY_STOP"
+}

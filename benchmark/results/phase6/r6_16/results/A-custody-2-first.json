@@ -1,0 +1,1213 @@
+{
+  "track": "A",
+  "domain": "custody",
+  "stage": 2,
+  "candidate": "first",
+  "utc": "2026-10-08T23:28:07.028184+00:00",
+  "status": "AVAILABLE",
+  "validation_seconds": 0.0015175000298768282,
+  "observations": [
+    {
+      "group": "base",
+      "case": "missing-list",
+      "step": 0,
+      "op": "list",
+      "expected": {
+        "ok": []
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": []}\n",
+      "tool_seconds": 0.06396930001210421,
+      "observed": {
+        "ok": []
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "blank-create",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "error": "invalid_label"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\n",
+      "tool_seconds": 0.054089499986730516,
+      "observed": {
+        "error": "invalid_input"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": false
+    },
+    {
+      "group": "base",
+      "case": "missing-id",
+      "step": 0,
+      "op": "seal",
+      "expected": {
+        "error": "not_found"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"not_found\"}\n",
+      "tool_seconds": 0.05374800006393343,
+      "observed": {
+        "error": "not_found"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "allowed-sequence",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "unsealed",
+          "witness": "present",
+          "material": "routine"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"routine\", \"phase\": \"unsealed\", \"witness\": \"present\"}}\n",
+      "tool_seconds": 0.05701320001389831,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "routine",
+          "phase": "unsealed",
+          "witness": "present"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "allowed-sequence",
+      "step": 1,
+      "op": "list",
+      "expected": {
+        "ok": [
+          {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "unsealed",
+            "witness": "present",
+            "material": "routine"
+          }
+        ]
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": [{\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"routine\", \"phase\": \"unsealed\", \"witness\": \"present\"}]}\n",
+      "tool_seconds": 0.050101100001484156,
+      "observed": {
+        "ok": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "material": "routine",
+            "phase": "unsealed",
+            "witness": "present"
+          }
+        ]
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "allowed-sequence",
+      "step": 2,
+      "op": "seal",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "sealed",
+          "witness": "present",
+          "material": "routine"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"routine\", \"phase\": \"sealed\", \"witness\": \"present\"}}\n",
+      "tool_seconds": 0.05631519993767142,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "routine",
+          "phase": "sealed",
+          "witness": "present"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "allowed-sequence",
+      "step": 3,
+      "op": "seal",
+      "expected": {
+        "error": "invalid_transition"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_transition\"}\n",
+      "tool_seconds": 0.052652299986220896,
+      "observed": {
+        "error": "invalid_transition"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "allowed-sequence",
+      "step": 4,
+      "op": "set_gate",
+      "expected": {
+        "error": "gate_locked"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"gate_locked\"}\n",
+      "tool_seconds": 0.05418420000933111,
+      "observed": {
+        "error": "gate_locked"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "allowed-sequence",
+      "step": 5,
+      "op": "set_gate",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "sealed",
+          "witness": "present",
+          "material": "routine"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"routine\", \"phase\": \"sealed\", \"witness\": \"present\"}}\n",
+      "tool_seconds": 0.058345999917946756,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "routine",
+          "phase": "sealed",
+          "witness": "present"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "allowed-sequence",
+      "step": 6,
+      "op": "list",
+      "expected": {
+        "ok": [
+          {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "sealed",
+            "witness": "present",
+            "material": "routine"
+          }
+        ]
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": [{\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"routine\", \"phase\": \"sealed\", \"witness\": \"present\"}]}\n",
+      "tool_seconds": 0.05604469997342676,
+      "observed": {
+        "ok": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "material": "routine",
+            "phase": "sealed",
+            "witness": "present"
+          }
+        ]
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "blocked-start",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "unsealed",
+          "witness": "absent",
+          "material": "routine"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"routine\", \"phase\": \"unsealed\", \"witness\": \"absent\"}}\n",
+      "tool_seconds": 0.058535899966955185,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "routine",
+          "phase": "unsealed",
+          "witness": "absent"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "blocked-start",
+      "step": 1,
+      "op": "seal",
+      "expected": {
+        "error": "gate_required"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"gate_required\"}\n",
+      "tool_seconds": 0.05428569996729493,
+      "observed": {
+        "error": "gate_required"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "blocked-start",
+      "step": 2,
+      "op": "set_gate",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "unsealed",
+          "witness": "present",
+          "material": "routine"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"routine\", \"phase\": \"unsealed\", \"witness\": \"present\"}}\n",
+      "tool_seconds": 0.057953699957579374,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "routine",
+          "phase": "unsealed",
+          "witness": "present"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "blocked-start",
+      "step": 3,
+      "op": "seal",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "sealed",
+          "witness": "present",
+          "material": "routine"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"routine\", \"phase\": \"sealed\", \"witness\": \"present\"}}\n",
+      "tool_seconds": 0.05736450001131743,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "routine",
+          "phase": "sealed",
+          "witness": "present"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "special-no-implicit-exception",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "unsealed",
+          "witness": "absent",
+          "material": "fragile"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"fragile\", \"phase\": \"unsealed\", \"witness\": \"absent\"}}\n",
+      "tool_seconds": 0.056092799990437925,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "fragile",
+          "phase": "unsealed",
+          "witness": "absent"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "special-no-implicit-exception",
+      "step": 1,
+      "op": "seal",
+      "expected": {
+        "error": "gate_required"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"gate_required\"}\n",
+      "tool_seconds": 0.0514027999015525,
+      "observed": {
+        "error": "gate_required"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "invalid-gate",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "unsealed",
+          "witness": "present",
+          "material": "routine"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"routine\", \"phase\": \"unsealed\", \"witness\": \"present\"}}\n",
+      "tool_seconds": 0.05457809998188168,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "routine",
+          "phase": "unsealed",
+          "witness": "present"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "invalid-gate",
+      "step": 1,
+      "op": "set_gate",
+      "expected": {
+        "error": "invalid_input"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\n",
+      "tool_seconds": 0.050949799944646657,
+      "observed": {
+        "error": "invalid_input"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "missing-gate",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "unsealed",
+          "witness": "present",
+          "material": "routine"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"routine\", \"phase\": \"unsealed\", \"witness\": \"present\"}}\n",
+      "tool_seconds": 0.05668340006377548,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "routine",
+          "phase": "unsealed",
+          "witness": "present"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "missing-gate",
+      "step": 1,
+      "op": "set_gate",
+      "expected": {
+        "error": "invalid_input"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_input\"}\n",
+      "tool_seconds": 0.050692700082436204,
+      "observed": {
+        "error": "invalid_input"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "corrupt-domain",
+      "step": 0,
+      "op": "list",
+      "expected": {
+        "error": "invalid_state"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_state\"}\n",
+      "tool_seconds": 0.05382069991901517,
+      "observed": {
+        "error": "invalid_state"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "corrupt-duplicate",
+      "step": 0,
+      "op": "list",
+      "expected": {
+        "error": "invalid_state"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_state\"}\n",
+      "tool_seconds": 0.05462409998290241,
+      "observed": {
+        "error": "invalid_state"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "corrupt-invariant",
+      "step": 0,
+      "op": "list",
+      "expected": {
+        "error": "invalid_state"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_state\"}\n",
+      "tool_seconds": 0.053901700070127845,
+      "observed": {
+        "error": "invalid_state"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "corrupt-blank",
+      "step": 0,
+      "op": "list",
+      "expected": {
+        "error": "invalid_state"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_state\"}\n",
+      "tool_seconds": 0.05809079995378852,
+      "observed": {
+        "error": "invalid_state"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "collision",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "unsealed",
+          "witness": "present",
+          "material": "routine"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"routine\", \"phase\": \"unsealed\", \"witness\": \"present\"}}\n",
+      "tool_seconds": 0.0596541000995785,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "routine",
+          "phase": "unsealed",
+          "witness": "present"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "base",
+      "case": "collision",
+      "step": 1,
+      "op": "create",
+      "expected": {
+        "error": "id_collision"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"id_collision\"}\n",
+      "tool_seconds": 0.056787800043821335,
+      "observed": {
+        "error": "id_collision"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "s1",
+      "case": "new-return-cycle",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "unsealed",
+          "witness": "present",
+          "material": "routine"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"routine\", \"phase\": \"unsealed\", \"witness\": \"present\"}}\n",
+      "tool_seconds": 0.06031420000363141,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "routine",
+          "phase": "unsealed",
+          "witness": "present"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "s1",
+      "case": "new-return-cycle",
+      "step": 1,
+      "op": "unseal",
+      "expected": {
+        "error": "invalid_transition"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_transition\"}\n",
+      "tool_seconds": 0.050760500016622245,
+      "observed": {
+        "error": "invalid_transition"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "s1",
+      "case": "new-return-cycle",
+      "step": 2,
+      "op": "seal",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "sealed",
+          "witness": "present",
+          "material": "routine"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"routine\", \"phase\": \"sealed\", \"witness\": \"present\"}}\n",
+      "tool_seconds": 0.05754970002453774,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "routine",
+          "phase": "sealed",
+          "witness": "present"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "s1",
+      "case": "new-return-cycle",
+      "step": 3,
+      "op": "unseal",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "unsealed",
+          "witness": "present",
+          "material": "routine"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"routine\", \"phase\": \"unsealed\", \"witness\": \"present\"}}\n",
+      "tool_seconds": 0.056143099907785654,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "routine",
+          "phase": "unsealed",
+          "witness": "present"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "s1",
+      "case": "new-return-cycle",
+      "step": 4,
+      "op": "set_gate",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "unsealed",
+          "witness": "absent",
+          "material": "routine"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"routine\", \"phase\": \"unsealed\", \"witness\": \"absent\"}}\n",
+      "tool_seconds": 0.056704699993133545,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "routine",
+          "phase": "unsealed",
+          "witness": "absent"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "s1",
+      "case": "new-return-cycle",
+      "step": 5,
+      "op": "seal",
+      "expected": {
+        "error": "gate_required"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"gate_required\"}\n",
+      "tool_seconds": 0.052030400023795664,
+      "observed": {
+        "error": "gate_required"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "s1",
+      "case": "new-return-cycle",
+      "step": 6,
+      "op": "unseal",
+      "expected": {
+        "error": "invalid_transition"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_transition\"}\n",
+      "tool_seconds": 0.05478740006219596,
+      "observed": {
+        "error": "invalid_transition"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "s1",
+      "case": "return-missing",
+      "step": 0,
+      "op": "unseal",
+      "expected": {
+        "error": "not_found"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"not_found\"}\n",
+      "tool_seconds": 0.05316400004085153,
+      "observed": {
+        "error": "not_found"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "s2",
+      "case": "exception-cycle",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "unsealed",
+          "witness": "absent",
+          "material": "fragile"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"fragile\", \"phase\": \"unsealed\", \"witness\": \"absent\"}}\n",
+      "tool_seconds": 0.0570509999524802,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "fragile",
+          "phase": "unsealed",
+          "witness": "absent"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "s2",
+      "case": "exception-cycle",
+      "step": 1,
+      "op": "protect",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "sealed",
+          "witness": "absent",
+          "material": "fragile"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"fragile\", \"phase\": \"sealed\", \"witness\": \"absent\"}}\n",
+      "tool_seconds": 0.05793260002974421,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "fragile",
+          "phase": "sealed",
+          "witness": "absent"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "s2",
+      "case": "exception-cycle",
+      "step": 2,
+      "op": "list",
+      "expected": {
+        "ok": [
+          {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "sealed",
+            "witness": "absent",
+            "material": "fragile"
+          }
+        ]
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": [{\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"fragile\", \"phase\": \"sealed\", \"witness\": \"absent\"}]}\n",
+      "tool_seconds": 0.05398209998384118,
+      "observed": {
+        "ok": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "material": "fragile",
+            "phase": "sealed",
+            "witness": "absent"
+          }
+        ]
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "s2",
+      "case": "exception-cycle",
+      "step": 3,
+      "op": "protect",
+      "expected": {
+        "error": "invalid_transition"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"invalid_transition\"}\n",
+      "tool_seconds": 0.05584950000047684,
+      "observed": {
+        "error": "invalid_transition"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "s2",
+      "case": "exception-cycle",
+      "step": 4,
+      "op": "set_gate",
+      "expected": {
+        "error": "gate_locked"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"gate_locked\"}\n",
+      "tool_seconds": 0.05351849994622171,
+      "observed": {
+        "error": "gate_locked"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "s2",
+      "case": "exception-cycle",
+      "step": 5,
+      "op": "unseal",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "unsealed",
+          "witness": "absent",
+          "material": "fragile"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"fragile\", \"phase\": \"unsealed\", \"witness\": \"absent\"}}\n",
+      "tool_seconds": 0.05462409998290241,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "fragile",
+          "phase": "unsealed",
+          "witness": "absent"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "s2",
+      "case": "exception-cycle",
+      "step": 6,
+      "op": "seal",
+      "expected": {
+        "error": "gate_required"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"gate_required\"}\n",
+      "tool_seconds": 0.05259380000643432,
+      "observed": {
+        "error": "gate_required"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "s2",
+      "case": "exception-normal",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "unsealed",
+          "witness": "absent",
+          "material": "routine"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"routine\", \"phase\": \"unsealed\", \"witness\": \"absent\"}}\n",
+      "tool_seconds": 0.05637860007118434,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "routine",
+          "phase": "unsealed",
+          "witness": "absent"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "s2",
+      "case": "exception-normal",
+      "step": 1,
+      "op": "protect",
+      "expected": {
+        "error": "exception_denied"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"exception_denied\"}\n",
+      "tool_seconds": 0.050259499927051365,
+      "observed": {
+        "error": "exception_denied"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "s2",
+      "case": "exception-allowed-gate",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "unsealed",
+          "witness": "present",
+          "material": "fragile"
+        }
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": {\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"fragile\", \"phase\": \"unsealed\", \"witness\": \"present\"}}\n",
+      "tool_seconds": 0.056033700006082654,
+      "observed": {
+        "ok": {
+          "created_at": "2026-01-01T00:00:00Z",
+          "id": "00000000-0000-4000-8000-000000000001",
+          "label": "  Batch A  ",
+          "material": "fragile",
+          "phase": "unsealed",
+          "witness": "present"
+        }
+      },
+      "rejection_bytes_unchanged": null,
+      "pass_result": true
+    },
+    {
+      "group": "s2",
+      "case": "exception-allowed-gate",
+      "step": 1,
+      "op": "protect",
+      "expected": {
+        "error": "exception_denied"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"exception_denied\"}\n",
+      "tool_seconds": 0.052609500009566545,
+      "observed": {
+        "error": "exception_denied"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "s2",
+      "case": "exception-missing",
+      "step": 0,
+      "op": "protect",
+      "expected": {
+        "error": "not_found"
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"error\": \"not_found\"}\n",
+      "tool_seconds": 0.051422599935904145,
+      "observed": {
+        "error": "not_found"
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    },
+    {
+      "group": "s2",
+      "case": "corrupt-special-permitted",
+      "step": 0,
+      "op": "list",
+      "expected": {
+        "ok": [
+          {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "sealed",
+            "witness": "absent",
+            "material": "fragile"
+          }
+        ]
+      },
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\"ok\": [{\"created_at\": \"2026-01-01T00:00:00Z\", \"id\": \"00000000-0000-4000-8000-000000000001\", \"label\": \"  Batch A  \", \"material\": \"fragile\", \"phase\": \"sealed\", \"witness\": \"absent\"}]}\n",
+      "tool_seconds": 0.050252499990165234,
+      "observed": {
+        "ok": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "material": "fragile",
+            "phase": "sealed",
+            "witness": "absent"
+          }
+        ]
+      },
+      "rejection_bytes_unchanged": true,
+      "pass_result": true
+    }
+  ],
+  "source_bytes": 5215,
+  "authored_bytes": 5215,
+  "candidate_sha256": "fac47b370c0747a081e38567d9e9a5fc5f8f5d30d42aef76ad68bef1324d58f3",
+  "groups": {
+    "base": {
+      "passed": 25,
+      "total": 26
+    },
+    "s1": {
+      "passed": 8,
+      "total": 8
+    },
+    "s2": {
+      "passed": 13,
+      "total": 13
+    }
+  },
+  "accepted": false
+}

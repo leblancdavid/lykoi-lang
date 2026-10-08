@@ -1,0 +1,117 @@
+{
+  "session": "AUTHORING-24",
+  "round": "R6.15",
+  "track": "A",
+  "task_order": ["T2", "T4"],
+  "phase": "base",
+  "status": "HANDOFF_CODE_IMMUTABLE",
+  "timing": {
+    "first_tool_start_utc": null,
+    "first_tool_start_limitation": "The first tool was git status --short; its result supplied no UTC timestamp. No exact timestamp or total wall duration is invented.",
+    "start_utc_observed": "2026-10-08T22:44:30.9912916Z",
+    "start_observation": "First explicit UTC clock sample, after git status and the four authorized contract reads, before candidate creation.",
+    "end_utc_observed": "2026-10-08T22:45:54.392798+00:00",
+    "end_observation": "Final explicit UTC sample at code integrity verification. Only this authoring record and the final handoff response follow; no code edits or tests follow.",
+    "deadline_seconds": 600,
+    "exact_first_tool_to_handoff_duration_seconds": null,
+    "deadline_assessment": "Authoring completed promptly within the cooperative budget; exact first-tool-to-handoff telemetry is unavailable. Reasoning and dispatch cannot be forcibly interrupted by the task tool."
+  },
+  "artifacts": {
+    "T2": {
+      "base": "benchmark/results/phase6/r6_15/A/base/T2.py",
+      "first": "benchmark/results/phase6/r6_15/A/first/T2.py",
+      "sha256_both": "6a1688c4648744f219ab295a0f92a20ff85271fac873a7ebe74e17b92ca244db",
+      "base_matches_first": true,
+      "first_candidate_outcome": "AUTHOR_CHOSEN_SELF_TEST_PASS",
+      "scored_acceptance": "NOT_RUN",
+      "initial_candidates": 1,
+      "repairs": [],
+      "test_batches": [
+        {
+          "batch": 1,
+          "candidate": "first/T2.py",
+          "start_utc": "2026-10-08T22:45:20.201032+00:00",
+          "end_utc": "2026-10-08T22:45:20.214603+00:00",
+          "subprocess": "Direct python -B -c via shell, timeout 30000 milliseconds",
+          "observations": 1555,
+          "exit_code": 0,
+          "failures": [],
+          "coverage": "Nine explicit empty/version/truncation/order/error cases; all 5 valid counts crossed with all 256 byte values; all 251 invalid count bytes at missing-value boundary; 0 through 8 full count4 runs; three ninth-record precedence cases; three over64 inputs. Reserved version2 excluded.",
+          "equality": "Recursive exact type-sensitive dictionary/list/scalar comparison",
+          "expected_digest": "ce96b577acf405b2ec6e49fbc50199fd624d3b0b75c7a2bded755751af36043a",
+          "observed_digest": "ce96b577acf405b2ec6e49fbc50199fd624d3b0b75c7a2bded755751af36043a"
+        }
+      ]
+    },
+    "T4": {
+      "base": "benchmark/results/phase6/r6_15/A/base/T4.py",
+      "first": "benchmark/results/phase6/r6_15/A/first/T4.py",
+      "sha256_both": "64c1bc43ed3cf8d58bc1ef111f952d2f233423802d9803a8eb3b7e23de8125ba",
+      "base_matches_first": true,
+      "first_candidate_outcome": "AUTHOR_CHOSEN_SELF_TEST_PASS",
+      "scored_acceptance": "NOT_RUN",
+      "initial_candidates": 1,
+      "repairs": [],
+      "test_batches": [
+        {
+          "batch": 1,
+          "candidate": "first/T4.py",
+          "start_utc": "2026-10-08T22:45:36.428085+00:00",
+          "end_utc": "2026-10-08T22:45:38.478182+00:00",
+          "subprocess": "Direct python -B -c via shell, timeout 30000 milliseconds",
+          "observations": 349785,
+          "exit_code": 0,
+          "failures": [],
+          "coverage": "All 349525 strings of lengths0..9 over bytes40,41,0,255; all 256 single bytes; four explicit 64/65-byte input-limit and occurrence-limit cases. Repeated single-byte observations are included in the observation count, not asserted as additional unique coverage.",
+          "oracle": "Author-chosen prefix-count characterization of nesting; earliest syntax/underflow/depth failure competes with ninth-symbol limit, then EOF closure.",
+          "equality": "Exact dictionary keys and recursive scalar types",
+          "expected_digest": "544316a293aa9f14c1ab48353b2a55cb1153b26913fe06158979e5b4c77c02d9",
+          "observed_digest": "544316a293aa9f14c1ab48353b2a55cb1153b26913fe06158979e5b4c77c02d9"
+        }
+      ]
+    }
+  },
+  "candidate_preservation": "All four executable files were created in one apply_patch call, ordered T2 then T4, before either behavioral test. No executable file was subsequently edited. First candidates are never overwritten.",
+  "failures_and_repairs": "No candidate failures, subprocess failures, or repairs occurred. Full test commands and stdout remain in this session tool trace; this record retains their summaries and digests.",
+  "exposure": {
+    "authorized_contracts_read": [
+      "benchmark/results/phase6/r6_15/tasks/COMMON.md",
+      "benchmark/results/phase6/r6_15/tasks/T2.md",
+      "benchmark/results/phase6/r6_15/tasks/T4.md",
+      "benchmark/results/phase6/r6_15/PROTOCOL.md"
+    ],
+    "inherited_context": "Harness system/developer instructions, model identifier, environment metadata and repository AGENTS.md guidance were supplied before authoring. This includes historical research summaries; no historical scored implementation was read.",
+    "other_accesses": "git status --short reported the untracked r6_15 directory. Test-Path checked own A directories and first/record path existence. Direct test subprocesses loaded own first candidates and compared own base files; final integrity check read own four candidate files. No other content reads occurred.",
+    "prohibited_content_read": false,
+    "coordinator_feedback_received": false,
+    "delegation": false,
+    "isolation": "Cooperative instruction-based restrictions on shared filesystem; no OS isolation attested."
+  },
+  "difficulties_and_choices": [
+    "Error precedence requires shared input limit before task behavior, count validation before missing value, and occurrence limit before ninth-symbol interpretation.",
+    "T2 reserved version2 has no base expectation and was excluded from tests; the base implementation rejects every non1 byte with VERSION without claiming a reserved-version requirement.",
+    "Exact first-tool timestamp was not captured; first explicit UTC sample and final code-check sample are recorded with their scope."
+  ],
+  "verification": {
+    "code_trailing_whitespace": [],
+    "targeted_git_diff_check": "PASS; own code paths only. Because files are untracked, separate own-file whitespace inspection was also performed.",
+    "production_vm_history_edits": false
+  },
+  "tool_accounting": {
+    "budget": 20,
+    "top_level_invocations_including_record_write": 8,
+    "leaf_tool_invocations_including_four_parallel_reads": 11,
+    "behavioral_test_batches_per_task": 1,
+    "subprocess_timeout_seconds_per_behavioral_batch": 30,
+    "tool_elapsed_time_telemetry": "Not independently exported; test process start/end UTC samples are reported above."
+  },
+  "model_disclosure": {
+    "inherited_declared_model": "openai/gpt-6.1-sol",
+    "actual_provider_routing": "UNVERIFIED",
+    "actual_reasoning_defaults": "UNVERIFIED",
+    "tokens": null,
+    "token_note": "Actual token telemetry unavailable in this authoring context; no estimate or allocation invented.",
+    "api_cost": null
+  },
+  "handoff": "Base and first code immutable at this handoff. Stop after this record and final response; no further testing, feedback, or repair."
+}

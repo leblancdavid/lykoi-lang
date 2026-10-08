@@ -1,0 +1,53 @@
+{
+  "round": "R6.16",
+  "track": "A",
+  "application": "custody",
+  "scope": "BASE_ONLY",
+  "source": "benchmark/results/phase6/r6_16/submissions/A/custody/base/application.py",
+  "first_tool_started_at_utc": null,
+  "first_tool_timestamp_note": "Exact timestamp of first tool invocation unavailable; UTC was first captured after git status and the two permitted task reads.",
+  "first_observed_utc": "2026-10-08T23:18:40.8735730Z",
+  "base_candidate_and_verification_completed_at_utc": "2026-10-08T23:19:26.522240+00:00",
+  "model": "openai/gpt-6.1-sol",
+  "tools_available_used": ["bash", "read", "apply_patch"],
+  "tool_calls_total": 8,
+  "tool_calls_by_kind": {"bash": 4, "read": 2, "apply_patch": 2},
+  "tool_sequence": [
+    "git status --short",
+    "Read tasks/COMMON.md",
+    "Read tasks/custody.md",
+    "Capture UTC and verify source/infrastructure parent paths",
+    "Write initial application.py with apply_patch",
+    "Verify source parent and run prescribed snapshot.py before selftest",
+    "Run one local base-only selftest batch with a 30-second timeout",
+    "Write authoring.json with apply_patch"
+  ],
+  "initial_candidate_sha256": "d50b285a8b61c8a6edf24e50581f1e70adf8262657964ca4d951952ee59a5aca",
+  "snapshot_result": "First candidate sealed",
+  "candidate_count": 1,
+  "repairs": 0,
+  "final_source_equals_initial_candidate": true,
+  "selftests": {
+    "batches": 1,
+    "timeout_seconds": 30,
+    "measured_batch_seconds": 0.048777,
+    "result": "PASS",
+    "coverage": [
+      "missing store list and blank-label rejection preserving absence",
+      "creation and retained label/material",
+      "missing identity precedence",
+      "seal witness guard and repeat-transition rejection",
+      "required gate input, invalid input and active blocked-value rejection",
+      "rejected writes preserve exact bytes",
+      "same-value allowed gate write",
+      "created_at/id list ordering",
+      "provider identity collision",
+      "invalid persisted invariant rejected without repair"
+    ]
+  },
+  "tokens": null,
+  "api_cost": null,
+  "unavailable_metrics": ["actual token usage", "API cost", "exact first-tool UTC timestamp"],
+  "unsupported_base_behavior_observed": [],
+  "handoff": "BASE_ONLY; stop after base handoff"
+}

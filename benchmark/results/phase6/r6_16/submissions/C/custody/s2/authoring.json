@@ -1,0 +1,56 @@
+{
+  "round": "R6.16",
+  "track": "C",
+  "application": "custody",
+  "scope": "STAGE2_CUMULATIVE_FINAL_HANDOFF",
+  "intent": "benchmark/results/phase6/r6_16/submissions/C/custody/s2/intent.json",
+  "schema": "experiments/value_added_r6_16/intent-2.schema.json",
+  "started_at_utc": null,
+  "first_recorded_clock_utc": "2026-10-08T23:26:02.1803371Z",
+  "last_verification_at_utc": "2026-10-08T23:26:58.3888930Z",
+  "timestamp_note": "First recorded UTC clock followed git status in the first tool call. Exact first-tool start was not captured. Recorded interval is 56.2085559 seconds; metadata was written afterward.",
+  "tools": {
+    "individual_calls_including_this_metadata_write": 8,
+    "parallel_dispatch_wrappers": 1,
+    "breakdown": {"bash": 3, "read": 3, "apply_patch": 2},
+    "available_and_used": ["git status", "read", "apply_patch", "PowerShell", "python -B", "snapshot.py", "generate.py"]
+  },
+  "model": "openai/gpt-6.1-sol",
+  "tokens": null,
+  "api_cost": null,
+  "change": "Added protect: first require phase=unsealed with invalid_transition, then witness=absent AND material=fragile with exception_denied, then write only phase=sealed. Broadened invariant to phase!=sealed OR witness=present OR (witness=absent AND material=fragile). Retained all previous commands, creation bindings and field declarations.",
+  "previous_files_preserved": true,
+  "initial_candidate": {
+    "sealed_before_any_selftest": true,
+    "seal_calls": 1,
+    "sha256": "879e0dd4eda1bcccf5981c01daa487d7f0f5107cedfd1018e1b0a3789c08490e",
+    "seal_method": "python -B experiments/value_added_r6_16/snapshot.py <intent path>",
+    "parent_verified": true,
+    "final_equals_initial": true
+  },
+  "repairs": 0,
+  "selftests": {
+    "batches": 1,
+    "timeout_seconds_per_batch": 30,
+    "behavioral_batches": 0,
+    "results": [
+      {
+        "batch": 1,
+        "kind": "genuine frozen Track C production validation/lowering/generation",
+        "result": "completed_without_error",
+        "exit_code": 0,
+        "observed_at_utc": "2026-10-08T23:26:58.3888930Z",
+        "outputs": [
+          "benchmark/results/phase6/r6_16/submissions/C/custody/s2/selftest.py",
+          "benchmark/results/phase6/r6_16/submissions/C/custody/s2/selftest.ir.json"
+        ]
+      }
+    ]
+  },
+  "validator_failures": [],
+  "unsupported_semantics_observed": [],
+  "unavailable_behavior_observed": [],
+  "limitations": ["Successful production generation only; generated application behavior was not executed, so behavioral correctness is unverified."],
+  "telemetry": {"tokens": null, "api_cost": null},
+  "handoff": "FINAL_STAGE_STOP"
+}

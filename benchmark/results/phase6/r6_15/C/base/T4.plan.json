@@ -1,0 +1,328 @@
+{
+  "version": "semantic-plan-1",
+  "text": false,
+  "rules": {},
+  "decode": {
+    "id": "n33",
+    "op": "seq",
+    "steps": [
+      {
+        "node": {
+          "id": "n19",
+          "op": "dispatch",
+          "expr": {
+            "le": [
+              {
+                "input_length": null
+              },
+              {
+                "const": 8
+              }
+            ]
+          },
+          "branches": {
+            "True": {
+              "id": "n16",
+              "op": "repeat",
+              "body": {
+                "id": "n15",
+                "op": "atom",
+                "codec": "uint8"
+              },
+              "stop": [],
+              "eof": true,
+              "max": 8,
+              "occurrence_limit": true,
+              "count": {
+                "input_length": null
+              }
+            },
+            "False": {
+              "id": "n18",
+              "op": "repeat",
+              "body": {
+                "id": "n17",
+                "op": "atom",
+                "codec": "uint8"
+              },
+              "stop": [],
+              "eof": true,
+              "max": 8,
+              "occurrence_limit": true,
+              "count": {
+                "const": 8
+              }
+            }
+          }
+        },
+        "bind": "symbols"
+      },
+      {
+        "node": {
+          "id": "n27",
+          "op": "map",
+          "source": {
+            "ref": "symbols"
+          },
+          "body": {
+            "id": "n26",
+            "op": "seq",
+            "steps": [
+              {
+                "node": {
+                  "id": "n20",
+                  "op": "check",
+                  "test": {
+                    "le": [
+                      {
+                        "ref": "item"
+                      },
+                      {
+                        "const": 41
+                      }
+                    ]
+                  },
+                  "code": "SYNTAX",
+                  "site": {
+                    "ref": "item"
+                  }
+                }
+              },
+              {
+                "node": {
+                  "id": "n21",
+                  "op": "check",
+                  "test": {
+                    "le": [
+                      {
+                        "const": 40
+                      },
+                      {
+                        "ref": "item"
+                      }
+                    ]
+                  },
+                  "code": "SYNTAX",
+                  "site": {
+                    "ref": "item"
+                  }
+                }
+              },
+              {
+                "node": {
+                  "id": "n22",
+                  "op": "select",
+                  "source": {
+                    "ref": "prefix"
+                  },
+                  "test": {
+                    "eq": [
+                      {
+                        "ref": "item"
+                      },
+                      {
+                        "const": 40
+                      }
+                    ]
+                  }
+                },
+                "bind": "opens"
+              },
+              {
+                "node": {
+                  "id": "n23",
+                  "op": "select",
+                  "source": {
+                    "ref": "prefix"
+                  },
+                  "test": {
+                    "eq": [
+                      {
+                        "ref": "item"
+                      },
+                      {
+                        "const": 41
+                      }
+                    ]
+                  }
+                },
+                "bind": "closes"
+              },
+              {
+                "node": {
+                  "id": "n24",
+                  "op": "check",
+                  "test": {
+                    "le": [
+                      {
+                        "length": {
+                          "ref": "closes"
+                        }
+                      },
+                      {
+                        "length": {
+                          "ref": "opens"
+                        }
+                      }
+                    ]
+                  },
+                  "code": "UNDERFLOW",
+                  "site": {
+                    "ref": "item"
+                  }
+                }
+              },
+              {
+                "node": {
+                  "id": "n25",
+                  "op": "check",
+                  "test": {
+                    "le": [
+                      {
+                        "length": {
+                          "ref": "opens"
+                        }
+                      },
+                      {
+                        "add": [
+                          {
+                            "length": {
+                              "ref": "closes"
+                            }
+                          },
+                          {
+                            "const": 2
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "code": "DEPTH",
+                  "site": {
+                    "ref": "item"
+                  }
+                }
+              }
+            ],
+            "result": {
+              "const": null
+            }
+          }
+        }
+      },
+      {
+        "node": {
+          "id": "n28",
+          "op": "take",
+          "length": {
+            "const": 0
+          },
+          "max": 0,
+          "code": "SYNTAX"
+        },
+        "bind": "eof_site"
+      },
+      {
+        "node": {
+          "id": "n29",
+          "op": "check",
+          "test": {
+            "le": [
+              {
+                "input_length": null
+              },
+              {
+                "const": 8
+              }
+            ]
+          },
+          "code": "OCCURRENCE_LIMIT",
+          "site": {
+            "ref": "eof_site"
+          }
+        }
+      },
+      {
+        "node": {
+          "id": "n30",
+          "op": "select",
+          "source": {
+            "ref": "symbols"
+          },
+          "test": {
+            "eq": [
+              {
+                "ref": "item"
+              },
+              {
+                "const": 40
+              }
+            ]
+          }
+        },
+        "bind": "opens"
+      },
+      {
+        "node": {
+          "id": "n31",
+          "op": "select",
+          "source": {
+            "ref": "symbols"
+          },
+          "test": {
+            "eq": [
+              {
+                "ref": "item"
+              },
+              {
+                "const": 41
+              }
+            ]
+          }
+        },
+        "bind": "closes"
+      },
+      {
+        "node": {
+          "id": "n32",
+          "op": "check",
+          "test": {
+            "eq": [
+              {
+                "length": {
+                  "ref": "opens"
+                }
+              },
+              {
+                "length": {
+                  "ref": "closes"
+                }
+              }
+            ]
+          },
+          "code": "UNCLOSED",
+          "site": {
+            "ref": "eof_site"
+          }
+        }
+      }
+    ],
+    "result": {
+      "record": {
+        "pairs": {
+          "length": {
+            "ref": "closes"
+          }
+        }
+      }
+    }
+  },
+  "encode": {
+    "id": "n34",
+    "op": "emit",
+    "codec": "uint8",
+    "expr": {
+      "ref": "root.pairs"
+    }
+  }
+}

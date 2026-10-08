@@ -1,0 +1,55 @@
+{
+  "round": "R6.16",
+  "track": "C",
+  "application": "custody",
+  "scope": "STAGE1_CUMULATIVE_HANDOFF",
+  "intent": "benchmark/results/phase6/r6_16/submissions/C/custody/s1/intent.json",
+  "schema": "experiments/value_added_r6_16/intent-2.schema.json",
+  "first_recorded_clock_utc": "2026-10-08T23:21:44.1391663Z",
+  "last_verification_at_utc": "2026-10-08T23:22:28.5837209Z",
+  "started_at_utc": null,
+  "timestamp_note": "First recorded UTC clock was emitted after git status in the first tool call. Exact first-tool start was not captured. Recorded interval is 44.4445546 seconds; metadata was written afterward.",
+  "tools": {
+    "individual_calls_including_this_metadata_write": 8,
+    "parallel_dispatch_wrappers": 1,
+    "breakdown": {"bash": 3, "read": 3, "apply_patch": 2},
+    "available_and_used": ["git status", "read", "apply_patch", "PowerShell", "python -B", "snapshot.py", "generate.py"]
+  },
+  "model": "openai/gpt-6.1-sol",
+  "tokens": null,
+  "api_cost": null,
+  "change": "Added unseal with lookup id, invalid_transition unless original phase equals sealed, and a literal phase=unsealed write. All base intent fields, bindings, operations and invariants retained.",
+  "base_preserved": true,
+  "initial_candidate": {
+    "sealed_before_any_selftest": true,
+    "seal_calls": 1,
+    "sha256": "17cd2a994d5efab70495dc295a10e26a48e9e47d43677955793b44fb464dd992",
+    "seal_method": "python -B experiments/value_added_r6_16/snapshot.py <intent path>",
+    "parent_verified": true,
+    "final_equals_initial": true
+  },
+  "repairs": 0,
+  "selftests": {
+    "batches": 1,
+    "timeout_seconds_per_batch": 30,
+    "behavioral_batches": 0,
+    "results": [
+      {
+        "batch": 1,
+        "kind": "genuine Track C production validation/lowering/generation",
+        "result": "completed_without_error",
+        "exit_code": 0,
+        "observed_at_utc": "2026-10-08T23:22:28.5837209Z",
+        "outputs": [
+          "benchmark/results/phase6/r6_16/submissions/C/custody/s1/selftest.py",
+          "benchmark/results/phase6/r6_16/submissions/C/custody/s1/selftest.ir.json"
+        ]
+      }
+    ]
+  },
+  "validator_failures": [],
+  "unsupported_semantics_observed": [],
+  "limitations": ["Successful production generation only; generated application behavior was not executed."],
+  "telemetry": {"tokens": null, "api_cost": null},
+  "handoff": "STAGE1_STOP"
+}

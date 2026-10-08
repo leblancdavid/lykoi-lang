@@ -1,0 +1,402 @@
+{
+  "track": "C",
+  "domain": "kiln",
+  "stage": 0,
+  "candidate": "first",
+  "utc": "2026-10-08T23:20:16.279973+00:00",
+  "status": "UNAVAILABLE",
+  "validation_seconds": 0.00039820000529289246,
+  "observations": [
+    {
+      "group": "base",
+      "case": "missing-list",
+      "step": 0,
+      "op": "list",
+      "expected": {
+        "ok": []
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "blank-create",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "error": "invalid_label"
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "missing-id",
+      "step": 0,
+      "op": "ignite",
+      "expected": {
+        "error": "not_found"
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "allowed-sequence",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "cold",
+          "vent": "open",
+          "load": "ordinary"
+        }
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "allowed-sequence",
+      "step": 1,
+      "op": "list",
+      "expected": {
+        "ok": [
+          {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "cold",
+            "vent": "open",
+            "load": "ordinary"
+          }
+        ]
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "allowed-sequence",
+      "step": 2,
+      "op": "ignite",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "firing",
+          "vent": "open",
+          "load": "ordinary"
+        }
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "allowed-sequence",
+      "step": 3,
+      "op": "ignite",
+      "expected": {
+        "error": "invalid_transition"
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "allowed-sequence",
+      "step": 4,
+      "op": "set_gate",
+      "expected": {
+        "error": "gate_locked"
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "allowed-sequence",
+      "step": 5,
+      "op": "set_gate",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "firing",
+          "vent": "open",
+          "load": "ordinary"
+        }
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "allowed-sequence",
+      "step": 6,
+      "op": "list",
+      "expected": {
+        "ok": [
+          {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "firing",
+            "vent": "open",
+            "load": "ordinary"
+          }
+        ]
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "blocked-start",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "cold",
+          "vent": "closed",
+          "load": "ordinary"
+        }
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "blocked-start",
+      "step": 1,
+      "op": "ignite",
+      "expected": {
+        "error": "gate_required"
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "blocked-start",
+      "step": 2,
+      "op": "set_gate",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "cold",
+          "vent": "open",
+          "load": "ordinary"
+        }
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "blocked-start",
+      "step": 3,
+      "op": "ignite",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "firing",
+          "vent": "open",
+          "load": "ordinary"
+        }
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "special-no-implicit-exception",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "cold",
+          "vent": "closed",
+          "load": "emergency"
+        }
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "special-no-implicit-exception",
+      "step": 1,
+      "op": "ignite",
+      "expected": {
+        "error": "gate_required"
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "invalid-gate",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "cold",
+          "vent": "open",
+          "load": "ordinary"
+        }
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "invalid-gate",
+      "step": 1,
+      "op": "set_gate",
+      "expected": {
+        "error": "invalid_input"
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "missing-gate",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "cold",
+          "vent": "open",
+          "load": "ordinary"
+        }
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "missing-gate",
+      "step": 1,
+      "op": "set_gate",
+      "expected": {
+        "error": "invalid_input"
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "corrupt-domain",
+      "step": 0,
+      "op": "list",
+      "expected": {
+        "error": "invalid_state"
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "corrupt-duplicate",
+      "step": 0,
+      "op": "list",
+      "expected": {
+        "error": "invalid_state"
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "corrupt-invariant",
+      "step": 0,
+      "op": "list",
+      "expected": {
+        "error": "invalid_state"
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "corrupt-blank",
+      "step": 0,
+      "op": "list",
+      "expected": {
+        "error": "invalid_state"
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "collision",
+      "step": 0,
+      "op": "create",
+      "expected": {
+        "ok": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "created_at": "2026-01-01T00:00:00Z",
+          "label": "  Batch A  ",
+          "phase": "cold",
+          "vent": "open",
+          "load": "ordinary"
+        }
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    },
+    {
+      "group": "base",
+      "case": "collision",
+      "step": 1,
+      "op": "create",
+      "expected": {
+        "error": "id_collision"
+      },
+      "pass_result": false,
+      "failure": "UNAVAILABLE"
+    }
+  ],
+  "failure_type": "Failure",
+  "failure": "INVALID_TYPED_SCALAR_RELATION",
+  "groups": {
+    "base": {
+      "passed": 0,
+      "total": 26
+    },
+    "s1": {
+      "passed": 0,
+      "total": 0
+    },
+    "s2": {
+      "passed": 0,
+      "total": 0
+    }
+  },
+  "accepted": false
+}

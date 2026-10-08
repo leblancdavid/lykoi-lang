@@ -1,0 +1,123 @@
+[
+  {
+    "id": "new-return-cycle",
+    "steps": [
+      {
+        "op": "create",
+        "args": {
+          "label": "  Batch A  ",
+          "vent": "open",
+          "load": "ordinary"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "cold",
+            "vent": "open",
+            "load": "ordinary"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "cool",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_transition"
+        },
+        "unchanged": true
+      },
+      {
+        "op": "ignite",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "firing",
+            "vent": "open",
+            "load": "ordinary"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "cool",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "cold",
+            "vent": "open",
+            "load": "ordinary"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "set_gate",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "closed"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "cold",
+            "vent": "closed",
+            "load": "ordinary"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "ignite",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "gate_required"
+        },
+        "unchanged": true
+      },
+      {
+        "op": "cool",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_transition"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "return-missing",
+    "steps": [
+      {
+        "op": "cool",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "not_found"
+        },
+        "unchanged": true
+      }
+    ]
+  }
+]

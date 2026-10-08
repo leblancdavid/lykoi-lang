@@ -1,0 +1,113 @@
+{
+  "round": "R6.15",
+  "track": "A",
+  "phase": "staged-modification",
+  "task_order": ["T1", "T2"],
+  "handoff": "IMMUTABLE",
+  "interface": "solve(data: bytes), standard library only",
+  "budget": {
+    "wall_deadline_seconds": 600,
+    "tool_call_limit": 20,
+    "tool_calls_including_this_record": 18,
+    "initial_revisions_per_task": 1,
+    "repair_limit_per_task": 1,
+    "test_batch_limit_per_task": 2,
+    "test_batch_timeout_seconds": 30
+  },
+  "timing": {
+    "first_tool_start_utc": null,
+    "session_wall_seconds": null,
+    "note": "Exact first-tool timestamp and whole-session elapsed time were not exposed in tool responses; recover from actual harness metadata. No duration or token estimates supplied. Test timestamps and perf_counter durations below are measured inside each direct Python subprocess. Tool timeout was 30000 ms for each test batch. Model dispatch cannot be forcibly interrupted by this authoring session."
+  },
+  "exposure": {
+    "read_files": [
+      "tasks/COMMON.md",
+      "tasks/T1.md",
+      "tasks/T2.md",
+      "PROTOCOL.md",
+      "sealed/M1.md",
+      "sealed/M2.md",
+      "A/base/T1.py",
+      "A/base/T2.py"
+    ],
+    "failed_read": "tasks/PROTOCOL.md did not exist; then read the authorized root PROTOCOL.md",
+    "repository_status": "Initial git status --short reported only the untracked benchmark/results/phase6/r6_15/ directory.",
+    "inherited_context": "Harness supplied repository AGENTS.md guidance including historical research summaries. No historical source code or sessions were read. Access restrictions were cooperative, not OS isolation.",
+    "other_track_access": false,
+    "acceptance_access": false,
+    "sealed_json_access": false,
+    "scoring_results_access": false,
+    "coordinator_feedback": false,
+    "delegation": false,
+    "optional_original_authoring_records_read": false
+  },
+  "tasks": {
+    "T1": {
+      "implementation": "A/modified/T1.py",
+      "immutable_first_revision": "A/mod-first/T1.py",
+      "first_revision_saved_before_tests": true,
+      "initial_revisions": 1,
+      "repairs": 0,
+      "failures": [],
+      "sha256_first_and_final": "9a1586a1aa04f63e9d72fe1f76c071f09830b7de9ade8e43f97ff04226b64d0d",
+      "change": "Admit mode2 and calculate raw=x+y+10*mode. Preserve length boundary, mode rejection precedence, shortage/trailing checks, saturation, Boolean clipping and two-byte output.",
+      "tests": [
+        {
+          "batch": 1,
+          "start_utc": "2026-10-08T22:53:59.827793+00:00",
+          "elapsed_seconds": 0.0038868000265210867,
+          "checks": 15,
+          "failures": 0,
+          "coverage": "Explicit empty/short/mode/trailing/input-limit precedence and clipping boundaries including superboost zero and maximum; exact envelope and strict success types; snapshot byte equality."
+        },
+        {
+          "batch": 2,
+          "start_utc": "2026-10-08T22:54:10.227353+00:00",
+          "elapsed_seconds": 0.34035399998538196,
+          "checks": 213504,
+          "base_preservation_comparisons": 147902,
+          "failures": 0,
+          "coverage": "All 196608 admitted mode/x/y triples plus all 256 modes at lengths1..66 with zero argument suffixes; expected contract envelopes and strict integer/Boolean types; compare all sampled nonreserved base observations with frozen own base."
+        }
+      ]
+    },
+    "T2": {
+      "implementation": "A/modified/T2.py",
+      "immutable_first_revision": "A/mod-first/T2.py",
+      "first_revision_saved_before_tests": true,
+      "initial_revisions": 1,
+      "repairs": 0,
+      "failures": [],
+      "sha256_first_and_final": "e4c8810515e9291c9a8bf3d2cd1425d5975fb217db6be211c11a25bac78e01f6",
+      "change": "Admit version2. Append delimiter255 after each nonzero run only in version2, retaining ordered values, count0 value requirement, structural rejection precedence and eight-record bound.",
+      "tests": [
+        {
+          "batch": 1,
+          "start_utc": "2026-10-08T22:54:36.520576+00:00",
+          "elapsed_seconds": 0.002742099924944341,
+          "checks": 19,
+          "failures": 0,
+          "coverage": "Explicit empty/invalid-version/truncated-count/RUN/ninth-record/input-limit precedence; empty and zero runs, value255 extra delimiter, mixed ordered runs, 32/40-byte maximum outputs; strict value types and snapshot byte equality."
+        },
+        {
+          "batch": 2,
+          "start_utc": "2026-10-08T22:54:51.685219+00:00",
+          "end_utc": "2026-10-08T22:54:51.917764+00:00",
+          "elapsed_seconds": 0.23255680000875145,
+          "checks": 172510,
+          "base_preservation_comparisons": 92366,
+          "failures": 0,
+          "coverage": "Both versions with all256 counts/all256 values; all four-run combinations of counts0..4 and values0/255; every trailing count after0..8 valid zero-run prefixes; nonreserved versions at lengths1..66 compared to frozen own base; exact expected output and strict integer values. SHA256 equality checked for both tasks first/final artifacts."
+        }
+      ]
+    }
+  },
+  "difficulties": [
+    "The protocol path was initially interpreted under tasks/ and returned file-not-found; corrected to the authorized root protocol.",
+    "Whole-session timing requires harness metadata; only per-test timestamps/durations were directly measured."
+  ],
+  "verification_scope": "Author-chosen development tests only; no acceptance outcome claimed. Original files were read and executed as regression references, never edited. Python -B prevented bytecode-cache writes. All artifact edits used apply_patch.",
+  "token_usage": null,
+  "token_usage_note": "No token estimates; actual telemetry must come from harness export.",
+  "stop": "First snapshots and final implementations are handed off unchanged after zero self-test repairs. No further tests or edits after this record."
+}

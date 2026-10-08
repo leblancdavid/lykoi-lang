@@ -1,0 +1,166 @@
+{
+  "version": "semantic-plan-1",
+  "text": false,
+  "rules": {},
+  "decode": {
+    "id": "n12",
+    "op": "seq",
+    "steps": [
+      {
+        "node": {
+          "id": "n5",
+          "op": "literal",
+          "bytes": [
+            1
+          ],
+          "code": "VERSION"
+        }
+      },
+      {
+        "node": {
+          "id": "n6",
+          "op": "repeat",
+          "body": {
+            "id": "n4",
+            "op": "seq",
+            "steps": [
+              {
+                "node": {
+                  "id": "n1",
+                  "op": "atom",
+                  "codec": "uint8"
+                },
+                "bind": "count"
+              },
+              {
+                "node": {
+                  "id": "n2",
+                  "op": "check",
+                  "test": {
+                    "le": [
+                      {
+                        "ref": "count"
+                      },
+                      {
+                        "const": 4
+                      }
+                    ]
+                  },
+                  "code": "RUN",
+                  "site": {
+                    "ref": "count"
+                  }
+                }
+              },
+              {
+                "node": {
+                  "id": "n3",
+                  "op": "atom",
+                  "codec": "uint8"
+                },
+                "bind": "value"
+              }
+            ],
+            "result": {
+              "record": {
+                "count": {
+                  "ref": "count"
+                },
+                "value": {
+                  "ref": "value"
+                }
+              }
+            }
+          },
+          "stop": [],
+          "eof": true,
+          "max": 8,
+          "occurrence_limit": true
+        },
+        "bind": "records"
+      },
+      {
+        "node": {
+          "id": "n8",
+          "op": "map",
+          "source": {
+            "ref": "records"
+          },
+          "body": {
+            "id": "n7",
+            "op": "check",
+            "test": {
+              "le": [
+                {
+                  "ref": "item.count"
+                },
+                {
+                  "const": 1
+                }
+              ]
+            },
+            "code": "AUTHORING_UNSUPPORTED",
+            "site": {
+              "ref": "item.count"
+            }
+          }
+        }
+      },
+      {
+        "node": {
+          "id": "n9",
+          "op": "select",
+          "source": {
+            "ref": "records"
+          },
+          "test": {
+            "eq": [
+              {
+                "ref": "item.count"
+              },
+              {
+                "const": 1
+              }
+            ]
+          }
+        },
+        "bind": "nonzero"
+      },
+      {
+        "node": {
+          "id": "n11",
+          "op": "map",
+          "source": {
+            "ref": "nonzero"
+          },
+          "body": {
+            "id": "n10",
+            "op": "value",
+            "expr": {
+              "ref": "item.value"
+            }
+          }
+        },
+        "bind": "values"
+      }
+    ],
+    "result": {
+      "ref": "values"
+    }
+  },
+  "encode": {
+    "id": "n14",
+    "op": "each",
+    "source": {
+      "ref": "root"
+    },
+    "body": {
+      "id": "n13",
+      "op": "emit",
+      "codec": "uint8",
+      "expr": {
+        "ref": "item"
+      }
+    }
+  }
+}

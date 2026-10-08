@@ -75,6 +75,37 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R6.16 — `R6_16_ARCHITECTURAL_COMPARISON_INCONCLUSIVE`.**
+[Architecture comparison](../benchmark/results/phase6/R6_16-REPORT.md): two new
+stateful applications on direct Python A, shared structured intent B and genuine
+unchanged production validation/lowering C. B/C2/2 base applications and all staged
+requirements; A executable but0/2 strict full acceptance from wrong blank-label errors.
+All tracks meet four new changes; no regressions. C's earlier typed diagnostics are
+real but no additional scored behavioral benefit, with two base integration repairs
+and incomplete extension impact. Author metadata recovered; setup usage/billing,
+attested configuration/separation unavailable, stages CONTAMINATED_UNENFORCED.
+Kernel26/production/VM/775 protected-history identities preserved. Locally lean
+structured intent sufficient; recommendation is optional semantic analysis/research,
+not mandatory layering. Broader retain/remove architecture decision unresolved.
+Stopped after publication; further work needs authorization, no automatic production
+changes, P6-A04 acceptance or P6-A05 access.
+The [context supplement](../benchmark/results/phase6/r6_16/INHERITED-CONTEXT-SUPPLEMENT.md)
+records substantive R6.16 findings already supplied to the coordinator in inherited
+harness guidance; exclusion from authors unattested. INHERITED_R6_16_OUTCOME_PRIMING
+means these new executions are not independent replication or causal architecture evidence.
+
+**R6.15 — `R6_15_EXPLORATORY_COMPARISON_ONLY`.**
+[Authoring comparison](../benchmark/results/phase6/R6_15-REPORT.md): four fresh
+synthetic contracts, six fresh authoring contexts. Python4/4 tasks, frozen VM3/4;
+staged changes2/2 versus1/2, zero passing-to-failing regressions. Actual per-call
+tokens available; API cost, attested separation and reasoning configuration unavailable.
+Staged disclosure CONTAMINATED_UNENFORCED despite no premature-access markers.
+Matched accepted calibration/window pair locally favors Python effort; no general
+superiority or cost-efficiency conclusion. Failed run expansion and qualified native-list
+interface limit retained. Kernel26/VM/687 protected/history identities preserved.
+Stopped after publication; recommended controlled task-level comparison needs explicit
+authorization. No automatic Lykoi changes, P6-A04 acceptance or P6-A05 access.
+
 **R6.14 — `R6_14_FINITE_RELATIONS_SUPPORTED`.**
 [Construction report](../benchmark/results/phase6/R6_14-REPORT.md): unchanged R6.10
 VM composes XOR8 (57 nodes), modulo-256 addition (9) and parity8 (43). Three exhaustive

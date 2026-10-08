@@ -1,0 +1,223 @@
+[
+  {
+    "id": "exception-cycle",
+    "steps": [
+      {
+        "op": "create",
+        "args": {
+          "label": "  Batch A  ",
+          "vent": "closed",
+          "load": "emergency"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "cold",
+            "vent": "closed",
+            "load": "emergency"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "rescue",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "firing",
+            "vent": "closed",
+            "load": "emergency"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "list",
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "created_at": "2026-01-01T00:00:00Z",
+              "label": "  Batch A  ",
+              "phase": "firing",
+              "vent": "closed",
+              "load": "emergency"
+            }
+          ]
+        },
+        "unchanged": true
+      },
+      {
+        "op": "rescue",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_transition"
+        },
+        "unchanged": true
+      },
+      {
+        "op": "set_gate",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "closed"
+        },
+        "expected": {
+          "error": "gate_locked"
+        },
+        "unchanged": true
+      },
+      {
+        "op": "cool",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "cold",
+            "vent": "closed",
+            "load": "emergency"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "ignite",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "gate_required"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "exception-normal",
+    "steps": [
+      {
+        "op": "create",
+        "args": {
+          "label": "  Batch A  ",
+          "vent": "closed",
+          "load": "ordinary"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "cold",
+            "vent": "closed",
+            "load": "ordinary"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "rescue",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "exception_denied"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "exception-allowed-gate",
+    "steps": [
+      {
+        "op": "create",
+        "args": {
+          "label": "  Batch A  ",
+          "vent": "open",
+          "load": "emergency"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "cold",
+            "vent": "open",
+            "load": "emergency"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "rescue",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "exception_denied"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "exception-missing",
+    "steps": [
+      {
+        "op": "rescue",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "not_found"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "corrupt-special-permitted",
+    "initial": [
+      {
+        "id": "00000000-0000-4000-8000-000000000001",
+        "created_at": "2026-01-01T00:00:00Z",
+        "label": "  Batch A  ",
+        "phase": "firing",
+        "vent": "closed",
+        "load": "emergency"
+      }
+    ],
+    "steps": [
+      {
+        "op": "list",
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "created_at": "2026-01-01T00:00:00Z",
+              "label": "  Batch A  ",
+              "phase": "firing",
+              "vent": "closed",
+              "load": "emergency"
+            }
+          ]
+        },
+        "unchanged": true
+      }
+    ]
+  }
+]

@@ -8,6 +8,30 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R6.16 — `R6_16_ARCHITECTURAL_COMPARISON_INCONCLUSIVE`.**
+Read the [architecture report](../benchmark/results/phase6/R6_16-REPORT.md) and
+experimental frozen protocol. Two stateful domains share a semantic skeleton:
+B/C2/2 applications, all four new changes pass in all tracks; A0/2 full base
+acceptance due to wrong blank-label errors. No regressions or uniquely prevented
+C scored defects. Production type/binding/effect checks execute genuinely; two
+base integration repairs, extension impact incomplete. Actual author telemetry,
+missing setup usage/billing/configuration attestation; stages CONTAMINATED_UNENFORCED.
+Kernel26/production/VM/775 history identities preserved. No automatic architectural
+changes or rerun; stop pending explicit authorization. No P6-A04 acceptance/P6-A05 access.
+Read the [context supplement](../benchmark/results/phase6/r6_16/INHERITED-CONTEXT-SUPPLEMENT.md):
+coordinator inherited substantive same-round findings before this run; author exclusion
+unattested. INHERITED_R6_16_OUTCOME_PRIMING adds a prior-knowledge contamination limit.
+
+**Latest round: R6.15 — `R6_15_EXPLORATORY_COMPARISON_ONLY`.**
+Read the [authoring comparison](../benchmark/results/phase6/R6_15-REPORT.md) and
+frozen protocol. Python4/4 tasks and2/2 changes; unchanged VM3/4 and1/2; no
+passing-to-failing regressions. Six fresh contexts export actual tokens, not billing
+or attested reasoning/separation. Staged disclosure CONTAMINATED_UNENFORCED. Preserve
+all first candidates, failed T2/native-list limitation and sealed expectations.
+Matched accepted T1/T3 pair locally favors Python, not general superiority.
+Kernel26/VM/687 historical/protected identities unchanged. Stopped; further work
+needs explicit authorization. No automatic language edits, P6-A04 acceptance/P6-A05 access.
+
 **Latest round: R6.14 — `R6_14_FINITE_RELATIONS_SUPPORTED`.**
 Read the [construction report](../benchmark/results/phase6/R6_14-REPORT.md) and both
 frozen experiment protocols in r6_14. XOR8/addmod8/parity8 exhaustively pass three runs

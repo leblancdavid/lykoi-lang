@@ -1,0 +1,53 @@
+{
+  "round": "R6.16",
+  "track": "A",
+  "application": "kiln",
+  "scope": "CUMULATIVE_STAGE1",
+  "classification": "EXPLORATORY_SHARED_INHERITED_GUIDANCE",
+  "source": "application.py",
+  "base_preserved": true,
+  "utc_times": {
+    "first_tool_observed": "2026-10-08T23:21:43.4943548Z",
+    "seal_command_completed": "2026-10-08T23:22:29.9018311Z",
+    "selftest_command_completed": "2026-10-08T23:22:45.2773999Z"
+  },
+  "tool_calls": 7,
+  "initial_candidates": 1,
+  "repairs": 0,
+  "first_candidate_sha256": "1dbe284fc70a4f8d91d77af76a842a3fc377747a73fb593002ac53c512280d4c",
+  "sealed_before_selftest": true,
+  "resealed": false,
+  "selftest_batches": 1,
+  "selftest_timeout_seconds": 30,
+  "selftest_results": [
+    {
+      "result": "PASS",
+      "elapsed_seconds": 0.04078,
+      "coverage": [
+        "cool missing identity preserves store absence",
+        "cool cold record rejects invalid_transition",
+        "closed gate prevents ignition",
+        "gate opening and ignition preserve other fields",
+        "active gate lock and repeat ignition preserve bytes",
+        "cool changes phase only and is reflected in list",
+        "cool then close does not bypass ignition gate",
+        "second ignition/cooling cycle",
+        "invalid persisted firing/closed invariant rejects cool without repair"
+      ]
+    }
+  ],
+  "model": "openai/gpt-6.1-sol",
+  "available_tools_used": ["bash", "read", "apply_patch"],
+  "token_count": null,
+  "api_cost": null,
+  "limitations": [
+    "Shared inherited guidance makes this exploratory evidence.",
+    "UTC observations were captured inside tool commands; exact first-tool start and final handoff duration were not measured.",
+    "Token telemetry and API billing were unavailable.",
+    "Only the released kiln stage1 requirement and own base application were read during this stage; common/base requirements were already present in context.",
+    "No scored or acceptance feedback was supplied.",
+    "One local self-test batch is not exhaustive verification.",
+    "Provider outputs retain the base expectation of UUID-v4 and UTC ISO timestamp strings; provider exceptions are not assigned a contract error.",
+    "No concurrency, distributed IO or migrations are implemented."
+  ]
+}

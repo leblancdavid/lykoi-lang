@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "storage": "records.json",
+  "fields": {
+    "id": {"type": "identifier", "domain": []},
+    "created_at": {"type": "timestamp", "domain": []},
+    "label": {"type": "string", "domain": []},
+    "phase": {"type": "enum", "domain": ["unsealed", "sealed"]},
+    "witness": {"type": "enum", "domain": ["present", "absent"]},
+    "material": {"type": "enum", "domain": ["routine", "fragile"]}
+  },
+  "create": {
+    "bindings": {
+      "id": {"source": "uuid_v4", "value": null},
+      "created_at": {"source": "utc_clock", "value": null},
+      "label": {"source": "input", "value": null},
+      "phase": {"source": "literal", "value": "unsealed"},
+      "witness": {"source": "input", "value": null},
+      "material": {"source": "input", "value": null}
+    },
+    "nonblank": ["label"]
+  },
+  "operations": {
+    "seal": {
+      "guards": [
+        {
+          "condition": {
+            "op": "eq",
+            "left": {"kind": "field", "value": "phase", "type": "enum", "domain": ["unsealed", "sealed"]},
+            "right": {"kind": "literal", "value": "unsealed", "type": "enum", "domain": ["unsealed", "sealed"]}
+          },
+          "error": "invalid_transition"
+        },
+        {
+          "condition": {
+            "op": "eq",
+            "left": {"kind": "field", "value": "witness", "type": "enum", "domain": ["present", "absent"]},
+            "right": {"kind": "literal", "value": "present", "type": "enum", "domain": ["present", "absent"]}
+          },
+          "error": "gate_required"
+        }
+      ],
+      "writes": {"phase": {"source": "literal", "value": "sealed"}}
+    },
+    "set_gate": {
+      "guards": [
+        {
+          "condition": {
+            "op": "not",
+            "child": {
+              "op": "and",
+              "children": [
+                {
+                  "op": "eq",
+                  "left": {"kind": "field", "value": "phase", "type": "enum", "domain": ["unsealed", "sealed"]},
+                  "right": {"kind": "literal", "value": "sealed", "type": "enum", "domain": ["unsealed", "sealed"]}
+                },
+                {
+                  "op": "eq",
+                  "left": {"kind": "parameter", "value": "value", "type": "enum", "domain": ["present", "absent"]},
+                  "right": {"kind": "literal", "value": "absent", "type": "enum", "domain": ["present", "absent"]}
+                }
+              ]
+            }
+          },
+          "error": "gate_locked"
+        }
+      ],
+      "writes": {"witness": {"source": "input", "value": "value"}}
+    }
+  },
+  "invariants": [
+    {
+      "op": "or",
+      "children": [
+        {
+          "op": "not",
+          "child": {
+            "op": "eq",
+            "left": {"kind": "field", "value": "phase", "type": "enum", "domain": ["unsealed", "sealed"]},
+            "right": {"kind": "literal", "value": "sealed", "type": "enum", "domain": ["unsealed", "sealed"]}
+          }
+        },
+        {
+          "op": "eq",
+          "left": {"kind": "field", "value": "witness", "type": "enum", "domain": ["present", "absent"]},
+          "right": {"kind": "literal", "value": "present", "type": "enum", "domain": ["present", "absent"]}
+        }
+      ]
+    }
+  ]
+}

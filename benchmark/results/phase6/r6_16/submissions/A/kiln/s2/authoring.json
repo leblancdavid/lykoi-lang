@@ -1,0 +1,56 @@
+{
+  "round": "R6.16",
+  "track": "A",
+  "application": "kiln",
+  "scope": "CUMULATIVE_STAGE2",
+  "classification": "EXPLORATORY_SHARED_INHERITED_GUIDANCE",
+  "source": "application.py",
+  "previous_files_preserved": true,
+  "utc_times": {
+    "first_tool_observed": "2026-10-08T23:26:02.0961584Z",
+    "seal_command_completed": "2026-10-08T23:26:51.5238343Z",
+    "selftest_command_completed": "2026-10-08T23:27:12.9897437Z"
+  },
+  "tool_calls": 7,
+  "initial_candidates": 1,
+  "repairs": 0,
+  "first_candidate_sha256": "c48936bbe080b025001c0bce5b4a7d0a456ed302755325132733800b38331777",
+  "sealed_before_selftest": true,
+  "resealed": false,
+  "selftest_batches": 1,
+  "selftest_timeout_seconds": 30,
+  "selftest_results": [
+    {
+      "result": "PASS",
+      "elapsed_seconds": 0.181491,
+      "state_operation_matrix_cases": 48,
+      "coverage": [
+        "missing rescue identity preserves store absence",
+        "blank creation rejection and duplicate provider identity preserve state",
+        "creation starts cold",
+        "all eight phase/vent/load combinations against rescue, cool, ignite and three set_gate values",
+        "rescue transition and exception-denied guard precedence",
+        "active emergency closed state persists and reloads",
+        "active closed gate write rejects even when unchanged",
+        "active ordinary closed state rejects every tested command",
+        "all successful matrix writes preserve other fields and reload through list",
+        "all rejected matrix writes preserve exact bytes",
+        "rescue-cool cycle preserves closed gate and ordinary ignition still requires open"
+      ]
+    }
+  ],
+  "model": "openai/gpt-6.1-sol",
+  "available_tools_used": ["bash", "read", "apply_patch"],
+  "token_count": null,
+  "api_cost": null,
+  "limitations": [
+    "Shared inherited guidance makes this exploratory evidence.",
+    "UTC observations were captured inside tool commands; exact first-tool start and final handoff duration were not measured.",
+    "Token telemetry and API billing were unavailable.",
+    "Only the released kiln stage2 requirement and own stage1 application were read during this stage; earlier requirements were already present in context.",
+    "No results, acceptance or other-track files were read and no scored feedback was supplied.",
+    "The single local batch covers the finite state-operation matrix but is not exhaustive input or filesystem verification.",
+    "Provider outputs retain the base expectation of UUID-v4 and UTC ISO timestamp strings; provider exceptions are not assigned a contract error.",
+    "No concurrency, distributed IO or migrations are implemented."
+  ]
+}

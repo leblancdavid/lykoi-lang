@@ -1,5 +1,42 @@
 # Experimental decisions
 
+## R6.16 — Require incremental semantic benefit before mandatory layering
+
+[Report](../benchmark/results/phase6/R6_16-REPORT.md):
+`R6_16_ARCHITECTURAL_COMPARISON_INCONCLUSIVE`. Use the same declarative interface
+for ordinary generation and genuine production-semantic lowering. Preserve both
+C base first-validation failures and repaired finals; redundant input metadata
+rejection adds burden without preventing a scored behavioral defect. Typed operand,
+literal-domain and authority/effect validation are real earlier diagnostics, not
+proof of requirements correspondence or advantages uniquely unavailable to ordinary
+validation. B/C behavior agrees on two narrow applications and four changes, while
+A misses exact error codes. No regression advantage, complete impact analysis or
+end-to-end cost benefit established. Report setup and failed-task effort, missing
+billing/attested isolation and contaminated withholding. Recommend a lean intent path
+for this bounded class and optional Lykoi semantic research; neither retain nor remove
+the architecture automatically. Keep kernel26 and all production/history unchanged.
+Stop after publication; any follow-up needs explicit authorization.
+The [context supplement](../benchmark/results/phase6/r6_16/INHERITED-CONTEXT-SUPPLEMENT.md)
+retains original publication while explicitly disclosing prior same-round findings
+in coordinator harness guidance. Unknown author exclusion prevents independent
+replication/causal attribution; shared-file disclosure alone was insufficient.
+
+## R6.15 — Separate accepted authoring effort from capability-limited failures
+
+[Report](../benchmark/results/phase6/R6_15-REPORT.md):
+`R6_15_EXPLORATORY_COMPARISON_ONLY`. Retain all four tasks in success denominators;
+compare effort primarily on fully accepted task groups, without source-size token
+allocation. Six actual metadata exports supplement author token-null records;
+reported zero cost is not billing evidence. Fresh contexts/shared filesystem are
+exploratory, and unenforced staged withholding is classified contaminated despite
+no observed premature reads. Preserve initial/final equality and failed native-list
+run expansion; its specific list-origin limitation is distinct from invalid plan,
+runtime failure or universal language impossibility. Explicit plan size, validation
+selector work and runtime work are separate from Python AST/source metrics.
+Local results favor Python on the matched accepted pair but do not authorize VM
+operations, production changes or a general superiority claim. Next controlled
+task-level experiment requires explicit authorization; stop after publication.
+
 ## R6.14 — Compose finite relations before inferring missing meaning
 
 [Report](../benchmark/results/phase6/R6_14-REPORT.md):

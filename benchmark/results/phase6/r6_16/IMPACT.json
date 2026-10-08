@@ -1,0 +1,292 @@
+{
+  "utc": "2026-10-08T23:29:41.926046+00:00",
+  "tool": "air_compiler.semantics.impact",
+  "actual": {
+    "root": "field:phase",
+    "impacts": [
+      {
+        "id": "behavior:create",
+        "kind": "behavior",
+        "depth": 1,
+        "path": [
+          {
+            "from": "behavior:create",
+            "relation": "assigns",
+            "to": "field:phase"
+          }
+        ],
+        "classification": "direct",
+        "semantic_classification": "DIRECT_SEMANTIC_IMPACT"
+      },
+      {
+        "id": "guarantee:create:value",
+        "kind": "postcondition",
+        "depth": 1,
+        "path": [
+          {
+            "from": "guarantee:create:value",
+            "relation": "field",
+            "to": "field:phase"
+          }
+        ],
+        "classification": "direct",
+        "semantic_classification": "DIRECT_SEMANTIC_IMPACT"
+      },
+      {
+        "id": "record",
+        "kind": "type",
+        "depth": 1,
+        "path": [
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:phase"
+          }
+        ],
+        "classification": "direct",
+        "semantic_classification": "DIRECT_SEMANTIC_IMPACT"
+      },
+      {
+        "id": "command:create",
+        "kind": "command",
+        "depth": 2,
+        "path": [
+          {
+            "from": "command:create",
+            "relation": "exposes",
+            "to": "behavior:create"
+          },
+          {
+            "from": "behavior:create",
+            "relation": "assigns",
+            "to": "field:phase"
+          }
+        ],
+        "classification": "indirect",
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      },
+      {
+        "id": "records",
+        "kind": "type",
+        "depth": 2,
+        "path": [
+          {
+            "from": "records",
+            "relation": "item_type",
+            "to": "record"
+          },
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:phase"
+          }
+        ],
+        "classification": "indirect",
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      },
+      {
+        "id": "behavior:list",
+        "kind": "behavior",
+        "depth": 3,
+        "path": [
+          {
+            "from": "behavior:list",
+            "relation": "output",
+            "to": "records"
+          },
+          {
+            "from": "records",
+            "relation": "item_type",
+            "to": "record"
+          },
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:phase"
+          }
+        ],
+        "classification": "indirect",
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      },
+      {
+        "id": "state",
+        "kind": "state",
+        "depth": 3,
+        "path": [
+          {
+            "from": "state",
+            "relation": "type",
+            "to": "records"
+          },
+          {
+            "from": "records",
+            "relation": "item_type",
+            "to": "record"
+          },
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:phase"
+          }
+        ],
+        "classification": "indirect",
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      },
+      {
+        "id": "command:list",
+        "kind": "command",
+        "depth": 4,
+        "path": [
+          {
+            "from": "command:list",
+            "relation": "exposes",
+            "to": "behavior:list"
+          },
+          {
+            "from": "behavior:list",
+            "relation": "output",
+            "to": "records"
+          },
+          {
+            "from": "records",
+            "relation": "item_type",
+            "to": "record"
+          },
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:phase"
+          }
+        ],
+        "classification": "indirect",
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      },
+      {
+        "id": "guarantee:create:stored",
+        "kind": "postcondition",
+        "depth": 4,
+        "path": [
+          {
+            "from": "guarantee:create:stored",
+            "relation": "state",
+            "to": "state"
+          },
+          {
+            "from": "state",
+            "relation": "type",
+            "to": "records"
+          },
+          {
+            "from": "records",
+            "relation": "item_type",
+            "to": "record"
+          },
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:phase"
+          }
+        ],
+        "classification": "indirect",
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      },
+      {
+        "id": "guarantee:list",
+        "kind": "postcondition",
+        "depth": 4,
+        "path": [
+          {
+            "from": "guarantee:list",
+            "relation": "state",
+            "to": "state"
+          },
+          {
+            "from": "state",
+            "relation": "type",
+            "to": "records"
+          },
+          {
+            "from": "records",
+            "relation": "item_type",
+            "to": "record"
+          },
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:phase"
+          }
+        ],
+        "classification": "indirect",
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      },
+      {
+        "id": "unique",
+        "kind": "invariant",
+        "depth": 4,
+        "path": [
+          {
+            "from": "unique",
+            "relation": "state",
+            "to": "state"
+          },
+          {
+            "from": "state",
+            "relation": "type",
+            "to": "records"
+          },
+          {
+            "from": "records",
+            "relation": "item_type",
+            "to": "record"
+          },
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:phase"
+          }
+        ],
+        "classification": "indirect",
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      },
+      {
+        "id": "valid",
+        "kind": "invariant",
+        "depth": 4,
+        "path": [
+          {
+            "from": "valid",
+            "relation": "state",
+            "to": "state"
+          },
+          {
+            "from": "state",
+            "relation": "type",
+            "to": "records"
+          },
+          {
+            "from": "records",
+            "relation": "item_type",
+            "to": "record"
+          },
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:phase"
+          }
+        ],
+        "classification": "indirect",
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      }
+    ]
+  },
+  "scope": "legacy scalar base only; mutable operations and extension invariant predicates not indexed",
+  "missing_semantic_users": [
+    "ignite",
+    "cool",
+    "rescue",
+    "set_gate",
+    "predicate_semantics.invariants"
+  ],
+  "B_equivalent": "ordinary static reference traversal could enumerate shared intent users; not measured as AI effort",
+  "warning": "Do not interpret returned traversal as complete change impact"
+}

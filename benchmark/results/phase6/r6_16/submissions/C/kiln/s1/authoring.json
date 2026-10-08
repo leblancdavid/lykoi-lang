@@ -1,0 +1,52 @@
+{
+  "round": "R6.16",
+  "track": "C",
+  "application": "kiln",
+  "scope": "STAGE1_CUMULATIVE",
+  "intent": "intent.json",
+  "first_candidate": "first.json",
+  "base_source": "../base/intent.json",
+  "base_preserved": true,
+  "first_tool_clock_utc": "2026-10-08T23:21:43.7141835Z",
+  "last_execution_utc": "2026-10-08T23:22:55.0389916Z",
+  "timestamp_note": "First timestamp captured after git status in the first tool; last timestamp captured after the final selftest. Authoring record write followed.",
+  "tools": 11,
+  "tool_count_basis": "Individual tool invocations, counting three parallel reads individually and including this record write; parallel dispatch wrapper excluded.",
+  "repairs": 0,
+  "selftests": 2,
+  "selftest_timeout_seconds_per_batch": 30,
+  "first_candidate_sealed_before_tests": true,
+  "snapshot_invocations": 1,
+  "first_candidate_sha256": "ce7a932e658894b4ea20e0ffc66e44dd7d32a6c5c778d55d237131293ce400c0",
+  "final_equals_first_candidate": true,
+  "generation": {
+    "command": "python -B experiments/value_added_r6_16/generate.py C benchmark/results/phase6/r6_16/submissions/C/kiln/s1/intent.json benchmark/results/phase6/r6_16/submissions/C/kiln/s1/selftest.py",
+    "result": "PASS",
+    "generated_application": "selftest.py",
+    "generated_ir": "selftest.ir.json",
+    "genuine_validator_failures": []
+  },
+  "behavioral_selftest": {
+    "script": "check_own.py",
+    "result": "PASS",
+    "checks_passed": 18,
+    "coverage": [
+      "Empty listing and missing cool identity",
+      "Blank creation label and verbatim label preservation",
+      "Cold cool rejection and ignite gate requirement",
+      "Ignite, cool and gate-update cycle with exact whole-record results",
+      "Repeated ignite rejection and active closed-gate rejection",
+      "Missing and out-of-domain gate input rejection",
+      "Invalid persisted firing/closed invariant rejected by list and cool",
+      "Exact storage bytes or absence preserved on each tested rejection"
+    ],
+    "qualification": "Author-owned smoke checks only; no acceptance or exhaustive behavioral claim."
+  },
+  "unsupported_behavior": [],
+  "unsupported_behavior_note": "No unavailable semantic behavior observed in generation or the bounded author-owned checks.",
+  "model": "openai/gpt-6.1-sol",
+  "tool_availability": "PowerShell, dedicated reads, parallel dispatch and apply_patch available; Python and frozen genuine Track C generator callable.",
+  "token_cost": null,
+  "api_cost": null,
+  "handoff": "Stage1 handoff; stopped after cumulative intent generation and bounded selftests."
+}

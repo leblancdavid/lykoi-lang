@@ -1,5 +1,30 @@
 # Phase 5: comparative maintenance benchmark
 
+## R6.16 value-added architecture experiment
+
+[Report](results/phase6/R6_16-REPORT.md) and
+[protocol](../experiments/value_added_r6_16/PROTOCOL.md):
+`R6_16_ARCHITECTURAL_COMPARISON_INCONCLUSIVE`. B structured intent and genuine
+production-semantic C each2/2 applications, all four new changes pass; A executable
+but exact blank-label errors leave0/2 fully accepted. No regressions or C-specific
+scored advantage. C base validation adds two repairs; actual author telemetry available,
+setup usage/billing/attested isolation unavailable, stages CONTAMINATED_UNENFORCED.
+Kernel26/production/VM/775 protected-history identities preserved. Local lean-intent
+sufficiency, no general architectural winner. Stopped; further work needs authorization.
+The [inherited-context supplement](results/phase6/r6_16/INHERITED-CONTEXT-SUPPLEMENT.md)
+discloses same-round findings already present in coordinator harness guidance;
+author exclusion unattested, INHERITED_R6_16_OUTCOME_PRIMING. No independent replication.
+
+## R6.15 AI authoring efficiency challenge
+
+[Report](results/phase6/R6_15-REPORT.md) and [protocol](results/phase6/r6_15/PROTOCOL.md):
+`R6_15_EXPLORATORY_COMPARISON_ONLY`. Python4/4 fresh tasks and2/2 extensions;
+frozen VM3/4 and1/2, zero passing-to-failing regressions. Actual exported tokens for
+six fresh contexts; API billing/attested isolation/reasoning unavailable. Modification
+comparison CONTAMINATED_UNENFORCED. Matched accepted pair locally favors Python;
+failed list-valued run expansion retained, no general superiority. Kernel26/VM/history
+unchanged. Stopped; controlled task-level follow-up requires explicit authorization.
+
 ## R6.14 generic finite-relation construction
 
 [Report](results/phase6/R6_14-REPORT.md) and [protocol](results/phase6/r6_14/PROTOCOL.md):

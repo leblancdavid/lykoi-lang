@@ -1,0 +1,53 @@
+{
+  "round": "R6.16",
+  "track": "A",
+  "application": "custody",
+  "scope": "STAGE1_CUMULATIVE",
+  "source": "benchmark/results/phase6/r6_16/submissions/A/custody/s1/application.py",
+  "first_tool_observed_at_utc": "2026-10-08T23:21:43.8782462Z",
+  "timestamp_note": "Start observation captured during first tool call after git status; exact invocation instant unavailable.",
+  "candidate_and_verification_completed_at_utc": "2026-10-08T23:22:47.038496+00:00",
+  "model": "openai/gpt-6.1-sol",
+  "tools_available_used": ["bash", "read", "apply_patch"],
+  "tool_calls_total": 9,
+  "tool_calls_by_kind": {"bash": 3, "read": 4, "apply_patch": 2},
+  "tool_sequence": [
+    "git status --short and UTC capture",
+    "Read sealed/custody-s1.md",
+    "Read tasks/COMMON.md",
+    "Read tasks/custody.md",
+    "Read own base/application.py",
+    "Write cumulative s1/application.py with apply_patch",
+    "Test-Path source and snapshot parents; prescribed snapshot.py seal",
+    "One cumulative stage1 selftest batch with 30-second timeout",
+    "Write s1/authoring.json with apply_patch"
+  ],
+  "initial_candidate_sha256": "2a5bde93b8969ff6a9abdd535ed0ba2c38a3a6b92422538ed47dd25545ac823f",
+  "snapshot_result": "First candidate sealed before any selftest",
+  "candidate_count": 1,
+  "repairs": 0,
+  "reseals": 0,
+  "final_source_equals_initial_candidate": true,
+  "base_preserved": true,
+  "selftests": {
+    "batches": 1,
+    "timeout_seconds": 30,
+    "measured_batch_seconds": 0.049086,
+    "result": "PASS",
+    "coverage": [
+      "unseal missing identity preserves store absence",
+      "unseal original idle-state rejection preserves exact bytes",
+      "successful unseal changes phase only",
+      "repeat unseal rejection preserves exact bytes",
+      "seal/unseal/gate-change/reseal cycle retains gate requirement",
+      "base blank-label, creation, collision, list and gate behaviors",
+      "base lookup/error precedence and rejected-write preservation",
+      "invalid persisted invariant rejected by unseal and list without repair"
+    ]
+  },
+  "tokens": null,
+  "api_cost": null,
+  "unavailable_metrics": ["actual token usage", "API cost", "exact first-tool invocation timestamp"],
+  "unsupported_stage1_behavior_observed": [],
+  "handoff": "STAGE1_ONLY; stop after stage1 handoff"
+}

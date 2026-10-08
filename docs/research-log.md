@@ -1,5 +1,51 @@
 # Lykoi research log
 
+## R6.16 value-added architecture experiment (2026-10-08)
+
+**`R6_16_ARCHITECTURAL_COMPARISON_INCONCLUSIVE`**;
+[report](../benchmark/results/phase6/R6_16-REPORT.md). Baseline kernel26 and775
+production/history identities preserved. Six fresh task contexts, two structurally
+similar synthetic persistent domains, two cumulative changes each, common pre-author
+requirements/expectations. First schema syntax failure preserved and corrected before
+authors; no post-score infra edits. B ordinary generation and C actual production
+semantic generation each52/52 base,16/16 stage1 new,26/26 stage2 new observations;
+A50/52 base with incorrect blank-label errors, all new checks pass. No regressions.
+C base first candidates fail input metadata validation, one repair each; B's identical
+redundant metadata still meets behavior. Seeded C typed binding/domain/effect refusals
+demonstrated; well-typed wrong transition missed, runtime invariants equivalent to
+ordinary A/B checks. Legacy impact misses extension operations. Actual author totals
+A/B/C600.681/441.720/579.771 wall-effort seconds, billing/setup usage unavailable.
+Common setup48,214 bytes/921 lines; C final Python about55KB versus B8KB/A5–6KB.
+Same model/default reasoning unattested; shared access/staged withholding contaminated.
+No incremental Lykoi behavioral value established, local lean-intent sufficiency only.
+Recommend optional semantic research/analysis, broader architecture unresolved. No
+production/VM/history edits, P6-A04 acceptance0/P6-A05 accessfalse. Stopped; further
+experiments or architectural changes require explicit authorization.
+Additive [context disclosure](../benchmark/results/phase6/r6_16/INHERITED-CONTEXT-SUPPLEMENT.md):
+initial harness guidance already asserted substantive same-round outcomes, although
+inspected disk guidance still pointed to R6.15. Coordinator outcome priming and
+unattested exclusion from fresh authors qualify all comparison claims further.
+Original publication preserved; disclosure adds zero scored executions or repairs.
+
+## R6.15 AI authoring efficiency challenge (2026-10-08)
+
+**`R6_15_EXPLORATORY_COMPARISON_ONLY`**;
+[report](../benchmark/results/phase6/R6_15-REPORT.md). Preselection baseline verifies
+kernel26, frozen VM and687 identities; budgets/contracts/observations/modifications
+frozen before authoring. Six fresh contexts with cooperative file restrictions,
+counterbalanced base task groups. Python passes4/4 tasks (1,065 observations), VM3/4
+(1,030/1,065); three deterministic repeats each. Changes2/2 versus1/2, no regressions,
+but C/T2 remains incomplete. Actual export tokens/calls/timings recovered; billing,
+reasoning configuration and independent isolation unverified. Modification comparison
+explicitly CONTAMINATED_UNENFORCED. Matched accepted T1/T3 group132.8s Python versus
+410.874s VM, with fewer Python output/reasoning/cache tokens, slightly higher uncached
+input. Only local exploratory advantage; unsuccessful groups remain fully reported.
+T2 native-list growth limit qualified by specific17-byte/list32 origin analysis,
+not universal Lykoi impossibility. No candidate repairs; one pre-candidate builder
+syntax correction disclosed. Production/VM/history unchanged, P6-A04 acceptance0,
+P6-A05 not accessed. Stop; controlled isolated task-level replication recommended
+only with separate owner authorization.
+
 ## R6.14 generic finite-relation construction (2026-10-08)
 
 **`R6_14_FINITE_RELATIONS_SUPPORTED`**;

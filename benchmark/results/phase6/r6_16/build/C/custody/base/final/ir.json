@@ -1,0 +1,1061 @@
+{
+  "version": "typed-mutable-values-1",
+  "base": {
+    "axiom_version": "0.3",
+    "application": {
+      "id": "application",
+      "name": "scalar_records"
+    },
+    "types": [
+      {
+        "id": "type:phase",
+        "name": "phase",
+        "kind": "enum",
+        "values": [
+          "unsealed",
+          "sealed"
+        ]
+      },
+      {
+        "id": "type:witness",
+        "name": "witness",
+        "kind": "enum",
+        "values": [
+          "present",
+          "absent"
+        ]
+      },
+      {
+        "id": "type:material",
+        "name": "material",
+        "kind": "enum",
+        "values": [
+          "routine",
+          "fragile"
+        ]
+      },
+      {
+        "id": "record",
+        "name": "Record",
+        "kind": "record",
+        "fields": [
+          {
+            "id": "field:id",
+            "name": "id",
+            "type": "prim:string"
+          },
+          {
+            "id": "field:created_at",
+            "name": "created_at",
+            "type": "prim:timestamp"
+          },
+          {
+            "id": "field:label",
+            "name": "label",
+            "type": "prim:string"
+          },
+          {
+            "id": "field:phase",
+            "name": "phase",
+            "type": "type:phase"
+          },
+          {
+            "id": "field:witness",
+            "name": "witness",
+            "type": "type:witness"
+          },
+          {
+            "id": "field:material",
+            "name": "material",
+            "type": "type:material"
+          }
+        ]
+      },
+      {
+        "id": "records",
+        "name": "Records",
+        "kind": "list",
+        "item_type": "record"
+      }
+    ],
+    "capabilities": [
+      {
+        "id": "store",
+        "kind": "json_file",
+        "path": "records.json",
+        "missing_file": "empty_collection"
+      },
+      {
+        "id": "read",
+        "kind": "resource_access",
+        "resource": "store",
+        "action": "read"
+      },
+      {
+        "id": "write",
+        "kind": "resource_access",
+        "resource": "store",
+        "action": "write"
+      },
+      {
+        "id": "utc_clock",
+        "kind": "utc_clock"
+      },
+      {
+        "id": "uuid_v4",
+        "kind": "uuid_v4"
+      }
+    ],
+    "state": [
+      {
+        "id": "state",
+        "name": "records",
+        "type": "records",
+        "storage": "store",
+        "key_field": "field:id",
+        "schema_version": 1,
+        "invariants": [
+          "unique",
+          "valid"
+        ]
+      }
+    ],
+    "invariants": [
+      {
+        "id": "unique",
+        "kind": "unique_field",
+        "state": "state",
+        "field": "field:id"
+      },
+      {
+        "id": "valid",
+        "kind": "all_records_valid",
+        "state": "state",
+        "field_rules": [
+          {
+            "field": "field:label",
+            "kind": "nonblank"
+          }
+        ]
+      }
+    ],
+    "behaviors": [
+      {
+        "id": "behavior:create",
+        "name": "create",
+        "kind": "create",
+        "state": "state",
+        "inputs": [
+          {
+            "id": "input:create:label",
+            "name": "label",
+            "type": "prim:string"
+          },
+          {
+            "id": "input:create:witness",
+            "name": "witness",
+            "type": "type:witness"
+          },
+          {
+            "id": "input:create:material",
+            "name": "material",
+            "type": "type:material"
+          }
+        ],
+        "output": "record",
+        "dependencies": [
+          "state",
+          "store",
+          "utc_clock",
+          "uuid_v4"
+        ],
+        "requires": [
+          "read",
+          "utc_clock",
+          "uuid_v4",
+          "write"
+        ],
+        "reads": [
+          "state"
+        ],
+        "writes": [
+          "state"
+        ],
+        "effects": [
+          "clock_read",
+          "file_read",
+          "file_write",
+          "random_id",
+          "state_read",
+          "state_write"
+        ],
+        "conditions": [
+          {
+            "id": "guard:create:0",
+            "kind": "nonblank_input",
+            "input": "input:create:label",
+            "failure": "error:invalid_label"
+          }
+        ],
+        "assignments": [
+          {
+            "field": "field:id",
+            "source": "capability",
+            "id": "uuid_v4"
+          },
+          {
+            "field": "field:created_at",
+            "source": "capability",
+            "id": "utc_clock"
+          },
+          {
+            "field": "field:label",
+            "source": "input",
+            "id": "input:create:label"
+          },
+          {
+            "field": "field:phase",
+            "source": "literal",
+            "value": "unsealed"
+          },
+          {
+            "field": "field:witness",
+            "source": "input",
+            "id": "input:create:witness"
+          },
+          {
+            "field": "field:material",
+            "source": "input",
+            "id": "input:create:material"
+          }
+        ],
+        "guarantees": [
+          {
+            "id": "guarantee:create:value",
+            "kind": "result_field_equals",
+            "field": "field:phase",
+            "value": "unsealed"
+          },
+          {
+            "id": "guarantee:create:stored",
+            "kind": "result_in_state",
+            "state": "state"
+          },
+          {
+            "id": "guarantee:create:label",
+            "kind": "result_field_equals_assignment",
+            "field": "field:label"
+          },
+          {
+            "id": "guarantee:create:witness",
+            "kind": "result_field_equals_assignment",
+            "field": "field:witness"
+          },
+          {
+            "id": "guarantee:create:material",
+            "kind": "result_field_equals_assignment",
+            "field": "field:material"
+          }
+        ],
+        "failures": [
+          "error:id_collision",
+          "error:invalid_label",
+          "error:invalid_state",
+          "error:persistence_failure"
+        ]
+      },
+      {
+        "id": "behavior:list",
+        "name": "list",
+        "kind": "list",
+        "state": "state",
+        "inputs": [],
+        "output": "records",
+        "dependencies": [
+          "state",
+          "store"
+        ],
+        "requires": [
+          "read"
+        ],
+        "reads": [
+          "state"
+        ],
+        "writes": [],
+        "effects": [
+          "state_read",
+          "file_read"
+        ],
+        "conditions": [],
+        "assignments": [],
+        "guarantees": [
+          {
+            "id": "guarantee:list",
+            "kind": "result_equals_state_sorted",
+            "state": "state"
+          }
+        ],
+        "failures": [
+          "error:invalid_state",
+          "error:persistence_failure"
+        ],
+        "order_by": [
+          "field:created_at",
+          "field:id"
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "id": "command:create",
+        "token": "create",
+        "behavior": "behavior:create",
+        "arguments": [
+          {
+            "flag": "--label",
+            "input": "input:create:label",
+            "required": true
+          },
+          {
+            "flag": "--witness",
+            "input": "input:create:witness",
+            "required": true
+          },
+          {
+            "flag": "--material",
+            "input": "input:create:material",
+            "required": true
+          }
+        ]
+      },
+      {
+        "id": "command:list",
+        "token": "list",
+        "behavior": "behavior:list",
+        "arguments": []
+      }
+    ],
+    "errors": [
+      {
+        "id": "error:id_collision",
+        "code": "id_collision"
+      },
+      {
+        "id": "error:invalid_label",
+        "code": "invalid_label"
+      },
+      {
+        "id": "error:invalid_state",
+        "code": "invalid_state"
+      },
+      {
+        "id": "error:persistence_failure",
+        "code": "persistence_failure"
+      }
+    ],
+    "migrations": [],
+    "state_machines": [],
+    "transitions": []
+  },
+  "model": {
+    "axiom_version": "0.3",
+    "application": {
+      "id": "application",
+      "name": "scalar_records"
+    },
+    "types": [
+      {
+        "id": "type:phase",
+        "name": "phase",
+        "kind": "enum",
+        "values": [
+          "unsealed",
+          "sealed"
+        ]
+      },
+      {
+        "id": "type:witness",
+        "name": "witness",
+        "kind": "enum",
+        "values": [
+          "present",
+          "absent"
+        ]
+      },
+      {
+        "id": "type:material",
+        "name": "material",
+        "kind": "enum",
+        "values": [
+          "routine",
+          "fragile"
+        ]
+      },
+      {
+        "id": "record",
+        "name": "Record",
+        "kind": "record",
+        "fields": [
+          {
+            "id": "field:id",
+            "name": "id",
+            "type": "prim:string"
+          },
+          {
+            "id": "field:created_at",
+            "name": "created_at",
+            "type": "prim:timestamp"
+          },
+          {
+            "id": "field:label",
+            "name": "label",
+            "type": "prim:string"
+          },
+          {
+            "id": "field:phase",
+            "name": "phase",
+            "type": "type:phase"
+          },
+          {
+            "id": "field:witness",
+            "name": "witness",
+            "type": "type:witness"
+          },
+          {
+            "id": "field:material",
+            "name": "material",
+            "type": "type:material"
+          }
+        ]
+      },
+      {
+        "id": "records",
+        "name": "Records",
+        "kind": "list",
+        "item_type": "record"
+      }
+    ],
+    "capabilities": [
+      {
+        "id": "store",
+        "kind": "json_file",
+        "path": "records.json",
+        "missing_file": "empty_collection"
+      },
+      {
+        "id": "read",
+        "kind": "resource_access",
+        "resource": "store",
+        "action": "read"
+      },
+      {
+        "id": "write",
+        "kind": "resource_access",
+        "resource": "store",
+        "action": "write"
+      },
+      {
+        "id": "utc_clock",
+        "kind": "utc_clock"
+      },
+      {
+        "id": "uuid_v4",
+        "kind": "uuid_v4"
+      }
+    ],
+    "state": [
+      {
+        "id": "state",
+        "name": "records",
+        "type": "records",
+        "storage": "store",
+        "key_field": "field:id",
+        "schema_version": 1,
+        "invariants": [
+          "unique",
+          "valid"
+        ]
+      }
+    ],
+    "invariants": [
+      {
+        "id": "unique",
+        "kind": "unique_field",
+        "state": "state",
+        "field": "field:id"
+      },
+      {
+        "id": "valid",
+        "kind": "all_records_valid",
+        "state": "state",
+        "field_rules": [
+          {
+            "field": "field:label",
+            "kind": "nonblank"
+          }
+        ]
+      }
+    ],
+    "behaviors": [
+      {
+        "id": "behavior:create",
+        "name": "create",
+        "kind": "create",
+        "state": "state",
+        "inputs": [
+          {
+            "id": "input:create:label",
+            "name": "label",
+            "type": "prim:string"
+          },
+          {
+            "id": "input:create:witness",
+            "name": "witness",
+            "type": "type:witness"
+          },
+          {
+            "id": "input:create:material",
+            "name": "material",
+            "type": "type:material"
+          }
+        ],
+        "output": "record",
+        "dependencies": [
+          "state",
+          "store",
+          "utc_clock",
+          "uuid_v4"
+        ],
+        "requires": [
+          "read",
+          "utc_clock",
+          "uuid_v4",
+          "write"
+        ],
+        "reads": [
+          "state"
+        ],
+        "writes": [
+          "state"
+        ],
+        "effects": [
+          "clock_read",
+          "file_read",
+          "file_write",
+          "random_id",
+          "state_read",
+          "state_write"
+        ],
+        "conditions": [
+          {
+            "id": "guard:create:0",
+            "kind": "nonblank_input",
+            "input": "input:create:label",
+            "failure": "error:invalid_label"
+          }
+        ],
+        "assignments": [
+          {
+            "field": "field:id",
+            "source": "capability",
+            "id": "uuid_v4"
+          },
+          {
+            "field": "field:created_at",
+            "source": "capability",
+            "id": "utc_clock"
+          },
+          {
+            "field": "field:label",
+            "source": "input",
+            "id": "input:create:label"
+          },
+          {
+            "field": "field:phase",
+            "source": "literal",
+            "value": "unsealed"
+          },
+          {
+            "field": "field:witness",
+            "source": "input",
+            "id": "input:create:witness"
+          },
+          {
+            "field": "field:material",
+            "source": "input",
+            "id": "input:create:material"
+          }
+        ],
+        "guarantees": [
+          {
+            "id": "guarantee:create:value",
+            "kind": "result_field_equals",
+            "field": "field:phase",
+            "value": "unsealed"
+          },
+          {
+            "id": "guarantee:create:stored",
+            "kind": "result_in_state",
+            "state": "state"
+          },
+          {
+            "id": "guarantee:create:label",
+            "kind": "result_field_equals_assignment",
+            "field": "field:label"
+          },
+          {
+            "id": "guarantee:create:witness",
+            "kind": "result_field_equals_assignment",
+            "field": "field:witness"
+          },
+          {
+            "id": "guarantee:create:material",
+            "kind": "result_field_equals_assignment",
+            "field": "field:material"
+          }
+        ],
+        "failures": [
+          "error:id_collision",
+          "error:invalid_label",
+          "error:invalid_state",
+          "error:persistence_failure"
+        ]
+      },
+      {
+        "id": "behavior:list",
+        "name": "list",
+        "kind": "list",
+        "state": "state",
+        "inputs": [],
+        "output": "records",
+        "dependencies": [
+          "state",
+          "store"
+        ],
+        "requires": [
+          "read"
+        ],
+        "reads": [
+          "state"
+        ],
+        "writes": [],
+        "effects": [
+          "state_read",
+          "file_read"
+        ],
+        "conditions": [],
+        "assignments": [],
+        "guarantees": [
+          {
+            "id": "guarantee:list",
+            "kind": "result_equals_state_sorted",
+            "state": "state"
+          }
+        ],
+        "failures": [
+          "error:invalid_state",
+          "error:persistence_failure"
+        ],
+        "order_by": [
+          "field:created_at",
+          "field:id"
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "id": "command:create",
+        "token": "create",
+        "behavior": "behavior:create",
+        "arguments": [
+          {
+            "flag": "--label",
+            "input": "input:create:label",
+            "required": true
+          },
+          {
+            "flag": "--witness",
+            "input": "input:create:witness",
+            "required": true
+          },
+          {
+            "flag": "--material",
+            "input": "input:create:material",
+            "required": true
+          }
+        ]
+      },
+      {
+        "id": "command:list",
+        "token": "list",
+        "behavior": "behavior:list",
+        "arguments": []
+      }
+    ],
+    "errors": [
+      {
+        "id": "error:id_collision",
+        "code": "id_collision"
+      },
+      {
+        "id": "error:invalid_label",
+        "code": "invalid_label"
+      },
+      {
+        "id": "error:invalid_state",
+        "code": "invalid_state"
+      },
+      {
+        "id": "error:persistence_failure",
+        "code": "persistence_failure"
+      }
+    ],
+    "migrations": [],
+    "state_machines": [],
+    "transitions": []
+  },
+  "value_types": {
+    "id": {
+      "type": "string",
+      "domain": [],
+      "nullable": false
+    },
+    "created_at": {
+      "type": "timestamp",
+      "domain": [],
+      "nullable": false
+    },
+    "label": {
+      "type": "string",
+      "domain": [],
+      "nullable": false
+    },
+    "phase": {
+      "type": "enum",
+      "domain": [
+        "unsealed",
+        "sealed"
+      ],
+      "nullable": false
+    },
+    "witness": {
+      "type": "enum",
+      "domain": [
+        "present",
+        "absent"
+      ],
+      "nullable": false
+    },
+    "material": {
+      "type": "enum",
+      "domain": [
+        "routine",
+        "fragile"
+      ],
+      "nullable": false
+    }
+  },
+  "facts": {
+    "collections": [],
+    "mutations": [
+      {
+        "command": "seal",
+        "lookup": "id",
+        "missing_error": "not_found",
+        "changes": [
+          {
+            "field": "phase",
+            "operation": "replace",
+            "pipeline": [],
+            "invalid_error": "invalid_input",
+            "source": {
+              "kind": "literal",
+              "type": {
+                "type": "enum",
+                "domain": [
+                  "unsealed",
+                  "sealed"
+                ],
+                "nullable": false
+              },
+              "value": "sealed"
+            }
+          }
+        ],
+        "guards": [
+          {
+            "predicate": {
+              "kind": "compare",
+              "result_type": "boolean",
+              "operator": "eq",
+              "left": {
+                "kind": "field",
+                "type": {
+                  "type": "enum",
+                  "domain": [
+                    "unsealed",
+                    "sealed"
+                  ],
+                  "nullable": false
+                },
+                "name": "phase"
+              },
+              "right": {
+                "kind": "literal",
+                "type": {
+                  "type": "enum",
+                  "domain": [
+                    "unsealed",
+                    "sealed"
+                  ],
+                  "nullable": false
+                },
+                "value": "unsealed"
+              },
+              "policy": {
+                "case": "sensitive",
+                "normalization": "none"
+              },
+              "nulls": "false"
+            },
+            "error": "invalid_transition"
+          },
+          {
+            "predicate": {
+              "kind": "compare",
+              "result_type": "boolean",
+              "operator": "eq",
+              "left": {
+                "kind": "field",
+                "type": {
+                  "type": "enum",
+                  "domain": [
+                    "present",
+                    "absent"
+                  ],
+                  "nullable": false
+                },
+                "name": "witness"
+              },
+              "right": {
+                "kind": "literal",
+                "type": {
+                  "type": "enum",
+                  "domain": [
+                    "present",
+                    "absent"
+                  ],
+                  "nullable": false
+                },
+                "value": "present"
+              },
+              "policy": {
+                "case": "sensitive",
+                "normalization": "none"
+              },
+              "nulls": "false"
+            },
+            "error": "gate_required"
+          }
+        ],
+        "effect": {
+          "atomicity": "single_record",
+          "persistence": "atomic",
+          "rejection": "unchanged"
+        }
+      },
+      {
+        "command": "set_gate",
+        "lookup": "id",
+        "missing_error": "not_found",
+        "changes": [
+          {
+            "field": "witness",
+            "operation": "replace",
+            "pipeline": [],
+            "invalid_error": "invalid_input",
+            "input": "value",
+            "omitted": "reject",
+            "missing_error": "invalid_input"
+          }
+        ],
+        "guards": [
+          {
+            "predicate": {
+              "kind": "not",
+              "result_type": "boolean",
+              "child": {
+                "kind": "and",
+                "result_type": "boolean",
+                "children": [
+                  {
+                    "kind": "compare",
+                    "result_type": "boolean",
+                    "operator": "eq",
+                    "left": {
+                      "kind": "field",
+                      "type": {
+                        "type": "enum",
+                        "domain": [
+                          "unsealed",
+                          "sealed"
+                        ],
+                        "nullable": false
+                      },
+                      "name": "phase"
+                    },
+                    "right": {
+                      "kind": "literal",
+                      "type": {
+                        "type": "enum",
+                        "domain": [
+                          "unsealed",
+                          "sealed"
+                        ],
+                        "nullable": false
+                      },
+                      "value": "sealed"
+                    },
+                    "policy": {
+                      "case": "sensitive",
+                      "normalization": "none"
+                    },
+                    "nulls": "false"
+                  },
+                  {
+                    "kind": "compare",
+                    "result_type": "boolean",
+                    "operator": "eq",
+                    "left": {
+                      "kind": "parameter",
+                      "type": {
+                        "type": "enum",
+                        "domain": [
+                          "present",
+                          "absent"
+                        ],
+                        "nullable": false
+                      },
+                      "name": "value"
+                    },
+                    "right": {
+                      "kind": "literal",
+                      "type": {
+                        "type": "enum",
+                        "domain": [
+                          "present",
+                          "absent"
+                        ],
+                        "nullable": false
+                      },
+                      "value": "absent"
+                    },
+                    "policy": {
+                      "case": "sensitive",
+                      "normalization": "none"
+                    },
+                    "nulls": "false"
+                  }
+                ]
+              }
+            },
+            "error": "gate_locked"
+          }
+        ],
+        "effect": {
+          "atomicity": "single_record",
+          "persistence": "atomic",
+          "rejection": "unchanged"
+        }
+      }
+    ],
+    "creation_pipelines": [],
+    "predicate_semantics": {
+      "booleans": [],
+      "guards": [],
+      "invariants": [
+        {
+          "predicate": {
+            "kind": "or",
+            "result_type": "boolean",
+            "children": [
+              {
+                "kind": "not",
+                "result_type": "boolean",
+                "child": {
+                  "kind": "compare",
+                  "result_type": "boolean",
+                  "operator": "eq",
+                  "left": {
+                    "kind": "field",
+                    "type": {
+                      "type": "enum",
+                      "domain": [
+                        "unsealed",
+                        "sealed"
+                      ],
+                      "nullable": false
+                    },
+                    "name": "phase"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": {
+                      "type": "enum",
+                      "domain": [
+                        "unsealed",
+                        "sealed"
+                      ],
+                      "nullable": false
+                    },
+                    "value": "sealed"
+                  },
+                  "policy": {
+                    "case": "sensitive",
+                    "normalization": "none"
+                  },
+                  "nulls": "false"
+                }
+              },
+              {
+                "kind": "compare",
+                "result_type": "boolean",
+                "operator": "eq",
+                "left": {
+                  "kind": "field",
+                  "type": {
+                    "type": "enum",
+                    "domain": [
+                      "present",
+                      "absent"
+                    ],
+                    "nullable": false
+                  },
+                  "name": "witness"
+                },
+                "right": {
+                  "kind": "literal",
+                  "type": {
+                    "type": "enum",
+                    "domain": [
+                      "present",
+                      "absent"
+                    ],
+                    "nullable": false
+                  },
+                  "value": "present"
+                },
+                "policy": {
+                  "case": "sensitive",
+                  "normalization": "none"
+                },
+                "nulls": "false"
+              }
+            ]
+          },
+          "error": "invalid_state"
+        }
+      ]
+    }
+  }
+}

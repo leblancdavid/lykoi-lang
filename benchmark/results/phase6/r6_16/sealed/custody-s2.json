@@ -1,0 +1,223 @@
+[
+  {
+    "id": "exception-cycle",
+    "steps": [
+      {
+        "op": "create",
+        "args": {
+          "label": "  Batch A  ",
+          "witness": "absent",
+          "material": "fragile"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "unsealed",
+            "witness": "absent",
+            "material": "fragile"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "protect",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "sealed",
+            "witness": "absent",
+            "material": "fragile"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "list",
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "created_at": "2026-01-01T00:00:00Z",
+              "label": "  Batch A  ",
+              "phase": "sealed",
+              "witness": "absent",
+              "material": "fragile"
+            }
+          ]
+        },
+        "unchanged": true
+      },
+      {
+        "op": "protect",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_transition"
+        },
+        "unchanged": true
+      },
+      {
+        "op": "set_gate",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "absent"
+        },
+        "expected": {
+          "error": "gate_locked"
+        },
+        "unchanged": true
+      },
+      {
+        "op": "unseal",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "unsealed",
+            "witness": "absent",
+            "material": "fragile"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "seal",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "gate_required"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "exception-normal",
+    "steps": [
+      {
+        "op": "create",
+        "args": {
+          "label": "  Batch A  ",
+          "witness": "absent",
+          "material": "routine"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "unsealed",
+            "witness": "absent",
+            "material": "routine"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "protect",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "exception_denied"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "exception-allowed-gate",
+    "steps": [
+      {
+        "op": "create",
+        "args": {
+          "label": "  Batch A  ",
+          "witness": "present",
+          "material": "fragile"
+        },
+        "expected": {
+          "ok": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "created_at": "2026-01-01T00:00:00Z",
+            "label": "  Batch A  ",
+            "phase": "unsealed",
+            "witness": "present",
+            "material": "fragile"
+          }
+        },
+        "unchanged": false
+      },
+      {
+        "op": "protect",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "exception_denied"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "exception-missing",
+    "steps": [
+      {
+        "op": "protect",
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "not_found"
+        },
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "id": "corrupt-special-permitted",
+    "initial": [
+      {
+        "id": "00000000-0000-4000-8000-000000000001",
+        "created_at": "2026-01-01T00:00:00Z",
+        "label": "  Batch A  ",
+        "phase": "sealed",
+        "witness": "absent",
+        "material": "fragile"
+      }
+    ],
+    "steps": [
+      {
+        "op": "list",
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "id": "00000000-0000-4000-8000-000000000001",
+              "created_at": "2026-01-01T00:00:00Z",
+              "label": "  Batch A  ",
+              "phase": "sealed",
+              "witness": "absent",
+              "material": "fragile"
+            }
+          ]
+        },
+        "unchanged": true
+      }
+    ]
+  }
+]

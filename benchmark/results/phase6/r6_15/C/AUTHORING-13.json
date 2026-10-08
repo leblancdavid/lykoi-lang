@@ -1,0 +1,75 @@
+{
+  "session": "R6.15 Track C fresh base authoring T1 then T3",
+  "start_utc": "2026-10-08T22:44:16.2174332Z",
+  "end_utc": "2026-10-08T22:50:48.098417+00:00",
+  "deadline_seconds": 600,
+  "outcome": "INITIAL_CANDIDATES_SELF_TEST_PASS_ACCEPTANCE_NOT_RUN",
+  "task_order": ["T1", "T3"],
+  "runtime": "Original experiments.semantic_interpreter.interpreter.execute(plan, data), default limits and default assemble=True",
+  "shared_boundary": "COMMON.md delegates the >64 byte INPUT_LIMIT at64 boundary to the coordinator adapter. Development cases here all have length <=64; that adapter was neither accessed nor tested.",
+  "first_candidates_written_before_any_tests": true,
+  "initial_snapshots_immutable": true,
+  "repairs": {"T1": [], "T3": []},
+  "actual_failures": [],
+  "acceptance": "NOT_RUN; no coordinator feedback received",
+  "artifacts": {
+    "base/T1.plan.json": {"sha256": "ed738b9277db3f186fc19e77e3f2d6a68928debbb8ac63073cb84471ffcc265e", "bytes": 1344, "nodes": 16},
+    "first/T1.plan.json": {"sha256": "ed738b9277db3f186fc19e77e3f2d6a68928debbb8ac63073cb84471ffcc265e", "bytes": 1344, "nodes": 16},
+    "base/T3.plan.json": {"sha256": "7466e6fea15ca8eae089f0f3acb7c2cb21ee2e82b11d8867e5d5214948e98924", "bytes": 6320, "nodes": 59},
+    "first/T3.plan.json": {"sha256": "7466e6fea15ca8eae089f0f3acb7c2cb21ee2e82b11d8867e5d5214948e98924", "bytes": 6320, "nodes": 59},
+    "authoring-13.py": {"sha256": "32b8e87464ab3650390b3316be42837b9895a48b372944c13c01ae709217ac0e", "bytes": 4509, "role": "Data-only authoring; prints apply_patch text and is not imported by runtime"}
+  },
+  "tests": [
+    {
+      "task": "T1", "batch": 1,
+      "start_utc": "2026-10-08T22:48:53.572493+00:00",
+      "end_utc": "2026-10-08T22:48:53.593098+00:00",
+      "seconds": 0.020600000047124922, "subprocess_timeout_seconds": 30,
+      "observations": 298, "failures": [],
+      "observation_sha256": "fd226824c719ab6fcce11a65acc6cabd88f88f706eefa6144c73b11b722aa776",
+      "cases": "Eight explicit inputs: empty, 00, 01, 00ff, 0100, 03, ff, 03000000; Cartesian mode in [0,1] and each operand in [0,1,9,10,100,189,190,199,200,201,245,255]; trailing [mode,0,0,255] for both modes. Order is as listed.",
+      "oracle": "Author-written inline development oracle checks mode/shortage/trailing precedence, then min(x+y+10*mode,200), strict raw>200 Boolean and exact two-byte hex output. Sorted JSON comparison distinguishes integer and Boolean.",
+      "first_equals_base": true, "builder_matches": true
+    },
+    {
+      "task": "T3", "batch": 1,
+      "start_utc": "2026-10-08T22:49:12.112103+00:00",
+      "end_utc": "2026-10-08T22:49:25.010357+00:00",
+      "seconds": 12.898258200031705, "subprocess_timeout_seconds": 30,
+      "observations": 2413, "failures": [],
+      "observation_sha256": "527b010d0c5cb172881c45092067b27f95a8891e610bc4d8337ef2addf653805",
+      "cases": "In order: empty; every single byte; [a,b] with a in [0,1,7,14,15,16,127,255], b in range(256); [0,8,a,b] with a,b each in [0,1,7,8,9,15,16,255]; [0,8,a] with a in [0,7,8,15,16,255]; n copies of [0,0] for n=1..9; [i,i] for i=0..15; eight [0,0] followed by ff, then eight [0,0] followed by 0000, then 00080709ff, 00080706ff, 000807ffff; touching [i,i+1] windows for i=0..n-1, n=1..8. Counts are observations, not a unique-input assertion.",
+      "oracle": "Author-written inline development oracle processes each record in order: ninth limit, start RANGE, end shortage, end RANGE, ORDER, every earlier end<=start. Success returns exact ordered records and count+original bytes. Sorted JSON comparison distinguishes integer and Boolean.",
+      "first_equals_base": true, "builder_matches": true
+    }
+  ],
+  "test_evidence": "Exact commands and successful subprocess stdout are retained in this session's tool messages. Observation hashes use sha256(json.dumps([[input_hex,projected_result],...],sort_keys=True).encode()). No failed observations or stderr occurred.",
+  "difficulties": [
+    "T1 has no min expression; checked addition followed by Boolean dispatch supplies saturation and the exact clipping boundary.",
+    "T3 repeat bodies do not receive earlier-occurrence state. The submitted plan looks ahead at the next start while the current end remains locally bound. If overlap is anticipated it consumes and checks that next record before rejecting, preserving shortage/RANGE/ORDER precedence. Adjacent checks suffice because every previously accepted record is ordered and disjoint.",
+    "T3 privately emits count and accepted record bytes during decode. output_length then supplies cursor+1 for EOF and ninth-record lookahead suppression. Count is selected by finite input-length thresholds. Only even lengths <=16 can succeed. A rejecting execute result exposes neither private output nor prefix value.",
+    "T3 needs assemble=True (the original execute default). encode is an explicit no-op; the native decode value is already the required list. The 59-node plan stays inside the unchanged 64-node bound."
+  ],
+  "exposure": {
+    "read_inputs": [
+      "benchmark/results/phase6/r6_15/tasks/COMMON.md",
+      "benchmark/results/phase6/r6_15/tasks/T1.md",
+      "benchmark/results/phase6/r6_15/tasks/T3.md",
+      "benchmark/results/phase6/r6_15/PROTOCOL.md",
+      "experiments/semantic_interpreter/CONTRACT-1.md",
+      "experiments/semantic_interpreter/semantic-plan-1.schema.json",
+      "experiments/semantic_interpreter/interpreter.py"
+    ],
+    "inherited_context": "Harness supplied repository AGENTS.md, model/environment instructions and historical high-level round findings before this request. No historical plans, builders or examples were opened. Freshness and separation are cooperative, not OS-attested.",
+    "own_artifact_reads": "Own builder execution and own plans read for tests, matching, hashes and whitespace checks.",
+    "git_metadata": "Initial git status reported only untracked benchmark/results/phase6/r6_15/. git diff --check completed without output.",
+    "forbidden_content_accesses": [],
+    "other_track_solution_provided": false,
+    "delegation": false,
+    "runtime_callbacks_or_host_task_behavior": false
+  },
+  "writes": "Intentional file edits used apply_patch and were limited to the four named plans, this record and own builder. Python imports may maintain ordinary interpreter bytecode caches; no VM source or production/history artifact edits were made.",
+  "telemetry": "No token estimates. Provider billing and per-call token telemetry were not available to this authoring session. Model identity was inherited as openai/gpt-6.1-sol, not independently attested.",
+  "budget_disclosure": "Cooperative 600-second wall deadline and <=20 tool invocations. Each task used one initial candidate, zero repairs, and one <=30-second direct subprocess development batch. Tool messages preserve actual invocation metadata; reasoning/dispatch cannot be forcibly interrupted by task tools.",
+  "stop": "Freeze both base artifacts and initial snapshots at handoff; coordinator scoring is subsequent. No further authoring or scored repair authorized in this session."
+}

@@ -1,0 +1,592 @@
+{
+  "collections": [],
+  "mutations": [
+    {
+      "command": "ignite",
+      "lookup": "id",
+      "missing_error": "not_found",
+      "changes": [
+        {
+          "field": "phase",
+          "operation": "replace",
+          "pipeline": [],
+          "invalid_error": "invalid_input",
+          "source": {
+            "kind": "literal",
+            "type": {
+              "type": "enum",
+              "domain": [
+                "cold",
+                "firing"
+              ],
+              "nullable": false
+            },
+            "value": "firing"
+          }
+        }
+      ],
+      "guards": [
+        {
+          "predicate": {
+            "kind": "compare",
+            "result_type": "boolean",
+            "operator": "eq",
+            "left": {
+              "kind": "field",
+              "type": {
+                "type": "enum",
+                "domain": [
+                  "cold",
+                  "firing"
+                ],
+                "nullable": false
+              },
+              "name": "phase"
+            },
+            "right": {
+              "kind": "literal",
+              "type": {
+                "type": "enum",
+                "domain": [
+                  "cold",
+                  "firing"
+                ],
+                "nullable": false
+              },
+              "value": "cold"
+            },
+            "policy": {
+              "case": "sensitive",
+              "normalization": "none"
+            },
+            "nulls": "false"
+          },
+          "error": "invalid_transition"
+        },
+        {
+          "predicate": {
+            "kind": "compare",
+            "result_type": "boolean",
+            "operator": "eq",
+            "left": {
+              "kind": "field",
+              "type": {
+                "type": "enum",
+                "domain": [
+                  "open",
+                  "closed"
+                ],
+                "nullable": false
+              },
+              "name": "vent"
+            },
+            "right": {
+              "kind": "literal",
+              "type": {
+                "type": "enum",
+                "domain": [
+                  "open",
+                  "closed"
+                ],
+                "nullable": false
+              },
+              "value": "open"
+            },
+            "policy": {
+              "case": "sensitive",
+              "normalization": "none"
+            },
+            "nulls": "false"
+          },
+          "error": "gate_required"
+        }
+      ],
+      "effect": {
+        "atomicity": "single_record",
+        "persistence": "atomic",
+        "rejection": "changed"
+      }
+    },
+    {
+      "command": "set_gate",
+      "lookup": "id",
+      "missing_error": "not_found",
+      "changes": [
+        {
+          "field": "vent",
+          "operation": "replace",
+          "pipeline": [],
+          "invalid_error": "invalid_input",
+          "input": "value",
+          "omitted": "reject",
+          "missing_error": "invalid_input"
+        }
+      ],
+      "guards": [
+        {
+          "predicate": {
+            "kind": "not",
+            "result_type": "boolean",
+            "child": {
+              "kind": "and",
+              "result_type": "boolean",
+              "children": [
+                {
+                  "kind": "compare",
+                  "result_type": "boolean",
+                  "operator": "eq",
+                  "left": {
+                    "kind": "field",
+                    "type": {
+                      "type": "enum",
+                      "domain": [
+                        "cold",
+                        "firing"
+                      ],
+                      "nullable": false
+                    },
+                    "name": "phase"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": {
+                      "type": "enum",
+                      "domain": [
+                        "cold",
+                        "firing"
+                      ],
+                      "nullable": false
+                    },
+                    "value": "firing"
+                  },
+                  "policy": {
+                    "case": "sensitive",
+                    "normalization": "none"
+                  },
+                  "nulls": "false"
+                },
+                {
+                  "kind": "compare",
+                  "result_type": "boolean",
+                  "operator": "eq",
+                  "left": {
+                    "kind": "parameter",
+                    "type": {
+                      "type": "enum",
+                      "domain": [
+                        "open",
+                        "closed"
+                      ],
+                      "nullable": false
+                    },
+                    "name": "value"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": {
+                      "type": "enum",
+                      "domain": [
+                        "open",
+                        "closed"
+                      ],
+                      "nullable": false
+                    },
+                    "value": "closed"
+                  },
+                  "policy": {
+                    "case": "sensitive",
+                    "normalization": "none"
+                  },
+                  "nulls": "false"
+                }
+              ]
+            }
+          },
+          "error": "gate_locked"
+        }
+      ],
+      "effect": {
+        "atomicity": "single_record",
+        "persistence": "atomic",
+        "rejection": "unchanged"
+      }
+    },
+    {
+      "command": "cool",
+      "lookup": "id",
+      "missing_error": "not_found",
+      "changes": [
+        {
+          "field": "phase",
+          "operation": "replace",
+          "pipeline": [],
+          "invalid_error": "invalid_input",
+          "source": {
+            "kind": "literal",
+            "type": {
+              "type": "enum",
+              "domain": [
+                "cold",
+                "firing"
+              ],
+              "nullable": false
+            },
+            "value": "cold"
+          }
+        }
+      ],
+      "guards": [
+        {
+          "predicate": {
+            "kind": "compare",
+            "result_type": "boolean",
+            "operator": "eq",
+            "left": {
+              "kind": "field",
+              "type": {
+                "type": "enum",
+                "domain": [
+                  "cold",
+                  "firing"
+                ],
+                "nullable": false
+              },
+              "name": "phase"
+            },
+            "right": {
+              "kind": "literal",
+              "type": {
+                "type": "enum",
+                "domain": [
+                  "cold",
+                  "firing"
+                ],
+                "nullable": false
+              },
+              "value": "firing"
+            },
+            "policy": {
+              "case": "sensitive",
+              "normalization": "none"
+            },
+            "nulls": "false"
+          },
+          "error": "invalid_transition"
+        }
+      ],
+      "effect": {
+        "atomicity": "single_record",
+        "persistence": "atomic",
+        "rejection": "unchanged"
+      }
+    },
+    {
+      "command": "rescue",
+      "lookup": "id",
+      "missing_error": "not_found",
+      "changes": [
+        {
+          "field": "phase",
+          "operation": "replace",
+          "pipeline": [],
+          "invalid_error": "invalid_input",
+          "source": {
+            "kind": "literal",
+            "type": {
+              "type": "enum",
+              "domain": [
+                "cold",
+                "firing"
+              ],
+              "nullable": false
+            },
+            "value": "firing"
+          }
+        }
+      ],
+      "guards": [
+        {
+          "predicate": {
+            "kind": "compare",
+            "result_type": "boolean",
+            "operator": "eq",
+            "left": {
+              "kind": "field",
+              "type": {
+                "type": "enum",
+                "domain": [
+                  "cold",
+                  "firing"
+                ],
+                "nullable": false
+              },
+              "name": "phase"
+            },
+            "right": {
+              "kind": "literal",
+              "type": {
+                "type": "enum",
+                "domain": [
+                  "cold",
+                  "firing"
+                ],
+                "nullable": false
+              },
+              "value": "cold"
+            },
+            "policy": {
+              "case": "sensitive",
+              "normalization": "none"
+            },
+            "nulls": "false"
+          },
+          "error": "invalid_transition"
+        },
+        {
+          "predicate": {
+            "kind": "and",
+            "result_type": "boolean",
+            "children": [
+              {
+                "kind": "compare",
+                "result_type": "boolean",
+                "operator": "eq",
+                "left": {
+                  "kind": "field",
+                  "type": {
+                    "type": "enum",
+                    "domain": [
+                      "open",
+                      "closed"
+                    ],
+                    "nullable": false
+                  },
+                  "name": "vent"
+                },
+                "right": {
+                  "kind": "literal",
+                  "type": {
+                    "type": "enum",
+                    "domain": [
+                      "open",
+                      "closed"
+                    ],
+                    "nullable": false
+                  },
+                  "value": "closed"
+                },
+                "policy": {
+                  "case": "sensitive",
+                  "normalization": "none"
+                },
+                "nulls": "false"
+              },
+              {
+                "kind": "compare",
+                "result_type": "boolean",
+                "operator": "eq",
+                "left": {
+                  "kind": "field",
+                  "type": {
+                    "type": "enum",
+                    "domain": [
+                      "ordinary",
+                      "emergency"
+                    ],
+                    "nullable": false
+                  },
+                  "name": "load"
+                },
+                "right": {
+                  "kind": "literal",
+                  "type": {
+                    "type": "enum",
+                    "domain": [
+                      "ordinary",
+                      "emergency"
+                    ],
+                    "nullable": false
+                  },
+                  "value": "emergency"
+                },
+                "policy": {
+                  "case": "sensitive",
+                  "normalization": "none"
+                },
+                "nulls": "false"
+              }
+            ]
+          },
+          "error": "exception_denied"
+        }
+      ],
+      "effect": {
+        "atomicity": "single_record",
+        "persistence": "atomic",
+        "rejection": "unchanged"
+      }
+    }
+  ],
+  "creation_pipelines": [],
+  "predicate_semantics": {
+    "booleans": [],
+    "guards": [],
+    "invariants": [
+      {
+        "predicate": {
+          "kind": "or",
+          "result_type": "boolean",
+          "children": [
+            {
+              "kind": "not",
+              "result_type": "boolean",
+              "child": {
+                "kind": "compare",
+                "result_type": "boolean",
+                "operator": "eq",
+                "left": {
+                  "kind": "field",
+                  "type": {
+                    "type": "enum",
+                    "domain": [
+                      "cold",
+                      "firing"
+                    ],
+                    "nullable": false
+                  },
+                  "name": "phase"
+                },
+                "right": {
+                  "kind": "literal",
+                  "type": {
+                    "type": "enum",
+                    "domain": [
+                      "cold",
+                      "firing"
+                    ],
+                    "nullable": false
+                  },
+                  "value": "firing"
+                },
+                "policy": {
+                  "case": "sensitive",
+                  "normalization": "none"
+                },
+                "nulls": "false"
+              }
+            },
+            {
+              "kind": "compare",
+              "result_type": "boolean",
+              "operator": "eq",
+              "left": {
+                "kind": "field",
+                "type": {
+                  "type": "enum",
+                  "domain": [
+                    "open",
+                    "closed"
+                  ],
+                  "nullable": false
+                },
+                "name": "vent"
+              },
+              "right": {
+                "kind": "literal",
+                "type": {
+                  "type": "enum",
+                  "domain": [
+                    "open",
+                    "closed"
+                  ],
+                  "nullable": false
+                },
+                "value": "open"
+              },
+              "policy": {
+                "case": "sensitive",
+                "normalization": "none"
+              },
+              "nulls": "false"
+            },
+            {
+              "kind": "and",
+              "result_type": "boolean",
+              "children": [
+                {
+                  "kind": "compare",
+                  "result_type": "boolean",
+                  "operator": "eq",
+                  "left": {
+                    "kind": "field",
+                    "type": {
+                      "type": "enum",
+                      "domain": [
+                        "open",
+                        "closed"
+                      ],
+                      "nullable": false
+                    },
+                    "name": "vent"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": {
+                      "type": "enum",
+                      "domain": [
+                        "open",
+                        "closed"
+                      ],
+                      "nullable": false
+                    },
+                    "value": "closed"
+                  },
+                  "policy": {
+                    "case": "sensitive",
+                    "normalization": "none"
+                  },
+                  "nulls": "false"
+                },
+                {
+                  "kind": "compare",
+                  "result_type": "boolean",
+                  "operator": "eq",
+                  "left": {
+                    "kind": "field",
+                    "type": {
+                      "type": "enum",
+                      "domain": [
+                        "ordinary",
+                        "emergency"
+                      ],
+                      "nullable": false
+                    },
+                    "name": "load"
+                  },
+                  "right": {
+                    "kind": "literal",
+                    "type": {
+                      "type": "enum",
+                      "domain": [
+                        "ordinary",
+                        "emergency"
+                      ],
+                      "nullable": false
+                    },
+                    "value": "emergency"
+                  },
+                  "policy": {
+                    "case": "sensitive",
+                    "normalization": "none"
+                  },
+                  "nulls": "false"
+                }
+              ]
+            }
+          ]
+        },
+        "error": "invalid_state"
+      }
+    ]
+  }
+}

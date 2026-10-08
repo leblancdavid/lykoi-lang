@@ -1,0 +1,110 @@
+{
+  "session": "AUTHORING-24",
+  "round": "R6.15",
+  "track": "C",
+  "task_order": ["T2", "T4"],
+  "start_utc_observed": "2026-10-08T22:38:52.4043110Z",
+  "start_clock_disclosure": "First tool was the COMMON.md read; the clock was captured in the immediately following parallel call. Exact first-tool timestamp is not available to this author; tool metadata can establish it. No backdated start is fabricated.",
+  "end_utc_observed": "2026-10-08T22:43:33.059604+00:00",
+  "end_clock_scope": "Final integrity check timestamp immediately before this metadata-only end/disclosure update and handoff. Candidate authoring/testing/hash verification completed at 22:42:22.822351 UTC.",
+  "integrity_checks": "Authoring JSON parsed; all six authored files checked for trailing whitespace; first/base plans byte-identical; git diff --check passed; status still reports only the preexisting untracked r6_15 subtree.",
+  "tool_call_accounting": "16 underlying function calls through this metadata update, including seven independent calls in one parallel wrapper. Actual harness accounting is authoritative.",
+  "implicit_write_disclosure": "Both development-test Python subprocesses imported the original interpreter without -B. Ordinary Python bytecode caching was not explicitly disabled there; incidental __pycache__ writes cannot be excluded from this session. No such files were inspected, deliberately edited or removed. Final integrity subprocess used -B. All intentional artifact writes are the six authorized C files.",
+  "deadline_seconds": 600,
+  "tokens": null,
+  "token_disclosure": "No token counts estimated; coordinator may recover actual metadata.",
+  "runtime": "Original experiments.semantic_interpreter.interpreter.execute(plan, data), default VM limits, assemble=True. Development projection only success value/output.hex or rejection code/offset. Test data lengths <=64; shared >64 input boundary belongs to common coordinator adapter.",
+  "builder": "C/authoring-24.py",
+  "builder_scope": "Generates JSON data only. No VM runtime import, callbacks, or host task implementations in submitted artifacts. Builder authored using apply_patch; running it materialized first and base JSON using exclusive-create mode. First snapshots were both created before any validation or tests and never overwritten.",
+  "candidates": {
+    "T2": {
+      "base": "C/base/T2.plan.json",
+      "first": "C/first/T2.plan.json",
+      "sha256_first_and_final": "d33f3e4757d3c7eef2103a5de9f248c5e4ec6708d6aae6c0a3415362686fd363",
+      "nodes": 14,
+      "status": "PARTIAL_AUTHORING_FAILURE_SUPPORTED_LIST_BOUND_BLOCKER",
+      "initial_candidates": 1,
+      "repairs": [],
+      "behavior": "Full record parsing/count validation and occurrence precedence; exact ordered native value/output for count0/count1 runs. After full parsing, a count2..4 rejects with the explicitly noncontract code AUTHORING_UNSUPPORTED. This is an incomplete attempted submission, not a conforming task implementation or a task-sanctioned rejection.",
+      "blocker_analysis": [
+        "Consider the required success input 01 followed by eight 04ff records: 17 input bytes require a flat list of 32 integers.",
+        "In the inspected closed expression domain, const cannot construct lists. ref and record projections transport existing values; decode returns integer/string/bytes; join returns a string; length/nonempty/eq/le/add return scalar values. There is no additional list source in those expressions.",
+        "The native list constructors in Machine.run are repeat, map/each, select, and the internal prefix snapshots supplied by map/each. map/each/select accept at most the default eight source occurrences. They cannot produce a flat list longer than eight; prefix snapshots also have at most eight occurrences.",
+        "Each successful repeat body must have conservative positive progress. The validator's positive base cases are nonempty literal, positive-min scan, and fixed atom; seq sums progress, choice takes its minimum, and acyclic call preserves its rule progress. All of those consume their established positive bytes on success. Dynamic take, repeat itself and other operations contribute zero conservative progress. No runtime operation rewinds the input cursor.",
+        "Therefore a repeat-created list on this 17-byte input has at most 17 members, even if occurrence_limit=False. Nested repeats may create nested lists, but expression transport does not flatten or concatenate those lists. Taking references to nested lists cannot increase their member count.",
+        "Consequently none of the inspected native list origins supplies the required flat list32 on that input under the frozen interpreter. This is a compositional bound for this specific VM/value interface and finite witness, not universal language impossibility, optimality, or a conclusion drawn merely from direct opcode absence. Output-only encoding or a task-computing projection would not satisfy the required native value and was not used."
+      ],
+      "tests": [{
+        "batch": 1,
+        "start_utc": "2026-10-08T22:41:38.431475+00:00",
+        "end_utc": "2026-10-08T22:41:38.432994+00:00",
+        "subprocess_timeout_seconds": 30,
+        "measured_test_seconds": 0.0020241737365722656,
+        "cases": 22,
+        "passed": 12,
+        "case_generation": "Empty; version3; invalid count5 lacking value; count0 lacking value; eight zero runs followed by count5; Cartesian count0..4 x value0,128,255 as single runs; mixed 01 0107 00ff 0107; eight count4/value255 runs. Expected success lists and bytes constructed directly from these author-chosen counts. All expectations come only from T2.md.",
+        "failures": [
+          {"input":"010200","expected_value":[0,0],"expected_output":"0000","actual_code":"AUTHORING_UNSUPPORTED","offset":1,"node":"n7","stage":"validation","path":null,"expected_spellings":[],"work":26},
+          {"input":"010280","expected_value":[128,128],"expected_output":"8080","actual_code":"AUTHORING_UNSUPPORTED","offset":1,"node":"n7","stage":"validation","path":null,"expected_spellings":[],"work":26},
+          {"input":"0102ff","expected_value":[255,255],"expected_output":"ffff","actual_code":"AUTHORING_UNSUPPORTED","offset":1,"node":"n7","stage":"validation","path":null,"expected_spellings":[],"work":26},
+          {"input":"010300","expected_value":[0,0,0],"expected_output":"000000","actual_code":"AUTHORING_UNSUPPORTED","offset":1,"node":"n7","stage":"validation","path":null,"expected_spellings":[],"work":26},
+          {"input":"010380","expected_value":[128,128,128],"expected_output":"808080","actual_code":"AUTHORING_UNSUPPORTED","offset":1,"node":"n7","stage":"validation","path":null,"expected_spellings":[],"work":26},
+          {"input":"0103ff","expected_value":[255,255,255],"expected_output":"ffffff","actual_code":"AUTHORING_UNSUPPORTED","offset":1,"node":"n7","stage":"validation","path":null,"expected_spellings":[],"work":26},
+          {"input":"010400","expected_value":[0,0,0,0],"expected_output":"00000000","actual_code":"AUTHORING_UNSUPPORTED","offset":1,"node":"n7","stage":"validation","path":null,"expected_spellings":[],"work":26},
+          {"input":"010480","expected_value":[128,128,128,128],"expected_output":"80808080","actual_code":"AUTHORING_UNSUPPORTED","offset":1,"node":"n7","stage":"validation","path":null,"expected_spellings":[],"work":26},
+          {"input":"0104ff","expected_value":[255,255,255,255],"expected_output":"ffffffff","actual_code":"AUTHORING_UNSUPPORTED","offset":1,"node":"n7","stage":"validation","path":null,"expected_spellings":[],"work":26},
+          {"input":"0104ff04ff04ff04ff04ff04ff04ff04ff","expected_value":[255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255],"expected_output":"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff","actual_code":"AUTHORING_UNSUPPORTED","offset":1,"node":"n7","stage":"validation","path":null,"expected_spellings":[],"work":131}
+        ],
+        "failure_envelope": "All actual failures have status reject and the recorded error fields; all expected failures above have expected status success. Raw tool output preserved in this session; fields reproduced here without successful partial values/output.",
+        "stderr": "",
+        "exit_code": 0
+      }]
+    },
+    "T4": {
+      "base": "C/base/T4.plan.json",
+      "first": "C/first/T4.plan.json",
+      "sha256_first_and_final": "a034d76ab55f2f511217deb063ec5fd1e1c9fb7311f3f8757d7cb8973c7c3209",
+      "nodes": 20,
+      "status": "IMPLEMENTED_AUTHOR_SELF_TEST_PASS_ACCEPTANCE_NOT_RUN",
+      "initial_candidates": 1,
+      "repairs": [],
+      "behavior": "Count-controlled raw UInt8 repeat reads min(input_length,8). Ordered map validates each item syntax, counts opening/closing symbols in its inclusive prefix, checks underflow and depth with original item Cell sites. Only afterward check the ninth-symbol boundary at cursor8, then EOF balance, then return native pairs record and encode its UInt8 byte.",
+      "tests": [{
+        "batch": 1,
+        "start_utc": "2026-10-08T22:41:56.603734+00:00",
+        "end_utc": "2026-10-08T22:41:57.333763+00:00",
+        "subprocess_timeout_seconds": 30,
+        "measured_test_seconds": 0.7301023006439209,
+        "cases": 4865,
+        "passed": 4865,
+        "failures": [],
+        "case_generation": "Deduplicated union: all strings over bytes40,41 of lengths0..9; all strings over bytes0,40,41,255 of lengths0..5; all256 single bytes; every substitution of every byte0..255 at each of8 positions of (()())(); ()()()() followed by every byte0..255; () repeated32 and ( repeated64. Sorted before execution.",
+        "expected_oracle": "Inline development-only contract oracle: left-to-right index8 occurrence limit before symbol inspection; otherwise syntax, opening depth increment and depth>2, closing underflow or decrement/pairs increment; at EOF nonzero depth UNCLOSED else native pairs and one-byte output. Never saved as or imported by runtime task implementation.",
+        "stderr": "",
+        "exit_code": 0
+      }]
+    }
+  },
+  "difficulties": [
+    "T2 needs flat ordered list growth exceeding both input consumption and default map occurrence bounds; no conforming native-value construction found, and the finite list-origin analysis supplies a specific supported blocker.",
+    "T4 naive full structural validation would incorrectly prioritize later syntax or ninth-symbol failure ahead of earlier depth/underflow. Bounded raw reads followed by ordered prefix validation preserve task precedence."
+  ],
+  "exposure": {
+    "authorized_reads": [
+      "benchmark/results/phase6/r6_15/tasks/COMMON.md",
+      "benchmark/results/phase6/r6_15/tasks/T2.md",
+      "benchmark/results/phase6/r6_15/tasks/T4.md",
+      "benchmark/results/phase6/r6_15/PROTOCOL.md",
+      "experiments/semantic_interpreter/CONTRACT-1.md",
+      "experiments/semantic_interpreter/semantic-plan-1.schema.json",
+      "experiments/semantic_interpreter/interpreter.py"
+    ],
+    "inherited": "Harness supplied extensive AGENTS.md repository guidance, including historical round summaries, kernel26, prior VM finite-relation/nibble-XOR observations, plan node counts, regression counts and known limitations. These are inherited substantive historical context, so this is not a historical-context-free authoring session. No historical plan/builder/example was read. CONTRACT-1.md itself contains authorized historical codec descriptions and published node counts.",
+    "unauthorized_file_reads": [],
+    "other_track_or_task_content": "None inspected or supplied beyond identifiers in authorized PROTOCOL.md and inherited guidance.",
+    "coordinator_feedback": "None",
+    "delegation": "None",
+    "isolation": "Cooperative shared filesystem access, not OS isolation; model reasoning is not forcibly deadline-interruptible."
+  },
+  "freeze": "VM, production and historical source/artifacts not edited. Intentional writes restricted to specified C candidate/snapshot paths, data-only builder and this authoring record; incidental Python cache qualification disclosed above. No scored acceptance run, feedback or post-handoff repair. Stop at handoff."
+}

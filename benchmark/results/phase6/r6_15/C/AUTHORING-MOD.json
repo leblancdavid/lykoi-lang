@@ -1,0 +1,1361 @@
+{
+  "session": "R6.15 fresh Track C staged modification T1 then T2",
+  "status": "IMMUTABLE_HANDOFF_PARTIAL",
+  "handoff_utc": "2026-10-08T22:55:54.980775+00:00",
+  "originals_edited": false,
+  "vm_edited": false,
+  "central_behavior": "Explicit plans executed by original interpreter.execute; no callbacks. Self-test oracle is development-only.",
+  "candidate_policy": "One initial revision each; exclusive first snapshots before any tests; final identical; no self-test repairs.",
+  "tool_calls": 20,
+  "tool_count_convention": "Count individual underlying calls, including failed read; parallel wrapper is not an additional call.",
+  "timing": {
+    "first_tool_start": null,
+    "first_tool_start_note": "Not instrumented locally; use harness metadata for exact session wall duration. No invented timestamp.",
+    "snapshot_to_handoff_seconds": 58.79849290847778,
+    "test_timeout_seconds_each": 30
+  },
+  "exposure": {
+    "read": [
+      "tasks/COMMON.md",
+      "tasks/T1.md",
+      "tasks/T2.md",
+      "PROTOCOL.md",
+      "sealed/M1.md",
+      "sealed/M2.md",
+      "C/base/T1.plan.json",
+      "C/base/T2.plan.json",
+      "experiments/semantic_interpreter/CONTRACT-1.md",
+      "experiments/semantic_interpreter/interpreter.py"
+    ],
+    "failed_read": "tasks/PROTOCOL.md (absent; corrected to root PROTOCOL.md)",
+    "other_access": "git status --short; own builder and generated own artifacts",
+    "inherited_guidance": "Repository AGENTS.md provided by harness; no additional historical reads.",
+    "other_track_acceptance_sealed_json_scoring_sessions": false,
+    "delegation": false,
+    "coordinator_feedback": false
+  },
+  "difficulties": [
+    "T1 required one new disjoint mode2 branch with boost20; original arithmetic and layout reused.",
+    "Frozen T2 already rejects counts2..4 with AUTHORING_UNSUPPORTED. This candidate retains that partial version1 behavior, not full contract compliance.",
+    "T2 version2 supports empty input payload and zero-count runs; nonempty runs reject AUTHORING_UNSUPPORTED after structural parsing. Errors RUN/TRUNCATED/OCCURRENCE_LIMIT precede unsupported checks.",
+    "VM map/each operate on at most8 items; map preserves one output item per input item. join constructs ASCII strings, not flattened integer lists; const cannot create lists. Consuming repeat can create lists but repeating value nodes alone fails conservative progress. These observations explain difficulty with this approach, not an impossibility proof for every explicit plan.",
+    "No full finite alternative or lower-bound proof was established within this session. Failures are retained as partial authoring failure, not missing-capability verdict.",
+    "One builder syntax typo corrected before candidate generation and before testing; no candidate repair."
+  ],
+  "artifacts": {
+    "T1": {
+      "first_sha256": "30addf1d40bcc3be257055037061594f9d6b3fdbf77a465772d04542d5f55fa0",
+      "final_sha256": "30addf1d40bcc3be257055037061594f9d6b3fdbf77a465772d04542d5f55fa0",
+      "first_snapshot_utc": "2026-10-08T22:54:56.182282+00:00",
+      "repairs": 0,
+      "development_batches": 1,
+      "selftest": {
+        "task": "T1",
+        "batch": 1,
+        "utc": "2026-10-08T22:55:04.961818+00:00",
+        "elapsed_seconds": 0.008460999932140112,
+        "nodes": 17,
+        "passed": 39,
+        "total": 39,
+        "results": [
+          {
+            "input": "",
+            "actual": {
+              "status": "reject",
+              "code": "TRUNCATED",
+              "offset": 0
+            },
+            "expected": {
+              "status": "reject",
+              "code": "TRUNCATED",
+              "offset": 0
+            },
+            "pass": true
+          },
+          {
+            "input": "00",
+            "actual": {
+              "status": "reject",
+              "code": "TRUNCATED",
+              "offset": 1
+            },
+            "expected": {
+              "status": "reject",
+              "code": "TRUNCATED",
+              "offset": 1
+            },
+            "pass": true
+          },
+          {
+            "input": "01ff",
+            "actual": {
+              "status": "reject",
+              "code": "TRUNCATED",
+              "offset": 2
+            },
+            "expected": {
+              "status": "reject",
+              "code": "TRUNCATED",
+              "offset": 2
+            },
+            "pass": true
+          },
+          {
+            "input": "02",
+            "actual": {
+              "status": "reject",
+              "code": "TRUNCATED",
+              "offset": 1
+            },
+            "expected": {
+              "status": "reject",
+              "code": "TRUNCATED",
+              "offset": 1
+            },
+            "pass": true
+          },
+          {
+            "input": "0200",
+            "actual": {
+              "status": "reject",
+              "code": "TRUNCATED",
+              "offset": 2
+            },
+            "expected": {
+              "status": "reject",
+              "code": "TRUNCATED",
+              "offset": 2
+            },
+            "pass": true
+          },
+          {
+            "input": "03",
+            "actual": {
+              "status": "reject",
+              "code": "MODE",
+              "offset": 0
+            },
+            "expected": {
+              "status": "reject",
+              "code": "MODE",
+              "offset": 0
+            },
+            "pass": true
+          },
+          {
+            "input": "ff0000",
+            "actual": {
+              "status": "reject",
+              "code": "MODE",
+              "offset": 0
+            },
+            "expected": {
+              "status": "reject",
+              "code": "MODE",
+              "offset": 0
+            },
+            "pass": true
+          },
+          {
+            "input": "02000009",
+            "actual": {
+              "status": "reject",
+              "code": "TRAILING",
+              "offset": 3
+            },
+            "expected": {
+              "status": "reject",
+              "code": "TRAILING",
+              "offset": 3
+            },
+            "pass": true
+          },
+          {
+            "input": "000000",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 0,
+                "clipped": false
+              },
+              "output": "0000"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 0,
+                "clipped": false
+              },
+              "output": "0000"
+            },
+            "pass": true
+          },
+          {
+            "input": "0000ff",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "pass": true
+          },
+          {
+            "input": "00ffff",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "pass": true
+          },
+          {
+            "input": "006464",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": false
+              },
+              "output": "c800"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": false
+              },
+              "output": "c800"
+            },
+            "pass": true
+          },
+          {
+            "input": "005a64",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 190,
+                "clipped": false
+              },
+              "output": "be00"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 190,
+                "clipped": false
+              },
+              "output": "be00"
+            },
+            "pass": true
+          },
+          {
+            "input": "005964",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 189,
+                "clipped": false
+              },
+              "output": "bd00"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 189,
+                "clipped": false
+              },
+              "output": "bd00"
+            },
+            "pass": true
+          },
+          {
+            "input": "005b64",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 191,
+                "clipped": false
+              },
+              "output": "bf00"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 191,
+                "clipped": false
+              },
+              "output": "bf00"
+            },
+            "pass": true
+          },
+          {
+            "input": "005064",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 180,
+                "clipped": false
+              },
+              "output": "b400"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 180,
+                "clipped": false
+              },
+              "output": "b400"
+            },
+            "pass": true
+          },
+          {
+            "input": "004f64",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 179,
+                "clipped": false
+              },
+              "output": "b300"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 179,
+                "clipped": false
+              },
+              "output": "b300"
+            },
+            "pass": true
+          },
+          {
+            "input": "005164",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 181,
+                "clipped": false
+              },
+              "output": "b500"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 181,
+                "clipped": false
+              },
+              "output": "b500"
+            },
+            "pass": true
+          },
+          {
+            "input": "010000",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 10,
+                "clipped": false
+              },
+              "output": "0a00"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 10,
+                "clipped": false
+              },
+              "output": "0a00"
+            },
+            "pass": true
+          },
+          {
+            "input": "0100ff",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "pass": true
+          },
+          {
+            "input": "01ffff",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "pass": true
+          },
+          {
+            "input": "016464",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "pass": true
+          },
+          {
+            "input": "015a64",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": false
+              },
+              "output": "c800"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": false
+              },
+              "output": "c800"
+            },
+            "pass": true
+          },
+          {
+            "input": "015964",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 199,
+                "clipped": false
+              },
+              "output": "c700"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 199,
+                "clipped": false
+              },
+              "output": "c700"
+            },
+            "pass": true
+          },
+          {
+            "input": "015b64",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "pass": true
+          },
+          {
+            "input": "015064",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 190,
+                "clipped": false
+              },
+              "output": "be00"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 190,
+                "clipped": false
+              },
+              "output": "be00"
+            },
+            "pass": true
+          },
+          {
+            "input": "014f64",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 189,
+                "clipped": false
+              },
+              "output": "bd00"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 189,
+                "clipped": false
+              },
+              "output": "bd00"
+            },
+            "pass": true
+          },
+          {
+            "input": "015164",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 191,
+                "clipped": false
+              },
+              "output": "bf00"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 191,
+                "clipped": false
+              },
+              "output": "bf00"
+            },
+            "pass": true
+          },
+          {
+            "input": "020000",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 20,
+                "clipped": false
+              },
+              "output": "1400"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 20,
+                "clipped": false
+              },
+              "output": "1400"
+            },
+            "pass": true
+          },
+          {
+            "input": "0200ff",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "pass": true
+          },
+          {
+            "input": "02ffff",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "pass": true
+          },
+          {
+            "input": "026464",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "pass": true
+          },
+          {
+            "input": "025a64",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "pass": true
+          },
+          {
+            "input": "025964",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "pass": true
+          },
+          {
+            "input": "025b64",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "pass": true
+          },
+          {
+            "input": "025064",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": false
+              },
+              "output": "c800"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": false
+              },
+              "output": "c800"
+            },
+            "pass": true
+          },
+          {
+            "input": "024f64",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 199,
+                "clipped": false
+              },
+              "output": "c700"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 199,
+                "clipped": false
+              },
+              "output": "c700"
+            },
+            "pass": true
+          },
+          {
+            "input": "025164",
+            "actual": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "expected": {
+              "status": "success",
+              "value": {
+                "amount": 200,
+                "clipped": true
+              },
+              "output": "c801"
+            },
+            "pass": true
+          },
+          {
+            "input": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "actual": {
+              "status": "reject",
+              "code": "INPUT_LIMIT",
+              "offset": 64
+            },
+            "expected": {
+              "status": "reject",
+              "code": "INPUT_LIMIT",
+              "offset": 64
+            },
+            "pass": true
+          }
+        ]
+      }
+    },
+    "T2": {
+      "first_sha256": "38dc113612911938fc4703e09ca5b2deed4943aad6a4c858f4e800984551a4ff",
+      "final_sha256": "38dc113612911938fc4703e09ca5b2deed4943aad6a4c858f4e800984551a4ff",
+      "first_snapshot_utc": "2026-10-08T22:54:56.182787+00:00",
+      "repairs": 0,
+      "development_batches": 1,
+      "selftest": {
+        "task": "T2",
+        "batch": 1,
+        "utc": "2026-10-08T22:55:12.248492+00:00",
+        "elapsed_seconds": 0.007231299998238683,
+        "nodes": 18,
+        "passed": 24,
+        "total": 30,
+        "results": [
+          {
+            "input": "",
+            "actual": {
+              "status": "reject",
+              "code": "TRUNCATED",
+              "offset": 0
+            },
+            "expected": {
+              "status": "reject",
+              "code": "TRUNCATED",
+              "offset": 0
+            },
+            "pass": true
+          },
+          {
+            "input": "00",
+            "actual": {
+              "status": "reject",
+              "code": "VERSION",
+              "offset": 0
+            },
+            "expected": {
+              "status": "reject",
+              "code": "VERSION",
+              "offset": 0
+            },
+            "pass": true
+          },
+          {
+            "input": "03",
+            "actual": {
+              "status": "reject",
+              "code": "VERSION",
+              "offset": 0
+            },
+            "expected": {
+              "status": "reject",
+              "code": "VERSION",
+              "offset": 0
+            },
+            "pass": true
+          },
+          {
+            "input": "ff",
+            "actual": {
+              "status": "reject",
+              "code": "VERSION",
+              "offset": 0
+            },
+            "expected": {
+              "status": "reject",
+              "code": "VERSION",
+              "offset": 0
+            },
+            "pass": true
+          },
+          {
+            "input": "01",
+            "actual": {
+              "status": "success",
+              "value": [],
+              "output": ""
+            },
+            "expected": {
+              "status": "success",
+              "value": [],
+              "output": ""
+            },
+            "pass": true
+          },
+          {
+            "input": "02",
+            "actual": {
+              "status": "success",
+              "value": [],
+              "output": ""
+            },
+            "expected": {
+              "status": "success",
+              "value": [],
+              "output": ""
+            },
+            "pass": true
+          },
+          {
+            "input": "0100",
+            "actual": {
+              "status": "reject",
+              "code": "TRUNCATED",
+              "offset": 2
+            },
+            "expected": {
+              "status": "reject",
+              "code": "TRUNCATED",
+              "offset": 2
+            },
+            "pass": true
+          },
+          {
+            "input": "0200",
+            "actual": {
+              "status": "reject",
+              "code": "TRUNCATED",
+              "offset": 2
+            },
+            "expected": {
+              "status": "reject",
+              "code": "TRUNCATED",
+              "offset": 2
+            },
+            "pass": true
+          },
+          {
+            "input": "0105",
+            "actual": {
+              "status": "reject",
+              "code": "RUN",
+              "offset": 1
+            },
+            "expected": {
+              "status": "reject",
+              "code": "RUN",
+              "offset": 1
+            },
+            "pass": true
+          },
+          {
+            "input": "0205",
+            "actual": {
+              "status": "reject",
+              "code": "RUN",
+              "offset": 1
+            },
+            "expected": {
+              "status": "reject",
+              "code": "RUN",
+              "offset": 1
+            },
+            "pass": true
+          },
+          {
+            "input": "0101ff",
+            "actual": {
+              "status": "success",
+              "value": [
+                255
+              ],
+              "output": "ff"
+            },
+            "expected": {
+              "status": "success",
+              "value": [
+                255
+              ],
+              "output": "ff"
+            },
+            "pass": true
+          },
+          {
+            "input": "0201ff",
+            "actual": {
+              "status": "reject",
+              "code": "AUTHORING_UNSUPPORTED",
+              "offset": 1
+            },
+            "expected": {
+              "status": "success",
+              "value": [
+                255,
+                255
+              ],
+              "output": "ffff"
+            },
+            "pass": false
+          },
+          {
+            "input": "010207",
+            "actual": {
+              "status": "reject",
+              "code": "AUTHORING_UNSUPPORTED",
+              "offset": 1
+            },
+            "expected": {
+              "status": "success",
+              "value": [
+                7,
+                7
+              ],
+              "output": "0707"
+            },
+            "pass": false
+          },
+          {
+            "input": "020407",
+            "actual": {
+              "status": "reject",
+              "code": "AUTHORING_UNSUPPORTED",
+              "offset": 1
+            },
+            "expected": {
+              "status": "success",
+              "value": [
+                7,
+                7,
+                7,
+                7,
+                255
+              ],
+              "output": "07070707ff"
+            },
+            "pass": false
+          },
+          {
+            "input": "0200ff",
+            "actual": {
+              "status": "success",
+              "value": [],
+              "output": ""
+            },
+            "expected": {
+              "status": "success",
+              "value": [],
+              "output": ""
+            },
+            "pass": true
+          },
+          {
+            "input": "01010700090107",
+            "actual": {
+              "status": "success",
+              "value": [
+                7,
+                7
+              ],
+              "output": "0707"
+            },
+            "expected": {
+              "status": "success",
+              "value": [
+                7,
+                7
+              ],
+              "output": "0707"
+            },
+            "pass": true
+          },
+          {
+            "input": "0200080009",
+            "actual": {
+              "status": "success",
+              "value": [],
+              "output": ""
+            },
+            "expected": {
+              "status": "success",
+              "value": [],
+              "output": ""
+            },
+            "pass": true
+          },
+          {
+            "input": "0100ff00ff00ff00ff00ff00ff00ff00ff",
+            "actual": {
+              "status": "success",
+              "value": [],
+              "output": ""
+            },
+            "expected": {
+              "status": "success",
+              "value": [],
+              "output": ""
+            },
+            "pass": true
+          },
+          {
+            "input": "0100ff00ff00ff00ff00ff00ff00ff00ff00ff",
+            "actual": {
+              "status": "reject",
+              "code": "OCCURRENCE_LIMIT",
+              "offset": 17
+            },
+            "expected": {
+              "status": "reject",
+              "code": "OCCURRENCE_LIMIT",
+              "offset": 17
+            },
+            "pass": true
+          },
+          {
+            "input": "0101ff01ff01ff01ff01ff01ff01ff01ff",
+            "actual": {
+              "status": "success",
+              "value": [
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ],
+              "output": "ffffffffffffffff"
+            },
+            "expected": {
+              "status": "success",
+              "value": [
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ],
+              "output": "ffffffffffffffff"
+            },
+            "pass": true
+          },
+          {
+            "input": "0101ff01ff01ff01ff01ff01ff01ff01ff01ff",
+            "actual": {
+              "status": "reject",
+              "code": "OCCURRENCE_LIMIT",
+              "offset": 17
+            },
+            "expected": {
+              "status": "reject",
+              "code": "OCCURRENCE_LIMIT",
+              "offset": 17
+            },
+            "pass": true
+          },
+          {
+            "input": "0104ff04ff04ff04ff04ff04ff04ff04ff",
+            "actual": {
+              "status": "reject",
+              "code": "AUTHORING_UNSUPPORTED",
+              "offset": 1
+            },
+            "expected": {
+              "status": "success",
+              "value": [
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ],
+              "output": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+            },
+            "pass": false
+          },
+          {
+            "input": "0104ff04ff04ff04ff04ff04ff04ff04ff04ff",
+            "actual": {
+              "status": "reject",
+              "code": "OCCURRENCE_LIMIT",
+              "offset": 17
+            },
+            "expected": {
+              "status": "reject",
+              "code": "OCCURRENCE_LIMIT",
+              "offset": 17
+            },
+            "pass": true
+          },
+          {
+            "input": "0200ff00ff00ff00ff00ff00ff00ff00ff",
+            "actual": {
+              "status": "success",
+              "value": [],
+              "output": ""
+            },
+            "expected": {
+              "status": "success",
+              "value": [],
+              "output": ""
+            },
+            "pass": true
+          },
+          {
+            "input": "0200ff00ff00ff00ff00ff00ff00ff00ff00ff",
+            "actual": {
+              "status": "reject",
+              "code": "OCCURRENCE_LIMIT",
+              "offset": 17
+            },
+            "expected": {
+              "status": "reject",
+              "code": "OCCURRENCE_LIMIT",
+              "offset": 17
+            },
+            "pass": true
+          },
+          {
+            "input": "0201ff01ff01ff01ff01ff01ff01ff01ff",
+            "actual": {
+              "status": "reject",
+              "code": "AUTHORING_UNSUPPORTED",
+              "offset": 1
+            },
+            "expected": {
+              "status": "success",
+              "value": [
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ],
+              "output": "ffffffffffffffffffffffffffffffff"
+            },
+            "pass": false
+          },
+          {
+            "input": "0201ff01ff01ff01ff01ff01ff01ff01ff01ff",
+            "actual": {
+              "status": "reject",
+              "code": "OCCURRENCE_LIMIT",
+              "offset": 17
+            },
+            "expected": {
+              "status": "reject",
+              "code": "OCCURRENCE_LIMIT",
+              "offset": 17
+            },
+            "pass": true
+          },
+          {
+            "input": "0204ff04ff04ff04ff04ff04ff04ff04ff",
+            "actual": {
+              "status": "reject",
+              "code": "AUTHORING_UNSUPPORTED",
+              "offset": 1
+            },
+            "expected": {
+              "status": "success",
+              "value": [
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255,
+                255
+              ],
+              "output": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+            },
+            "pass": false
+          },
+          {
+            "input": "0204ff04ff04ff04ff04ff04ff04ff04ff04ff",
+            "actual": {
+              "status": "reject",
+              "code": "OCCURRENCE_LIMIT",
+              "offset": 17
+            },
+            "expected": {
+              "status": "reject",
+              "code": "OCCURRENCE_LIMIT",
+              "offset": 17
+            },
+            "pass": true
+          },
+          {
+            "input": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "actual": {
+              "status": "reject",
+              "code": "INPUT_LIMIT",
+              "offset": 64
+            },
+            "expected": {
+              "status": "reject",
+              "code": "INPUT_LIMIT",
+              "offset": 64
+            },
+            "pass": true
+          }
+        ]
+      }
+    }
+  },
+  "stop": "No post-handoff edits or additional tests authorized."
+}

@@ -1,0 +1,356 @@
+{
+  "axiom_version": "0.3",
+  "application": {
+    "id": "application",
+    "name": "scalar_records"
+  },
+  "types": [
+    {
+      "id": "type:phase",
+      "name": "phase",
+      "kind": "enum",
+      "values": [
+        "cold",
+        "firing"
+      ]
+    },
+    {
+      "id": "type:vent",
+      "name": "vent",
+      "kind": "enum",
+      "values": [
+        "open",
+        "closed"
+      ]
+    },
+    {
+      "id": "type:load",
+      "name": "load",
+      "kind": "enum",
+      "values": [
+        "ordinary",
+        "emergency"
+      ]
+    },
+    {
+      "id": "record",
+      "name": "Record",
+      "kind": "record",
+      "fields": [
+        {
+          "id": "field:id",
+          "name": "id",
+          "type": "prim:string"
+        },
+        {
+          "id": "field:created_at",
+          "name": "created_at",
+          "type": "prim:timestamp"
+        },
+        {
+          "id": "field:label",
+          "name": "label",
+          "type": "prim:string"
+        },
+        {
+          "id": "field:phase",
+          "name": "phase",
+          "type": "type:phase"
+        },
+        {
+          "id": "field:vent",
+          "name": "vent",
+          "type": "type:vent"
+        },
+        {
+          "id": "field:load",
+          "name": "load",
+          "type": "type:load"
+        }
+      ]
+    },
+    {
+      "id": "records",
+      "name": "Records",
+      "kind": "list",
+      "item_type": "record"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "store",
+      "kind": "json_file",
+      "path": "records.json",
+      "missing_file": "empty_collection"
+    },
+    {
+      "id": "read",
+      "kind": "resource_access",
+      "resource": "store",
+      "action": "read"
+    },
+    {
+      "id": "write",
+      "kind": "resource_access",
+      "resource": "store",
+      "action": "write"
+    },
+    {
+      "id": "utc_clock",
+      "kind": "utc_clock"
+    },
+    {
+      "id": "uuid_v4",
+      "kind": "uuid_v4"
+    }
+  ],
+  "state": [
+    {
+      "id": "state",
+      "name": "records",
+      "type": "records",
+      "storage": "store",
+      "key_field": "field:id",
+      "schema_version": 1,
+      "invariants": [
+        "unique",
+        "valid"
+      ]
+    }
+  ],
+  "invariants": [
+    {
+      "id": "unique",
+      "kind": "unique_field",
+      "state": "state",
+      "field": "field:id"
+    },
+    {
+      "id": "valid",
+      "kind": "all_records_valid",
+      "state": "state",
+      "field_rules": [
+        {
+          "field": "field:label",
+          "kind": "nonblank"
+        }
+      ]
+    }
+  ],
+  "behaviors": [
+    {
+      "id": "behavior:create",
+      "name": "create",
+      "kind": "create",
+      "state": "state",
+      "inputs": [
+        {
+          "id": "input:create:label",
+          "name": "label",
+          "type": "prim:string"
+        },
+        {
+          "id": "input:create:vent",
+          "name": "vent",
+          "type": "type:vent"
+        },
+        {
+          "id": "input:create:load",
+          "name": "load",
+          "type": "type:load"
+        }
+      ],
+      "output": "record",
+      "dependencies": [
+        "state",
+        "store",
+        "utc_clock",
+        "uuid_v4"
+      ],
+      "requires": [
+        "read",
+        "utc_clock",
+        "uuid_v4"
+      ],
+      "reads": [
+        "state"
+      ],
+      "writes": [
+        "state"
+      ],
+      "effects": [
+        "clock_read",
+        "file_read",
+        "file_write",
+        "random_id",
+        "state_read",
+        "state_write"
+      ],
+      "conditions": [
+        {
+          "id": "guard:create:0",
+          "kind": "nonblank_input",
+          "input": "input:create:label",
+          "failure": "error:invalid_label"
+        }
+      ],
+      "assignments": [
+        {
+          "field": "field:id",
+          "source": "capability",
+          "id": "uuid_v4"
+        },
+        {
+          "field": "field:created_at",
+          "source": "capability",
+          "id": "utc_clock"
+        },
+        {
+          "field": "field:label",
+          "source": "input",
+          "id": "input:create:label"
+        },
+        {
+          "field": "field:phase",
+          "source": "literal",
+          "value": "cold"
+        },
+        {
+          "field": "field:vent",
+          "source": "input",
+          "id": "input:create:vent"
+        },
+        {
+          "field": "field:load",
+          "source": "input",
+          "id": "input:create:load"
+        }
+      ],
+      "guarantees": [
+        {
+          "id": "guarantee:create:value",
+          "kind": "result_field_equals",
+          "field": "field:phase",
+          "value": "cold"
+        },
+        {
+          "id": "guarantee:create:stored",
+          "kind": "result_in_state",
+          "state": "state"
+        },
+        {
+          "id": "guarantee:create:label",
+          "kind": "result_field_equals_assignment",
+          "field": "field:label"
+        },
+        {
+          "id": "guarantee:create:vent",
+          "kind": "result_field_equals_assignment",
+          "field": "field:vent"
+        },
+        {
+          "id": "guarantee:create:load",
+          "kind": "result_field_equals_assignment",
+          "field": "field:load"
+        }
+      ],
+      "failures": [
+        "error:id_collision",
+        "error:invalid_label",
+        "error:invalid_state",
+        "error:persistence_failure"
+      ]
+    },
+    {
+      "id": "behavior:list",
+      "name": "list",
+      "kind": "list",
+      "state": "state",
+      "inputs": [],
+      "output": "records",
+      "dependencies": [
+        "state",
+        "store"
+      ],
+      "requires": [
+        "read"
+      ],
+      "reads": [
+        "state"
+      ],
+      "writes": [],
+      "effects": [
+        "state_read",
+        "file_read"
+      ],
+      "conditions": [],
+      "assignments": [],
+      "guarantees": [
+        {
+          "id": "guarantee:list",
+          "kind": "result_equals_state_sorted",
+          "state": "state"
+        }
+      ],
+      "failures": [
+        "error:invalid_state",
+        "error:persistence_failure"
+      ],
+      "order_by": [
+        "field:created_at",
+        "field:id"
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "id": "command:create",
+      "token": "create",
+      "behavior": "behavior:create",
+      "arguments": [
+        {
+          "flag": "--label",
+          "input": "input:create:label",
+          "required": true
+        },
+        {
+          "flag": "--vent",
+          "input": "input:create:vent",
+          "required": true
+        },
+        {
+          "flag": "--load",
+          "input": "input:create:load",
+          "required": true
+        }
+      ]
+    },
+    {
+      "id": "command:list",
+      "token": "list",
+      "behavior": "behavior:list",
+      "arguments": []
+    }
+  ],
+  "errors": [
+    {
+      "id": "error:id_collision",
+      "code": "id_collision"
+    },
+    {
+      "id": "error:invalid_label",
+      "code": "invalid_label"
+    },
+    {
+      "id": "error:invalid_state",
+      "code": "invalid_state"
+    },
+    {
+      "id": "error:persistence_failure",
+      "code": "persistence_failure"
+    }
+  ],
+  "migrations": [],
+  "state_machines": [],
+  "transitions": []
+}
