@@ -75,6 +75,16 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R6.10 — `R6_10_PROTOTYPE_PARTIAL`.**
+[Experimental report](../benchmark/results/phase6/R6_10-REPORT.md): one bounded VM
+executes explicit CFG66/DSV66/BXC66 plans outside production. 82 tests pass, including
+canonical layouts, delayed conversion/provenance, malformed cases, all UInt16 values
+and deterministic work cutoffs. Full static typing, precise encode paths and exact
+cost/lowering correspondence remain open. Candidate execution feasibility is observed;
+formal correctness, independent qualification and completeness are not established.
+Kernel 26 and production/history unchanged. **Stop after publication.** A prospective
+typed-plan/encode closure experiment needs separate authorization.
+
 **R6.9 — `R6_9_ISOLATION_CONTROL_GAP`.**
 [Infrastructure report](../benchmark/results/phase6/R6_9-REPORT.md): source-pinned
 preparation export, provider-neutral runner, provenance and anchored seals implemented;

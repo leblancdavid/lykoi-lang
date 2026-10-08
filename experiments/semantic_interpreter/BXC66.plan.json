@@ -1,0 +1,425 @@
+{
+  "version": "semantic-plan-1",
+  "text": false,
+  "rules": {},
+  "decode": {
+    "id": "n019",
+    "op": "seq",
+    "steps": [
+      {
+        "node": {
+          "id": "n010",
+          "op": "literal",
+          "bytes": [
+            82,
+            54,
+            54,
+            67
+          ],
+          "code": "HEADER"
+        }
+      },
+      {
+        "node": {
+          "id": "n011",
+          "op": "atom",
+          "codec": "uint8"
+        },
+        "bind": "version"
+      },
+      {
+        "node": {
+          "id": "n012",
+          "op": "check",
+          "test": {
+            "eq": [
+              {
+                "ref": "version"
+              },
+              {
+                "const": 1
+              }
+            ]
+          },
+          "code": "VERSION",
+          "site": {
+            "ref": "version"
+          }
+        }
+      },
+      {
+        "node": {
+          "id": "n013",
+          "op": "atom",
+          "codec": "uint8"
+        },
+        "bind": "count"
+      },
+      {
+        "node": {
+          "id": "n014",
+          "op": "repeat",
+          "body": {
+            "id": "n009",
+            "op": "seq",
+            "steps": [
+              {
+                "node": {
+                  "id": "n001",
+                  "op": "atom",
+                  "codec": "uint8"
+                },
+                "bind": "nl"
+              },
+              {
+                "node": {
+                  "id": "n002",
+                  "op": "check",
+                  "test": {
+                    "le": [
+                      {
+                        "const": 1
+                      },
+                      {
+                        "ref": "nl"
+                      }
+                    ]
+                  },
+                  "code": "BOUND",
+                  "site": {
+                    "ref": "nl"
+                  }
+                }
+              },
+              {
+                "node": {
+                  "id": "n003",
+                  "op": "check",
+                  "test": {
+                    "le": [
+                      {
+                        "ref": "nl"
+                      },
+                      {
+                        "const": 32
+                      }
+                    ]
+                  },
+                  "code": "BOUND",
+                  "site": {
+                    "ref": "nl"
+                  }
+                }
+              },
+              {
+                "node": {
+                  "id": "n004",
+                  "op": "take",
+                  "length": {
+                    "ref": "nl"
+                  },
+                  "max": 32,
+                  "code": "NAME",
+                  "allowed": [
+                    48,
+                    49,
+                    50,
+                    51,
+                    52,
+                    53,
+                    54,
+                    55,
+                    56,
+                    57,
+                    95,
+                    97,
+                    98,
+                    99,
+                    100,
+                    101,
+                    102,
+                    103,
+                    104,
+                    105,
+                    106,
+                    107,
+                    108,
+                    109,
+                    110,
+                    111,
+                    112,
+                    113,
+                    114,
+                    115,
+                    116,
+                    117,
+                    118,
+                    119,
+                    120,
+                    121,
+                    122
+                  ]
+                },
+                "bind": "name"
+              },
+              {
+                "node": {
+                  "id": "n005",
+                  "op": "atom",
+                  "codec": "uint16be"
+                },
+                "bind": "cl"
+              },
+              {
+                "node": {
+                  "id": "n006",
+                  "op": "take",
+                  "length": {
+                    "ref": "cl"
+                  },
+                  "max": 1024,
+                  "code": "BOUND"
+                },
+                "bind": "content"
+              },
+              {
+                "node": {
+                  "id": "n007",
+                  "op": "atom",
+                  "codec": "uint16be"
+                },
+                "bind": "echo"
+              },
+              {
+                "node": {
+                  "id": "n008",
+                  "op": "check",
+                  "test": {
+                    "eq": [
+                      {
+                        "ref": "cl"
+                      },
+                      {
+                        "ref": "echo"
+                      }
+                    ]
+                  },
+                  "code": "LENGTH_ECHO",
+                  "site": {
+                    "ref": "echo"
+                  }
+                }
+              }
+            ],
+            "result": {
+              "record": {
+                "name": {
+                  "decode": [
+                    "ascii",
+                    {
+                      "ref": "name"
+                    }
+                  ]
+                },
+                "content": {
+                  "ref": "content"
+                },
+                "declared_length": {
+                  "ref": "cl"
+                }
+              }
+            }
+          },
+          "stop": [],
+          "eof": true,
+          "max": 8,
+          "occurrence_limit": true,
+          "count": {
+            "ref": "count"
+          }
+        },
+        "bind": "rows"
+      },
+      {
+        "node": {
+          "id": "n015",
+          "op": "atom",
+          "codec": "uint16be"
+        },
+        "bind": "total"
+      },
+      {
+        "node": {
+          "id": "n016",
+          "op": "end"
+        }
+      },
+      {
+        "node": {
+          "id": "n017",
+          "op": "check",
+          "test": {
+            "eq": [
+              {
+                "ref": "total"
+              },
+              {
+                "input_length": null
+              }
+            ]
+          },
+          "code": "TOTAL_LENGTH",
+          "site": {
+            "ref": "total"
+          }
+        }
+      },
+      {
+        "node": {
+          "id": "n018",
+          "op": "unique",
+          "source": {
+            "ref": "rows"
+          },
+          "field": "name",
+          "code": "DUPLICATE"
+        }
+      }
+    ],
+    "result": {
+      "ref": "rows"
+    }
+  },
+  "encode": {
+    "id": "n031",
+    "op": "seq",
+    "steps": [
+      {
+        "node": {
+          "id": "n026",
+          "op": "emit",
+          "codec": "ascii",
+          "expr": {
+            "const": "R66C"
+          }
+        }
+      },
+      {
+        "node": {
+          "id": "n027",
+          "op": "emit",
+          "codec": "uint8",
+          "expr": {
+            "const": 1
+          }
+        }
+      },
+      {
+        "node": {
+          "id": "n028",
+          "op": "emit",
+          "codec": "uint8",
+          "expr": {
+            "length": {
+              "ref": "root"
+            }
+          }
+        }
+      },
+      {
+        "node": {
+          "id": "n029",
+          "op": "each",
+          "source": {
+            "ref": "root"
+          },
+          "body": {
+            "id": "n025",
+            "op": "seq",
+            "steps": [
+              {
+                "node": {
+                  "id": "n020",
+                  "op": "emit",
+                  "codec": "uint8",
+                  "expr": {
+                    "length": {
+                      "ref": "item.name"
+                    }
+                  }
+                }
+              },
+              {
+                "node": {
+                  "id": "n021",
+                  "op": "emit",
+                  "codec": "ascii",
+                  "expr": {
+                    "ref": "item.name"
+                  }
+                }
+              },
+              {
+                "node": {
+                  "id": "n022",
+                  "op": "emit",
+                  "codec": "uint16be",
+                  "expr": {
+                    "length": {
+                      "ref": "item.content"
+                    }
+                  }
+                }
+              },
+              {
+                "node": {
+                  "id": "n023",
+                  "op": "emit",
+                  "codec": "bytes",
+                  "expr": {
+                    "ref": "item.content"
+                  }
+                }
+              },
+              {
+                "node": {
+                  "id": "n024",
+                  "op": "emit",
+                  "codec": "uint16be",
+                  "expr": {
+                    "length": {
+                      "ref": "item.content"
+                    }
+                  }
+                }
+              }
+            ],
+            "result": {
+              "const": null
+            }
+          }
+        }
+      },
+      {
+        "node": {
+          "id": "n030",
+          "op": "emit",
+          "codec": "uint16be",
+          "expr": {
+            "add": [
+              {
+                "output_length": null
+              },
+              {
+                "const": 2
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "result": {
+      "const": null
+    }
+  }
+}

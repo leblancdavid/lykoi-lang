@@ -20,6 +20,12 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R6.10 executes an experimental shared semantic interpreter.**
+[Report](benchmark/results/phase6/R6_10-REPORT.md): `R6_10_PROTOTYPE_PARTIAL`.
+Explicit CFG66/DSV66/BXC66 plans use one bounded VM; 82 tests pass. Static typing,
+encode field paths and exact accounting/lowering remain incomplete. Production kernel
+26 and history preserved. Stopped; next development requires explicit authorization.
+
 **R6.9 implements reviewer infrastructure; isolation control gap remains.**
 [Report](benchmark/results/phase6/R6_9-REPORT.md):
 `R6_9_ISOLATION_CONTROL_GAP`. Reproducible package, provider-neutral runner and

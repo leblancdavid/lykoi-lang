@@ -8,6 +8,15 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R6.10 — `R6_10_PROTOTYPE_PARTIAL`.**
+Read the [experimental report](../benchmark/results/phase6/R6_10-REPORT.md) and
+[semantic contract](../experiments/semantic_interpreter/CONTRACT-1.md). One experimental
+VM executes three explicit plans, with 82 passing tests and repeated byte/work/site
+observations. Static typed-plan completeness, encode field paths and exact frozen
+cost/lowering correspondence remain unresolved. Production kernel 26 and historical
+identities preserved. Stop after publication; subsequent typed-plan/encode experiment,
+production integration or independent review requires explicit owner authorization.
+
 **Latest round: R6.9 — `R6_9_ISOLATION_CONTROL_GAP`.**
 Read the [infrastructure report](../benchmark/results/phase6/R6_9-REPORT.md) and
 [invocation contract](../benchmark/results/phase6/r6_9/INVOCATION-CONTRACT.md).

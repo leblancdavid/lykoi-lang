@@ -7,6 +7,15 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R6.10: `R6_10_PROTOTYPE_PARTIAL`.
+  Read `benchmark/results/phase6/R6_10-REPORT.md` and
+  `experiments/semantic_interpreter/CONTRACT-1.md`. Dedicated experimental VM executes
+  explicit CFG66/DSV66/BXC66 plans; 82 tests pass, including exhaustive UInt16 values
+  and deterministic budget cutoffs. Full static typing, encode field paths and exact
+  frozen cost/lowering correspondence remain open. Production kernel 26 and protected
+  implementation/R6.3–R6.9 history preserved; no acceptance/provider/review execution.
+  Stop after publication. Typed-plan/encode closure requires separate authorization;
+  no production integration, independent review or P6-A05 access.
 - Latest round R6.9: `R6_9_ISOLATION_CONTROL_GAP`.
   Read `benchmark/results/phase6/R6_9-REPORT.md` and
   `r6_9/INVOCATION-CONTRACT.md`. Provider-neutral package/runner/seal infrastructure

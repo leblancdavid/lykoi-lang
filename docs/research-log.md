@@ -1,5 +1,18 @@
 # Lykoi research log
 
+## R6.10 experimental semantic prototype (2026-10-08)
+
+**`R6_10_PROTOTYPE_PARTIAL`**;
+[report](../benchmark/results/phase6/R6_10-REPORT.md). One pure explicit-plan VM
+recognizes, validates and assembles CFG66/DSV66/BXC66. 82 synthetic tests pass;
+all UInt16 values and per-budget cutoff vectors are included within that denominator.
+Repeated results include source provenance, work and output bytes. Full static union/
+field typing, standalone encode admissibility/paths and frozen cost correspondence
+remain open. Same-agent execution evidence, not independent qualification. Baseline
+captures 219 protected files and verifies 26 historical publication hashes. Production
+kernel 26/history unchanged, acceptance/provider/review calls 0. Stop; typed-plan and
+encode-boundary closure is proposed only, pending separate owner authorization.
+
 ## R6.9 provider-neutral reviewer isolation infrastructure (2026-10-08)
 
 **`R6_9_ISOLATION_CONTROL_GAP`**;

@@ -1,5 +1,18 @@
 # Experimental decisions
 
+## R6.10 — Execute shared plans outside production and expose contract gaps
+
+[Report](../benchmark/results/phase6/R6_10-REPORT.md): `R6_10_PROTOTYPE_PARTIAL`.
+Use a closed bounded operation VM with explicit JSON plans and codec relations,
+not format-specific host parsers. Keep candidate meanings outside the 26-construct
+production kernel. Finite escape/Boolean projections compose literal meanings;
+cursor recurrence, raw access, joining, provenance and codec envelopes remain visible.
+R6.7 accounting/typing gaps become labeled experimental assumptions rather than edits
+to frozen specifications. Tradeoff: executable feasibility across three domains with
+82 passing tests, but no complete static type judgment, encode-path qualification or
+exact frozen-cost reduction verdict. Stop; separately authorize typed-plan/encode
+closure before subsequent development. No production integration or review initiated.
+
 ## R6.9 — Separate enforceable data controls from reviewer containment
 
 [Report](../benchmark/results/phase6/R6_9-REPORT.md):
