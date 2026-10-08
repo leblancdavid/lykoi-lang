@@ -8,6 +8,17 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R6.6 — `R6_6_COMPOSITION_CANDIDATE_SUPPORTED`.**
+Read the [report](../benchmark/results/phase6/R6_6-REPORT.md) and
+[candidate definitions](../benchmark/results/phase6/r6_6/CANDIDATE-SEMANTICS.md).
+Bounded interpretation/assembly and explicit atomic codecs have three specification
+witnesses and adversarial challenge outcomes, not execution evidence. Candidate families
+do not establish a construct count/minimum; typing/progress, lowering, result binding,
+Unicode/recursive scope and stronger integrity remain open. Kernel 26/implementation/history
+preserved. Stop after publication; an independent specification reduction audit is only
+a recommendation. No implementation, benchmark compilation, acceptance or P6-A05 access
+without separate explicit authorization.
+
 **Latest round: R6.5 — `R6_5_SEMANTIC_EXTENSION_REQUIRED`.**
 Read the [architectural report](../benchmark/results/phase6/R6_5-REPORT.md) and
 [expressibility matrix](../benchmark/results/phase6/r6_5/EXPRESSIBILITY-MATRIX.md).

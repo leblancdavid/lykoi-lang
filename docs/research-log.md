@@ -1,5 +1,21 @@
 # Lykoi research log
 
+## R6.6 general semantic composition challenge (2026-10-08)
+
+**`R6_6_COMPOSITION_CANDIDATE_SUPPORTED`**;
+[report](../benchmark/results/phase6/R6_6-REPORT.md),
+[witnesses](../benchmark/results/phase6/r6_6/COMPOSITION-WITNESSES.md) and
+[adversarial matrix](../benchmark/results/phase6/r6_6/ADVERSARIAL-MATRIX.md).
+Three independently specified synthetic formats share bounded structural interpretation
+and layout with explicit atomic codecs; decoded validation/transformation reuses the
+existing kernel. Same-agent analytical evidence, no independent cognition or execution.
+27 format/challenge cells and 16 candidate attacks are specification outcomes only.
+Two semantic family labels do not establish two constructs or a minimum. General
+Unicode/recursion/strong integrity, metatheory, lowering and result bindings remain
+open; physical resource effects are separate. Publication/preservation checks only;
+kernel 26 and implementation/history unchanged; acceptance executions 0. Stopped after
+publication; independent specification reduction audit requires explicit authorization.
+
 ## R6.5 general parsing/resource architecture (2026-10-08)
 
 **`R6_5_SEMANTIC_EXTENSION_REQUIRED`**;

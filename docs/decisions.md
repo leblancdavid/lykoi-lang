@@ -1,5 +1,18 @@
 # Experimental decisions
 
+## R6.6 — Share bounded structural interpretation; expose atomic codec meanings
+
+[Composition challenge](../benchmark/results/phase6/R6_6-REPORT.md) supports a hybrid
+research candidate: bounded structural recognition/construction/assembly with explicit
+typed scalar relations and existing decoded-value predicates/transforms. Derive tokens,
+Boolean literals, length calculations and domain layouts before proposing separate
+primitives. Tradeoff: pure acyclic bounded plans narrow verification scope but do not
+cover general recursion, Unicode or cryptographic integrity. Codec names and two family
+labels cannot conceal new operations or prove minimality. Human readability is not a
+requirement; provider-independent deterministic semantics are. Recommend an independent
+specification reduction audit before implementation. Kernel 26/history unchanged;
+stop at publication pending explicit authorization.
+
 ## R6.5 — Account interpretation separately from physical adapters
 
 [Architectural decomposition](../benchmark/results/phase6/R6_5-REPORT.md) prioritizes

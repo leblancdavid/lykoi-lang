@@ -20,6 +20,16 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R6.6 supports a bounded semantic composition candidate.**
+[Specification report](benchmark/results/phase6/R6_6-REPORT.md) and
+[definitions](benchmark/results/phase6/r6_6/CANDIDATE-SEMANTICS.md):
+`R6_6_COMPOSITION_CANDIDATE_SUPPORTED`. Three synthetic formats compose bounded
+structural interpretation/assembly with explicit scalar codecs and existing kernel
+operations. Two family names are not a proven construct count or minimum. Adversarial
+outcomes NOT_RUN; typing, lowering and result integration remain open. Kernel 26 and
+implementation/history unchanged; executions 0. Stopped after publication; next
+independent specification audit requires explicit authorization.
+
 **R6.5 decomposes general parsing and typed resource effects.**
 [Architectural report](benchmark/results/phase6/R6_5-REPORT.md) and
 [expressibility matrix](benchmark/results/phase6/r6_5/EXPRESSIBILITY-MATRIX.md):

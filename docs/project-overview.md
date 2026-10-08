@@ -75,6 +75,18 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R6.6 — `R6_6_COMPOSITION_CANDIDATE_SUPPORTED`.**
+[Report](../benchmark/results/phase6/R6_6-REPORT.md) and
+[candidate definitions](../benchmark/results/phase6/r6_6/CANDIDATE-SEMANTICS.md):
+specification-level CFG66/DSV66/BXC66 witnesses support a bounded shared structural
+interpreter/assembly family with explicit typed scalar codecs. Two family names are
+not two proven irreducible constructs or a minimum. Adversarial outcomes are specified,
+not executed; general Unicode/recursion/strong integrity, lowering and result integration
+remain open. Hybrid is a research candidate, not an adopted profile. Kernel 26 and all
+implementation/history unchanged; executions 0. Recommend an independently reviewed
+specification reduction audit under separate authorization.
+**Stop after publication; no implementation, compilation, acceptance or P6-A05 access.**
+
 **R6.5 — `R6_5_SEMANTIC_EXTENSION_REQUIRED`.**
 [Report](../benchmark/results/phase6/R6_5-REPORT.md),
 [matrix](../benchmark/results/phase6/r6_5/EXPRESSIBILITY-MATRIX.md),

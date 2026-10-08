@@ -7,6 +7,16 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R6.6: `R6_6_COMPOSITION_CANDIDATE_SUPPORTED`.
+  Read `benchmark/results/phase6/R6_6-REPORT.md` and
+  `r6_6/CANDIDATE-SEMANTICS.md`. Specification-only bounded structural
+  interpretation/assembly and explicit atomic codecs compose CFG66/DSV66/BXC66.
+  Two families are not two proven constructs or a minimum; adversarial outcomes
+  are NOT_RUN. Typing/progress, lowering, result binding, broader Unicode/recursion,
+  stronger integrity and physical effects remain open. Kernel 26/implementation/history
+  unchanged; executions 0. Stop after publication; no implementation, compilation,
+  acceptance or P6-A05 access. Independent specification reduction audit requires
+  explicit authorization.
 - Latest round R6.5: `R6_5_SEMANTIC_EXTENSION_REQUIRED`.
   Read `benchmark/results/phase6/R6_5-REPORT.md` and
   `r6_5/EXPRESSIBILITY-MATRIX.md`. Documentation-only general parsing/resource

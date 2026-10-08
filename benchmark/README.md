@@ -1,5 +1,17 @@
 # Phase 5: comparative maintenance benchmark
 
+## R6.6 general semantic composition challenge
+
+[Report](results/phase6/R6_6-REPORT.md),
+[definitions](results/phase6/r6_6/CANDIDATE-SEMANTICS.md) and
+[witnesses](results/phase6/r6_6/COMPOSITION-WITNESSES.md):
+`R6_6_COMPOSITION_CANDIDATE_SUPPORTED`. Shared bounded interpretation/assembly plus
+explicit scalar codecs compose three synthetic formats at specification level.
+No primitive minimum, implementation or behavioral verification claimed. Kernel 26,
+history/approval boundaries preserved; executions 0. Next proposed work is an independent
+specification reduction audit, requiring explicit authorization. Stop after publication;
+no implementation, benchmark compilation, acceptance or P6-A05 access.
+
 ## R6.5 general parsing and typed resource effects decomposition
 
 [Report](results/phase6/R6_5-REPORT.md),
