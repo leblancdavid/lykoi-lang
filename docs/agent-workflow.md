@@ -8,6 +8,15 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R6.9 — `R6_9_ISOLATION_CONTROL_GAP`.**
+Read the [infrastructure report](../benchmark/results/phase6/R6_9-REPORT.md) and
+[invocation contract](../benchmark/results/phase6/r6_9/INVOCATION-CONTRACT.md).
+Infrastructure-only changes have 28 passing synthetic tests; actual host dispatch
+halts for unavailable containment. Broker/configuration/mocked transport checks
+are not OS/provider qualification. Prepared candidate inputs are not approved;
+substantive review/provider calls 0. Kernel 26/implementation/history preserved.
+Stop after publication; further qualification/review requires explicit approval.
+
 **Latest round: R6.8 — `R6_8_INDEPENDENCE_NOT_ESTABLISHED`.**
 See the [terminal report](../benchmark/results/phase6/R6_8-REPORT.md) and
 [isolation evidence](../benchmark/results/phase6/r6_8/ISOLATION-EVIDENCE.md).

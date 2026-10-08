@@ -75,6 +75,17 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R6.9 — `R6_9_ISOLATION_CONTROL_GAP`.**
+[Infrastructure report](../benchmark/results/phase6/R6_9-REPORT.md): source-pinned
+preparation export, provider-neutral runner, provenance and anchored seals implemented;
+28 synthetic tests pass. Actual Windows attempt refuses before dispatch. Negative
+controls demonstrate that cwd/empty environment do not contain filesystem/network
+access. Linux sandbox path is unexecuted; provider hidden context and package
+dependency sufficiency remain unverified. No substantive review/provider call;
+kernel 26 and language/history preserved. **Stop after publication.** A future
+review needs separately authorized actual boundary qualification and exact input
+approval; it cannot proceed on this evidence alone.
+
 **R6.8 — `R6_8_INDEPENDENCE_NOT_ESTABLISHED`.**
 [Terminal report](../benchmark/results/phase6/R6_8-REPORT.md) and
 [input-control evidence](../benchmark/results/phase6/r6_8/ISOLATION-EVIDENCE.md):

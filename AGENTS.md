@@ -7,6 +7,16 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R6.9: `R6_9_ISOLATION_CONTROL_GAP`.
+  Read `benchmark/results/phase6/R6_9-REPORT.md` and
+  `r6_9/INVOCATION-CONTRACT.md`. Provider-neutral package/runner/seal infrastructure
+  implemented; 28 synthetic tests pass. Actual Windows runner refuses dispatch;
+  unconfined negative controls demonstrate outside-file/guidance/network access.
+  Linux sandbox branch unexecuted, provider hidden context unverified, input
+  dependency sufficiency unreviewed. Candidate export prepared, not approved/dispatched.
+  Kernel 26/language implementation/history preserved; provider and substantive-review
+  calls 0. Stop after publication. Further qualification and review need explicit
+  approval; no I-BOUND/C-ATOM implementation, compilation, acceptance or P6-A05 access.
 - Latest round R6.8: `R6_8_INDEPENDENCE_NOT_ESTABLISHED`.
   Read `benchmark/results/phase6/R6_8-REPORT.md` and
   `r6_8/ISOLATION-EVIDENCE.md`. Pre-assignment isolation gate not established;

@@ -1,5 +1,20 @@
 # Lykoi research log
 
+## R6.9 provider-neutral reviewer isolation infrastructure (2026-10-08)
+
+**`R6_9_ISOLATION_CONTROL_GAP`**;
+[report](../benchmark/results/phase6/R6_9-REPORT.md). Implemented pinned normative
+export, exact package verification, data broker, provider-neutral request/runner and
+anchored output/provenance seals without language changes. 28 synthetic tests pass.
+Actual fresh-process controls demonstrate local environment/history exclusion;
+negative controls demonstrate outside-file/guidance/network access without a sandbox.
+Initial Winsock negative-control orchestration halt preserved; final collection uses
+explicit SystemRoot only for that Windows negative control. Actual runner refuses
+unavailable isolation before adapter dispatch; Linux branch not executed, provider
+hidden context unverified, normative dependency sufficiency unreviewed. Provider and
+substantive-review calls 0; kernel 26/history preserved. Stop after publication;
+future qualification and exact-input independent review require separate approval.
+
 ## R6.8 input-controlled independent review (2026-10-08)
 
 **`R6_8_INDEPENDENCE_NOT_ESTABLISHED`**;

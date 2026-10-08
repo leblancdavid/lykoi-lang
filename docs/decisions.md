@@ -1,5 +1,19 @@
 # Experimental decisions
 
+## R6.9 — Separate enforceable data controls from reviewer containment
+
+[Report](../benchmark/results/phase6/R6_9-REPORT.md):
+`R6_9_ISOLATION_CONTROL_GAP`. Build independent infrastructure outside the language
+implementation; pin source exports and provider-neutral requests, and verify output
+against externally retained seal anchors. Prefer a fail-closed unavailable-backend
+result over labeling a clean cwd/process as a sandbox. Tradeoff: the current host
+qualifies package/broker/evidence behavior but cannot establish independent-review
+readiness. Offline standalone-adapter design avoids provider credentials/SDK and host
+runtime mounts; remote transport and actual Linux denial testing remain prospective.
+Marker filtering cannot prove freedom from publisher bias or paraphrased findings.
+No synthetic answer or model/provider label establishes cognition independence.
+Stop; separately approve future qualification, input closure and substantive review.
+
 ## R6.8 — Require verifiable input control before assigning review
 
 [Terminal report](../benchmark/results/phase6/R6_8-REPORT.md):

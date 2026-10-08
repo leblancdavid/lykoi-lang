@@ -20,6 +20,14 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R6.9 implements reviewer infrastructure; isolation control gap remains.**
+[Report](benchmark/results/phase6/R6_9-REPORT.md):
+`R6_9_ISOLATION_CONTROL_GAP`. Reproducible package, provider-neutral runner and
+anchored evidence verification implemented; 28 synthetic tests pass. Actual host
+dispatch refuses unavailable containment; Linux sandbox path is unexecuted.
+Candidate export not dispatched, provider/review calls 0, kernel 26/history preserved.
+Stopped; future qualification and review require explicit approval.
+
 **R6.8 halts before reviewer assignment: independence not established.**
 [Report](benchmark/results/phase6/R6_8-REPORT.md) and
 [isolation evidence](benchmark/results/phase6/r6_8/ISOLATION-EVIDENCE.md):
