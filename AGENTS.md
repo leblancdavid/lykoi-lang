@@ -7,6 +7,16 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R6.5: `R6_5_SEMANTIC_EXTENSION_REQUIRED`.
+  Read `benchmark/results/phase6/R6_5-REPORT.md` and
+  `r6_5/EXPRESSIBILITY-MATRIX.md`. Documentation-only general parsing/resource
+  decomposition: decoded finite data reuse established architecturally; general
+  grammar interpretation adds missing meaning under current admitted operations.
+  Physical adapters/lowering/verifier work distinguished; live handles, process
+  contracts and tree transactions unresolved. No minimality/impossibility or
+  behavioral result. Kernel 26/implementation/history unchanged; executions 0.
+  Stop after publication; no implementation, repair, compilation, acceptance or
+  P6-A05 access. Next specification challenge requires explicit authorization.
 - Latest round R6.4: `R6_4_LYKOI_SEMANTIC_GAP`.
   Read `benchmark/results/phase6/R6_4-REPORT.md` and
   `r6_4/CAPABILITY-INVENTORY.md`. Exact R6.3 artifact approval/source provenance

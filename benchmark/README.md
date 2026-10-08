@@ -1,5 +1,16 @@
 # Phase 5: comparative maintenance benchmark
 
+## R6.5 general parsing and typed resource effects decomposition
+
+[Report](results/phase6/R6_5-REPORT.md),
+[matrix](results/phase6/r6_5/EXPRESSIBILITY-MATRIX.md) and
+[cross-domain examples](results/phase6/r6_5/CROSS-DOMAIN-REUSE.md):
+`R6_5_SEMANTIC_EXTENSION_REQUIRED`, bounded to current admitted operations.
+Documentation-only architectural evidence; no benchmark solution, execution or
+minimality theorem. Existing finite decoded-data reuse, new interpretation meaning,
+runtime/lowering and verifier obligations distinguished. Kernel 26/history unchanged;
+acceptance executions 0. Stop after publication; no implementation or P6-A05 access.
+
 ## R6.4 P6-A04 research approval and native readiness
 
 [Report](results/phase6/R6_4-REPORT.md) and

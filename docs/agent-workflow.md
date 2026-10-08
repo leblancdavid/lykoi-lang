@@ -8,6 +8,17 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R6.5 — `R6_5_SEMANTIC_EXTENSION_REQUIRED`.**
+Read the [architectural report](../benchmark/results/phase6/R6_5-REPORT.md) and
+[expressibility matrix](../benchmark/results/phase6/r6_5/EXPRESSIBILITY-MATRIX.md).
+General raw-input grammar interpretation needs newly specified meaning under the
+current admitted operations; decoded finite data reuse, physical adapters, lowering
+and verifier infrastructure are separate. Live handles/process/transaction sufficiency
+remains unresolved. Documentation-only, no minimality theorem or behavioral evidence.
+Kernel 26/implementation/history unchanged; executions 0. Stop after publication;
+no implementation/repair/compilation/acceptance or P6-A05 access. Obtain explicit
+authorization before the proposed specification-only composition challenge.
+
 **Latest round: R6.4 — `R6_4_LYKOI_SEMANTIC_GAP`.**
 Read the [report](../benchmark/results/phase6/R6_4-REPORT.md) and
 [native capability inventory](../benchmark/results/phase6/r6_4/CAPABILITY-INVENTORY.md).

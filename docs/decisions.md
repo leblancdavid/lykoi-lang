@@ -1,5 +1,19 @@
 # Experimental decisions
 
+## R6.5 — Account interpretation separately from physical adapters
+
+[Architectural decomposition](../benchmark/results/phase6/R6_5-REPORT.md) prioritizes
+existing record/predicate/reference/authority/local-commit composition for decoded
+data. A grammar interpreter or archive codec specifies an independent value relation;
+calling it a runtime primitive does not avoid semantic accounting. Physical resource
+access and verifier measurement can be infrastructure where the observable contract
+already exists; live handles, process contracts and tree publication require further
+audit. Tradeoff: bounded declarative interpretation is narrower than unrestricted
+callbacks/recursion, but no final minimal design or closure is demonstrated. Reject
+package-only operations and hidden conventional parser/installer delegation as native
+coverage. Preserve provider independence, kernel 26, all implementation and historical
+identities. Stop at documentation; further specification/implementation needs authorization.
+
 ## R6.4 — Separate native semantic gaps from a missing verifier payload
 
 [Readiness assessment](../benchmark/results/phase6/R6_4-REPORT.md) records exact

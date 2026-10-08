@@ -75,6 +75,20 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R6.5 — `R6_5_SEMANTIC_EXTENSION_REQUIRED`.**
+[Report](../benchmark/results/phase6/R6_5-REPORT.md),
+[matrix](../benchmark/results/phase6/r6_5/EXPRESSIBILITY-MATRIX.md),
+[candidates](../benchmark/results/phase6/r6_5/PRIMITIVE-CANDIDATES.md) and
+[cross-domain reuse](../benchmark/results/phase6/r6_5/CROSS-DOMAIN-REUSE.md):
+documentation-only decomposition distinguishes existing decoded-data composition
+from missing general grammar/codec interpretation, physical adapters, deterministic
+lowering and verifier work. The semantic-extension finding is bounded to current
+admitted meanings, not an abstract impossibility/minimality result. Three non-package
+examples are conceptual; live resource/process/tree-transaction sufficiency remains
+unresolved. Kernel 26/implementation/history unchanged; executions 0. Recommended
+next step is a separately authorized specification-only composition challenge.
+**Stop after publication; no implementation, repair, compilation, acceptance or P6-A05 access.**
+
 **R6.4 — `R6_4_LYKOI_SEMANTIC_GAP`.**
 [Report](../benchmark/results/phase6/R6_4-REPORT.md) and
 [inventory](../benchmark/results/phase6/r6_4/CAPABILITY-INVENTORY.md): exact R6.3

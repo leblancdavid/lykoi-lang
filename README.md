@@ -20,6 +20,15 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R6.5 decomposes general parsing and typed resource effects.**
+[Architectural report](benchmark/results/phase6/R6_5-REPORT.md) and
+[expressibility matrix](benchmark/results/phase6/r6_5/EXPRESSIBILITY-MATRIX.md):
+`R6_5_SEMANTIC_EXTENSION_REQUIRED`, bounded to current admitted meanings.
+Decoded-data composition is reusable; general grammar interpretation needs new
+specified meaning. Runtime adapters, lowering and verifier work are distinguished.
+Three conceptual non-package examples; no implementation or behavioral result.
+Kernel 26/history unchanged; executions 0. Stop after documentation publication.
+
 **R6.4 records P6-A04 approval and static native-readiness gaps.**
 [Report](benchmark/results/phase6/R6_4-REPORT.md) and
 [inventory](benchmark/results/phase6/r6_4/CAPABILITY-INVENTORY.md):

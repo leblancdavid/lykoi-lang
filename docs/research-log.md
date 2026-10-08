@@ -1,5 +1,20 @@
 # Lykoi research log
 
+## R6.5 general parsing/resource architecture (2026-10-08)
+
+**`R6_5_SEMANTIC_EXTENSION_REQUIRED`**;
+[report](../benchmark/results/phase6/R6_5-REPORT.md) and
+[matrix](../benchmark/results/phase6/r6_5/EXPRESSIBILITY-MATRIX.md).
+Static normative/source analysis supports existing bounded decoded-data composition,
+but general grammar/codec interpretation adds independent observable meaning under
+the current admitted operations. Contracts/maps/authority are not arbitrary-code
+coverage. Physical adapters, lowering rules and independent verifier work are
+separately proposed; live handles, process contracts and tree atomicity unresolved.
+Configuration, archive assets and data import are conceptual reuse pressure, not
+behavioral/held-out evidence. No final minimum construct set or abstract impossibility
+claim. Preservation/publication checks only, kernel 26 unchanged, executions 0.
+Stopped after documentation; next specification challenge needs explicit authorization.
+
 ## R6.4 P6-A04 approval and static native-readiness assessment (2026-10-08)
 
 **`R6_4_LYKOI_SEMANTIC_GAP`**;
