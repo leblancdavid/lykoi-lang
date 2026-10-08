@@ -75,6 +75,17 @@ external resources such as storage, time and IDs should remain distinguishable.
 
 ## Current boundary and next steps
 
+**R6.4 — `R6_4_LYKOI_SEMANTIC_GAP`.**
+[Report](../benchmark/results/phase6/R6_4-REPORT.md) and
+[inventory](../benchmark/results/phase6/r6_4/CAPABILITY-INVENTORY.md): exact R6.3
+artifact approval and preserved provenance verified. Static inspection identifies
+current native parsing/artifact/install semantic gaps alongside missing verifier payload,
+pinned environment and observation/containment integration. This is a bounded implemented
+capability assessment, not abstract-kernel impossibility or benchmark evaluation.
+Research approval receipt grants investigation only. Kernel 26/implementation/history
+unchanged; acceptance executions 0. Next proposed step: separately authorized general
+capability decomposition. **Stop after publication; no repairs or P6-A05 access.**
+
 **R6.3 — `R6_3_P6_A04_CLARIFIED_RESEARCH_CONTRACT_READY`.**
 [Report](../benchmark/results/phase6/R6_3-REPORT.md),
 [final approval review](../benchmark/results/phase6/r6_3/HUMAN-REVIEW.md): exact human

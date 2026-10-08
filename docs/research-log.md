@@ -1,5 +1,20 @@
 # Lykoi research log
 
+## R6.4 P6-A04 approval and static native-readiness assessment (2026-10-08)
+
+**`R6_4_LYKOI_SEMANTIC_GAP`**;
+[report](../benchmark/results/phase6/R6_4-REPORT.md) and
+[classified inventory](../benchmark/results/phase6/r6_4/CAPABILITY-INVENTORY.md).
+Exact four approved R6.3 identities and original source provenance verify. New receipt
+retains readiness-only authorization; historical artifact bytes/statuses preserved.
+Closed native transforms/capabilities/lowering do not provide package parsing,
+binary artifact/build processing or venv installation effects. Missing native payload,
+pinned environment, observation binding and containment are separate gaps. Abstract
+kernel composition sufficiency remains unproven; no impossibility or native-stage result.
+Same-agent static evidence/publication checks only, acceptance executions 0, kernel 26
+unchanged. Proposed next step is general capability decomposition under separate authority.
+Stopped after publication; no repairs, evaluation, compilation or P6-A05 access.
+
 ## R6.3 P6-A04 human-clarified research contract (2026-10-08)
 
 **`R6_3_P6_A04_CLARIFIED_RESEARCH_CONTRACT_READY`**;

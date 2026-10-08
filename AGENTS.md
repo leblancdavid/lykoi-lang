@@ -7,6 +7,15 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R6.4: `R6_4_LYKOI_SEMANTIC_GAP`.
+  Read `benchmark/results/phase6/R6_4-REPORT.md` and
+  `r6_4/CAPABILITY-INVENTORY.md`. Exact R6.3 artifact approval/source provenance
+  verified; research-only receipt, static native-readiness assessment published.
+  Current accepted operations lack package parsing/artifact/install semantics;
+  native payload, pinned environment and observation/containment integration also
+  missing. No abstract-kernel impossibility claim or measured native blocker.
+  Kernel 26/implementation/history unchanged; acceptance executions 0. Stop after
+  publication; no repairs, evaluation, authoring, compilation or P6-A05 access.
 - Latest round R6.3: `R6_3_P6_A04_CLARIFIED_RESEARCH_CONTRACT_READY`.
   Read `benchmark/results/phase6/R6_3-REPORT.md` and `r6_3/HUMAN-REVIEW.md`.
   Exact human Q1/Q2 clarification recorded; source-faithful revision 2, pinned fixture

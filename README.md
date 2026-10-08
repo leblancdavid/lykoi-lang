@@ -20,6 +20,14 @@ Contributors and AI agents should start with [`AGENTS.md`](AGENTS.md) and the
 [agent workflow](docs/agent-workflow.md) before changing the model, compiler or
 benchmark.
 
+**R6.4 records P6-A04 approval and static native-readiness gaps.**
+[Report](benchmark/results/phase6/R6_4-REPORT.md) and
+[inventory](benchmark/results/phase6/r6_4/CAPABILITY-INVENTORY.md):
+`R6_4_LYKOI_SEMANTIC_GAP`. Exact approved R6.3 identities/provenance verified;
+current native package semantics and execution integration are missing. No abstract
+kernel-impossibility claim, evaluation or implementation change. Kernel 26 unchanged;
+acceptance executions 0. Stop after publication; no repairs or P6-A05 access.
+
 **R6.3 prepares the human-clarified P6-A04 contract.**
 [Report](benchmark/results/phase6/R6_3-REPORT.md) and
 [final review](benchmark/results/phase6/r6_3/HUMAN-REVIEW.md):

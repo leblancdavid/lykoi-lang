@@ -1,5 +1,18 @@
 # Experimental decisions
 
+## R6.4 — Separate native semantic gaps from a missing verifier payload
+
+[Readiness assessment](../benchmark/results/phase6/R6_4-REPORT.md) records exact
+artifact approval prospectively without editing R6.3 bytes. Use a research approval
+receipt scoped to investigation, not an execution receipt or invented evaluator grant.
+Tradeoff: extending only the CLI harness would leave native grammar/artifact/install
+meaning unsupported; calling a conventional installer behind generated JSON would mask
+that boundary. Reuse explicit records/predicates/authority where justified, but investigate
+general composition and resource-effect meaning before any implementation proposal.
+Static implemented-language gaps do not prove abstract kernel impossibility. Provider
+credentials remain unnecessary; kernel 26 and all implementation/history preserved.
+Stop at publication, awaiting separate authorization.
+
 ## R6.3 — Attribute experimental syntax authority and keep exact input
 
 [Final review](../benchmark/results/phase6/r6_3/HUMAN-REVIEW.md) records owner Q1/Q2

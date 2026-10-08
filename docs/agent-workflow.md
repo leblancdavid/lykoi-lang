@@ -8,6 +8,15 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R6.4 — `R6_4_LYKOI_SEMANTIC_GAP`.**
+Read the [report](../benchmark/results/phase6/R6_4-REPORT.md) and
+[native capability inventory](../benchmark/results/phase6/r6_4/CAPABILITY-INVENTORY.md).
+Exact conditional R6.3 artifact approval and provenance verified; research-only receipt
+records readiness-investigation permission, not execution authority. Static native
+package parsing/artifact/install gaps coexist with verifier/environment gaps. Kernel 26
+unchanged; no abstract expressiveness impossibility or executed first blocker claimed.
+Stop after publication; no repair/evaluation/authoring/compilation or P6-A05 access.
+
 **Latest round: R6.3 — `R6_3_P6_A04_CLARIFIED_RESEARCH_CONTRACT_READY`.**
 Read the [report](../benchmark/results/phase6/R6_3-REPORT.md) and
 [final approval review](../benchmark/results/phase6/r6_3/HUMAN-REVIEW.md).

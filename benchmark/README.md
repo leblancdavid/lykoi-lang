@@ -1,5 +1,16 @@
 # Phase 5: comparative maintenance benchmark
 
+## R6.4 P6-A04 research approval and native readiness
+
+[Report](results/phase6/R6_4-REPORT.md) and
+[inventory](results/phase6/r6_4/CAPABILITY-INVENTORY.md):
+`R6_4_LYKOI_SEMANTIC_GAP`. Exact R6.3 artifact approval/provenance verified;
+research-only receipt and static assessment published. Implemented package parsing,
+artifact/install semantics and verifier/environment integration are missing.
+No abstract-kernel impossibility or measured evaluation blocker. Kernel 26/history
+unchanged; no authoring/compilation or acceptance execution. Stop after publication;
+no repairs or P6-A05 access.
+
 ## R6.3 P6-A04 human-clarified contract preparation
 
 [Report](results/phase6/R6_3-REPORT.md) and
