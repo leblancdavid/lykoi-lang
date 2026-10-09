@@ -1,0 +1,230 @@
+{
+  "packet": {
+    "version": "construct-1",
+    "definitions": [
+      {
+        "name": "GuardedLeft",
+        "inputs": [
+          [
+            "x",
+            "Int64"
+          ],
+          [
+            "y",
+            "Int64"
+          ]
+        ],
+        "ops": [
+          [
+            "guard",
+            "value",
+            "Bool",
+            [
+              "le",
+              "$x",
+              "$y"
+            ],
+            [
+              "x",
+              "y"
+            ]
+          ],
+          [
+            "guard_check",
+            "check",
+            "$guard",
+            0,
+            "GuardDenied",
+            [
+              "guard"
+            ]
+          ],
+          [
+            "first_sum",
+            "value",
+            "Int64",
+            [
+              "add",
+              "$x",
+              "$y"
+            ],
+            [
+              "x",
+              "y"
+            ]
+          ],
+          [
+            "second_sum",
+            "value",
+            "Int64",
+            [
+              "add",
+              "$first_sum",
+              "$x"
+            ],
+            [
+              "first_sum",
+              "x"
+            ]
+          ]
+        ],
+        "result": "$second_sum",
+        "result_type": "Int64"
+      }
+    ],
+    "target": "GuardedLeft"
+  },
+  "completed": {
+    "json_valid": true,
+    "strict_valid": true,
+    "schema_valid": true,
+    "constructed": true,
+    "typed_valid": true,
+    "diagnostic": null,
+    "times": {
+      "serialization_seconds": 9.059999138116837e-05,
+      "schema_seconds": 0.002117699943482876,
+      "construction_seconds": 0.0001794000854715705,
+      "validation_seconds": 0.00019690010230988264
+    },
+    "artifact": {
+      "definitions": [
+        {
+          "name": "GuardedLeft",
+          "revision": 1,
+          "params": [
+            {
+              "name": "x",
+              "type": "Int64"
+            },
+            {
+              "name": "y",
+              "type": "Int64"
+            }
+          ],
+          "dependencies": {},
+          "steps": [
+            {
+              "id": "s001",
+              "type": "Bool",
+              "deps": [
+                "x",
+                "y"
+              ],
+              "node": {
+                "op": "value",
+                "expr": {
+                  "le": [
+                    {
+                      "ref": "x"
+                    },
+                    {
+                      "ref": "y"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": "s002",
+              "type": "Unit",
+              "deps": [
+                "s001"
+              ],
+              "node": {
+                "op": "check",
+                "test": {
+                  "ref": "s001"
+                },
+                "site": {
+                  "const": 0
+                },
+                "code": "GuardDenied"
+              }
+            },
+            {
+              "id": "s003",
+              "type": "Int64",
+              "deps": [
+                "x",
+                "y"
+              ],
+              "node": {
+                "op": "value",
+                "expr": {
+                  "add": [
+                    {
+                      "ref": "x"
+                    },
+                    {
+                      "ref": "y"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": "s004",
+              "type": "Int64",
+              "deps": [
+                "s003",
+                "x"
+              ],
+              "node": {
+                "op": "value",
+                "expr": {
+                  "add": [
+                    {
+                      "ref": "s003"
+                    },
+                    {
+                      "ref": "x"
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "order": [
+            "s001",
+            "s002",
+            "s003",
+            "s004"
+          ],
+          "result": {
+            "ref": "s004"
+          },
+          "result_type": "Int64",
+          "identity": "c13eba61a93c860c7dae7c20aba92b3f4891db7dfc608d082a590960da653041"
+        }
+      ],
+      "target": "GuardedLeft",
+      "identifier_map": {
+        "GuardedLeft": [
+          {
+            "scope": "GuardedLeft",
+            "alias": "guard",
+            "generated": "s001"
+          },
+          {
+            "scope": "GuardedLeft",
+            "alias": "guard_check",
+            "generated": "s002"
+          },
+          {
+            "scope": "GuardedLeft",
+            "alias": "first_sum",
+            "generated": "s003"
+          },
+          {
+            "scope": "GuardedLeft",
+            "alias": "second_sum",
+            "generated": "s004"
+          }
+        ]
+      }
+    }
+  },
+  "semantic_calls": 7,
+  "correction_turns": 0
+}

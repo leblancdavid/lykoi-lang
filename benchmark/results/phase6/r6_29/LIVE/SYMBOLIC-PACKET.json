@@ -1,0 +1,75 @@
+{
+  "version": "construct-1",
+  "definitions": [
+    {
+      "name": "GuardedLeft",
+      "inputs": [
+        [
+          "x",
+          "Int64"
+        ],
+        [
+          "y",
+          "Int64"
+        ]
+      ],
+      "ops": [
+        [
+          "guard",
+          "value",
+          "Bool",
+          [
+            "le",
+            "$x",
+            "$y"
+          ],
+          [
+            "x",
+            "y"
+          ]
+        ],
+        [
+          "guard_check",
+          "check",
+          "$guard",
+          0,
+          "GuardDenied",
+          [
+            "guard"
+          ]
+        ],
+        [
+          "first_sum",
+          "value",
+          "Int64",
+          [
+            "add",
+            "$x",
+            "$y"
+          ],
+          [
+            "x",
+            "y"
+          ]
+        ],
+        [
+          "second_sum",
+          "value",
+          "Int64",
+          [
+            "add",
+            "$first_sum",
+            "$x"
+          ],
+          [
+            "first_sum",
+            "x"
+          ]
+        ]
+      ],
+      "result": "$second_sum",
+      "result_type": "Int64"
+    }
+  ],
+  "target": "GuardedLeft"
+}

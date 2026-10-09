@@ -1,0 +1,82 @@
+{
+  "timestamp": "2026-10-09T16:11:15.888620+00:00",
+  "command": [
+    "opencode",
+    "run",
+    "--pure",
+    "--model",
+    "openai/gpt-6.1-sol",
+    "--variant",
+    "high",
+    "--agent",
+    "r628",
+    "--format",
+    "json",
+    "--title",
+    "R6.28 single semantic attempt"
+  ],
+  "stdin_prompt": "R6.29 authorized real guarded semantic construction.\nCreate GuardedLeft(x:Int64,y:Int64). First compute and store the Bool predicate x <= y, then enforce that predicate with an ordered check using code GuardDenied and literal site 0. Only after that check passes, store the checked Int64 sum x+y, then store the checked Int64 sum of that first sum and x. Return the second sum as Int64. Exactly four ordered steps: Bool value, check, Int64 value, dependent Int64 value. Native Int64 overflow rejects at the first failing arithmetic step. Fixed UInt16BE output encoding rejects values outside 0..65535. A false guard must reject GuardDenied before either arithmetic step, including when either sum would overflow. Exact signature x,y; typed host literals, empty byte input.\nUse the four existing Lykoi tools with truthful local construction effects. Maximum16 semantic tool calls and4 correction turns, one session. Stop immediately after successful validate_candidate. Dependencies enumerate every referenced input or prior alias exactly, including site references. Expressions are $name, typed literals or [add|le|eq,operand,operand]. No completed implementation is supplied. Construct and validate using tools; do not substitute a JSON proposal.",
+  "cwd": "C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode",
+  "configuration": {
+    "$schema": "https://opencode.ai/config.json",
+    "model": "openai/gpt-6.1-sol",
+    "small_model": "openai/gpt-6.1-sol",
+    "share": "disabled",
+    "autoupdate": false,
+    "snapshot": false,
+    "instructions": [],
+    "plugin": [],
+    "lsp": false,
+    "formatter": false,
+    "compaction": {
+      "auto": false
+    },
+    "enabled_providers": [
+      "openai"
+    ],
+    "permission": {
+      "*": "deny",
+      "lykoi_*": "allow"
+    },
+    "tools": {
+      "*": false,
+      "lykoi_*": true
+    },
+    "agent": {
+      "r628": {
+        "mode": "primary",
+        "model": "openai/gpt-6.1-sol",
+        "variant": "high",
+        "steps": 21,
+        "options": {
+          "maxOutputTokens": 4096
+        },
+        "permission": {
+          "*": "deny",
+          "lykoi_*": "allow"
+        },
+        "prompt": "Construct the requested R6.29 symbolic program using only the four Lykoi semantic tools. They mutate a real local construction Session. Stop on completed validation. Maximum16 semantic calls and4 correction turns. No files, shell, other tools or delegation."
+      }
+    },
+    "mcp": {
+      "lykoi": {
+        "type": "local",
+        "command": [
+          "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+          "D:\\Dev\\axiom\\benchmark\\results\\phase6\\r6_29\\experiment.py",
+          "bridge"
+        ],
+        "enabled": true
+      },
+      "codegraphcontext": {
+        "enabled": false
+      },
+      "shadcn": {
+        "enabled": false
+      },
+      "pixellab": {
+        "enabled": false
+      }
+    }
+  }
+}

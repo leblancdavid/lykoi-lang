@@ -1,0 +1,27 @@
+{
+  "id": "R629-TINY-1",
+  "requirement": "Create GuardedLeft(x:Int64,y:Int64). First compute and store the Bool predicate x <= y, then enforce that predicate with an ordered check using code GuardDenied and literal site 0. Only after that check passes, store the checked Int64 sum x+y, then store the checked Int64 sum of that first sum and x. Return the second sum as Int64. Exactly four ordered steps: Bool value, check, Int64 value, dependent Int64 value. Native Int64 overflow rejects at the first failing arithmetic step. Fixed UInt16BE output encoding rejects values outside 0..65535. A false guard must reject GuardDenied before either arithmetic step, including when either sum would overflow. Exact signature x,y; typed host literals, empty byte input.",
+  "target": "GuardedLeft",
+  "inputs": [
+    [
+      "x",
+      "Int64"
+    ],
+    [
+      "y",
+      "Int64"
+    ]
+  ],
+  "operations": [
+    "value",
+    "check",
+    "value",
+    "value"
+  ],
+  "result_type": "Int64",
+  "scored": false,
+  "source": "Fresh coordinator-authored capability-tailored synthetic requirement selected after scripted gate; no completed implementation supplied",
+  "invalid_types": "Bool/string/null are not Int64: wrapper TYPE. Float is outside the representation domain: wrapper SHAPE. Out-of-range signed integers: wrapper TYPE.",
+  "invalid_signature": "Missing or extra argument names: wrapper SHAPE, before type/VM checks.",
+  "precedence": "Signature then typed wrapper validation, predicate, guard, first add, second add, result, encoding. Guard failure absorbs subsequent overflow."
+}

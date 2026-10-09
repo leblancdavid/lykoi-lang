@@ -1,0 +1,1241 @@
+{
+  "timestamp": "2026-10-09T16:10:23.061131+00:00",
+  "passed": true,
+  "model_calls": 0,
+  "calls": [
+    {
+      "request": {
+        "function": {
+          "name": "declare_input",
+          "arguments": {
+            "definition": "GateWitness",
+            "inputs": [
+              {
+                "name": "flag",
+                "type": "Bool"
+              },
+              {
+                "name": "n",
+                "type": "Int64"
+              }
+            ]
+          }
+        }
+      },
+      "response": {
+        "syntax_valid": true,
+        "arguments_valid": true,
+        "success": true,
+        "response": {
+          "ok": true,
+          "definition": "GateWitness",
+          "finalized": false
+        },
+        "seconds": 0.00026270002126693726
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "name": "apply_operation",
+          "arguments": {
+            "definition": "GateWitness",
+            "alias": "g",
+            "operation": "check",
+            "expression": "$flag",
+            "site": 0,
+            "code": "WitnessDenied",
+            "dependencies": [
+              "flag"
+            ]
+          }
+        }
+      },
+      "response": {
+        "syntax_valid": true,
+        "arguments_valid": true,
+        "success": true,
+        "response": {
+          "ok": true,
+          "definition": "GateWitness",
+          "finalized": false
+        },
+        "seconds": 0.00037260004319250584
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "name": "apply_operation",
+          "arguments": {
+            "definition": "GateWitness",
+            "alias": "a",
+            "operation": "value",
+            "type": "Int64",
+            "expression": [
+              "add",
+              "$n",
+              1
+            ],
+            "dependencies": [
+              "n"
+            ]
+          }
+        }
+      },
+      "response": {
+        "syntax_valid": true,
+        "arguments_valid": true,
+        "success": true,
+        "response": {
+          "ok": true,
+          "definition": "GateWitness",
+          "finalized": false
+        },
+        "seconds": 0.00021709990687668324
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "name": "apply_operation",
+          "arguments": {
+            "definition": "GateWitness",
+            "alias": "b",
+            "operation": "value",
+            "type": "Int64",
+            "expression": [
+              "add",
+              "$a",
+              1
+            ],
+            "dependencies": [
+              "a"
+            ]
+          }
+        }
+      },
+      "response": {
+        "syntax_valid": true,
+        "arguments_valid": true,
+        "success": true,
+        "response": {
+          "ok": true,
+          "definition": "GateWitness",
+          "finalized": false
+        },
+        "seconds": 0.00019090005662292242
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "name": "define_result",
+          "arguments": {
+            "definition": "GateWitness",
+            "result": "$b",
+            "result_type": "Int64"
+          }
+        }
+      },
+      "response": {
+        "syntax_valid": true,
+        "arguments_valid": true,
+        "success": true,
+        "response": {
+          "ok": true,
+          "definition": "GateWitness",
+          "finalized": true
+        },
+        "seconds": 8.469994645565748e-05
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "name": "validate_candidate",
+          "arguments": {
+            "target": "GateWitness"
+          }
+        }
+      },
+      "response": {
+        "syntax_valid": true,
+        "arguments_valid": true,
+        "success": true,
+        "response": {
+          "ok": true,
+          "completed": true,
+          "target": "GateWitness",
+          "expanded_nodes": 6
+        },
+        "seconds": 0.001590500003658235
+      }
+    }
+  ],
+  "artifact": {
+    "definitions": [
+      {
+        "name": "GateWitness",
+        "revision": 1,
+        "params": [
+          {
+            "name": "flag",
+            "type": "Bool"
+          },
+          {
+            "name": "n",
+            "type": "Int64"
+          }
+        ],
+        "dependencies": {},
+        "steps": [
+          {
+            "id": "s001",
+            "type": "Unit",
+            "deps": [
+              "flag"
+            ],
+            "node": {
+              "op": "check",
+              "test": {
+                "ref": "flag"
+              },
+              "site": {
+                "const": 0
+              },
+              "code": "WitnessDenied"
+            }
+          },
+          {
+            "id": "s002",
+            "type": "Int64",
+            "deps": [
+              "n"
+            ],
+            "node": {
+              "op": "value",
+              "expr": {
+                "add": [
+                  {
+                    "ref": "n"
+                  },
+                  {
+                    "const": 1
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "s003",
+            "type": "Int64",
+            "deps": [
+              "s002"
+            ],
+            "node": {
+              "op": "value",
+              "expr": {
+                "add": [
+                  {
+                    "ref": "s002"
+                  },
+                  {
+                    "const": 1
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "order": [
+          "s001",
+          "s002",
+          "s003"
+        ],
+        "result": {
+          "ref": "s003"
+        },
+        "result_type": "Int64",
+        "identity": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d"
+      }
+    ],
+    "target": "GateWitness",
+    "identifier_map": {
+      "GateWitness": [
+        {
+          "scope": "GateWitness",
+          "alias": "g",
+          "generated": "s001"
+        },
+        {
+          "scope": "GateWitness",
+          "alias": "a",
+          "generated": "s002"
+        },
+        {
+          "scope": "GateWitness",
+          "alias": "b",
+          "generated": "s003"
+        }
+      ]
+    }
+  },
+  "observations": [
+    {
+      "args": {
+        "flag": true,
+        "n": 1
+      },
+      "evidence": {
+        "observation": {
+          "status": "success",
+          "value": 3,
+          "provenance": {
+            "span": [
+              0,
+              0
+            ],
+            "origins": []
+          },
+          "consumed": 0,
+          "work": 18,
+          "output": {
+            "bytes_hex": "0003"
+          },
+          "output_spans": [
+            {
+              "node": "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3/encode",
+              "start": 0,
+              "end": 2
+            }
+          ]
+        },
+        "ordered_entry_trace": [
+          {
+            "node": "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3",
+            "cursor": 0,
+            "work_before": 0,
+            "depth": 1
+          },
+          {
+            "node": "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+            "cursor": 0,
+            "work_before": 1,
+            "depth": 2
+          },
+          {
+            "node": "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s001",
+            "cursor": 0,
+            "work_before": 2,
+            "depth": 3
+          },
+          {
+            "node": "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s002",
+            "cursor": 0,
+            "work_before": 4,
+            "depth": 3
+          },
+          {
+            "node": "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s003",
+            "cursor": 0,
+            "work_before": 8,
+            "depth": 3
+          },
+          {
+            "node": "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3/encode",
+            "cursor": 0,
+            "work_before": 14,
+            "depth": 1
+          }
+        ],
+        "expanded": {
+          "plan": {
+            "version": "semantic-plan-1",
+            "text": false,
+            "rules": {},
+            "decode": {
+              "id": "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3",
+              "op": "seq",
+              "steps": [
+                {
+                  "node": {
+                    "id": "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+                    "op": "seq",
+                    "steps": [
+                      {
+                        "node": {
+                          "id": "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s001",
+                          "op": "check",
+                          "test": {
+                            "const": true
+                          },
+                          "site": {
+                            "const": 0
+                          },
+                          "code": "WitnessDenied"
+                        },
+                        "bind": "b_704373ce59f24757dddc5f991c36c1c640bb52afdee68ec6d4312eac6a411e2a"
+                      },
+                      {
+                        "node": {
+                          "id": "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s002",
+                          "op": "value",
+                          "expr": {
+                            "add": [
+                              {
+                                "const": 1
+                              },
+                              {
+                                "const": 1
+                              }
+                            ]
+                          }
+                        },
+                        "bind": "b_eeada6266f50162df79b374a032792b6916b984aa8c7dc9309e7c64f1a60000e"
+                      },
+                      {
+                        "node": {
+                          "id": "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s003",
+                          "op": "value",
+                          "expr": {
+                            "add": [
+                              {
+                                "ref": "b_eeada6266f50162df79b374a032792b6916b984aa8c7dc9309e7c64f1a60000e"
+                              },
+                              {
+                                "const": 1
+                              }
+                            ]
+                          }
+                        },
+                        "bind": "b_9752424b7433c5d0add2983d546254c03b078d4d32d6172b4c9eb3073834be81"
+                      }
+                    ],
+                    "result": {
+                      "ref": "b_9752424b7433c5d0add2983d546254c03b078d4d32d6172b4c9eb3073834be81"
+                    }
+                  },
+                  "bind": "b_85dd618d5719177497a8e9a3784543df27cd807e12ce529c2a3ef22e98f297c4"
+                }
+              ],
+              "result": {
+                "ref": "b_85dd618d5719177497a8e9a3784543df27cd807e12ce529c2a3ef22e98f297c4"
+              }
+            },
+            "encode": {
+              "id": "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3/encode",
+              "op": "emit",
+              "codec": "uint16be",
+              "expr": {
+                "ref": "root"
+              }
+            }
+          },
+          "map": {
+            "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3": {
+              "definition": "f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3",
+              "local": "region"
+            },
+            "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d": {
+              "definition": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+              "local": "region"
+            },
+            "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s001": {
+              "definition": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+              "local": "s001"
+            },
+            "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s002": {
+              "definition": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+              "local": "s002"
+            },
+            "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s003": {
+              "definition": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+              "local": "s003"
+            },
+            "program/f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3/encode": {
+              "definition": "f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3",
+              "local": "encode"
+            }
+          },
+          "plan_identity": "206d0ed282ddcc0c3cf4ed1671c0960b3ee97652715d318d4214f36b50f07729",
+          "program_identity": "f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3",
+          "nodes": 6
+        },
+        "package": {
+          "version": "typed-composition-1",
+          "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+          "definitions": [
+            {
+              "name": "GateWitness",
+              "revision": 1,
+              "params": [
+                {
+                  "name": "flag",
+                  "type": "Bool"
+                },
+                {
+                  "name": "n",
+                  "type": "Int64"
+                }
+              ],
+              "dependencies": {},
+              "steps": [
+                {
+                  "id": "s001",
+                  "type": "Unit",
+                  "deps": [
+                    "flag"
+                  ],
+                  "node": {
+                    "op": "check",
+                    "test": {
+                      "ref": "flag"
+                    },
+                    "site": {
+                      "const": 0
+                    },
+                    "code": "WitnessDenied"
+                  }
+                },
+                {
+                  "id": "s002",
+                  "type": "Int64",
+                  "deps": [
+                    "n"
+                  ],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "n"
+                        },
+                        {
+                          "const": 1
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "s003",
+                  "type": "Int64",
+                  "deps": [
+                    "s002"
+                  ],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "s002"
+                        },
+                        {
+                          "const": 1
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "s001",
+                "s002",
+                "s003"
+              ],
+              "result": {
+                "ref": "s003"
+              },
+              "result_type": "Int64",
+              "identity": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d"
+            }
+          ],
+          "program": {
+            "name": "HostEntry",
+            "revision": 1,
+            "params": [],
+            "dependencies": {
+              "GateWitness": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d"
+            },
+            "steps": [
+              {
+                "id": "invocation",
+                "type": "Int64",
+                "deps": [],
+                "node": {
+                  "op": "compose",
+                  "symbol": "GateWitness",
+                  "identity": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+                  "args": {
+                    "flag": {
+                      "const": true
+                    },
+                    "n": {
+                      "const": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "order": [
+              "invocation"
+            ],
+            "result": {
+              "ref": "invocation"
+            },
+            "result_type": "Int64",
+            "identity": "f7fd3182009948383ecc5a71f26970bb742f59b9f83950f820a812eaa72172c3"
+          }
+        },
+        "package_identity": "936978d1fc54223de86ff2eb8c121db193f89523f122975985e9d08ebccbe273",
+        "result_type": "Int64"
+      },
+      "times": {
+        "validation_seconds": 0.00013259996194392443,
+        "expansion_including_validation_seconds": 0.00017310003750026226,
+        "execution_including_VM_validation_seconds": 6.089999806135893e-05
+      }
+    },
+    {
+      "args": {
+        "flag": false,
+        "n": 9223372036854775807
+      },
+      "evidence": {
+        "observation": {
+          "status": "reject",
+          "error": {
+            "code": "WitnessDenied",
+            "offset": 0,
+            "node": "program/10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s001",
+            "stage": "validation",
+            "path": null,
+            "expected": []
+          },
+          "work": 5
+        },
+        "ordered_entry_trace": [
+          {
+            "node": "program/10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7",
+            "cursor": 0,
+            "work_before": 0,
+            "depth": 1
+          },
+          {
+            "node": "program/10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+            "cursor": 0,
+            "work_before": 1,
+            "depth": 2
+          },
+          {
+            "node": "program/10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s001",
+            "cursor": 0,
+            "work_before": 2,
+            "depth": 3
+          }
+        ],
+        "expanded": {
+          "plan": {
+            "version": "semantic-plan-1",
+            "text": false,
+            "rules": {},
+            "decode": {
+              "id": "program/10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7",
+              "op": "seq",
+              "steps": [
+                {
+                  "node": {
+                    "id": "program/10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+                    "op": "seq",
+                    "steps": [
+                      {
+                        "node": {
+                          "id": "program/10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s001",
+                          "op": "check",
+                          "test": {
+                            "const": false
+                          },
+                          "site": {
+                            "const": 0
+                          },
+                          "code": "WitnessDenied"
+                        },
+                        "bind": "b_9625cad73450bdda58ec19a89bfeca26b3a27abb9a631a0e6213c6762c22ca80"
+                      },
+                      {
+                        "node": {
+                          "id": "program/10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s002",
+                          "op": "value",
+                          "expr": {
+                            "add": [
+                              {
+                                "const": 9223372036854775807
+                              },
+                              {
+                                "const": 1
+                              }
+                            ]
+                          }
+                        },
+                        "bind": "b_b61093b0aadeb623a544e5a0b68e779e5f54f1720419e9780335723fb0df64fd"
+                      },
+                      {
+                        "node": {
+                          "id": "program/10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s003",
+                          "op": "value",
+                          "expr": {
+                            "add": [
+                              {
+                                "ref": "b_b61093b0aadeb623a544e5a0b68e779e5f54f1720419e9780335723fb0df64fd"
+                              },
+                              {
+                                "const": 1
+                              }
+                            ]
+                          }
+                        },
+                        "bind": "b_6c485eebee7c67c15f8f593f76da9e4037fcba0eba5d35a19aa08f1c00af5e6e"
+                      }
+                    ],
+                    "result": {
+                      "ref": "b_6c485eebee7c67c15f8f593f76da9e4037fcba0eba5d35a19aa08f1c00af5e6e"
+                    }
+                  },
+                  "bind": "b_6ea5259763af3cde84a6161e7280655ffe44ccb90bd9ec77a7e5d0c43a7ab4a8"
+                }
+              ],
+              "result": {
+                "ref": "b_6ea5259763af3cde84a6161e7280655ffe44ccb90bd9ec77a7e5d0c43a7ab4a8"
+              }
+            },
+            "encode": {
+              "id": "program/10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7/encode",
+              "op": "emit",
+              "codec": "uint16be",
+              "expr": {
+                "ref": "root"
+              }
+            }
+          },
+          "map": {
+            "program/10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7": {
+              "definition": "10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7",
+              "local": "region"
+            },
+            "program/10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d": {
+              "definition": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+              "local": "region"
+            },
+            "program/10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s001": {
+              "definition": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+              "local": "s001"
+            },
+            "program/10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s002": {
+              "definition": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+              "local": "s002"
+            },
+            "program/10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s003": {
+              "definition": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+              "local": "s003"
+            },
+            "program/10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7/encode": {
+              "definition": "10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7",
+              "local": "encode"
+            }
+          },
+          "plan_identity": "bd6f2f176efea8925056a901f9be7e072660fb29309f33bb6c6f3ac06a9fdfdb",
+          "program_identity": "10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7",
+          "nodes": 6
+        },
+        "package": {
+          "version": "typed-composition-1",
+          "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+          "definitions": [
+            {
+              "name": "GateWitness",
+              "revision": 1,
+              "params": [
+                {
+                  "name": "flag",
+                  "type": "Bool"
+                },
+                {
+                  "name": "n",
+                  "type": "Int64"
+                }
+              ],
+              "dependencies": {},
+              "steps": [
+                {
+                  "id": "s001",
+                  "type": "Unit",
+                  "deps": [
+                    "flag"
+                  ],
+                  "node": {
+                    "op": "check",
+                    "test": {
+                      "ref": "flag"
+                    },
+                    "site": {
+                      "const": 0
+                    },
+                    "code": "WitnessDenied"
+                  }
+                },
+                {
+                  "id": "s002",
+                  "type": "Int64",
+                  "deps": [
+                    "n"
+                  ],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "n"
+                        },
+                        {
+                          "const": 1
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "s003",
+                  "type": "Int64",
+                  "deps": [
+                    "s002"
+                  ],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "s002"
+                        },
+                        {
+                          "const": 1
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "s001",
+                "s002",
+                "s003"
+              ],
+              "result": {
+                "ref": "s003"
+              },
+              "result_type": "Int64",
+              "identity": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d"
+            }
+          ],
+          "program": {
+            "name": "HostEntry",
+            "revision": 1,
+            "params": [],
+            "dependencies": {
+              "GateWitness": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d"
+            },
+            "steps": [
+              {
+                "id": "invocation",
+                "type": "Int64",
+                "deps": [],
+                "node": {
+                  "op": "compose",
+                  "symbol": "GateWitness",
+                  "identity": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+                  "args": {
+                    "flag": {
+                      "const": false
+                    },
+                    "n": {
+                      "const": 9223372036854775807
+                    }
+                  }
+                }
+              }
+            ],
+            "order": [
+              "invocation"
+            ],
+            "result": {
+              "ref": "invocation"
+            },
+            "result_type": "Int64",
+            "identity": "10e8f667928a9343ed92692b9e38dfac25a233e8e0ee50d19067d6be9aac1bd7"
+          }
+        },
+        "package_identity": "a494f1446a953982897588ecb435610d05279f6334c1404bc646d3cb7ace81cf",
+        "result_type": null
+      },
+      "times": {
+        "validation_seconds": 0.00014000001829117537,
+        "expansion_including_validation_seconds": 0.00017600005958229303,
+        "execution_including_VM_validation_seconds": 3.190001007169485e-05
+      }
+    },
+    {
+      "args": {
+        "flag": true,
+        "n": 9223372036854775807
+      },
+      "evidence": {
+        "observation": {
+          "status": "reject",
+          "error": {
+            "code": "OVERFLOW",
+            "offset": 0,
+            "node": "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s002",
+            "stage": "structure",
+            "path": null,
+            "expected": []
+          },
+          "work": 8
+        },
+        "ordered_entry_trace": [
+          {
+            "node": "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53",
+            "cursor": 0,
+            "work_before": 0,
+            "depth": 1
+          },
+          {
+            "node": "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+            "cursor": 0,
+            "work_before": 1,
+            "depth": 2
+          },
+          {
+            "node": "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s001",
+            "cursor": 0,
+            "work_before": 2,
+            "depth": 3
+          },
+          {
+            "node": "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s002",
+            "cursor": 0,
+            "work_before": 4,
+            "depth": 3
+          }
+        ],
+        "expanded": {
+          "plan": {
+            "version": "semantic-plan-1",
+            "text": false,
+            "rules": {},
+            "decode": {
+              "id": "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53",
+              "op": "seq",
+              "steps": [
+                {
+                  "node": {
+                    "id": "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+                    "op": "seq",
+                    "steps": [
+                      {
+                        "node": {
+                          "id": "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s001",
+                          "op": "check",
+                          "test": {
+                            "const": true
+                          },
+                          "site": {
+                            "const": 0
+                          },
+                          "code": "WitnessDenied"
+                        },
+                        "bind": "b_24cd04c1887e1a95f5aab77f2904e2613d9d55b70cdf0263dfd4556ade748ecd"
+                      },
+                      {
+                        "node": {
+                          "id": "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s002",
+                          "op": "value",
+                          "expr": {
+                            "add": [
+                              {
+                                "const": 9223372036854775807
+                              },
+                              {
+                                "const": 1
+                              }
+                            ]
+                          }
+                        },
+                        "bind": "b_ff18d2f8f896a1b37381e79806b51f4e187fbdd8c1fac3bb1a8397ee911c7f78"
+                      },
+                      {
+                        "node": {
+                          "id": "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s003",
+                          "op": "value",
+                          "expr": {
+                            "add": [
+                              {
+                                "ref": "b_ff18d2f8f896a1b37381e79806b51f4e187fbdd8c1fac3bb1a8397ee911c7f78"
+                              },
+                              {
+                                "const": 1
+                              }
+                            ]
+                          }
+                        },
+                        "bind": "b_5e18e67d46e24ea200add01d7857d4a56c499ec092cec8b2f0b8cc25ec74d3cd"
+                      }
+                    ],
+                    "result": {
+                      "ref": "b_5e18e67d46e24ea200add01d7857d4a56c499ec092cec8b2f0b8cc25ec74d3cd"
+                    }
+                  },
+                  "bind": "b_9a3980e2f9f6b3859ac49fd846935e625d6b997cbb95e64ca6cb498efe025892"
+                }
+              ],
+              "result": {
+                "ref": "b_9a3980e2f9f6b3859ac49fd846935e625d6b997cbb95e64ca6cb498efe025892"
+              }
+            },
+            "encode": {
+              "id": "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53/encode",
+              "op": "emit",
+              "codec": "uint16be",
+              "expr": {
+                "ref": "root"
+              }
+            }
+          },
+          "map": {
+            "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53": {
+              "definition": "14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53",
+              "local": "region"
+            },
+            "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d": {
+              "definition": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+              "local": "region"
+            },
+            "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s001": {
+              "definition": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+              "local": "s001"
+            },
+            "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s002": {
+              "definition": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+              "local": "s002"
+            },
+            "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53/invocation/0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d/s003": {
+              "definition": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+              "local": "s003"
+            },
+            "program/14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53/encode": {
+              "definition": "14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53",
+              "local": "encode"
+            }
+          },
+          "plan_identity": "15da4852f82084970892572610f227b3c745df4611e5068cc32845729423c79b",
+          "program_identity": "14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53",
+          "nodes": 6
+        },
+        "package": {
+          "version": "typed-composition-1",
+          "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+          "definitions": [
+            {
+              "name": "GateWitness",
+              "revision": 1,
+              "params": [
+                {
+                  "name": "flag",
+                  "type": "Bool"
+                },
+                {
+                  "name": "n",
+                  "type": "Int64"
+                }
+              ],
+              "dependencies": {},
+              "steps": [
+                {
+                  "id": "s001",
+                  "type": "Unit",
+                  "deps": [
+                    "flag"
+                  ],
+                  "node": {
+                    "op": "check",
+                    "test": {
+                      "ref": "flag"
+                    },
+                    "site": {
+                      "const": 0
+                    },
+                    "code": "WitnessDenied"
+                  }
+                },
+                {
+                  "id": "s002",
+                  "type": "Int64",
+                  "deps": [
+                    "n"
+                  ],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "n"
+                        },
+                        {
+                          "const": 1
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "id": "s003",
+                  "type": "Int64",
+                  "deps": [
+                    "s002"
+                  ],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "s002"
+                        },
+                        {
+                          "const": 1
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "s001",
+                "s002",
+                "s003"
+              ],
+              "result": {
+                "ref": "s003"
+              },
+              "result_type": "Int64",
+              "identity": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d"
+            }
+          ],
+          "program": {
+            "name": "HostEntry",
+            "revision": 1,
+            "params": [],
+            "dependencies": {
+              "GateWitness": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d"
+            },
+            "steps": [
+              {
+                "id": "invocation",
+                "type": "Int64",
+                "deps": [],
+                "node": {
+                  "op": "compose",
+                  "symbol": "GateWitness",
+                  "identity": "0e2251f38f7ad11ead13f813f91642ecd1919a44c1c6844931239b7f9b8dac1d",
+                  "args": {
+                    "flag": {
+                      "const": true
+                    },
+                    "n": {
+                      "const": 9223372036854775807
+                    }
+                  }
+                }
+              }
+            ],
+            "order": [
+              "invocation"
+            ],
+            "result": {
+              "ref": "invocation"
+            },
+            "result_type": "Int64",
+            "identity": "14b8b3e91f00c9550e1300f2daea7966dbbf21fb99307eb769008e1d44af1a53"
+          }
+        },
+        "package_identity": "96426784cc312ec39f447aa17cf60b97a14a33de055b60a38441769e2ffe0eae",
+        "result_type": null
+      },
+      "times": {
+        "validation_seconds": 0.0001292000524699688,
+        "expansion_including_validation_seconds": 0.00016279995907098055,
+        "execution_including_VM_validation_seconds": 2.7499976567924023e-05
+      }
+    }
+  ],
+  "predicate_calls": [
+    {
+      "name": "declare_input",
+      "arguments": {
+        "definition": "PredicateWitness",
+        "inputs": [
+          {
+            "name": "n",
+            "type": "Int64"
+          }
+        ]
+      },
+      "response": {
+        "syntax_valid": true,
+        "arguments_valid": true,
+        "success": true,
+        "response": {
+          "ok": true,
+          "definition": "PredicateWitness",
+          "finalized": false
+        },
+        "seconds": 6.220000796020031e-05
+      }
+    },
+    {
+      "name": "apply_operation",
+      "arguments": {
+        "definition": "PredicateWitness",
+        "alias": "p",
+        "operation": "value",
+        "type": "Bool",
+        "expression": [
+          "le",
+          0,
+          "$n"
+        ],
+        "dependencies": [
+          "n"
+        ]
+      },
+      "response": {
+        "syntax_valid": true,
+        "arguments_valid": true,
+        "success": true,
+        "response": {
+          "ok": true,
+          "definition": "PredicateWitness",
+          "finalized": false
+        },
+        "seconds": 0.0001949999714270234
+      }
+    }
+  ],
+  "capabilities": {
+    "typed_Boolean_predicate": true,
+    "guard_evaluation": true,
+    "guard_rejection": true,
+    "dependent_arithmetic": true,
+    "ordered_error_precedence": true
+  },
+  "conflict": "false guard and n=Int64_MAX: WitnessDenied; same n with true guard: OVERFLOW",
+  "task_selected_before_gate": false
+}

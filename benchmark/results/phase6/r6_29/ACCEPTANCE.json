@@ -1,0 +1,293 @@
+{
+  "cases": [
+    {
+      "id": "normal0",
+      "args": {
+        "x": 2,
+        "y": 5
+      },
+      "expected": {
+        "status": "success",
+        "value": 9,
+        "output_hex": "0009",
+        "consumed": 0
+      }
+    },
+    {
+      "id": "normal1",
+      "args": {
+        "x": 0,
+        "y": 0
+      },
+      "expected": {
+        "status": "success",
+        "value": 0,
+        "output_hex": "0000",
+        "consumed": 0
+      }
+    },
+    {
+      "id": "normal2",
+      "args": {
+        "x": -2,
+        "y": 4
+      },
+      "expected": {
+        "status": "success",
+        "value": 0,
+        "output_hex": "0000",
+        "consumed": 0
+      }
+    },
+    {
+      "id": "normal3",
+      "args": {
+        "x": 1,
+        "y": 65533
+      },
+      "expected": {
+        "status": "success",
+        "value": 65535,
+        "output_hex": "ffff",
+        "consumed": 0
+      }
+    },
+    {
+      "id": "normal4",
+      "args": {
+        "x": 0,
+        "y": 65535
+      },
+      "expected": {
+        "status": "success",
+        "value": 65535,
+        "output_hex": "ffff",
+        "consumed": 0
+      }
+    },
+    {
+      "id": "guard",
+      "args": {
+        "x": 5,
+        "y": 2
+      },
+      "expected": {
+        "status": "reject",
+        "code": "GuardDenied",
+        "stage": "structure",
+        "step_index": 1
+      }
+    },
+    {
+      "id": "guard_first_overflow",
+      "args": {
+        "x": 9223372036854775807,
+        "y": 1
+      },
+      "expected": {
+        "status": "reject",
+        "code": "GuardDenied",
+        "stage": "structure",
+        "step_index": 1
+      }
+    },
+    {
+      "id": "guard_second_overflow",
+      "args": {
+        "x": 4611686018427387904,
+        "y": 0
+      },
+      "expected": {
+        "status": "reject",
+        "code": "GuardDenied",
+        "stage": "structure",
+        "step_index": 1
+      }
+    },
+    {
+      "id": "guard_underflow",
+      "args": {
+        "x": -2,
+        "y": -9223372036854775808
+      },
+      "expected": {
+        "status": "reject",
+        "code": "GuardDenied",
+        "stage": "structure",
+        "step_index": 1
+      }
+    },
+    {
+      "id": "first_overflow",
+      "args": {
+        "x": 1,
+        "y": 9223372036854775807
+      },
+      "expected": {
+        "status": "reject",
+        "code": "OVERFLOW",
+        "stage": "structure",
+        "step_index": 2
+      }
+    },
+    {
+      "id": "second_overflow",
+      "args": {
+        "x": 4611686018427387903,
+        "y": 4611686018427387903
+      },
+      "expected": {
+        "status": "reject",
+        "code": "OVERFLOW",
+        "stage": "structure",
+        "step_index": 3
+      }
+    },
+    {
+      "id": "first_underflow",
+      "args": {
+        "x": -9223372036854775808,
+        "y": -1
+      },
+      "expected": {
+        "status": "reject",
+        "code": "OVERFLOW",
+        "stage": "structure",
+        "step_index": 2
+      }
+    },
+    {
+      "id": "second_underflow",
+      "args": {
+        "x": -4611686018427387904,
+        "y": -1
+      },
+      "expected": {
+        "status": "reject",
+        "code": "OVERFLOW",
+        "stage": "structure",
+        "step_index": 3
+      }
+    },
+    {
+      "id": "encode_high",
+      "args": {
+        "x": 0,
+        "y": 65536
+      },
+      "expected": {
+        "status": "reject",
+        "code": "ENCODE_RANGE",
+        "stage": "encode",
+        "step_index": null
+      }
+    },
+    {
+      "id": "encode_low",
+      "args": {
+        "x": -1,
+        "y": 0
+      },
+      "expected": {
+        "status": "reject",
+        "code": "ENCODE_RANGE",
+        "stage": "encode",
+        "step_index": null
+      }
+    },
+    {
+      "id": "bool",
+      "args": {
+        "x": true,
+        "y": 1
+      },
+      "expected": {
+        "status": "wrapper_reject",
+        "code": "TYPE"
+      }
+    },
+    {
+      "id": "string",
+      "args": {
+        "x": "1",
+        "y": 1
+      },
+      "expected": {
+        "status": "wrapper_reject",
+        "code": "TYPE"
+      }
+    },
+    {
+      "id": "null",
+      "args": {
+        "x": null,
+        "y": 1
+      },
+      "expected": {
+        "status": "wrapper_reject",
+        "code": "TYPE"
+      }
+    },
+    {
+      "id": "float",
+      "args": {
+        "x": 1.0,
+        "y": 1
+      },
+      "expected": {
+        "status": "wrapper_reject",
+        "code": "SHAPE"
+      }
+    },
+    {
+      "id": "range",
+      "args": {
+        "x": 9223372036854775808,
+        "y": 1
+      },
+      "expected": {
+        "status": "wrapper_reject",
+        "code": "TYPE"
+      }
+    },
+    {
+      "id": "missing",
+      "args": {
+        "x": 1
+      },
+      "expected": {
+        "status": "wrapper_reject",
+        "code": "SHAPE"
+      }
+    },
+    {
+      "id": "extra",
+      "args": {
+        "x": 1,
+        "y": 2,
+        "z": 3
+      },
+      "expected": {
+        "status": "wrapper_reject",
+        "code": "SHAPE"
+      }
+    },
+    {
+      "id": "signature_type_conflict",
+      "args": {
+        "x": true
+      },
+      "expected": {
+        "status": "wrapper_reject",
+        "code": "SHAPE"
+      }
+    }
+  ],
+  "all_required": true,
+  "conflict_cases": [
+    "guard_first_overflow",
+    "guard_second_overflow",
+    "guard_underflow"
+  ],
+  "repeat_comparison": "Complete typed observations, errors, provenance, work, ordering, package and expansion identities; timing excluded"
+}
