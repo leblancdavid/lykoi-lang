@@ -1,0 +1,318 @@
+{
+  "create": {
+    "bindings": {
+      "created_at": {
+        "source": "utc_clock",
+        "value": null
+      },
+      "id": {
+        "source": "uuid_v4",
+        "value": null
+      },
+      "label": {
+        "source": "input",
+        "value": null
+      },
+      "load": {
+        "source": "input",
+        "value": null
+      },
+      "phase": {
+        "source": "literal",
+        "value": "cold"
+      },
+      "vent": {
+        "source": "input",
+        "value": null
+      }
+    },
+    "nonblank": [
+      "label"
+    ]
+  },
+  "fields": {
+    "created_at": {
+      "domain": [],
+      "type": "timestamp"
+    },
+    "id": {
+      "domain": [],
+      "type": "identifier"
+    },
+    "label": {
+      "domain": [],
+      "type": "string"
+    },
+    "load": {
+      "domain": [
+        "ordinary",
+        "emergency"
+      ],
+      "type": "enum"
+    },
+    "phase": {
+      "domain": [
+        "cold",
+        "firing"
+      ],
+      "type": "enum"
+    },
+    "vent": {
+      "domain": [
+        "open",
+        "closed"
+      ],
+      "type": "enum"
+    }
+  },
+  "invariants": [
+    {
+      "children": [
+        {
+          "child": {
+            "left": {
+              "domain": [
+                "cold",
+                "firing"
+              ],
+              "kind": "field",
+              "type": "enum",
+              "value": "phase"
+            },
+            "op": "eq",
+            "right": {
+              "domain": [
+                "cold",
+                "firing"
+              ],
+              "kind": "literal",
+              "type": "enum",
+              "value": "firing"
+            }
+          },
+          "op": "not"
+        },
+        {
+          "left": {
+            "domain": [
+              "open",
+              "closed"
+            ],
+            "kind": "field",
+            "type": "enum",
+            "value": "vent"
+          },
+          "op": "eq",
+          "right": {
+            "domain": [
+              "open",
+              "closed"
+            ],
+            "kind": "literal",
+            "type": "enum",
+            "value": "open"
+          }
+        },
+        {
+          "left": {
+            "domain": [
+              "ordinary",
+              "emergency"
+            ],
+            "kind": "field",
+            "type": "enum",
+            "value": "load"
+          },
+          "op": "eq",
+          "right": {
+            "domain": [
+              "ordinary",
+              "emergency"
+            ],
+            "kind": "literal",
+            "type": "enum",
+            "value": "emergency"
+          }
+        }
+      ],
+      "op": "or"
+    }
+  ],
+  "operations": {
+    "ignite": {
+      "guards": [
+        {
+          "condition": {
+            "left": {
+              "domain": [
+                "cold",
+                "firing"
+              ],
+              "kind": "field",
+              "type": "enum",
+              "value": "phase"
+            },
+            "op": "eq",
+            "right": {
+              "domain": [
+                "cold",
+                "firing"
+              ],
+              "kind": "literal",
+              "type": "enum",
+              "value": "cold"
+            }
+          },
+          "error": "invalid_transition"
+        },
+        {
+          "condition": {
+            "children": [
+              {
+                "left": {
+                  "domain": [
+                    "open",
+                    "closed"
+                  ],
+                  "kind": "field",
+                  "type": "enum",
+                  "value": "vent"
+                },
+                "op": "eq",
+                "right": {
+                  "domain": [
+                    "open",
+                    "closed"
+                  ],
+                  "kind": "literal",
+                  "type": "enum",
+                  "value": "open"
+                }
+              },
+              {
+                "left": {
+                  "domain": [
+                    "ordinary",
+                    "emergency"
+                  ],
+                  "kind": "field",
+                  "type": "enum",
+                  "value": "load"
+                },
+                "op": "eq",
+                "right": {
+                  "domain": [
+                    "ordinary",
+                    "emergency"
+                  ],
+                  "kind": "literal",
+                  "type": "enum",
+                  "value": "emergency"
+                }
+              }
+            ],
+            "op": "or"
+          },
+          "error": "gate_required"
+        }
+      ],
+      "writes": {
+        "phase": {
+          "source": "literal",
+          "value": "firing"
+        }
+      }
+    },
+    "set_gate": {
+      "guards": [
+        {
+          "condition": {
+            "children": [
+              {
+                "child": {
+                  "children": [
+                    {
+                      "left": {
+                        "domain": [
+                          "cold",
+                          "firing"
+                        ],
+                        "kind": "field",
+                        "type": "enum",
+                        "value": "phase"
+                      },
+                      "op": "eq",
+                      "right": {
+                        "domain": [
+                          "cold",
+                          "firing"
+                        ],
+                        "kind": "literal",
+                        "type": "enum",
+                        "value": "firing"
+                      }
+                    },
+                    {
+                      "left": {
+                        "domain": [
+                          "open",
+                          "closed"
+                        ],
+                        "kind": "parameter",
+                        "type": "enum",
+                        "value": "value"
+                      },
+                      "op": "eq",
+                      "right": {
+                        "domain": [
+                          "open",
+                          "closed"
+                        ],
+                        "kind": "literal",
+                        "type": "enum",
+                        "value": "closed"
+                      }
+                    }
+                  ],
+                  "op": "and"
+                },
+                "op": "not"
+              },
+              {
+                "left": {
+                  "domain": [
+                    "ordinary",
+                    "emergency"
+                  ],
+                  "kind": "field",
+                  "type": "enum",
+                  "value": "load"
+                },
+                "op": "eq",
+                "right": {
+                  "domain": [
+                    "ordinary",
+                    "emergency"
+                  ],
+                  "kind": "literal",
+                  "type": "enum",
+                  "value": "emergency"
+                }
+              }
+            ],
+            "op": "or"
+          },
+          "error": "gate_locked"
+        }
+      ],
+      "writes": {
+        "vent": {
+          "source": "input",
+          "value": "value"
+        }
+      }
+    }
+  },
+  "storage": "records.json",
+  "version": 1
+}

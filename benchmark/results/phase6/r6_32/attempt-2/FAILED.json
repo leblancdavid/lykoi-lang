@@ -1,0 +1,2283 @@
+{
+  "diagnostic": "{'request': {'op': 'ignite', 'args': {'id': '00000000-0000-4000-8000-000000000001'}, 'providers': {}}, 'returncode': 0, 'stderr': '', 'observation': {'error': 'migration_required'}, 'before_sha256': 'b0f669270c7c1d559b0d9e54d0964a8f2f90199787b4e926d3b45f3096db3756', 'after_sha256': 'b0f669270c7c1d559b0d9e54d0964a8f2f90199787b4e926d3b45f3096db3756', 'rejection_bytes_unchanged': True, 'tool_seconds': 0.07320999994408339, 'case': 'original-0-cold-open-ordinary-ignite-None', 'expected': {'ok': {'id': '00000000-0000-4000-8000-000000000001', 'created_at': '2026-01-01T00:00:00Z', 'label': 'Control', 'phase': 'firing', 'vent': 'open', 'load': 'ordinary'}}, 'passed': False}",
+  "exception": "AssertionError",
+  "recovery": {
+    "completed": [
+      "registry"
+    ],
+    "events": [
+      {
+        "data": {
+          "inputs": {
+            "implementation": "cc2fe09f3bd9055de17b0435ef12e2539133e1fea83830f6e0bed632dad60f94"
+          },
+          "stage": "registry"
+        },
+        "identity": "66e033a401b4e510facdfdc776676db6713df1f2b3f90035845aad0d6647808b",
+        "kind": "start",
+        "previous": null,
+        "sequence": 1,
+        "utc": "2026-10-09T17:55:03.696892+00:00"
+      },
+      {
+        "data": {
+          "expected": null,
+          "predecessor": null,
+          "proposals": [
+            {
+              "dependencies": {},
+              "identity": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+              "name": "Increment",
+              "order": [
+                "sum"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "sum"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "sum",
+                  "node": {
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "x"
+                        },
+                        {
+                          "const": 1
+                        }
+                      ]
+                    },
+                    "op": "value"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            },
+            {
+              "dependencies": {
+                "Increment": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d"
+              },
+              "identity": "d3f220ba6a3a5fa1cbd06a517b6ed093d0e60763afdbeb2e77930412e887f647",
+              "name": "CallerA",
+              "order": [
+                "use"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "use"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "use",
+                  "node": {
+                    "args": {
+                      "x": {
+                        "ref": "x"
+                      }
+                    },
+                    "identity": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+                    "op": "compose",
+                    "symbol": "Increment"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            },
+            {
+              "dependencies": {
+                "Increment": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d"
+              },
+              "identity": "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122",
+              "name": "CallerB",
+              "order": [
+                "use"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "use"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "use",
+                  "node": {
+                    "args": {
+                      "x": {
+                        "ref": "x"
+                      }
+                    },
+                    "identity": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+                    "op": "compose",
+                    "symbol": "Increment"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            }
+          ],
+          "result": {
+            "nodes": [
+              4,
+              5,
+              5
+            ],
+            "pins": [
+              "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+              "d3f220ba6a3a5fa1cbd06a517b6ed093d0e60763afdbeb2e77930412e887f647",
+              "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122"
+            ],
+            "status": "accepted",
+            "token": "9e60566b8c13b247af5da9ecc42d473729e6dd97564491452634244ef977865f"
+          },
+          "tool_seconds": 0.0019513999577611685
+        },
+        "identity": "2528ef694b89fe17b8e225f183af1728b68ee89a8a8e0ffc914377459331f60a",
+        "kind": "admission",
+        "previous": "66e033a401b4e510facdfdc776676db6713df1f2b3f90035845aad0d6647808b",
+        "sequence": 2,
+        "utc": "2026-10-09T17:55:03.704885+00:00"
+      },
+      {
+        "data": {
+          "expected": "9e60566b8c13b247af5da9ecc42d473729e6dd97564491452634244ef977865f",
+          "predecessor": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+          "proposals": [
+            {
+              "dependencies": {},
+              "identity": "e00df78f700c37c75dd50081884877e66bfe0bc3543345856e25bd9278dce14a",
+              "name": "Increment",
+              "order": [
+                "sum"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "sum"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "sum",
+                  "node": {
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "x"
+                        },
+                        {
+                          "const": 2
+                        }
+                      ]
+                    },
+                    "op": "value"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            }
+          ],
+          "result": {
+            "nodes": [
+              4
+            ],
+            "pins": [
+              "e00df78f700c37c75dd50081884877e66bfe0bc3543345856e25bd9278dce14a"
+            ],
+            "status": "accepted",
+            "token": "5cd2927b78bcd8a8c67adb6e19cf10ff1d184d1f82507ce68d55e300a289e1d0"
+          },
+          "tool_seconds": 0.0017607000190764666
+        },
+        "identity": "f0ac9afa35582a429bb014c18d80d61d27ee6575c9ff5033957bb108c068ca6d",
+        "kind": "admission",
+        "previous": "2528ef694b89fe17b8e225f183af1728b68ee89a8a8e0ffc914377459331f60a",
+        "sequence": 3,
+        "utc": "2026-10-09T17:55:03.712262+00:00"
+      },
+      {
+        "data": {
+          "expected": "5cd2927b78bcd8a8c67adb6e19cf10ff1d184d1f82507ce68d55e300a289e1d0",
+          "predecessor": "d3f220ba6a3a5fa1cbd06a517b6ed093d0e60763afdbeb2e77930412e887f647",
+          "proposals": [
+            {
+              "dependencies": {
+                "Increment": "e00df78f700c37c75dd50081884877e66bfe0bc3543345856e25bd9278dce14a"
+              },
+              "identity": "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485",
+              "name": "CallerA",
+              "order": [
+                "use"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "use"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "use",
+                  "node": {
+                    "args": {
+                      "x": {
+                        "ref": "x"
+                      }
+                    },
+                    "identity": "e00df78f700c37c75dd50081884877e66bfe0bc3543345856e25bd9278dce14a",
+                    "op": "compose",
+                    "symbol": "Increment"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            }
+          ],
+          "result": {
+            "nodes": [
+              5
+            ],
+            "pins": [
+              "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485"
+            ],
+            "status": "accepted",
+            "token": "224848c90f36f7dacad2f9ad09d682811d82a442234afe6d5a804a333dd4abc7"
+          },
+          "tool_seconds": 0.0027718999190256
+        },
+        "identity": "636e6f93c8e26dacc32e47e25407c05f364af21e88272215a8862b43e9ad72e0",
+        "kind": "admission",
+        "previous": "f0ac9afa35582a429bb014c18d80d61d27ee6575c9ff5033957bb108c068ca6d",
+        "sequence": 4,
+        "utc": "2026-10-09T17:55:03.720557+00:00"
+      },
+      {
+        "data": {
+          "actual": "PARTIAL_MIGRATION",
+          "control": "partial-caller-migration",
+          "diagnostic": {
+            "code": "PARTIAL_MIGRATION",
+            "detail": "explicit update or retain for every direct caller required",
+            "path": "$/lifecycle"
+          },
+          "expected": "PARTIAL_MIGRATION",
+          "passed": true,
+          "proposal": null,
+          "tool_seconds": 0.001313099986873567
+        },
+        "identity": "2172f2197f5cd14cb75fd3e8d92f89a5335f545656ab31a7162ff785d57b3921",
+        "kind": "validation_control",
+        "previous": "636e6f93c8e26dacc32e47e25407c05f364af21e88272215a8862b43e9ad72e0",
+        "sequence": 5,
+        "utc": "2026-10-09T17:55:03.727462+00:00"
+      },
+      {
+        "data": {
+          "actual": "INVALID_MIGRATION",
+          "control": "invalid-caller-successor",
+          "diagnostic": {
+            "code": "INVALID_MIGRATION",
+            "detail": "caller successor edge required",
+            "path": "$/lifecycle"
+          },
+          "expected": "INVALID_MIGRATION",
+          "passed": true,
+          "proposal": null,
+          "tool_seconds": 0.0017588000046089292
+        },
+        "identity": "ae884d96d69c9b6249d622b2df681e2af5bc11d1a1e328bbb265812708d96f27",
+        "kind": "validation_control",
+        "previous": "2172f2197f5cd14cb75fd3e8d92f89a5335f545656ab31a7162ff785d57b3921",
+        "sequence": 6,
+        "utc": "2026-10-09T17:55:03.735003+00:00"
+      },
+      {
+        "data": {
+          "decisions": {
+            "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122": null,
+            "d3f220ba6a3a5fa1cbd06a517b6ed093d0e60763afdbeb2e77930412e887f647": "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485"
+          },
+          "input_token": "224848c90f36f7dacad2f9ad09d682811d82a442234afe6d5a804a333dd4abc7",
+          "output_token": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "predecessor": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+          "successor": "e00df78f700c37c75dd50081884877e66bfe0bc3543345856e25bd9278dce14a"
+        },
+        "identity": "f58142c3480978a251db7c77a25d2384c947548bfa64ce4154d97f538b29d29f",
+        "kind": "migration",
+        "previous": "ae884d96d69c9b6249d622b2df681e2af5bc11d1a1e328bbb265812708d96f27",
+        "sequence": 7,
+        "utc": "2026-10-09T17:55:03.743422+00:00"
+      },
+      {
+        "data": {
+          "bytes": 345,
+          "identities": [
+            "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d"
+          ],
+          "name": null,
+          "pin": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+          "signature": null,
+          "token": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "tool_seconds": 0.0013160000089555979
+        },
+        "identity": "19b93dceea4b9d284f535503976473b921ae94a69ed4de0dac586eb4206cd8cb",
+        "kind": "retrieval",
+        "previous": "f58142c3480978a251db7c77a25d2384c947548bfa64ce4154d97f538b29d29f",
+        "sequence": 8,
+        "utc": "2026-10-09T17:55:03.751220+00:00"
+      },
+      {
+        "data": {
+          "bytes": 850,
+          "identities": [
+            "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+            "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122"
+          ],
+          "name": null,
+          "pin": "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122",
+          "signature": null,
+          "token": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "tool_seconds": 0.0008805999532341957
+        },
+        "identity": "0e83a40b4df96b40717293667f2aaa49451bfca86265fd4588befd77b6811392",
+        "kind": "retrieval",
+        "previous": "19b93dceea4b9d284f535503976473b921ae94a69ed4de0dac586eb4206cd8cb",
+        "sequence": 9,
+        "utc": "2026-10-09T17:55:03.757434+00:00"
+      },
+      {
+        "data": {
+          "bytes": 850,
+          "identities": [
+            "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485",
+            "e00df78f700c37c75dd50081884877e66bfe0bc3543345856e25bd9278dce14a"
+          ],
+          "name": null,
+          "pin": "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485",
+          "signature": null,
+          "token": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "tool_seconds": 0.0008382999803870916
+        },
+        "identity": "092b1a87f242da8c38766ba109beff35a2dfec0b01c20680a853f7ed3cc25982",
+        "kind": "retrieval",
+        "previous": "0e83a40b4df96b40717293667f2aaa49451bfca86265fd4588befd77b6811392",
+        "sequence": 10,
+        "utc": "2026-10-09T17:55:03.764386+00:00"
+      },
+      {
+        "data": {
+          "bytes": 689,
+          "identities": [
+            "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+            "e00df78f700c37c75dd50081884877e66bfe0bc3543345856e25bd9278dce14a"
+          ],
+          "name": "Increment",
+          "pin": null,
+          "signature": [
+            [
+              {
+                "name": "x",
+                "type": "Int64"
+              }
+            ],
+            "Int64"
+          ],
+          "token": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "tool_seconds": 0.0008716000011190772
+        },
+        "identity": "ccf71d745024f48edc8a978adfabb60cd36c7385af6e6808f083fb5c15e894e1",
+        "kind": "retrieval",
+        "previous": "092b1a87f242da8c38766ba109beff35a2dfec0b01c20680a853f7ed3cc25982",
+        "sequence": 11,
+        "utc": "2026-10-09T17:55:03.771073+00:00"
+      },
+      {
+        "data": {
+          "bytes": 689,
+          "identities": [
+            "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+            "e00df78f700c37c75dd50081884877e66bfe0bc3543345856e25bd9278dce14a"
+          ],
+          "name": "Increment",
+          "pin": null,
+          "signature": null,
+          "token": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "tool_seconds": 0.0007813000120222569
+        },
+        "identity": "ca9257c5bb3328011a5f785d36d769fd10037342c1643513bf48771cc92fd58b",
+        "kind": "retrieval",
+        "previous": "ccf71d745024f48edc8a978adfabb60cd36c7385af6e6808f083fb5c15e894e1",
+        "sequence": 12,
+        "utc": "2026-10-09T17:55:03.777709+00:00"
+      },
+      {
+        "data": {
+          "actual": "AMBIGUOUS_REFERENCE",
+          "control": "ambiguous-unpinned-reference",
+          "diagnostic": {
+            "code": "AMBIGUOUS_REFERENCE",
+            "detail": "Increment",
+            "path": "$/lifecycle"
+          },
+          "expected": "AMBIGUOUS_REFERENCE",
+          "passed": true,
+          "proposal": null,
+          "tool_seconds": 0.005928299971856177
+        },
+        "identity": "b89cea3c62da2c07df0182033dfb598e9f0971c46143c89143f222282456156a",
+        "kind": "validation_control",
+        "previous": "ca9257c5bb3328011a5f785d36d769fd10037342c1643513bf48771cc92fd58b",
+        "sequence": 13,
+        "utc": "2026-10-09T17:55:03.784315+00:00"
+      },
+      {
+        "data": {
+          "diagnostic": {
+            "code": "DUPLICATE_IDENTITY",
+            "detail": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+            "path": "$/lifecycle"
+          },
+          "expected": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "predecessor": null,
+          "proposals": [
+            {
+              "dependencies": {},
+              "identity": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+              "name": "Increment",
+              "order": [
+                "sum"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "sum"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "sum",
+                  "node": {
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "x"
+                        },
+                        {
+                          "const": 1
+                        }
+                      ]
+                    },
+                    "op": "value"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            }
+          ],
+          "status": "rejected",
+          "tool_seconds": 0.0009695000480860472
+        },
+        "identity": "b00d27174629cae22bd5b3826ff2f2d8d6d13b063ac2e7c84301b079f67bab2c",
+        "kind": "admission",
+        "previous": "b89cea3c62da2c07df0182033dfb598e9f0971c46143c89143f222282456156a",
+        "sequence": 14,
+        "utc": "2026-10-09T17:55:03.790863+00:00"
+      },
+      {
+        "data": {
+          "actual": "DUPLICATE_IDENTITY",
+          "control": "duplicate-identity",
+          "diagnostic": {
+            "code": "DUPLICATE_IDENTITY",
+            "detail": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+            "path": "$/lifecycle"
+          },
+          "expected": "DUPLICATE_IDENTITY",
+          "passed": true,
+          "proposal": {
+            "dependencies": {},
+            "identity": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+            "name": "Increment",
+            "order": [
+              "sum"
+            ],
+            "params": [
+              {
+                "name": "x",
+                "type": "Int64"
+              }
+            ],
+            "result": {
+              "ref": "sum"
+            },
+            "result_type": "Int64",
+            "revision": 1,
+            "steps": [
+              {
+                "deps": [
+                  "x"
+                ],
+                "id": "sum",
+                "node": {
+                  "expr": {
+                    "add": [
+                      {
+                        "ref": "x"
+                      },
+                      {
+                        "const": 1
+                      }
+                    ]
+                  },
+                  "op": "value"
+                },
+                "type": "Int64"
+              }
+            ]
+          },
+          "tool_seconds": 0.006243900046683848
+        },
+        "identity": "b38eed80b3c5df3327565182d70cfd35d63260d6e8150b3359fab51af484d76c",
+        "kind": "validation_control",
+        "previous": "b00d27174629cae22bd5b3826ff2f2d8d6d13b063ac2e7c84301b079f67bab2c",
+        "sequence": 15,
+        "utc": "2026-10-09T17:55:03.798138+00:00"
+      },
+      {
+        "data": {
+          "diagnostic": {
+            "code": "IDENTITY",
+            "detail": "content mismatch",
+            "path": "$/lifecycle"
+          },
+          "expected": null,
+          "predecessor": null,
+          "proposals": [
+            {
+              "dependencies": {},
+              "identity": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+              "name": "Increment",
+              "order": [
+                "sum"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "const": 99
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "sum",
+                  "node": {
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "x"
+                        },
+                        {
+                          "const": 1
+                        }
+                      ]
+                    },
+                    "op": "value"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            }
+          ],
+          "status": "rejected",
+          "tool_seconds": 0.00019419996533542871
+        },
+        "identity": "f1022c42a2df6f3c4847dce958f2d99feee581421438a25c76556e5848c5284d",
+        "kind": "admission",
+        "previous": "b38eed80b3c5df3327565182d70cfd35d63260d6e8150b3359fab51af484d76c",
+        "sequence": 16,
+        "utc": "2026-10-09T17:55:03.804247+00:00"
+      },
+      {
+        "data": {
+          "actual": "IDENTITY",
+          "control": "identity-tampering",
+          "diagnostic": {
+            "code": "IDENTITY",
+            "detail": "content mismatch",
+            "path": "$/lifecycle"
+          },
+          "expected": "IDENTITY",
+          "passed": true,
+          "proposal": {
+            "dependencies": {},
+            "identity": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+            "name": "Increment",
+            "order": [
+              "sum"
+            ],
+            "params": [
+              {
+                "name": "x",
+                "type": "Int64"
+              }
+            ],
+            "result": {
+              "const": 99
+            },
+            "result_type": "Int64",
+            "revision": 1,
+            "steps": [
+              {
+                "deps": [
+                  "x"
+                ],
+                "id": "sum",
+                "node": {
+                  "expr": {
+                    "add": [
+                      {
+                        "ref": "x"
+                      },
+                      {
+                        "const": 1
+                      }
+                    ]
+                  },
+                  "op": "value"
+                },
+                "type": "Int64"
+              }
+            ]
+          },
+          "tool_seconds": 0.005794900003820658
+        },
+        "identity": "9e92122d6832a18c621034408b633d98c2ce5eec3175e8a5d3da7a991751935a",
+        "kind": "validation_control",
+        "previous": "f1022c42a2df6f3c4847dce958f2d99feee581421438a25c76556e5848c5284d",
+        "sequence": 17,
+        "utc": "2026-10-09T17:55:03.810667+00:00"
+      },
+      {
+        "data": {
+          "diagnostic": {
+            "code": "MISSING_DEPENDENCY",
+            "detail": "958aad9730d14d737b6a354a292db1267e3791cfe24d40164e33fa98d3a0c3ec",
+            "path": "$/lifecycle"
+          },
+          "expected": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "predecessor": null,
+          "proposals": [
+            {
+              "dependencies": {
+                "Absent": "958aad9730d14d737b6a354a292db1267e3791cfe24d40164e33fa98d3a0c3ec"
+              },
+              "identity": "ac460776e2547c6f30ba55cb9549add3c893a27f4e3ca0c4bb666ce0dac60008",
+              "name": "MissingCaller",
+              "order": [
+                "use"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "use"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "use",
+                  "node": {
+                    "args": {
+                      "x": {
+                        "ref": "x"
+                      }
+                    },
+                    "identity": "958aad9730d14d737b6a354a292db1267e3791cfe24d40164e33fa98d3a0c3ec",
+                    "op": "compose",
+                    "symbol": "Absent"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            }
+          ],
+          "status": "rejected",
+          "tool_seconds": 0.0009492000099271536
+        },
+        "identity": "107312fecbc617ed40c85df905991876b60b9dfab1f863aeeb5f204a94b05400",
+        "kind": "admission",
+        "previous": "9e92122d6832a18c621034408b633d98c2ce5eec3175e8a5d3da7a991751935a",
+        "sequence": 18,
+        "utc": "2026-10-09T17:55:03.818084+00:00"
+      },
+      {
+        "data": {
+          "actual": "MISSING_DEPENDENCY",
+          "control": "missing-dependency",
+          "diagnostic": {
+            "code": "MISSING_DEPENDENCY",
+            "detail": "958aad9730d14d737b6a354a292db1267e3791cfe24d40164e33fa98d3a0c3ec",
+            "path": "$/lifecycle"
+          },
+          "expected": "MISSING_DEPENDENCY",
+          "passed": true,
+          "proposal": {
+            "dependencies": {
+              "Absent": "958aad9730d14d737b6a354a292db1267e3791cfe24d40164e33fa98d3a0c3ec"
+            },
+            "identity": "ac460776e2547c6f30ba55cb9549add3c893a27f4e3ca0c4bb666ce0dac60008",
+            "name": "MissingCaller",
+            "order": [
+              "use"
+            ],
+            "params": [
+              {
+                "name": "x",
+                "type": "Int64"
+              }
+            ],
+            "result": {
+              "ref": "use"
+            },
+            "result_type": "Int64",
+            "revision": 1,
+            "steps": [
+              {
+                "deps": [
+                  "x"
+                ],
+                "id": "use",
+                "node": {
+                  "args": {
+                    "x": {
+                      "ref": "x"
+                    }
+                  },
+                  "identity": "958aad9730d14d737b6a354a292db1267e3791cfe24d40164e33fa98d3a0c3ec",
+                  "op": "compose",
+                  "symbol": "Absent"
+                },
+                "type": "Int64"
+              }
+            ]
+          },
+          "tool_seconds": 0.007168299984186888
+        },
+        "identity": "04616258aef6f351e9b9d52a31f2242d492231d717e4cf1640fc1192037ad4bf",
+        "kind": "validation_control",
+        "previous": "107312fecbc617ed40c85df905991876b60b9dfab1f863aeeb5f204a94b05400",
+        "sequence": 19,
+        "utc": "2026-10-09T17:55:03.824818+00:00"
+      },
+      {
+        "data": {
+          "diagnostic": {
+            "code": "CYCLE",
+            "detail": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "path": "$/lifecycle"
+          },
+          "expected": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "predecessor": null,
+          "proposals": [
+            {
+              "dependencies": {
+                "CycleB": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              },
+              "identity": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "name": "CycleA",
+              "order": [
+                "use"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "use"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "use",
+                  "node": {
+                    "args": {
+                      "x": {
+                        "ref": "x"
+                      }
+                    },
+                    "identity": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                    "op": "compose",
+                    "symbol": "CycleB"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            },
+            {
+              "dependencies": {
+                "CycleA": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "identity": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "name": "CycleB",
+              "order": [
+                "use"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "use"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "use",
+                  "node": {
+                    "args": {
+                      "x": {
+                        "ref": "x"
+                      }
+                    },
+                    "identity": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "op": "compose",
+                    "symbol": "CycleA"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            }
+          ],
+          "status": "rejected",
+          "tool_seconds": 0.0009395999368280172
+        },
+        "identity": "3f7770cd6cf9e79e8831aeefe3d56f1913ce1bdf976e20ae4a868862d338fe9e",
+        "kind": "admission",
+        "previous": "04616258aef6f351e9b9d52a31f2242d492231d717e4cf1640fc1192037ad4bf",
+        "sequence": 20,
+        "utc": "2026-10-09T17:55:03.833774+00:00"
+      },
+      {
+        "data": {
+          "actual": "CYCLE",
+          "control": "dependency-cycle",
+          "diagnostic": {
+            "code": "CYCLE",
+            "detail": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "path": "$/lifecycle"
+          },
+          "expected": "CYCLE",
+          "passed": true,
+          "proposal": [
+            {
+              "dependencies": {
+                "CycleB": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              },
+              "identity": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "name": "CycleA",
+              "order": [
+                "use"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "use"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "use",
+                  "node": {
+                    "args": {
+                      "x": {
+                        "ref": "x"
+                      }
+                    },
+                    "identity": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                    "op": "compose",
+                    "symbol": "CycleB"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            },
+            {
+              "dependencies": {
+                "CycleA": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              },
+              "identity": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "name": "CycleB",
+              "order": [
+                "use"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "use"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "use",
+                  "node": {
+                    "args": {
+                      "x": {
+                        "ref": "x"
+                      }
+                    },
+                    "identity": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "op": "compose",
+                    "symbol": "CycleA"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            }
+          ],
+          "tool_seconds": 0.009194100042805076
+        },
+        "identity": "dda73f1d00786f1a5c53c93803d4179e9bafcc64b5502ef4ff1e1de69a17ce00",
+        "kind": "validation_control",
+        "previous": "3f7770cd6cf9e79e8831aeefe3d56f1913ce1bdf976e20ae4a868862d338fe9e",
+        "sequence": 21,
+        "utc": "2026-10-09T17:55:03.840357+00:00"
+      },
+      {
+        "data": {
+          "diagnostic": {
+            "code": "INVALID_SUCCESSOR",
+            "detail": "exact admitted predecessor required",
+            "path": "$/lifecycle"
+          },
+          "expected": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "predecessor": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "proposals": [
+            {
+              "dependencies": {},
+              "identity": "3a70e8ce319e0c1585f9bf88cef9c0a00d24fccbbfbd836b04dd063cf55d5e59",
+              "name": "Other",
+              "order": [
+                "sum"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "sum"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "sum",
+                  "node": {
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "x"
+                        },
+                        {
+                          "const": 3
+                        }
+                      ]
+                    },
+                    "op": "value"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            }
+          ],
+          "status": "rejected",
+          "tool_seconds": 0.0011569999624043703
+        },
+        "identity": "a801e748e53276f1f0635f62739a7be3288ccb0634b5750eb11893ca73b1d0d4",
+        "kind": "admission",
+        "previous": "dda73f1d00786f1a5c53c93803d4179e9bafcc64b5502ef4ff1e1de69a17ce00",
+        "sequence": 22,
+        "utc": "2026-10-09T17:55:03.848565+00:00"
+      },
+      {
+        "data": {
+          "actual": "INVALID_SUCCESSOR",
+          "control": "invalid-successor-reference",
+          "diagnostic": {
+            "code": "INVALID_SUCCESSOR",
+            "detail": "exact admitted predecessor required",
+            "path": "$/lifecycle"
+          },
+          "expected": "INVALID_SUCCESSOR",
+          "passed": true,
+          "proposal": {
+            "dependencies": {},
+            "identity": "3a70e8ce319e0c1585f9bf88cef9c0a00d24fccbbfbd836b04dd063cf55d5e59",
+            "name": "Other",
+            "order": [
+              "sum"
+            ],
+            "params": [
+              {
+                "name": "x",
+                "type": "Int64"
+              }
+            ],
+            "result": {
+              "ref": "sum"
+            },
+            "result_type": "Int64",
+            "revision": 1,
+            "steps": [
+              {
+                "deps": [
+                  "x"
+                ],
+                "id": "sum",
+                "node": {
+                  "expr": {
+                    "add": [
+                      {
+                        "ref": "x"
+                      },
+                      {
+                        "const": 3
+                      }
+                    ]
+                  },
+                  "op": "value"
+                },
+                "type": "Int64"
+              }
+            ]
+          },
+          "tool_seconds": 0.008278700057417154
+        },
+        "identity": "adee718cb3b04dfc75d432598b13a9f736c9dc103e2c4548baaa5d11092042bf",
+        "kind": "validation_control",
+        "previous": "a801e748e53276f1f0635f62739a7be3288ccb0634b5750eb11893ca73b1d0d4",
+        "sequence": 23,
+        "utc": "2026-10-09T17:55:03.854980+00:00"
+      },
+      {
+        "data": {
+          "diagnostic": {
+            "code": "TYPE_CHANGE",
+            "detail": "successor must preserve exact name and signature",
+            "path": "$/lifecycle"
+          },
+          "expected": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "predecessor": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+          "proposals": [
+            {
+              "dependencies": {},
+              "identity": "fed56cc9c619b5d2751202f1d7915b8247881c8a339f0060e9a5260829a6ceaf",
+              "name": "Increment",
+              "order": [
+                "same"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Bool"
+                }
+              ],
+              "result": {
+                "ref": "same"
+              },
+              "result_type": "Bool",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "same",
+                  "node": {
+                    "expr": {
+                      "ref": "x"
+                    },
+                    "op": "value"
+                  },
+                  "type": "Bool"
+                }
+              ]
+            }
+          ],
+          "status": "rejected",
+          "tool_seconds": 0.0011050000321120024
+        },
+        "identity": "f14e986d9a3050569bd9863e6f491666f57859ce3b83c9e94f0a1bab97d033bf",
+        "kind": "admission",
+        "previous": "adee718cb3b04dfc75d432598b13a9f736c9dc103e2c4548baaa5d11092042bf",
+        "sequence": 24,
+        "utc": "2026-10-09T17:55:03.863332+00:00"
+      },
+      {
+        "data": {
+          "actual": "TYPE_CHANGE",
+          "control": "invalid-type-change",
+          "diagnostic": {
+            "code": "TYPE_CHANGE",
+            "detail": "successor must preserve exact name and signature",
+            "path": "$/lifecycle"
+          },
+          "expected": "TYPE_CHANGE",
+          "passed": true,
+          "proposal": {
+            "dependencies": {},
+            "identity": "fed56cc9c619b5d2751202f1d7915b8247881c8a339f0060e9a5260829a6ceaf",
+            "name": "Increment",
+            "order": [
+              "same"
+            ],
+            "params": [
+              {
+                "name": "x",
+                "type": "Bool"
+              }
+            ],
+            "result": {
+              "ref": "same"
+            },
+            "result_type": "Bool",
+            "revision": 1,
+            "steps": [
+              {
+                "deps": [
+                  "x"
+                ],
+                "id": "same",
+                "node": {
+                  "expr": {
+                    "ref": "x"
+                  },
+                  "op": "value"
+                },
+                "type": "Bool"
+              }
+            ]
+          },
+          "tool_seconds": 0.008346899994648993
+        },
+        "identity": "96a9a83905c9fd82aea6a21a32174e3b7f81e3df8f0b9ed42e5ab485eea669fa",
+        "kind": "validation_control",
+        "previous": "f14e986d9a3050569bd9863e6f491666f57859ce3b83c9e94f0a1bab97d033bf",
+        "sequence": 25,
+        "utc": "2026-10-09T17:55:03.870010+00:00"
+      },
+      {
+        "data": {
+          "diagnostic": {
+            "code": "SHAPE",
+            "detail": "exact object fields required: dependencies,identity,name,order,params,result,result_type,revision,steps",
+            "path": "$/proposal"
+          },
+          "expected": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "predecessor": null,
+          "proposals": [
+            {
+              "dependencies": {},
+              "extra": 1,
+              "identity": "3a70e8ce319e0c1585f9bf88cef9c0a00d24fccbbfbd836b04dd063cf55d5e59",
+              "name": "Other",
+              "order": [
+                "sum"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "sum"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "sum",
+                  "node": {
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "x"
+                        },
+                        {
+                          "const": 3
+                        }
+                      ]
+                    },
+                    "op": "value"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            }
+          ],
+          "status": "rejected",
+          "tool_seconds": 0.0008969999616965652
+        },
+        "identity": "cfbc19b47ddf83c0c8ae5a5de00b3be0f0917f4bd75fb3b77cf9320f7e4b68e8",
+        "kind": "admission",
+        "previous": "96a9a83905c9fd82aea6a21a32174e3b7f81e3df8f0b9ed42e5ab485eea669fa",
+        "sequence": 26,
+        "utc": "2026-10-09T17:55:03.877734+00:00"
+      },
+      {
+        "data": {
+          "actual": "SHAPE",
+          "control": "invalid-schema",
+          "diagnostic": {
+            "code": "SHAPE",
+            "detail": "exact object fields required: dependencies,identity,name,order,params,result,result_type,revision,steps",
+            "path": "$/proposal"
+          },
+          "expected": "SHAPE",
+          "passed": true,
+          "proposal": {
+            "dependencies": {},
+            "extra": 1,
+            "identity": "3a70e8ce319e0c1585f9bf88cef9c0a00d24fccbbfbd836b04dd063cf55d5e59",
+            "name": "Other",
+            "order": [
+              "sum"
+            ],
+            "params": [
+              {
+                "name": "x",
+                "type": "Int64"
+              }
+            ],
+            "result": {
+              "ref": "sum"
+            },
+            "result_type": "Int64",
+            "revision": 1,
+            "steps": [
+              {
+                "deps": [
+                  "x"
+                ],
+                "id": "sum",
+                "node": {
+                  "expr": {
+                    "add": [
+                      {
+                        "ref": "x"
+                      },
+                      {
+                        "const": 3
+                      }
+                    ]
+                  },
+                  "op": "value"
+                },
+                "type": "Int64"
+              }
+            ]
+          },
+          "tool_seconds": 0.007776999962516129
+        },
+        "identity": "ffda816b9d6391bc01c7526bee7b4c0d2b5e1451f5140c37912beaef25530973",
+        "kind": "validation_control",
+        "previous": "cfbc19b47ddf83c0c8ae5a5de00b3be0f0917f4bd75fb3b77cf9320f7e4b68e8",
+        "sequence": 27,
+        "utc": "2026-10-09T17:55:03.884830+00:00"
+      },
+      {
+        "data": {
+          "diagnostic": {
+            "code": "TYPE",
+            "detail": "declared step type differs",
+            "path": "Other/sum"
+          },
+          "expected": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "predecessor": null,
+          "proposals": [
+            {
+              "dependencies": {},
+              "identity": "0af2690e2aa607e66b467d8b80ce9a00347514df5a8ee8ddd580e198cb12122f",
+              "name": "Other",
+              "order": [
+                "sum"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "sum"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "sum",
+                  "node": {
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "x"
+                        },
+                        {
+                          "const": 3
+                        }
+                      ]
+                    },
+                    "op": "value"
+                  },
+                  "type": "Bool"
+                }
+              ]
+            }
+          ],
+          "status": "rejected",
+          "tool_seconds": 0.001036000088788569
+        },
+        "identity": "9ac4b7c8fa67b8401e83a07e800926d4d764b7fb434c09d85c3558422574859a",
+        "kind": "admission",
+        "previous": "ffda816b9d6391bc01c7526bee7b4c0d2b5e1451f5140c37912beaef25530973",
+        "sequence": 28,
+        "utc": "2026-10-09T17:55:03.892872+00:00"
+      },
+      {
+        "data": {
+          "actual": "TYPE",
+          "control": "incompatible-step-type",
+          "diagnostic": {
+            "code": "TYPE",
+            "detail": "declared step type differs",
+            "path": "Other/sum"
+          },
+          "expected": "TYPE",
+          "passed": true,
+          "proposal": {
+            "dependencies": {},
+            "identity": "0af2690e2aa607e66b467d8b80ce9a00347514df5a8ee8ddd580e198cb12122f",
+            "name": "Other",
+            "order": [
+              "sum"
+            ],
+            "params": [
+              {
+                "name": "x",
+                "type": "Int64"
+              }
+            ],
+            "result": {
+              "ref": "sum"
+            },
+            "result_type": "Int64",
+            "revision": 1,
+            "steps": [
+              {
+                "deps": [
+                  "x"
+                ],
+                "id": "sum",
+                "node": {
+                  "expr": {
+                    "add": [
+                      {
+                        "ref": "x"
+                      },
+                      {
+                        "const": 3
+                      }
+                    ]
+                  },
+                  "op": "value"
+                },
+                "type": "Bool"
+              }
+            ]
+          },
+          "tool_seconds": 0.008126000058837235
+        },
+        "identity": "43848c2651c15c20cc4407a01bb1396b0562d70eb62e35195dbddbce84ac246b",
+        "kind": "validation_control",
+        "previous": "9ac4b7c8fa67b8401e83a07e800926d4d764b7fb434c09d85c3558422574859a",
+        "sequence": 29,
+        "utc": "2026-10-09T17:55:03.901638+00:00"
+      },
+      {
+        "data": {
+          "diagnostic": {
+            "code": "UNSUPPORTED",
+            "detail": "host_callback",
+            "path": "Other/sum"
+          },
+          "expected": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "predecessor": null,
+          "proposals": [
+            {
+              "dependencies": {},
+              "identity": "43709754a14826de25e6c1c1e4a35d436df4b83bea8a594408642550304af1a8",
+              "name": "Other",
+              "order": [
+                "sum"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "sum"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "sum",
+                  "node": {
+                    "op": "host_callback"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            }
+          ],
+          "status": "rejected",
+          "tool_seconds": 0.0010327999480068684
+        },
+        "identity": "29a716a0705f421b2af32a3a7dc6d658246bfc49cbd62489e7a210e65f9ae307",
+        "kind": "admission",
+        "previous": "43848c2651c15c20cc4407a01bb1396b0562d70eb62e35195dbddbce84ac246b",
+        "sequence": 30,
+        "utc": "2026-10-09T17:55:03.910373+00:00"
+      },
+      {
+        "data": {
+          "actual": "UNSUPPORTED",
+          "control": "new-meaning",
+          "diagnostic": {
+            "code": "UNSUPPORTED",
+            "detail": "host_callback",
+            "path": "Other/sum"
+          },
+          "expected": "UNSUPPORTED",
+          "passed": true,
+          "proposal": {
+            "dependencies": {},
+            "identity": "43709754a14826de25e6c1c1e4a35d436df4b83bea8a594408642550304af1a8",
+            "name": "Other",
+            "order": [
+              "sum"
+            ],
+            "params": [
+              {
+                "name": "x",
+                "type": "Int64"
+              }
+            ],
+            "result": {
+              "ref": "sum"
+            },
+            "result_type": "Int64",
+            "revision": 1,
+            "steps": [
+              {
+                "deps": [
+                  "x"
+                ],
+                "id": "sum",
+                "node": {
+                  "op": "host_callback"
+                },
+                "type": "Int64"
+              }
+            ]
+          },
+          "tool_seconds": 0.008901099907234311
+        },
+        "identity": "50f2bdf8f681ae5124ee031bbf74bad8569543f0bf533d3b270fbfb9e3d7fddd",
+        "kind": "validation_control",
+        "previous": "29a716a0705f421b2af32a3a7dc6d658246bfc49cbd62489e7a210e65f9ae307",
+        "sequence": 31,
+        "utc": "2026-10-09T17:55:03.919215+00:00"
+      },
+      {
+        "data": {
+          "diagnostic": {
+            "code": "EXPANSION_LIMIT",
+            "detail": "expanded node budget exhausted",
+            "path": "program/c4cfc747e63f9f47cb6263bd1bc00b6db53166c77fb86f087f20359d6dea35fa/call/3a70e8ce319e0c1585f9bf88cef9c0a00d24fccbbfbd836b04dd063cf55d5e59"
+          },
+          "expected": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "predecessor": null,
+          "proposals": [
+            {
+              "dependencies": {},
+              "identity": "3a70e8ce319e0c1585f9bf88cef9c0a00d24fccbbfbd836b04dd063cf55d5e59",
+              "name": "Other",
+              "order": [
+                "sum"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "sum"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "sum",
+                  "node": {
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "x"
+                        },
+                        {
+                          "const": 3
+                        }
+                      ]
+                    },
+                    "op": "value"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            }
+          ],
+          "status": "rejected",
+          "tool_seconds": 0.0010863000061362982
+        },
+        "identity": "2762ce8d18eac2ccb59dd2a935d92ce66c6480f519301916d7800917986e83a5",
+        "kind": "admission",
+        "previous": "50f2bdf8f681ae5124ee031bbf74bad8569543f0bf533d3b270fbfb9e3d7fddd",
+        "sequence": 32,
+        "utc": "2026-10-09T17:55:03.927998+00:00"
+      },
+      {
+        "data": {
+          "actual": "EXPANSION_LIMIT",
+          "control": "expansion-exhaustion",
+          "diagnostic": {
+            "code": "EXPANSION_LIMIT",
+            "detail": "expanded node budget exhausted",
+            "path": "program/c4cfc747e63f9f47cb6263bd1bc00b6db53166c77fb86f087f20359d6dea35fa/call/3a70e8ce319e0c1585f9bf88cef9c0a00d24fccbbfbd836b04dd063cf55d5e59"
+          },
+          "expected": "EXPANSION_LIMIT",
+          "passed": true,
+          "proposal": {
+            "dependencies": {},
+            "identity": "3a70e8ce319e0c1585f9bf88cef9c0a00d24fccbbfbd836b04dd063cf55d5e59",
+            "name": "Other",
+            "order": [
+              "sum"
+            ],
+            "params": [
+              {
+                "name": "x",
+                "type": "Int64"
+              }
+            ],
+            "result": {
+              "ref": "sum"
+            },
+            "result_type": "Int64",
+            "revision": 1,
+            "steps": [
+              {
+                "deps": [
+                  "x"
+                ],
+                "id": "sum",
+                "node": {
+                  "expr": {
+                    "add": [
+                      {
+                        "ref": "x"
+                      },
+                      {
+                        "const": 3
+                      }
+                    ]
+                  },
+                  "op": "value"
+                },
+                "type": "Int64"
+              }
+            ]
+          },
+          "tool_seconds": 0.008838700014166534
+        },
+        "identity": "70ff7fa95949088439c0696f3487ce3372cf4301074b290178993771ea8aa701",
+        "kind": "validation_control",
+        "previous": "2762ce8d18eac2ccb59dd2a935d92ce66c6480f519301916d7800917986e83a5",
+        "sequence": 33,
+        "utc": "2026-10-09T17:55:03.936518+00:00"
+      },
+      {
+        "data": {
+          "actual": "UNAUTHORIZED_MUTATION",
+          "control": "unauthorized-mutation",
+          "diagnostic": {
+            "code": "UNAUTHORIZED_MUTATION",
+            "detail": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+            "path": "$/lifecycle"
+          },
+          "expected": "UNAUTHORIZED_MUTATION",
+          "passed": true,
+          "proposal": null,
+          "tool_seconds": 0.0009806000161916018
+        },
+        "identity": "ef491481b17df623730a3a3ba54928deb7812057b430da833b83a057271cf814",
+        "kind": "validation_control",
+        "previous": "70ff7fa95949088439c0696f3487ce3372cf4301074b290178993771ea8aa701",
+        "sequence": 34,
+        "utc": "2026-10-09T17:55:03.946035+00:00"
+      },
+      {
+        "data": {
+          "actual": "STALE_READ",
+          "control": "stale-registry-read",
+          "diagnostic": {
+            "code": "STALE_READ",
+            "detail": "retrieval token",
+            "path": "$/lifecycle"
+          },
+          "expected": "STALE_READ",
+          "passed": true,
+          "proposal": null,
+          "tool_seconds": 0.0008416000055149198
+        },
+        "identity": "29b6880600cfd79f0646f703f0bc07f9cb1bad751e4e97df8339f4ca54b0cf00",
+        "kind": "validation_control",
+        "previous": "ef491481b17df623730a3a3ba54928deb7812057b430da833b83a057271cf814",
+        "sequence": 35,
+        "utc": "2026-10-09T17:55:03.955898+00:00"
+      },
+      {
+        "data": {
+          "diagnostic": {
+            "code": "STALE_READ",
+            "detail": "admission input token",
+            "path": "$/lifecycle"
+          },
+          "expected": "9e60566b8c13b247af5da9ecc42d473729e6dd97564491452634244ef977865f",
+          "predecessor": null,
+          "proposals": [
+            {
+              "dependencies": {},
+              "identity": "3a70e8ce319e0c1585f9bf88cef9c0a00d24fccbbfbd836b04dd063cf55d5e59",
+              "name": "Other",
+              "order": [
+                "sum"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "sum"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "sum",
+                  "node": {
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "x"
+                        },
+                        {
+                          "const": 3
+                        }
+                      ]
+                    },
+                    "op": "value"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            }
+          ],
+          "status": "rejected",
+          "tool_seconds": 0.0008016000501811504
+        },
+        "identity": "5fcdfac0f791971e3dc55eb60911c6ab26598d3b2cfc4635b88ca7e09187acad",
+        "kind": "admission",
+        "previous": "29b6880600cfd79f0646f703f0bc07f9cb1bad751e4e97df8339f4ca54b0cf00",
+        "sequence": 36,
+        "utc": "2026-10-09T17:55:03.965192+00:00"
+      },
+      {
+        "data": {
+          "actual": "STALE_READ",
+          "control": "stale-registry-write",
+          "diagnostic": {
+            "code": "STALE_READ",
+            "detail": "admission input token",
+            "path": "$/lifecycle"
+          },
+          "expected": "STALE_READ",
+          "passed": true,
+          "proposal": null,
+          "tool_seconds": 0.009159900015220046
+        },
+        "identity": "cbe415a06b130c6c5de9549635dada383321d63c1eccdfe815a4518f9ed1a376",
+        "kind": "validation_control",
+        "previous": "5fcdfac0f791971e3dc55eb60911c6ab26598d3b2cfc4635b88ca7e09187acad",
+        "sequence": 37,
+        "utc": "2026-10-09T17:55:03.973437+00:00"
+      },
+      {
+        "data": {
+          "diagnostic": {
+            "code": "AMBIGUOUS_REFERENCE",
+            "detail": "Increment",
+            "path": "$/lifecycle"
+          },
+          "expected": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "predecessor": null,
+          "proposals": [
+            {
+              "dependencies": {
+                "CallerA": "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485",
+                "CallerB": "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122"
+              },
+              "identity": "6b3363dbc3df6df8638426cdb94c79d7ad96445d5012a7c0c110045f207c2cea",
+              "name": "Mixed",
+              "order": [
+                "a",
+                "b"
+              ],
+              "params": [
+                {
+                  "name": "x",
+                  "type": "Int64"
+                }
+              ],
+              "result": {
+                "ref": "a"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "a",
+                  "node": {
+                    "args": {
+                      "x": {
+                        "ref": "x"
+                      }
+                    },
+                    "identity": "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485",
+                    "op": "compose",
+                    "symbol": "CallerA"
+                  },
+                  "type": "Int64"
+                },
+                {
+                  "deps": [
+                    "x"
+                  ],
+                  "id": "b",
+                  "node": {
+                    "args": {
+                      "x": {
+                        "ref": "x"
+                      }
+                    },
+                    "identity": "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122",
+                    "op": "compose",
+                    "symbol": "CallerB"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            }
+          ],
+          "status": "rejected",
+          "tool_seconds": 0.0009298999793827534
+        },
+        "identity": "2c58f444ef97e2f1d3b51cb8c4a882d7bc15e207d2d1163eac6f7618b3d4abb8",
+        "kind": "admission",
+        "previous": "cbe415a06b130c6c5de9549635dada383321d63c1eccdfe815a4518f9ed1a376",
+        "sequence": 38,
+        "utc": "2026-10-09T17:55:03.983911+00:00"
+      },
+      {
+        "data": {
+          "actual": "AMBIGUOUS_REFERENCE",
+          "control": "mixed-version-closure",
+          "diagnostic": {
+            "code": "AMBIGUOUS_REFERENCE",
+            "detail": "Increment",
+            "path": "$/lifecycle"
+          },
+          "expected": "AMBIGUOUS_REFERENCE",
+          "passed": true,
+          "proposal": {
+            "dependencies": {
+              "CallerA": "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485",
+              "CallerB": "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122"
+            },
+            "identity": "6b3363dbc3df6df8638426cdb94c79d7ad96445d5012a7c0c110045f207c2cea",
+            "name": "Mixed",
+            "order": [
+              "a",
+              "b"
+            ],
+            "params": [
+              {
+                "name": "x",
+                "type": "Int64"
+              }
+            ],
+            "result": {
+              "ref": "a"
+            },
+            "result_type": "Int64",
+            "revision": 1,
+            "steps": [
+              {
+                "deps": [
+                  "x"
+                ],
+                "id": "a",
+                "node": {
+                  "args": {
+                    "x": {
+                      "ref": "x"
+                    }
+                  },
+                  "identity": "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485",
+                  "op": "compose",
+                  "symbol": "CallerA"
+                },
+                "type": "Int64"
+              },
+              {
+                "deps": [
+                  "x"
+                ],
+                "id": "b",
+                "node": {
+                  "args": {
+                    "x": {
+                      "ref": "x"
+                    }
+                  },
+                  "identity": "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122",
+                  "op": "compose",
+                  "symbol": "CallerB"
+                },
+                "type": "Int64"
+              }
+            ]
+          },
+          "tool_seconds": 0.010440199985168874
+        },
+        "identity": "c5da68734203bf424c1333186666d8e4304c0b251c6ccd5da06182b0cbed8f4d",
+        "kind": "validation_control",
+        "previous": "2c58f444ef97e2f1d3b51cb8c4a882d7bc15e207d2d1163eac6f7618b3d4abb8",
+        "sequence": 39,
+        "utc": "2026-10-09T17:55:03.992279+00:00"
+      },
+      {
+        "data": {
+          "diagnostic": {
+            "code": "CYCLE",
+            "detail": "a",
+            "path": "LocalCycle/steps"
+          },
+          "expected": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "predecessor": null,
+          "proposals": [
+            {
+              "dependencies": {},
+              "identity": "9b11d76b2ffefcc7af2952b191e84d10460116fa0fce1336d20d250b57d8792c",
+              "name": "LocalCycle",
+              "order": [
+                "a",
+                "b"
+              ],
+              "params": [],
+              "result": {
+                "ref": "a"
+              },
+              "result_type": "Int64",
+              "revision": 1,
+              "steps": [
+                {
+                  "deps": [
+                    "b"
+                  ],
+                  "id": "a",
+                  "node": {
+                    "expr": {
+                      "ref": "b"
+                    },
+                    "op": "value"
+                  },
+                  "type": "Int64"
+                },
+                {
+                  "deps": [
+                    "a"
+                  ],
+                  "id": "b",
+                  "node": {
+                    "expr": {
+                      "ref": "a"
+                    },
+                    "op": "value"
+                  },
+                  "type": "Int64"
+                }
+              ]
+            }
+          ],
+          "status": "rejected",
+          "tool_seconds": 0.0010094000026583672
+        },
+        "identity": "728a9cf20f0a07c778cb740c9bebc365fadf9036da26db0c68e021cf52c59bba",
+        "kind": "admission",
+        "previous": "c5da68734203bf424c1333186666d8e4304c0b251c6ccd5da06182b0cbed8f4d",
+        "sequence": 40,
+        "utc": "2026-10-09T17:55:04.003186+00:00"
+      },
+      {
+        "data": {
+          "actual": "CYCLE",
+          "control": "local-value-cycle",
+          "diagnostic": {
+            "code": "CYCLE",
+            "detail": "a",
+            "path": "LocalCycle/steps"
+          },
+          "expected": "CYCLE",
+          "passed": true,
+          "proposal": {
+            "dependencies": {},
+            "identity": "9b11d76b2ffefcc7af2952b191e84d10460116fa0fce1336d20d250b57d8792c",
+            "name": "LocalCycle",
+            "order": [
+              "a",
+              "b"
+            ],
+            "params": [],
+            "result": {
+              "ref": "a"
+            },
+            "result_type": "Int64",
+            "revision": 1,
+            "steps": [
+              {
+                "deps": [
+                  "b"
+                ],
+                "id": "a",
+                "node": {
+                  "expr": {
+                    "ref": "b"
+                  },
+                  "op": "value"
+                },
+                "type": "Int64"
+              },
+              {
+                "deps": [
+                  "a"
+                ],
+                "id": "b",
+                "node": {
+                  "expr": {
+                    "ref": "a"
+                  },
+                  "op": "value"
+                },
+                "type": "Int64"
+              }
+            ]
+          },
+          "tool_seconds": 0.011006100103259087
+        },
+        "identity": "d085cfbd860f2f5cb6e827e78814e9cad1071b27b020630476b434fe4fb85685",
+        "kind": "validation_control",
+        "previous": "728a9cf20f0a07c778cb740c9bebc365fadf9036da26db0c68e021cf52c59bba",
+        "sequence": 41,
+        "utc": "2026-10-09T17:55:04.012571+00:00"
+      },
+      {
+        "data": {
+          "bytes": 850,
+          "identities": [
+            "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+            "d3f220ba6a3a5fa1cbd06a517b6ed093d0e60763afdbeb2e77930412e887f647"
+          ],
+          "name": null,
+          "pin": "d3f220ba6a3a5fa1cbd06a517b6ed093d0e60763afdbeb2e77930412e887f647",
+          "signature": null,
+          "token": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "tool_seconds": 0.0009324999991804361
+        },
+        "identity": "2a0205fa43b3f07e069e47d1af6a5fe58f20182cd3a00c962715a9ceed14ca6e",
+        "kind": "retrieval",
+        "previous": "d085cfbd860f2f5cb6e827e78814e9cad1071b27b020630476b434fe4fb85685",
+        "sequence": 42,
+        "utc": "2026-10-09T17:55:04.022459+00:00"
+      },
+      {
+        "data": {
+          "bytes": 850,
+          "identities": [
+            "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485",
+            "e00df78f700c37c75dd50081884877e66bfe0bc3543345856e25bd9278dce14a"
+          ],
+          "name": null,
+          "pin": "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485",
+          "signature": null,
+          "token": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "tool_seconds": 0.0008274000138044357
+        },
+        "identity": "7c52e9655144f5123add0262343dddfaf1c26f755a76b252663b35c9ef06a77c",
+        "kind": "retrieval",
+        "previous": "2a0205fa43b3f07e069e47d1af6a5fe58f20182cd3a00c962715a9ceed14ca6e",
+        "sequence": 43,
+        "utc": "2026-10-09T17:55:04.033361+00:00"
+      },
+      {
+        "data": {
+          "bytes": 850,
+          "identities": [
+            "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+            "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122"
+          ],
+          "name": null,
+          "pin": "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122",
+          "signature": null,
+          "token": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+          "tool_seconds": 0.000876000034622848
+        },
+        "identity": "99c65884b0c7bcb9e3107313566a6a19715290dd121995e25b0f7a27fa268e18",
+        "kind": "retrieval",
+        "previous": "7c52e9655144f5123add0262343dddfaf1c26f755a76b252663b35c9ef06a77c",
+        "sequence": 44,
+        "utc": "2026-10-09T17:55:04.044595+00:00"
+      },
+      {
+        "data": {
+          "stage": "registry",
+          "wall_seconds": 0.35006830003112555
+        },
+        "identity": "778a027a8c1e8112ac08a4c52d5f63727daa5e594c8af6698735ede327c4d012",
+        "kind": "complete",
+        "previous": "99c65884b0c7bcb9e3107313566a6a19715290dd121995e25b0f7a27fa268e18",
+        "sequence": 45,
+        "utc": "2026-10-09T17:55:04.056701+00:00"
+      },
+      {
+        "data": {
+          "inputs": {
+            "modified": "cd8497a0cc3601c743e000fe7a4fa66020a7f7a89b543a5ba37c16127dca83d7",
+            "original": "e28047c8a5f17e9656375034ef64a21a111bd8ba5f0debcc144f00887a53c303",
+            "source_sha256": "04f46d6d655c7fb5cf20864731e0e9d5839cf891f2d3bb48a2c2a0cdb719488f"
+          },
+          "stage": "stateful"
+        },
+        "identity": "1958d5aa4ecbc3e9a4432dffbca97ec9c1390e370ee8fbdb04ec0d0423733d5e",
+        "kind": "start",
+        "previous": "778a027a8c1e8112ac08a4c52d5f63727daa5e594c8af6698735ede327c4d012",
+        "sequence": 46,
+        "utc": "2026-10-09T17:55:04.068529+00:00"
+      },
+      {
+        "data": {
+          "deterministic": true,
+          "input": "e28047c8a5f17e9656375034ef64a21a111bd8ba5f0debcc144f00887a53c303",
+          "ir": "46ccf8d6a032e2147326ad7b366c413a799665b887b76ed34e5982bac7d59fa4",
+          "source_sha256": "34b5d746603f4f40ebc3bc367cbf0b086dbddc0521cea8330bfac804ebeb922c",
+          "stage": "stateful",
+          "tool_seconds": 0.07070689997635782
+        },
+        "identity": "093b5bf7bb70effac2bd435acaa6d7fb580af8d6c8fa714d57ca5d21b339a8d0",
+        "kind": "generation",
+        "previous": "1958d5aa4ecbc3e9a4432dffbca97ec9c1390e370ee8fbdb04ec0d0423733d5e",
+        "sequence": 47,
+        "utc": "2026-10-09T17:55:04.149472+00:00"
+      },
+      {
+        "data": {
+          "after_sha256": "b0f669270c7c1d559b0d9e54d0964a8f2f90199787b4e926d3b45f3096db3756",
+          "application_sha256": "34b5d746603f4f40ebc3bc367cbf0b086dbddc0521cea8330bfac804ebeb922c",
+          "before_sha256": "b0f669270c7c1d559b0d9e54d0964a8f2f90199787b4e926d3b45f3096db3756",
+          "observation": {
+            "error": "migration_required"
+          },
+          "rejection_bytes_unchanged": true,
+          "request": {
+            "args": {
+              "id": "00000000-0000-4000-8000-000000000001"
+            },
+            "op": "ignite",
+            "providers": {}
+          },
+          "returncode": 0,
+          "stage": "original-0-cold-open-ordinary-ignite-None",
+          "stderr": "",
+          "tool_seconds": 0.07320999994408339
+        },
+        "identity": "767c26692b7acc34e5aad81b685e64a9127bf2c72c8d78e9876afad0cf23d9c4",
+        "kind": "functional_observation",
+        "previous": "093b5bf7bb70effac2bd435acaa6d7fb580af8d6c8fa714d57ca5d21b339a8d0",
+        "sequence": 48,
+        "utc": "2026-10-09T17:55:04.239350+00:00"
+      },
+      {
+        "data": {
+          "diagnostic": "{'request': {'op': 'ignite', 'args': {'id': '00000000-0000-4000-8000-000000000001'}, 'providers': {}}, 'returncode': 0, 'stderr': '', 'observation': {'error': 'migration_required'}, 'before_sha256': 'b0f669270c7c1d559b0d9e54d0964a8f2f90199787b4e926d3b45f3096db3756', 'after_sha256': 'b0f669270c7c1d559b0d9e54d0964a8f2f90199787b4e926d3b45f3096db3756', 'rejection_bytes_unchanged': True, 'tool_seconds': 0.07320999994408339, 'case': 'original-0-cold-open-ordinary-ignite-None', 'expected': {'ok': {'id': '00000000-0000-4000-8000-000000000001', 'created_at': '2026-01-01T00:00:00Z', 'label': 'Control', 'phase': 'firing', 'vent': 'open', 'load': 'ordinary'}}, 'passed': False}",
+          "exception": "AssertionError",
+          "stage": "stateful",
+          "wall_seconds": 0.1709936000406742
+        },
+        "identity": "9c2bf0e081d6c15e1da86a36242827562d33453b2df43c08246a58fbd0e2d71d",
+        "kind": "error",
+        "previous": "767c26692b7acc34e5aad81b685e64a9127bf2c72c8d78e9876afad0cf23d9c4",
+        "sequence": 49,
+        "utc": "2026-10-09T17:55:04.251912+00:00"
+      }
+    ],
+    "incomplete": [
+      "stateful"
+    ],
+    "pending": []
+  },
+  "traceback": "Traceback (most recent call last):\n  File \"D:\\Dev\\axiom\\experiments\\lifecycle_r6_32\\qualify.py\", line 367, in main\n    functional, impact_result = stateful_qualification(attempt, journal)\n                                ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"D:\\Dev\\axiom\\experiments\\lifecycle_r6_32\\qualify.py\", line 211, in stateful_qualification\n    assert row['passed'], row\n           ~~~^^^^^^^^^^\nAssertionError: {'request': {'op': 'ignite', 'args': {'id': '00000000-0000-4000-8000-000000000001'}, 'providers': {}}, 'returncode': 0, 'stderr': '', 'observation': {'error': 'migration_required'}, 'before_sha256': 'b0f669270c7c1d559b0d9e54d0964a8f2f90199787b4e926d3b45f3096db3756', 'after_sha256': 'b0f669270c7c1d559b0d9e54d0964a8f2f90199787b4e926d3b45f3096db3756', 'rejection_bytes_unchanged': True, 'tool_seconds': 0.07320999994408339, 'case': 'original-0-cold-open-ordinary-ignite-None', 'expected': {'ok': {'id': '00000000-0000-4000-8000-000000000001', 'created_at': '2026-01-01T00:00:00Z', 'label': 'Control', 'phase': 'firing', 'vent': 'open', 'load': 'ordinary'}}, 'passed': False}\n"
+}

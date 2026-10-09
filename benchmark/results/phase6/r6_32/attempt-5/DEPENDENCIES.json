@@ -1,0 +1,348 @@
+{
+  "adapter_logic": "only declarative guard/invariant copy edits",
+  "after": {
+    "consumers": {
+      "invariant:firing_vent": "696fdc5a6fcd658f5365fd59e754a4ca5e5d5b71f5bad138fb08fcc37c33ece8",
+      "transition:ignite": "696fdc5a6fcd658f5365fd59e754a4ca5e5d5b71f5bad138fb08fcc37c33ece8",
+      "transition:set_gate": "696fdc5a6fcd658f5365fd59e754a4ca5e5d5b71f5bad138fb08fcc37c33ece8"
+    },
+    "identity": "696fdc5a6fcd658f5365fd59e754a4ca5e5d5b71f5bad138fb08fcc37c33ece8",
+    "policy": {
+      "ignite": {
+        "children": [
+          {
+            "left": {
+              "domain": [
+                "open",
+                "closed"
+              ],
+              "kind": "field",
+              "type": "enum",
+              "value": "vent"
+            },
+            "op": "eq",
+            "right": {
+              "domain": [
+                "open",
+                "closed"
+              ],
+              "kind": "literal",
+              "type": "enum",
+              "value": "open"
+            }
+          },
+          {
+            "left": {
+              "domain": [
+                "ordinary",
+                "emergency"
+              ],
+              "kind": "field",
+              "type": "enum",
+              "value": "load"
+            },
+            "op": "eq",
+            "right": {
+              "domain": [
+                "ordinary",
+                "emergency"
+              ],
+              "kind": "literal",
+              "type": "enum",
+              "value": "emergency"
+            }
+          }
+        ],
+        "op": "or"
+      },
+      "invariant": {
+        "children": [
+          {
+            "child": {
+              "left": {
+                "domain": [
+                  "cold",
+                  "firing"
+                ],
+                "kind": "field",
+                "type": "enum",
+                "value": "phase"
+              },
+              "op": "eq",
+              "right": {
+                "domain": [
+                  "cold",
+                  "firing"
+                ],
+                "kind": "literal",
+                "type": "enum",
+                "value": "firing"
+              }
+            },
+            "op": "not"
+          },
+          {
+            "left": {
+              "domain": [
+                "open",
+                "closed"
+              ],
+              "kind": "field",
+              "type": "enum",
+              "value": "vent"
+            },
+            "op": "eq",
+            "right": {
+              "domain": [
+                "open",
+                "closed"
+              ],
+              "kind": "literal",
+              "type": "enum",
+              "value": "open"
+            }
+          },
+          {
+            "left": {
+              "domain": [
+                "ordinary",
+                "emergency"
+              ],
+              "kind": "field",
+              "type": "enum",
+              "value": "load"
+            },
+            "op": "eq",
+            "right": {
+              "domain": [
+                "ordinary",
+                "emergency"
+              ],
+              "kind": "literal",
+              "type": "enum",
+              "value": "emergency"
+            }
+          }
+        ],
+        "op": "or"
+      },
+      "set_gate": {
+        "children": [
+          {
+            "child": {
+              "children": [
+                {
+                  "left": {
+                    "domain": [
+                      "cold",
+                      "firing"
+                    ],
+                    "kind": "field",
+                    "type": "enum",
+                    "value": "phase"
+                  },
+                  "op": "eq",
+                  "right": {
+                    "domain": [
+                      "cold",
+                      "firing"
+                    ],
+                    "kind": "literal",
+                    "type": "enum",
+                    "value": "firing"
+                  }
+                },
+                {
+                  "left": {
+                    "domain": [
+                      "open",
+                      "closed"
+                    ],
+                    "kind": "parameter",
+                    "type": "enum",
+                    "value": "value"
+                  },
+                  "op": "eq",
+                  "right": {
+                    "domain": [
+                      "open",
+                      "closed"
+                    ],
+                    "kind": "literal",
+                    "type": "enum",
+                    "value": "closed"
+                  }
+                }
+              ],
+              "op": "and"
+            },
+            "op": "not"
+          },
+          {
+            "left": {
+              "domain": [
+                "ordinary",
+                "emergency"
+              ],
+              "kind": "field",
+              "type": "enum",
+              "value": "load"
+            },
+            "op": "eq",
+            "right": {
+              "domain": [
+                "ordinary",
+                "emergency"
+              ],
+              "kind": "literal",
+              "type": "enum",
+              "value": "emergency"
+            }
+          }
+        ],
+        "op": "or"
+      }
+    }
+  },
+  "before": {
+    "consumers": {
+      "invariant:firing_vent": "2680a7507a339b3597ed3450d181c419c45c28291d46821d2f23d95f582fc4cc",
+      "transition:ignite": "2680a7507a339b3597ed3450d181c419c45c28291d46821d2f23d95f582fc4cc",
+      "transition:set_gate": "2680a7507a339b3597ed3450d181c419c45c28291d46821d2f23d95f582fc4cc"
+    },
+    "identity": "2680a7507a339b3597ed3450d181c419c45c28291d46821d2f23d95f582fc4cc",
+    "policy": {
+      "ignite": {
+        "left": {
+          "domain": [
+            "open",
+            "closed"
+          ],
+          "kind": "field",
+          "type": "enum",
+          "value": "vent"
+        },
+        "op": "eq",
+        "right": {
+          "domain": [
+            "open",
+            "closed"
+          ],
+          "kind": "literal",
+          "type": "enum",
+          "value": "open"
+        }
+      },
+      "invariant": {
+        "children": [
+          {
+            "child": {
+              "left": {
+                "domain": [
+                  "cold",
+                  "firing"
+                ],
+                "kind": "field",
+                "type": "enum",
+                "value": "phase"
+              },
+              "op": "eq",
+              "right": {
+                "domain": [
+                  "cold",
+                  "firing"
+                ],
+                "kind": "literal",
+                "type": "enum",
+                "value": "firing"
+              }
+            },
+            "op": "not"
+          },
+          {
+            "left": {
+              "domain": [
+                "open",
+                "closed"
+              ],
+              "kind": "field",
+              "type": "enum",
+              "value": "vent"
+            },
+            "op": "eq",
+            "right": {
+              "domain": [
+                "open",
+                "closed"
+              ],
+              "kind": "literal",
+              "type": "enum",
+              "value": "open"
+            }
+          }
+        ],
+        "op": "or"
+      },
+      "set_gate": {
+        "child": {
+          "children": [
+            {
+              "left": {
+                "domain": [
+                  "cold",
+                  "firing"
+                ],
+                "kind": "field",
+                "type": "enum",
+                "value": "phase"
+              },
+              "op": "eq",
+              "right": {
+                "domain": [
+                  "cold",
+                  "firing"
+                ],
+                "kind": "literal",
+                "type": "enum",
+                "value": "firing"
+              }
+            },
+            {
+              "left": {
+                "domain": [
+                  "open",
+                  "closed"
+                ],
+                "kind": "parameter",
+                "type": "enum",
+                "value": "value"
+              },
+              "op": "eq",
+              "right": {
+                "domain": [
+                  "open",
+                  "closed"
+                ],
+                "kind": "literal",
+                "type": "enum",
+                "value": "closed"
+              }
+            }
+          ],
+          "op": "and"
+        },
+        "op": "not"
+      }
+    }
+  },
+  "explicit_selected_consumers": [
+    "invariant:firing_vent",
+    "transition:ignite",
+    "transition:set_gate"
+  ],
+  "supersedes": "2680a7507a339b3597ed3450d181c419c45c28291d46821d2f23d95f582fc4cc",
+  "unchanged_operations": [
+    "create",
+    "list"
+  ]
+}

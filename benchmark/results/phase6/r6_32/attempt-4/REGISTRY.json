@@ -1,0 +1,1184 @@
+{
+  "accepted_definitions": 5,
+  "controls": [
+    {
+      "actual": "PARTIAL_MIGRATION",
+      "control": "partial-caller-migration",
+      "diagnostic": {
+        "code": "PARTIAL_MIGRATION",
+        "detail": "explicit update or retain for every direct caller required",
+        "path": "$/lifecycle"
+      },
+      "expected": "PARTIAL_MIGRATION",
+      "passed": true,
+      "proposal": null,
+      "tool_seconds": 0.0013618000084534287
+    },
+    {
+      "actual": "INVALID_MIGRATION",
+      "control": "invalid-caller-successor",
+      "diagnostic": {
+        "code": "INVALID_MIGRATION",
+        "detail": "caller successor edge required",
+        "path": "$/lifecycle"
+      },
+      "expected": "INVALID_MIGRATION",
+      "passed": true,
+      "proposal": null,
+      "tool_seconds": 0.0017034000484272838
+    },
+    {
+      "actual": "AMBIGUOUS_REFERENCE",
+      "control": "ambiguous-unpinned-reference",
+      "diagnostic": {
+        "code": "AMBIGUOUS_REFERENCE",
+        "detail": "Increment",
+        "path": "$/lifecycle"
+      },
+      "expected": "AMBIGUOUS_REFERENCE",
+      "passed": true,
+      "proposal": null,
+      "tool_seconds": 0.006337399943731725
+    },
+    {
+      "actual": "DUPLICATE_IDENTITY",
+      "control": "duplicate-identity",
+      "diagnostic": {
+        "code": "DUPLICATE_IDENTITY",
+        "detail": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+        "path": "$/lifecycle"
+      },
+      "expected": "DUPLICATE_IDENTITY",
+      "passed": true,
+      "proposal": {
+        "dependencies": {},
+        "identity": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+        "name": "Increment",
+        "order": [
+          "sum"
+        ],
+        "params": [
+          {
+            "name": "x",
+            "type": "Int64"
+          }
+        ],
+        "result": {
+          "ref": "sum"
+        },
+        "result_type": "Int64",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "x"
+            ],
+            "id": "sum",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "x"
+                  },
+                  {
+                    "const": 1
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ]
+      },
+      "tool_seconds": 0.00818290002644062
+    },
+    {
+      "actual": "IDENTITY",
+      "control": "identity-tampering",
+      "diagnostic": {
+        "code": "IDENTITY",
+        "detail": "content mismatch",
+        "path": "$/lifecycle"
+      },
+      "expected": "IDENTITY",
+      "passed": true,
+      "proposal": {
+        "dependencies": {},
+        "identity": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+        "name": "Increment",
+        "order": [
+          "sum"
+        ],
+        "params": [
+          {
+            "name": "x",
+            "type": "Int64"
+          }
+        ],
+        "result": {
+          "const": 99
+        },
+        "result_type": "Int64",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "x"
+            ],
+            "id": "sum",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "x"
+                  },
+                  {
+                    "const": 1
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ]
+      },
+      "tool_seconds": 0.006254500010982156
+    },
+    {
+      "actual": "MISSING_DEPENDENCY",
+      "control": "missing-dependency",
+      "diagnostic": {
+        "code": "MISSING_DEPENDENCY",
+        "detail": "958aad9730d14d737b6a354a292db1267e3791cfe24d40164e33fa98d3a0c3ec",
+        "path": "$/lifecycle"
+      },
+      "expected": "MISSING_DEPENDENCY",
+      "passed": true,
+      "proposal": {
+        "dependencies": {
+          "Absent": "958aad9730d14d737b6a354a292db1267e3791cfe24d40164e33fa98d3a0c3ec"
+        },
+        "identity": "ac460776e2547c6f30ba55cb9549add3c893a27f4e3ca0c4bb666ce0dac60008",
+        "name": "MissingCaller",
+        "order": [
+          "use"
+        ],
+        "params": [
+          {
+            "name": "x",
+            "type": "Int64"
+          }
+        ],
+        "result": {
+          "ref": "use"
+        },
+        "result_type": "Int64",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "x"
+            ],
+            "id": "use",
+            "node": {
+              "args": {
+                "x": {
+                  "ref": "x"
+                }
+              },
+              "identity": "958aad9730d14d737b6a354a292db1267e3791cfe24d40164e33fa98d3a0c3ec",
+              "op": "compose",
+              "symbol": "Absent"
+            },
+            "type": "Int64"
+          }
+        ]
+      },
+      "tool_seconds": 0.007162300054915249
+    },
+    {
+      "actual": "CYCLE",
+      "control": "dependency-cycle",
+      "diagnostic": {
+        "code": "CYCLE",
+        "detail": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "path": "$/lifecycle"
+      },
+      "expected": "CYCLE",
+      "passed": true,
+      "proposal": [
+        {
+          "dependencies": {
+            "CycleB": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "identity": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "name": "CycleA",
+          "order": [
+            "use"
+          ],
+          "params": [
+            {
+              "name": "x",
+              "type": "Int64"
+            }
+          ],
+          "result": {
+            "ref": "use"
+          },
+          "result_type": "Int64",
+          "revision": 1,
+          "steps": [
+            {
+              "deps": [
+                "x"
+              ],
+              "id": "use",
+              "node": {
+                "args": {
+                  "x": {
+                    "ref": "x"
+                  }
+                },
+                "identity": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "op": "compose",
+                "symbol": "CycleB"
+              },
+              "type": "Int64"
+            }
+          ]
+        },
+        {
+          "dependencies": {
+            "CycleA": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "identity": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "name": "CycleB",
+          "order": [
+            "use"
+          ],
+          "params": [
+            {
+              "name": "x",
+              "type": "Int64"
+            }
+          ],
+          "result": {
+            "ref": "use"
+          },
+          "result_type": "Int64",
+          "revision": 1,
+          "steps": [
+            {
+              "deps": [
+                "x"
+              ],
+              "id": "use",
+              "node": {
+                "args": {
+                  "x": {
+                    "ref": "x"
+                  }
+                },
+                "identity": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "op": "compose",
+                "symbol": "CycleA"
+              },
+              "type": "Int64"
+            }
+          ]
+        }
+      ],
+      "tool_seconds": 0.0073222999926656485
+    },
+    {
+      "actual": "INVALID_SUCCESSOR",
+      "control": "invalid-successor-reference",
+      "diagnostic": {
+        "code": "INVALID_SUCCESSOR",
+        "detail": "exact admitted predecessor required",
+        "path": "$/lifecycle"
+      },
+      "expected": "INVALID_SUCCESSOR",
+      "passed": true,
+      "proposal": {
+        "dependencies": {},
+        "identity": "3a70e8ce319e0c1585f9bf88cef9c0a00d24fccbbfbd836b04dd063cf55d5e59",
+        "name": "Other",
+        "order": [
+          "sum"
+        ],
+        "params": [
+          {
+            "name": "x",
+            "type": "Int64"
+          }
+        ],
+        "result": {
+          "ref": "sum"
+        },
+        "result_type": "Int64",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "x"
+            ],
+            "id": "sum",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "x"
+                  },
+                  {
+                    "const": 3
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ]
+      },
+      "tool_seconds": 0.008190999971702695
+    },
+    {
+      "actual": "TYPE_CHANGE",
+      "control": "invalid-type-change",
+      "diagnostic": {
+        "code": "TYPE_CHANGE",
+        "detail": "successor must preserve exact name and signature",
+        "path": "$/lifecycle"
+      },
+      "expected": "TYPE_CHANGE",
+      "passed": true,
+      "proposal": {
+        "dependencies": {},
+        "identity": "fed56cc9c619b5d2751202f1d7915b8247881c8a339f0060e9a5260829a6ceaf",
+        "name": "Increment",
+        "order": [
+          "same"
+        ],
+        "params": [
+          {
+            "name": "x",
+            "type": "Bool"
+          }
+        ],
+        "result": {
+          "ref": "same"
+        },
+        "result_type": "Bool",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "x"
+            ],
+            "id": "same",
+            "node": {
+              "expr": {
+                "ref": "x"
+              },
+              "op": "value"
+            },
+            "type": "Bool"
+          }
+        ]
+      },
+      "tool_seconds": 0.008908199961297214
+    },
+    {
+      "actual": "SHAPE",
+      "control": "invalid-schema",
+      "diagnostic": {
+        "code": "SHAPE",
+        "detail": "exact object fields required: dependencies,identity,name,order,params,result,result_type,revision,steps",
+        "path": "$/proposal"
+      },
+      "expected": "SHAPE",
+      "passed": true,
+      "proposal": {
+        "dependencies": {},
+        "extra": 1,
+        "identity": "3a70e8ce319e0c1585f9bf88cef9c0a00d24fccbbfbd836b04dd063cf55d5e59",
+        "name": "Other",
+        "order": [
+          "sum"
+        ],
+        "params": [
+          {
+            "name": "x",
+            "type": "Int64"
+          }
+        ],
+        "result": {
+          "ref": "sum"
+        },
+        "result_type": "Int64",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "x"
+            ],
+            "id": "sum",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "x"
+                  },
+                  {
+                    "const": 3
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ]
+      },
+      "tool_seconds": 0.007865899940952659
+    },
+    {
+      "actual": "TYPE",
+      "control": "incompatible-step-type",
+      "diagnostic": {
+        "code": "TYPE",
+        "detail": "declared step type differs",
+        "path": "Other/sum"
+      },
+      "expected": "TYPE",
+      "passed": true,
+      "proposal": {
+        "dependencies": {},
+        "identity": "0af2690e2aa607e66b467d8b80ce9a00347514df5a8ee8ddd580e198cb12122f",
+        "name": "Other",
+        "order": [
+          "sum"
+        ],
+        "params": [
+          {
+            "name": "x",
+            "type": "Int64"
+          }
+        ],
+        "result": {
+          "ref": "sum"
+        },
+        "result_type": "Int64",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "x"
+            ],
+            "id": "sum",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "x"
+                  },
+                  {
+                    "const": 3
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Bool"
+          }
+        ]
+      },
+      "tool_seconds": 0.00835200003348291
+    },
+    {
+      "actual": "UNSUPPORTED",
+      "control": "new-meaning",
+      "diagnostic": {
+        "code": "UNSUPPORTED",
+        "detail": "host_callback",
+        "path": "Other/sum"
+      },
+      "expected": "UNSUPPORTED",
+      "passed": true,
+      "proposal": {
+        "dependencies": {},
+        "identity": "43709754a14826de25e6c1c1e4a35d436df4b83bea8a594408642550304af1a8",
+        "name": "Other",
+        "order": [
+          "sum"
+        ],
+        "params": [
+          {
+            "name": "x",
+            "type": "Int64"
+          }
+        ],
+        "result": {
+          "ref": "sum"
+        },
+        "result_type": "Int64",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "x"
+            ],
+            "id": "sum",
+            "node": {
+              "op": "host_callback"
+            },
+            "type": "Int64"
+          }
+        ]
+      },
+      "tool_seconds": 0.00950299995020032
+    },
+    {
+      "actual": "EXPANSION_LIMIT",
+      "control": "expansion-exhaustion",
+      "diagnostic": {
+        "code": "EXPANSION_LIMIT",
+        "detail": "expanded node budget exhausted",
+        "path": "program/c4cfc747e63f9f47cb6263bd1bc00b6db53166c77fb86f087f20359d6dea35fa/call/3a70e8ce319e0c1585f9bf88cef9c0a00d24fccbbfbd836b04dd063cf55d5e59"
+      },
+      "expected": "EXPANSION_LIMIT",
+      "passed": true,
+      "proposal": {
+        "dependencies": {},
+        "identity": "3a70e8ce319e0c1585f9bf88cef9c0a00d24fccbbfbd836b04dd063cf55d5e59",
+        "name": "Other",
+        "order": [
+          "sum"
+        ],
+        "params": [
+          {
+            "name": "x",
+            "type": "Int64"
+          }
+        ],
+        "result": {
+          "ref": "sum"
+        },
+        "result_type": "Int64",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "x"
+            ],
+            "id": "sum",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "x"
+                  },
+                  {
+                    "const": 3
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ]
+      },
+      "tool_seconds": 0.009365100064314902
+    },
+    {
+      "actual": "UNAUTHORIZED_MUTATION",
+      "control": "unauthorized-mutation",
+      "diagnostic": {
+        "code": "UNAUTHORIZED_MUTATION",
+        "detail": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+        "path": "$/lifecycle"
+      },
+      "expected": "UNAUTHORIZED_MUTATION",
+      "passed": true,
+      "proposal": null,
+      "tool_seconds": 0.0011647000210359693
+    },
+    {
+      "actual": "STALE_READ",
+      "control": "stale-registry-read",
+      "diagnostic": {
+        "code": "STALE_READ",
+        "detail": "retrieval token",
+        "path": "$/lifecycle"
+      },
+      "expected": "STALE_READ",
+      "passed": true,
+      "proposal": null,
+      "tool_seconds": 0.0009120999602600932
+    },
+    {
+      "actual": "STALE_READ",
+      "control": "stale-registry-write",
+      "diagnostic": {
+        "code": "STALE_READ",
+        "detail": "admission input token",
+        "path": "$/lifecycle"
+      },
+      "expected": "STALE_READ",
+      "passed": true,
+      "proposal": null,
+      "tool_seconds": 0.009554699994623661
+    },
+    {
+      "actual": "AMBIGUOUS_REFERENCE",
+      "control": "mixed-version-closure",
+      "diagnostic": {
+        "code": "AMBIGUOUS_REFERENCE",
+        "detail": "Increment",
+        "path": "$/lifecycle"
+      },
+      "expected": "AMBIGUOUS_REFERENCE",
+      "passed": true,
+      "proposal": {
+        "dependencies": {
+          "CallerA": "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485",
+          "CallerB": "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122"
+        },
+        "identity": "6b3363dbc3df6df8638426cdb94c79d7ad96445d5012a7c0c110045f207c2cea",
+        "name": "Mixed",
+        "order": [
+          "a",
+          "b"
+        ],
+        "params": [
+          {
+            "name": "x",
+            "type": "Int64"
+          }
+        ],
+        "result": {
+          "ref": "a"
+        },
+        "result_type": "Int64",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "x"
+            ],
+            "id": "a",
+            "node": {
+              "args": {
+                "x": {
+                  "ref": "x"
+                }
+              },
+              "identity": "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485",
+              "op": "compose",
+              "symbol": "CallerA"
+            },
+            "type": "Int64"
+          },
+          {
+            "deps": [
+              "x"
+            ],
+            "id": "b",
+            "node": {
+              "args": {
+                "x": {
+                  "ref": "x"
+                }
+              },
+              "identity": "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122",
+              "op": "compose",
+              "symbol": "CallerB"
+            },
+            "type": "Int64"
+          }
+        ]
+      },
+      "tool_seconds": 0.010184799903072417
+    },
+    {
+      "actual": "CYCLE",
+      "control": "local-value-cycle",
+      "diagnostic": {
+        "code": "CYCLE",
+        "detail": "a",
+        "path": "LocalCycle/steps"
+      },
+      "expected": "CYCLE",
+      "passed": true,
+      "proposal": {
+        "dependencies": {},
+        "identity": "9b11d76b2ffefcc7af2952b191e84d10460116fa0fce1336d20d250b57d8792c",
+        "name": "LocalCycle",
+        "order": [
+          "a",
+          "b"
+        ],
+        "params": [],
+        "result": {
+          "ref": "a"
+        },
+        "result_type": "Int64",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "b"
+            ],
+            "id": "a",
+            "node": {
+              "expr": {
+                "ref": "b"
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          },
+          {
+            "deps": [
+              "a"
+            ],
+            "id": "b",
+            "node": {
+              "expr": {
+                "ref": "a"
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ]
+      },
+      "tool_seconds": 0.011087099905125797
+    }
+  ],
+  "dependents": {
+    "direct": [
+      "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122",
+      "d3f220ba6a3a5fa1cbd06a517b6ed093d0e60763afdbeb2e77930412e887f647"
+    ],
+    "transitive": [
+      "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122",
+      "d3f220ba6a3a5fa1cbd06a517b6ed093d0e60763afdbeb2e77930412e887f647"
+    ]
+  },
+  "executions": [
+    {
+      "caller": "d3f220ba6a3a5fa1cbd06a517b6ed093d0e60763afdbeb2e77930412e887f647",
+      "expected": 1,
+      "input": 0,
+      "observation": {
+        "consumed": 1,
+        "output_hex": "0001",
+        "output_spans": [
+          {
+            "end": 2,
+            "node": "program/94ecd0a66387d399ef6dd8d43c1572d134943aa11a2cd5a6beffca3cb83708f7/encode",
+            "start": 0
+          }
+        ],
+        "provenance": {
+          "origins": [],
+          "span": [
+            0,
+            1
+          ]
+        },
+        "status": "success",
+        "value": 1,
+        "work": 18
+      }
+    },
+    {
+      "caller": "d3f220ba6a3a5fa1cbd06a517b6ed093d0e60763afdbeb2e77930412e887f647",
+      "expected": 2,
+      "input": 1,
+      "observation": {
+        "consumed": 1,
+        "output_hex": "0002",
+        "output_spans": [
+          {
+            "end": 2,
+            "node": "program/94ecd0a66387d399ef6dd8d43c1572d134943aa11a2cd5a6beffca3cb83708f7/encode",
+            "start": 0
+          }
+        ],
+        "provenance": {
+          "origins": [],
+          "span": [
+            0,
+            1
+          ]
+        },
+        "status": "success",
+        "value": 2,
+        "work": 18
+      }
+    },
+    {
+      "caller": "d3f220ba6a3a5fa1cbd06a517b6ed093d0e60763afdbeb2e77930412e887f647",
+      "expected": 254,
+      "input": 253,
+      "observation": {
+        "consumed": 1,
+        "output_hex": "00fe",
+        "output_spans": [
+          {
+            "end": 2,
+            "node": "program/94ecd0a66387d399ef6dd8d43c1572d134943aa11a2cd5a6beffca3cb83708f7/encode",
+            "start": 0
+          }
+        ],
+        "provenance": {
+          "origins": [],
+          "span": [
+            0,
+            1
+          ]
+        },
+        "status": "success",
+        "value": 254,
+        "work": 18
+      }
+    },
+    {
+      "caller": "d3f220ba6a3a5fa1cbd06a517b6ed093d0e60763afdbeb2e77930412e887f647",
+      "expected": 256,
+      "input": 255,
+      "observation": {
+        "consumed": 1,
+        "output_hex": "0100",
+        "output_spans": [
+          {
+            "end": 2,
+            "node": "program/94ecd0a66387d399ef6dd8d43c1572d134943aa11a2cd5a6beffca3cb83708f7/encode",
+            "start": 0
+          }
+        ],
+        "provenance": {
+          "origins": [],
+          "span": [
+            0,
+            1
+          ]
+        },
+        "status": "success",
+        "value": 256,
+        "work": 18
+      }
+    },
+    {
+      "caller": "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485",
+      "expected": 2,
+      "input": 0,
+      "observation": {
+        "consumed": 1,
+        "output_hex": "0002",
+        "output_spans": [
+          {
+            "end": 2,
+            "node": "program/7964d1e54047f90397989ab50f4e777f0745cfb34e75dee59695f8c3cee1f666/encode",
+            "start": 0
+          }
+        ],
+        "provenance": {
+          "origins": [],
+          "span": [
+            0,
+            1
+          ]
+        },
+        "status": "success",
+        "value": 2,
+        "work": 18
+      }
+    },
+    {
+      "caller": "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485",
+      "expected": 3,
+      "input": 1,
+      "observation": {
+        "consumed": 1,
+        "output_hex": "0003",
+        "output_spans": [
+          {
+            "end": 2,
+            "node": "program/7964d1e54047f90397989ab50f4e777f0745cfb34e75dee59695f8c3cee1f666/encode",
+            "start": 0
+          }
+        ],
+        "provenance": {
+          "origins": [],
+          "span": [
+            0,
+            1
+          ]
+        },
+        "status": "success",
+        "value": 3,
+        "work": 18
+      }
+    },
+    {
+      "caller": "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485",
+      "expected": 255,
+      "input": 253,
+      "observation": {
+        "consumed": 1,
+        "output_hex": "00ff",
+        "output_spans": [
+          {
+            "end": 2,
+            "node": "program/7964d1e54047f90397989ab50f4e777f0745cfb34e75dee59695f8c3cee1f666/encode",
+            "start": 0
+          }
+        ],
+        "provenance": {
+          "origins": [],
+          "span": [
+            0,
+            1
+          ]
+        },
+        "status": "success",
+        "value": 255,
+        "work": 18
+      }
+    },
+    {
+      "caller": "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485",
+      "expected": 257,
+      "input": 255,
+      "observation": {
+        "consumed": 1,
+        "output_hex": "0101",
+        "output_spans": [
+          {
+            "end": 2,
+            "node": "program/7964d1e54047f90397989ab50f4e777f0745cfb34e75dee59695f8c3cee1f666/encode",
+            "start": 0
+          }
+        ],
+        "provenance": {
+          "origins": [],
+          "span": [
+            0,
+            1
+          ]
+        },
+        "status": "success",
+        "value": 257,
+        "work": 18
+      }
+    },
+    {
+      "caller": "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122",
+      "expected": 1,
+      "input": 0,
+      "observation": {
+        "consumed": 1,
+        "output_hex": "0001",
+        "output_spans": [
+          {
+            "end": 2,
+            "node": "program/dddfc30507194712ea4614923a6c5b54fbb617af4a4b3683a10e81282b96aa6d/encode",
+            "start": 0
+          }
+        ],
+        "provenance": {
+          "origins": [],
+          "span": [
+            0,
+            1
+          ]
+        },
+        "status": "success",
+        "value": 1,
+        "work": 18
+      }
+    },
+    {
+      "caller": "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122",
+      "expected": 2,
+      "input": 1,
+      "observation": {
+        "consumed": 1,
+        "output_hex": "0002",
+        "output_spans": [
+          {
+            "end": 2,
+            "node": "program/dddfc30507194712ea4614923a6c5b54fbb617af4a4b3683a10e81282b96aa6d/encode",
+            "start": 0
+          }
+        ],
+        "provenance": {
+          "origins": [],
+          "span": [
+            0,
+            1
+          ]
+        },
+        "status": "success",
+        "value": 2,
+        "work": 18
+      }
+    },
+    {
+      "caller": "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122",
+      "expected": 254,
+      "input": 253,
+      "observation": {
+        "consumed": 1,
+        "output_hex": "00fe",
+        "output_spans": [
+          {
+            "end": 2,
+            "node": "program/dddfc30507194712ea4614923a6c5b54fbb617af4a4b3683a10e81282b96aa6d/encode",
+            "start": 0
+          }
+        ],
+        "provenance": {
+          "origins": [],
+          "span": [
+            0,
+            1
+          ]
+        },
+        "status": "success",
+        "value": 254,
+        "work": 18
+      }
+    },
+    {
+      "caller": "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122",
+      "expected": 256,
+      "input": 255,
+      "observation": {
+        "consumed": 1,
+        "output_hex": "0100",
+        "output_spans": [
+          {
+            "end": 2,
+            "node": "program/dddfc30507194712ea4614923a6c5b54fbb617af4a4b3683a10e81282b96aa6d/encode",
+            "start": 0
+          }
+        ],
+        "provenance": {
+          "origins": [],
+          "span": [
+            0,
+            1
+          ]
+        },
+        "status": "success",
+        "value": 256,
+        "work": 18
+      }
+    }
+  ],
+  "migrations": [
+    {
+      "decisions": {
+        "3876e206b0a22d7f8105873fc8a3a983cbf4249e20fe27fe04e7f85f1f8b4122": null,
+        "d3f220ba6a3a5fa1cbd06a517b6ed093d0e60763afdbeb2e77930412e887f647": "25955e93c8848f4d0058322103c08bb8aba445d716baa7f9a9e20b634e4c1485"
+      },
+      "predecessor": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+      "successor": "e00df78f700c37c75dd50081884877e66bfe0bc3543345856e25bd9278dce14a"
+    }
+  ],
+  "predecessor_preserved": true,
+  "retrieval": [
+    {
+      "dependencies": {},
+      "identity": "26e480fdfed5778d213067c61e31c310ea70e13ba4bb22881ef561e2035acf9d",
+      "name": "Increment",
+      "order": [
+        "sum"
+      ],
+      "params": [
+        {
+          "name": "x",
+          "type": "Int64"
+        }
+      ],
+      "result": {
+        "ref": "sum"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [
+            "x"
+          ],
+          "id": "sum",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "x"
+                },
+                {
+                  "const": 1
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    {
+      "dependencies": {},
+      "identity": "e00df78f700c37c75dd50081884877e66bfe0bc3543345856e25bd9278dce14a",
+      "name": "Increment",
+      "order": [
+        "sum"
+      ],
+      "params": [
+        {
+          "name": "x",
+          "type": "Int64"
+        }
+      ],
+      "result": {
+        "ref": "sum"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [
+            "x"
+          ],
+          "id": "sum",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "x"
+                },
+                {
+                  "const": 2
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        }
+      ]
+    }
+  ],
+  "token": "66da81cc17480f6650e88d1f569cf853c86cfe4d439e7246d7d19d46fd5366fa",
+  "unaffected_caller_preserved": true
+}

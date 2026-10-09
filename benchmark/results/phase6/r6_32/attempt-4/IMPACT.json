@@ -1,0 +1,390 @@
+{
+  "actual_mapped": [
+    "behavior:create",
+    "behavior:list",
+    "native:command:create",
+    "native:command:list",
+    "native:guarantee:create:stored",
+    "native:guarantee:create:vent",
+    "native:guarantee:list",
+    "native:record",
+    "native:records",
+    "native:state",
+    "native:unique",
+    "native:valid"
+  ],
+  "expected_affected": [
+    "definition:vent_policy",
+    "invariant:firing_vent",
+    "predicate:ignite_gate",
+    "predicate:set_gate_lock",
+    "transition:ignite",
+    "transition:set_gate"
+  ],
+  "expected_unaffected": [
+    "behavior:create",
+    "behavior:list",
+    "field:created_at",
+    "field:id",
+    "field:label",
+    "field:load",
+    "field:phase",
+    "field:vent"
+  ],
+  "extension_probes": [
+    {
+      "identifier": "definition:vent_policy",
+      "observation": {
+        "diagnostic": "unknown entity ID: definition:vent_policy",
+        "exception": "AirError"
+      }
+    },
+    {
+      "identifier": "invariant:firing_vent",
+      "observation": {
+        "diagnostic": "unknown entity ID: invariant:firing_vent",
+        "exception": "AirError"
+      }
+    },
+    {
+      "identifier": "predicate:ignite_gate",
+      "observation": {
+        "diagnostic": "unknown entity ID: predicate:ignite_gate",
+        "exception": "AirError"
+      }
+    },
+    {
+      "identifier": "predicate:set_gate_lock",
+      "observation": {
+        "diagnostic": "unknown entity ID: predicate:set_gate_lock",
+        "exception": "AirError"
+      }
+    },
+    {
+      "identifier": "transition:ignite",
+      "observation": {
+        "diagnostic": "unknown entity ID: transition:ignite",
+        "exception": "AirError"
+      }
+    },
+    {
+      "identifier": "transition:set_gate",
+      "observation": {
+        "diagnostic": "unknown entity ID: transition:set_gate",
+        "exception": "AirError"
+      }
+    }
+  ],
+  "false_negatives": [
+    "definition:vent_policy",
+    "invariant:firing_vent",
+    "predicate:ignite_gate",
+    "predicate:set_gate_lock",
+    "transition:ignite",
+    "transition:set_gate"
+  ],
+  "false_positives": [
+    "behavior:create",
+    "behavior:list",
+    "native:command:create",
+    "native:command:list",
+    "native:guarantee:create:stored",
+    "native:guarantee:create:vent",
+    "native:guarantee:list",
+    "native:record",
+    "native:records",
+    "native:state",
+    "native:unique",
+    "native:valid"
+  ],
+  "mapping": {
+    "behavior:create": "behavior:create",
+    "behavior:list": "behavior:list"
+  },
+  "native": {
+    "impacts": [
+      {
+        "classification": "direct",
+        "depth": 1,
+        "id": "behavior:create",
+        "kind": "behavior",
+        "path": [
+          {
+            "from": "behavior:create",
+            "relation": "assigns",
+            "to": "field:vent"
+          }
+        ],
+        "semantic_classification": "DIRECT_SEMANTIC_IMPACT"
+      },
+      {
+        "classification": "direct",
+        "depth": 1,
+        "id": "guarantee:create:vent",
+        "kind": "postcondition",
+        "path": [
+          {
+            "from": "guarantee:create:vent",
+            "relation": "field",
+            "to": "field:vent"
+          }
+        ],
+        "semantic_classification": "DIRECT_SEMANTIC_IMPACT"
+      },
+      {
+        "classification": "direct",
+        "depth": 1,
+        "id": "record",
+        "kind": "type",
+        "path": [
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:vent"
+          }
+        ],
+        "semantic_classification": "DIRECT_SEMANTIC_IMPACT"
+      },
+      {
+        "classification": "indirect",
+        "depth": 2,
+        "id": "command:create",
+        "kind": "command",
+        "path": [
+          {
+            "from": "command:create",
+            "relation": "exposes",
+            "to": "behavior:create"
+          },
+          {
+            "from": "behavior:create",
+            "relation": "assigns",
+            "to": "field:vent"
+          }
+        ],
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      },
+      {
+        "classification": "indirect",
+        "depth": 2,
+        "id": "records",
+        "kind": "type",
+        "path": [
+          {
+            "from": "records",
+            "relation": "item_type",
+            "to": "record"
+          },
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:vent"
+          }
+        ],
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      },
+      {
+        "classification": "indirect",
+        "depth": 3,
+        "id": "behavior:list",
+        "kind": "behavior",
+        "path": [
+          {
+            "from": "behavior:list",
+            "relation": "output",
+            "to": "records"
+          },
+          {
+            "from": "records",
+            "relation": "item_type",
+            "to": "record"
+          },
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:vent"
+          }
+        ],
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      },
+      {
+        "classification": "indirect",
+        "depth": 3,
+        "id": "state",
+        "kind": "state",
+        "path": [
+          {
+            "from": "state",
+            "relation": "type",
+            "to": "records"
+          },
+          {
+            "from": "records",
+            "relation": "item_type",
+            "to": "record"
+          },
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:vent"
+          }
+        ],
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      },
+      {
+        "classification": "indirect",
+        "depth": 4,
+        "id": "command:list",
+        "kind": "command",
+        "path": [
+          {
+            "from": "command:list",
+            "relation": "exposes",
+            "to": "behavior:list"
+          },
+          {
+            "from": "behavior:list",
+            "relation": "output",
+            "to": "records"
+          },
+          {
+            "from": "records",
+            "relation": "item_type",
+            "to": "record"
+          },
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:vent"
+          }
+        ],
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      },
+      {
+        "classification": "indirect",
+        "depth": 4,
+        "id": "guarantee:create:stored",
+        "kind": "postcondition",
+        "path": [
+          {
+            "from": "guarantee:create:stored",
+            "relation": "state",
+            "to": "state"
+          },
+          {
+            "from": "state",
+            "relation": "type",
+            "to": "records"
+          },
+          {
+            "from": "records",
+            "relation": "item_type",
+            "to": "record"
+          },
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:vent"
+          }
+        ],
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      },
+      {
+        "classification": "indirect",
+        "depth": 4,
+        "id": "guarantee:list",
+        "kind": "postcondition",
+        "path": [
+          {
+            "from": "guarantee:list",
+            "relation": "state",
+            "to": "state"
+          },
+          {
+            "from": "state",
+            "relation": "type",
+            "to": "records"
+          },
+          {
+            "from": "records",
+            "relation": "item_type",
+            "to": "record"
+          },
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:vent"
+          }
+        ],
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      },
+      {
+        "classification": "indirect",
+        "depth": 4,
+        "id": "unique",
+        "kind": "invariant",
+        "path": [
+          {
+            "from": "unique",
+            "relation": "state",
+            "to": "state"
+          },
+          {
+            "from": "state",
+            "relation": "type",
+            "to": "records"
+          },
+          {
+            "from": "records",
+            "relation": "item_type",
+            "to": "record"
+          },
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:vent"
+          }
+        ],
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      },
+      {
+        "classification": "indirect",
+        "depth": 4,
+        "id": "valid",
+        "kind": "invariant",
+        "path": [
+          {
+            "from": "valid",
+            "relation": "state",
+            "to": "state"
+          },
+          {
+            "from": "state",
+            "relation": "type",
+            "to": "records"
+          },
+          {
+            "from": "records",
+            "relation": "item_type",
+            "to": "record"
+          },
+          {
+            "from": "record",
+            "relation": "owns",
+            "to": "field:vent"
+          }
+        ],
+        "semantic_classification": "DEPENDENCY_IMPACT"
+      }
+    ],
+    "root": "field:vent"
+  },
+  "scalar_diff": {
+    "affected": {},
+    "after_version": "0.3",
+    "before_version": "0.3",
+    "changes": []
+  },
+  "scope": "Legacy scalar impact; changed extension facts are not indexed; coarse vent-field seed over-approximates unchanged create/list",
+  "true_positives": []
+}
