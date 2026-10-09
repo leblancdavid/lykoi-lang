@@ -1,0 +1,576 @@
+{
+  "id": "feature_dependencies",
+  "timestamp": "2026-10-09T01:03:25.135060+00:00",
+  "request": {
+    "model": "qwen3:8b",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Return JSON only, no Markdown. R6.18 typed composition rules: a closed program is a definition with exact fields name,revision=1,params=[],dependencies={},steps,order,result,result_type=Int64. Omit program identity; host computes it, inserts package version/foundation and immutable library. Every step has exact id,type,deps,node. Types Int64,Bool,Unit (null); booleans are not integers. Names are case-sensitive ASCII letters then alphanumeric/underscore, at most32. Immutable unique step names; deps list exactly all referenced locals/parameters, no duplicates. Order contains every step exactly once, dependencies must precede uses; no shadowing or cycles. Expressions are {\"const\":integer|boolean|null}, {\"ref\":\"name\"}, {\"add\":[expr,expr]}, {\"le\":[expr,expr]}, {\"eq\":[expr,expr]}; add/le require Int64, eq same types. Nodes: {\"op\":\"value\",\"expr\":expr}; {\"op\":\"atom\",\"codec\":\"uint8\"}; {\"op\":\"check\",\"test\":Bool_expr,\"site\":expr,\"code\":\"ASCII_NAME\"} returns Unit; {\"op\":\"end\"} returns Unit; {\"op\":\"compose\",\"symbol\":\"library_name\",\"identity\":\"exact library hash\",\"args\":{\"parameter\":ref_or_const}}. Arguments cannot be compound expressions. Direct symbolic dependencies exactly equal called symbols with their supplied identity; transitive dependencies belong to library definitions, not program. The host never repairs semantic fields. Every stored step executes in order, check failure absorbs later operations, program returns result after steps, UInt16BE root output fixed. At least1 at most32 steps, expression depth8, representation depth24, max8 definitions, nesting4, expanded nodes64. Each region costs1 expansion node, each noncompose step1, compose is replaced by its region/steps, final encode1. For all closed neutral tasks input is empty, so do not use atom; do not use end unless requested. Unused typed values permitted. No new symbols or opcodes.\nBoth interfaces receive these rules, objective, same library and schemas. A emits a complete definition. B emits six stages: operations used; header/signatures (name,revision,params,dependencies,steps:[{id,type}],result_type); deps:{id:[refs]}; nodes:{id:node}; order:[ids]; result:expression. Host copies these fields exactly, never infers missing semantics. Shape validation at every stage; provisional validation after nodes uses submitted signature order and dummy const0 result, final validation uses submitted order/result. Choose signature order to be a valid provisional execution order. All semantic constraints apply to A and B.\nImmutable library: [{\"name\": \"Echo\", \"revision\": 1, \"params\": [{\"name\": \"p\", \"type\": \"Int64\"}], \"dependencies\": {}, \"steps\": [{\"id\": \"copy\", \"type\": \"Int64\", \"deps\": [\"p\"], \"node\": {\"op\": \"value\", \"expr\": {\"ref\": \"p\"}}}], \"order\": [\"copy\"], \"result\": {\"ref\": \"copy\"}, \"result_type\": \"Int64\", \"identity\": \"9529a64dad1c8edecf22a227069f74c6697942b1cb80b64cb34c84b6bbcda295\"}, {\"name\": \"Relay\", \"revision\": 1, \"params\": [{\"name\": \"q\", \"type\": \"Int64\"}], \"dependencies\": {\"Echo\": \"9529a64dad1c8edecf22a227069f74c6697942b1cb80b64cb34c84b6bbcda295\"}, \"steps\": [{\"id\": \"inner\", \"type\": \"Int64\", \"deps\": [\"q\"], \"node\": {\"op\": \"compose\", \"symbol\": \"Echo\", \"identity\": \"9529a64dad1c8edecf22a227069f74c6697942b1cb80b64cb34c84b6bbcda295\", \"args\": {\"p\": {\"ref\": \"q\"}}}}], \"order\": [\"inner\"], \"result\": {\"ref\": \"inner\"}, \"result_type\": \"Int64\", \"identity\": \"f58c52f3b5b42aee50ce55e3d1c88c9c70d136f0819235dba4dd87749ce2e1be\"}]\nAll output schemas: {\"definition\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"revision\", \"params\", \"dependencies\", \"steps\", \"order\", \"result\", \"result_type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"revision\": {\"const\": 1}, \"params\": {\"type\": \"array\", \"maxItems\": 8, \"items\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"type\": {\"$ref\": \"#/$defs/type\"}}}}, \"dependencies\": {\"type\": \"object\", \"maxProperties\": 8, \"propertyNames\": {\"$ref\": \"#/$defs/name\"}, \"additionalProperties\": {\"$ref\": \"#/$defs/hash\"}}, \"steps\": {\"type\": \"array\", \"minItems\": 1, \"maxItems\": 32, \"items\": {\"$ref\": \"#/$defs/step\"}}, \"order\": {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"$ref\": \"#/$defs/name\"}}, \"result\": {\"$ref\": \"#/$defs/expr\"}, \"result_type\": {\"$ref\": \"#/$defs/type\"}}, \"$defs\": {\"name\": {\"type\": \"string\", \"pattern\": \"^[A-Za-z][A-Za-z0-9_]{0,31}$\"}, \"hash\": {\"type\": \"string\", \"pattern\": \"^[0-9a-f]{64}$\"}, \"type\": {\"enum\": [\"Int64\", \"Bool\", \"Unit\"]}, \"expr\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [{\"type\": \"null\"}, {\"type\": \"boolean\"}, {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}]}}}, {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1, \"additionalProperties\": false, \"properties\": {\"add\": {\"$ref\": \"#/$defs/binary\"}, \"le\": {\"$ref\": \"#/$defs/binary\"}, \"eq\": {\"$ref\": \"#/$defs/binary\"}}}]}, \"binary\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/expr\"}}, \"argument\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [{\"type\": \"null\"}, {\"type\": \"boolean\"}, {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}]}}}]}, \"node\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"codec\"], \"properties\": {\"op\": {\"const\": \"atom\"}, \"codec\": {\"const\": \"uint8\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"], \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"$ref\": \"#/$defs/expr\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"test\", \"site\", \"code\"], \"properties\": {\"op\": {\"const\": \"check\"}, \"test\": {\"$ref\": \"#/$defs/expr\"}, \"site\": {\"$ref\": \"#/$defs/expr\"}, \"code\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\"], \"properties\": {\"op\": {\"const\": \"end\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"symbol\", \"identity\", \"args\"], \"properties\": {\"op\": {\"const\": \"compose\"}, \"symbol\": {\"$ref\": \"#/$defs/name\"}, \"identity\": {\"$ref\": \"#/$defs/hash\"}, \"args\": {\"type\": \"object\", \"maxProperties\": 8, \"propertyNames\": {\"$ref\": \"#/$defs/name\"}, \"additionalProperties\": {\"$ref\": \"#/$defs/argument\"}}}}]}, \"step\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"id\", \"type\", \"deps\", \"node\"], \"properties\": {\"id\": {\"$ref\": \"#/$defs/name\"}, \"type\": {\"$ref\": \"#/$defs/type\"}, \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"$ref\": \"#/$defs/name\"}}, \"node\": {\"$ref\": \"#/$defs/node\"}}}, \"definition\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"revision\", \"params\", \"dependencies\", \"steps\", \"order\", \"result\", \"result_type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"revision\": {\"const\": 1}, \"params\": {\"type\": \"array\", \"maxItems\": 8, \"items\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"type\": {\"$ref\": \"#/$defs/type\"}}}}, \"dependencies\": {\"type\": \"object\", \"maxProperties\": 8, \"propertyNames\": {\"$ref\": \"#/$defs/name\"}, \"additionalProperties\": {\"$ref\": \"#/$defs/hash\"}}, \"steps\": {\"type\": \"array\", \"minItems\": 1, \"maxItems\": 32, \"items\": {\"$ref\": \"#/$defs/step\"}}, \"order\": {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"$ref\": \"#/$defs/name\"}}, \"result\": {\"$ref\": \"#/$defs/expr\"}, \"result_type\": {\"$ref\": \"#/$defs/type\"}}}}}, \"stages\": [{\"type\": \"object\", \"properties\": {\"operations\": {\"type\": \"array\", \"items\": {\"enum\": [\"atom\", \"value\", \"check\", \"end\", \"compose\"]}, \"uniqueItems\": true}}, \"required\": [\"operations\"], \"additionalProperties\": false, \"$defs\": {\"name\": {\"type\": \"string\", \"pattern\": \"^[A-Za-z][A-Za-z0-9_]{0,31}$\"}, \"hash\": {\"type\": \"string\", \"pattern\": \"^[0-9a-f]{64}$\"}, \"type\": {\"enum\": [\"Int64\", \"Bool\", \"Unit\"]}, \"expr\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [{\"type\": \"null\"}, {\"type\": \"boolean\"}, {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}]}}}, {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1, \"additionalProperties\": false, \"properties\": {\"add\": {\"$ref\": \"#/$defs/binary\"}, \"le\": {\"$ref\": \"#/$defs/binary\"}, \"eq\": {\"$ref\": \"#/$defs/binary\"}}}]}, \"binary\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/expr\"}}, \"argument\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [{\"type\": \"null\"}, {\"type\": \"boolean\"}, {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}]}}}]}, \"node\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"codec\"], \"properties\": {\"op\": {\"const\": \"atom\"}, \"codec\": {\"const\": \"uint8\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"], \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"$ref\": \"#/$defs/expr\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"test\", \"site\", \"code\"], \"properties\": {\"op\": {\"const\": \"check\"}, \"test\": {\"$ref\": \"#/$defs/expr\"}, \"site\": {\"$ref\": \"#/$defs/expr\"}, \"code\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\"], \"properties\": {\"op\": {\"const\": \"end\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"symbol\", \"identity\", \"args\"], \"properties\": {\"op\": {\"const\": \"compose\"}, \"symbol\": {\"$ref\": \"#/$defs/name\"}, \"identity\": {\"$ref\": \"#/$defs/hash\"}, \"args\": {\"type\": \"object\", \"maxProperties\": 8, \"propertyNames\": {\"$ref\": \"#/$defs/name\"}, \"additionalProperties\": {\"$ref\": \"#/$defs/argument\"}}}}]}, \"step\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"id\", \"type\", \"deps\", \"node\"], \"properties\": {\"id\": {\"$ref\": \"#/$defs/name\"}, \"type\": {\"$ref\": \"#/$defs/type\"}, \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"$ref\": \"#/$defs/name\"}}, \"node\": {\"$ref\": \"#/$defs/node\"}}}, \"definition\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"revision\", \"params\", \"dependencies\", \"steps\", \"order\", \"result\", \"result_type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"revision\": {\"const\": 1}, \"params\": {\"type\": \"array\", \"maxItems\": 8, \"items\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"type\": {\"$ref\": \"#/$defs/type\"}}}}, \"dependencies\": {\"type\": \"object\", \"maxProperties\": 8, \"propertyNames\": {\"$ref\": \"#/$defs/name\"}, \"additionalProperties\": {\"$ref\": \"#/$defs/hash\"}}, \"steps\": {\"type\": \"array\", \"minItems\": 1, \"maxItems\": 32, \"items\": {\"$ref\": \"#/$defs/step\"}}, \"order\": {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"$ref\": \"#/$defs/name\"}}, \"result\": {\"$ref\": \"#/$defs/expr\"}, \"result_type\": {\"$ref\": \"#/$defs/type\"}}}}}, {\"type\": \"object\", \"properties\": {\"name\": {\"type\": \"string\", \"pattern\": \"^[A-Za-z][A-Za-z0-9_]{0,31}$\"}, \"revision\": {\"const\": 1}, \"params\": {\"type\": \"array\", \"maxItems\": 8, \"items\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"type\": {\"$ref\": \"#/$defs/type\"}}}}, \"dependencies\": {\"type\": \"object\", \"maxProperties\": 8, \"propertyNames\": {\"$ref\": \"#/$defs/name\"}, \"additionalProperties\": {\"$ref\": \"#/$defs/hash\"}}, \"steps\": {\"type\": \"array\", \"minItems\": 1, \"maxItems\": 32, \"items\": {\"type\": \"object\", \"properties\": {\"id\": {\"type\": \"string\", \"pattern\": \"^[A-Za-z][A-Za-z0-9_]{0,31}$\"}, \"type\": {\"enum\": [\"Int64\", \"Bool\", \"Unit\"]}}, \"required\": [\"id\", \"type\"], \"additionalProperties\": false}}, \"result_type\": {\"enum\": [\"Int64\", \"Bool\", \"Unit\"]}}, \"required\": [\"name\", \"revision\", \"params\", \"dependencies\", \"steps\", \"result_type\"], \"additionalProperties\": false, \"$defs\": {\"name\": {\"type\": \"string\", \"pattern\": \"^[A-Za-z][A-Za-z0-9_]{0,31}$\"}, \"hash\": {\"type\": \"string\", \"pattern\": \"^[0-9a-f]{64}$\"}, \"type\": {\"enum\": [\"Int64\", \"Bool\", \"Unit\"]}, \"expr\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [{\"type\": \"null\"}, {\"type\": \"boolean\"}, {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}]}}}, {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1, \"additionalProperties\": false, \"properties\": {\"add\": {\"$ref\": \"#/$defs/binary\"}, \"le\": {\"$ref\": \"#/$defs/binary\"}, \"eq\": {\"$ref\": \"#/$defs/binary\"}}}]}, \"binary\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/expr\"}}, \"argument\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [{\"type\": \"null\"}, {\"type\": \"boolean\"}, {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}]}}}]}, \"node\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"codec\"], \"properties\": {\"op\": {\"const\": \"atom\"}, \"codec\": {\"const\": \"uint8\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"], \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"$ref\": \"#/$defs/expr\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"test\", \"site\", \"code\"], \"properties\": {\"op\": {\"const\": \"check\"}, \"test\": {\"$ref\": \"#/$defs/expr\"}, \"site\": {\"$ref\": \"#/$defs/expr\"}, \"code\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\"], \"properties\": {\"op\": {\"const\": \"end\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"symbol\", \"identity\", \"args\"], \"properties\": {\"op\": {\"const\": \"compose\"}, \"symbol\": {\"$ref\": \"#/$defs/name\"}, \"identity\": {\"$ref\": \"#/$defs/hash\"}, \"args\": {\"type\": \"object\", \"maxProperties\": 8, \"propertyNames\": {\"$ref\": \"#/$defs/name\"}, \"additionalProperties\": {\"$ref\": \"#/$defs/argument\"}}}}]}, \"step\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"id\", \"type\", \"deps\", \"node\"], \"properties\": {\"id\": {\"$ref\": \"#/$defs/name\"}, \"type\": {\"$ref\": \"#/$defs/type\"}, \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"$ref\": \"#/$defs/name\"}}, \"node\": {\"$ref\": \"#/$defs/node\"}}}, \"definition\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"revision\", \"params\", \"dependencies\", \"steps\", \"order\", \"result\", \"result_type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"revision\": {\"const\": 1}, \"params\": {\"type\": \"array\", \"maxItems\": 8, \"items\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"type\": {\"$ref\": \"#/$defs/type\"}}}}, \"dependencies\": {\"type\": \"object\", \"maxProperties\": 8, \"propertyNames\": {\"$ref\": \"#/$defs/name\"}, \"additionalProperties\": {\"$ref\": \"#/$defs/hash\"}}, \"steps\": {\"type\": \"array\", \"minItems\": 1, \"maxItems\": 32, \"items\": {\"$ref\": \"#/$defs/step\"}}, \"order\": {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"$ref\": \"#/$defs/name\"}}, \"result\": {\"$ref\": \"#/$defs/expr\"}, \"result_type\": {\"$ref\": \"#/$defs/type\"}}}}}, {\"type\": \"object\", \"properties\": {\"deps\": {\"type\": \"object\", \"additionalProperties\": {\"type\": \"array\", \"items\": {\"type\": \"string\", \"pattern\": \"^[A-Za-z][A-Za-z0-9_]{0,31}$\"}, \"uniqueItems\": true}}}, \"required\": [\"deps\"], \"additionalProperties\": false, \"$defs\": {\"name\": {\"type\": \"string\", \"pattern\": \"^[A-Za-z][A-Za-z0-9_]{0,31}$\"}, \"hash\": {\"type\": \"string\", \"pattern\": \"^[0-9a-f]{64}$\"}, \"type\": {\"enum\": [\"Int64\", \"Bool\", \"Unit\"]}, \"expr\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [{\"type\": \"null\"}, {\"type\": \"boolean\"}, {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}]}}}, {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1, \"additionalProperties\": false, \"properties\": {\"add\": {\"$ref\": \"#/$defs/binary\"}, \"le\": {\"$ref\": \"#/$defs/binary\"}, \"eq\": {\"$ref\": \"#/$defs/binary\"}}}]}, \"binary\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/expr\"}}, \"argument\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [{\"type\": \"null\"}, {\"type\": \"boolean\"}, {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}]}}}]}, \"node\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"codec\"], \"properties\": {\"op\": {\"const\": \"atom\"}, \"codec\": {\"const\": \"uint8\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"], \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"$ref\": \"#/$defs/expr\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"test\", \"site\", \"code\"], \"properties\": {\"op\": {\"const\": \"check\"}, \"test\": {\"$ref\": \"#/$defs/expr\"}, \"site\": {\"$ref\": \"#/$defs/expr\"}, \"code\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\"], \"properties\": {\"op\": {\"const\": \"end\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"symbol\", \"identity\", \"args\"], \"properties\": {\"op\": {\"const\": \"compose\"}, \"symbol\": {\"$ref\": \"#/$defs/name\"}, \"identity\": {\"$ref\": \"#/$defs/hash\"}, \"args\": {\"type\": \"object\", \"maxProperties\": 8, \"propertyNames\": {\"$ref\": \"#/$defs/name\"}, \"additionalProperties\": {\"$ref\": \"#/$defs/argument\"}}}}]}, \"step\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"id\", \"type\", \"deps\", \"node\"], \"properties\": {\"id\": {\"$ref\": \"#/$defs/name\"}, \"type\": {\"$ref\": \"#/$defs/type\"}, \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"$ref\": \"#/$defs/name\"}}, \"node\": {\"$ref\": \"#/$defs/node\"}}}, \"definition\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"revision\", \"params\", \"dependencies\", \"steps\", \"order\", \"result\", \"result_type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"revision\": {\"const\": 1}, \"params\": {\"type\": \"array\", \"maxItems\": 8, \"items\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"type\": {\"$ref\": \"#/$defs/type\"}}}}, \"dependencies\": {\"type\": \"object\", \"maxProperties\": 8, \"propertyNames\": {\"$ref\": \"#/$defs/name\"}, \"additionalProperties\": {\"$ref\": \"#/$defs/hash\"}}, \"steps\": {\"type\": \"array\", \"minItems\": 1, \"maxItems\": 32, \"items\": {\"$ref\": \"#/$defs/step\"}}, \"order\": {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"$ref\": \"#/$defs/name\"}}, \"result\": {\"$ref\": \"#/$defs/expr\"}, \"result_type\": {\"$ref\": \"#/$defs/type\"}}}}}, {\"type\": \"object\", \"properties\": {\"nodes\": {\"type\": \"object\", \"additionalProperties\": {\"$ref\": \"#/$defs/node\"}}}, \"required\": [\"nodes\"], \"additionalProperties\": false, \"$defs\": {\"name\": {\"type\": \"string\", \"pattern\": \"^[A-Za-z][A-Za-z0-9_]{0,31}$\"}, \"hash\": {\"type\": \"string\", \"pattern\": \"^[0-9a-f]{64}$\"}, \"type\": {\"enum\": [\"Int64\", \"Bool\", \"Unit\"]}, \"expr\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [{\"type\": \"null\"}, {\"type\": \"boolean\"}, {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}]}}}, {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1, \"additionalProperties\": false, \"properties\": {\"add\": {\"$ref\": \"#/$defs/binary\"}, \"le\": {\"$ref\": \"#/$defs/binary\"}, \"eq\": {\"$ref\": \"#/$defs/binary\"}}}]}, \"binary\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/expr\"}}, \"argument\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [{\"type\": \"null\"}, {\"type\": \"boolean\"}, {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}]}}}]}, \"node\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"codec\"], \"properties\": {\"op\": {\"const\": \"atom\"}, \"codec\": {\"const\": \"uint8\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"], \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"$ref\": \"#/$defs/expr\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"test\", \"site\", \"code\"], \"properties\": {\"op\": {\"const\": \"check\"}, \"test\": {\"$ref\": \"#/$defs/expr\"}, \"site\": {\"$ref\": \"#/$defs/expr\"}, \"code\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\"], \"properties\": {\"op\": {\"const\": \"end\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"symbol\", \"identity\", \"args\"], \"properties\": {\"op\": {\"const\": \"compose\"}, \"symbol\": {\"$ref\": \"#/$defs/name\"}, \"identity\": {\"$ref\": \"#/$defs/hash\"}, \"args\": {\"type\": \"object\", \"maxProperties\": 8, \"propertyNames\": {\"$ref\": \"#/$defs/name\"}, \"additionalProperties\": {\"$ref\": \"#/$defs/argument\"}}}}]}, \"step\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"id\", \"type\", \"deps\", \"node\"], \"properties\": {\"id\": {\"$ref\": \"#/$defs/name\"}, \"type\": {\"$ref\": \"#/$defs/type\"}, \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"$ref\": \"#/$defs/name\"}}, \"node\": {\"$ref\": \"#/$defs/node\"}}}, \"definition\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"revision\", \"params\", \"dependencies\", \"steps\", \"order\", \"result\", \"result_type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"revision\": {\"const\": 1}, \"params\": {\"type\": \"array\", \"maxItems\": 8, \"items\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"type\": {\"$ref\": \"#/$defs/type\"}}}}, \"dependencies\": {\"type\": \"object\", \"maxProperties\": 8, \"propertyNames\": {\"$ref\": \"#/$defs/name\"}, \"additionalProperties\": {\"$ref\": \"#/$defs/hash\"}}, \"steps\": {\"type\": \"array\", \"minItems\": 1, \"maxItems\": 32, \"items\": {\"$ref\": \"#/$defs/step\"}}, \"order\": {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"$ref\": \"#/$defs/name\"}}, \"result\": {\"$ref\": \"#/$defs/expr\"}, \"result_type\": {\"$ref\": \"#/$defs/type\"}}}}}, {\"type\": \"object\", \"properties\": {\"order\": {\"type\": \"array\", \"items\": {\"type\": \"string\", \"pattern\": \"^[A-Za-z][A-Za-z0-9_]{0,31}$\"}, \"uniqueItems\": true}}, \"required\": [\"order\"], \"additionalProperties\": false, \"$defs\": {\"name\": {\"type\": \"string\", \"pattern\": \"^[A-Za-z][A-Za-z0-9_]{0,31}$\"}, \"hash\": {\"type\": \"string\", \"pattern\": \"^[0-9a-f]{64}$\"}, \"type\": {\"enum\": [\"Int64\", \"Bool\", \"Unit\"]}, \"expr\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [{\"type\": \"null\"}, {\"type\": \"boolean\"}, {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}]}}}, {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1, \"additionalProperties\": false, \"properties\": {\"add\": {\"$ref\": \"#/$defs/binary\"}, \"le\": {\"$ref\": \"#/$defs/binary\"}, \"eq\": {\"$ref\": \"#/$defs/binary\"}}}]}, \"binary\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/expr\"}}, \"argument\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [{\"type\": \"null\"}, {\"type\": \"boolean\"}, {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}]}}}]}, \"node\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"codec\"], \"properties\": {\"op\": {\"const\": \"atom\"}, \"codec\": {\"const\": \"uint8\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"], \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"$ref\": \"#/$defs/expr\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"test\", \"site\", \"code\"], \"properties\": {\"op\": {\"const\": \"check\"}, \"test\": {\"$ref\": \"#/$defs/expr\"}, \"site\": {\"$ref\": \"#/$defs/expr\"}, \"code\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\"], \"properties\": {\"op\": {\"const\": \"end\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"symbol\", \"identity\", \"args\"], \"properties\": {\"op\": {\"const\": \"compose\"}, \"symbol\": {\"$ref\": \"#/$defs/name\"}, \"identity\": {\"$ref\": \"#/$defs/hash\"}, \"args\": {\"type\": \"object\", \"maxProperties\": 8, \"propertyNames\": {\"$ref\": \"#/$defs/name\"}, \"additionalProperties\": {\"$ref\": \"#/$defs/argument\"}}}}]}, \"step\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"id\", \"type\", \"deps\", \"node\"], \"properties\": {\"id\": {\"$ref\": \"#/$defs/name\"}, \"type\": {\"$ref\": \"#/$defs/type\"}, \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"$ref\": \"#/$defs/name\"}}, \"node\": {\"$ref\": \"#/$defs/node\"}}}, \"definition\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"revision\", \"params\", \"dependencies\", \"steps\", \"order\", \"result\", \"result_type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"revision\": {\"const\": 1}, \"params\": {\"type\": \"array\", \"maxItems\": 8, \"items\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"type\": {\"$ref\": \"#/$defs/type\"}}}}, \"dependencies\": {\"type\": \"object\", \"maxProperties\": 8, \"propertyNames\": {\"$ref\": \"#/$defs/name\"}, \"additionalProperties\": {\"$ref\": \"#/$defs/hash\"}}, \"steps\": {\"type\": \"array\", \"minItems\": 1, \"maxItems\": 32, \"items\": {\"$ref\": \"#/$defs/step\"}}, \"order\": {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"$ref\": \"#/$defs/name\"}}, \"result\": {\"$ref\": \"#/$defs/expr\"}, \"result_type\": {\"$ref\": \"#/$defs/type\"}}}}}, {\"type\": \"object\", \"properties\": {\"result\": {\"$ref\": \"#/$defs/expr\"}}, \"required\": [\"result\"], \"additionalProperties\": false, \"$defs\": {\"name\": {\"type\": \"string\", \"pattern\": \"^[A-Za-z][A-Za-z0-9_]{0,31}$\"}, \"hash\": {\"type\": \"string\", \"pattern\": \"^[0-9a-f]{64}$\"}, \"type\": {\"enum\": [\"Int64\", \"Bool\", \"Unit\"]}, \"expr\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [{\"type\": \"null\"}, {\"type\": \"boolean\"}, {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}]}}}, {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1, \"additionalProperties\": false, \"properties\": {\"add\": {\"$ref\": \"#/$defs/binary\"}, \"le\": {\"$ref\": \"#/$defs/binary\"}, \"eq\": {\"$ref\": \"#/$defs/binary\"}}}]}, \"binary\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/expr\"}}, \"argument\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [{\"type\": \"null\"}, {\"type\": \"boolean\"}, {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}]}}}]}, \"node\": {\"oneOf\": [{\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"codec\"], \"properties\": {\"op\": {\"const\": \"atom\"}, \"codec\": {\"const\": \"uint8\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"], \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"$ref\": \"#/$defs/expr\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"test\", \"site\", \"code\"], \"properties\": {\"op\": {\"const\": \"check\"}, \"test\": {\"$ref\": \"#/$defs/expr\"}, \"site\": {\"$ref\": \"#/$defs/expr\"}, \"code\": {\"$ref\": \"#/$defs/name\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\"], \"properties\": {\"op\": {\"const\": \"end\"}}}, {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"symbol\", \"identity\", \"args\"], \"properties\": {\"op\": {\"const\": \"compose\"}, \"symbol\": {\"$ref\": \"#/$defs/name\"}, \"identity\": {\"$ref\": \"#/$defs/hash\"}, \"args\": {\"type\": \"object\", \"maxProperties\": 8, \"propertyNames\": {\"$ref\": \"#/$defs/name\"}, \"additionalProperties\": {\"$ref\": \"#/$defs/argument\"}}}}]}, \"step\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"id\", \"type\", \"deps\", \"node\"], \"properties\": {\"id\": {\"$ref\": \"#/$defs/name\"}, \"type\": {\"$ref\": \"#/$defs/type\"}, \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"$ref\": \"#/$defs/name\"}}, \"node\": {\"$ref\": \"#/$defs/node\"}}}, \"definition\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"revision\", \"params\", \"dependencies\", \"steps\", \"order\", \"result\", \"result_type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"revision\": {\"const\": 1}, \"params\": {\"type\": \"array\", \"maxItems\": 8, \"items\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"name\", \"type\"], \"properties\": {\"name\": {\"$ref\": \"#/$defs/name\"}, \"type\": {\"$ref\": \"#/$defs/type\"}}}}, \"dependencies\": {\"type\": \"object\", \"maxProperties\": 8, \"propertyNames\": {\"$ref\": \"#/$defs/name\"}, \"additionalProperties\": {\"$ref\": \"#/$defs/hash\"}}, \"steps\": {\"type\": \"array\", \"minItems\": 1, \"maxItems\": 32, \"items\": {\"$ref\": \"#/$defs/step\"}}, \"order\": {\"type\": \"array\", \"uniqueItems\": true, \"items\": {\"$ref\": \"#/$defs/name\"}}, \"result\": {\"$ref\": \"#/$defs/expr\"}, \"result_type\": {\"$ref\": \"#/$defs/type\"}}}}}]}\n"
+      },
+      {
+        "role": "user",
+        "content": "Value a=7 then value b=11 then value c=add(ref a,ref b); return c. Exactly three steps. Emit complete definition."
+      }
+    ],
+    "options": {
+      "temperature": 0,
+      "seed": 619,
+      "num_ctx": 8192,
+      "num_predict": 4096,
+      "top_k": 20,
+      "top_p": 0.95,
+      "repeat_penalty": 1
+    },
+    "think": false,
+    "stream": false,
+    "keep_alive": "10m",
+    "format": "json"
+  },
+  "prompt_sha256": "8f6b52e8e0d0b1eb47723b7739c1d0ba94cbacab8ab2088409cd9c7b8a68f7f4",
+  "schema_sha256": "4e23b392048439acfc9c40dd5d4e908f779147cd3b302b13acce4a083fd3c13d",
+  "http_status": 200,
+  "error": null,
+  "response_body": "{\"model\":\"qwen3:8b\",\"created_at\":\"2026-10-09T01:03:50.65721Z\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"$defs\\\": {\\n    \\\"name\\\": {\\n      \\\"type\\\": \\\"string\\\",\\n      \\\"pattern\\\": \\\"^[A-Za-z][A-Za-z0-9_]{0,31}$\\\"\\n    },\\n    \\\"hash\\\": {\\n      \\\"type\\\": \\\"string\\\",\\n      \\\"pattern\\\": \\\"^[0-9a-f]{64}$\\\"\\n    },\\n    \\\"type\\\": {\\n      \\\"enum\\\": [\\\"Int64\\\", \\\"Bool\\\", \\\"Unit\\\"]\\n    },\\n    \\\"expr\\\": {\\n      \\\"oneOf\\\": [\\n        {\\n          \\\"type\\\": \\\"object\\\",\\n          \\\"additionalProperties\\\": false,\\n          \\\"required\\\": [\\\"ref\\\"],\\n          \\\"properties\\\": {\\n            \\\"ref\\\": {\\\"$ref\\\": \\\"#/$defs/name\\\"}\\n          }\\n        },\\n        {\\n          \\\"type\\\": \\\"object\\\",\\n          \\\"additionalProperties\\\": false,\\n          \\\"required\\\": [\\\"const\\\"],\\n          \\\"properties\\\": {\\n            \\\"const\\\": {\\n              \\\"oneOf\\\": [\\n                {\\\"type\\\": \\\"null\\\"},\\n                {\\\"type\\\": \\\"boolean\\\"},\\n                {\\n                  \\\"type\\\": \\\"integer\\\",\\n                  \\\"minimum\\\": -9223372036854775808,\\n                  \\\"maximum\\\": 9223372036854775807\\n                }\\n              ]\\n            }\\n          }\\n        },\\n        {\\n          \\\"type\\\": \\\"object\\\",\\n          \\\"minProperties\\\": 1,\\n          \\\"maxProperties\\\": 1,\\n          \\\"additionalProperties\\\": false,\\n          \\\"properties\\\": {\\n            \\\"add\\\": {\\\"$ref\\\": \\\"#/$defs/binary\\\"},\\n            \\\"le\\\": {\\\"$ref\\\": \\\"#/$defs/binary\\\"},\\n            \\\"eq\\\": {\\\"$ref\\\": \\\"#/$defs/binary\\\"}\\n          }\\n        }\\n      ]\\n    },\\n    \\\"binary\\\": {\\n      \\\"type\\\": \\\"array\\\",\\n      \\\"minItems\\\": 2,\\n      \\\"maxItems\\\": 2,\\n      \\\"items\\\": {\\\"$ref\\\": \\\"#/$defs/expr\\\"}\\n    },\\n    \\\"argument\\\": {\\n      \\\"oneOf\\\": [\\n        {\\n          \\\"type\\\": \\\"object\\\",\\n          \\\"additionalProperties\\\": false,\\n          \\\"required\\\": [\\\"ref\\\"],\\n          \\\"properties\\\": {\\n            \\\"ref\\\": {\\\"$ref\\\": \\\"#/$defs/name\\\"}\\n          }\\n        },\\n        {\\n          \\\"type\\\": \\\"object\\\",\\n          \\\"additionalProperties\\\": false,\\n          \\\"required\\\": [\\\"const\\\"],\\n          \\\"properties\\\": {\\n            \\\"const\\\": {\\n              \\\"oneOf\\\": [\\n                {\\\"type\\\": \\\"null\\\"},\\n                {\\\"type\\\": \\\"boolean\\\"},\\n                {\\n                  \\\"type\\\": \\\"integer\\\",\\n                  \\\"minimum\\\": -9223372036854775808,\\n                  \\\"maximum\\\": 9223372036854775807\\n                }\\n              ]\\n            }\\n          }\\n        }\\n      ]\\n    },\\n    \\\"node\\\": {\\n      \\\"oneOf\\\": [\\n        {\\n          \\\"type\\\": \\\"object\\\",\\n          \\\"additionalProperties\\\": false,\\n          \\\"required\\\": [\\\"op\\\", \\\"codec\\\"],\\n          \\\"properties\\\": {\\n            \\\"op\\\": {\\\"const\\\": \\\"atom\\\"},\\n            \\\"codec\\\": {\\\"const\\\": \\\"uint8\\\"}\\n          }\\n        },\\n        {\\n          \\\"type\\\": \\\"object\\\",\\n          \\\"additionalProperties\\\": false,\\n          \\\"required\\\": [\\\"op\\\", \\\"expr\\\"],\\n          \\\"properties\\\": {\\n            \\\"op\\\": {\\\"const\\\": \\\"value\\\"},\\n            \\\"expr\\\": {\\\"$ref\\\": \\\"#/$defs/expr\\\"}\\n          }\\n        },\\n        {\\n          \\\"type\\\": \\\"object\\\",\\n          \\\"additionalProperties\\\": false,\\n          \\\"required\\\": [\\\"op\\\", \\\"test\\\", \\\"site\\\", \\\"code\\\"],\\n          \\\"properties\\\": {\\n            \\\"op\\\": {\\\"const\\\": \\\"check\\\"},\\n            \\\"test\\\": {\\\"$ref\\\": \\\"#/$defs/expr\\\"},\\n            \\\"site\\\": {\\\"$ref\\\": \\\"#/$defs/expr\\\"},\\n            \\\"code\\\": {\\\"$ref\\\": \\\"#/$defs/name\\\"}\\n          }\\n        },\\n        {\\n          \\\"type\\\": \\\"object\\\",\\n          \\\"additionalProperties\\\": false,\\n          \\\"required\\\": [\\\"op\\\"],\\n          \\\"properties\\\": {\\n            \\\"op\\\": {\\\"const\\\": \\\"end\\\"}\\n          }\\n        },\\n        {\\n          \\\"type\\\": \\\"object\\\",\\n          \\\"additionalProperties\\\": false,\\n          \\\"required\\\": [\\\"op\\\", \\\"symbol\\\", \\\"identity\\\", \\\"args\\\"],\\n          \\\"properties\\\": {\\n            \\\"op\\\": {\\\"const\\\": \\\"compose\\\"},\\n            \\\"symbol\\\": {\\\"$ref\\\": \\\"#/$defs/name\\\"},\\n            \\\"identity\\\": {\\\"$ref\\\": \\\"#/$defs/hash\\\"},\\n            \\\"args\\\": {\\n              \\\"type\\\": \\\"object\\\",\\n              \\\"maxProperties\\\": 8,\\n              \\\"propertyNames\\\": {\\\"$ref\\\": \\\"#/$defs/name\\\"},\\n              \\\"additionalProperties\\\": {\\\"$ref\\\": \\\"#/$defs/argument\\\"}\\n            }\\n          }\\n        }\\n      ]\\n    },\\n    \\\"step\\\": {\\n      \\\"type\\\": \\\"object\\\",\\n      \\\"additionalProperties\\\": false,\\n      \\\"required\\\": [\\\"id\\\", \\\"type\\\", \\\"deps\\\", \\\"node\\\"],\\n      \\\"properties\\\": {\\n        \\\"id\\\": {\\\"$ref\\\": \\\"#/$defs/name\\\"},\\n        \\\"type\\\": {\\\"$ref\\\": \\\"#/$defs/type\\\"},\\n        \\\"deps\\\": {\\n          \\\"type\\\": \\\"array\\\",\\n          \\\"uniqueItems\\\": true,\\n          \\\"items\\\": {\\\"$ref\\\": \\\"#/$defs/name\\\"}\\n        },\\n        \\\"node\\\": {\\\"$ref\\\": \\\"#/$defs/node\\\"}\\n      }\\n    },\\n    \\\"definition\\\": {\\n      \\\"type\\\": \\\"object\\\",\\n      \\\"additionalProperties\\\": false,\\n      \\\"required\\\": [\\\"name\\\", \\\"revision\\\", \\\"params\\\", \\\"dependencies\\\", \\\"steps\\\", \\\"order\\\", \\\"result\\\", \\\"result_type\\\"],\\n      \\\"properties\\\": {\\n        \\\"name\\\": {\\\"$ref\\\": \\\"#/$defs/name\\\"},\\n        \\\"revision\\\": {\\\"const\\\": 1},\\n        \\\"params\\\": {\\n          \\\"type\\\": \\\"array\\\",\\n          \\\"maxItems\\\": 8,\\n          \\\"items\\\": {\\n            \\\"type\\\": \\\"object\\\",\\n            \\\"additionalProperties\\\": false,\\n            \\\"required\\\": [\\\"name\\\", \\\"type\\\"],\\n            \\\"properties\\\": {\\n              \\\"name\\\": {\\\"$ref\\\": \\\"#/$defs/name\\\"},\\n              \\\"type\\\": {\\\"$ref\\\": \\\"#/$defs/type\\\"}\\n            }\\n          }\\n        },\\n        \\\"dependencies\\\": {\\n          \\\"type\\\": \\\"object\\\",\\n          \\\"maxProperties\\\": 8,\\n          \\\"propertyNames\\\": {\\\"$ref\\\": \\\"#/$defs/name\\\"},\\n          \\\"additionalProperties\\\": {\\\"$ref\\\": \\\"#/$defs/hash\\\"}\\n        },\\n        \\\"steps\\\": {\\n          \\\"type\\\": \\\"array\\\",\\n          \\\"minItems\\\": 1,\\n          \\\"maxItems\\\": 32,\\n          \\\"items\\\": {\\\"$ref\\\": \\\"#/$defs/step\\\"}\\n        },\\n        \\\"order\\\": {\\n          \\\"type\\\": \\\"array\\\",\\n          \\\"uniqueItems\\\": true,\\n          \\\"items\\\": {\\\"$ref\\\": \\\"#/$defs/name\\\"}\\n        },\\n        \\\"result\\\": {\\\"$ref\\\": \\\"#/$defs/expr\\\"},\\n        \\\"result_type\\\": {\\\"$ref\\\": \\\"#/$defs/type\\\"}\\n      }\\n    }\\n  },\\n  \\\"definition\\\": {\\n    \\\"name\\\": \\\"add_a_b\\\",\\n    \\\"revision\\\": 1,\\n    \\\"params\\\": [\\n      {\\n        \\\"name\\\": \\\"a\\\",\\n        \\\"type\\\": \\\"Int64\\\"\\n      },\\n      {\\n        \\\"name\\\": \\\"b\\\",\\n        \\\"type\\\": \\\"Int64\\\"\\n      }\\n    ],\\n    \\\"dependencies\\\": {\\n      \\\"a\\\": \\\"hash_a\\\",\\n      \\\"b\\\": \\\"hash_b\\\"\\n    },\\n    \\\"steps\\\": [\\n      {\\n        \\\"id\\\": \\\"set_a\\\",\\n        \\\"type\\\": \\\"value\\\",\\n        \\\"deps\\\": [],\\n        \\\"node\\\": {\\n          \\\"op\\\": \\\"value\\\",\\n          \\\"expr\\\": {\\n            \\\"const\\\": 7\\n          }\\n        }\\n      },\\n      {\\n        \\\"id\\\": \\\"set_b\\\",\\n        \\\"type\\\": \\\"value\\\",\\n        \\\"deps\\\": [],\\n        \\\"node\\\": {\\n          \\\"op\\\": \\\"value\\\",\\n          \\\"expr\\\": {\\n            \\\"const\\\": 11\\n          }\\n        }\\n      },\\n      {\\n        \\\"id\\\": \\\"add_a_b\\\",\\n        \\\"type\\\": \\\"value\\\",\\n        \\\"deps\\\": [\\\"set_a\\\", \\\"set_b\\\"],\\n        \\\"node\\\": {\\n          \\\"op\\\": \\\"value\\\",\\n          \\\"expr\\\": {\\n            \\\"add\\\": [\\n              {\\n                \\\"ref\\\": \\\"a\\\"\\n              },\\n              {\\n                \\\"ref\\\": \\\"b\\\"\\n              }\\n            ]\\n          }\\n        }\\n      }\\n    ],\\n    \\\"order\\\": [\\\"set_a\\\", \\\"set_b\\\", \\\"add_a_b\\\"],\\n    \\\"result\\\": {\\n      \\\"ref\\\": \\\"add_a_b\\\"\\n    },\\n    \\\"result_type\\\": \\\"Int64\\\"\\n  }\\n}\"},\"done\":true,\"done_reason\":\"stop\",\"total_duration\":25521630300,\"load_duration\":3641500,\"prompt_eval_count\":4098,\"prompt_eval_cached_count\":5,\"prompt_eval_duration\":964552000,\"eval_count\":1753,\"eval_duration\":24437864000}",
+  "response": {
+    "model": "qwen3:8b",
+    "created_at": "2026-10-09T01:03:50.65721Z",
+    "message": {
+      "role": "assistant",
+      "content": "{\n  \"$defs\": {\n    \"name\": {\n      \"type\": \"string\",\n      \"pattern\": \"^[A-Za-z][A-Za-z0-9_]{0,31}$\"\n    },\n    \"hash\": {\n      \"type\": \"string\",\n      \"pattern\": \"^[0-9a-f]{64}$\"\n    },\n    \"type\": {\n      \"enum\": [\"Int64\", \"Bool\", \"Unit\"]\n    },\n    \"expr\": {\n      \"oneOf\": [\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"required\": [\"ref\"],\n          \"properties\": {\n            \"ref\": {\"$ref\": \"#/$defs/name\"}\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"required\": [\"const\"],\n          \"properties\": {\n            \"const\": {\n              \"oneOf\": [\n                {\"type\": \"null\"},\n                {\"type\": \"boolean\"},\n                {\n                  \"type\": \"integer\",\n                  \"minimum\": -9223372036854775808,\n                  \"maximum\": 9223372036854775807\n                }\n              ]\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"minProperties\": 1,\n          \"maxProperties\": 1,\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"add\": {\"$ref\": \"#/$defs/binary\"},\n            \"le\": {\"$ref\": \"#/$defs/binary\"},\n            \"eq\": {\"$ref\": \"#/$defs/binary\"}\n          }\n        }\n      ]\n    },\n    \"binary\": {\n      \"type\": \"array\",\n      \"minItems\": 2,\n      \"maxItems\": 2,\n      \"items\": {\"$ref\": \"#/$defs/expr\"}\n    },\n    \"argument\": {\n      \"oneOf\": [\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"required\": [\"ref\"],\n          \"properties\": {\n            \"ref\": {\"$ref\": \"#/$defs/name\"}\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"required\": [\"const\"],\n          \"properties\": {\n            \"const\": {\n              \"oneOf\": [\n                {\"type\": \"null\"},\n                {\"type\": \"boolean\"},\n                {\n                  \"type\": \"integer\",\n                  \"minimum\": -9223372036854775808,\n                  \"maximum\": 9223372036854775807\n                }\n              ]\n            }\n          }\n        }\n      ]\n    },\n    \"node\": {\n      \"oneOf\": [\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"required\": [\"op\", \"codec\"],\n          \"properties\": {\n            \"op\": {\"const\": \"atom\"},\n            \"codec\": {\"const\": \"uint8\"}\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"required\": [\"op\", \"expr\"],\n          \"properties\": {\n            \"op\": {\"const\": \"value\"},\n            \"expr\": {\"$ref\": \"#/$defs/expr\"}\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"required\": [\"op\", \"test\", \"site\", \"code\"],\n          \"properties\": {\n            \"op\": {\"const\": \"check\"},\n            \"test\": {\"$ref\": \"#/$defs/expr\"},\n            \"site\": {\"$ref\": \"#/$defs/expr\"},\n            \"code\": {\"$ref\": \"#/$defs/name\"}\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"required\": [\"op\"],\n          \"properties\": {\n            \"op\": {\"const\": \"end\"}\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"required\": [\"op\", \"symbol\", \"identity\", \"args\"],\n          \"properties\": {\n            \"op\": {\"const\": \"compose\"},\n            \"symbol\": {\"$ref\": \"#/$defs/name\"},\n            \"identity\": {\"$ref\": \"#/$defs/hash\"},\n            \"args\": {\n              \"type\": \"object\",\n              \"maxProperties\": 8,\n              \"propertyNames\": {\"$ref\": \"#/$defs/name\"},\n              \"additionalProperties\": {\"$ref\": \"#/$defs/argument\"}\n            }\n          }\n        }\n      ]\n    },\n    \"step\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\"id\", \"type\", \"deps\", \"node\"],\n      \"properties\": {\n        \"id\": {\"$ref\": \"#/$defs/name\"},\n        \"type\": {\"$ref\": \"#/$defs/type\"},\n        \"deps\": {\n          \"type\": \"array\",\n          \"uniqueItems\": true,\n          \"items\": {\"$ref\": \"#/$defs/name\"}\n        },\n        \"node\": {\"$ref\": \"#/$defs/node\"}\n      }\n    },\n    \"definition\": {\n      \"type\": \"object\",\n      \"additionalProperties\": false,\n      \"required\": [\"name\", \"revision\", \"params\", \"dependencies\", \"steps\", \"order\", \"result\", \"result_type\"],\n      \"properties\": {\n        \"name\": {\"$ref\": \"#/$defs/name\"},\n        \"revision\": {\"const\": 1},\n        \"params\": {\n          \"type\": \"array\",\n          \"maxItems\": 8,\n          \"items\": {\n            \"type\": \"object\",\n            \"additionalProperties\": false,\n            \"required\": [\"name\", \"type\"],\n            \"properties\": {\n              \"name\": {\"$ref\": \"#/$defs/name\"},\n              \"type\": {\"$ref\": \"#/$defs/type\"}\n            }\n          }\n        },\n        \"dependencies\": {\n          \"type\": \"object\",\n          \"maxProperties\": 8,\n          \"propertyNames\": {\"$ref\": \"#/$defs/name\"},\n          \"additionalProperties\": {\"$ref\": \"#/$defs/hash\"}\n        },\n        \"steps\": {\n          \"type\": \"array\",\n          \"minItems\": 1,\n          \"maxItems\": 32,\n          \"items\": {\"$ref\": \"#/$defs/step\"}\n        },\n        \"order\": {\n          \"type\": \"array\",\n          \"uniqueItems\": true,\n          \"items\": {\"$ref\": \"#/$defs/name\"}\n        },\n        \"result\": {\"$ref\": \"#/$defs/expr\"},\n        \"result_type\": {\"$ref\": \"#/$defs/type\"}\n      }\n    }\n  },\n  \"definition\": {\n    \"name\": \"add_a_b\",\n    \"revision\": 1,\n    \"params\": [\n      {\n        \"name\": \"a\",\n        \"type\": \"Int64\"\n      },\n      {\n        \"name\": \"b\",\n        \"type\": \"Int64\"\n      }\n    ],\n    \"dependencies\": {\n      \"a\": \"hash_a\",\n      \"b\": \"hash_b\"\n    },\n    \"steps\": [\n      {\n        \"id\": \"set_a\",\n        \"type\": \"value\",\n        \"deps\": [],\n        \"node\": {\n          \"op\": \"value\",\n          \"expr\": {\n            \"const\": 7\n          }\n        }\n      },\n      {\n        \"id\": \"set_b\",\n        \"type\": \"value\",\n        \"deps\": [],\n        \"node\": {\n          \"op\": \"value\",\n          \"expr\": {\n            \"const\": 11\n          }\n        }\n      },\n      {\n        \"id\": \"add_a_b\",\n        \"type\": \"value\",\n        \"deps\": [\"set_a\", \"set_b\"],\n        \"node\": {\n          \"op\": \"value\",\n          \"expr\": {\n            \"add\": [\n              {\n                \"ref\": \"a\"\n              },\n              {\n                \"ref\": \"b\"\n              }\n            ]\n          }\n        }\n      }\n    ],\n    \"order\": [\"set_a\", \"set_b\", \"add_a_b\"],\n    \"result\": {\n      \"ref\": \"add_a_b\"\n    },\n    \"result_type\": \"Int64\"\n  }\n}"
+    },
+    "done": true,
+    "done_reason": "stop",
+    "total_duration": 25521630300,
+    "load_duration": 3641500,
+    "prompt_eval_count": 4098,
+    "prompt_eval_cached_count": 5,
+    "prompt_eval_duration": 964552000,
+    "eval_count": 1753,
+    "eval_duration": 24437864000
+  },
+  "response_headers": {
+    "content-type": "application/json; charset=utf-8"
+  },
+  "latency_seconds": 25.523307600058615,
+  "post_health": {
+    "/api/version": {
+      "version": "0.35.0"
+    },
+    "/api/ps": {
+      "models": [
+        {
+          "name": "qwen3:8b",
+          "model": "qwen3:8b",
+          "size": 6295440588,
+          "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen3",
+            "families": [
+              "qwen3"
+            ],
+            "parameter_size": "8.2B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-10-08T18:13:50.6577095-07:00",
+          "size_vram": 6295440588,
+          "context_length": 8192
+        }
+      ]
+    }
+  },
+  "resources": [
+    {
+      "timestamp": "2026-10-09T01:03:25.174942+00:00",
+      "ram_available_bytes": 11679051776,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:26.227454+00:00",
+      "ram_available_bytes": 11016351744,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 100, 30\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:27.281534+00:00",
+      "ram_available_bytes": 11032858624,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 98, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:28.335014+00:00",
+      "ram_available_bytes": 11035402240,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:29.388961+00:00",
+      "ram_available_bytes": 11028496384,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:30.442629+00:00",
+      "ram_available_bytes": 11027427328,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:31.496540+00:00",
+      "ram_available_bytes": 11022487552,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:32.549959+00:00",
+      "ram_available_bytes": 11022004224,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:33.604097+00:00",
+      "ram_available_bytes": 11022319616,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:34.658595+00:00",
+      "ram_available_bytes": 11023794176,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 98, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:35.712555+00:00",
+      "ram_available_bytes": 11024850944,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:36.765762+00:00",
+      "ram_available_bytes": 11025612800,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:37.819882+00:00",
+      "ram_available_bytes": 11029770240,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:38.873456+00:00",
+      "ram_available_bytes": 11026239488,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:39.943614+00:00",
+      "ram_available_bytes": 11028578304,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:40.997506+00:00",
+      "ram_available_bytes": 11014529024,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 98, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:42.051789+00:00",
+      "ram_available_bytes": 11031826432,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7530, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:43.105195+00:00",
+      "ram_available_bytes": 11026038784,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7540, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:44.159902+00:00",
+      "ram_available_bytes": 11026567168,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7540, 98, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:45.213536+00:00",
+      "ram_available_bytes": 11022159872,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7540, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72675328,
+      "server_private_bytes": 79925248,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:46.268192+00:00",
+      "ram_available_bytes": 11025969152,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7540, 98, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72699904,
+      "server_private_bytes": 79990784,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:47.321508+00:00",
+      "ram_available_bytes": 11025997824,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7540, 98, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72708096,
+      "server_private_bytes": 79998976,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:48.375128+00:00",
+      "ram_available_bytes": 11024760832,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7540, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72810496,
+      "server_private_bytes": 80113664,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:49.428950+00:00",
+      "ram_available_bytes": 11024818176,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7540, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72810496,
+      "server_private_bytes": 80113664,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    },
+    {
+      "timestamp": "2026-10-09T01:03:50.483518+00:00",
+      "ram_available_bytes": 11028885504,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7540, 97, 100\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 72818688,
+      "server_private_bytes": 80121856,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    }
+  ],
+  "log_byte_span": [
+    96375,
+    102318
+  ],
+  "tokens": {
+    "prompt_eval_count": 4098,
+    "prompt_eval_cached_count": 5,
+    "eval_count": 1753
+  },
+  "durations_ns": {
+    "total_duration": 25521630300,
+    "load_duration": 3641500,
+    "prompt_eval_duration": 964552000,
+    "eval_duration": 24437864000
+  }
+}

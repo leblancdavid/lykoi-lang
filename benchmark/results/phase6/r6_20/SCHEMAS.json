@@ -1,0 +1,2529 @@
+{
+  "definition": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "name",
+      "revision",
+      "params",
+      "dependencies",
+      "steps",
+      "order",
+      "result",
+      "result_type"
+    ],
+    "properties": {
+      "name": {
+        "$ref": "#/$defs/name"
+      },
+      "revision": {
+        "const": 1
+      },
+      "params": {
+        "type": "array",
+        "maxItems": 8,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "type"
+          ],
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/name"
+            },
+            "type": {
+              "$ref": "#/$defs/type"
+            }
+          }
+        }
+      },
+      "dependencies": {
+        "type": "object",
+        "maxProperties": 8,
+        "propertyNames": {
+          "$ref": "#/$defs/name"
+        },
+        "additionalProperties": {
+          "$ref": "#/$defs/hash"
+        }
+      },
+      "steps": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 32,
+        "items": {
+          "$ref": "#/$defs/step"
+        }
+      },
+      "order": {
+        "type": "array",
+        "uniqueItems": true,
+        "items": {
+          "$ref": "#/$defs/name"
+        }
+      },
+      "result": {
+        "$ref": "#/$defs/expr"
+      },
+      "result_type": {
+        "$ref": "#/$defs/type"
+      }
+    },
+    "$defs": {
+      "name": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+      },
+      "hash": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "type": {
+        "enum": [
+          "Int64",
+          "Bool",
+          "Unit"
+        ]
+      },
+      "expr": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "ref"
+            ],
+            "properties": {
+              "ref": {
+                "$ref": "#/$defs/name"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "const"
+            ],
+            "properties": {
+              "const": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "integer",
+                    "minimum": -9223372036854775808,
+                    "maximum": 9223372036854775807
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "minProperties": 1,
+            "maxProperties": 1,
+            "additionalProperties": false,
+            "properties": {
+              "add": {
+                "$ref": "#/$defs/binary"
+              },
+              "le": {
+                "$ref": "#/$defs/binary"
+              },
+              "eq": {
+                "$ref": "#/$defs/binary"
+              }
+            }
+          }
+        ]
+      },
+      "binary": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "$ref": "#/$defs/expr"
+        }
+      },
+      "argument": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "ref"
+            ],
+            "properties": {
+              "ref": {
+                "$ref": "#/$defs/name"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "const"
+            ],
+            "properties": {
+              "const": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "integer",
+                    "minimum": -9223372036854775808,
+                    "maximum": 9223372036854775807
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "node": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "op",
+              "codec"
+            ],
+            "properties": {
+              "op": {
+                "const": "atom"
+              },
+              "codec": {
+                "const": "uint8"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "op",
+              "expr"
+            ],
+            "properties": {
+              "op": {
+                "const": "value"
+              },
+              "expr": {
+                "$ref": "#/$defs/expr"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "op",
+              "test",
+              "site",
+              "code"
+            ],
+            "properties": {
+              "op": {
+                "const": "check"
+              },
+              "test": {
+                "$ref": "#/$defs/expr"
+              },
+              "site": {
+                "$ref": "#/$defs/expr"
+              },
+              "code": {
+                "$ref": "#/$defs/name"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "op"
+            ],
+            "properties": {
+              "op": {
+                "const": "end"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "op",
+              "symbol",
+              "identity",
+              "args"
+            ],
+            "properties": {
+              "op": {
+                "const": "compose"
+              },
+              "symbol": {
+                "$ref": "#/$defs/name"
+              },
+              "identity": {
+                "$ref": "#/$defs/hash"
+              },
+              "args": {
+                "type": "object",
+                "maxProperties": 8,
+                "propertyNames": {
+                  "$ref": "#/$defs/name"
+                },
+                "additionalProperties": {
+                  "$ref": "#/$defs/argument"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "step": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "type",
+          "deps",
+          "node"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/name"
+          },
+          "type": {
+            "$ref": "#/$defs/type"
+          },
+          "deps": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/name"
+            }
+          },
+          "node": {
+            "$ref": "#/$defs/node"
+          }
+        }
+      },
+      "definition": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "revision",
+          "params",
+          "dependencies",
+          "steps",
+          "order",
+          "result",
+          "result_type"
+        ],
+        "properties": {
+          "name": {
+            "$ref": "#/$defs/name"
+          },
+          "revision": {
+            "const": 1
+          },
+          "params": {
+            "type": "array",
+            "maxItems": 8,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "name",
+                "type"
+              ],
+              "properties": {
+                "name": {
+                  "$ref": "#/$defs/name"
+                },
+                "type": {
+                  "$ref": "#/$defs/type"
+                }
+              }
+            }
+          },
+          "dependencies": {
+            "type": "object",
+            "maxProperties": 8,
+            "propertyNames": {
+              "$ref": "#/$defs/name"
+            },
+            "additionalProperties": {
+              "$ref": "#/$defs/hash"
+            }
+          },
+          "steps": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 32,
+            "items": {
+              "$ref": "#/$defs/step"
+            }
+          },
+          "order": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/name"
+            }
+          },
+          "result": {
+            "$ref": "#/$defs/expr"
+          },
+          "result_type": {
+            "$ref": "#/$defs/type"
+          }
+        }
+      }
+    }
+  },
+  "stages": [
+    {
+      "type": "object",
+      "properties": {
+        "operations": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "atom",
+              "value",
+              "check",
+              "end",
+              "compose"
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "operations"
+      ],
+      "additionalProperties": false,
+      "$defs": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "type": {
+          "enum": [
+            "Int64",
+            "Bool",
+            "Unit"
+          ]
+        },
+        "expr": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ref"
+              ],
+              "properties": {
+                "ref": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "const"
+              ],
+              "properties": {
+                "const": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": -9223372036854775808,
+                      "maximum": 9223372036854775807
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "minProperties": 1,
+              "maxProperties": 1,
+              "additionalProperties": false,
+              "properties": {
+                "add": {
+                  "$ref": "#/$defs/binary"
+                },
+                "le": {
+                  "$ref": "#/$defs/binary"
+                },
+                "eq": {
+                  "$ref": "#/$defs/binary"
+                }
+              }
+            }
+          ]
+        },
+        "binary": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/expr"
+          }
+        },
+        "argument": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ref"
+              ],
+              "properties": {
+                "ref": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "const"
+              ],
+              "properties": {
+                "const": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": -9223372036854775808,
+                      "maximum": 9223372036854775807
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "node": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "codec"
+              ],
+              "properties": {
+                "op": {
+                  "const": "atom"
+                },
+                "codec": {
+                  "const": "uint8"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "expr"
+              ],
+              "properties": {
+                "op": {
+                  "const": "value"
+                },
+                "expr": {
+                  "$ref": "#/$defs/expr"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "test",
+                "site",
+                "code"
+              ],
+              "properties": {
+                "op": {
+                  "const": "check"
+                },
+                "test": {
+                  "$ref": "#/$defs/expr"
+                },
+                "site": {
+                  "$ref": "#/$defs/expr"
+                },
+                "code": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op"
+              ],
+              "properties": {
+                "op": {
+                  "const": "end"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "symbol",
+                "identity",
+                "args"
+              ],
+              "properties": {
+                "op": {
+                  "const": "compose"
+                },
+                "symbol": {
+                  "$ref": "#/$defs/name"
+                },
+                "identity": {
+                  "$ref": "#/$defs/hash"
+                },
+                "args": {
+                  "type": "object",
+                  "maxProperties": 8,
+                  "propertyNames": {
+                    "$ref": "#/$defs/name"
+                  },
+                  "additionalProperties": {
+                    "$ref": "#/$defs/argument"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "step": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "type",
+            "deps",
+            "node"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/name"
+            },
+            "type": {
+              "$ref": "#/$defs/type"
+            },
+            "deps": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/name"
+              }
+            },
+            "node": {
+              "$ref": "#/$defs/node"
+            }
+          }
+        },
+        "definition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "revision",
+            "params",
+            "dependencies",
+            "steps",
+            "order",
+            "result",
+            "result_type"
+          ],
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/name"
+            },
+            "revision": {
+              "const": 1
+            },
+            "params": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "type"
+                ],
+                "properties": {
+                  "name": {
+                    "$ref": "#/$defs/name"
+                  },
+                  "type": {
+                    "$ref": "#/$defs/type"
+                  }
+                }
+              }
+            },
+            "dependencies": {
+              "type": "object",
+              "maxProperties": 8,
+              "propertyNames": {
+                "$ref": "#/$defs/name"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/hash"
+              }
+            },
+            "steps": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": {
+                "$ref": "#/$defs/step"
+              }
+            },
+            "order": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/name"
+              }
+            },
+            "result": {
+              "$ref": "#/$defs/expr"
+            },
+            "result_type": {
+              "$ref": "#/$defs/type"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+        },
+        "revision": {
+          "const": 1
+        },
+        "params": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "type"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/name"
+              },
+              "type": {
+                "$ref": "#/$defs/type"
+              }
+            }
+          }
+        },
+        "dependencies": {
+          "type": "object",
+          "maxProperties": 8,
+          "propertyNames": {
+            "$ref": "#/$defs/name"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/hash"
+          }
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+              },
+              "type": {
+                "enum": [
+                  "Int64",
+                  "Bool",
+                  "Unit"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "type"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "result_type": {
+          "enum": [
+            "Int64",
+            "Bool",
+            "Unit"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "revision",
+        "params",
+        "dependencies",
+        "steps",
+        "result_type"
+      ],
+      "additionalProperties": false,
+      "$defs": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "type": {
+          "enum": [
+            "Int64",
+            "Bool",
+            "Unit"
+          ]
+        },
+        "expr": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ref"
+              ],
+              "properties": {
+                "ref": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "const"
+              ],
+              "properties": {
+                "const": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": -9223372036854775808,
+                      "maximum": 9223372036854775807
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "minProperties": 1,
+              "maxProperties": 1,
+              "additionalProperties": false,
+              "properties": {
+                "add": {
+                  "$ref": "#/$defs/binary"
+                },
+                "le": {
+                  "$ref": "#/$defs/binary"
+                },
+                "eq": {
+                  "$ref": "#/$defs/binary"
+                }
+              }
+            }
+          ]
+        },
+        "binary": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/expr"
+          }
+        },
+        "argument": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ref"
+              ],
+              "properties": {
+                "ref": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "const"
+              ],
+              "properties": {
+                "const": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": -9223372036854775808,
+                      "maximum": 9223372036854775807
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "node": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "codec"
+              ],
+              "properties": {
+                "op": {
+                  "const": "atom"
+                },
+                "codec": {
+                  "const": "uint8"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "expr"
+              ],
+              "properties": {
+                "op": {
+                  "const": "value"
+                },
+                "expr": {
+                  "$ref": "#/$defs/expr"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "test",
+                "site",
+                "code"
+              ],
+              "properties": {
+                "op": {
+                  "const": "check"
+                },
+                "test": {
+                  "$ref": "#/$defs/expr"
+                },
+                "site": {
+                  "$ref": "#/$defs/expr"
+                },
+                "code": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op"
+              ],
+              "properties": {
+                "op": {
+                  "const": "end"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "symbol",
+                "identity",
+                "args"
+              ],
+              "properties": {
+                "op": {
+                  "const": "compose"
+                },
+                "symbol": {
+                  "$ref": "#/$defs/name"
+                },
+                "identity": {
+                  "$ref": "#/$defs/hash"
+                },
+                "args": {
+                  "type": "object",
+                  "maxProperties": 8,
+                  "propertyNames": {
+                    "$ref": "#/$defs/name"
+                  },
+                  "additionalProperties": {
+                    "$ref": "#/$defs/argument"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "step": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "type",
+            "deps",
+            "node"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/name"
+            },
+            "type": {
+              "$ref": "#/$defs/type"
+            },
+            "deps": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/name"
+              }
+            },
+            "node": {
+              "$ref": "#/$defs/node"
+            }
+          }
+        },
+        "definition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "revision",
+            "params",
+            "dependencies",
+            "steps",
+            "order",
+            "result",
+            "result_type"
+          ],
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/name"
+            },
+            "revision": {
+              "const": 1
+            },
+            "params": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "type"
+                ],
+                "properties": {
+                  "name": {
+                    "$ref": "#/$defs/name"
+                  },
+                  "type": {
+                    "$ref": "#/$defs/type"
+                  }
+                }
+              }
+            },
+            "dependencies": {
+              "type": "object",
+              "maxProperties": 8,
+              "propertyNames": {
+                "$ref": "#/$defs/name"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/hash"
+              }
+            },
+            "steps": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": {
+                "$ref": "#/$defs/step"
+              }
+            },
+            "order": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/name"
+              }
+            },
+            "result": {
+              "$ref": "#/$defs/expr"
+            },
+            "result_type": {
+              "$ref": "#/$defs/type"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "deps": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+            },
+            "uniqueItems": true
+          }
+        }
+      },
+      "required": [
+        "deps"
+      ],
+      "additionalProperties": false,
+      "$defs": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "type": {
+          "enum": [
+            "Int64",
+            "Bool",
+            "Unit"
+          ]
+        },
+        "expr": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ref"
+              ],
+              "properties": {
+                "ref": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "const"
+              ],
+              "properties": {
+                "const": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": -9223372036854775808,
+                      "maximum": 9223372036854775807
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "minProperties": 1,
+              "maxProperties": 1,
+              "additionalProperties": false,
+              "properties": {
+                "add": {
+                  "$ref": "#/$defs/binary"
+                },
+                "le": {
+                  "$ref": "#/$defs/binary"
+                },
+                "eq": {
+                  "$ref": "#/$defs/binary"
+                }
+              }
+            }
+          ]
+        },
+        "binary": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/expr"
+          }
+        },
+        "argument": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ref"
+              ],
+              "properties": {
+                "ref": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "const"
+              ],
+              "properties": {
+                "const": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": -9223372036854775808,
+                      "maximum": 9223372036854775807
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "node": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "codec"
+              ],
+              "properties": {
+                "op": {
+                  "const": "atom"
+                },
+                "codec": {
+                  "const": "uint8"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "expr"
+              ],
+              "properties": {
+                "op": {
+                  "const": "value"
+                },
+                "expr": {
+                  "$ref": "#/$defs/expr"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "test",
+                "site",
+                "code"
+              ],
+              "properties": {
+                "op": {
+                  "const": "check"
+                },
+                "test": {
+                  "$ref": "#/$defs/expr"
+                },
+                "site": {
+                  "$ref": "#/$defs/expr"
+                },
+                "code": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op"
+              ],
+              "properties": {
+                "op": {
+                  "const": "end"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "symbol",
+                "identity",
+                "args"
+              ],
+              "properties": {
+                "op": {
+                  "const": "compose"
+                },
+                "symbol": {
+                  "$ref": "#/$defs/name"
+                },
+                "identity": {
+                  "$ref": "#/$defs/hash"
+                },
+                "args": {
+                  "type": "object",
+                  "maxProperties": 8,
+                  "propertyNames": {
+                    "$ref": "#/$defs/name"
+                  },
+                  "additionalProperties": {
+                    "$ref": "#/$defs/argument"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "step": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "type",
+            "deps",
+            "node"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/name"
+            },
+            "type": {
+              "$ref": "#/$defs/type"
+            },
+            "deps": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/name"
+              }
+            },
+            "node": {
+              "$ref": "#/$defs/node"
+            }
+          }
+        },
+        "definition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "revision",
+            "params",
+            "dependencies",
+            "steps",
+            "order",
+            "result",
+            "result_type"
+          ],
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/name"
+            },
+            "revision": {
+              "const": 1
+            },
+            "params": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "type"
+                ],
+                "properties": {
+                  "name": {
+                    "$ref": "#/$defs/name"
+                  },
+                  "type": {
+                    "$ref": "#/$defs/type"
+                  }
+                }
+              }
+            },
+            "dependencies": {
+              "type": "object",
+              "maxProperties": 8,
+              "propertyNames": {
+                "$ref": "#/$defs/name"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/hash"
+              }
+            },
+            "steps": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": {
+                "$ref": "#/$defs/step"
+              }
+            },
+            "order": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/name"
+              }
+            },
+            "result": {
+              "$ref": "#/$defs/expr"
+            },
+            "result_type": {
+              "$ref": "#/$defs/type"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/node"
+          }
+        }
+      },
+      "required": [
+        "nodes"
+      ],
+      "additionalProperties": false,
+      "$defs": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "type": {
+          "enum": [
+            "Int64",
+            "Bool",
+            "Unit"
+          ]
+        },
+        "expr": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ref"
+              ],
+              "properties": {
+                "ref": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "const"
+              ],
+              "properties": {
+                "const": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": -9223372036854775808,
+                      "maximum": 9223372036854775807
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "minProperties": 1,
+              "maxProperties": 1,
+              "additionalProperties": false,
+              "properties": {
+                "add": {
+                  "$ref": "#/$defs/binary"
+                },
+                "le": {
+                  "$ref": "#/$defs/binary"
+                },
+                "eq": {
+                  "$ref": "#/$defs/binary"
+                }
+              }
+            }
+          ]
+        },
+        "binary": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/expr"
+          }
+        },
+        "argument": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ref"
+              ],
+              "properties": {
+                "ref": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "const"
+              ],
+              "properties": {
+                "const": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": -9223372036854775808,
+                      "maximum": 9223372036854775807
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "node": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "codec"
+              ],
+              "properties": {
+                "op": {
+                  "const": "atom"
+                },
+                "codec": {
+                  "const": "uint8"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "expr"
+              ],
+              "properties": {
+                "op": {
+                  "const": "value"
+                },
+                "expr": {
+                  "$ref": "#/$defs/expr"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "test",
+                "site",
+                "code"
+              ],
+              "properties": {
+                "op": {
+                  "const": "check"
+                },
+                "test": {
+                  "$ref": "#/$defs/expr"
+                },
+                "site": {
+                  "$ref": "#/$defs/expr"
+                },
+                "code": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op"
+              ],
+              "properties": {
+                "op": {
+                  "const": "end"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "symbol",
+                "identity",
+                "args"
+              ],
+              "properties": {
+                "op": {
+                  "const": "compose"
+                },
+                "symbol": {
+                  "$ref": "#/$defs/name"
+                },
+                "identity": {
+                  "$ref": "#/$defs/hash"
+                },
+                "args": {
+                  "type": "object",
+                  "maxProperties": 8,
+                  "propertyNames": {
+                    "$ref": "#/$defs/name"
+                  },
+                  "additionalProperties": {
+                    "$ref": "#/$defs/argument"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "step": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "type",
+            "deps",
+            "node"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/name"
+            },
+            "type": {
+              "$ref": "#/$defs/type"
+            },
+            "deps": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/name"
+              }
+            },
+            "node": {
+              "$ref": "#/$defs/node"
+            }
+          }
+        },
+        "definition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "revision",
+            "params",
+            "dependencies",
+            "steps",
+            "order",
+            "result",
+            "result_type"
+          ],
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/name"
+            },
+            "revision": {
+              "const": 1
+            },
+            "params": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "type"
+                ],
+                "properties": {
+                  "name": {
+                    "$ref": "#/$defs/name"
+                  },
+                  "type": {
+                    "$ref": "#/$defs/type"
+                  }
+                }
+              }
+            },
+            "dependencies": {
+              "type": "object",
+              "maxProperties": 8,
+              "propertyNames": {
+                "$ref": "#/$defs/name"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/hash"
+              }
+            },
+            "steps": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": {
+                "$ref": "#/$defs/step"
+              }
+            },
+            "order": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/name"
+              }
+            },
+            "result": {
+              "$ref": "#/$defs/expr"
+            },
+            "result_type": {
+              "$ref": "#/$defs/type"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "order": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "order"
+      ],
+      "additionalProperties": false,
+      "$defs": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "type": {
+          "enum": [
+            "Int64",
+            "Bool",
+            "Unit"
+          ]
+        },
+        "expr": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ref"
+              ],
+              "properties": {
+                "ref": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "const"
+              ],
+              "properties": {
+                "const": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": -9223372036854775808,
+                      "maximum": 9223372036854775807
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "minProperties": 1,
+              "maxProperties": 1,
+              "additionalProperties": false,
+              "properties": {
+                "add": {
+                  "$ref": "#/$defs/binary"
+                },
+                "le": {
+                  "$ref": "#/$defs/binary"
+                },
+                "eq": {
+                  "$ref": "#/$defs/binary"
+                }
+              }
+            }
+          ]
+        },
+        "binary": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/expr"
+          }
+        },
+        "argument": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ref"
+              ],
+              "properties": {
+                "ref": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "const"
+              ],
+              "properties": {
+                "const": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": -9223372036854775808,
+                      "maximum": 9223372036854775807
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "node": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "codec"
+              ],
+              "properties": {
+                "op": {
+                  "const": "atom"
+                },
+                "codec": {
+                  "const": "uint8"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "expr"
+              ],
+              "properties": {
+                "op": {
+                  "const": "value"
+                },
+                "expr": {
+                  "$ref": "#/$defs/expr"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "test",
+                "site",
+                "code"
+              ],
+              "properties": {
+                "op": {
+                  "const": "check"
+                },
+                "test": {
+                  "$ref": "#/$defs/expr"
+                },
+                "site": {
+                  "$ref": "#/$defs/expr"
+                },
+                "code": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op"
+              ],
+              "properties": {
+                "op": {
+                  "const": "end"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "symbol",
+                "identity",
+                "args"
+              ],
+              "properties": {
+                "op": {
+                  "const": "compose"
+                },
+                "symbol": {
+                  "$ref": "#/$defs/name"
+                },
+                "identity": {
+                  "$ref": "#/$defs/hash"
+                },
+                "args": {
+                  "type": "object",
+                  "maxProperties": 8,
+                  "propertyNames": {
+                    "$ref": "#/$defs/name"
+                  },
+                  "additionalProperties": {
+                    "$ref": "#/$defs/argument"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "step": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "type",
+            "deps",
+            "node"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/name"
+            },
+            "type": {
+              "$ref": "#/$defs/type"
+            },
+            "deps": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/name"
+              }
+            },
+            "node": {
+              "$ref": "#/$defs/node"
+            }
+          }
+        },
+        "definition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "revision",
+            "params",
+            "dependencies",
+            "steps",
+            "order",
+            "result",
+            "result_type"
+          ],
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/name"
+            },
+            "revision": {
+              "const": 1
+            },
+            "params": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "type"
+                ],
+                "properties": {
+                  "name": {
+                    "$ref": "#/$defs/name"
+                  },
+                  "type": {
+                    "$ref": "#/$defs/type"
+                  }
+                }
+              }
+            },
+            "dependencies": {
+              "type": "object",
+              "maxProperties": 8,
+              "propertyNames": {
+                "$ref": "#/$defs/name"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/hash"
+              }
+            },
+            "steps": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": {
+                "$ref": "#/$defs/step"
+              }
+            },
+            "order": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/name"
+              }
+            },
+            "result": {
+              "$ref": "#/$defs/expr"
+            },
+            "result_type": {
+              "$ref": "#/$defs/type"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/$defs/expr"
+        }
+      },
+      "required": [
+        "result"
+      ],
+      "additionalProperties": false,
+      "$defs": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "type": {
+          "enum": [
+            "Int64",
+            "Bool",
+            "Unit"
+          ]
+        },
+        "expr": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ref"
+              ],
+              "properties": {
+                "ref": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "const"
+              ],
+              "properties": {
+                "const": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": -9223372036854775808,
+                      "maximum": 9223372036854775807
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "minProperties": 1,
+              "maxProperties": 1,
+              "additionalProperties": false,
+              "properties": {
+                "add": {
+                  "$ref": "#/$defs/binary"
+                },
+                "le": {
+                  "$ref": "#/$defs/binary"
+                },
+                "eq": {
+                  "$ref": "#/$defs/binary"
+                }
+              }
+            }
+          ]
+        },
+        "binary": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/expr"
+          }
+        },
+        "argument": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ref"
+              ],
+              "properties": {
+                "ref": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "const"
+              ],
+              "properties": {
+                "const": {
+                  "oneOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "integer",
+                      "minimum": -9223372036854775808,
+                      "maximum": 9223372036854775807
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "node": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "codec"
+              ],
+              "properties": {
+                "op": {
+                  "const": "atom"
+                },
+                "codec": {
+                  "const": "uint8"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "expr"
+              ],
+              "properties": {
+                "op": {
+                  "const": "value"
+                },
+                "expr": {
+                  "$ref": "#/$defs/expr"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "test",
+                "site",
+                "code"
+              ],
+              "properties": {
+                "op": {
+                  "const": "check"
+                },
+                "test": {
+                  "$ref": "#/$defs/expr"
+                },
+                "site": {
+                  "$ref": "#/$defs/expr"
+                },
+                "code": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op"
+              ],
+              "properties": {
+                "op": {
+                  "const": "end"
+                }
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "op",
+                "symbol",
+                "identity",
+                "args"
+              ],
+              "properties": {
+                "op": {
+                  "const": "compose"
+                },
+                "symbol": {
+                  "$ref": "#/$defs/name"
+                },
+                "identity": {
+                  "$ref": "#/$defs/hash"
+                },
+                "args": {
+                  "type": "object",
+                  "maxProperties": 8,
+                  "propertyNames": {
+                    "$ref": "#/$defs/name"
+                  },
+                  "additionalProperties": {
+                    "$ref": "#/$defs/argument"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "step": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "type",
+            "deps",
+            "node"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/name"
+            },
+            "type": {
+              "$ref": "#/$defs/type"
+            },
+            "deps": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/name"
+              }
+            },
+            "node": {
+              "$ref": "#/$defs/node"
+            }
+          }
+        },
+        "definition": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "revision",
+            "params",
+            "dependencies",
+            "steps",
+            "order",
+            "result",
+            "result_type"
+          ],
+          "properties": {
+            "name": {
+              "$ref": "#/$defs/name"
+            },
+            "revision": {
+              "const": 1
+            },
+            "params": {
+              "type": "array",
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "type"
+                ],
+                "properties": {
+                  "name": {
+                    "$ref": "#/$defs/name"
+                  },
+                  "type": {
+                    "$ref": "#/$defs/type"
+                  }
+                }
+              }
+            },
+            "dependencies": {
+              "type": "object",
+              "maxProperties": 8,
+              "propertyNames": {
+                "$ref": "#/$defs/name"
+              },
+              "additionalProperties": {
+                "$ref": "#/$defs/hash"
+              }
+            },
+            "steps": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 32,
+              "items": {
+                "$ref": "#/$defs/step"
+              }
+            },
+            "order": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/name"
+              }
+            },
+            "result": {
+              "$ref": "#/$defs/expr"
+            },
+            "result_type": {
+              "$ref": "#/$defs/type"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

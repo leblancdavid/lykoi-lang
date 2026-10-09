@@ -1,0 +1,103 @@
+{
+  "original_round": "R6.19",
+  "historical_log_sha256": "5463e99309beb45912c5f9fa2eca61216760fb1d65f63d015fc8dc3fd81d9d1b",
+  "failed_request_sha256": "3b2cecc1bdb8bc0e18e8375ec721a613ef31dcbbb1ba140f40350666aa9a9b8d",
+  "failed_request_provenance": "historical deterministic reconstruction, never replayed",
+  "original_response_body": null,
+  "original_failed_call_tokens": null,
+  "original_error_sha256": "f42cfaa69744273c7ddbc7a34251c322046f4201feee4241d7a5eb81f8e9cb20",
+  "tail": [
+    {
+      "line": 968,
+      "text": "srv  server_strea: conv_id= (empty=1)"
+    },
+    {
+      "line": 969,
+      "text": "slot get_availabl: id  0 | task -1 |  - checking sim = 0.600 (1662/2771) > 0.100"
+    },
+    {
+      "line": 970,
+      "text": "slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.600 (> 0.100 thold), f_keep = 0.612"
+    },
+    {
+      "line": 971,
+      "text": "slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist "
+    },
+    {
+      "line": 972,
+      "text": "slot launch_slot_: id  0 | task -1 | sampler params: "
+    },
+    {
+      "line": 973,
+      "text": "\trepeat_last_n = 64, repeat_penalty = 1.000, frequency_penalty = 0.000, presence_penalty = 0.000"
+    },
+    {
+      "line": 974,
+      "text": "\tdry_multiplier = 0.000, dry_base = 1.750, dry_allowed_length = 2, dry_penalty_last_n = 64"
+    },
+    {
+      "line": 975,
+      "text": "\ttop_k = 20, top_p = 0.950, min_p = 0.000, xtc_probability = 0.000, xtc_threshold = 0.100, typical_p = 1.000, top_n_sigma = -1.000, temp = 0.000"
+    },
+    {
+      "line": 976,
+      "text": "\tmirostat = 0, mirostat_lr = 0.100, mirostat_ent = 5.000, adaptive_target = -1.000, adaptive_decay = 0.900"
+    },
+    {
+      "line": 977,
+      "text": "slot launch_slot_: id  0 | task 11826 | processing task, is_child = 0"
+    },
+    {
+      "line": 978,
+      "text": "slot   operator(): id  0 | task 11826 | new prompt, n_ctx_slot = 8192, n_keep = 4, task.n_tokens = 2771"
+    },
+    {
+      "line": 979,
+      "text": "slot   operator(): id  0 | task 11826 | cached n_tokens = 1662, memory_seq_rm [1662, end)"
+    },
+    {
+      "line": 980,
+      "text": "slot   operator(): id  0 | task 11826 | cached n_tokens = 2686, memory_seq_rm [2686, end)"
+    },
+    {
+      "line": 981,
+      "text": "slot init_sampler: id  0 | task 11826 | init sampler, took 0.22 ms, tokens: text = 2771, total = 2771"
+    },
+    {
+      "line": 982,
+      "text": "slot print_timing: id  0 | task 11826 | n_gen =    230, tg =  76.13 t/s, tg_3s =  76.47 t/s"
+    },
+    {
+      "line": 983,
+      "text": "slot print_timing: id  0 | task 11826 | n_gen =    457, tg =  75.87 t/s, tg_3s =  75.61 t/s"
+    },
+    {
+      "line": 984,
+      "text": "slot print_timing: id  0 | task 11826 | n_gen =    683, tg =  75.63 t/s, tg_3s =  75.14 t/s"
+    },
+    {
+      "line": 985,
+      "text": "slot print_timing: id  0 | task 11826 | n_gen =    908, tg =  75.40 t/s, tg_3s =  74.73 t/s"
+    },
+    {
+      "line": 986,
+      "text": "[GIN] 2026/10/08 - 17:37:00 | 500 |   15.1508252s |       127.0.0.1 | POST     \"/api/chat\""
+    }
+  ],
+  "observed_context": {
+    "n_ctx_slot": 8192,
+    "prompt_tokens": 2771,
+    "last_logged_generated_tokens": 908
+  },
+  "context_note": "last logged generation plus prompt is3679; no logged context exhaustion, later generation unknown",
+  "previous_successful_calls": "two immediate prior HTTP200 requests; historical warm generation ~75tokens/s",
+  "current_statuses": {
+    "200": 49
+  },
+  "longest_current_output_tokens": 2457,
+  "cause": "UNDETERMINED: HTTP endpoint reports failure during active generation; no causal runtime error/body/dump retained",
+  "most_likely_cause": "No specific mechanism can be ranked responsibly from available evidence. Inference-serving path failed; OOM, backend disconnect/crash, output/parser failure remain unproved hypotheses.",
+  "evidence_against_assumptions": "historical no OOM log; current sampled VRAM/RAM not exhausted and2457-token outputs succeed; current resources cannot reconstruct historical peaks",
+  "reproduction": "NOT_REPRODUCED by49 neutral requests; scored historical request not replayed",
+  "next_diagnostic": "qualify compact nontruncating prompts first, then separately authorize longer sequential neutral soak with full body capture and backend process/exit sampling"
+}

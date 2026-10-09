@@ -1,0 +1,76 @@
+[
+  {
+    "name": "Echo",
+    "revision": 1,
+    "params": [
+      {
+        "name": "p",
+        "type": "Int64"
+      }
+    ],
+    "dependencies": {},
+    "steps": [
+      {
+        "id": "copy",
+        "type": "Int64",
+        "deps": [
+          "p"
+        ],
+        "node": {
+          "op": "value",
+          "expr": {
+            "ref": "p"
+          }
+        }
+      }
+    ],
+    "order": [
+      "copy"
+    ],
+    "result": {
+      "ref": "copy"
+    },
+    "result_type": "Int64",
+    "identity": "9529a64dad1c8edecf22a227069f74c6697942b1cb80b64cb34c84b6bbcda295"
+  },
+  {
+    "name": "Relay",
+    "revision": 1,
+    "params": [
+      {
+        "name": "q",
+        "type": "Int64"
+      }
+    ],
+    "dependencies": {
+      "Echo": "9529a64dad1c8edecf22a227069f74c6697942b1cb80b64cb34c84b6bbcda295"
+    },
+    "steps": [
+      {
+        "id": "inner",
+        "type": "Int64",
+        "deps": [
+          "q"
+        ],
+        "node": {
+          "op": "compose",
+          "symbol": "Echo",
+          "identity": "9529a64dad1c8edecf22a227069f74c6697942b1cb80b64cb34c84b6bbcda295",
+          "args": {
+            "p": {
+              "ref": "q"
+            }
+          }
+        }
+      }
+    ],
+    "order": [
+      "inner"
+    ],
+    "result": {
+      "ref": "inner"
+    },
+    "result_type": "Int64",
+    "identity": "f58c52f3b5b42aee50ce55e3d1c88c9c70d136f0819235dba4dd87749ce2e1be"
+  }
+]

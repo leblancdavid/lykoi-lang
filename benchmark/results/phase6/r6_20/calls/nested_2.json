@@ -1,0 +1,181 @@
+{
+  "id": "nested_2",
+  "timestamp": "2026-10-09T01:02:34.684321+00:00",
+  "request": {
+    "model": "qwen3:8b",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Return exactly {\"child\": {\"child\": {\"child\": {\"child\": {\"child\": {\"child\": {\"leaf\": 29}}}}}}}"
+      }
+    ],
+    "options": {
+      "temperature": 0,
+      "seed": 619,
+      "num_ctx": 8192,
+      "num_predict": 4096,
+      "top_k": 20,
+      "top_p": 0.95,
+      "repeat_penalty": 1
+    },
+    "think": false,
+    "stream": false,
+    "keep_alive": "10m",
+    "format": {
+      "type": "object",
+      "properties": {
+        "child": {
+          "type": "object",
+          "properties": {
+            "child": {
+              "type": "object",
+              "properties": {
+                "child": {
+                  "type": "object",
+                  "properties": {
+                    "child": {
+                      "type": "object",
+                      "properties": {
+                        "child": {
+                          "type": "object",
+                          "properties": {
+                            "child": {
+                              "type": "object",
+                              "properties": {
+                                "leaf": {
+                                  "type": "integer"
+                                }
+                              },
+                              "required": [
+                                "leaf"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "required": [
+                            "child"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "child"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "child"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "child"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "child"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "child"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "prompt_sha256": "c1c6802b8976499603eaa6b92391a02046f58557784c8268b9af0809af0742d9",
+  "schema_sha256": "c2f8bb06ec22484cc923366f2c20d115d07d9aeb04895ca513af222717444bad",
+  "http_status": 200,
+  "error": null,
+  "response_body": "{\"model\":\"qwen3:8b\",\"created_at\":\"2026-10-09T01:02:35.0270064Z\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"child\\\": {\\\"child\\\": {\\\"child\\\": {\\\"child\\\": {\\\"child\\\": {\\\"child\\\": {\\\"leaf\\\": 29}}}}}}}\"},\"done\":true,\"done_reason\":\"stop\",\"total_duration\":342411100,\"load_duration\":3000300,\"prompt_eval_count\":45,\"prompt_eval_cached_count\":44,\"prompt_eval_duration\":12499000,\"eval_count\":28,\"eval_duration\":324509000}",
+  "response": {
+    "model": "qwen3:8b",
+    "created_at": "2026-10-09T01:02:35.0270064Z",
+    "message": {
+      "role": "assistant",
+      "content": "{\"child\": {\"child\": {\"child\": {\"child\": {\"child\": {\"child\": {\"leaf\": 29}}}}}}}"
+    },
+    "done": true,
+    "done_reason": "stop",
+    "total_duration": 342411100,
+    "load_duration": 3000300,
+    "prompt_eval_count": 45,
+    "prompt_eval_cached_count": 44,
+    "prompt_eval_duration": 12499000,
+    "eval_count": 28,
+    "eval_duration": 324509000
+  },
+  "response_headers": {
+    "content-type": "application/json; charset=utf-8"
+  },
+  "latency_seconds": 0.34349210001528263,
+  "post_health": {
+    "/api/version": {
+      "version": "0.35.0"
+    },
+    "/api/ps": {
+      "models": [
+        {
+          "name": "qwen3:8b",
+          "model": "qwen3:8b",
+          "size": 6295440588,
+          "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+          "details": {
+            "parent_model": "",
+            "format": "gguf",
+            "family": "qwen3",
+            "families": [
+              "qwen3"
+            ],
+            "parameter_size": "8.2B",
+            "quantization_level": "Q4_K_M"
+          },
+          "expires_at": "2026-10-08T18:12:35.0270064-07:00",
+          "size_vram": 6295440588,
+          "context_length": 8192
+        }
+      ]
+    }
+  },
+  "resources": [
+    {
+      "timestamp": "2026-10-09T01:02:34.723331+00:00",
+      "ram_available_bytes": 13304778752,
+      "ram_total_bytes": 33408004096,
+      "gpu": {
+        "command": [
+          "nvidia-smi",
+          "--query-gpu=memory.total,memory.used,utilization.gpu,utilization.memory",
+          "--format=csv,noheader,nounits"
+        ],
+        "returncode": 0,
+        "stdout": "12282, 7518, 18, 4\n",
+        "stderr": ""
+      },
+      "server_pid": 44676,
+      "server_working_set_bytes": 71737344,
+      "server_private_bytes": 78778368,
+      "process_memory_note": "Ollama parent only; runner included in system/GPU observations, per-runner memory unavailable here"
+    }
+  ],
+  "log_byte_span": [
+    38793,
+    41083
+  ],
+  "tokens": {
+    "prompt_eval_count": 45,
+    "prompt_eval_cached_count": 44,
+    "eval_count": 28
+  },
+  "durations_ns": {
+    "total_duration": 342411100,
+    "load_duration": 3000300,
+    "prompt_eval_duration": 12499000,
+    "eval_duration": 324509000
+  }
+}
