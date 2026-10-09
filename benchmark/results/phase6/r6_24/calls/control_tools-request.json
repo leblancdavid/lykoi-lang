@@ -1,0 +1,96 @@
+{
+  "request": {
+    "model": "qwen3:8b",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Call echo with text local24."
+      }
+    ],
+    "think": false,
+    "stream": true,
+    "keep_alive": "10m",
+    "options": {
+      "temperature": 0,
+      "seed": 624,
+      "num_ctx": 8192,
+      "num_predict": 64,
+      "top_k": 20,
+      "top_p": 0.95,
+      "repeat_penalty": 1
+    },
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "echo",
+          "description": "Select this inert tool with the requested text.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "text"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    ]
+  },
+  "serialized": "{\"model\":\"qwen3:8b\",\"messages\":[{\"role\":\"user\",\"content\":\"Call echo with text local24.\"}],\"think\":false,\"stream\":true,\"keep_alive\":\"10m\",\"options\":{\"temperature\":0,\"seed\":624,\"num_ctx\":8192,\"num_predict\":64,\"top_k\":20,\"top_p\":0.95,\"repeat_penalty\":1},\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"echo\",\"description\":\"Select this inert tool with the requested text.\",\"parameters\":{\"type\":\"object\",\"properties\":{\"text\":{\"type\":\"string\"}},\"required\":[\"text\"],\"additionalProperties\":false}}}]}",
+  "request_sha256": "3ebd3d451c1e16c829ba5e19e79efdf58202c422cf1109436ff65907eb464c3a",
+  "preflight": {
+    "endpoint": {
+      "base": "http://127.0.0.1:64932",
+      "port": 64932,
+      "context": 8192,
+      "startup": "time=2026-10-09T06:24:26.629-07:00 level=INFO source=llama_server.go:436 msg=\"starting llama-server\" cmd=\"C:\\\\Users\\\\lblan\\\\AppData\\\\Local\\\\Programs\\\\Ollama\\\\lib\\\\ollama\\\\llama-server.exe --model D:\\\\Software\\\\.ollama\\\\models\\\\blobs\\\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f --port 64932 --host 127.0.0.1 --no-webui --offline -c 8192 -np 1 --log-verbosity 4 --no-log-prefix --no-log-timestamps --no-jinja --chat-template chatml --load-mode none --flash-attn auto -b 1024 -ub 1024 --context-shift --keep 4\"",
+      "process": {
+        "ProcessId": 51912,
+        "ParentProcessId": 37220,
+        "Name": "llama-server.exe",
+        "CommandLine": "C:\\Users\\lblan\\AppData\\Local\\Programs\\Ollama\\lib\\ollama\\llama-server.exe --model D:\\Software\\.ollama\\models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f --port 64932 --host 127.0.0.1 --no-webui --offline -c 8192 -np 1 --log-verbosity 4 --no-log-prefix --no-log-timestamps --no-jinja --chat-template chatml --load-mode none --flash-attn auto -b 1024 -ub 1024 --context-shift --keep 4"
+      },
+      "health": {
+        "status": "ok"
+      },
+      "props": {
+        "model_path": "D:\\Software\\.ollama\\models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f",
+        "model_alias": "D:\\Software\\.ollama\\models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f",
+        "total_slots": 1
+      },
+      "loaded": {
+        "models": [
+          {
+            "name": "qwen3:8b",
+            "model": "qwen3:8b",
+            "size": 6295440588,
+            "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+            "details": {
+              "parent_model": "",
+              "format": "gguf",
+              "family": "qwen3",
+              "families": [
+                "qwen3"
+              ],
+              "parameter_size": "8.2B",
+              "quantization_level": "Q4_K_M"
+            },
+            "expires_at": "2026-10-09T06:34:28.3386845-07:00",
+            "size_vram": 6295440588,
+            "context_length": 8192
+          }
+        ]
+      },
+      "verified": true,
+      "verification_seconds": 3.249063999974169,
+      "verification": "fresh log + active loopback listener owner/parent + pinned model path + loaded digest/context + backend health/props + owner recheck"
+    },
+    "proxy_tokens": 67,
+    "template_reserve": 1024
+  }
+}
