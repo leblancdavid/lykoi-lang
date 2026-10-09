@@ -1,0 +1,87 @@
+{
+  "definitions": [
+    {
+      "name": "TwiceRight",
+      "revision": 1,
+      "params": [
+        {
+          "name": "left",
+          "type": "Int64"
+        },
+        {
+          "name": "right",
+          "type": "Int64"
+        }
+      ],
+      "dependencies": {},
+      "steps": [
+        {
+          "id": "s001",
+          "type": "Int64",
+          "deps": [
+            "left",
+            "right"
+          ],
+          "node": {
+            "op": "value",
+            "expr": {
+              "add": [
+                {
+                  "ref": "left"
+                },
+                {
+                  "ref": "right"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "s002",
+          "type": "Int64",
+          "deps": [
+            "s001",
+            "right"
+          ],
+          "node": {
+            "op": "value",
+            "expr": {
+              "add": [
+                {
+                  "ref": "s001"
+                },
+                {
+                  "ref": "right"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "order": [
+        "s001",
+        "s002"
+      ],
+      "result": {
+        "ref": "s002"
+      },
+      "result_type": "Int64",
+      "identity": "8fb37edc2225819adbdac606deeea1eff8e4059669db6a89d240a675bda1678b"
+    }
+  ],
+  "target": "TwiceRight",
+  "identifier_map": {
+    "TwiceRight": [
+      {
+        "scope": "TwiceRight",
+        "alias": "sum",
+        "generated": "s001"
+      },
+      {
+        "scope": "TwiceRight",
+        "alias": "result",
+        "generated": "s002"
+      }
+    ]
+  }
+}

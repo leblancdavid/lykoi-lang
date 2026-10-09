@@ -1,0 +1,82 @@
+{
+  "timestamp": "2026-10-09T15:37:52.695230+00:00",
+  "command": [
+    "opencode",
+    "run",
+    "--pure",
+    "--model",
+    "openai/gpt-6.1-sol",
+    "--variant",
+    "high",
+    "--agent",
+    "r628",
+    "--format",
+    "json",
+    "--title",
+    "R6.28 single semantic attempt"
+  ],
+  "stdin_prompt": "R6.28 authorized real semantic construction, not inert qualification.\nCreate target TwiceRight(left:Int64,right:Int64). Compute the sum of left and right as a stored Int64 value, then add right to that stored sum as a second dependent Int64 operation. Return the second value. Exactly two ordered value operations in one definition. Keep native signed64 addition overflow and fixed UInt16BE encoding errors; add no guards or other operations. Inputs are typed literals supplied by the host, with empty byte input.\nUse the actual Lykoi tools to declare, construct, finalize and validate. Maximum12 semantic calls and4 correction turns. Stop on completed validation. Dependencies list every referenced input or prior alias exactly; expressions use $name or [add|le|eq, operand, operand]. Input names can be referenced in expressions. Values are immutable. define_result finalizes without later edits. validate_candidate seals and expands the real artifact; target must return Int64. No earlier solution is supplied. The tools perform only local deterministic symbolic construction, without external effects. Do not answer with a proposed JSON program instead of calling tools.",
+  "cwd": "C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode",
+  "configuration": {
+    "$schema": "https://opencode.ai/config.json",
+    "model": "openai/gpt-6.1-sol",
+    "small_model": "openai/gpt-6.1-sol",
+    "share": "disabled",
+    "autoupdate": false,
+    "snapshot": false,
+    "instructions": [],
+    "plugin": [],
+    "lsp": false,
+    "formatter": false,
+    "compaction": {
+      "auto": false
+    },
+    "enabled_providers": [
+      "openai"
+    ],
+    "permission": {
+      "*": "deny",
+      "lykoi_*": "allow"
+    },
+    "tools": {
+      "*": false,
+      "lykoi_*": true
+    },
+    "agent": {
+      "r628": {
+        "mode": "primary",
+        "model": "openai/gpt-6.1-sol",
+        "variant": "high",
+        "steps": 17,
+        "options": {
+          "maxOutputTokens": 4096
+        },
+        "permission": {
+          "*": "deny",
+          "lykoi_*": "allow"
+        },
+        "prompt": "Construct the requested symbolic program using only the four Lykoi semantic tools. They mutate a real in-memory construction session and validate via the deterministic backend. Stop immediately on completed validation. Do not use files, shell, other tools or delegate. Maximum12 tool calls and4 correction turns."
+      }
+    },
+    "mcp": {
+      "lykoi": {
+        "type": "local",
+        "command": [
+          "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+          "D:\\Dev\\axiom\\benchmark\\results\\phase6\\r6_28\\experiment.py",
+          "bridge"
+        ],
+        "enabled": true
+      },
+      "codegraphcontext": {
+        "enabled": false
+      },
+      "shadcn": {
+        "enabled": false
+      },
+      "pixellab": {
+        "enabled": false
+      }
+    }
+  }
+}

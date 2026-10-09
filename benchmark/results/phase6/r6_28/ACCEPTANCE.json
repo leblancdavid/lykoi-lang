@@ -1,0 +1,130 @@
+{
+  "cases": [
+    {
+      "args": {
+        "left": 7,
+        "right": 11
+      },
+      "expected": {
+        "status": "success",
+        "value": 29,
+        "output_hex": "001d",
+        "consumed": 0
+      }
+    },
+    {
+      "args": {
+        "left": 0,
+        "right": 0
+      },
+      "expected": {
+        "status": "success",
+        "value": 0,
+        "output_hex": "0000",
+        "consumed": 0
+      }
+    },
+    {
+      "args": {
+        "left": 65535,
+        "right": 0
+      },
+      "expected": {
+        "status": "success",
+        "value": 65535,
+        "output_hex": "ffff",
+        "consumed": 0
+      }
+    },
+    {
+      "args": {
+        "left": 1,
+        "right": 32767
+      },
+      "expected": {
+        "status": "success",
+        "value": 65535,
+        "output_hex": "ffff",
+        "consumed": 0
+      }
+    },
+    {
+      "args": {
+        "left": -2,
+        "right": 1
+      },
+      "expected": {
+        "status": "success",
+        "value": 0,
+        "output_hex": "0000",
+        "consumed": 0
+      }
+    },
+    {
+      "args": {
+        "left": 0,
+        "right": 32768
+      },
+      "expected": {
+        "status": "reject",
+        "code": "ENCODE_RANGE",
+        "stage": "encode"
+      }
+    },
+    {
+      "args": {
+        "left": -1,
+        "right": 0
+      },
+      "expected": {
+        "status": "reject",
+        "code": "ENCODE_RANGE",
+        "stage": "encode"
+      }
+    },
+    {
+      "args": {
+        "left": 9223372036854775807,
+        "right": 1
+      },
+      "expected": {
+        "status": "reject",
+        "code": "OVERFLOW",
+        "stage": "structure"
+      }
+    },
+    {
+      "args": {
+        "left": 9223372036854775806,
+        "right": 1
+      },
+      "expected": {
+        "status": "reject",
+        "code": "OVERFLOW",
+        "stage": "structure"
+      }
+    },
+    {
+      "args": {
+        "left": true,
+        "right": 1
+      },
+      "expected": {
+        "status": "wrapper_reject",
+        "code": "TYPE"
+      }
+    },
+    {
+      "args": {
+        "left": 1
+      },
+      "expected": {
+        "status": "wrapper_reject",
+        "code": "SHAPE"
+      }
+    }
+  ],
+  "all_required": true,
+  "ordering": "First stored sum then dependent second value; no topological resort",
+  "repeat_comparison": "Entire envelopes, entry traces, package and expanded identities; timing excluded"
+}
