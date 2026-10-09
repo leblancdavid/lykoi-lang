@@ -1,0 +1,83 @@
+{
+  "version": "construct-1",
+  "definitions": [
+    {
+      "name": "ConfirmedIncrement",
+      "inputs": [
+        [
+          "enabled",
+          "Bool"
+        ],
+        [
+          "a",
+          "Int64"
+        ],
+        [
+          "b",
+          "Int64"
+        ],
+        [
+          "expected",
+          "Int64"
+        ]
+      ],
+      "ops": [
+        [
+          "enabled_check",
+          "check",
+          "$enabled",
+          0,
+          "Disabled",
+          [
+            "enabled"
+          ]
+        ],
+        [
+          "sum",
+          "value",
+          "Int64",
+          [
+            "add",
+            "$a",
+            "$b"
+          ],
+          [
+            "a",
+            "b"
+          ]
+        ],
+        [
+          "expected_check",
+          "check",
+          [
+            "eq",
+            "$sum",
+            "$expected"
+          ],
+          0,
+          "Mismatch",
+          [
+            "sum",
+            "expected"
+          ]
+        ],
+        [
+          "incremented",
+          "value",
+          "Int64",
+          [
+            "add",
+            "$sum",
+            1
+          ],
+          [
+            "sum"
+          ]
+        ]
+      ],
+      "result": "$incremented",
+      "result_type": "Int64"
+    }
+  ],
+  "target": "ConfirmedIncrement"
+}

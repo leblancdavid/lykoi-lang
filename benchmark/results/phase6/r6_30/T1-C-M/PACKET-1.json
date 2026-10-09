@@ -1,0 +1,83 @@
+{
+  "version": "construct-1",
+  "definitions": [
+    {
+      "name": "CapacityFeeAudited",
+      "inputs": [
+        [
+          "load",
+          "Int64"
+        ],
+        [
+          "reserve",
+          "Int64"
+        ],
+        [
+          "cap",
+          "Int64"
+        ],
+        [
+          "permit",
+          "Bool"
+        ]
+      ],
+      "ops": [
+        [
+          "total",
+          "value",
+          "Int64",
+          [
+            "add",
+            "$load",
+            "$reserve"
+          ],
+          [
+            "load",
+            "reserve"
+          ]
+        ],
+        [
+          "capacity_check",
+          "check",
+          [
+            "le",
+            "$total",
+            "$cap"
+          ],
+          0,
+          "CapacityExceeded",
+          [
+            "total",
+            "cap"
+          ]
+        ],
+        [
+          "fee_total",
+          "value",
+          "Int64",
+          [
+            "add",
+            "$total",
+            3
+          ],
+          [
+            "total"
+          ]
+        ],
+        [
+          "audit_check",
+          "check",
+          "$permit",
+          0,
+          "AuditDenied",
+          [
+            "permit"
+          ]
+        ]
+      ],
+      "result": "$fee_total",
+      "result_type": "Int64"
+    }
+  ],
+  "target": "CapacityFeeAudited"
+}

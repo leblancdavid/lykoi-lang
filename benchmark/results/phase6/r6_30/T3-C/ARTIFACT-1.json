@@ -1,0 +1,152 @@
+{
+  "definitions": [
+    {
+      "name": "FloorThenCeiling",
+      "revision": 1,
+      "params": [
+        {
+          "name": "seed",
+          "type": "Int64"
+        },
+        {
+          "name": "delta",
+          "type": "Int64"
+        },
+        {
+          "name": "floor",
+          "type": "Int64"
+        }
+      ],
+      "dependencies": {},
+      "steps": [
+        {
+          "id": "s001",
+          "type": "Int64",
+          "deps": [
+            "seed",
+            "delta"
+          ],
+          "node": {
+            "op": "value",
+            "expr": {
+              "add": [
+                {
+                  "ref": "seed"
+                },
+                {
+                  "ref": "delta"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "s002",
+          "type": "Unit",
+          "deps": [
+            "floor",
+            "s001"
+          ],
+          "node": {
+            "op": "check",
+            "test": {
+              "le": [
+                {
+                  "ref": "floor"
+                },
+                {
+                  "ref": "s001"
+                }
+              ]
+            },
+            "site": {
+              "const": 0
+            },
+            "code": "BelowFloor"
+          }
+        },
+        {
+          "id": "s003",
+          "type": "Int64",
+          "deps": [
+            "s001",
+            "delta"
+          ],
+          "node": {
+            "op": "value",
+            "expr": {
+              "add": [
+                {
+                  "ref": "s001"
+                },
+                {
+                  "ref": "delta"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "s004",
+          "type": "Unit",
+          "deps": [
+            "s003"
+          ],
+          "node": {
+            "op": "check",
+            "test": {
+              "le": [
+                {
+                  "ref": "s003"
+                },
+                {
+                  "const": 65535
+                }
+              ]
+            },
+            "site": {
+              "const": 0
+            },
+            "code": "AboveCeiling"
+          }
+        }
+      ],
+      "order": [
+        "s001",
+        "s002",
+        "s003",
+        "s004"
+      ],
+      "result": {
+        "ref": "s003"
+      },
+      "result_type": "Int64",
+      "identity": "6a624c40a338d20b8100e85df08cf406b39a645be6237d98c3185e040d90d906"
+    }
+  ],
+  "target": "FloorThenCeiling",
+  "identifier_map": {
+    "FloorThenCeiling": [
+      {
+        "scope": "FloorThenCeiling",
+        "alias": "first_sum",
+        "generated": "s001"
+      },
+      {
+        "scope": "FloorThenCeiling",
+        "alias": "floor_check",
+        "generated": "s002"
+      },
+      {
+        "scope": "FloorThenCeiling",
+        "alias": "second_sum",
+        "generated": "s003"
+      },
+      {
+        "scope": "FloorThenCeiling",
+        "alias": "ceiling_check",
+        "generated": "s004"
+      }
+    ]
+  }
+}

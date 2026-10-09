@@ -1,0 +1,84 @@
+{
+  "version": "construct-1",
+  "definitions": [
+    {
+      "name": "FloorThenCeiling",
+      "inputs": [
+        [
+          "seed",
+          "Int64"
+        ],
+        [
+          "delta",
+          "Int64"
+        ],
+        [
+          "floor",
+          "Int64"
+        ]
+      ],
+      "ops": [
+        [
+          "first_sum",
+          "value",
+          "Int64",
+          [
+            "add",
+            "$seed",
+            "$delta"
+          ],
+          [
+            "seed",
+            "delta"
+          ]
+        ],
+        [
+          "floor_check",
+          "check",
+          [
+            "le",
+            "$floor",
+            "$first_sum"
+          ],
+          0,
+          "BelowFloor",
+          [
+            "floor",
+            "first_sum"
+          ]
+        ],
+        [
+          "second_sum",
+          "value",
+          "Int64",
+          [
+            "add",
+            "$first_sum",
+            "$delta"
+          ],
+          [
+            "first_sum",
+            "delta"
+          ]
+        ],
+        [
+          "ceiling_check",
+          "check",
+          [
+            "le",
+            "$second_sum",
+            65535
+          ],
+          0,
+          "AboveCeiling",
+          [
+            "second_sum"
+          ]
+        ]
+      ],
+      "result": "$second_sum",
+      "result_type": "Int64"
+    }
+  ],
+  "target": "FloorThenCeiling"
+}

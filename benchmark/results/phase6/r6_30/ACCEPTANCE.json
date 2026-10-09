@@ -1,0 +1,1221 @@
+{
+  "base": {
+    "T1": [
+      {
+        "id": "T1-0",
+        "args": {
+          "load": 2,
+          "reserve": 5,
+          "cap": 7
+        },
+        "expected": {
+          "status": "success",
+          "value": 10,
+          "output_hex": "000a",
+          "consumed": 0
+        }
+      },
+      {
+        "id": "T1-1",
+        "args": {
+          "load": -3,
+          "reserve": 0,
+          "cap": 0
+        },
+        "expected": {
+          "status": "success",
+          "value": 0,
+          "output_hex": "0000",
+          "consumed": 0
+        }
+      },
+      {
+        "id": "T1-2",
+        "args": {
+          "load": 65532,
+          "reserve": 0,
+          "cap": 65532
+        },
+        "expected": {
+          "status": "success",
+          "value": 65535,
+          "output_hex": "ffff",
+          "consumed": 0
+        }
+      },
+      {
+        "id": "T1-3",
+        "args": {
+          "load": 1,
+          "reserve": 1,
+          "cap": 1
+        },
+        "expected": {
+          "status": "reject",
+          "code": "CapacityExceeded",
+          "stage": "validation",
+          "step": 1
+        }
+      },
+      {
+        "id": "T1-4",
+        "args": {
+          "load": 9223372036854775807,
+          "reserve": 1,
+          "cap": 0
+        },
+        "expected": {
+          "status": "reject",
+          "code": "OVERFLOW",
+          "stage": "structure",
+          "step": 0
+        }
+      },
+      {
+        "id": "T1-5",
+        "args": {
+          "load": 9223372036854775807,
+          "reserve": 0,
+          "cap": 9223372036854775807
+        },
+        "expected": {
+          "status": "reject",
+          "code": "OVERFLOW",
+          "stage": "structure",
+          "step": 2
+        }
+      },
+      {
+        "id": "T1-6",
+        "args": {
+          "load": 9223372036854775807,
+          "reserve": 0,
+          "cap": 0
+        },
+        "expected": {
+          "status": "reject",
+          "code": "CapacityExceeded",
+          "stage": "validation",
+          "step": 1
+        }
+      },
+      {
+        "id": "T1-7",
+        "args": {
+          "load": -5,
+          "reserve": 0,
+          "cap": 0
+        },
+        "expected": {
+          "status": "reject",
+          "code": "ENCODE_RANGE",
+          "stage": "encode",
+          "step": null
+        }
+      },
+      {
+        "id": "T1-8",
+        "args": {
+          "load": 65533,
+          "reserve": 0,
+          "cap": 9223372036854775807
+        },
+        "expected": {
+          "status": "reject",
+          "code": "ENCODE_RANGE",
+          "stage": "encode",
+          "step": null
+        }
+      },
+      {
+        "id": "T1-9",
+        "args": {
+          "load": -9223372036854775808,
+          "reserve": -1,
+          "cap": 0
+        },
+        "expected": {
+          "status": "reject",
+          "code": "OVERFLOW",
+          "stage": "structure",
+          "step": 0
+        }
+      },
+      {
+        "id": "T1-10",
+        "args": {
+          "load": true,
+          "reserve": 5,
+          "cap": 7
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "TYPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T1-11",
+        "args": {
+          "load": "3",
+          "reserve": 5,
+          "cap": 7
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "TYPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T1-12",
+        "args": {
+          "load": null,
+          "reserve": 5,
+          "cap": 7
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "TYPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T1-13",
+        "args": {
+          "load": 1.5,
+          "reserve": 5,
+          "cap": 7
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "SHAPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T1-14",
+        "args": {
+          "load": 9223372036854775808,
+          "reserve": 5,
+          "cap": 7
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "TYPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T1-15",
+        "args": {
+          "reserve": 5,
+          "cap": 7
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "SHAPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T1-16",
+        "args": {
+          "load": 2,
+          "reserve": 5,
+          "cap": 7,
+          "extra": 0
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "SHAPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T1-17",
+        "args": {
+          "reserve": null,
+          "cap": 7
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "SHAPE",
+          "stage": null,
+          "step": null
+        }
+      }
+    ],
+    "T2": [
+      {
+        "id": "T2-0",
+        "args": {
+          "enabled": true,
+          "a": 2,
+          "b": 3,
+          "expected": 5
+        },
+        "expected": {
+          "status": "success",
+          "value": 6,
+          "output_hex": "0006",
+          "consumed": 0
+        }
+      },
+      {
+        "id": "T2-1",
+        "args": {
+          "enabled": true,
+          "a": -1,
+          "b": 0,
+          "expected": -1
+        },
+        "expected": {
+          "status": "success",
+          "value": 0,
+          "output_hex": "0000",
+          "consumed": 0
+        }
+      },
+      {
+        "id": "T2-2",
+        "args": {
+          "enabled": true,
+          "a": 65534,
+          "b": 0,
+          "expected": 65534
+        },
+        "expected": {
+          "status": "success",
+          "value": 65535,
+          "output_hex": "ffff",
+          "consumed": 0
+        }
+      },
+      {
+        "id": "T2-3",
+        "args": {
+          "enabled": false,
+          "a": 9223372036854775807,
+          "b": 1,
+          "expected": 0
+        },
+        "expected": {
+          "status": "reject",
+          "code": "Disabled",
+          "stage": "validation",
+          "step": 0
+        }
+      },
+      {
+        "id": "T2-4",
+        "args": {
+          "enabled": true,
+          "a": 9223372036854775807,
+          "b": 1,
+          "expected": 0
+        },
+        "expected": {
+          "status": "reject",
+          "code": "OVERFLOW",
+          "stage": "structure",
+          "step": 1
+        }
+      },
+      {
+        "id": "T2-5",
+        "args": {
+          "enabled": true,
+          "a": 3,
+          "b": 4,
+          "expected": 8
+        },
+        "expected": {
+          "status": "reject",
+          "code": "Mismatch",
+          "stage": "validation",
+          "step": 2
+        }
+      },
+      {
+        "id": "T2-6",
+        "args": {
+          "enabled": true,
+          "a": 9223372036854775807,
+          "b": 0,
+          "expected": 0
+        },
+        "expected": {
+          "status": "reject",
+          "code": "Mismatch",
+          "stage": "validation",
+          "step": 2
+        }
+      },
+      {
+        "id": "T2-7",
+        "args": {
+          "enabled": true,
+          "a": 9223372036854775807,
+          "b": 0,
+          "expected": 9223372036854775807
+        },
+        "expected": {
+          "status": "reject",
+          "code": "OVERFLOW",
+          "stage": "structure",
+          "step": 3
+        }
+      },
+      {
+        "id": "T2-8",
+        "args": {
+          "enabled": true,
+          "a": -2,
+          "b": 0,
+          "expected": -2
+        },
+        "expected": {
+          "status": "reject",
+          "code": "ENCODE_RANGE",
+          "stage": "encode",
+          "step": null
+        }
+      },
+      {
+        "id": "T2-9",
+        "args": {
+          "enabled": true,
+          "a": 65535,
+          "b": 0,
+          "expected": 65535
+        },
+        "expected": {
+          "status": "reject",
+          "code": "ENCODE_RANGE",
+          "stage": "encode",
+          "step": null
+        }
+      },
+      {
+        "id": "T2-10",
+        "args": {
+          "enabled": true,
+          "a": true,
+          "b": 3,
+          "expected": 5
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "TYPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T2-11",
+        "args": {
+          "enabled": true,
+          "a": "3",
+          "b": 3,
+          "expected": 5
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "TYPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T2-12",
+        "args": {
+          "enabled": true,
+          "a": null,
+          "b": 3,
+          "expected": 5
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "TYPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T2-13",
+        "args": {
+          "enabled": true,
+          "a": 1.5,
+          "b": 3,
+          "expected": 5
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "SHAPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T2-14",
+        "args": {
+          "enabled": true,
+          "a": 9223372036854775808,
+          "b": 3,
+          "expected": 5
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "TYPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T2-15",
+        "args": {
+          "enabled": 1,
+          "a": 2,
+          "b": 3,
+          "expected": 5
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "TYPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T2-16",
+        "args": {
+          "enabled": true,
+          "b": 3,
+          "expected": 5
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "SHAPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T2-17",
+        "args": {
+          "enabled": true,
+          "a": 2,
+          "b": 3,
+          "expected": 5,
+          "extra": 0
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "SHAPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T2-18",
+        "args": {
+          "enabled": null,
+          "b": 3,
+          "expected": 5
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "SHAPE",
+          "stage": null,
+          "step": null
+        }
+      }
+    ],
+    "T3": [
+      {
+        "id": "T3-0",
+        "args": {
+          "seed": 5,
+          "delta": 2,
+          "floor": 7
+        },
+        "expected": {
+          "status": "success",
+          "value": 9,
+          "output_hex": "0009",
+          "consumed": 0
+        }
+      },
+      {
+        "id": "T3-1",
+        "args": {
+          "seed": 0,
+          "delta": 0,
+          "floor": 0
+        },
+        "expected": {
+          "status": "success",
+          "value": 0,
+          "output_hex": "0000",
+          "consumed": 0
+        }
+      },
+      {
+        "id": "T3-2",
+        "args": {
+          "seed": 65533,
+          "delta": 1,
+          "floor": 0
+        },
+        "expected": {
+          "status": "success",
+          "value": 65535,
+          "output_hex": "ffff",
+          "consumed": 0
+        }
+      },
+      {
+        "id": "T3-3",
+        "args": {
+          "seed": -1,
+          "delta": 0,
+          "floor": -1
+        },
+        "expected": {
+          "status": "reject",
+          "code": "ENCODE_RANGE",
+          "stage": "encode",
+          "step": null
+        }
+      },
+      {
+        "id": "T3-4",
+        "args": {
+          "seed": 9223372036854775807,
+          "delta": 1,
+          "floor": 0
+        },
+        "expected": {
+          "status": "reject",
+          "code": "OVERFLOW",
+          "stage": "structure",
+          "step": 0
+        }
+      },
+      {
+        "id": "T3-5",
+        "args": {
+          "seed": 9223372036854775806,
+          "delta": 1,
+          "floor": 9223372036854775807
+        },
+        "expected": {
+          "status": "reject",
+          "code": "OVERFLOW",
+          "stage": "structure",
+          "step": 2
+        }
+      },
+      {
+        "id": "T3-6",
+        "args": {
+          "seed": -9223372036854775808,
+          "delta": -1,
+          "floor": 0
+        },
+        "expected": {
+          "status": "reject",
+          "code": "OVERFLOW",
+          "stage": "structure",
+          "step": 0
+        }
+      },
+      {
+        "id": "T3-7",
+        "args": {
+          "seed": -9223372036854775807,
+          "delta": -1,
+          "floor": -9223372036854775808
+        },
+        "expected": {
+          "status": "reject",
+          "code": "OVERFLOW",
+          "stage": "structure",
+          "step": 2
+        }
+      },
+      {
+        "id": "T3-8",
+        "args": {
+          "seed": 0,
+          "delta": -1,
+          "floor": 0
+        },
+        "expected": {
+          "status": "reject",
+          "code": "BelowFloor",
+          "stage": "validation",
+          "step": 1
+        }
+      },
+      {
+        "id": "T3-9",
+        "args": {
+          "seed": 65535,
+          "delta": 1,
+          "floor": 0
+        },
+        "expected": {
+          "status": "reject",
+          "code": "AboveCeiling",
+          "stage": "validation",
+          "step": 3
+        }
+      },
+      {
+        "id": "T3-10",
+        "args": {
+          "seed": 9223372036854775806,
+          "delta": 1,
+          "floor": 9223372036854775806
+        },
+        "expected": {
+          "status": "reject",
+          "code": "OVERFLOW",
+          "stage": "structure",
+          "step": 2
+        }
+      },
+      {
+        "id": "T3-11",
+        "args": {
+          "seed": true,
+          "delta": 2,
+          "floor": 7
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "TYPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T3-12",
+        "args": {
+          "seed": "3",
+          "delta": 2,
+          "floor": 7
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "TYPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T3-13",
+        "args": {
+          "seed": null,
+          "delta": 2,
+          "floor": 7
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "TYPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T3-14",
+        "args": {
+          "seed": 1.5,
+          "delta": 2,
+          "floor": 7
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "SHAPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T3-15",
+        "args": {
+          "seed": 9223372036854775808,
+          "delta": 2,
+          "floor": 7
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "TYPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T3-16",
+        "args": {
+          "delta": 2,
+          "floor": 7
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "SHAPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T3-17",
+        "args": {
+          "seed": 5,
+          "delta": 2,
+          "floor": 7,
+          "extra": 0
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "SHAPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T3-18",
+        "args": {
+          "delta": null,
+          "floor": 7
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "SHAPE",
+          "stage": null,
+          "step": null
+        }
+      }
+    ]
+  },
+  "modified": {
+    "T1": [
+      {
+        "id": "T1-M-0",
+        "args": {
+          "load": 2,
+          "reserve": 5,
+          "cap": 7,
+          "permit": true
+        },
+        "expected": {
+          "status": "success",
+          "value": 10,
+          "output_hex": "000a",
+          "consumed": 0
+        }
+      },
+      {
+        "id": "T1-M-1",
+        "args": {
+          "load": -3,
+          "reserve": 0,
+          "cap": 0,
+          "permit": true
+        },
+        "expected": {
+          "status": "success",
+          "value": 0,
+          "output_hex": "0000",
+          "consumed": 0
+        }
+      },
+      {
+        "id": "T1-M-2",
+        "args": {
+          "load": 65532,
+          "reserve": 0,
+          "cap": 65532,
+          "permit": true
+        },
+        "expected": {
+          "status": "success",
+          "value": 65535,
+          "output_hex": "ffff",
+          "consumed": 0
+        }
+      },
+      {
+        "id": "T1-M-3",
+        "args": {
+          "load": 1,
+          "reserve": 1,
+          "cap": 1,
+          "permit": true
+        },
+        "expected": {
+          "status": "reject",
+          "code": "CapacityExceeded",
+          "stage": "validation",
+          "step": 1
+        }
+      },
+      {
+        "id": "T1-M-4",
+        "args": {
+          "load": 9223372036854775807,
+          "reserve": 1,
+          "cap": 0,
+          "permit": true
+        },
+        "expected": {
+          "status": "reject",
+          "code": "OVERFLOW",
+          "stage": "structure",
+          "step": 0
+        }
+      },
+      {
+        "id": "T1-M-5",
+        "args": {
+          "load": 9223372036854775807,
+          "reserve": 0,
+          "cap": 9223372036854775807,
+          "permit": true
+        },
+        "expected": {
+          "status": "reject",
+          "code": "OVERFLOW",
+          "stage": "structure",
+          "step": 2
+        }
+      },
+      {
+        "id": "T1-M-6",
+        "args": {
+          "load": 9223372036854775807,
+          "reserve": 0,
+          "cap": 0,
+          "permit": true
+        },
+        "expected": {
+          "status": "reject",
+          "code": "CapacityExceeded",
+          "stage": "validation",
+          "step": 1
+        }
+      },
+      {
+        "id": "T1-M-7",
+        "args": {
+          "load": -5,
+          "reserve": 0,
+          "cap": 0,
+          "permit": true
+        },
+        "expected": {
+          "status": "reject",
+          "code": "ENCODE_RANGE",
+          "stage": "encode",
+          "step": null
+        }
+      },
+      {
+        "id": "T1-M-8",
+        "args": {
+          "load": 65533,
+          "reserve": 0,
+          "cap": 9223372036854775807,
+          "permit": true
+        },
+        "expected": {
+          "status": "reject",
+          "code": "ENCODE_RANGE",
+          "stage": "encode",
+          "step": null
+        }
+      },
+      {
+        "id": "T1-M-9",
+        "args": {
+          "load": -9223372036854775808,
+          "reserve": -1,
+          "cap": 0,
+          "permit": true
+        },
+        "expected": {
+          "status": "reject",
+          "code": "OVERFLOW",
+          "stage": "structure",
+          "step": 0
+        }
+      },
+      {
+        "id": "T1-M-10",
+        "args": {
+          "load": 1,
+          "reserve": 2,
+          "cap": 3,
+          "permit": false
+        },
+        "expected": {
+          "status": "reject",
+          "code": "AuditDenied",
+          "stage": "validation",
+          "step": 3
+        }
+      },
+      {
+        "id": "T1-M-11",
+        "args": {
+          "load": 9223372036854775807,
+          "reserve": 1,
+          "cap": 0,
+          "permit": false
+        },
+        "expected": {
+          "status": "reject",
+          "code": "OVERFLOW",
+          "stage": "structure",
+          "step": 0
+        }
+      },
+      {
+        "id": "T1-M-12",
+        "args": {
+          "load": 65533,
+          "reserve": 0,
+          "cap": 9223372036854775807,
+          "permit": false
+        },
+        "expected": {
+          "status": "reject",
+          "code": "AuditDenied",
+          "stage": "validation",
+          "step": 3
+        }
+      },
+      {
+        "id": "T1-M-13",
+        "args": {
+          "load": 1,
+          "reserve": 2,
+          "cap": 3,
+          "permit": 1
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "TYPE",
+          "stage": null,
+          "step": null
+        }
+      },
+      {
+        "id": "T1-M-14",
+        "args": {
+          "load": 1,
+          "reserve": 2,
+          "cap": 3
+        },
+        "expected": {
+          "status": "wrapper_reject",
+          "code": "SHAPE",
+          "stage": null,
+          "step": null
+        }
+      }
+    ],
+    "T2": [
+      {
+        "id": "T2-M-0",
+        "args": {
+          "enabled": true,
+          "a": 2,
+          "b": 3,
+          "expected": 5
+        },
+        "expected": {
+          "status": "success",
+          "value": 8,
+          "output_hex": "0008",
+          "consumed": 0
+        }
+      },
+      {
+        "id": "T2-M-1",
+        "args": {
+          "enabled": true,
+          "a": -1,
+          "b": 0,
+          "expected": -1
+        },
+        "expected": {
+          "status": "success",
+          "value": 2,
+          "output_hex": "0002",
+          "consumed": 0
+        }
+      },
+      {
+        "id": "T2-M-2",
+        "args": {
+          "enabled": true,
+          "a": 65534,
+          "b": 0,
+          "expected": 65534
+        },
+        "expected": {
+          "status": "reject",
+          "code": "PremiumLimit",
+          "stage": "validation",
+          "step": 5
+        }
+      },
+      {
+        "id": "T2-M-3",
+        "args": {
+          "enabled": false,
+          "a": 9223372036854775807,
+          "b": 1,
+          "expected": 0
+        },
+        "expected": {
+          "status": "reject",
+          "code": "Disabled",
+          "stage": "validation",
+          "step": 0
+        }
+      },
+      {
+        "id": "T2-M-4",
+        "args": {
+          "enabled": true,
+          "a": 9223372036854775807,
+          "b": 1,
+          "expected": 0
+        },
+        "expected": {
+          "status": "reject",
+          "code": "OVERFLOW",
+          "stage": "structure",
+          "step": 1
+        }
+      },
+      {
+        "id": "T2-M-5",
+        "args": {
+          "enabled": true,
+          "a": 3,
+          "b": 4,
+          "expected": 8
+        },
+        "expected": {
+          "status": "reject",
+          "code": "Mismatch",
+          "stage": "validation",
+          "step": 2
+        }
+      },
+      {
+        "id": "T2-M-6",
+        "args": {
+          "enabled": true,
+          "a": 9223372036854775807,
+          "b": 0,
+          "expected": 0
+        },
+        "expected": {
+          "status": "reject",
+          "code": "Mismatch",
+          "stage": "validation",
+          "step": 2
+        }
+      },
+      {
+        "id": "T2-M-7",
+        "args": {
+          "enabled": true,
+          "a": 9223372036854775807,
+          "b": 0,
+          "expected": 9223372036854775807
+        },
+        "expected": {
+          "status": "reject",
+          "code": "OVERFLOW",
+          "stage": "structure",
+          "step": 3
+        }
+      },
+      {
+        "id": "T2-M-8",
+        "args": {
+          "enabled": true,
+          "a": -2,
+          "b": 0,
+          "expected": -2
+        },
+        "expected": {
+          "status": "success",
+          "value": 1,
+          "output_hex": "0001",
+          "consumed": 0
+        }
+      },
+      {
+        "id": "T2-M-9",
+        "args": {
+          "enabled": true,
+          "a": 65535,
+          "b": 0,
+          "expected": 65535
+        },
+        "expected": {
+          "status": "reject",
+          "code": "PremiumLimit",
+          "stage": "validation",
+          "step": 5
+        }
+      },
+      {
+        "id": "T2-M-10",
+        "args": {
+          "enabled": true,
+          "a": 997,
+          "b": 0,
+          "expected": 997
+        },
+        "expected": {
+          "status": "success",
+          "value": 1000,
+          "output_hex": "03e8",
+          "consumed": 0
+        }
+      },
+      {
+        "id": "T2-M-11",
+        "args": {
+          "enabled": true,
+          "a": 998,
+          "b": 0,
+          "expected": 998
+        },
+        "expected": {
+          "status": "reject",
+          "code": "PremiumLimit",
+          "stage": "validation",
+          "step": 5
+        }
+      }
+    ]
+  },
+  "oracle": "explicit mathematical oracle in frozen experiment.py; conventional host rules independently cross-checked against native wrapper/VM controls"
+}

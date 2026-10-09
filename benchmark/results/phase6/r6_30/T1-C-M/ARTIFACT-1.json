@@ -1,0 +1,148 @@
+{
+  "definitions": [
+    {
+      "name": "CapacityFeeAudited",
+      "revision": 1,
+      "params": [
+        {
+          "name": "load",
+          "type": "Int64"
+        },
+        {
+          "name": "reserve",
+          "type": "Int64"
+        },
+        {
+          "name": "cap",
+          "type": "Int64"
+        },
+        {
+          "name": "permit",
+          "type": "Bool"
+        }
+      ],
+      "dependencies": {},
+      "steps": [
+        {
+          "id": "s001",
+          "type": "Int64",
+          "deps": [
+            "load",
+            "reserve"
+          ],
+          "node": {
+            "op": "value",
+            "expr": {
+              "add": [
+                {
+                  "ref": "load"
+                },
+                {
+                  "ref": "reserve"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "s002",
+          "type": "Unit",
+          "deps": [
+            "s001",
+            "cap"
+          ],
+          "node": {
+            "op": "check",
+            "test": {
+              "le": [
+                {
+                  "ref": "s001"
+                },
+                {
+                  "ref": "cap"
+                }
+              ]
+            },
+            "site": {
+              "const": 0
+            },
+            "code": "CapacityExceeded"
+          }
+        },
+        {
+          "id": "s003",
+          "type": "Int64",
+          "deps": [
+            "s001"
+          ],
+          "node": {
+            "op": "value",
+            "expr": {
+              "add": [
+                {
+                  "ref": "s001"
+                },
+                {
+                  "const": 3
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "s004",
+          "type": "Unit",
+          "deps": [
+            "permit"
+          ],
+          "node": {
+            "op": "check",
+            "test": {
+              "ref": "permit"
+            },
+            "site": {
+              "const": 0
+            },
+            "code": "AuditDenied"
+          }
+        }
+      ],
+      "order": [
+        "s001",
+        "s002",
+        "s003",
+        "s004"
+      ],
+      "result": {
+        "ref": "s003"
+      },
+      "result_type": "Int64",
+      "identity": "8f16bdd53485f9c7ce14aceb4e78967449f854dac51f86e505a37ebc618fa03b"
+    }
+  ],
+  "target": "CapacityFeeAudited",
+  "identifier_map": {
+    "CapacityFeeAudited": [
+      {
+        "scope": "CapacityFeeAudited",
+        "alias": "total",
+        "generated": "s001"
+      },
+      {
+        "scope": "CapacityFeeAudited",
+        "alias": "capacity_check",
+        "generated": "s002"
+      },
+      {
+        "scope": "CapacityFeeAudited",
+        "alias": "fee_total",
+        "generated": "s003"
+      },
+      {
+        "scope": "CapacityFeeAudited",
+        "alias": "audit_check",
+        "generated": "s004"
+      }
+    ]
+  }
+}

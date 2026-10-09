@@ -1,0 +1,35 @@
+{
+  "intent": {
+    "inputs": [
+      "load",
+      "reserve",
+      "cap",
+      "permit"
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "name": "total",
+        "expression": "add(load, reserve, 0)"
+      },
+      {
+        "kind": "check",
+        "expression": "total <= cap",
+        "code": "CapacityExceeded",
+        "step": 1
+      },
+      {
+        "kind": "assign",
+        "name": "result",
+        "expression": "add(total, 3, 2)"
+      },
+      {
+        "kind": "check",
+        "expression": "permit",
+        "code": "AuditDenied",
+        "step": 3
+      }
+    ],
+    "result": "result"
+  }
+}

@@ -1,0 +1,204 @@
+{
+  "definitions": [
+    {
+      "name": "PremiumConfirmedIncrement",
+      "revision": 1,
+      "params": [
+        {
+          "name": "enabled",
+          "type": "Bool"
+        },
+        {
+          "name": "a",
+          "type": "Int64"
+        },
+        {
+          "name": "b",
+          "type": "Int64"
+        },
+        {
+          "name": "expected",
+          "type": "Int64"
+        }
+      ],
+      "dependencies": {},
+      "steps": [
+        {
+          "id": "s001",
+          "type": "Unit",
+          "deps": [
+            "enabled"
+          ],
+          "node": {
+            "op": "check",
+            "test": {
+              "ref": "enabled"
+            },
+            "site": {
+              "const": 0
+            },
+            "code": "Disabled"
+          }
+        },
+        {
+          "id": "s002",
+          "type": "Int64",
+          "deps": [
+            "a",
+            "b"
+          ],
+          "node": {
+            "op": "value",
+            "expr": {
+              "add": [
+                {
+                  "ref": "a"
+                },
+                {
+                  "ref": "b"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "s003",
+          "type": "Unit",
+          "deps": [
+            "s002",
+            "expected"
+          ],
+          "node": {
+            "op": "check",
+            "test": {
+              "eq": [
+                {
+                  "ref": "s002"
+                },
+                {
+                  "ref": "expected"
+                }
+              ]
+            },
+            "site": {
+              "const": 0
+            },
+            "code": "Mismatch"
+          }
+        },
+        {
+          "id": "s004",
+          "type": "Int64",
+          "deps": [
+            "s002"
+          ],
+          "node": {
+            "op": "value",
+            "expr": {
+              "add": [
+                {
+                  "ref": "s002"
+                },
+                {
+                  "const": 1
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "s005",
+          "type": "Int64",
+          "deps": [
+            "s004"
+          ],
+          "node": {
+            "op": "value",
+            "expr": {
+              "add": [
+                {
+                  "ref": "s004"
+                },
+                {
+                  "const": 2
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "s006",
+          "type": "Unit",
+          "deps": [
+            "s005"
+          ],
+          "node": {
+            "op": "check",
+            "test": {
+              "le": [
+                {
+                  "ref": "s005"
+                },
+                {
+                  "const": 1000
+                }
+              ]
+            },
+            "site": {
+              "const": 0
+            },
+            "code": "PremiumLimit"
+          }
+        }
+      ],
+      "order": [
+        "s001",
+        "s002",
+        "s003",
+        "s004",
+        "s005",
+        "s006"
+      ],
+      "result": {
+        "ref": "s005"
+      },
+      "result_type": "Int64",
+      "identity": "449a6162388c8167614faa7badfd36bbbb30b5f2552f8024c81c99dcfd1639e0"
+    }
+  ],
+  "target": "PremiumConfirmedIncrement",
+  "identifier_map": {
+    "PremiumConfirmedIncrement": [
+      {
+        "scope": "PremiumConfirmedIncrement",
+        "alias": "enabled_check",
+        "generated": "s001"
+      },
+      {
+        "scope": "PremiumConfirmedIncrement",
+        "alias": "sum",
+        "generated": "s002"
+      },
+      {
+        "scope": "PremiumConfirmedIncrement",
+        "alias": "expected_check",
+        "generated": "s003"
+      },
+      {
+        "scope": "PremiumConfirmedIncrement",
+        "alias": "incremented",
+        "generated": "s004"
+      },
+      {
+        "scope": "PremiumConfirmedIncrement",
+        "alias": "premium_incremented",
+        "generated": "s005"
+      },
+      {
+        "scope": "PremiumConfirmedIncrement",
+        "alias": "premium_limit_check",
+        "generated": "s006"
+      }
+    ]
+  }
+}

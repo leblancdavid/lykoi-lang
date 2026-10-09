@@ -1,0 +1,121 @@
+{
+  "definitions": [
+    {
+      "name": "CapacityFee",
+      "revision": 1,
+      "params": [
+        {
+          "name": "load",
+          "type": "Int64"
+        },
+        {
+          "name": "reserve",
+          "type": "Int64"
+        },
+        {
+          "name": "cap",
+          "type": "Int64"
+        }
+      ],
+      "dependencies": {},
+      "steps": [
+        {
+          "id": "s001",
+          "type": "Int64",
+          "deps": [
+            "load",
+            "reserve"
+          ],
+          "node": {
+            "op": "value",
+            "expr": {
+              "add": [
+                {
+                  "ref": "load"
+                },
+                {
+                  "ref": "reserve"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "s002",
+          "type": "Unit",
+          "deps": [
+            "s001",
+            "cap"
+          ],
+          "node": {
+            "op": "check",
+            "test": {
+              "le": [
+                {
+                  "ref": "s001"
+                },
+                {
+                  "ref": "cap"
+                }
+              ]
+            },
+            "site": {
+              "const": 0
+            },
+            "code": "CapacityExceeded"
+          }
+        },
+        {
+          "id": "s003",
+          "type": "Int64",
+          "deps": [
+            "s001"
+          ],
+          "node": {
+            "op": "value",
+            "expr": {
+              "add": [
+                {
+                  "ref": "s001"
+                },
+                {
+                  "const": 3
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "order": [
+        "s001",
+        "s002",
+        "s003"
+      ],
+      "result": {
+        "ref": "s003"
+      },
+      "result_type": "Int64",
+      "identity": "5bc8241479baec7582eae87eb17757dd094bc42a38e9ea77cada03c06692da7e"
+    }
+  ],
+  "target": "CapacityFee",
+  "identifier_map": {
+    "CapacityFee": [
+      {
+        "scope": "CapacityFee",
+        "alias": "total",
+        "generated": "s001"
+      },
+      {
+        "scope": "CapacityFee",
+        "alias": "capacity_check",
+        "generated": "s002"
+      },
+      {
+        "scope": "CapacityFee",
+        "alias": "fee_total",
+        "generated": "s003"
+      }
+    ]
+  }
+}

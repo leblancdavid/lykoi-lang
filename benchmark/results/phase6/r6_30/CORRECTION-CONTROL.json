@@ -1,0 +1,1521 @@
+{
+  "timestamp": "2026-10-09T16:23:41.803822+00:00",
+  "model_calls": 0,
+  "source_sha256": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+  "independent_of_model_artifact": true,
+  "calls": [
+    {
+      "call": {
+        "function": {
+          "name": "declare_input",
+          "arguments": {
+            "definition": "StageControl",
+            "inputs": [
+              {
+                "name": "permit",
+                "type": "Bool"
+              },
+              {
+                "name": "n",
+                "type": "Int64"
+              }
+            ]
+          }
+        }
+      },
+      "response": {
+        "syntax_valid": true,
+        "arguments_valid": true,
+        "success": true,
+        "response": {
+          "ok": true,
+          "definition": "StageControl",
+          "finalized": false
+        },
+        "seconds": 0.00017520005349069834
+      }
+    },
+    {
+      "call": {
+        "function": {
+          "name": "apply_operation",
+          "arguments": {
+            "definition": "StageControl",
+            "alias": "gate",
+            "operation": "check",
+            "expression": "$permit",
+            "site": 0,
+            "code": "ControlDenied",
+            "dependencies": [
+              "permit"
+            ]
+          }
+        }
+      },
+      "response": {
+        "syntax_valid": true,
+        "arguments_valid": true,
+        "success": true,
+        "response": {
+          "ok": true,
+          "definition": "StageControl",
+          "finalized": false
+        },
+        "seconds": 0.0003370000049471855
+      }
+    },
+    {
+      "call": {
+        "function": {
+          "name": "apply_operation",
+          "arguments": {
+            "definition": "StageControl",
+            "alias": "next",
+            "operation": "value",
+            "type": "Int64",
+            "expression": [
+              "add",
+              "$n",
+              1
+            ],
+            "dependencies": [
+              "n"
+            ]
+          }
+        }
+      },
+      "response": {
+        "syntax_valid": true,
+        "arguments_valid": true,
+        "success": true,
+        "response": {
+          "ok": true,
+          "definition": "StageControl",
+          "finalized": false
+        },
+        "seconds": 0.00021620001643896103
+      }
+    },
+    {
+      "call": {
+        "function": {
+          "name": "define_result",
+          "arguments": {
+            "definition": "StageControl",
+            "result": "$next",
+            "result_type": "Int64"
+          }
+        }
+      },
+      "response": {
+        "syntax_valid": true,
+        "arguments_valid": true,
+        "success": true,
+        "response": {
+          "ok": true,
+          "definition": "StageControl",
+          "finalized": true
+        },
+        "seconds": 8.590007200837135e-05
+      }
+    },
+    {
+      "call": {
+        "function": {
+          "name": "validate_candidate",
+          "arguments": {
+            "target": "StageControl"
+          }
+        }
+      },
+      "response": {
+        "syntax_valid": true,
+        "arguments_valid": true,
+        "success": true,
+        "response": {
+          "ok": true,
+          "completed": true,
+          "target": "StageControl",
+          "expanded_nodes": 5
+        },
+        "seconds": 0.0013468998949974775
+      }
+    }
+  ],
+  "records": [
+    {
+      "args": {
+        "permit": false,
+        "n": 0
+      },
+      "expected": [
+        "reject",
+        "ControlDenied",
+        "validation"
+      ],
+      "actual": [
+        "reject",
+        "ControlDenied",
+        "validation"
+      ],
+      "evidence": {
+        "observation": {
+          "status": "reject",
+          "error": {
+            "code": "ControlDenied",
+            "offset": 0,
+            "node": "program/ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001",
+            "stage": "validation",
+            "path": null,
+            "expected": []
+          },
+          "work": 5
+        },
+        "ordered_entry_trace": [
+          {
+            "node": "program/ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8",
+            "cursor": 0,
+            "work_before": 0,
+            "depth": 1
+          },
+          {
+            "node": "program/ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+            "cursor": 0,
+            "work_before": 1,
+            "depth": 2
+          },
+          {
+            "node": "program/ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001",
+            "cursor": 0,
+            "work_before": 2,
+            "depth": 3
+          }
+        ],
+        "expanded": {
+          "plan": {
+            "version": "semantic-plan-1",
+            "text": false,
+            "rules": {},
+            "decode": {
+              "id": "program/ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8",
+              "op": "seq",
+              "steps": [
+                {
+                  "node": {
+                    "id": "program/ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+                    "op": "seq",
+                    "steps": [
+                      {
+                        "node": {
+                          "id": "program/ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001",
+                          "op": "check",
+                          "test": {
+                            "const": false
+                          },
+                          "site": {
+                            "const": 0
+                          },
+                          "code": "ControlDenied"
+                        },
+                        "bind": "b_c4e6fe53ed941d74effe8716a817eec781a1192ff9866227d3967cf153363f17"
+                      },
+                      {
+                        "node": {
+                          "id": "program/ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s002",
+                          "op": "value",
+                          "expr": {
+                            "add": [
+                              {
+                                "const": 0
+                              },
+                              {
+                                "const": 1
+                              }
+                            ]
+                          }
+                        },
+                        "bind": "b_56e19fce242dcbe36fdd2e56a5cfc15bbdb1868c154c2ed79970f1f2c3cecaf1"
+                      }
+                    ],
+                    "result": {
+                      "ref": "b_56e19fce242dcbe36fdd2e56a5cfc15bbdb1868c154c2ed79970f1f2c3cecaf1"
+                    }
+                  },
+                  "bind": "b_06a00259425b4fa3f12565631d3d384d8812f03d3868bc8ea0d36fb5529dec87"
+                }
+              ],
+              "result": {
+                "ref": "b_06a00259425b4fa3f12565631d3d384d8812f03d3868bc8ea0d36fb5529dec87"
+              }
+            },
+            "encode": {
+              "id": "program/ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8/encode",
+              "op": "emit",
+              "codec": "uint16be",
+              "expr": {
+                "ref": "root"
+              }
+            }
+          },
+          "map": {
+            "program/ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8": {
+              "definition": "ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8",
+              "local": "region"
+            },
+            "program/ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da": {
+              "definition": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+              "local": "region"
+            },
+            "program/ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001": {
+              "definition": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+              "local": "s001"
+            },
+            "program/ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s002": {
+              "definition": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+              "local": "s002"
+            },
+            "program/ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8/encode": {
+              "definition": "ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8",
+              "local": "encode"
+            }
+          },
+          "plan_identity": "0accc6e23a11f4b9f2edae4db18744e365080efbc4cd5d9537f9d4394e87a205",
+          "program_identity": "ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8",
+          "nodes": 5
+        },
+        "package": {
+          "version": "typed-composition-1",
+          "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+          "definitions": [
+            {
+              "name": "StageControl",
+              "revision": 1,
+              "params": [
+                {
+                  "name": "permit",
+                  "type": "Bool"
+                },
+                {
+                  "name": "n",
+                  "type": "Int64"
+                }
+              ],
+              "dependencies": {},
+              "steps": [
+                {
+                  "id": "s001",
+                  "type": "Unit",
+                  "deps": [
+                    "permit"
+                  ],
+                  "node": {
+                    "op": "check",
+                    "test": {
+                      "ref": "permit"
+                    },
+                    "site": {
+                      "const": 0
+                    },
+                    "code": "ControlDenied"
+                  }
+                },
+                {
+                  "id": "s002",
+                  "type": "Int64",
+                  "deps": [
+                    "n"
+                  ],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "n"
+                        },
+                        {
+                          "const": 1
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "s001",
+                "s002"
+              ],
+              "result": {
+                "ref": "s002"
+              },
+              "result_type": "Int64",
+              "identity": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da"
+            }
+          ],
+          "program": {
+            "name": "HostEntry",
+            "revision": 1,
+            "params": [],
+            "dependencies": {
+              "StageControl": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da"
+            },
+            "steps": [
+              {
+                "id": "invocation",
+                "type": "Int64",
+                "deps": [],
+                "node": {
+                  "op": "compose",
+                  "symbol": "StageControl",
+                  "identity": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+                  "args": {
+                    "permit": {
+                      "const": false
+                    },
+                    "n": {
+                      "const": 0
+                    }
+                  }
+                }
+              }
+            ],
+            "order": [
+              "invocation"
+            ],
+            "result": {
+              "ref": "invocation"
+            },
+            "result_type": "Int64",
+            "identity": "ba4b7c1c27926d3076aeb154f99fc907ba339c3df01baf24851880c6012436b8"
+          }
+        },
+        "package_identity": "64c8f4b90243358470c7e9aee3566fe17c70b62d3616e30328247a4a759153ce",
+        "result_type": null
+      },
+      "times": {
+        "validation_seconds": 0.00012059998698532581,
+        "expansion_including_validation_seconds": 0.00015089998487383127,
+        "execution_including_VM_validation_seconds": 3.300001844763756e-05
+      }
+    },
+    {
+      "args": {
+        "permit": false,
+        "n": 9223372036854775807
+      },
+      "expected": [
+        "reject",
+        "ControlDenied",
+        "validation"
+      ],
+      "actual": [
+        "reject",
+        "ControlDenied",
+        "validation"
+      ],
+      "evidence": {
+        "observation": {
+          "status": "reject",
+          "error": {
+            "code": "ControlDenied",
+            "offset": 0,
+            "node": "program/82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001",
+            "stage": "validation",
+            "path": null,
+            "expected": []
+          },
+          "work": 5
+        },
+        "ordered_entry_trace": [
+          {
+            "node": "program/82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1",
+            "cursor": 0,
+            "work_before": 0,
+            "depth": 1
+          },
+          {
+            "node": "program/82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+            "cursor": 0,
+            "work_before": 1,
+            "depth": 2
+          },
+          {
+            "node": "program/82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001",
+            "cursor": 0,
+            "work_before": 2,
+            "depth": 3
+          }
+        ],
+        "expanded": {
+          "plan": {
+            "version": "semantic-plan-1",
+            "text": false,
+            "rules": {},
+            "decode": {
+              "id": "program/82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1",
+              "op": "seq",
+              "steps": [
+                {
+                  "node": {
+                    "id": "program/82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+                    "op": "seq",
+                    "steps": [
+                      {
+                        "node": {
+                          "id": "program/82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001",
+                          "op": "check",
+                          "test": {
+                            "const": false
+                          },
+                          "site": {
+                            "const": 0
+                          },
+                          "code": "ControlDenied"
+                        },
+                        "bind": "b_d299afc37d6967af94d403fa00780e9e83bf6ccd25001f2e35f392f319ce406c"
+                      },
+                      {
+                        "node": {
+                          "id": "program/82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s002",
+                          "op": "value",
+                          "expr": {
+                            "add": [
+                              {
+                                "const": 9223372036854775807
+                              },
+                              {
+                                "const": 1
+                              }
+                            ]
+                          }
+                        },
+                        "bind": "b_d8b029d4853f6f48a8e590dad8cd6233809f439c2b3a08b34df0d4f8567e7ca5"
+                      }
+                    ],
+                    "result": {
+                      "ref": "b_d8b029d4853f6f48a8e590dad8cd6233809f439c2b3a08b34df0d4f8567e7ca5"
+                    }
+                  },
+                  "bind": "b_149078ad1f870e87d86c6c75f25c9be18fe9d57cb53cc639678668956345c696"
+                }
+              ],
+              "result": {
+                "ref": "b_149078ad1f870e87d86c6c75f25c9be18fe9d57cb53cc639678668956345c696"
+              }
+            },
+            "encode": {
+              "id": "program/82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1/encode",
+              "op": "emit",
+              "codec": "uint16be",
+              "expr": {
+                "ref": "root"
+              }
+            }
+          },
+          "map": {
+            "program/82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1": {
+              "definition": "82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1",
+              "local": "region"
+            },
+            "program/82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da": {
+              "definition": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+              "local": "region"
+            },
+            "program/82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001": {
+              "definition": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+              "local": "s001"
+            },
+            "program/82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s002": {
+              "definition": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+              "local": "s002"
+            },
+            "program/82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1/encode": {
+              "definition": "82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1",
+              "local": "encode"
+            }
+          },
+          "plan_identity": "8df224da5ab22870f1a5d26fc4e5ef88762a764ff175fe82489b778bbec694f0",
+          "program_identity": "82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1",
+          "nodes": 5
+        },
+        "package": {
+          "version": "typed-composition-1",
+          "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+          "definitions": [
+            {
+              "name": "StageControl",
+              "revision": 1,
+              "params": [
+                {
+                  "name": "permit",
+                  "type": "Bool"
+                },
+                {
+                  "name": "n",
+                  "type": "Int64"
+                }
+              ],
+              "dependencies": {},
+              "steps": [
+                {
+                  "id": "s001",
+                  "type": "Unit",
+                  "deps": [
+                    "permit"
+                  ],
+                  "node": {
+                    "op": "check",
+                    "test": {
+                      "ref": "permit"
+                    },
+                    "site": {
+                      "const": 0
+                    },
+                    "code": "ControlDenied"
+                  }
+                },
+                {
+                  "id": "s002",
+                  "type": "Int64",
+                  "deps": [
+                    "n"
+                  ],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "n"
+                        },
+                        {
+                          "const": 1
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "s001",
+                "s002"
+              ],
+              "result": {
+                "ref": "s002"
+              },
+              "result_type": "Int64",
+              "identity": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da"
+            }
+          ],
+          "program": {
+            "name": "HostEntry",
+            "revision": 1,
+            "params": [],
+            "dependencies": {
+              "StageControl": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da"
+            },
+            "steps": [
+              {
+                "id": "invocation",
+                "type": "Int64",
+                "deps": [],
+                "node": {
+                  "op": "compose",
+                  "symbol": "StageControl",
+                  "identity": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+                  "args": {
+                    "permit": {
+                      "const": false
+                    },
+                    "n": {
+                      "const": 9223372036854775807
+                    }
+                  }
+                }
+              }
+            ],
+            "order": [
+              "invocation"
+            ],
+            "result": {
+              "ref": "invocation"
+            },
+            "result_type": "Int64",
+            "identity": "82488b9c8e1028e6f320672c996ed18330045cd470f3e6aad30ac27dc115e3e1"
+          }
+        },
+        "package_identity": "6672fb392d77f0ee3c3b31448a158179e60b53be7f5377885c8d57ba1f7c7893",
+        "result_type": null
+      },
+      "times": {
+        "validation_seconds": 0.00012390001211315393,
+        "expansion_including_validation_seconds": 0.0001490999711677432,
+        "execution_including_VM_validation_seconds": 2.2799940779805183e-05
+      }
+    },
+    {
+      "args": {
+        "permit": true,
+        "n": 9223372036854775807
+      },
+      "expected": [
+        "reject",
+        "OVERFLOW",
+        "structure"
+      ],
+      "actual": [
+        "reject",
+        "OVERFLOW",
+        "structure"
+      ],
+      "evidence": {
+        "observation": {
+          "status": "reject",
+          "error": {
+            "code": "OVERFLOW",
+            "offset": 0,
+            "node": "program/f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s002",
+            "stage": "structure",
+            "path": null,
+            "expected": []
+          },
+          "work": 8
+        },
+        "ordered_entry_trace": [
+          {
+            "node": "program/f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89",
+            "cursor": 0,
+            "work_before": 0,
+            "depth": 1
+          },
+          {
+            "node": "program/f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+            "cursor": 0,
+            "work_before": 1,
+            "depth": 2
+          },
+          {
+            "node": "program/f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001",
+            "cursor": 0,
+            "work_before": 2,
+            "depth": 3
+          },
+          {
+            "node": "program/f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s002",
+            "cursor": 0,
+            "work_before": 4,
+            "depth": 3
+          }
+        ],
+        "expanded": {
+          "plan": {
+            "version": "semantic-plan-1",
+            "text": false,
+            "rules": {},
+            "decode": {
+              "id": "program/f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89",
+              "op": "seq",
+              "steps": [
+                {
+                  "node": {
+                    "id": "program/f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+                    "op": "seq",
+                    "steps": [
+                      {
+                        "node": {
+                          "id": "program/f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001",
+                          "op": "check",
+                          "test": {
+                            "const": true
+                          },
+                          "site": {
+                            "const": 0
+                          },
+                          "code": "ControlDenied"
+                        },
+                        "bind": "b_0debdf6f8fe50f634a6c01b25cf4738a1df75d5eea110fe9f335658fdbc0b66d"
+                      },
+                      {
+                        "node": {
+                          "id": "program/f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s002",
+                          "op": "value",
+                          "expr": {
+                            "add": [
+                              {
+                                "const": 9223372036854775807
+                              },
+                              {
+                                "const": 1
+                              }
+                            ]
+                          }
+                        },
+                        "bind": "b_851b361cc8955d6b780dbada12c40804082f36b63685bc2b71f664cbc5002cb4"
+                      }
+                    ],
+                    "result": {
+                      "ref": "b_851b361cc8955d6b780dbada12c40804082f36b63685bc2b71f664cbc5002cb4"
+                    }
+                  },
+                  "bind": "b_2a7b417c7dc2415332af9c22f6d4a5baecf2b36b2b3151c8257684d6b03edf9a"
+                }
+              ],
+              "result": {
+                "ref": "b_2a7b417c7dc2415332af9c22f6d4a5baecf2b36b2b3151c8257684d6b03edf9a"
+              }
+            },
+            "encode": {
+              "id": "program/f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89/encode",
+              "op": "emit",
+              "codec": "uint16be",
+              "expr": {
+                "ref": "root"
+              }
+            }
+          },
+          "map": {
+            "program/f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89": {
+              "definition": "f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89",
+              "local": "region"
+            },
+            "program/f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da": {
+              "definition": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+              "local": "region"
+            },
+            "program/f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001": {
+              "definition": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+              "local": "s001"
+            },
+            "program/f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s002": {
+              "definition": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+              "local": "s002"
+            },
+            "program/f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89/encode": {
+              "definition": "f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89",
+              "local": "encode"
+            }
+          },
+          "plan_identity": "7a9d8198660d78a70d480b8f7a279c95c0210dcfc7516afec6f45dee4b8de263",
+          "program_identity": "f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89",
+          "nodes": 5
+        },
+        "package": {
+          "version": "typed-composition-1",
+          "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+          "definitions": [
+            {
+              "name": "StageControl",
+              "revision": 1,
+              "params": [
+                {
+                  "name": "permit",
+                  "type": "Bool"
+                },
+                {
+                  "name": "n",
+                  "type": "Int64"
+                }
+              ],
+              "dependencies": {},
+              "steps": [
+                {
+                  "id": "s001",
+                  "type": "Unit",
+                  "deps": [
+                    "permit"
+                  ],
+                  "node": {
+                    "op": "check",
+                    "test": {
+                      "ref": "permit"
+                    },
+                    "site": {
+                      "const": 0
+                    },
+                    "code": "ControlDenied"
+                  }
+                },
+                {
+                  "id": "s002",
+                  "type": "Int64",
+                  "deps": [
+                    "n"
+                  ],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "n"
+                        },
+                        {
+                          "const": 1
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "s001",
+                "s002"
+              ],
+              "result": {
+                "ref": "s002"
+              },
+              "result_type": "Int64",
+              "identity": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da"
+            }
+          ],
+          "program": {
+            "name": "HostEntry",
+            "revision": 1,
+            "params": [],
+            "dependencies": {
+              "StageControl": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da"
+            },
+            "steps": [
+              {
+                "id": "invocation",
+                "type": "Int64",
+                "deps": [],
+                "node": {
+                  "op": "compose",
+                  "symbol": "StageControl",
+                  "identity": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+                  "args": {
+                    "permit": {
+                      "const": true
+                    },
+                    "n": {
+                      "const": 9223372036854775807
+                    }
+                  }
+                }
+              }
+            ],
+            "order": [
+              "invocation"
+            ],
+            "result": {
+              "ref": "invocation"
+            },
+            "result_type": "Int64",
+            "identity": "f13c4495172c28f1435c272714b708396f3d6fc4bef61ff57f44dc1013edff89"
+          }
+        },
+        "package_identity": "1b37f5730fb1ab65965695888c31494ff074cffa2ef8d4bd89c4a443c1b1d63e",
+        "result_type": null
+      },
+      "times": {
+        "validation_seconds": 0.00012340000830590725,
+        "expansion_including_validation_seconds": 0.00014180003199726343,
+        "execution_including_VM_validation_seconds": 2.729997504502535e-05
+      }
+    },
+    {
+      "args": {
+        "permit": true,
+        "n": 65535
+      },
+      "expected": [
+        "reject",
+        "ENCODE_RANGE",
+        "encode"
+      ],
+      "actual": [
+        "reject",
+        "ENCODE_RANGE",
+        "encode"
+      ],
+      "evidence": {
+        "observation": {
+          "status": "reject",
+          "error": {
+            "code": "ENCODE_RANGE",
+            "offset": null,
+            "node": "program/dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c/encode",
+            "stage": "encode",
+            "path": "value",
+            "expected": []
+          },
+          "work": 12
+        },
+        "ordered_entry_trace": [
+          {
+            "node": "program/dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c",
+            "cursor": 0,
+            "work_before": 0,
+            "depth": 1
+          },
+          {
+            "node": "program/dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+            "cursor": 0,
+            "work_before": 1,
+            "depth": 2
+          },
+          {
+            "node": "program/dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001",
+            "cursor": 0,
+            "work_before": 2,
+            "depth": 3
+          },
+          {
+            "node": "program/dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s002",
+            "cursor": 0,
+            "work_before": 4,
+            "depth": 3
+          },
+          {
+            "node": "program/dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c/encode",
+            "cursor": 0,
+            "work_before": 10,
+            "depth": 1
+          }
+        ],
+        "expanded": {
+          "plan": {
+            "version": "semantic-plan-1",
+            "text": false,
+            "rules": {},
+            "decode": {
+              "id": "program/dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c",
+              "op": "seq",
+              "steps": [
+                {
+                  "node": {
+                    "id": "program/dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+                    "op": "seq",
+                    "steps": [
+                      {
+                        "node": {
+                          "id": "program/dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001",
+                          "op": "check",
+                          "test": {
+                            "const": true
+                          },
+                          "site": {
+                            "const": 0
+                          },
+                          "code": "ControlDenied"
+                        },
+                        "bind": "b_c9fd290efe7608a29925704fdb2578dd4b9cfb4718138beb44418e5c94747949"
+                      },
+                      {
+                        "node": {
+                          "id": "program/dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s002",
+                          "op": "value",
+                          "expr": {
+                            "add": [
+                              {
+                                "const": 65535
+                              },
+                              {
+                                "const": 1
+                              }
+                            ]
+                          }
+                        },
+                        "bind": "b_ad4f3bd4b5c3f5e92dedc43736efb9a7fe646464f389a567a2965fc02a81f518"
+                      }
+                    ],
+                    "result": {
+                      "ref": "b_ad4f3bd4b5c3f5e92dedc43736efb9a7fe646464f389a567a2965fc02a81f518"
+                    }
+                  },
+                  "bind": "b_d0e2dd22c90fad8d70c546cdc037453a3b57d93d9dc1836e33f8176acda15455"
+                }
+              ],
+              "result": {
+                "ref": "b_d0e2dd22c90fad8d70c546cdc037453a3b57d93d9dc1836e33f8176acda15455"
+              }
+            },
+            "encode": {
+              "id": "program/dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c/encode",
+              "op": "emit",
+              "codec": "uint16be",
+              "expr": {
+                "ref": "root"
+              }
+            }
+          },
+          "map": {
+            "program/dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c": {
+              "definition": "dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c",
+              "local": "region"
+            },
+            "program/dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da": {
+              "definition": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+              "local": "region"
+            },
+            "program/dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001": {
+              "definition": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+              "local": "s001"
+            },
+            "program/dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s002": {
+              "definition": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+              "local": "s002"
+            },
+            "program/dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c/encode": {
+              "definition": "dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c",
+              "local": "encode"
+            }
+          },
+          "plan_identity": "f5e425f72a49562732f206c10606b00c785fc79e40d2beeb5a06d36313d78f88",
+          "program_identity": "dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c",
+          "nodes": 5
+        },
+        "package": {
+          "version": "typed-composition-1",
+          "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+          "definitions": [
+            {
+              "name": "StageControl",
+              "revision": 1,
+              "params": [
+                {
+                  "name": "permit",
+                  "type": "Bool"
+                },
+                {
+                  "name": "n",
+                  "type": "Int64"
+                }
+              ],
+              "dependencies": {},
+              "steps": [
+                {
+                  "id": "s001",
+                  "type": "Unit",
+                  "deps": [
+                    "permit"
+                  ],
+                  "node": {
+                    "op": "check",
+                    "test": {
+                      "ref": "permit"
+                    },
+                    "site": {
+                      "const": 0
+                    },
+                    "code": "ControlDenied"
+                  }
+                },
+                {
+                  "id": "s002",
+                  "type": "Int64",
+                  "deps": [
+                    "n"
+                  ],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "n"
+                        },
+                        {
+                          "const": 1
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "s001",
+                "s002"
+              ],
+              "result": {
+                "ref": "s002"
+              },
+              "result_type": "Int64",
+              "identity": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da"
+            }
+          ],
+          "program": {
+            "name": "HostEntry",
+            "revision": 1,
+            "params": [],
+            "dependencies": {
+              "StageControl": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da"
+            },
+            "steps": [
+              {
+                "id": "invocation",
+                "type": "Int64",
+                "deps": [],
+                "node": {
+                  "op": "compose",
+                  "symbol": "StageControl",
+                  "identity": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+                  "args": {
+                    "permit": {
+                      "const": true
+                    },
+                    "n": {
+                      "const": 65535
+                    }
+                  }
+                }
+              }
+            ],
+            "order": [
+              "invocation"
+            ],
+            "result": {
+              "ref": "invocation"
+            },
+            "result_type": "Int64",
+            "identity": "dd9743e1ae90e28c198c286669f40d8de1ee9d02cabc2073d71a62832cc6342c"
+          }
+        },
+        "package_identity": "d0e8a5d60eff26d4a7060e84fe4eaf9b0512232b385d0ecae996b4219db1212a",
+        "result_type": null
+      },
+      "times": {
+        "validation_seconds": 0.00011080002877861261,
+        "expansion_including_validation_seconds": 0.0001705000177025795,
+        "execution_including_VM_validation_seconds": 3.829994238913059e-05
+      }
+    },
+    {
+      "args": {
+        "permit": true,
+        "n": 0
+      },
+      "expected": [
+        "success",
+        null,
+        null
+      ],
+      "actual": [
+        "success",
+        null,
+        null
+      ],
+      "evidence": {
+        "observation": {
+          "status": "success",
+          "value": 1,
+          "provenance": {
+            "span": [
+              0,
+              0
+            ],
+            "origins": []
+          },
+          "consumed": 0,
+          "work": 14,
+          "output": {
+            "bytes_hex": "0001"
+          },
+          "output_spans": [
+            {
+              "node": "program/5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931/encode",
+              "start": 0,
+              "end": 2
+            }
+          ]
+        },
+        "ordered_entry_trace": [
+          {
+            "node": "program/5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931",
+            "cursor": 0,
+            "work_before": 0,
+            "depth": 1
+          },
+          {
+            "node": "program/5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+            "cursor": 0,
+            "work_before": 1,
+            "depth": 2
+          },
+          {
+            "node": "program/5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001",
+            "cursor": 0,
+            "work_before": 2,
+            "depth": 3
+          },
+          {
+            "node": "program/5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s002",
+            "cursor": 0,
+            "work_before": 4,
+            "depth": 3
+          },
+          {
+            "node": "program/5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931/encode",
+            "cursor": 0,
+            "work_before": 10,
+            "depth": 1
+          }
+        ],
+        "expanded": {
+          "plan": {
+            "version": "semantic-plan-1",
+            "text": false,
+            "rules": {},
+            "decode": {
+              "id": "program/5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931",
+              "op": "seq",
+              "steps": [
+                {
+                  "node": {
+                    "id": "program/5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+                    "op": "seq",
+                    "steps": [
+                      {
+                        "node": {
+                          "id": "program/5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001",
+                          "op": "check",
+                          "test": {
+                            "const": true
+                          },
+                          "site": {
+                            "const": 0
+                          },
+                          "code": "ControlDenied"
+                        },
+                        "bind": "b_68dbea0fa6d7cc410766211ffd6f04eae207235f2c7128edbf27bcaa34bacc31"
+                      },
+                      {
+                        "node": {
+                          "id": "program/5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s002",
+                          "op": "value",
+                          "expr": {
+                            "add": [
+                              {
+                                "const": 0
+                              },
+                              {
+                                "const": 1
+                              }
+                            ]
+                          }
+                        },
+                        "bind": "b_1fda284b2168aa7dafb16c8fd417a5446bcbf1c014faa36376dacc48b19a1f3d"
+                      }
+                    ],
+                    "result": {
+                      "ref": "b_1fda284b2168aa7dafb16c8fd417a5446bcbf1c014faa36376dacc48b19a1f3d"
+                    }
+                  },
+                  "bind": "b_c49cbf011a44280b73108608275a8145dac27f03b2782373c75bae5fb90d8eb8"
+                }
+              ],
+              "result": {
+                "ref": "b_c49cbf011a44280b73108608275a8145dac27f03b2782373c75bae5fb90d8eb8"
+              }
+            },
+            "encode": {
+              "id": "program/5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931/encode",
+              "op": "emit",
+              "codec": "uint16be",
+              "expr": {
+                "ref": "root"
+              }
+            }
+          },
+          "map": {
+            "program/5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931": {
+              "definition": "5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931",
+              "local": "region"
+            },
+            "program/5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da": {
+              "definition": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+              "local": "region"
+            },
+            "program/5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s001": {
+              "definition": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+              "local": "s001"
+            },
+            "program/5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931/invocation/d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da/s002": {
+              "definition": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+              "local": "s002"
+            },
+            "program/5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931/encode": {
+              "definition": "5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931",
+              "local": "encode"
+            }
+          },
+          "plan_identity": "b973c5852993fd4d4af2447e7b1ebc29859ebd83619fe59dc44be21f175f4871",
+          "program_identity": "5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931",
+          "nodes": 5
+        },
+        "package": {
+          "version": "typed-composition-1",
+          "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+          "definitions": [
+            {
+              "name": "StageControl",
+              "revision": 1,
+              "params": [
+                {
+                  "name": "permit",
+                  "type": "Bool"
+                },
+                {
+                  "name": "n",
+                  "type": "Int64"
+                }
+              ],
+              "dependencies": {},
+              "steps": [
+                {
+                  "id": "s001",
+                  "type": "Unit",
+                  "deps": [
+                    "permit"
+                  ],
+                  "node": {
+                    "op": "check",
+                    "test": {
+                      "ref": "permit"
+                    },
+                    "site": {
+                      "const": 0
+                    },
+                    "code": "ControlDenied"
+                  }
+                },
+                {
+                  "id": "s002",
+                  "type": "Int64",
+                  "deps": [
+                    "n"
+                  ],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "add": [
+                        {
+                          "ref": "n"
+                        },
+                        {
+                          "const": 1
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "s001",
+                "s002"
+              ],
+              "result": {
+                "ref": "s002"
+              },
+              "result_type": "Int64",
+              "identity": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da"
+            }
+          ],
+          "program": {
+            "name": "HostEntry",
+            "revision": 1,
+            "params": [],
+            "dependencies": {
+              "StageControl": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da"
+            },
+            "steps": [
+              {
+                "id": "invocation",
+                "type": "Int64",
+                "deps": [],
+                "node": {
+                  "op": "compose",
+                  "symbol": "StageControl",
+                  "identity": "d769b04f98a606bf6fb40012c17df6d6c6d8a9724c7ffc41adacb68678e020da",
+                  "args": {
+                    "permit": {
+                      "const": true
+                    },
+                    "n": {
+                      "const": 0
+                    }
+                  }
+                }
+              }
+            ],
+            "order": [
+              "invocation"
+            ],
+            "result": {
+              "ref": "invocation"
+            },
+            "result_type": "Int64",
+            "identity": "5021023a5ef64919ddb69cd92e5b2d2fede4b1dd74a7dad389a07da40b426931"
+          }
+        },
+        "package_identity": "5f2ff2da6a6eb19ad20fbd0007ee07f98026d4c0b998272e406e91bd858031df",
+        "result_type": "Int64"
+      },
+      "times": {
+        "validation_seconds": 0.00011139991693198681,
+        "expansion_including_validation_seconds": 0.0001447000540792942,
+        "execution_including_VM_validation_seconds": 3.0800001695752144e-05
+      }
+    },
+    {
+      "args": {
+        "permit": true,
+        "n": true
+      },
+      "expected": [
+        "wrapper_reject",
+        "TYPE",
+        null
+      ],
+      "actual": [
+        "wrapper_reject",
+        "TYPE",
+        null
+      ],
+      "evidence": {
+        "observation": {
+          "status": "wrapper_reject",
+          "diagnostic": {
+            "code": "TYPE",
+            "path": "HostEntry/invocation",
+            "detail": "argument: n"
+          }
+        },
+        "ordered_entry_trace": [],
+        "result_type": null
+      },
+      "times": {
+        "wrapper_rejection_seconds": 0.00010289996862411499
+      }
+    },
+    {
+      "args": {
+        "permit": true
+      },
+      "expected": [
+        "wrapper_reject",
+        "SHAPE",
+        null
+      ],
+      "actual": [
+        "wrapper_reject",
+        "SHAPE",
+        null
+      ],
+      "evidence": {
+        "observation": {
+          "status": "wrapper_reject",
+          "diagnostic": {
+            "code": "SHAPE",
+            "path": "$/arguments",
+            "detail": "exact target input signature"
+          }
+        },
+        "ordered_entry_trace": [],
+        "result_type": null
+      },
+      "times": {
+        "wrapper_rejection_seconds": 3.600027412176132e-06
+      }
+    }
+  ],
+  "passed": true,
+  "justification": "Machine.run check explicitly selects validation; add defaults to structure; emit chooses encode. Script signature/predicate differs from R6.29."
+}

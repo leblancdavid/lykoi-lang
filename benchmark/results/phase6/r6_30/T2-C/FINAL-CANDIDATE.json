@@ -1,0 +1,148 @@
+{
+  "definitions": [
+    {
+      "name": "ConfirmedIncrement",
+      "revision": 1,
+      "params": [
+        {
+          "name": "enabled",
+          "type": "Bool"
+        },
+        {
+          "name": "a",
+          "type": "Int64"
+        },
+        {
+          "name": "b",
+          "type": "Int64"
+        },
+        {
+          "name": "expected",
+          "type": "Int64"
+        }
+      ],
+      "dependencies": {},
+      "steps": [
+        {
+          "id": "s001",
+          "type": "Unit",
+          "deps": [
+            "enabled"
+          ],
+          "node": {
+            "op": "check",
+            "test": {
+              "ref": "enabled"
+            },
+            "site": {
+              "const": 0
+            },
+            "code": "Disabled"
+          }
+        },
+        {
+          "id": "s002",
+          "type": "Int64",
+          "deps": [
+            "a",
+            "b"
+          ],
+          "node": {
+            "op": "value",
+            "expr": {
+              "add": [
+                {
+                  "ref": "a"
+                },
+                {
+                  "ref": "b"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "id": "s003",
+          "type": "Unit",
+          "deps": [
+            "s002",
+            "expected"
+          ],
+          "node": {
+            "op": "check",
+            "test": {
+              "eq": [
+                {
+                  "ref": "s002"
+                },
+                {
+                  "ref": "expected"
+                }
+              ]
+            },
+            "site": {
+              "const": 0
+            },
+            "code": "Mismatch"
+          }
+        },
+        {
+          "id": "s004",
+          "type": "Int64",
+          "deps": [
+            "s002"
+          ],
+          "node": {
+            "op": "value",
+            "expr": {
+              "add": [
+                {
+                  "ref": "s002"
+                },
+                {
+                  "const": 1
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "order": [
+        "s001",
+        "s002",
+        "s003",
+        "s004"
+      ],
+      "result": {
+        "ref": "s004"
+      },
+      "result_type": "Int64",
+      "identity": "57b469b5c6e0830e24ac60c12ad810b72fe3afccebfa1c114336dc04524f355e"
+    }
+  ],
+  "target": "ConfirmedIncrement",
+  "identifier_map": {
+    "ConfirmedIncrement": [
+      {
+        "scope": "ConfirmedIncrement",
+        "alias": "enabled_check",
+        "generated": "s001"
+      },
+      {
+        "scope": "ConfirmedIncrement",
+        "alias": "sum",
+        "generated": "s002"
+      },
+      {
+        "scope": "ConfirmedIncrement",
+        "alias": "expected_check",
+        "generated": "s003"
+      },
+      {
+        "scope": "ConfirmedIncrement",
+        "alias": "incremented",
+        "generated": "s004"
+      }
+    ]
+  }
+}

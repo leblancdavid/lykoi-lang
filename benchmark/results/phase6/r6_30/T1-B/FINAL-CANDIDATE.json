@@ -1,0 +1,28 @@
+{
+  "intent": {
+    "inputs": [
+      "load",
+      "reserve",
+      "cap"
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "name": "total",
+        "expression": "add(load, reserve, 0)"
+      },
+      {
+        "kind": "check",
+        "expression": "total <= cap",
+        "code": "CapacityExceeded",
+        "step": 1
+      },
+      {
+        "kind": "assign",
+        "name": "result",
+        "expression": "add(total, 3, 2)"
+      }
+    ],
+    "result": "result"
+  }
+}

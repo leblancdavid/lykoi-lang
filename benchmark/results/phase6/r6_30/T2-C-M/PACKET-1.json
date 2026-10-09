@@ -1,0 +1,110 @@
+{
+  "version": "construct-1",
+  "definitions": [
+    {
+      "name": "PremiumConfirmedIncrement",
+      "inputs": [
+        [
+          "enabled",
+          "Bool"
+        ],
+        [
+          "a",
+          "Int64"
+        ],
+        [
+          "b",
+          "Int64"
+        ],
+        [
+          "expected",
+          "Int64"
+        ]
+      ],
+      "ops": [
+        [
+          "enabled_check",
+          "check",
+          "$enabled",
+          0,
+          "Disabled",
+          [
+            "enabled"
+          ]
+        ],
+        [
+          "sum",
+          "value",
+          "Int64",
+          [
+            "add",
+            "$a",
+            "$b"
+          ],
+          [
+            "a",
+            "b"
+          ]
+        ],
+        [
+          "expected_check",
+          "check",
+          [
+            "eq",
+            "$sum",
+            "$expected"
+          ],
+          0,
+          "Mismatch",
+          [
+            "sum",
+            "expected"
+          ]
+        ],
+        [
+          "incremented",
+          "value",
+          "Int64",
+          [
+            "add",
+            "$sum",
+            1
+          ],
+          [
+            "sum"
+          ]
+        ],
+        [
+          "premium_incremented",
+          "value",
+          "Int64",
+          [
+            "add",
+            "$incremented",
+            2
+          ],
+          [
+            "incremented"
+          ]
+        ],
+        [
+          "premium_limit_check",
+          "check",
+          [
+            "le",
+            "$premium_incremented",
+            1000
+          ],
+          0,
+          "PremiumLimit",
+          [
+            "premium_incremented"
+          ]
+        ]
+      ],
+      "result": "$premium_incremented",
+      "result_type": "Int64"
+    }
+  ],
+  "target": "PremiumConfirmedIncrement"
+}

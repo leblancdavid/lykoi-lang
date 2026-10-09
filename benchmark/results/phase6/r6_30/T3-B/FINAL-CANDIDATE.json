@@ -1,0 +1,34 @@
+{
+  "intent": {
+    "inputs": [
+      "seed",
+      "delta",
+      "floor"
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "name": "first_sum",
+        "expression": "add(seed, delta, 0)"
+      },
+      {
+        "kind": "check",
+        "expression": "floor <= first_sum",
+        "code": "BelowFloor",
+        "step": 1
+      },
+      {
+        "kind": "assign",
+        "name": "second_sum",
+        "expression": "add(first_sum, delta, 2)"
+      },
+      {
+        "kind": "check",
+        "expression": "second_sum <= 65535",
+        "code": "AboveCeiling",
+        "step": 3
+      }
+    ],
+    "result": "second_sum"
+  }
+}
