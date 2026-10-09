@@ -7,6 +7,20 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R6.18: `R6_18_TYPED_COMPOSITION_SUPPORTED`.
+  Read `benchmark/results/phase6/R6_18-REPORT.md` and
+  `experiments/typed_composition_r6_18/SEMANTICS-1.md`. Separate nonproduction
+  Int64/Bool/Unit wrapper uses only unchanged VM seq/UInt8 atom/value/check/end/
+  UInt16BE emit and ref/const/add/le/eq. Hygienic pinned bounded-add composition
+  reused directly and through nested increment; independent expanded twins match
+  all65,536 byte pairs/context on three passes (393,216 differential observations),
+  511 trace/limit controls,25 representation and6 serialization rejection controls.
+  Eight wrapper and82 frozen VM methods pass;810 protected identities/kernel26
+  preserved. Two test-expectation failures retained, including seq-result span
+  offset3 versus inner offset1; no behavioral repair. Bounded mechanics only,
+  not AI discovery/universal equivalence/authoring benefit. Stop after publication;
+  next ordered-check/span experiment needs authorization. No full R6.17 study,
+  production/VM changes, P6-A04 acceptance, P6-A05 access or training.
 - Latest round R6.17: `R6_17_SYMBOLIC_RESEARCH_DESIGN_READY`.
   Read `docs/symbolic-research-charter-r6.17.md` and
   `benchmark/results/phase6/R6_17-REPORT.md`, plus the r6_17 design/lifecycle.

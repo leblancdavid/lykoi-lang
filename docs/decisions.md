@@ -1,5 +1,22 @@
 # Experimental decisions
 
+## R6.18 — Keep template order, work and provenance observable
+
+[Report](../benchmark/results/phase6/R6_18-REPORT.md) and
+[semantics](../experiments/typed_composition_r6_18/SEMANTICS-1.md):
+`R6_18_TYPED_COMPOSITION_SUPPORTED`. Use a deliberately tiny monomorphic wrapper
+over unchanged VM operations, with explicit immutable references/dependencies/order,
+content-pinned definitions and fresh deterministic scope/site IDs. Lower calls to
+ordinary nested seq nodes; preserve charges and result spans rather than optimize
+away wrappers or invent function semantics. Limit arguments to refs/literals:
+substitution has existing expression/provenance costs, not call-by-value meaning.
+Full envelopes and cutoff traces matter: an interrupted expectation exposed seq
+result span offset3 versus inner offset1 and is retained. Compact representation
+and exact expansion qualify mechanics only; the wrapper's validation/expansion
+overhead is measured separately from VM work and model effort. No production/VM
+integration, discovery or comparative study authorized. Smallest next proposal is
+ordered conflicting-check/span qualification, only after explicit owner approval.
+
 ## R6.17 — Test adaptive composition without inventing execution meanings
 
 [Charter](symbolic-research-charter-r6.17.md) and

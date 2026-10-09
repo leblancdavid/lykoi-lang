@@ -1,5 +1,25 @@
 # Lykoi research log
 
+## R6.18 bounded typed composition qualification (2026-10-08)
+
+**`R6_18_TYPED_COMPOSITION_SUPPORTED`**;
+[report](../benchmark/results/phase6/R6_18-REPORT.md) and
+[prototype evidence](../experiments/typed_composition_r6_18/README.md).
+Deterministic typing/reference/dependency/order/identity validation and hygienic
+expansion succeed over the declared tiny unchanged R6.10 subset. A checked sum
+composition has direct and nested/header-context reuse.393,216 differential
+observations (two exhaustive byte-pair domains, three passes),511 ordered trace/
+limit controls,25 representation and6 strict JSON rejection controls pass. Eight
+wrapper and82 unchanged VM methods pass;810 protected identities/kernel26 preserved.
+Two failed test attempts retained: no-op mutation rejection expectations/count,
+then outer nested failure offset3 versus inner offset1 from existing seq span
+wrapping. Explicit/lowered behavior already matched; no semantic repair. Canonical
+packages are1,483/2,607 bytes, expanded2,217/4,548; full-wrapper median182.20/315.30µs,
+public VM execution28.90/53.20µs; zero work difference. Host timings/allocations and
+compactness do not establish AI authoring benefit. Same-agent bounded mechanics
+qualification, no independent review/discovery or comparative study. Recommend
+separately authorized two-conflicting-check/span experiment; stopped after publication.
+
 ## R6.17 symbolic construction charter/design (2026-10-08)
 
 **`R6_17_SYMBOLIC_RESEARCH_DESIGN_READY`**;

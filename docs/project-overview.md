@@ -66,6 +66,22 @@ and unverified host callbacks cannot substitute for specified meaning.
 
 ## Current boundary and next steps
 
+**R6.18 — `R6_18_TYPED_COMPOSITION_SUPPORTED`.**
+[Prototype report](../benchmark/results/phase6/R6_18-REPORT.md): separately authorized
+nonproduction Int64/Bool/Unit wrapper validates closed immutable references, exact
+dependencies/order, pinned identities and hygienic bounded expansion into unchanged
+R6.10 operations. Bounded addition reused directly and through nested increment;
+both independent explicit twins match65,536 byte pairs/context on three passes,
+with511 trace/limit controls and31 named representation/serialization rejections.
+Eight wrapper and82 VM regression methods pass;810 protected identities and kernel26
+preserved. Two failed test expectations retained; nested seq result spans remain
+observable. Symbolic sizes1,483/2,607 bytes versus expanded2,217/4,548; wrapper
+adds validation/expansion cost but zero differential VM work. Bounded deterministic
+composition only, no AI-discovery/authoring benefit or general completeness.
+Smallest next proposal: ordered conflicting-check/span qualification within the same
+allowlist. Stopped after publication; no full R6.17 study, production/VM changes,
+model training, P6-A04 acceptance or P6-A05 access. Await explicit authorization.
+
 **R6.17 — `R6_17_SYMBOLIC_RESEARCH_DESIGN_READY`.**
 [Design report](../benchmark/results/phase6/R6_17-REPORT.md): documentation-only
 charter revision and falsifiable local experiment. Three tracks: Python, fixed

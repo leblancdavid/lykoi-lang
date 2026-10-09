@@ -1,5 +1,17 @@
 # Phase 5: comparative maintenance benchmark
 
+## R6.18 bounded typed composition qualification
+
+[Report](results/phase6/R6_18-REPORT.md) and
+[isolated prototype](../experiments/typed_composition_r6_18/README.md):
+`R6_18_TYPED_COMPOSITION_SUPPORTED`. One pinned composition reused in two distinct
+contexts, including nested calls;393,216 exhaustive differential observations,
+511 ordered trace/limit controls,25 representation and6 serialization rejections
+pass. Explicit plans/expansion maps/results and two failed test attempts retained.
+Kernel26, production, R6.10 and R6.3–R6.17 history unchanged. No comparative study,
+AI-discovery/authoring-cost claim, P6-A04 acceptance or P6-A05 access. Stopped after
+publication; subsequent experiments require authorization.
+
 ## R6.17 local symbolic construction — design only
 
 [Charter](../docs/symbolic-research-charter-r6.17.md),

@@ -1,5 +1,15 @@
 # Lykoi
 
+**R6.18 qualifies a bounded nonproduction typed composition wrapper.**
+[Report](benchmark/results/phase6/R6_18-REPORT.md) and
+[prototype](experiments/typed_composition_r6_18/README.md):
+`R6_18_TYPED_COMPOSITION_SUPPORTED`. Hygienic nested reuse lowers deterministically
+to unchanged R6.10 operations. Two contexts each exhaust65,536 byte pairs on three
+passes; exact values/errors/provenance/output/work match explicit twins. Adversarial
+controls and failure evidence retained; production26/VM/history preserved. This
+qualifies mechanics, not AI discovery or the full R6.17 comparison. Stopped after
+publication; further work needs explicit owner authorization.
+
 Lykoi investigates local, provider-independent, AI-native symbolic software
 construction. AI interprets requirements and constructs explicit symbolic software;
 deterministic tools validate and lower it to executables that run without an LLM.

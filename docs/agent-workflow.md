@@ -8,6 +8,17 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R6.18 — `R6_18_TYPED_COMPOSITION_SUPPORTED`.**
+Read the [report](../benchmark/results/phase6/R6_18-REPORT.md) and
+[bounded composition semantics](../experiments/typed_composition_r6_18/SEMANTICS-1.md).
+Separate wrapper qualifies typed immutable references, explicit DAG/order, pinned
+definitions and deterministic hygienic expansion into a tiny unchanged VM subset.
+Two exhaustive contexts/three passes and adversarial/trace/limit controls pass;
+two test-expectation failures are retained, including nested seq span behavior.
+Production/kernel26/VM/history preserved; bounded mechanics only. No full R6.17
+comparison, AI-discovery claim, model selection/training, P6-A04 acceptance or
+P6-A05 access. Stop after publication; further work requires owner authorization.
+
 **Latest round: R6.17 — `R6_17_SYMBOLIC_RESEARCH_DESIGN_READY`.**
 Read the [charter proposal](symbolic-research-charter-r6.17.md),
 [report](../benchmark/results/phase6/R6_17-REPORT.md) and linked design/lifecycle.

@@ -1,0 +1,153 @@
+{
+  "definitions": [
+    {
+      "dependencies": {},
+      "identity": "52da24d6e316a64cbe430055bec8ca92bc0515a9c2271aa218451830f5e99be1",
+      "name": "bounded_add",
+      "order": [
+        "sum",
+        "guard"
+      ],
+      "params": [
+        {
+          "name": "x",
+          "type": "Int64"
+        },
+        {
+          "name": "delta",
+          "type": "Int64"
+        },
+        {
+          "name": "limit",
+          "type": "Int64"
+        }
+      ],
+      "result": {
+        "ref": "sum"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [
+            "x",
+            "delta"
+          ],
+          "id": "sum",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "x"
+                },
+                {
+                  "ref": "delta"
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [
+            "sum",
+            "limit"
+          ],
+          "id": "guard",
+          "node": {
+            "code": "BOUND",
+            "op": "check",
+            "site": {
+              "ref": "sum"
+            },
+            "test": {
+              "le": [
+                {
+                  "ref": "sum"
+                },
+                {
+                  "ref": "limit"
+                }
+              ]
+            }
+          },
+          "type": "Unit"
+        }
+      ]
+    }
+  ],
+  "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+  "program": {
+    "dependencies": {
+      "bounded_add": "52da24d6e316a64cbe430055bec8ca92bc0515a9c2271aa218451830f5e99be1"
+    },
+    "identity": "4da422813553042179f800749ca4233cdb8575df17ae12de271015c54edc6f7f",
+    "name": "pair",
+    "order": [
+      "x",
+      "y",
+      "total",
+      "complete"
+    ],
+    "params": [],
+    "result": {
+      "ref": "total"
+    },
+    "result_type": "Int64",
+    "revision": 1,
+    "steps": [
+      {
+        "deps": [],
+        "id": "x",
+        "node": {
+          "codec": "uint8",
+          "op": "atom"
+        },
+        "type": "Int64"
+      },
+      {
+        "deps": [],
+        "id": "y",
+        "node": {
+          "codec": "uint8",
+          "op": "atom"
+        },
+        "type": "Int64"
+      },
+      {
+        "deps": [
+          "x",
+          "y"
+        ],
+        "id": "total",
+        "node": {
+          "args": {
+            "delta": {
+              "ref": "y"
+            },
+            "limit": {
+              "const": 255
+            },
+            "x": {
+              "ref": "x"
+            }
+          },
+          "identity": "52da24d6e316a64cbe430055bec8ca92bc0515a9c2271aa218451830f5e99be1",
+          "op": "compose",
+          "symbol": "bounded_add"
+        },
+        "type": "Int64"
+      },
+      {
+        "deps": [],
+        "id": "complete",
+        "node": {
+          "op": "end"
+        },
+        "type": "Unit"
+      }
+    ]
+  },
+  "version": "typed-composition-1"
+}
