@@ -1,0 +1,16 @@
+{
+  "source": "opencode db; allowlisted providerID/modelID/finish fields from five latest assistant metadata records",
+  "query": "SELECT json_extract(data,'$.providerID') AS provider, json_extract(data,'$.modelID') AS model, json_extract(data,'$.finish') AS finish FROM message WHERE json_extract(data,'$.role')='assistant' ORDER BY time_created DESC LIMIT 5",
+  "observations": [
+    {"provider": "openai", "model": "gpt-6.1-sol", "finish": null},
+    {"provider": "openai", "model": "gpt-6.1-sol", "finish": "tool-calls"},
+    {"provider": "openai", "model": "gpt-6.1-sol", "finish": "tool-calls"},
+    {"provider": "openai", "model": "gpt-6.1-sol", "finish": "tool-calls"},
+    {"provider": "openai", "model": "gpt-6.1-sol", "finish": "tool-calls"}
+  ],
+  "session_binding": "Recent records corroborate harness model label; query does not uniquely bind the active session",
+  "authentication_route_attested": false,
+  "endpoint_attested": false,
+  "message_content_read": false,
+  "credential_tables_read": false
+}

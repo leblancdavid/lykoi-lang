@@ -1,0 +1,174 @@
+{
+  "dependencies": {},
+  "identity": "354406290a75b7f2ebc5ef144940d946ad7af0bc5e437021213050ad32250f65",
+  "name": "BoundedScore",
+  "order": [
+    "check_x",
+    "check_y",
+    "sum",
+    "check_sum",
+    "score",
+    "surcharged_score"
+  ],
+  "params": [
+    {
+      "name": "x",
+      "type": "Int64"
+    },
+    {
+      "name": "y",
+      "type": "Int64"
+    },
+    {
+      "name": "limit",
+      "type": "Int64"
+    },
+    {
+      "name": "bias",
+      "type": "Int64"
+    }
+  ],
+  "result": {
+    "ref": "surcharged_score"
+  },
+  "result_type": "Int64",
+  "revision": 1,
+  "steps": [
+    {
+      "deps": [
+        "x"
+      ],
+      "id": "check_x",
+      "node": {
+        "code": "X_NEGATIVE",
+        "op": "check",
+        "site": {
+          "ref": "x"
+        },
+        "test": {
+          "le": [
+            {
+              "const": 0
+            },
+            {
+              "ref": "x"
+            }
+          ]
+        }
+      },
+      "type": "Unit"
+    },
+    {
+      "deps": [
+        "y"
+      ],
+      "id": "check_y",
+      "node": {
+        "code": "Y_NEGATIVE",
+        "op": "check",
+        "site": {
+          "ref": "y"
+        },
+        "test": {
+          "le": [
+            {
+              "const": 0
+            },
+            {
+              "ref": "y"
+            }
+          ]
+        }
+      },
+      "type": "Unit"
+    },
+    {
+      "deps": [
+        "x",
+        "y"
+      ],
+      "id": "sum",
+      "node": {
+        "expr": {
+          "add": [
+            {
+              "ref": "x"
+            },
+            {
+              "ref": "y"
+            }
+          ]
+        },
+        "op": "value"
+      },
+      "type": "Int64"
+    },
+    {
+      "deps": [
+        "sum",
+        "limit",
+        "x"
+      ],
+      "id": "check_sum",
+      "node": {
+        "code": "SUM_LIMIT",
+        "op": "check",
+        "site": {
+          "ref": "x"
+        },
+        "test": {
+          "le": [
+            {
+              "ref": "sum"
+            },
+            {
+              "ref": "limit"
+            }
+          ]
+        }
+      },
+      "type": "Unit"
+    },
+    {
+      "deps": [
+        "sum",
+        "bias"
+      ],
+      "id": "score",
+      "node": {
+        "expr": {
+          "add": [
+            {
+              "ref": "sum"
+            },
+            {
+              "ref": "bias"
+            }
+          ]
+        },
+        "op": "value"
+      },
+      "type": "Int64"
+    },
+    {
+      "deps": [
+        "score"
+      ],
+      "id": "surcharged_score",
+      "node": {
+        "expr": {
+          "add": [
+            {
+              "ref": "score"
+            },
+            {
+              "const": 2
+            }
+          ]
+        },
+        "op": "value"
+      },
+      "type": "Int64"
+    }
+  ]
+}

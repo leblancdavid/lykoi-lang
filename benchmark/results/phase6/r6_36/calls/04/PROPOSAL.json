@@ -1,0 +1,79 @@
+{
+  "action": "admit",
+  "definitions": [
+    {
+      "dependencies": {
+        "BoundedScore": "354406290a75b7f2ebc5ef144940d946ad7af0bc5e437021213050ad32250f65"
+      },
+      "name": "CallerA",
+      "order": [
+        "x",
+        "y",
+        "score",
+        "end"
+      ],
+      "params": [],
+      "result": {
+        "ref": "score"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "x",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "y",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [
+            "x",
+            "y"
+          ],
+          "id": "score",
+          "node": {
+            "args": {
+              "bias": {
+                "const": 7
+              },
+              "limit": {
+                "const": 300
+              },
+              "x": {
+                "ref": "x"
+              },
+              "y": {
+                "ref": "y"
+              }
+            },
+            "identity": "354406290a75b7f2ebc5ef144940d946ad7af0bc5e437021213050ad32250f65",
+            "op": "compose",
+            "symbol": "BoundedScore"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "end",
+          "node": {
+            "op": "end"
+          },
+          "type": "Unit"
+        }
+      ]
+    }
+  ],
+  "predecessor": "5c108d4bca34ea803f19a1909d1915730e31003e71b99cda141351df8974082d"
+}

@@ -1,0 +1,22 @@
+Exact definition fields: name,revision (always1),params (array of {name,type}),
+dependencies (symbol->exact hash),steps (array of {id,type,deps,node}),order (exact step id permutation),
+result (expression),result_type. OMIT identity: broker calls existing seal unchanged.
+Types Int64,Bool,Unit. Expressions {"ref":"identifier"},{"const":integer/bool/null},
+{"add":[expr,expr]},{"le":[expr,expr]},{"eq":[expr,expr]}.
+Nodes {"op":"value","expr":expr}, {"op":"check","test":bool_expr,"site":expr,"code":"CODE"},
+{"op":"atom","codec":"uint8"}, {"op":"end"},
+{"op":"compose","symbol":"Family","identity":"actual SHA256","args":{"param":ref_or_const}}.
+Each step deps lists exactly all refs in its node, including check site.
+Declared type equals inferred node result. check/end return Unit. No params or local shadowing.
+Declarations are a DAG, order respects deps; all steps execute in order until first rejection.
+Symbol dependencies exactly match compose families; actual immutable pins only. No cycles.
+Calls args refs/literals only. Max32 steps/definition,8 definitions/closure,64 expanded nodes,nesting4.
+Root program must have params[] and result_type Int64. VM encodes final root as UInt16BE.
+All definitions pass unchanged R6.32 admission/R6.18 expansion/VM validation.
+Do not use tools or output prose. One exact JSON object only.
+
+Create a reusable BoundedScore with ordered params x:Int64,y:Int64,limit:Int64,bias:Int64 -> Int64.
+Consumes no bytes. Check x>=0 first (code X_NEGATIVE, site ref x), then y>=0
+(Y_NEGATIVE, site ref y), compute checked x+y, check sum<=limit (SUM_LIMIT, site ref x),
+then return checked sum+bias. No additional input checks. Use only existing operations.
+Return {"action":"admit","predecessor":null,"definitions":[DEFINITION_WITHOUT_IDENTITY]}.

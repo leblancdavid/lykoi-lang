@@ -1,0 +1,123 @@
+{
+  "budget": {
+    "CLI_invocations": 1,
+    "deadline_seconds": 90
+  },
+  "config": {
+    "$schema": "https://opencode.ai/config.json",
+    "agent": {
+      "r636-author": {
+        "description": "Bounded Lykoi symbolic participant",
+        "mode": "primary",
+        "model": "openai/gpt-6.1-sol",
+        "permission": {
+          "*": "deny",
+          "r636_lykoi_*": "allow"
+        },
+        "prompt": "Follow only the supplied request. Do not access files or other tools. Only Lykoi construction tools are permitted. Never invent semantic operations.",
+        "variant": "high"
+      }
+    },
+    "autoupdate": false,
+    "default_agent": "r636-author",
+    "mcp": {
+      "r636": {
+        "command": [
+          "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+          "-B",
+          "D:\\Dev\\axiom\\experiments\\ai_lifecycle_r6_36\\tools.py"
+        ],
+        "enabled": true,
+        "type": "local"
+      }
+    },
+    "permission": {
+      "*": "deny",
+      "r636_lykoi_*": "allow"
+    },
+    "share": "disabled",
+    "snapshot": false
+  },
+  "effective_authentication": null,
+  "effective_reasoning": null,
+  "lifecycle_requirements_included": false,
+  "model": "gpt-6.1-sol",
+  "opencode_version": "1.18.32",
+  "provider": "openai",
+  "requested_reasoning": {
+    "reasoningEffort": "high"
+  },
+  "tools": [
+    {
+      "description": "Validate and expand a closed typed symbolic package.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "package": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "package"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_validate"
+    },
+    {
+      "description": "Explicit immutable admission or explicit caller migration.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_admit"
+    },
+    {
+      "description": "Retrieve exact immutable definition closure by SHA256 identity.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "identity": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identity"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_retrieve"
+    },
+    {
+      "description": "Validate and execute a closed symbolic package on input bytes.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "input_hex": {
+            "pattern": "^(?:[0-9a-f]{2})*$",
+            "type": "string"
+          },
+          "package": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "package",
+          "input_hex"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_execute"
+    }
+  ],
+  "variant": "high"
+}
