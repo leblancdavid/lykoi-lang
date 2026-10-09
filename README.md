@@ -1,5 +1,12 @@
 # Lykoi
 
+**R6.19 local discovery ended in `R6_19_PROTOCOL_HALT`.**
+[Report](benchmark/results/phase6/R6_19-REPORT.md): existing RTX4070/32GiB/Ollama
+and pinned local Qwen3 8B pass neutral JSON/tool calibration. Nine development
+proposals reject; no abstraction admitted. Track B/E1's third call returns local
+HTTP500; paired evaluation and benefit claims are not reached. All evidence retained;
+production26/R6.10/R6.18 unchanged. Stopped; further work needs explicit authorization.
+
 **R6.18 qualifies a bounded nonproduction typed composition wrapper.**
 [Report](benchmark/results/phase6/R6_18-REPORT.md) and
 [prototype](experiments/typed_composition_r6_18/README.md):

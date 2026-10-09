@@ -66,6 +66,20 @@ and unverified host callbacks cannot substitute for specified meaning.
 
 ## Current boundary and next steps
 
+**R6.19 — `R6_19_PROTOCOL_HALT`.**
+[Local feasibility report](../benchmark/results/phase6/R6_19-REPORT.md): existing
+Ryzen7700X/32GiB/RTX4070 12,282MiB/Ollama0.35.0 with pinned Qwen3 8B Q4_K_M
+supports local offline inference; neutral3/3 JSON and1/1 inert tool selection pass.
+Three discovery sessions produce nine rejected proposals and zero abstractions.
+B/E1 has two rejected responses then local HTTP500; remaining evaluation NOT_REACHED.
+Discovery cost129.210s and9,661 output tokens retained; no reuse/generalization or
+correctness/efficiency benefit demonstrated. Production26/VM/wrapper/history preserved.
+Recommended separately authorized next step: neutral long-output runtime diagnosis
+and unscored nested-schema calibration before a freshly frozen discovery experiment.
+Stopped after publication; await authorization, no downloads/training/P6-A04/P6-A05.
+Harness guidance supplied substantive same-round findings before inventory/model
+selection; INHERITED_R6_19_OUTCOME_PRIMING prevents an independent replication claim.
+
 **R6.18 — `R6_18_TYPED_COMPOSITION_SUPPORTED`.**
 [Prototype report](../benchmark/results/phase6/R6_18-REPORT.md): separately authorized
 nonproduction Int64/Bool/Unit wrapper validates closed immutable references, exact

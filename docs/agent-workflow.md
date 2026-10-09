@@ -8,6 +8,17 @@ does not retroactively amend them or authorize a new run.
 
 ## Orient before editing
 
+**Latest round: R6.19 — `R6_19_PROTOCOL_HALT`.**
+Read the [report](../benchmark/results/phase6/R6_19-REPORT.md) and
+[protocol](../benchmark/results/phase6/r6_19/PROTOCOL.md). Local Qwen3 8B on
+existing RTX4070/Ollama passes neutral JSON/tool calibration; nine discovery
+proposals reject, no accepted abstraction. Track B/E1's third call returns HTTP500;
+paired evaluation is incomplete and no adaptive benefit is established. Preserve
+all attempts and empty frozen vocabulary. Kernel26/production/R6.10/R6.18 preserved.
+Stopped after publication; no outcome-informed retry or tuning without authorization.
+Read the [inherited-context disclosure](../benchmark/results/phase6/r6_19/INHERITED-CONTEXT.md):
+same-round findings were injected before inventory/model selection; no independence claim.
+
 **Latest round: R6.18 — `R6_18_TYPED_COMPOSITION_SUPPORTED`.**
 Read the [report](../benchmark/results/phase6/R6_18-REPORT.md) and
 [bounded composition semantics](../experiments/typed_composition_r6_18/SEMANTICS-1.md).

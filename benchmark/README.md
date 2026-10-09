@@ -1,5 +1,14 @@
 # Phase 5: comparative maintenance benchmark
 
+## R6.19 bounded local discovery — halted
+
+[Report](results/phase6/R6_19-REPORT.md) and [protocol](results/phase6/r6_19/PROTOCOL.md):
+`R6_19_PROTOCOL_HALT`. Pinned local Qwen3 8B/Ollama on existing RTX4070 passes
+neutral JSON/tool calibration;9 development proposals reject,0 abstractions admitted.
+B/E1 third call returns HTTP500; B/C comparison incomplete, no benefit established.
+Frozen tasks/raw proposals/diagnostics/empty vocabulary and failed call retained.
+Kernel26/production/R6.10/R6.18/history preserved; stopped pending authorization.
+
 ## R6.18 bounded typed composition qualification
 
 [Report](results/phase6/R6_18-REPORT.md) and

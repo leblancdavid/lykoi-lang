@@ -1,5 +1,23 @@
 # Lykoi research log
 
+## R6.19 local discovery feasibility (2026-10-08 local / 2026-10-09 UTC)
+
+**`R6_19_PROTOCOL_HALT`**; [report](../benchmark/results/phase6/R6_19-REPORT.md).
+Hardware/runtime inventory finds Ryzen7700X,32GiB,RTX4070 12,282MiB and existing
+Ollama0.35.0/local Qwen3 8B Q4_K_M. Dedicated cloud-disabled loopback/offline runtime
+passes3/3 neutral JSON and1/1 inert tool-selection calibration. Frozen3 development/
+4 unseen-to-participant tasks; three discovery budgets yield9 rejected proposals,
+no valid expanded program or accepted abstraction. Empty vocabulary is pinned.
+Discovery129.210s,15,563 reported input/9,661 output tokens; cached fields separate.
+Track B/E1 two invalid responses, third HTTP500; cause/body/tokens unavailable.
+Harness-injected same-round findings preceded inventory/model selection:
+INHERITED_R6_19_OUTCOME_PRIMING; no independent replication or unbiased selection.
+Remaining B/C and behavioral scoring NOT_REACHED; no comparative efficiency or
+generalization conclusion. Setup-directory failure and pre-exposure harness review
+retained. Original validation timings unavailable; posthoc diagnostic timing separate.
+Production/kernel26/VM/R6.18/history preserved. Stopped after publication; next
+neutral runtime/schema qualification and fresh discovery need explicit authorization.
+
 ## R6.18 bounded typed composition qualification (2026-10-08)
 
 **`R6_18_TYPED_COMPOSITION_SUPPORTED`**;

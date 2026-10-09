@@ -7,6 +7,19 @@ current research boundary and `docs/agent-workflow.md` for scope-specific rules.
 
 ## Model and verification
 
+- Latest round R6.19: `R6_19_PROTOCOL_HALT`.
+  Read `benchmark/results/phase6/R6_19-REPORT.md` and `r6_19/PROTOCOL.md` beside it.
+  Existing RTX4070/32GiB/Ollama0.35.0/local Qwen3 8B Q4_K_M; offline loopback
+  calibration3/3 JSON and1/1 inert tool selection pass. Discovery9 proposals reject,
+  no accepted vocabulary. B/E1 two invalid responses then HTTP500; remaining B/C
+  NOT_REACHED. No demonstrated discovery/reuse/generalization/efficiency benefit.
+  Preserve failed setup, raw calls/feedback, empty vocabulary and halted request;
+  do not repair/rerun from outcomes. Kernel26/production/R6.10/R6.18/history preserved.
+  Stop after publication; neutral runtime/schema qualification or a new experiment
+  requires explicit authorization. No downloads/training/P6-A04 acceptance/P6-A05 access.
+  `r6_19/INHERITED-CONTEXT.md` records substantive same-round findings injected
+  before inventory/model selection: INHERITED_R6_19_OUTCOME_PRIMING; no independent
+  replication or unbiased coordinator selection claim.
 - Latest round R6.18: `R6_18_TYPED_COMPOSITION_SUPPORTED`.
   Read `benchmark/results/phase6/R6_18-REPORT.md` and
   `experiments/typed_composition_r6_18/SEMANTICS-1.md`. Separate nonproduction

@@ -1,0 +1,79 @@
+{
+  "label": "D2_2",
+  "timestamp": "2026-10-09T00:35:13.144319+00:00",
+  "request": {
+    "model": "qwen3:8b",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Return JSON {\"definitions\": [...], \"program\": {...}}. Each definition/program has EXACT fields name, revision:1, params:[{\"name\":...,\"type\":\"Int64\"|\"Bool\"|\"Unit\"}], dependencies:{symbol:\"AUTO\"}, steps:[{\"id\":...,\"type\":...,\"deps\":[exact referenced parameter/local names],\"node\":...}], order:[every step id in execution order], result:expression, result_type. Program params=[] and result_type=\"Int64\". Identity fields are omitted; harness mechanically seals them and replaces AUTO dependency/call pins. No other semantic correction.\nExpressions: {\"ref\":\"local_or_param\"}, {\"const\":integer|boolean|null}, {\"add\":[expr,expr]}, {\"le\":[expr,expr]}, {\"eq\":[expr,expr]}. Bool is not Int64. Nodes: {\"op\":\"atom\",\"codec\":\"uint8\"}; {\"op\":\"value\",\"expr\":expr}; {\"op\":\"check\",\"test\":Bool_expr,\"site\":expr,\"code\":\"ASCII_NAME\"}; {\"op\":\"end\"}; {\"op\":\"compose\",\"symbol\":\"name\",\"identity\":\"AUTO\",\"args\":{\"param\":{\"ref\":\"local\"}|{\"const\":literal}}}. Compose args cannot be computed expressions: materialize values first. Definition result_type may be Int64/Bool/Unit. At least one step per region; exact dependencies and execution order; no shadowing/free refs; no cycles. Max 8 definitions,8 params,32 steps/region,64 expanded nodes, nesting4. Definitions may compose prior library definitions by their exact names. All supplied definitions are validated even unused. No Python, new opcodes, comments, Markdown or prose. Never add end inside reusable arithmetic operations. All checks are ordered, not optimized. seq return provenance is region span. Execution has no LLM.\n\nImmutable library: []"
+      },
+      {
+        "role": "user",
+        "content": "Read exactly two uint8 bytes x then y. Compute total=x+y+2. Require 10<=total with code LOW; require total<=60 with code HIGH. Run predicates in listed order. Compute predicates as typed Bool immutable values before checking them. All checks use total as site. After checks enforce end of input. Return total and encode UInt16BE. Preserve first failing code. Use reusable parameterized operations when useful. Propose up to two meaningful parameterized reusable compositions with this solution."
+      },
+      {
+        "role": "assistant",
+        "content": "{\n  \"definitions\": [\n    {\n      \"name\": \"add_two_bytes\",\n      \"params\": [\n        {\"name\": \"x\", \"type\": \"UInt8\"},\n        {\"name\": \"y\", \"type\": \"UInt8\"}\n      ],\n      \"steps\": [\n        {\"id\": \"add\", \"type\": \"op\", \"deps\": [\"x\", \"y\"], \"node\": {\"op\": \"value\", \"expr\": {\"add\": [{\"ref\": \"x\"}, {\"ref\": \"y\"}]}}},\n        {\"id\": \"add_two\", \"type\": \"op\", \"deps\": [\"add\"], \"node\": {\"op\": \"value\", \"expr\": {\"add\": [{\"ref\": \"add\"}, {\"const\": 2}]}}}\n      ],\n      \"order\": [\"add\", \"add_two\"],\n      \"result\": {\"ref\": \"add_two\"},\n      \"result_type\": \"UInt16\"\n    },\n    {\n      \"name\": \"check_total\",\n      \"params\": [\n        {\"name\": \"total\", \"type\": \"UInt16\"}\n      ],\n      \"steps\": [\n        {\"id\": \"check_low\", \"type\": \"op\", \"deps\": [\"total\"], \"node\": {\"op\": \"check\", \"test\": {\"le\": [{\"const\": 10}, {\"ref\": \"total\"}]}, \"site\": {\"ref\": \"total\"}, \"code\": \"LOW\"}},\n        {\"id\": \"check_high\", \"type\": \"op\", \"deps\": [\"total\"], \"node\": {\"op\": \"check\", \"test\": {\"le\": [{\"ref\": \"total\"}, {\"const\": 60}]}, \"site\": {\"ref\": \"total\"}, \"code\": \"HIGH\"}}\n      ],\n      \"order\": [\"check_low\", \"check_high\"],\n      \"result\": {\"ref\": \"check_high\"},\n      \"result_type\": \"Unit\"\n    },\n    {\n      \" \":\n      \"params\",\n      \"steps\": [\n        {\"id\": \"read_x\", \"type\": \"op\", \"deps\": [], \"node\": {\"op\": \"atom\", \"codec\": \"uint8\"}},\n        {\"id\": \"read_y\", \"type\": \"op\", \"deps\": [\"read_x\"], \"node\": {\"op\": \"atom\", \"codec\": \"uint8\"}},\n        {\"id\": \"compute_total\", \"type\": \"op\", \"deps\": [\"read_x\", \"read_y\"], \"node\": {\"op\": \"compose\", \"symbol\": \"add_two_bytes\", \"identity\": \"AUTO\", \"args\": {\"param\": {\"ref\": \"read_x\"}}}},\n        {\"id\": \"compute_total_y\", \"type\": \"op\", \"deps\": [\"compute_total\", \"read_y\"], \"node\": {\"op\": \"compose\", \"symbol\": \"add_two_bytes\", \"identity\": \"AUTO\", \"args\": {\"param\": {\"ref\": \"read_y\"}}}},\n        {\"id\": \"final_total\", \"type\": \"op\", \"deps\": [\"compute_total\", \"compute_total_y\"], \"node\": {\"op\": \"add\", \"deps\": [\"compute_total\", \"compute_total_y\"], \"node\": {\"op\": \"value\", \"expr\": {\"add\": [{\"ref\": \"compute_total\"}, {\"ref\": \"compute_total_y\"}]}}}},\n        {\"id\": \"check_total_final\", \"type\": \"op\", \"deps\": [\"final_total\"], \"node\": {\"op\": \"compose\", \"symbol\": \"check_total\", \"identity\": \"AUTO\", \"args\": {\"param\": {\"ref\": \"final_total\"}}}},\n        {\"id\": \"end\", \"type\": \"op\", \"deps\": [\"check_total_final\"], \"node\": {\"op\": \"end\"}}\n      ],\n      \"order\": [\"read_x\", \"read_y\", \"compute_total\", \"compute_total_y\", \"final_total\", \"check_total_final\", \"end\"],\n      \"result\": {\"ref\": \"final_total\"},\n      \"result_type\": \"UInt16\"\n    }\n  ],\n  \"program\": {\n    \"name\": \"main\",\n    \"params\": [],\n    \"steps\": [\n      {\"id\": \"read_x\", \"type\": \"op\", \"deps\": [], \"node\": {\"op\": \"atom\", \"codec\": \"uint8\"}},\n      {\"id\": \"read_y\", \"type\": \"op\", \"deps\": [\"read_x\"], \"node\": {\"op\": \"atom\", \"codec\": \"uint8\"}},\n      {\"id\": \"compute_total\", \"type\": \"op\", \"deps\": [\"read_x\", \"read_y\"], \"node\": {\"op\": \"compose\", \"symbol\": \"add_two_bytes\", \"identity\": \"AUTO\", \"args\": {\"param\": {\"ref\": \"read_x\"}}}},\n      {\"id\": \"compute_total_y\", \"type\": \"op\", \"deps\": [\"compute_total\", \"read_y\"], \"node\": {\"op\": \"compose\", \"symbol\": \"add_two_bytes\", \"identity\": \"AUTO\", \"args\": {\"param\": {\"ref\": \"read_y\"}}}},\n      {\"id\": \"final_total\", \"type\": \"op\", \"deps\": [\"compute_total\", \"compute_total_y\"], \"node\": {\"op\": \"value\", \"expr\": {\"add\": [{\"ref\": \"compute_total\"}, {\"ref\": \"compute_total_y\"}]}}},\n      {\"id\": \"check_total_final\", \"type\": \"op\", \"deps\": [\"final_total\"], \"node\": {\"op\": \"compose\", \"symbol\": \"check_total\", \"identity\": \"AUTO\", \"args\": {\"param\": {\"ref\": \"final_total\"}}}},\n      {\"id\": \"end\", \"type\": \"op\", \"deps\": [\"check_total_final\"], \"node\": {\"op\": \"end\"}}\n    ],\n    \"order\": [\"read_x\", \"read_y\", \"compute_total\", \"compute_total_y\", \"final_total\", \"check_total_final\", \"end\"],\n    \"result\": {\"ref\": \"final_total\"},\n    \"result_type\": \"UInt16\"\n  }\n}"
+      },
+      {
+        "role": "user",
+        "content": "Repair within same rules. Deterministic feedback: {\"status\": \"reject\", \"diagnostic\": {\"code\": \"VOCABULARY\", \"path\": \"$\", \"detail\": \"evaluation definitions forbidden; discovery at most two\"}}"
+      }
+    ],
+    "options": {
+      "temperature": 0,
+      "seed": 619,
+      "num_ctx": 8192,
+      "num_predict": 4096,
+      "top_k": 20,
+      "top_p": 0.95,
+      "repeat_penalty": 1
+    },
+    "think": false,
+    "stream": false,
+    "keep_alive": "10m",
+    "format": "json"
+  },
+  "response": {
+    "model": "qwen3:8b",
+    "created_at": "2026-10-09T00:35:13.143605Z",
+    "message": {
+      "role": "assistant",
+      "content": "{\n  \"definitions\": [\n    {\n      \"name\": \"add_two_bytes\",\n      \"params\": [\n        {\"name\": \"x\", \"type\": \"UInt8\"},\n        {\"name\": \"y\", \"type\": \"UInt8\"}\n      ],\n      \"steps\": [\n        {\"id\": \"add\", \"type\": \"op\", \"deps\": [\"x\", \"y\"], \"node\": {\"op\": \"value\", \"expr\": {\"add\": [{\"ref\": \"x\"}, {\"ref\": \"y\"}]}}},\n        {\"id\": \"add_two\", \"type\": \"op\", \"deps\": [\"add\"], \"node\": {\"op\": \"value\", \"expr\": {\"add\": [{\"ref\": \"add\"}, {\"const\": 2}]}}}\n      ],\n      \"order\": [\"add\", \"add_two\"],\n      \"result\": {\"ref\": \"add_two\"},\n      \"result_type\": \"UInt16\"\n    },\n    {\n      \"name\": \"check_total\",\n      \"params\": [\n        {\"name\": \"total\", \"type\": \"UInt16\"}\n      ],\n      \"steps\": [\n        {\"id\": \"check_low\", \"type\": \"op\", \"deps\": [\"total\"], \"node\": {\"op\": \"check\", \"test\": {\"le\": [{\"const\": 10}, {\"ref\": \"total\"}]}, \"site\": {\"ref\": \"total\"}, \"code\": \"LOW\"}},\n        {\"id\": \"check_high\", \"type\": \"op\", \"deps\": [\"total\"], \"node\": {\"op\": \"check\", \"test\": {\"le\": [{\"ref\": \"total\"}, {\"const\": 60}]}, \"site\": {\"ref\": \"total\"}, \"code\": \"HIGH\"}}\n      ],\n      \"order\": [\"check_low\", \"check_high\"],\n      \"result\": {\"ref\": \"check_high\"},\n      \"result_type\": \"Unit\"\n    }\n  ],\n  \"program\": {\n    \"name\": \"main\",\n    \"params\": [],\n    \"steps\": [\n      {\"id\": \"read_x\", \"type\": \"op\", \"deps\": [], \"node\": {\"op\": \"atom\", \"codec\": \"uint8\"}},\n      {\"id\": \"read_y\", \"type\": \"op\", \"deps\": [\"read_x\"], \"node\": {\"op\": \"atom\", \"codec\": \"uint8\"}},\n      {\"id\": \"compute_total\", \"type\": \"op\", \"deps\": [\"read_x\", \"read_y\"], \"node\": {\"op\": \"compose\", \"symbol\": \"add_two_bytes\", \"identity\": \"AUTO\", \"args\": {\"param\": {\"ref\": \"read_x\"}}}},\n      {\"id\": \"compute_total_y\", \"type\": \"op\", \"deps\": [\"compute_total\", \"read_y\"], \"node\": {\"op\": \"compose\", \"symbol\": \"add_two_bytes\", \"identity\": \"AUTO\", \"args\": {\"param\": {\"ref\": \"read_y\"}}}},\n      {\"id\": \"final_total\", \"type\": \"op\", \"deps\": [\"compute_total\", \"compute_total_y\"], \"node\": {\"op\": \"value\", \"expr\": {\"add\": [{\"ref\": \"compute_total\"}, {\"ref\": \"compute_total_y\"}]}}},\n      {\"id\": \"check_total_final\", \"type\": \"op\", \"deps\": [\"final_total\"], \"node\": {\"op\": \"compose\", \"symbol\": \"check_total\", \"identity\": \"AUTO\", \"args\": {\"param\": {\"ref\": \"final_total\"}}}},\n      {\"id\": \"end\", \"type\": \"op\", \"deps\": [\"check_total_final\"], \"node\": {\"op\": \"end\"}}\n    ],\n    \"order\": [\"read_x\", \"read_y\", \"compute_total\", \"compute_total_y\", \"final_total\", \"check_total_final\", \"end\"],\n    \"result\": {\"ref\": \"final_total\"},\n    \"result_type\": \"UInt16\"\n  }\n}"
+    },
+    "done": true,
+    "done_reason": "stop",
+    "total_duration": 10855305900,
+    "load_duration": 2998300,
+    "prompt_eval_count": 1819,
+    "prompt_eval_cached_count": 494,
+    "prompt_eval_duration": 307037000,
+    "eval_count": 819,
+    "eval_duration": 10502469000
+  },
+  "wall_seconds": 10.856551500037313,
+  "loaded": {
+    "models": [
+      {
+        "name": "qwen3:8b",
+        "model": "qwen3:8b",
+        "size": 6295440588,
+        "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen3",
+          "families": [
+            "qwen3"
+          ],
+          "parameter_size": "8.2B",
+          "quantization_level": "Q4_K_M"
+        },
+        "expires_at": "2026-10-08T17:45:13.143605-07:00",
+        "size_vram": 6295440588,
+        "context_length": 8192
+      }
+    ]
+  }
+}

@@ -1,5 +1,18 @@
 # Experimental decisions
 
+## R6.19 — Preserve local authoring failures and halt the incomplete comparison
+
+[Report](../benchmark/results/phase6/R6_19-REPORT.md): `R6_19_PROTOCOL_HALT`.
+Select already installed Qwen3 8B for hardware fit before scoring; pin weights,
+configuration and offline loopback runtime. Neutral JSON/tool success is a distinct
+achievement from symbolic construction. Preserve all9 rejected development proposals
+and empty vocabulary rather than manually repairing or choosing another model from
+outcomes. Local HTTP500 on B/E1 attempt3 prevents the paired comparison; publish
+NOT_REACHED and unavailable telemetry instead of guessing behavior/cost. Mechanical
+identity sealing changes no semantic body. A stronger prospective schema/prompt or
+transport fix requires separate authorization and a new freeze, with exposed tasks
+identified. Kernel26/production/R6.10/R6.18 and historical evidence remain unchanged.
+
 ## R6.18 — Keep template order, work and provenance observable
 
 [Report](../benchmark/results/phase6/R6_18-REPORT.md) and
