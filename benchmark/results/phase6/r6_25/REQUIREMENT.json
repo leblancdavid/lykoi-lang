@@ -1,0 +1,102 @@
+{
+  "id": "F1",
+  "target": "OffsetTotal",
+  "requirement": "Construct only OffsetTotal(a:Int64,b:Int64). Store the subtotal of a and b as an immutable Int64 value. In a second value step, increase that stored subtotal by the constant 3. Return the second stored value. Exactly two ordered value steps, with explicit dependencies. Use the native construction tools and finish with validate_candidate.",
+  "signatures": {
+    "OffsetTotal": [
+      [
+        "a",
+        "Int64"
+      ],
+      [
+        "b",
+        "Int64"
+      ]
+    ]
+  },
+  "operations": {
+    "OffsetTotal": [
+      "value",
+      "value"
+    ]
+  },
+  "edges": [],
+  "cases": [
+    {
+      "args": {
+        "a": 2,
+        "b": 4
+      },
+      "status": "success",
+      "value": 9,
+      "output": [
+        0,
+        9
+      ],
+      "consumed": 0
+    },
+    {
+      "args": {
+        "a": -3,
+        "b": 0
+      },
+      "status": "success",
+      "value": 0,
+      "output": [
+        0,
+        0
+      ],
+      "consumed": 0
+    },
+    {
+      "args": {
+        "a": 32766,
+        "b": 32766
+      },
+      "status": "success",
+      "value": 65535,
+      "output": [
+        255,
+        255
+      ],
+      "consumed": 0
+    },
+    {
+      "args": {
+        "a": 32767,
+        "b": 32767
+      },
+      "status": "reject",
+      "code": "ENCODE_RANGE",
+      "stage": "encode",
+      "offset": null
+    },
+    {
+      "args": {
+        "a": -4,
+        "b": 0
+      },
+      "status": "reject",
+      "code": "ENCODE_RANGE",
+      "stage": "encode",
+      "offset": null
+    },
+    {
+      "args": {
+        "a": 9223372036854775807,
+        "b": 1
+      },
+      "status": "reject",
+      "code": "OVERFLOW",
+      "stage": "structure",
+      "offset": 0
+    },
+    {
+      "args": {
+        "a": true,
+        "b": 0
+      },
+      "validation_error": "TYPE"
+    }
+  ]
+}

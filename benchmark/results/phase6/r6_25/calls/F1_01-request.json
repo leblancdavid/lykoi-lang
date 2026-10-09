@@ -1,0 +1,474 @@
+{
+  "request": {
+    "model": "qwen3:8b",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Shared frozen semantic rules (both interfaces):\nOnly existing value/check/compose/atom/end nodes and const/ref/add/le/eq expressions. No executable code, callbacks, new meanings or external effects. Int64 is signed64, Bool distinct, Unit null. add/le require Int64; eq requires identical operand types. add overflow rejects OVERFLOW. check needs Bool, yields Unit; false rejects with its code at site's provenance. Failure absorbs all later operations. Each step executes once in submitted order; result evaluates after steps. Immutable bindings, exact types, no shadowing, forward references, cycles or free variables. Call arguments are only refs/literals, matching exact named signature; templates substitute expressions rather than eager call-by-value. Nested seq provenance/work preserved. UInt8 atom consumes one byte, end rejects trailing data. Host uses empty byte input and fixed UInt16BE output0..65535; no reads needed for these objectives. Bounds: max7 authored definitions+HostEntry;8 inputs/definition;32 steps/region;128 stored/package;depth8 expressions;max64 expanded VM nodes;nesting4;64KiB strict JSON. Target Int64 and exact requested input signature. No persistent mutable symbol registry. All authored definitions are validated. Names ASCII letter then letters/digits/underscore max32. HostEntry reserved. Cryptographic sealing is mechanical and shared by both tracks; no semantic repair. \n\nUse native tools only. Expressions use scalar literals, $input_or_prior_alias, or [add|le|eq,operand,operand]. dependencies lists all referenced input/local aliases exactly once. No solution is supplied. Finalize using define_result, then validate_candidate. Rejected calls leave state unchanged. Maximum3 definitions/4 inputs/8 steps; expression one binary layer. Target Int64. No chat packet or examples."
+      },
+      {
+        "role": "user",
+        "content": "Construct only OffsetTotal(a:Int64,b:Int64). Store the subtotal of a and b as an immutable Int64 value. In a second value step, increase that stored subtotal by the constant 3. Return the second stored value. Exactly two ordered value steps, with explicit dependencies. Use the native construction tools and finish with validate_candidate."
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "tool_calls": [
+          {
+            "id": "call_o8u8xtmv",
+            "function": {
+              "index": 0,
+              "name": "declare_input",
+              "arguments": {
+                "definition": "OffsetTotal",
+                "inputs": [
+                  {
+                    "name": "a",
+                    "type": "Int64"
+                  },
+                  {
+                    "name": "b",
+                    "type": "Int64"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "call_he8xcix5",
+            "function": {
+              "index": 1,
+              "name": "apply_operation",
+              "arguments": {
+                "dependencies": [
+                  "a",
+                  "b"
+                ],
+                "operation": [
+                  "add",
+                  "a",
+                  "b"
+                ]
+              }
+            }
+          },
+          {
+            "id": "call_pu8ls37b",
+            "function": {
+              "index": 2,
+              "name": "define_result",
+              "arguments": {
+                "definition": "OffsetTotal",
+                "result": [
+                  "add",
+                  "$prior_alias",
+                  3
+                ],
+                "result_type": "Int64"
+              }
+            }
+          },
+          {
+            "id": "call_88q7sxjr",
+            "function": {
+              "index": 3,
+              "name": "validate_candidate",
+              "arguments": {
+                "target": "OffsetTotal"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "role": "tool",
+        "tool_name": "declare_input",
+        "content": "{\"ok\":true,\"definition\":\"OffsetTotal\",\"finalized\":false}",
+        "tool_call_id": "call_o8u8xtmv"
+      },
+      {
+        "role": "tool",
+        "tool_name": "apply_operation",
+        "content": "{\"ok\":false,\"error\":{\"code\":\"ARGUMENT_SCHEMA\",\"detail\":\"{'dependencies': ['a', 'b'], 'operation': ['add', 'a', 'b']} is not valid under any of the given schemas\\n\\nFailed validating 'oneOf' in schema:\\n    {'oneOf': [{'type': 'object',\\n                'properties': {'definition': {'type': 'string',\\n                                              'pattern': '^[A-Za-z][A-Za-z0-9_]{0,31}$'},\\n                               'alias': {'type': 'string',\\n                                         'pattern': '^[A-Za-z][A-Za-z0-9_]{0,31}$'},\\n                         \"}}",
+        "tool_call_id": "call_he8xcix5"
+      },
+      {
+        "role": "tool",
+        "tool_name": "define_result",
+        "content": "{\"ok\":false,\"error\":{\"code\":\"SHAPE\",\"path\":\"$/ops\",\"detail\":\"at least one operation required\"}}",
+        "tool_call_id": "call_pu8ls37b"
+      },
+      {
+        "role": "tool",
+        "tool_name": "validate_candidate",
+        "content": "{\"ok\":false,\"error\":{\"code\":\"INCOMPLETE\",\"path\":\"$/definitions\",\"detail\":\"all declared definitions must be finalized\"}}",
+        "tool_call_id": "call_88q7sxjr"
+      }
+    ],
+    "think": false,
+    "stream": true,
+    "keep_alive": "10m",
+    "options": {
+      "temperature": 0,
+      "seed": 625,
+      "num_ctx": 8192,
+      "num_predict": 384,
+      "top_k": 20,
+      "top_p": 0.95,
+      "repeat_penalty": 1
+    },
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "declare_input",
+          "description": "Create a named definition and its exact typed input signature. Maximum3 definitions/4 inputs.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "definition": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+              },
+              "inputs": {
+                "type": "array",
+                "maxItems": 4,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+                    },
+                    "type": {
+                      "enum": [
+                        "Int64",
+                        "Bool",
+                        "Unit"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "type"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "definition",
+              "inputs"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "apply_operation",
+          "description": "Append one ordered operation. Expressions are scalar literals, $prior_alias, or [add|le|eq,operand,operand]. Exact dependencies required. Maximum8 steps/definition. compose may call only a completed definition.",
+          "parameters": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "definition": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+                  },
+                  "alias": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+                  },
+                  "operation": {
+                    "const": "value"
+                  },
+                  "type": {
+                    "enum": [
+                      "Int64",
+                      "Bool",
+                      "Unit"
+                    ]
+                  },
+                  "expression": {
+                    "oneOf": [
+                      {
+                        "oneOf": [
+                          {
+                            "type": "integer",
+                            "minimum": -9223372036854775808,
+                            "maximum": 9223372036854775807
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string",
+                            "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "array",
+                        "prefixItems": [
+                          {
+                            "enum": [
+                              "add",
+                              "le",
+                              "eq"
+                            ]
+                          },
+                          {
+                            "oneOf": [
+                              {
+                                "type": "integer",
+                                "minimum": -9223372036854775808,
+                                "maximum": 9223372036854775807
+                              },
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "type": "null"
+                              },
+                              {
+                                "type": "string",
+                                "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                              }
+                            ]
+                          },
+                          {
+                            "oneOf": [
+                              {
+                                "type": "integer",
+                                "minimum": -9223372036854775808,
+                                "maximum": 9223372036854775807
+                              },
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "type": "null"
+                              },
+                              {
+                                "type": "string",
+                                "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                              }
+                            ]
+                          }
+                        ],
+                        "items": false,
+                        "minItems": 3,
+                        "maxItems": 3
+                      }
+                    ]
+                  },
+                  "dependencies": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+                    },
+                    "uniqueItems": true,
+                    "maxItems": 8
+                  }
+                },
+                "required": [
+                  "definition",
+                  "alias",
+                  "operation",
+                  "type",
+                  "expression",
+                  "dependencies"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "define_result",
+          "description": "Finalize this definition with its result expression and type; no later edits.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "definition": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+              },
+              "result": {
+                "oneOf": [
+                  {
+                    "oneOf": [
+                      {
+                        "type": "integer",
+                        "minimum": -9223372036854775808,
+                        "maximum": 9223372036854775807
+                      },
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "array",
+                    "prefixItems": [
+                      {
+                        "enum": [
+                          "add",
+                          "le",
+                          "eq"
+                        ]
+                      },
+                      {
+                        "oneOf": [
+                          {
+                            "type": "integer",
+                            "minimum": -9223372036854775808,
+                            "maximum": 9223372036854775807
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string",
+                            "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                          }
+                        ]
+                      },
+                      {
+                        "oneOf": [
+                          {
+                            "type": "integer",
+                            "minimum": -9223372036854775808,
+                            "maximum": 9223372036854775807
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string",
+                            "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                          }
+                        ]
+                      }
+                    ],
+                    "items": false,
+                    "minItems": 3,
+                    "maxItems": 3
+                  }
+                ]
+              },
+              "result_type": {
+                "enum": [
+                  "Int64",
+                  "Bool",
+                  "Unit"
+                ]
+              }
+            },
+            "required": [
+              "definition",
+              "result",
+              "result_type"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "validate_candidate",
+          "description": "Validate and expand the completed registry via frozen adapter/wrapper. Target must return Int64. Finish on success.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "target": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+              }
+            },
+            "required": [
+              "target"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    ]
+  },
+  "serialized": "{\"model\":\"qwen3:8b\",\"messages\":[{\"role\":\"system\",\"content\":\"Shared frozen semantic rules (both interfaces):\\nOnly existing value/check/compose/atom/end nodes and const/ref/add/le/eq expressions. No executable code, callbacks, new meanings or external effects. Int64 is signed64, Bool distinct, Unit null. add/le require Int64; eq requires identical operand types. add overflow rejects OVERFLOW. check needs Bool, yields Unit; false rejects with its code at site's provenance. Failure absorbs all later operations. Each step executes once in submitted order; result evaluates after steps. Immutable bindings, exact types, no shadowing, forward references, cycles or free variables. Call arguments are only refs/literals, matching exact named signature; templates substitute expressions rather than eager call-by-value. Nested seq provenance/work preserved. UInt8 atom consumes one byte, end rejects trailing data. Host uses empty byte input and fixed UInt16BE output0..65535; no reads needed for these objectives. Bounds: max7 authored definitions+HostEntry;8 inputs/definition;32 steps/region;128 stored/package;depth8 expressions;max64 expanded VM nodes;nesting4;64KiB strict JSON. Target Int64 and exact requested input signature. No persistent mutable symbol registry. All authored definitions are validated. Names ASCII letter then letters/digits/underscore max32. HostEntry reserved. Cryptographic sealing is mechanical and shared by both tracks; no semantic repair. \\n\\nUse native tools only. Expressions use scalar literals, $input_or_prior_alias, or [add|le|eq,operand,operand]. dependencies lists all referenced input/local aliases exactly once. No solution is supplied. Finalize using define_result, then validate_candidate. Rejected calls leave state unchanged. Maximum3 definitions/4 inputs/8 steps; expression one binary layer. Target Int64. No chat packet or examples.\"},{\"role\":\"user\",\"content\":\"Construct only OffsetTotal(a:Int64,b:Int64). Store the subtotal of a and b as an immutable Int64 value. In a second value step, increase that stored subtotal by the constant 3. Return the second stored value. Exactly two ordered value steps, with explicit dependencies. Use the native construction tools and finish with validate_candidate.\"},{\"role\":\"assistant\",\"content\":\"\",\"tool_calls\":[{\"id\":\"call_o8u8xtmv\",\"function\":{\"index\":0,\"name\":\"declare_input\",\"arguments\":{\"definition\":\"OffsetTotal\",\"inputs\":[{\"name\":\"a\",\"type\":\"Int64\"},{\"name\":\"b\",\"type\":\"Int64\"}]}}},{\"id\":\"call_he8xcix5\",\"function\":{\"index\":1,\"name\":\"apply_operation\",\"arguments\":{\"dependencies\":[\"a\",\"b\"],\"operation\":[\"add\",\"a\",\"b\"]}}},{\"id\":\"call_pu8ls37b\",\"function\":{\"index\":2,\"name\":\"define_result\",\"arguments\":{\"definition\":\"OffsetTotal\",\"result\":[\"add\",\"$prior_alias\",3],\"result_type\":\"Int64\"}}},{\"id\":\"call_88q7sxjr\",\"function\":{\"index\":3,\"name\":\"validate_candidate\",\"arguments\":{\"target\":\"OffsetTotal\"}}}]},{\"role\":\"tool\",\"tool_name\":\"declare_input\",\"content\":\"{\\\"ok\\\":true,\\\"definition\\\":\\\"OffsetTotal\\\",\\\"finalized\\\":false}\",\"tool_call_id\":\"call_o8u8xtmv\"},{\"role\":\"tool\",\"tool_name\":\"apply_operation\",\"content\":\"{\\\"ok\\\":false,\\\"error\\\":{\\\"code\\\":\\\"ARGUMENT_SCHEMA\\\",\\\"detail\\\":\\\"{'dependencies': ['a', 'b'], 'operation': ['add', 'a', 'b']} is not valid under any of the given schemas\\\\n\\\\nFailed validating 'oneOf' in schema:\\\\n    {'oneOf': [{'type': 'object',\\\\n                'properties': {'definition': {'type': 'string',\\\\n                                              'pattern': '^[A-Za-z][A-Za-z0-9_]{0,31}$'},\\\\n                               'alias': {'type': 'string',\\\\n                                         'pattern': '^[A-Za-z][A-Za-z0-9_]{0,31}$'},\\\\n                         \\\"}}\",\"tool_call_id\":\"call_he8xcix5\"},{\"role\":\"tool\",\"tool_name\":\"define_result\",\"content\":\"{\\\"ok\\\":false,\\\"error\\\":{\\\"code\\\":\\\"SHAPE\\\",\\\"path\\\":\\\"$/ops\\\",\\\"detail\\\":\\\"at least one operation required\\\"}}\",\"tool_call_id\":\"call_pu8ls37b\"},{\"role\":\"tool\",\"tool_name\":\"validate_candidate\",\"content\":\"{\\\"ok\\\":false,\\\"error\\\":{\\\"code\\\":\\\"INCOMPLETE\\\",\\\"path\\\":\\\"$/definitions\\\",\\\"detail\\\":\\\"all declared definitions must be finalized\\\"}}\",\"tool_call_id\":\"call_88q7sxjr\"}],\"think\":false,\"stream\":true,\"keep_alive\":\"10m\",\"options\":{\"temperature\":0,\"seed\":625,\"num_ctx\":8192,\"num_predict\":384,\"top_k\":20,\"top_p\":0.95,\"repeat_penalty\":1},\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"declare_input\",\"description\":\"Create a named definition and its exact typed input signature. Maximum3 definitions/4 inputs.\",\"parameters\":{\"type\":\"object\",\"properties\":{\"definition\":{\"type\":\"string\",\"pattern\":\"^[A-Za-z][A-Za-z0-9_]{0,31}$\"},\"inputs\":{\"type\":\"array\",\"maxItems\":4,\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\",\"pattern\":\"^[A-Za-z][A-Za-z0-9_]{0,31}$\"},\"type\":{\"enum\":[\"Int64\",\"Bool\",\"Unit\"]}},\"required\":[\"name\",\"type\"],\"additionalProperties\":false}}},\"required\":[\"definition\",\"inputs\"],\"additionalProperties\":false}}},{\"type\":\"function\",\"function\":{\"name\":\"apply_operation\",\"description\":\"Append one ordered operation. Expressions are scalar literals, $prior_alias, or [add|le|eq,operand,operand]. Exact dependencies required. Maximum8 steps/definition. compose may call only a completed definition.\",\"parameters\":{\"oneOf\":[{\"type\":\"object\",\"properties\":{\"definition\":{\"type\":\"string\",\"pattern\":\"^[A-Za-z][A-Za-z0-9_]{0,31}$\"},\"alias\":{\"type\":\"string\",\"pattern\":\"^[A-Za-z][A-Za-z0-9_]{0,31}$\"},\"operation\":{\"const\":\"value\"},\"type\":{\"enum\":[\"Int64\",\"Bool\",\"Unit\"]},\"expression\":{\"oneOf\":[{\"oneOf\":[{\"type\":\"integer\",\"minimum\":-9223372036854775808,\"maximum\":9223372036854775807},{\"type\":\"boolean\"},{\"type\":\"null\"},{\"type\":\"string\",\"pattern\":\"^\\\\$[A-Za-z][A-Za-z0-9_]{0,31}$\"}]},{\"type\":\"array\",\"prefixItems\":[{\"enum\":[\"add\",\"le\",\"eq\"]},{\"oneOf\":[{\"type\":\"integer\",\"minimum\":-9223372036854775808,\"maximum\":9223372036854775807},{\"type\":\"boolean\"},{\"type\":\"null\"},{\"type\":\"string\",\"pattern\":\"^\\\\$[A-Za-z][A-Za-z0-9_]{0,31}$\"}]},{\"oneOf\":[{\"type\":\"integer\",\"minimum\":-9223372036854775808,\"maximum\":9223372036854775807},{\"type\":\"boolean\"},{\"type\":\"null\"},{\"type\":\"string\",\"pattern\":\"^\\\\$[A-Za-z][A-Za-z0-9_]{0,31}$\"}]}],\"items\":false,\"minItems\":3,\"maxItems\":3}]},\"dependencies\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"pattern\":\"^[A-Za-z][A-Za-z0-9_]{0,31}$\"},\"uniqueItems\":true,\"maxItems\":8}},\"required\":[\"definition\",\"alias\",\"operation\",\"type\",\"expression\",\"dependencies\"],\"additionalProperties\":false}]}}},{\"type\":\"function\",\"function\":{\"name\":\"define_result\",\"description\":\"Finalize this definition with its result expression and type; no later edits.\",\"parameters\":{\"type\":\"object\",\"properties\":{\"definition\":{\"type\":\"string\",\"pattern\":\"^[A-Za-z][A-Za-z0-9_]{0,31}$\"},\"result\":{\"oneOf\":[{\"oneOf\":[{\"type\":\"integer\",\"minimum\":-9223372036854775808,\"maximum\":9223372036854775807},{\"type\":\"boolean\"},{\"type\":\"null\"},{\"type\":\"string\",\"pattern\":\"^\\\\$[A-Za-z][A-Za-z0-9_]{0,31}$\"}]},{\"type\":\"array\",\"prefixItems\":[{\"enum\":[\"add\",\"le\",\"eq\"]},{\"oneOf\":[{\"type\":\"integer\",\"minimum\":-9223372036854775808,\"maximum\":9223372036854775807},{\"type\":\"boolean\"},{\"type\":\"null\"},{\"type\":\"string\",\"pattern\":\"^\\\\$[A-Za-z][A-Za-z0-9_]{0,31}$\"}]},{\"oneOf\":[{\"type\":\"integer\",\"minimum\":-9223372036854775808,\"maximum\":9223372036854775807},{\"type\":\"boolean\"},{\"type\":\"null\"},{\"type\":\"string\",\"pattern\":\"^\\\\$[A-Za-z][A-Za-z0-9_]{0,31}$\"}]}],\"items\":false,\"minItems\":3,\"maxItems\":3}]},\"result_type\":{\"enum\":[\"Int64\",\"Bool\",\"Unit\"]}},\"required\":[\"definition\",\"result\",\"result_type\"],\"additionalProperties\":false}}},{\"type\":\"function\",\"function\":{\"name\":\"validate_candidate\",\"description\":\"Validate and expand the completed registry via frozen adapter/wrapper. Target must return Int64. Finish on success.\",\"parameters\":{\"type\":\"object\",\"properties\":{\"target\":{\"type\":\"string\",\"pattern\":\"^[A-Za-z][A-Za-z0-9_]{0,31}$\"}},\"required\":[\"target\"],\"additionalProperties\":false}}}]}",
+  "request_sha256": "2b86f774bf9adc3f43ea6ec81b64d190f7fdc70ef2b6206e5e8cf30f0d42f3a3",
+  "preflight": {
+    "endpoint": {
+      "base": "http://127.0.0.1:62959",
+      "port": 62959,
+      "context": 8192,
+      "startup": "time=2026-10-09T06:43:52.700-07:00 level=INFO source=llama_server.go:436 msg=\"starting llama-server\" cmd=\"C:\\\\Users\\\\lblan\\\\AppData\\\\Local\\\\Programs\\\\Ollama\\\\lib\\\\ollama\\\\llama-server.exe --model D:\\\\Software\\\\.ollama\\\\models\\\\blobs\\\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f --port 62959 --host 127.0.0.1 --no-webui --offline -c 8192 -np 1 --log-verbosity 4 --no-log-prefix --no-log-timestamps --no-jinja --chat-template chatml --load-mode none --flash-attn auto -b 1024 -ub 1024 --context-shift --keep 4\"",
+      "process": {
+        "ProcessId": 35236,
+        "ParentProcessId": 59596,
+        "Name": "llama-server.exe",
+        "CommandLine": "C:\\Users\\lblan\\AppData\\Local\\Programs\\Ollama\\lib\\ollama\\llama-server.exe --model D:\\Software\\.ollama\\models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f --port 62959 --host 127.0.0.1 --no-webui --offline -c 8192 -np 1 --log-verbosity 4 --no-log-prefix --no-log-timestamps --no-jinja --chat-template chatml --load-mode none --flash-attn auto -b 1024 -ub 1024 --context-shift --keep 4"
+      },
+      "health": {
+        "status": "ok"
+      },
+      "props": {
+        "model_path": "D:\\Software\\.ollama\\models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f",
+        "model_alias": "D:\\Software\\.ollama\\models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f",
+        "total_slots": 1
+      },
+      "loaded": {
+        "models": [
+          {
+            "name": "qwen3:8b",
+            "model": "qwen3:8b",
+            "size": 6295440588,
+            "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+            "details": {
+              "parent_model": "",
+              "format": "gguf",
+              "family": "qwen3",
+              "families": [
+                "qwen3"
+              ],
+              "parameter_size": "8.2B",
+              "quantization_level": "Q4_K_M"
+            },
+            "expires_at": "2026-10-09T06:54:01.9177435-07:00",
+            "size_vram": 6295440588,
+            "context_length": 8192
+          }
+        ]
+      },
+      "verified": true,
+      "verification_seconds": 2.1026839000405744,
+      "verification": "fresh log + active loopback listener owner/parent + pinned model path + loaded digest/context + backend health/props + owner recheck"
+    },
+    "proxy_tokens": 2124,
+    "template_reserve": 1024
+  }
+}
