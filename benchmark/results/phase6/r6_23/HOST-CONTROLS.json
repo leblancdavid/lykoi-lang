@@ -1,0 +1,1887 @@
+{
+  "positive_controls": [
+    {
+      "id": "independent_full_and_native_twins",
+      "pass_": true,
+      "observations": 85
+    },
+    {
+      "id": "authored_nested_registry",
+      "pass_": true,
+      "envelope": {
+        "status": "success",
+        "value": 42,
+        "provenance": {
+          "span": [
+            0,
+            0
+          ],
+          "origins": []
+        },
+        "consumed": 0,
+        "work": 14,
+        "output": {
+          "bytes_hex": "002a"
+        },
+        "output_spans": [
+          {
+            "node": "program/1ff4034587563785404ac4b62a477252ff610f2e4116e3ef6774e5e2c5480c52/encode",
+            "start": 0,
+            "end": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "valid_but_wrong",
+      "pass_": true,
+      "envelope": {
+        "status": "success",
+        "value": 41,
+        "provenance": {
+          "span": [
+            0,
+            0
+          ],
+          "origins": []
+        },
+        "consumed": 0,
+        "work": 14,
+        "output": {
+          "bytes_hex": "0029"
+        },
+        "output_spans": [
+          {
+            "node": "program/9e0a8e41258635a02b439d4862728a395a1da5bee5d5d42dda46dd48d7df23a4/encode",
+            "start": 0,
+            "end": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "atom_end",
+      "pass_": true
+    }
+  ],
+  "rejections": [
+    {
+      "id": "unknown_ref",
+      "diagnostic": {
+        "code": "UNKNOWN_REFERENCE",
+        "path": "$/compact",
+        "detail": "missing"
+      }
+    },
+    {
+      "id": "forward_ref",
+      "diagnostic": {
+        "code": "UNKNOWN_REFERENCE",
+        "path": "$/compact",
+        "detail": "bound"
+      }
+    },
+    {
+      "id": "wrong_type",
+      "diagnostic": {
+        "code": "TYPE",
+        "path": "Control",
+        "detail": "declared value type differs"
+      }
+    },
+    {
+      "id": "missing_deps",
+      "diagnostic": {
+        "code": "DEPENDENCY",
+        "path": "Control",
+        "detail": "explicit compact dependencies must be exact"
+      }
+    },
+    {
+      "id": "extra_deps",
+      "diagnostic": {
+        "code": "DEPENDENCY",
+        "path": "Control",
+        "detail": "explicit compact dependencies must be exact"
+      }
+    },
+    {
+      "id": "shadow",
+      "diagnostic": {
+        "code": "CAPTURE",
+        "path": "Control",
+        "detail": "z"
+      }
+    },
+    {
+      "id": "unsupported_op",
+      "diagnostic": {
+        "code": "SCHEMA",
+        "detail": "['base', 'python', 'Int64', ['add', '$z', 4], ['z']] is not valid under any of the given schemas\n\nFailed validating 'oneOf' in schema['properties']['definitions']['items']['properties']['ops']['items']:\n    {'oneOf': [{'$ref': '#/$defs/operation'},\n               {'type': 'object',\n                'properties': {'repeat': {'type': 'integer',\n                                          'minimum': 1,\n                                          'maximum': 4},\n                               'body': {'type': 'array',\n                                        'items': {'$ref': '#/$defs/operation'},\n                                        'minItems': 1,\n                                        'maxItems': 8}},\n                'required': ['repeat', 'body'],\n                'additionalProperties': False}]}\n\nOn instance['definitions'][0]['ops'][0]:\n    ['base', 'python', 'Int64', ['add', '$z', 4], ['z']]"
+      }
+    },
+    {
+      "id": "callback_field",
+      "diagnostic": {
+        "code": "SCHEMA",
+        "detail": "Additional properties are not allowed ('callback' was unexpected)\n\nFailed validating 'additionalProperties' in schema['properties']['definitions']['items']:\n    {'type': 'object',\n     'properties': {'name': {'type': 'string',\n                             'pattern': '^[A-Za-z][A-Za-z0-9_]{0,31}$'},\n                    'inputs': {'type': 'array',\n                               'items': {'type': 'array',\n                                         'prefixItems': [{'type': 'string',\n                                                          'pattern': '^[A-Za-z][A-Za-z0-9_]{0,31}$'},\n                                                         {'enum': ['Int64',\n                                                                   'Bool',\n                                                                   'Unit']}],\n                                         'minItems': 2,\n                                         'maxItems': 2,\n                                         'items': False},\n                               'maxItems': 8},\n                    'ops': {'type': 'array',\n                            'items': {'oneOf': [{'$ref': '#/$defs/operation'},\n                                                {'type': 'object',\n                                                 'properties': {'repeat': {'type': 'integer',\n                                                                           'minimum': 1,\n                                                                           'maximum': 4},\n      "
+      }
+    },
+    {
+      "id": "repeat_escape",
+      "diagnostic": {
+        "code": "UNKNOWN_REFERENCE",
+        "path": "$/compact",
+        "detail": "gate"
+      }
+    },
+    {
+      "id": "repeat_bound",
+      "diagnostic": {
+        "code": "SCHEMA",
+        "detail": "{'repeat': 5, 'body': [['gate', 'check', '$permit', 3, 'FLAG', ['permit']]]} is not valid under any of the given schemas\n\nFailed validating 'oneOf' in schema['properties']['definitions']['items']['properties']['ops']['items']:\n    {'oneOf': [{'$ref': '#/$defs/operation'},\n               {'type': 'object',\n                'properties': {'repeat': {'type': 'integer',\n                                          'minimum': 1,\n                                          'maximum': 4},\n                               'body': {'type': 'array',\n                                        'items': {'$ref': '#/$defs/operation'},\n                                        'minItems': 1,\n                                        'maxItems': 8}},\n                'required': ['repeat', 'body'],\n                'additionalProperties': False}]}\n\nOn instance['definitions'][0]['ops'][2]:\n    {'repeat': 5,\n     'body': [['gate', 'check', '$permit', 3, 'FLAG', ['permit']]]}"
+      }
+    },
+    {
+      "id": "nested_repeat",
+      "diagnostic": {
+        "code": "SCHEMA",
+        "detail": "{'repeat': 2, 'body': [{'repeat': 2, 'body': []}]} is not valid under any of the given schemas\n\nFailed validating 'oneOf' in schema['properties']['definitions']['items']['properties']['ops']['items']:\n    {'oneOf': [{'$ref': '#/$defs/operation'},\n               {'type': 'object',\n                'properties': {'repeat': {'type': 'integer',\n                                          'minimum': 1,\n                                          'maximum': 4},\n                               'body': {'type': 'array',\n                                        'items': {'$ref': '#/$defs/operation'},\n                                        'minItems': 1,\n                                        'maxItems': 8}},\n                'required': ['repeat', 'body'],\n                'additionalProperties': False}]}\n\nOn instance['definitions'][0]['ops'][2]:\n    {'repeat': 2, 'body': [{'repeat': 2, 'body': []}]}"
+      }
+    },
+    {
+      "id": "step_bound",
+      "diagnostic": {
+        "code": "RESOURCE",
+        "path": "Control",
+        "detail": "expanded assembly exceeds32 steps"
+      }
+    },
+    {
+      "id": "symbol_cycle",
+      "diagnostic": {
+        "code": "CYCLE",
+        "path": "$/dependencies",
+        "detail": "Control"
+      }
+    },
+    {
+      "id": "computed_call_arg",
+      "diagnostic": {
+        "code": "SCHEMA",
+        "detail": "['selfcall', 'compose', 'Control', {'z': ['add', '$z', 1], 'permit': '$permit'}, ['z', 'permit']] is not valid under any of the given schemas\n\nFailed validating 'oneOf' in schema['properties']['definitions']['items']['properties']['ops']['items']:\n    {'oneOf': [{'$ref': '#/$defs/operation'},\n               {'type': 'object',\n                'properties': {'repeat': {'type': 'integer',\n                                          'minimum': 1,\n                                          'maximum': 4},\n                               'body': {'type': 'array',\n                                        'items': {'$ref': '#/$defs/operation'},\n                                        'minItems': 1,\n                                        'maxItems': 8}},\n                'required': ['repeat', 'body'],\n                'additionalProperties': False}]}\n\nOn instance['definitions'][0]['ops'][0]:\n    ['selfcall',\n     'compose',\n     'Control',\n     {'z': ['add', '$z', 1], 'permit': '$permit'},\n     ['z', 'permit']]"
+      }
+    },
+    {
+      "id": "duplicate_keys",
+      "diagnostic": {
+        "code": "SERIALIZATION",
+        "path": "$",
+        "detail": "duplicate object key: version"
+      }
+    },
+    {
+      "id": "float",
+      "diagnostic": {
+        "code": "SERIALIZATION",
+        "path": "$",
+        "detail": "noninteger JSON number"
+      }
+    },
+    {
+      "id": "nonfinite",
+      "diagnostic": {
+        "code": "SERIALIZATION",
+        "path": "$",
+        "detail": "noninteger JSON number"
+      }
+    }
+  ],
+  "differential_observations": [
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": null,
+      "envelope": {
+        "status": "success",
+        "value": 4,
+        "provenance": {
+          "span": [
+            0,
+            0
+          ],
+          "origins": []
+        },
+        "consumed": 0,
+        "work": 20,
+        "output": {
+          "bytes_hex": "0004"
+        },
+        "output_spans": [
+          {
+            "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/encode",
+            "start": 0,
+            "end": 2
+          }
+        ]
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 0,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 0
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 1,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 1
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 2,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 2
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 3,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 3
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 4,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 4
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 5,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 5
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 6,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 6
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 7,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 7
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 8,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 8
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 9,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 9
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 10,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 10
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 11,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 11
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 12,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s004",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 12
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 13,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s004",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 13
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 14,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 14
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 15,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 15
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 16,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/encode",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 16
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 17,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/encode",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 17
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 18,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/encode",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 18
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 19,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/encode",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 19
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 20,
+      "envelope": {
+        "status": "success",
+        "value": 4,
+        "provenance": {
+          "span": [
+            0,
+            0
+          ],
+          "origins": []
+        },
+        "consumed": 0,
+        "work": 20,
+        "output": {
+          "bytes_hex": "0004"
+        },
+        "output_spans": [
+          {
+            "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/encode",
+            "start": 0,
+            "end": 2
+          }
+        ]
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "budget": 21,
+      "envelope": {
+        "status": "success",
+        "value": 4,
+        "provenance": {
+          "span": [
+            0,
+            0
+          ],
+          "origins": []
+        },
+        "consumed": 0,
+        "work": 20,
+        "output": {
+          "bytes_hex": "0004"
+        },
+        "output_spans": [
+          {
+            "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/encode",
+            "start": 0,
+            "end": 2
+          }
+        ]
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": null,
+      "envelope": {
+        "status": "success",
+        "value": 40,
+        "provenance": {
+          "span": [
+            0,
+            0
+          ],
+          "origins": []
+        },
+        "consumed": 0,
+        "work": 20,
+        "output": {
+          "bytes_hex": "0028"
+        },
+        "output_spans": [
+          {
+            "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/encode",
+            "start": 0,
+            "end": 2
+          }
+        ]
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 0,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 0
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 1,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 1
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 2,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 2
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 3,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 3
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 4,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 4
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 5,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 5
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 6,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 6
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 7,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 7
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 8,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 8
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 9,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 9
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 10,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 10
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 11,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 11
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 12,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s004",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 12
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 13,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s004",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 13
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 14,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 14
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 15,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 15
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 16,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/encode",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 16
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 17,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/encode",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 17
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 18,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/encode",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 18
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 19,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/encode",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 19
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 20,
+      "envelope": {
+        "status": "success",
+        "value": 40,
+        "provenance": {
+          "span": [
+            0,
+            0
+          ],
+          "origins": []
+        },
+        "consumed": 0,
+        "work": 20,
+        "output": {
+          "bytes_hex": "0028"
+        },
+        "output_spans": [
+          {
+            "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/encode",
+            "start": 0,
+            "end": 2
+          }
+        ]
+      }
+    },
+    {
+      "args": {
+        "z": 36,
+        "permit": true
+      },
+      "budget": 21,
+      "envelope": {
+        "status": "success",
+        "value": 40,
+        "provenance": {
+          "span": [
+            0,
+            0
+          ],
+          "origins": []
+        },
+        "consumed": 0,
+        "work": 20,
+        "output": {
+          "bytes_hex": "0028"
+        },
+        "output_spans": [
+          {
+            "node": "program/8a5333d2424384e42d96e96072c96ff09467ac1bd8bccec85fb521e45608c4aa/encode",
+            "start": 0,
+            "end": 2
+          }
+        ]
+      }
+    },
+    {
+      "args": {
+        "z": 37,
+        "permit": true
+      },
+      "budget": null,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "BIG",
+          "offset": 0,
+          "node": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "validation",
+          "path": null,
+          "expected": []
+        },
+        "work": 11
+      }
+    },
+    {
+      "args": {
+        "z": 37,
+        "permit": true
+      },
+      "budget": 0,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 0
+      }
+    },
+    {
+      "args": {
+        "z": 37,
+        "permit": true
+      },
+      "budget": 1,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 1
+      }
+    },
+    {
+      "args": {
+        "z": 37,
+        "permit": true
+      },
+      "budget": 2,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 2
+      }
+    },
+    {
+      "args": {
+        "z": 37,
+        "permit": true
+      },
+      "budget": 3,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 3
+      }
+    },
+    {
+      "args": {
+        "z": 37,
+        "permit": true
+      },
+      "budget": 4,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 4
+      }
+    },
+    {
+      "args": {
+        "z": 37,
+        "permit": true
+      },
+      "budget": 5,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 5
+      }
+    },
+    {
+      "args": {
+        "z": 37,
+        "permit": true
+      },
+      "budget": 6,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 6
+      }
+    },
+    {
+      "args": {
+        "z": 37,
+        "permit": true
+      },
+      "budget": 7,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 7
+      }
+    },
+    {
+      "args": {
+        "z": 37,
+        "permit": true
+      },
+      "budget": 8,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 8
+      }
+    },
+    {
+      "args": {
+        "z": 37,
+        "permit": true
+      },
+      "budget": 9,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 9
+      }
+    },
+    {
+      "args": {
+        "z": 37,
+        "permit": true
+      },
+      "budget": 10,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 10
+      }
+    },
+    {
+      "args": {
+        "z": 37,
+        "permit": true
+      },
+      "budget": 11,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "BIG",
+          "offset": 0,
+          "node": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "validation",
+          "path": null,
+          "expected": []
+        },
+        "work": 11
+      }
+    },
+    {
+      "args": {
+        "z": 37,
+        "permit": true
+      },
+      "budget": 12,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "BIG",
+          "offset": 0,
+          "node": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "validation",
+          "path": null,
+          "expected": []
+        },
+        "work": 11
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "budget": null,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "FLAG",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003",
+          "stage": "validation",
+          "path": null,
+          "expected": []
+        },
+        "work": 13
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "budget": 0,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 0
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "budget": 1,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 1
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "budget": 2,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 2
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "budget": 3,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 3
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "budget": 4,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 4
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "budget": 5,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 5
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "budget": 6,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 6
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "budget": 7,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 7
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "budget": 8,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 8
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "budget": 9,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 9
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "budget": 10,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 10
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "budget": 11,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 11
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "budget": 12,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 12
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "budget": 13,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "FLAG",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003",
+          "stage": "validation",
+          "path": null,
+          "expected": []
+        },
+        "work": 13
+      }
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "budget": 14,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "FLAG",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003",
+          "stage": "validation",
+          "path": null,
+          "expected": []
+        },
+        "work": 13
+      }
+    },
+    {
+      "args": {
+        "z": 9223372036854775807,
+        "permit": true
+      },
+      "budget": null,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "OVERFLOW",
+          "offset": 0,
+          "node": "program/de934b18731a2a05b0742e422e44ef09316c19efef53db3ee7a2fc7897771c4a/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "structure",
+          "path": null,
+          "expected": []
+        },
+        "work": 6
+      }
+    },
+    {
+      "args": {
+        "z": 9223372036854775807,
+        "permit": true
+      },
+      "budget": 0,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/de934b18731a2a05b0742e422e44ef09316c19efef53db3ee7a2fc7897771c4a",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 0
+      }
+    },
+    {
+      "args": {
+        "z": 9223372036854775807,
+        "permit": true
+      },
+      "budget": 1,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/de934b18731a2a05b0742e422e44ef09316c19efef53db3ee7a2fc7897771c4a/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 1
+      }
+    },
+    {
+      "args": {
+        "z": 9223372036854775807,
+        "permit": true
+      },
+      "budget": 2,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/de934b18731a2a05b0742e422e44ef09316c19efef53db3ee7a2fc7897771c4a/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 2
+      }
+    },
+    {
+      "args": {
+        "z": 9223372036854775807,
+        "permit": true
+      },
+      "budget": 3,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/de934b18731a2a05b0742e422e44ef09316c19efef53db3ee7a2fc7897771c4a/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 3
+      }
+    },
+    {
+      "args": {
+        "z": 9223372036854775807,
+        "permit": true
+      },
+      "budget": 4,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/de934b18731a2a05b0742e422e44ef09316c19efef53db3ee7a2fc7897771c4a/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 4
+      }
+    },
+    {
+      "args": {
+        "z": 9223372036854775807,
+        "permit": true
+      },
+      "budget": 5,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "WORK_LIMIT",
+          "offset": 0,
+          "node": "program/de934b18731a2a05b0742e422e44ef09316c19efef53db3ee7a2fc7897771c4a/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "limit",
+          "path": null,
+          "expected": []
+        },
+        "work": 5
+      }
+    },
+    {
+      "args": {
+        "z": 9223372036854775807,
+        "permit": true
+      },
+      "budget": 6,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "OVERFLOW",
+          "offset": 0,
+          "node": "program/de934b18731a2a05b0742e422e44ef09316c19efef53db3ee7a2fc7897771c4a/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "structure",
+          "path": null,
+          "expected": []
+        },
+        "work": 6
+      }
+    },
+    {
+      "args": {
+        "z": 9223372036854775807,
+        "permit": true
+      },
+      "budget": 7,
+      "envelope": {
+        "status": "reject",
+        "error": {
+          "code": "OVERFLOW",
+          "offset": 0,
+          "node": "program/de934b18731a2a05b0742e422e44ef09316c19efef53db3ee7a2fc7897771c4a/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+          "stage": "structure",
+          "path": null,
+          "expected": []
+        },
+        "work": 6
+      }
+    }
+  ],
+  "total_controls": 21,
+  "passed": true,
+  "participant_exposed": false,
+  "qualification": "finite mechanical preservation, not universal equivalence"
+}

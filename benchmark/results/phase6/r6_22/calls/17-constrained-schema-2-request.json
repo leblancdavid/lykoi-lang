@@ -1,0 +1,97 @@
+{
+  "request": {
+    "model": "qwen3:8b",
+    "prompt": "<|im_start|>system\nReturn only the requested JSON, no commentary.<|im_end|>\n<|im_start|>user\nReturn {\"status\":\"ready\",\"flags\":[true,false,true],\"code\":22}.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "raw": true,
+    "stream": true,
+    "keep_alive": "10m",
+    "options": {
+      "temperature": 0,
+      "seed": 621,
+      "num_ctx": 8192,
+      "num_predict": 2048,
+      "top_k": 20,
+      "top_p": 0.95,
+      "repeat_penalty": 1
+    },
+    "format": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "ready",
+            "waiting"
+          ]
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "boolean"
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "code": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 99
+        }
+      },
+      "required": [
+        "status",
+        "flags",
+        "code"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "serialized_request": "{\"model\":\"qwen3:8b\",\"prompt\":\"<|im_start|>system\\nReturn only the requested JSON, no commentary.<|im_end|>\\n<|im_start|>user\\nReturn {\\\"status\\\":\\\"ready\\\",\\\"flags\\\":[true,false,true],\\\"code\\\":22}.<|im_end|>\\n<|im_start|>assistant\\n<think>\\n\\n</think>\\n\\n\",\"raw\":true,\"stream\":true,\"keep_alive\":\"10m\",\"options\":{\"temperature\":0,\"seed\":621,\"num_ctx\":8192,\"num_predict\":2048,\"top_k\":20,\"top_p\":0.95,\"repeat_penalty\":1},\"format\":{\"type\":\"object\",\"properties\":{\"status\":{\"enum\":[\"ready\",\"waiting\"]},\"flags\":{\"type\":\"array\",\"items\":{\"type\":\"boolean\"},\"minItems\":3,\"maxItems\":3},\"code\":{\"type\":\"integer\",\"minimum\":0,\"maximum\":99}},\"required\":[\"status\",\"flags\",\"code\"],\"additionalProperties\":false}}",
+  "sha256": "c01fe4519fba92987b80698521f2eae52ba1afed1af1869bf5c6a749011b48f4",
+  "tokenization": {
+    "tokens": [
+      151644,
+      8948,
+      198,
+      5598,
+      1172,
+      279,
+      11223,
+      4718,
+      11,
+      902,
+      30610,
+      13,
+      151645,
+      198,
+      151644,
+      872,
+      198,
+      5598,
+      5212,
+      2829,
+      3252,
+      2307,
+      2198,
+      11161,
+      8899,
+      1866,
+      23367,
+      21347,
+      28503,
+      1851,
+      788,
+      17,
+      17,
+      7810,
+      151645,
+      198,
+      151644,
+      77091,
+      198,
+      151667,
+      271,
+      151668,
+      271
+    ]
+  }
+}

@@ -1,0 +1,937 @@
+{
+  "provenance": "posthoc expansion of frozen mechanical host-control fixture; no participant candidate",
+  "construct_times": {
+    "serialization_seconds": 5.5999960750341415e-05,
+    "schema_seconds": 0.0013252999633550644,
+    "construction_seconds": 0.00017660006415098906,
+    "validation_seconds": 0.00018560001626610756
+  },
+  "rows": [
+    {
+      "args": {
+        "z": 0,
+        "permit": true
+      },
+      "package": {
+        "version": "typed-composition-1",
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "definitions": [
+          {
+            "name": "Control",
+            "revision": 1,
+            "params": [
+              {
+                "name": "z",
+                "type": "Int64"
+              },
+              {
+                "name": "permit",
+                "type": "Bool"
+              }
+            ],
+            "dependencies": {},
+            "steps": [
+              {
+                "id": "s001",
+                "type": "Int64",
+                "deps": [
+                  "z"
+                ],
+                "node": {
+                  "op": "value",
+                  "expr": {
+                    "add": [
+                      {
+                        "ref": "z"
+                      },
+                      {
+                        "const": 4
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "s002",
+                "type": "Unit",
+                "deps": [
+                  "s001"
+                ],
+                "node": {
+                  "op": "check",
+                  "test": {
+                    "le": [
+                      {
+                        "ref": "s001"
+                      },
+                      {
+                        "const": 40
+                      }
+                    ]
+                  },
+                  "site": {
+                    "const": 3
+                  },
+                  "code": "BIG"
+                }
+              },
+              {
+                "id": "s003",
+                "type": "Unit",
+                "deps": [
+                  "permit"
+                ],
+                "node": {
+                  "op": "check",
+                  "test": {
+                    "ref": "permit"
+                  },
+                  "site": {
+                    "const": 3
+                  },
+                  "code": "FLAG"
+                }
+              },
+              {
+                "id": "s004",
+                "type": "Unit",
+                "deps": [
+                  "permit"
+                ],
+                "node": {
+                  "op": "check",
+                  "test": {
+                    "ref": "permit"
+                  },
+                  "site": {
+                    "const": 3
+                  },
+                  "code": "FLAG"
+                }
+              }
+            ],
+            "order": [
+              "s001",
+              "s002",
+              "s003",
+              "s004"
+            ],
+            "result": {
+              "ref": "s001"
+            },
+            "result_type": "Int64",
+            "identity": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6"
+          }
+        ],
+        "program": {
+          "name": "HostEntry",
+          "revision": 1,
+          "params": [],
+          "dependencies": {
+            "Control": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6"
+          },
+          "steps": [
+            {
+              "id": "invocation",
+              "type": "Int64",
+              "deps": [],
+              "node": {
+                "op": "compose",
+                "symbol": "Control",
+                "identity": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+                "args": {
+                  "z": {
+                    "const": 0
+                  },
+                  "permit": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          ],
+          "order": [
+            "invocation"
+          ],
+          "result": {
+            "ref": "invocation"
+          },
+          "result_type": "Int64",
+          "identity": "868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b"
+        }
+      },
+      "expanded": {
+        "plan": {
+          "version": "semantic-plan-1",
+          "text": false,
+          "rules": {},
+          "decode": {
+            "id": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b",
+            "op": "seq",
+            "steps": [
+              {
+                "node": {
+                  "id": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+                  "op": "seq",
+                  "steps": [
+                    {
+                      "node": {
+                        "id": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+                        "op": "value",
+                        "expr": {
+                          "add": [
+                            {
+                              "const": 0
+                            },
+                            {
+                              "const": 4
+                            }
+                          ]
+                        }
+                      },
+                      "bind": "b_245625eafa1381096a5e45cc8300655f329062c750639f98c2fed4bff85c3639"
+                    },
+                    {
+                      "node": {
+                        "id": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+                        "op": "check",
+                        "test": {
+                          "le": [
+                            {
+                              "ref": "b_245625eafa1381096a5e45cc8300655f329062c750639f98c2fed4bff85c3639"
+                            },
+                            {
+                              "const": 40
+                            }
+                          ]
+                        },
+                        "site": {
+                          "const": 3
+                        },
+                        "code": "BIG"
+                      },
+                      "bind": "b_77e9a183a2636310bcb0078b6ddf18b46d91f9a7ee10a71f916fcc6a7df6e88c"
+                    },
+                    {
+                      "node": {
+                        "id": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003",
+                        "op": "check",
+                        "test": {
+                          "const": true
+                        },
+                        "site": {
+                          "const": 3
+                        },
+                        "code": "FLAG"
+                      },
+                      "bind": "b_ea314baed147aed9b86f33541e48ed2686f31a5b77baa0aab5bd065f635e1a84"
+                    },
+                    {
+                      "node": {
+                        "id": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s004",
+                        "op": "check",
+                        "test": {
+                          "const": true
+                        },
+                        "site": {
+                          "const": 3
+                        },
+                        "code": "FLAG"
+                      },
+                      "bind": "b_16f458cd176cce3667029b447801202b0af109a0f4b986f08628c80c0f49974e"
+                    }
+                  ],
+                  "result": {
+                    "ref": "b_245625eafa1381096a5e45cc8300655f329062c750639f98c2fed4bff85c3639"
+                  }
+                },
+                "bind": "b_d57f55dd4f473054782283e4a40dd30ad0b857d60d1224cd8ea95b96edfbb88b"
+              }
+            ],
+            "result": {
+              "ref": "b_d57f55dd4f473054782283e4a40dd30ad0b857d60d1224cd8ea95b96edfbb88b"
+            }
+          },
+          "encode": {
+            "id": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/encode",
+            "op": "emit",
+            "codec": "uint16be",
+            "expr": {
+              "ref": "root"
+            }
+          }
+        },
+        "map": {
+          "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b": {
+            "definition": "868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b",
+            "local": "region"
+          },
+          "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6": {
+            "definition": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+            "local": "region"
+          },
+          "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001": {
+            "definition": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+            "local": "s001"
+          },
+          "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002": {
+            "definition": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+            "local": "s002"
+          },
+          "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003": {
+            "definition": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+            "local": "s003"
+          },
+          "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s004": {
+            "definition": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+            "local": "s004"
+          },
+          "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/encode": {
+            "definition": "868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b",
+            "local": "encode"
+          }
+        },
+        "plan_identity": "b816e0e29ec56dcc5925d3c901cf10e63543c2164e6a3e8d392ecb4ad5a360c9",
+        "program_identity": "868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b",
+        "nodes": 7
+      },
+      "observation": {
+        "status": "success",
+        "value": 4,
+        "provenance": {
+          "span": [
+            0,
+            0
+          ],
+          "origins": []
+        },
+        "consumed": 0,
+        "work": 20,
+        "output": {
+          "bytes_hex": "0004"
+        },
+        "output_spans": [
+          {
+            "node": "program/868ba5b2845cffa868b747df26325ba093cefbd7de8343b8fe0446550d17684b/encode",
+            "start": 0,
+            "end": 2
+          }
+        ]
+      },
+      "expansion_seconds": 0.0002513999352231622,
+      "execution_seconds": 6.3000014051795e-05,
+      "package_bytes": 1447,
+      "plan_bytes": 2085
+    },
+    {
+      "args": {
+        "z": 37,
+        "permit": true
+      },
+      "package": {
+        "version": "typed-composition-1",
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "definitions": [
+          {
+            "name": "Control",
+            "revision": 1,
+            "params": [
+              {
+                "name": "z",
+                "type": "Int64"
+              },
+              {
+                "name": "permit",
+                "type": "Bool"
+              }
+            ],
+            "dependencies": {},
+            "steps": [
+              {
+                "id": "s001",
+                "type": "Int64",
+                "deps": [
+                  "z"
+                ],
+                "node": {
+                  "op": "value",
+                  "expr": {
+                    "add": [
+                      {
+                        "ref": "z"
+                      },
+                      {
+                        "const": 4
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "s002",
+                "type": "Unit",
+                "deps": [
+                  "s001"
+                ],
+                "node": {
+                  "op": "check",
+                  "test": {
+                    "le": [
+                      {
+                        "ref": "s001"
+                      },
+                      {
+                        "const": 40
+                      }
+                    ]
+                  },
+                  "site": {
+                    "const": 3
+                  },
+                  "code": "BIG"
+                }
+              },
+              {
+                "id": "s003",
+                "type": "Unit",
+                "deps": [
+                  "permit"
+                ],
+                "node": {
+                  "op": "check",
+                  "test": {
+                    "ref": "permit"
+                  },
+                  "site": {
+                    "const": 3
+                  },
+                  "code": "FLAG"
+                }
+              },
+              {
+                "id": "s004",
+                "type": "Unit",
+                "deps": [
+                  "permit"
+                ],
+                "node": {
+                  "op": "check",
+                  "test": {
+                    "ref": "permit"
+                  },
+                  "site": {
+                    "const": 3
+                  },
+                  "code": "FLAG"
+                }
+              }
+            ],
+            "order": [
+              "s001",
+              "s002",
+              "s003",
+              "s004"
+            ],
+            "result": {
+              "ref": "s001"
+            },
+            "result_type": "Int64",
+            "identity": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6"
+          }
+        ],
+        "program": {
+          "name": "HostEntry",
+          "revision": 1,
+          "params": [],
+          "dependencies": {
+            "Control": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6"
+          },
+          "steps": [
+            {
+              "id": "invocation",
+              "type": "Int64",
+              "deps": [],
+              "node": {
+                "op": "compose",
+                "symbol": "Control",
+                "identity": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+                "args": {
+                  "z": {
+                    "const": 37
+                  },
+                  "permit": {
+                    "const": true
+                  }
+                }
+              }
+            }
+          ],
+          "order": [
+            "invocation"
+          ],
+          "result": {
+            "ref": "invocation"
+          },
+          "result_type": "Int64",
+          "identity": "051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6"
+        }
+      },
+      "expanded": {
+        "plan": {
+          "version": "semantic-plan-1",
+          "text": false,
+          "rules": {},
+          "decode": {
+            "id": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6",
+            "op": "seq",
+            "steps": [
+              {
+                "node": {
+                  "id": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+                  "op": "seq",
+                  "steps": [
+                    {
+                      "node": {
+                        "id": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+                        "op": "value",
+                        "expr": {
+                          "add": [
+                            {
+                              "const": 37
+                            },
+                            {
+                              "const": 4
+                            }
+                          ]
+                        }
+                      },
+                      "bind": "b_187b5403d5fa91eaaff0d15cdb5ce6e8ac46b20efb6c7fdc682185c43422fbcd"
+                    },
+                    {
+                      "node": {
+                        "id": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+                        "op": "check",
+                        "test": {
+                          "le": [
+                            {
+                              "ref": "b_187b5403d5fa91eaaff0d15cdb5ce6e8ac46b20efb6c7fdc682185c43422fbcd"
+                            },
+                            {
+                              "const": 40
+                            }
+                          ]
+                        },
+                        "site": {
+                          "const": 3
+                        },
+                        "code": "BIG"
+                      },
+                      "bind": "b_f7f55cf70938e9e0d662d63378d49f77710171eea78bfe48c81d258e98ffcea9"
+                    },
+                    {
+                      "node": {
+                        "id": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003",
+                        "op": "check",
+                        "test": {
+                          "const": true
+                        },
+                        "site": {
+                          "const": 3
+                        },
+                        "code": "FLAG"
+                      },
+                      "bind": "b_25d8cd685d85075d5b07e111a342ca3910d38fceb4b9d0c3b2905f2052466d23"
+                    },
+                    {
+                      "node": {
+                        "id": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s004",
+                        "op": "check",
+                        "test": {
+                          "const": true
+                        },
+                        "site": {
+                          "const": 3
+                        },
+                        "code": "FLAG"
+                      },
+                      "bind": "b_0faefaf472811abacb6d26a58c7e4206cf83cbff40cdd76215d9bf90e2d2c5a5"
+                    }
+                  ],
+                  "result": {
+                    "ref": "b_187b5403d5fa91eaaff0d15cdb5ce6e8ac46b20efb6c7fdc682185c43422fbcd"
+                  }
+                },
+                "bind": "b_17dc5302642438265cd2df554c87f76327991f0e63c3d9444ac016ca503ea750"
+              }
+            ],
+            "result": {
+              "ref": "b_17dc5302642438265cd2df554c87f76327991f0e63c3d9444ac016ca503ea750"
+            }
+          },
+          "encode": {
+            "id": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/encode",
+            "op": "emit",
+            "codec": "uint16be",
+            "expr": {
+              "ref": "root"
+            }
+          }
+        },
+        "map": {
+          "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6": {
+            "definition": "051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6",
+            "local": "region"
+          },
+          "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6": {
+            "definition": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+            "local": "region"
+          },
+          "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001": {
+            "definition": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+            "local": "s001"
+          },
+          "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002": {
+            "definition": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+            "local": "s002"
+          },
+          "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003": {
+            "definition": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+            "local": "s003"
+          },
+          "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s004": {
+            "definition": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+            "local": "s004"
+          },
+          "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/encode": {
+            "definition": "051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6",
+            "local": "encode"
+          }
+        },
+        "plan_identity": "62ba9d14c56258fd77b6eac9eba76025f3662f82bdfd73173749e0a8b4e603bb",
+        "program_identity": "051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6",
+        "nodes": 7
+      },
+      "observation": {
+        "status": "reject",
+        "error": {
+          "code": "BIG",
+          "offset": 0,
+          "node": "program/051a289da09104edc9b4530fbd7905b301deeab9ab1aa4a0031f1842c70347e6/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+          "stage": "validation",
+          "path": null,
+          "expected": []
+        },
+        "work": 11
+      },
+      "expansion_seconds": 0.00021030008792877197,
+      "execution_seconds": 3.709993325173855e-05,
+      "package_bytes": 1448,
+      "plan_bytes": 2086
+    },
+    {
+      "args": {
+        "z": 0,
+        "permit": false
+      },
+      "package": {
+        "version": "typed-composition-1",
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "definitions": [
+          {
+            "name": "Control",
+            "revision": 1,
+            "params": [
+              {
+                "name": "z",
+                "type": "Int64"
+              },
+              {
+                "name": "permit",
+                "type": "Bool"
+              }
+            ],
+            "dependencies": {},
+            "steps": [
+              {
+                "id": "s001",
+                "type": "Int64",
+                "deps": [
+                  "z"
+                ],
+                "node": {
+                  "op": "value",
+                  "expr": {
+                    "add": [
+                      {
+                        "ref": "z"
+                      },
+                      {
+                        "const": 4
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "s002",
+                "type": "Unit",
+                "deps": [
+                  "s001"
+                ],
+                "node": {
+                  "op": "check",
+                  "test": {
+                    "le": [
+                      {
+                        "ref": "s001"
+                      },
+                      {
+                        "const": 40
+                      }
+                    ]
+                  },
+                  "site": {
+                    "const": 3
+                  },
+                  "code": "BIG"
+                }
+              },
+              {
+                "id": "s003",
+                "type": "Unit",
+                "deps": [
+                  "permit"
+                ],
+                "node": {
+                  "op": "check",
+                  "test": {
+                    "ref": "permit"
+                  },
+                  "site": {
+                    "const": 3
+                  },
+                  "code": "FLAG"
+                }
+              },
+              {
+                "id": "s004",
+                "type": "Unit",
+                "deps": [
+                  "permit"
+                ],
+                "node": {
+                  "op": "check",
+                  "test": {
+                    "ref": "permit"
+                  },
+                  "site": {
+                    "const": 3
+                  },
+                  "code": "FLAG"
+                }
+              }
+            ],
+            "order": [
+              "s001",
+              "s002",
+              "s003",
+              "s004"
+            ],
+            "result": {
+              "ref": "s001"
+            },
+            "result_type": "Int64",
+            "identity": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6"
+          }
+        ],
+        "program": {
+          "name": "HostEntry",
+          "revision": 1,
+          "params": [],
+          "dependencies": {
+            "Control": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6"
+          },
+          "steps": [
+            {
+              "id": "invocation",
+              "type": "Int64",
+              "deps": [],
+              "node": {
+                "op": "compose",
+                "symbol": "Control",
+                "identity": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+                "args": {
+                  "z": {
+                    "const": 0
+                  },
+                  "permit": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          ],
+          "order": [
+            "invocation"
+          ],
+          "result": {
+            "ref": "invocation"
+          },
+          "result_type": "Int64",
+          "identity": "57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362"
+        }
+      },
+      "expanded": {
+        "plan": {
+          "version": "semantic-plan-1",
+          "text": false,
+          "rules": {},
+          "decode": {
+            "id": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362",
+            "op": "seq",
+            "steps": [
+              {
+                "node": {
+                  "id": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+                  "op": "seq",
+                  "steps": [
+                    {
+                      "node": {
+                        "id": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001",
+                        "op": "value",
+                        "expr": {
+                          "add": [
+                            {
+                              "const": 0
+                            },
+                            {
+                              "const": 4
+                            }
+                          ]
+                        }
+                      },
+                      "bind": "b_bf1b267efe30bbf78811dc75632af74d995527f26aa31806c9891af666db2caf"
+                    },
+                    {
+                      "node": {
+                        "id": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002",
+                        "op": "check",
+                        "test": {
+                          "le": [
+                            {
+                              "ref": "b_bf1b267efe30bbf78811dc75632af74d995527f26aa31806c9891af666db2caf"
+                            },
+                            {
+                              "const": 40
+                            }
+                          ]
+                        },
+                        "site": {
+                          "const": 3
+                        },
+                        "code": "BIG"
+                      },
+                      "bind": "b_7354b4ed36c8573f60811ae2391e25d3b5add6b92939aca65a6bd2a75c9252ad"
+                    },
+                    {
+                      "node": {
+                        "id": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003",
+                        "op": "check",
+                        "test": {
+                          "const": false
+                        },
+                        "site": {
+                          "const": 3
+                        },
+                        "code": "FLAG"
+                      },
+                      "bind": "b_39ed34de7afafad8b94f5c34f668891bbb2d64bd257ba9b4c3db05ab49551ee2"
+                    },
+                    {
+                      "node": {
+                        "id": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s004",
+                        "op": "check",
+                        "test": {
+                          "const": false
+                        },
+                        "site": {
+                          "const": 3
+                        },
+                        "code": "FLAG"
+                      },
+                      "bind": "b_d13f489b25eda558ae10f7b78395479e66dca84970e818ff5cf3d5949a8f91ef"
+                    }
+                  ],
+                  "result": {
+                    "ref": "b_bf1b267efe30bbf78811dc75632af74d995527f26aa31806c9891af666db2caf"
+                  }
+                },
+                "bind": "b_b562051e5ff1447bf0fafc9b48c81cd0669f94b8b77df55756bbde085fcfa88a"
+              }
+            ],
+            "result": {
+              "ref": "b_b562051e5ff1447bf0fafc9b48c81cd0669f94b8b77df55756bbde085fcfa88a"
+            }
+          },
+          "encode": {
+            "id": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/encode",
+            "op": "emit",
+            "codec": "uint16be",
+            "expr": {
+              "ref": "root"
+            }
+          }
+        },
+        "map": {
+          "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362": {
+            "definition": "57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362",
+            "local": "region"
+          },
+          "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6": {
+            "definition": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+            "local": "region"
+          },
+          "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s001": {
+            "definition": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+            "local": "s001"
+          },
+          "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s002": {
+            "definition": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+            "local": "s002"
+          },
+          "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003": {
+            "definition": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+            "local": "s003"
+          },
+          "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s004": {
+            "definition": "faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6",
+            "local": "s004"
+          },
+          "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/encode": {
+            "definition": "57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362",
+            "local": "encode"
+          }
+        },
+        "plan_identity": "153b593391d86b972a5730296d375359256a5d7784f8c3075403df3740b3df57",
+        "program_identity": "57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362",
+        "nodes": 7
+      },
+      "observation": {
+        "status": "reject",
+        "error": {
+          "code": "FLAG",
+          "offset": 0,
+          "node": "program/57341cbea4f8cbbe9db599a96e8047687c86f2ad0cb8ab0761ab6ea2fac56362/invocation/faefa1b670fcfd8ba9127a92b71cf1a5b9c9ca9d7213ee63dcc6b3b760cf19d6/s003",
+          "stage": "validation",
+          "path": null,
+          "expected": []
+        },
+        "work": 13
+      },
+      "expansion_seconds": 0.00019970000721514225,
+      "execution_seconds": 3.290001768618822e-05,
+      "package_bytes": 1448,
+      "plan_bytes": 2087
+    }
+  ]
+}

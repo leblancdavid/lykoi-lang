@@ -1,0 +1,31 @@
+{
+  "id": "T4_A",
+  "classification": "repeat-guard runtime abort; underlying decoder/model cause undetermined",
+  "http_status": 200,
+  "stream_error": "{\"error\":\"prediction aborted, token repeat limit reached\"}\n",
+  "request_sha256": "d9805f25b9d943554cc9fbc853d5f6b69baf449620df11776cfee7dfa200ad4a",
+  "repetition": {
+    "id": "T4_A",
+    "streamed_events": 171,
+    "response_chunks": 170,
+    "max_identical_adjacent_chunks": 101,
+    "repeated_chunk": "'\\n'",
+    "output_newlines": 101,
+    "guard_abort": true,
+    "note": "receipt chunks and characters are not token counts"
+  },
+  "preflight_count": 710,
+  "logged_input": [
+    710
+  ],
+  "slots": [
+    8192
+  ],
+  "truncated": false,
+  "final_usage": "unavailable; chunks/newline counts not converted to tokens",
+  "log_excerpt": "time=2026-10-08T21:30:24.685-07:00 level=DEBUG source=sched.go:1391 msg=\"evaluating already loaded\" model=D:\\Software\\.ollama\\models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f\ntime=2026-10-08T21:30:24.686-07:00 level=DEBUG source=llama_server.go:1624 msg=\"llama-server completion request\" media=0 prompt_len=3063\nsrv  server_strea: conv_id= (empty=1)\r\nslot get_availabl: id  0 | task -1 |  - checking sim = 0.456 (324/710) > 0.100\r\nslot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.456 (> 0.100 thold), f_keep = 0.365\r\nsrv  get_availabl: updating prompt cache\r\nsrv   prompt_save:  - saving prompt with length 887, total state size = 124.745 MiB (draft: 0.000 MiB)\r\nsrv          load:  - looking for better prompt, base f_keep = 0.365, f_sim = 0.456\r\nsrv          load:    - prompt with length      42, lcp =       3, f_keep = 0.071, f_sim = 0.004\r\nsrv          load:    - prompt with length     872, lcp =     619, f_keep = 0.710, f_sim = 0.872\r\nsrv          load:    - prompt with length     887, lcp =     324, f_keep = 0.365, f_sim = 0.456\r\nsrv          load:  - found better prompt with f_keep = 0.710, f_sim = 0.872\r\nsrv        update:  - cache state: 2 prompts, 130.653 MiB (limits: 8192.000 MiB, 8192 tokens, 58248 est)\r\nsrv        update:    - prompt 000001BE292F8910:      42 tokens, checkpoints:  0,     5.908 MiB\r\nsrv        update:    - prompt 000001BE292FAE90:     887 tokens, checkpoints:  0,   124.745 MiB\r\nsrv  get_availabl: prompt cache update took 103.10 ms\r\nslot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist \r\nslot launch_slot_: id  0 | task -1 | sampler params: \r\n\trepeat_last_n = 64, repeat_penalty = 1.000, frequency_penalty = 0.000, presence_penalty = 0.000\r\n\tdry_multiplier = 0.000, dry_base = 1.750, dry_allowed_length = 2, dry_penalty_last_n = 64\r\n\ttop_k = 20, top_p = 0.950, min_p = 0.000, xtc_probability = 0.000, xtc_threshold = 0.100, typical_p = 1.000, top_n_sigma = -1.000, temp = 0.000\r\n\tmirostat = 0, mirostat_lr = 0.100, mirostat_ent = 5.000, adaptive_target = -1.000, adaptive_decay = 0.900\r\nslot launch_slot_: id  0 | task 1128 | processing task, is_child = 0\r\nslot   operator(): id  0 | task 1128 | new prompt, n_ctx_slot = 8192, n_keep = 4, task.n_tokens = 710\r\nslot   operator(): id  0 | task 1128 | cached n_tokens = 619, memory_seq_rm [619, end)\r\nslot init_sampler: id  0 | task 1128 | init sampler, took 0.06 ms, tokens: text = 710, total = 710\r\ntime=2026-10-08T21:30:27.155-07:00 level=DEBUG source=llama_server.go:1807 msg=\"prediction aborted, token repeat limit reached\"\n[GIN] 2026/10/08 - 21:30:27 | 200 |    2.4724472s |       127.0.0.1 | POST     \"/api/generate\"\ntime=2026-10-08T21:30:27.155-07:00 level=DEBUG source=sched.go:494 msg=\"context for request finished\" runner.name=registry.ollama.ai/library/qwen3:8b runner.inference=\"[{ID:0 Library:CUDA}]\" runner.pid=36768 runner.num_ctx=8192 runner.size=\"5.9 GiB\" runner.vram=\"5.9 GiB\" runner.parallel=1 runner.model=D:\\Software\\.ollama\\models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f\ntime=2026-10-08T21:30:27.155-07:00 level=DEBUG source=sched.go:399 msg=\"runner with non-zero duration has gone idle, adding timer\" runner.size=\"5.9 GiB\" runner.vram=\"5.9 GiB\" runner.parallel=1 runner.model=D:\\Software\\.ollama\\models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f duration=10m0s\ntime=2026-10-08T21:30:27.155-07:00 level=DEBUG source=sched.go:417 msg=\"after processing request finished event\" runner.size=\"5.9 GiB\" runner.vram=\"5.9 GiB\" runner.parallel=1 runner.model=D:\\Software\\.ollama\\models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f refCount=0\nsrv          stop: cancel task, id_task = 1128\r\nslot      release: id  0 | task 1128 | stop processing: n_tokens = 882, truncated = 0\r\nsrv  update_slots: all slots are idle\r\n",
+  "same_error_as_r6_21": true,
+  "transport_difference": "R6.21 nonstreaming HTTP500; R6.23 stream established HTTP200 then NDJSON error",
+  "memory_cause": "no supporting OOM evidence",
+  "inference_after_abort": 0
+}
