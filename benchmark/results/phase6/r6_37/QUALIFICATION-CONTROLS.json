@@ -1,0 +1,547 @@
+{
+  "actual_model_semantic_MCP_calls": 6,
+  "adapter_scope": "Transport-only lifecycle facade, exact R6.32 contracts remain authoritative",
+  "backend": "unchanged R6.32/R6.18/R6.10",
+  "discovery_observed": true,
+  "exchanges": [
+    {
+      "request": {
+        "id": 100,
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+          "arguments": {},
+          "name": "lykoi_retrieve"
+        }
+      },
+      "response": {
+        "id": 100,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "{\"code\": \"SHAPE\", \"path\": \"$/arguments\", \"detail\": \"exact object fields required: identity\"}",
+              "type": "text"
+            }
+          ],
+          "isError": true,
+          "structuredContent": {
+            "code": "SHAPE",
+            "detail": "exact object fields required: identity",
+            "path": "$/arguments"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "id": 101,
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+          "arguments": {
+            "identity": "ccf62765e8ddc6ec4345c2a9586d82ca57075cc837fbdbf7f50751771b7c8301",
+            "input_hex": "z"
+          },
+          "name": "lykoi_execute"
+        }
+      },
+      "response": {
+        "id": 101,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "{\"code\": \"ARGUMENT_SCHEMA\", \"path\": \"$/arguments/input_hex\", \"detail\": \"lowercase even hexadecimal required\"}",
+              "type": "text"
+            }
+          ],
+          "isError": true,
+          "structuredContent": {
+            "code": "ARGUMENT_SCHEMA",
+            "detail": "lowercase even hexadecimal required",
+            "path": "$/arguments/input_hex"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "id": 102,
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+          "arguments": {
+            "identity": "bad"
+          },
+          "name": "lykoi_retrieve"
+        }
+      },
+      "response": {
+        "id": 102,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "{\"code\": \"IDENTITY\", \"path\": \"$/arguments/identity\", \"detail\": \"SHA256 required\"}",
+              "type": "text"
+            }
+          ],
+          "isError": true,
+          "structuredContent": {
+            "code": "IDENTITY",
+            "detail": "SHA256 required",
+            "path": "$/arguments/identity"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "id": 103,
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+          "arguments": {
+            "action": {
+              "action": "admit",
+              "definitions": [
+                {
+                  "dependencies": {},
+                  "name": "NoHost",
+                  "order": [
+                    "v"
+                  ],
+                  "params": [],
+                  "result": {
+                    "ref": "v"
+                  },
+                  "result_type": "Int64",
+                  "revision": 1,
+                  "steps": [
+                    {
+                      "deps": [],
+                      "id": "v",
+                      "node": {
+                        "expr": {
+                          "const": 11
+                        },
+                        "op": "python"
+                      },
+                      "type": "Int64"
+                    }
+                  ]
+                }
+              ],
+              "predecessor": null
+            }
+          },
+          "name": "lykoi_admit"
+        }
+      },
+      "response": {
+        "id": 103,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "{\"code\": \"UNSUPPORTED\", \"path\": \"NoHost/v\", \"detail\": \"python\"}",
+              "type": "text"
+            }
+          ],
+          "isError": true,
+          "structuredContent": {
+            "code": "UNSUPPORTED",
+            "detail": "python",
+            "path": "NoHost/v"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "id": 104,
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+          "arguments": {
+            "action": {
+              "action": "admit",
+              "definitions": [
+                {
+                  "dependencies": {
+                    "NeutralProbe": "ccf62765e8ddc6ec4345c2a9586d82ca57075cc837fbdbf7f50751771b7c8301"
+                  },
+                  "name": "NeutralCaller",
+                  "order": [
+                    "call"
+                  ],
+                  "params": [],
+                  "result": {
+                    "ref": "call"
+                  },
+                  "result_type": "Int64",
+                  "revision": 1,
+                  "steps": [
+                    {
+                      "deps": [],
+                      "id": "call",
+                      "node": {
+                        "args": {},
+                        "identity": "ccf62765e8ddc6ec4345c2a9586d82ca57075cc837fbdbf7f50751771b7c8301",
+                        "op": "compose",
+                        "symbol": "NeutralProbe"
+                      },
+                      "type": "Int64"
+                    }
+                  ]
+                }
+              ],
+              "predecessor": null
+            }
+          },
+          "name": "lykoi_admit"
+        }
+      },
+      "response": {
+        "id": 104,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "{\"status\": \"accepted\", \"token\": \"4a229e5345553ce2ade56224260ce1e4828ee7e09ee3d9ec70b9418d96d66372\", \"pins\": [\"175d10135ee482864aec82e3fb373f0cc4bd9cbb2bd370561c45f851c2d21bfb\"], \"nodes\": [5]}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "structuredContent": {
+            "nodes": [
+              5
+            ],
+            "pins": [
+              "175d10135ee482864aec82e3fb373f0cc4bd9cbb2bd370561c45f851c2d21bfb"
+            ],
+            "status": "accepted",
+            "token": "4a229e5345553ce2ade56224260ce1e4828ee7e09ee3d9ec70b9418d96d66372"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "id": 105,
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+          "arguments": {
+            "action": {
+              "action": "admit",
+              "definitions": [
+                {
+                  "dependencies": {},
+                  "name": "NeutralProbe",
+                  "order": [
+                    "v"
+                  ],
+                  "params": [],
+                  "result": {
+                    "ref": "v"
+                  },
+                  "result_type": "Int64",
+                  "revision": 1,
+                  "steps": [
+                    {
+                      "deps": [],
+                      "id": "v",
+                      "node": {
+                        "expr": {
+                          "const": 12
+                        },
+                        "op": "value"
+                      },
+                      "type": "Int64"
+                    }
+                  ]
+                }
+              ],
+              "predecessor": "ccf62765e8ddc6ec4345c2a9586d82ca57075cc837fbdbf7f50751771b7c8301"
+            }
+          },
+          "name": "lykoi_admit"
+        }
+      },
+      "response": {
+        "id": 105,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "{\"status\": \"accepted\", \"token\": \"ffc9284bb3ec710078b355d958c780b77ff34a50f3b9b5362fe9a811b2c972a0\", \"pins\": [\"8f24a09d12f298120cb6b7493340e0642125579693fe5d9fa5da35c31f16f147\"], \"nodes\": [4]}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "structuredContent": {
+            "nodes": [
+              4
+            ],
+            "pins": [
+              "8f24a09d12f298120cb6b7493340e0642125579693fe5d9fa5da35c31f16f147"
+            ],
+            "status": "accepted",
+            "token": "ffc9284bb3ec710078b355d958c780b77ff34a50f3b9b5362fe9a811b2c972a0"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "id": 106,
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+          "arguments": {
+            "action": {
+              "action": "migrate",
+              "decisions": {},
+              "predecessor": "ccf62765e8ddc6ec4345c2a9586d82ca57075cc837fbdbf7f50751771b7c8301",
+              "successor": "8f24a09d12f298120cb6b7493340e0642125579693fe5d9fa5da35c31f16f147"
+            }
+          },
+          "name": "lykoi_admit"
+        }
+      },
+      "response": {
+        "id": 106,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "{\"code\": \"PARTIAL_MIGRATION\", \"path\": \"$/lifecycle\", \"detail\": \"explicit update or retain for every direct caller required\"}",
+              "type": "text"
+            }
+          ],
+          "isError": true,
+          "structuredContent": {
+            "code": "PARTIAL_MIGRATION",
+            "detail": "explicit update or retain for every direct caller required",
+            "path": "$/lifecycle"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "id": 107,
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+          "arguments": {
+            "action": {
+              "action": "admit",
+              "definitions": [
+                {
+                  "dependencies": {
+                    "NeutralProbe": "8f24a09d12f298120cb6b7493340e0642125579693fe5d9fa5da35c31f16f147"
+                  },
+                  "name": "NeutralCaller",
+                  "order": [
+                    "call"
+                  ],
+                  "params": [],
+                  "result": {
+                    "ref": "call"
+                  },
+                  "result_type": "Int64",
+                  "revision": 1,
+                  "steps": [
+                    {
+                      "deps": [],
+                      "id": "call",
+                      "node": {
+                        "args": {},
+                        "identity": "8f24a09d12f298120cb6b7493340e0642125579693fe5d9fa5da35c31f16f147",
+                        "op": "compose",
+                        "symbol": "NeutralProbe"
+                      },
+                      "type": "Int64"
+                    }
+                  ]
+                }
+              ],
+              "predecessor": "175d10135ee482864aec82e3fb373f0cc4bd9cbb2bd370561c45f851c2d21bfb"
+            }
+          },
+          "name": "lykoi_admit"
+        }
+      },
+      "response": {
+        "id": 107,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "{\"status\": \"accepted\", \"token\": \"5831636c74989b4040be854b44516005269dd8b6bf7d463eeacf913b0ae5594a\", \"pins\": [\"f054198be145c232e947fe4386f0dba9eb61940e7303d1b2fc8801cc99e9b065\"], \"nodes\": [5]}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "structuredContent": {
+            "nodes": [
+              5
+            ],
+            "pins": [
+              "f054198be145c232e947fe4386f0dba9eb61940e7303d1b2fc8801cc99e9b065"
+            ],
+            "status": "accepted",
+            "token": "5831636c74989b4040be854b44516005269dd8b6bf7d463eeacf913b0ae5594a"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "id": 108,
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+          "arguments": {
+            "action": {
+              "action": "migrate",
+              "decisions": {
+                "175d10135ee482864aec82e3fb373f0cc4bd9cbb2bd370561c45f851c2d21bfb": "f054198be145c232e947fe4386f0dba9eb61940e7303d1b2fc8801cc99e9b065"
+              },
+              "predecessor": "ccf62765e8ddc6ec4345c2a9586d82ca57075cc837fbdbf7f50751771b7c8301",
+              "successor": "8f24a09d12f298120cb6b7493340e0642125579693fe5d9fa5da35c31f16f147"
+            }
+          },
+          "name": "lykoi_admit"
+        }
+      },
+      "response": {
+        "id": 108,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "{\"status\": \"migrated\", \"token\": \"f56595cd351e89238fe179fdfe1a148c2b8a643b4284333055eed060eeaf3cc3\"}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "structuredContent": {
+            "status": "migrated",
+            "token": "f56595cd351e89238fe179fdfe1a148c2b8a643b4284333055eed060eeaf3cc3"
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "id": 109,
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+          "arguments": {
+            "identity": "175d10135ee482864aec82e3fb373f0cc4bd9cbb2bd370561c45f851c2d21bfb",
+            "input_hex": ""
+          },
+          "name": "lykoi_execute"
+        }
+      },
+      "response": {
+        "id": 109,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "{\"status\": \"success\", \"value\": 11, \"provenance\": {\"span\": [0, 0], \"origins\": []}, \"consumed\": 0, \"work\": 10, \"output\": {\"bytes_hex\": \"000b\"}, \"output_spans\": [{\"node\": \"program/175d10135ee482864aec82e3fb373f0cc4bd9cbb2bd370561c45f851c2d21bfb/encode\", \"start\": 0, \"end\": 2}]}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "structuredContent": {
+            "consumed": 0,
+            "output": {
+              "bytes_hex": "000b"
+            },
+            "output_spans": [
+              {
+                "end": 2,
+                "node": "program/175d10135ee482864aec82e3fb373f0cc4bd9cbb2bd370561c45f851c2d21bfb/encode",
+                "start": 0
+              }
+            ],
+            "provenance": {
+              "origins": [],
+              "span": [
+                0,
+                0
+              ]
+            },
+            "status": "success",
+            "value": 11,
+            "work": 10
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "id": 110,
+        "jsonrpc": "2.0",
+        "method": "tools/call",
+        "params": {
+          "arguments": {
+            "identity": "f054198be145c232e947fe4386f0dba9eb61940e7303d1b2fc8801cc99e9b065",
+            "input_hex": ""
+          },
+          "name": "lykoi_execute"
+        }
+      },
+      "response": {
+        "id": 110,
+        "jsonrpc": "2.0",
+        "result": {
+          "content": [
+            {
+              "text": "{\"status\": \"success\", \"value\": 12, \"provenance\": {\"span\": [0, 0], \"origins\": []}, \"consumed\": 0, \"work\": 10, \"output\": {\"bytes_hex\": \"000c\"}, \"output_spans\": [{\"node\": \"program/f054198be145c232e947fe4386f0dba9eb61940e7303d1b2fc8801cc99e9b065/encode\", \"start\": 0, \"end\": 2}]}",
+              "type": "text"
+            }
+          ],
+          "isError": false,
+          "structuredContent": {
+            "consumed": 0,
+            "output": {
+              "bytes_hex": "000c"
+            },
+            "output_spans": [
+              {
+                "end": 2,
+                "node": "program/f054198be145c232e947fe4386f0dba9eb61940e7303d1b2fc8801cc99e9b065/encode",
+                "start": 0
+              }
+            ],
+            "provenance": {
+              "origins": [],
+              "span": [
+                0,
+                0
+              ]
+            },
+            "status": "success",
+            "value": 12,
+            "work": 10
+          }
+        }
+      }
+    }
+  ],
+  "first_live_proposal_rejected": true,
+  "invalid_mutation_rollback": true,
+  "lifecycle_successor_and_migration_controls": true,
+  "live_TYPE_rejection": true,
+  "model_corrected_live_shape": true,
+  "original_four_tool_gap": "R6.25 declare/apply/result/validate has no persistent registry admit/retrieve/successor/migrate operations; R6.27 qualified echoes only",
+  "passed": true
+}

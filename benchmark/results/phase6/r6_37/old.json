@@ -1,0 +1,119 @@
+{
+  "dependencies": {},
+  "identity": "77878b97594fe374a02438160c41d48ba793345045832a1fc36be1c916eb8908",
+  "name": "WindowCharge",
+  "order": [
+    "c_start",
+    "c_cap",
+    "c_width"
+  ],
+  "params": [
+    {
+      "name": "start",
+      "type": "Int64"
+    },
+    {
+      "name": "end",
+      "type": "Int64"
+    },
+    {
+      "name": "cap",
+      "type": "Int64"
+    }
+  ],
+  "result": {
+    "add": [
+      {
+        "ref": "end"
+      },
+      {
+        "ref": "start"
+      }
+    ]
+  },
+  "result_type": "Int64",
+  "revision": 1,
+  "steps": [
+    {
+      "deps": [
+        "start"
+      ],
+      "id": "c_start",
+      "node": {
+        "code": "START_NEGATIVE",
+        "op": "check",
+        "site": {
+          "ref": "start"
+        },
+        "test": {
+          "le": [
+            {
+              "const": 0
+            },
+            {
+              "ref": "start"
+            }
+          ]
+        }
+      },
+      "type": "Unit"
+    },
+    {
+      "deps": [
+        "end",
+        "cap"
+      ],
+      "id": "c_cap",
+      "node": {
+        "code": "END_CAP",
+        "op": "check",
+        "site": {
+          "ref": "end"
+        },
+        "test": {
+          "le": [
+            {
+              "ref": "end"
+            },
+            {
+              "ref": "cap"
+            }
+          ]
+        }
+      },
+      "type": "Unit"
+    },
+    {
+      "deps": [
+        "start",
+        "end"
+      ],
+      "id": "c_width",
+      "node": {
+        "code": "WINDOW_NARROW",
+        "op": "check",
+        "site": {
+          "ref": "start"
+        },
+        "test": {
+          "le": [
+            {
+              "add": [
+                {
+                  "ref": "start"
+                },
+                {
+                  "ref": "start"
+                }
+              ]
+            },
+            {
+              "ref": "end"
+            }
+          ]
+        }
+      },
+      "type": "Unit"
+    }
+  ]
+}

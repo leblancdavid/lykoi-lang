@@ -1,0 +1,38 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "r637-author": {
+      "description": "Bounded MCP lifecycle participant",
+      "mode": "primary",
+      "model": "openai/gpt-6.1-sol",
+      "permission": {
+        "*": "deny",
+        "r637_lykoi_*": "allow"
+      },
+      "prompt": "Follow the supplied lifecycle stage using actual Lykoi MCP calls. Do not output JSON actions for a host broker. Do not access files or other tools. Never invent operations. Only mechanical identity sealing is done by admission. Stop at the requested stage, preserving all failed calls.",
+      "variant": "high"
+    }
+  },
+  "autoupdate": false,
+  "default_agent": "r637-author",
+  "mcp": {
+    "r637": {
+      "command": [
+        "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-B",
+        "D:\\Dev\\axiom\\experiments\\ai_lifecycle_r6_37\\tools.py"
+      ],
+      "enabled": true,
+      "environment": {
+        "R637_PHASE": "authoring"
+      },
+      "type": "local"
+    }
+  },
+  "permission": {
+    "*": "deny",
+    "r637_lykoi_*": "allow"
+  },
+  "share": "disabled",
+  "snapshot": false
+}

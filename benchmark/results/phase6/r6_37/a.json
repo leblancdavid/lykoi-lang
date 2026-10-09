@@ -1,0 +1,78 @@
+{
+  "dependencies": {
+    "WindowCharge": "77878b97594fe374a02438160c41d48ba793345045832a1fc36be1c916eb8908"
+  },
+  "identity": "d8e6131796e6b74e4dd1be2ca9057da433ede95a74cbba1307d89f06d23acf26",
+  "name": "CallerA",
+  "order": [
+    "read_start",
+    "read_end",
+    "input_end",
+    "charge"
+  ],
+  "params": [],
+  "result": {
+    "add": [
+      {
+        "ref": "charge"
+      },
+      {
+        "const": 3
+      }
+    ]
+  },
+  "result_type": "Int64",
+  "revision": 1,
+  "steps": [
+    {
+      "deps": [],
+      "id": "read_start",
+      "node": {
+        "codec": "uint8",
+        "op": "atom"
+      },
+      "type": "Int64"
+    },
+    {
+      "deps": [],
+      "id": "read_end",
+      "node": {
+        "codec": "uint8",
+        "op": "atom"
+      },
+      "type": "Int64"
+    },
+    {
+      "deps": [],
+      "id": "input_end",
+      "node": {
+        "op": "end"
+      },
+      "type": "Unit"
+    },
+    {
+      "deps": [
+        "read_start",
+        "read_end"
+      ],
+      "id": "charge",
+      "node": {
+        "args": {
+          "cap": {
+            "const": 200
+          },
+          "end": {
+            "ref": "read_end"
+          },
+          "start": {
+            "ref": "read_start"
+          }
+        },
+        "identity": "77878b97594fe374a02438160c41d48ba793345045832a1fc36be1c916eb8908",
+        "op": "compose",
+        "symbol": "WindowCharge"
+      },
+      "type": "Int64"
+    }
+  ]
+}

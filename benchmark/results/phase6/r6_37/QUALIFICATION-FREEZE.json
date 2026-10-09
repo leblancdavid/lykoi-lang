@@ -1,0 +1,84 @@
+{
+  "budget": {
+    "invocations": 1,
+    "seconds": 300
+  },
+  "inputs": {
+    "experiments/ai_lifecycle_r6_37/runner.py": "a50b6e600d358cb4acd671fd8ec3b669a7ab16f70e23689571405e4742ec8f89",
+    "experiments/ai_lifecycle_r6_37/tools.py": "cf69863540a929d525e46b7b16e7a01070bed5373fbe1f33d9f3d5da4582b272"
+  },
+  "prompt": "This is neutral unscored qualification, no lifecycle requirement.\nDiscover and name all four tools. Use actual MCP calls to:\n1. Admit NeutralProbe, revision1, params[], dependencies{}, one Int64 value step named v\nwith deps[] and expr const11, order[v], result ref v, result_type Int64. predecessor=null.\n2. Retrieve its returned pin, validate it, and execute it on empty input_hex.\n3. Submit a second definition BadProbe with the same shape but declared step type Bool\nwhile expr is const11. This must reject with TYPE; do not repair it.\nThen summarize exact observed effects and diagnostic. Do not produce broker actions.",
+  "task_exposure": false,
+  "tools": [
+    {
+      "description": "Validate and expand a closed typed symbolic package.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "package": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "package"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_validate"
+    },
+    {
+      "description": "Explicit immutable admission or explicit caller migration.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_admit"
+    },
+    {
+      "description": "Retrieve exact immutable definition closure by SHA256 identity.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "identity": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identity"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_retrieve"
+    },
+    {
+      "description": "Validate and execute a closed symbolic package on input bytes.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "input_hex": {
+            "pattern": "^(?:[0-9a-f]{2})*$",
+            "type": "string"
+          },
+          "package": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "package",
+          "input_hex"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_execute"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+Definition fields exactly: name,revision=1,params:[{name,type}],dependencies:
+symbol->pin,steps:[{id,type,deps,node}],order:[step IDs],result:expression,result_type.
+Omit identity only on admission; use tool-returned immutable pins afterward.
+Types Int64/Bool/Unit. Expressions {ref:name},{const:int/bool/null},{add:[e,e]},
+{le:[e,e]},{eq:[e,e]}. Nodes {op:value,expr:e}, {op:check,test:e,site:e,code:CODE},
+{op:atom,codec:uint8},{op:end},{op:compose,symbol:name,identity:pin,args:{param:ref/const}}.
+deps exactly enumerate all referenced local IDs/parameters, including check site.
+Check/end return Unit; atom returns Int64; value/compose types follow expressions.
+Order is an exact dependency-respecting permutation; no shadowing or cycles.
+Root params[] and result_type Int64; final root encoded UInt16BE. Max32 steps,
+8 definitions/closure,64 expanded nodes,depth4. Admission does static validation,
+not functional acceptance. Retrieval provides closed definitions and dependency
+impact. Validate/execute take admitted closed-root identity; execute also input_hex.
+Use actual MCP tools. No host JSON-action broker exists in this round.
+
+Construct reusable typed composition WindowCharge(start:Int64,end:Int64,cap:Int64)->Int64.
+Check in this order: start>=0 (START_NEGATIVE, source start); end<=cap (END_CAP,
+source end); start+start<=end (WINDOW_NARROW, source start). Return end+start.
+Checks have local source labels c_start,c_cap,c_width respectively. Use existing
+checked signed64 arithmetic. Do not invent subtraction/multiplication or host callbacks.
+CallerA reads start then end as two UInt8 bytes, requires end-of-input BEFORE the
+composition, calls with cap=200, then adds3 to the composition output. CallerB reads
+one UInt8 start, requires end-of-input BEFORE arithmetic/composition, computes
+end=start+20, calls with cap=180, and returns the composition output unchanged.
+Name roots CallerA and CallerB. Reading steps must be named read_start/read_end,
+end check input_end, composition invocation charge. Immutable identities are returned
+by tools. Admit reusable definition, retrieve it, admit both callers, retrieve and
+validate both, and execute representative success and ordered failure inputs.
+Stop after the original stage. No successor is requested yet.
+

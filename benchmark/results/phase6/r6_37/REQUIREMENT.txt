@@ -1,0 +1,14 @@
+Construct reusable typed composition WindowCharge(start:Int64,end:Int64,cap:Int64)->Int64.
+Check in this order: start>=0 (START_NEGATIVE, source start); end<=cap (END_CAP,
+source end); start+start<=end (WINDOW_NARROW, source start). Return end+start.
+Checks have local source labels c_start,c_cap,c_width respectively. Use existing
+checked signed64 arithmetic. Do not invent subtraction/multiplication or host callbacks.
+CallerA reads start then end as two UInt8 bytes, requires end-of-input BEFORE the
+composition, calls with cap=200, then adds3 to the composition output. CallerB reads
+one UInt8 start, requires end-of-input BEFORE arithmetic/composition, computes
+end=start+20, calls with cap=180, and returns the composition output unchanged.
+Name roots CallerA and CallerB. Reading steps must be named read_start/read_end,
+end check input_end, composition invocation charge. Immutable identities are returned
+by tools. Admit reusable definition, retrieve it, admit both callers, retrieve and
+validate both, and execute representative success and ordered failure inputs.
+Stop after the original stage. No successor is requested yet.
