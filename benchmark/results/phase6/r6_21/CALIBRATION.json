@@ -1,0 +1,389 @@
+{
+  "rows": [
+    {
+      "id": "F1",
+      "feature": "operation selection / typed values",
+      "result": {
+        "json_valid": true,
+        "strict_valid": true,
+        "schema_valid": true,
+        "type_valid": "NOT_REACHED",
+        "semantic_valid": false,
+        "executable_correct": "NOT_REACHED",
+        "composition_valid": false,
+        "objective_complete": false,
+        "classification": "DEPENDENCY",
+        "value": {
+          "name": "main",
+          "revision": 1,
+          "params": [],
+          "dependencies": {},
+          "steps": [
+            {
+              "id": "int83",
+              "type": "Int64",
+              "deps": [],
+              "node": {
+                "op": "value",
+                "expr": {
+                  "ref": "int83"
+                }
+              }
+            },
+            {
+              "id": "boolFalse",
+              "type": "Bool",
+              "deps": [],
+              "node": {
+                "op": "value",
+                "expr": {
+                  "ref": "boolFalse"
+                }
+              }
+            },
+            {
+              "id": "unitNull",
+              "type": "Unit",
+              "deps": [],
+              "node": {
+                "op": "value",
+                "expr": {
+                  "ref": "unitNull"
+                }
+              }
+            }
+          ],
+          "order": [
+            "int83",
+            "boolFalse",
+            "unitNull"
+          ],
+          "result": {
+            "ref": "int83"
+          },
+          "result_type": "Int64"
+        },
+        "diagnostic": {
+          "code": "DEPENDENCY",
+          "path": "main/int83",
+          "detail": "dependencies must exactly enumerate expression references"
+        },
+        "validation_seconds": 0.0014377000043168664
+      }
+    },
+    {
+      "id": "F2",
+      "feature": "typed input declarations",
+      "result": {
+        "json_valid": true,
+        "strict_valid": true,
+        "schema_valid": true,
+        "type_valid": true,
+        "semantic_valid": true,
+        "executable_correct": true,
+        "composition_valid": true,
+        "objective_complete": true,
+        "classification": "PASS",
+        "value": {
+          "name": "step",
+          "revision": 1,
+          "params": [
+            {
+              "name": "n",
+              "type": "Int64"
+            }
+          ],
+          "dependencies": {},
+          "steps": [
+            {
+              "id": "step",
+              "type": "Int64",
+              "deps": [
+                "n"
+              ],
+              "node": {
+                "op": "value",
+                "expr": {
+                  "ref": "n"
+                }
+              }
+            }
+          ],
+          "order": [
+            "step"
+          ],
+          "result": {
+            "ref": "step"
+          },
+          "result_type": "Int64"
+        },
+        "package": {
+          "version": "typed-composition-1",
+          "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+          "definitions": [
+            {
+              "name": "Echo",
+              "revision": 1,
+              "params": [
+                {
+                  "name": "p",
+                  "type": "Int64"
+                }
+              ],
+              "dependencies": {},
+              "steps": [
+                {
+                  "id": "copy",
+                  "type": "Int64",
+                  "deps": [
+                    "p"
+                  ],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "ref": "p"
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "copy"
+              ],
+              "result": {
+                "ref": "copy"
+              },
+              "result_type": "Int64",
+              "identity": "9529a64dad1c8edecf22a227069f74c6697942b1cb80b64cb34c84b6bbcda295"
+            },
+            {
+              "name": "Relay",
+              "revision": 1,
+              "params": [
+                {
+                  "name": "q",
+                  "type": "Int64"
+                }
+              ],
+              "dependencies": {
+                "Echo": "9529a64dad1c8edecf22a227069f74c6697942b1cb80b64cb34c84b6bbcda295"
+              },
+              "steps": [
+                {
+                  "id": "inner",
+                  "type": "Int64",
+                  "deps": [
+                    "q"
+                  ],
+                  "node": {
+                    "op": "compose",
+                    "symbol": "Echo",
+                    "identity": "9529a64dad1c8edecf22a227069f74c6697942b1cb80b64cb34c84b6bbcda295",
+                    "args": {
+                      "p": {
+                        "ref": "q"
+                      }
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "inner"
+              ],
+              "result": {
+                "ref": "inner"
+              },
+              "result_type": "Int64",
+              "identity": "f58c52f3b5b42aee50ce55e3d1c88c9c70d136f0819235dba4dd87749ce2e1be"
+            },
+            {
+              "name": "step",
+              "revision": 1,
+              "params": [
+                {
+                  "name": "n",
+                  "type": "Int64"
+                }
+              ],
+              "dependencies": {},
+              "steps": [
+                {
+                  "id": "step",
+                  "type": "Int64",
+                  "deps": [
+                    "n"
+                  ],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "ref": "n"
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "step"
+              ],
+              "result": {
+                "ref": "step"
+              },
+              "result_type": "Int64",
+              "identity": "346351e277a35a22ba5c0d8c85813e2ba57e2b33ef09d5c2cf88aff2d5fb0c75"
+            }
+          ],
+          "program": {
+            "name": "Runner",
+            "revision": 1,
+            "params": [],
+            "dependencies": {
+              "step": "346351e277a35a22ba5c0d8c85813e2ba57e2b33ef09d5c2cf88aff2d5fb0c75"
+            },
+            "steps": [
+              {
+                "id": "called",
+                "type": "Int64",
+                "deps": [],
+                "node": {
+                  "op": "compose",
+                  "symbol": "step",
+                  "identity": "346351e277a35a22ba5c0d8c85813e2ba57e2b33ef09d5c2cf88aff2d5fb0c75",
+                  "args": {
+                    "n": {
+                      "const": 0
+                    }
+                  }
+                }
+              }
+            ],
+            "order": [
+              "called"
+            ],
+            "result": {
+              "ref": "called"
+            },
+            "result_type": "Int64",
+            "identity": "f4d878fd0d6ebb6feb6204ad7e4d33f1e0be8ba1a14dba6738fb4b466bcc0c9c"
+          }
+        },
+        "expanded_nodes": 4,
+        "envelopes": [
+          {
+            "case": {
+              "args": {
+                "n": 0
+              },
+              "status": "success",
+              "value": 0,
+              "output": [
+                0,
+                0
+              ],
+              "consumed": 0
+            },
+            "envelope": {
+              "status": "success",
+              "value": 0,
+              "provenance": {
+                "span": [
+                  0,
+                  0
+                ],
+                "origins": []
+              },
+              "consumed": 0,
+              "work": 10,
+              "output": {
+                "bytes_hex": "0000"
+              },
+              "output_spans": [
+                {
+                  "node": "program/f4d878fd0d6ebb6feb6204ad7e4d33f1e0be8ba1a14dba6738fb4b466bcc0c9c/encode",
+                  "start": 0,
+                  "end": 2
+                }
+              ]
+            },
+            "repeat_equal": true
+          },
+          {
+            "case": {
+              "args": {
+                "n": 17
+              },
+              "status": "success",
+              "value": 17,
+              "output": [
+                0,
+                17
+              ],
+              "consumed": 0
+            },
+            "envelope": {
+              "status": "success",
+              "value": 17,
+              "provenance": {
+                "span": [
+                  0,
+                  0
+                ],
+                "origins": []
+              },
+              "consumed": 0,
+              "work": 10,
+              "output": {
+                "bytes_hex": "0011"
+              },
+              "output_spans": [
+                {
+                  "node": "program/d3ec8f2691d29396deb2f2ced7450a60e7c7640fd180b8fd99dc317fe5944d03/encode",
+                  "start": 0,
+                  "end": 2
+                }
+              ]
+            },
+            "repeat_equal": true
+          },
+          {
+            "case": {
+              "args": {
+                "n": 65535
+              },
+              "status": "success",
+              "value": 65535,
+              "output": [
+                255,
+                255
+              ],
+              "consumed": 0
+            },
+            "envelope": {
+              "status": "success",
+              "value": 65535,
+              "provenance": {
+                "span": [
+                  0,
+                  0
+                ],
+                "origins": []
+              },
+              "consumed": 0,
+              "work": 10,
+              "output": {
+                "bytes_hex": "ffff"
+              },
+              "output_spans": [
+                {
+                  "node": "program/b7173828d4de8b1072447b06e55d4dfcd815c3cb151e4fc4863b7c5577200a21/encode",
+                  "start": 0,
+                  "end": 2
+                }
+              ]
+            },
+            "repeat_equal": true
+          }
+        ],
+        "validation_seconds": 0.003845499944873154
+      }
+    }
+  ],
+  "planned": 6
+}

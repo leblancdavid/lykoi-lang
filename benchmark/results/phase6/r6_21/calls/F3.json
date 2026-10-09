@@ -1,0 +1,85 @@
+{
+  "id": "F3",
+  "timestamp": "2026-10-09T02:44:55.941186+00:00",
+  "request": {
+    "model": "qwen3:8b",
+    "prompt": "<|im_start|>system\nR6.21 compact-authoring-1. REQUIRED rules; emit JSON data only, never a schema, wrapper, prose or Markdown.\nGrammar (objects have exactly the shown keys; | means alternatives, not literal text):\nName := ASCII [A-Za-z][A-Za-z0-9_]{0,31}; Hash := 64 lowercase hex digits.\nType := Int64 | Bool | Unit. Int64 is exact signed64 integer, Bool is distinct, Unit is null. No floats.\nArg := {\"ref\":Name} | {\"const\":Int64|Bool|null}.\nExpr := Arg | {\"add\":[Expr,Expr]}.\nNode := {\"op\":\"value\",\"expr\":Expr}.\nParam := {\"name\":Name,\"type\":Type}.\nStep := {\"id\":Name,\"type\":Type,\"deps\":[Name,...],\"node\":Node}.\nDefinition := {\"name\":Name,\"revision\":1,\"params\":[Param,...],\"dependencies\":{symbol:Hash,...},\"steps\":[Step,...],\"order\":[Name,...],\"result\":Expr,\"result_type\":\"Int64\"}.\nSubmit this Definition without identity. Host computes identity and package headers only. Definitions are reusable templates; objective specifies exact typed parameters, including [] for closed definitions. Host instantiates declared input cases via a single fixed compose adapter, never edits your body. Empty byte input; fixed UInt16BE output (0..65535), no input reads or end operations needed. No invented operations/symbols or callbacks.\nAll params/step IDs unique, no shadowing, mutation, free refs, globals or projections. deps is the exact unique set of parameter/local references used anywhere in that step's node; symbol names are not local refs. order is an exact permutation of step IDs; all local dependencies precede uses. No cycles. Each step runs once in order, even if unused; absorbing first failure stops later steps. result evaluated after steps.\nvalue returns expression type. check requires Bool test, site is any typed Expr, returns Unit; false rejects with code and site's provenance. add/le operands Int64, add returns Int64 (overflow rejects), le returns Bool. eq needs same-type operands and returns Bool. Expressions evaluate recursively left-to-right. Constants preserve exact types.\ncompose args exactly match target parameter names/types, only ref or const. dependencies exactly maps directly called symbols to their supplied identities; do not include transitive symbols. Target/call/dependency hashes must agree. Params substitute as expressions, not eager values; repeated uses repeat expression work. Callee locals are hygienic, caller locals invisible except explicit args. No implicit latest version.\nEvery region lowers to seq; compose expands to nested seq, preserving order/work/provenance. Returned seq cell spans the entire region, not just its result expression. Canonical identity hashes version/foundation/full definition except identity; key order ignored, array order preserved. Fixed library is immutable; you cannot add or alter it.\nBounds: 1..32 steps/region, <=8 params and dependencies/definition, <=8 definitions and 128 stored steps/package; expression depth8, representation depth24/8192 values/64KiB, strings<=256, dependency depth16, expansion nesting4 and <=64 nodes including fixed adapter and encode; VM depth16/2048 expression visits. Each seq and noncompose step costs one node; compose replaced by target region/steps; encode one node. Limits and runtime rejection remain observable, not optimized away.\nInterfaces share all rules, objective, library and formats. A returns Definition. B returns exactly four stages:\n1 {\"operations\":[used op names once],\"name\":Name,\"revision\":1,\"params\":[Param,...],\"dependencies\":{symbol:Hash,...},\"steps\":[{\"id\":Name,\"type\":Type},...],\"result_type\":\"Int64\"}\n2 {\"bodies\":[{\"id\":Name,\"deps\":[Name,...],\"node\":Node},...]}\n3 {\"order\":[Name,...]}\n4 {\"result\":Expr}\nB bodies match signatures exactly once; host joins by ID and copies fields only. Selected operations exactly equal node op set. No missing field inference. Validation after each message; final unchanged wrapper checks type/dependencies/order/pins/bounds. Invalid stage terminal. No manual repair. A also has one attempt. OPTIONAL guidance: use short IDs and compact JSON; no examples are required.\n\nImmutable library JSON:[]<|im_end|>\n<|im_start|>user\nObjective:No parameters. Materialize integer13 then a second value step that adds the first step to itself. Return the second.\nAllowed node ops:[\"value\"]\nInterface:A; return Definition.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "raw": true,
+    "stream": false,
+    "format": "json",
+    "keep_alive": "10m",
+    "options": {
+      "temperature": 0,
+      "seed": 621,
+      "num_ctx": 8192,
+      "top_k": 20,
+      "top_p": 0.95,
+      "repeat_penalty": 1,
+      "num_predict": 2048
+    }
+  },
+  "serialized_request": "{\"model\":\"qwen3:8b\",\"prompt\":\"<|im_start|>system\\nR6.21 compact-authoring-1. REQUIRED rules; emit JSON data only, never a schema, wrapper, prose or Markdown.\\nGrammar (objects have exactly the shown keys; | means alternatives, not literal text):\\nName := ASCII [A-Za-z][A-Za-z0-9_]{0,31}; Hash := 64 lowercase hex digits.\\nType := Int64 | Bool | Unit. Int64 is exact signed64 integer, Bool is distinct, Unit is null. No floats.\\nArg := {\\\"ref\\\":Name} | {\\\"const\\\":Int64|Bool|null}.\\nExpr := Arg | {\\\"add\\\":[Expr,Expr]}.\\nNode := {\\\"op\\\":\\\"value\\\",\\\"expr\\\":Expr}.\\nParam := {\\\"name\\\":Name,\\\"type\\\":Type}.\\nStep := {\\\"id\\\":Name,\\\"type\\\":Type,\\\"deps\\\":[Name,...],\\\"node\\\":Node}.\\nDefinition := {\\\"name\\\":Name,\\\"revision\\\":1,\\\"params\\\":[Param,...],\\\"dependencies\\\":{symbol:Hash,...},\\\"steps\\\":[Step,...],\\\"order\\\":[Name,...],\\\"result\\\":Expr,\\\"result_type\\\":\\\"Int64\\\"}.\\nSubmit this Definition without identity. Host computes identity and package headers only. Definitions are reusable templates; objective specifies exact typed parameters, including [] for closed definitions. Host instantiates declared input cases via a single fixed compose adapter, never edits your body. Empty byte input; fixed UInt16BE output (0..65535), no input reads or end operations needed. No invented operations/symbols or callbacks.\\nAll params/step IDs unique, no shadowing, mutation, free refs, globals or projections. deps is the exact unique set of parameter/local references used anywhere in that step's node; symbol names are not local refs. order is an exact permutation of step IDs; all local dependencies precede uses. No cycles. Each step runs once in order, even if unused; absorbing first failure stops later steps. result evaluated after steps.\\nvalue returns expression type. check requires Bool test, site is any typed Expr, returns Unit; false rejects with code and site's provenance. add/le operands Int64, add returns Int64 (overflow rejects), le returns Bool. eq needs same-type operands and returns Bool. Expressions evaluate recursively left-to-right. Constants preserve exact types.\\ncompose args exactly match target parameter names/types, only ref or const. dependencies exactly maps directly called symbols to their supplied identities; do not include transitive symbols. Target/call/dependency hashes must agree. Params substitute as expressions, not eager values; repeated uses repeat expression work. Callee locals are hygienic, caller locals invisible except explicit args. No implicit latest version.\\nEvery region lowers to seq; compose expands to nested seq, preserving order/work/provenance. Returned seq cell spans the entire region, not just its result expression. Canonical identity hashes version/foundation/full definition except identity; key order ignored, array order preserved. Fixed library is immutable; you cannot add or alter it.\\nBounds: 1..32 steps/region, <=8 params and dependencies/definition, <=8 definitions and 128 stored steps/package; expression depth8, representation depth24/8192 values/64KiB, strings<=256, dependency depth16, expansion nesting4 and <=64 nodes including fixed adapter and encode; VM depth16/2048 expression visits. Each seq and noncompose step costs one node; compose replaced by target region/steps; encode one node. Limits and runtime rejection remain observable, not optimized away.\\nInterfaces share all rules, objective, library and formats. A returns Definition. B returns exactly four stages:\\n1 {\\\"operations\\\":[used op names once],\\\"name\\\":Name,\\\"revision\\\":1,\\\"params\\\":[Param,...],\\\"dependencies\\\":{symbol:Hash,...},\\\"steps\\\":[{\\\"id\\\":Name,\\\"type\\\":Type},...],\\\"result_type\\\":\\\"Int64\\\"}\\n2 {\\\"bodies\\\":[{\\\"id\\\":Name,\\\"deps\\\":[Name,...],\\\"node\\\":Node},...]}\\n3 {\\\"order\\\":[Name,...]}\\n4 {\\\"result\\\":Expr}\\nB bodies match signatures exactly once; host joins by ID and copies fields only. Selected operations exactly equal node op set. No missing field inference. Validation after each message; final unchanged wrapper checks type/dependencies/order/pins/bounds. Invalid stage terminal. No manual repair. A also has one attempt. OPTIONAL guidance: use short IDs and compact JSON; no examples are required.\\n\\nImmutable library JSON:[]<|im_end|>\\n<|im_start|>user\\nObjective:No parameters. Materialize integer13 then a second value step that adds the first step to itself. Return the second.\\nAllowed node ops:[\\\"value\\\"]\\nInterface:A; return Definition.<|im_end|>\\n<|im_start|>assistant\\n<think>\\n\\n</think>\\n\\n\",\"raw\":true,\"stream\":false,\"format\":\"json\",\"keep_alive\":\"10m\",\"options\":{\"temperature\":0,\"seed\":621,\"num_ctx\":8192,\"top_k\":20,\"top_p\":0.95,\"repeat_penalty\":1,\"num_predict\":2048}}",
+  "request_sha256": "13436f1a540d6659c32cc4ba898537a9e4699ac5b90f0375ba07c838e5d43616",
+  "prompt_sha256": "963c442316768f7e76ac41e781a61d2f027abd47a14f6b2f94f3375ecff4499b",
+  "status": 500,
+  "body": "{\"error\":\"prediction aborted, token repeat limit reached\"}",
+  "response": null,
+  "error": "<HTTPError 500: 'Internal Server Error'>",
+  "tokens": {
+    "prompt_eval_count": null,
+    "prompt_eval_cached_count": null,
+    "eval_count": null
+  },
+  "durations_ns": {
+    "total_duration": null,
+    "load_duration": null,
+    "prompt_eval_duration": null,
+    "eval_duration": null
+  },
+  "wall_seconds": 2.6986507999245077,
+  "log_byte_span": [
+    55241,
+    59459
+  ],
+  "loaded": {
+    "models": [
+      {
+        "name": "qwen3:8b",
+        "model": "qwen3:8b",
+        "size": 6295440588,
+        "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+        "details": {
+          "parent_model": "",
+          "format": "gguf",
+          "family": "qwen3",
+          "families": [
+            "qwen3"
+          ],
+          "parameter_size": "8.2B",
+          "quantization_level": "Q4_K_M"
+        },
+        "expires_at": "2026-10-08T19:54:55.8312569-07:00",
+        "size_vram": 6295440588,
+        "context_length": 8192
+      }
+    ]
+  },
+  "delivery": {
+    "id": "F3",
+    "expected_input": 969,
+    "reported_input": null,
+    "slots": [
+      8192
+    ],
+    "task_tokens": [
+      969
+    ],
+    "truncation": false,
+    "intact": false,
+    "output_cap": 2048,
+    "context": 8192,
+    "utilization": 0.1182861328125,
+    "reserved_utilization": 0.3682861328125,
+    "done_reason": null
+  }
+}

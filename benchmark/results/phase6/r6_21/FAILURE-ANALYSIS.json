@@ -1,0 +1,195 @@
+{
+  "classification": "R6_21_PROTOCOL_HALT",
+  "first_output": {
+    "call": "F1",
+    "diagnosis": {
+      "code": "DEPENDENCY",
+      "path": "main/int83",
+      "detail": "dependencies must exactly enumerate expression references"
+    },
+    "observation": "Schema-valid self references instead of constants; empty deps disagrees with references. No repair; later cycle/type checks not reached."
+  },
+  "runtime": {
+    "call": "F3",
+    "status": 500,
+    "raw_body": "{\"error\":\"prediction aborted, token repeat limit reached\"}",
+    "log_lines": [
+      {
+        "line": 471,
+        "text": "time=2026-10-08T19:44:53.146-07:00 level=DEBUG source=sched.go:1391 msg=\"evaluating already loaded\" model=D:\\Software\\.ollama\\models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f"
+      },
+      {
+        "line": 472,
+        "text": "time=2026-10-08T19:44:53.147-07:00 level=DEBUG source=llama_server.go:1624 msg=\"llama-server completion request\" media=0 prompt_len=4331"
+      },
+      {
+        "line": 473,
+        "text": "srv  server_strea: conv_id= (empty=1)"
+      },
+      {
+        "line": 474,
+        "text": "slot get_availabl: id  0 | task -1 |  - checking sim = 0.135 (131/969) > 0.100"
+      },
+      {
+        "line": 475,
+        "text": "slot get_availabl: id  0 | task -1 | selected slot by LCP similarity, f_sim_best = 0.135 (> 0.100 thold), f_keep = 0.128"
+      },
+      {
+        "line": 476,
+        "text": "srv  get_availabl: updating prompt cache"
+      },
+      {
+        "line": 477,
+        "text": "srv   prompt_save:  - saving prompt with length 1026, total state size = 144.294 MiB (draft: 0.000 MiB)"
+      },
+      {
+        "line": 478,
+        "text": "srv          load:  - looking for better prompt, base f_keep = 0.128, f_sim = 0.135"
+      },
+      {
+        "line": 479,
+        "text": "srv          load:    - prompt with length      44, lcp =       3, f_keep = 0.068, f_sim = 0.003"
+      },
+      {
+        "line": 480,
+        "text": "srv          load:    - prompt with length      61, lcp =       3, f_keep = 0.049, f_sim = 0.003"
+      },
+      {
+        "line": 481,
+        "text": "srv          load:    - prompt with length    2862, lcp =       3, f_keep = 0.001, f_sim = 0.003"
+      },
+      {
+        "line": 482,
+        "text": "srv          load:    - prompt with length    1026, lcp =     131, f_keep = 0.128, f_sim = 0.135"
+      },
+      {
+        "line": 483,
+        "text": "srv        update:  - cache state: 4 prompts, 561.565 MiB (limits: 8192.000 MiB, 8192 tokens, 58249 est)"
+      },
+      {
+        "line": 484,
+        "text": "srv        update:    - prompt 0000019B2B5246C0:      44 tokens, checkpoints:  0,     6.189 MiB"
+      },
+      {
+        "line": 485,
+        "text": "srv        update:    - prompt 0000019B2B527140:      61 tokens, checkpoints:  0,     8.580 MiB"
+      },
+      {
+        "line": 486,
+        "text": "srv        update:    - prompt 0000019B1F30B5B0:    2862 tokens, checkpoints:  0,   402.502 MiB"
+      },
+      {
+        "line": 487,
+        "text": "srv        update:    - prompt 0000019B1F30B6F0:    1026 tokens, checkpoints:  0,   144.294 MiB"
+      },
+      {
+        "line": 488,
+        "text": "srv  get_availabl: prompt cache update took 23.19 ms"
+      },
+      {
+        "line": 489,
+        "text": "slot launch_slot_: id  0 | task -1 | sampler chain: logits -> ?penalties -> ?dry -> ?top-n-sigma -> top-k -> ?typical -> top-p -> ?min-p -> ?xtc -> temp-ext -> dist "
+      },
+      {
+        "line": 490,
+        "text": "slot launch_slot_: id  0 | task -1 | sampler params: "
+      },
+      {
+        "line": 491,
+        "text": "\trepeat_last_n = 64, repeat_penalty = 1.000, frequency_penalty = 0.000, presence_penalty = 0.000"
+      },
+      {
+        "line": 492,
+        "text": "\tdry_multiplier = 0.000, dry_base = 1.750, dry_allowed_length = 2, dry_penalty_last_n = 64"
+      },
+      {
+        "line": 493,
+        "text": "\ttop_k = 20, top_p = 0.950, min_p = 0.000, xtc_probability = 0.000, xtc_threshold = 0.100, typical_p = 1.000, top_n_sigma = -1.000, temp = 0.000"
+      },
+      {
+        "line": 494,
+        "text": "\tmirostat = 0, mirostat_lr = 0.100, mirostat_ent = 5.000, adaptive_target = -1.000, adaptive_decay = 0.900"
+      },
+      {
+        "line": 495,
+        "text": "slot launch_slot_: id  0 | task 258 | processing task, is_child = 0"
+      },
+      {
+        "line": 496,
+        "text": "slot   operator(): id  0 | task 258 | new prompt, n_ctx_slot = 8192, n_keep = 4, task.n_tokens = 969"
+      },
+      {
+        "line": 497,
+        "text": "slot   operator(): id  0 | task 258 | cached n_tokens = 131, memory_seq_rm [131, end)"
+      },
+      {
+        "line": 498,
+        "text": "slot init_sampler: id  0 | task 258 | init sampler, took 0.07 ms, tokens: text = 969, total = 969"
+      },
+      {
+        "line": 499,
+        "text": "time=2026-10-08T19:44:55.831-07:00 level=DEBUG source=llama_server.go:1807 msg=\"prediction aborted, token repeat limit reached\""
+      },
+      {
+        "line": 500,
+        "text": "[GIN] 2026/10/08 - 19:44:55 | 500 |    2.6864252s |       127.0.0.1 | POST     \"/api/generate\""
+      },
+      {
+        "line": 501,
+        "text": "time=2026-10-08T19:44:55.831-07:00 level=DEBUG source=sched.go:494 msg=\"context for request finished\" runner.name=registry.ollama.ai/library/qwen3:8b runner.inference=\"[{ID:0 Library:CUDA}]\" runner.pid=39128 runner.num_ctx=8192 runner.size=\"5.9 GiB\" runner.vram=\"5.9 GiB\" runner.parallel=1 runner.model=D:\\Software\\.ollama\\models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f"
+      },
+      {
+        "line": 502,
+        "text": "time=2026-10-08T19:44:55.831-07:00 level=DEBUG source=sched.go:399 msg=\"runner with non-zero duration has gone idle, adding timer\" runner.size=\"5.9 GiB\" runner.vram=\"5.9 GiB\" runner.parallel=1 runner.model=D:\\Software\\.ollama\\models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f duration=10m0s"
+      },
+      {
+        "line": 503,
+        "text": "time=2026-10-08T19:44:55.831-07:00 level=DEBUG source=sched.go:417 msg=\"after processing request finished event\" runner.size=\"5.9 GiB\" runner.vram=\"5.9 GiB\" runner.parallel=1 runner.model=D:\\Software\\.ollama\\models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f refCount=0"
+      },
+      {
+        "line": 504,
+        "text": "srv          stop: cancel task, id_task = 258"
+      },
+      {
+        "line": 505,
+        "text": "slot      release: id  0 | task 258 | stop processing: n_tokens = 1159, truncated = 0"
+      },
+      {
+        "line": 506,
+        "text": "srv  update_slots: all slots are idle"
+      },
+      {
+        "line": 507,
+        "text": "[GIN] 2026/10/08 - 19:44:55 | 200 |            0s |       127.0.0.1 | GET      \"/api/ps\""
+      }
+    ],
+    "observed_mechanism": "Ollama prediction aborted at token-repeat guard, explicitly reported in body and server log",
+    "underlying_repetition_cause": "UNDETERMINED: aborted generated sequence not returned",
+    "preflight_input_tokens": 969,
+    "logged_task_tokens": 969,
+    "logged_slot_context": 8192,
+    "logged_release_total_tokens": 1159,
+    "final_output_tokens": null,
+    "token_note": "Do not subtract log slot totals to invent eval_count; final usage absent",
+    "truncation": "No input truncation logged; release truncated=0; final API delivery equality unavailable",
+    "postcall_loaded_model_responsive": true,
+    "request_sha256": "13436f1a540d6659c32cc4ba898537a9e4699ac5b90f0375ba07c838e5d43616",
+    "historical_link": "Same HTTP status as R6.19; historical cause remains unproved because its error body was not retained",
+    "hypotheses_not_established": [
+      "OOM",
+      "context exhaustion",
+      "backend crash",
+      "same cause as R6.19"
+    ]
+  },
+  "downstream": {
+    "F4": "NOT_REACHED",
+    "F5": "NOT_REACHED",
+    "F6": "NOT_REACHED",
+    "A": "NOT_REACHED",
+    "B": "NOT_REACHED"
+  },
+  "manual_repairs": 0,
+  "retries": 0,
+  "postoutcome_prompt_changes": 0
+}

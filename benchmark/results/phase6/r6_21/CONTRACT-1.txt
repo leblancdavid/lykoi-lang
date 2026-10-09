@@ -1,0 +1,22 @@
+R6.21 compact-authoring-1. REQUIRED rules; emit JSON data only, never a schema, wrapper, prose or Markdown.
+Grammar (objects have exactly the shown keys; | means alternatives, not literal text):
+Name := ASCII [A-Za-z][A-Za-z0-9_]{0,31}; Hash := 64 lowercase hex digits.
+Type := Int64 | Bool | Unit. Int64 is exact signed64 integer, Bool is distinct, Unit is null. No floats.
+Arg := {"ref":Name} | {"const":Int64|Bool|null}.
+Expr := Arg | {"add":[Expr,Expr]} | {"le":[Expr,Expr]} | {"eq":[Expr,Expr]}.
+Node := {"op":"value","expr":Expr} | {"op":"check","test":Expr,"site":Expr,"code":Name} | {"op":"compose","symbol":Name,"identity":Hash,"args":{parameter:Arg,...}}.
+Param := {"name":Name,"type":Type}.
+Step := {"id":Name,"type":Type,"deps":[Name,...],"node":Node}.
+Definition := {"name":Name,"revision":1,"params":[Param,...],"dependencies":{symbol:Hash,...},"steps":[Step,...],"order":[Name,...],"result":Expr,"result_type":"Int64"}.
+Submit this Definition without identity. Host computes identity and package headers only. Definitions are reusable templates; objective specifies exact typed parameters, including [] for closed definitions. Host instantiates declared input cases via a single fixed compose adapter, never edits your body. Empty byte input; fixed UInt16BE output (0..65535), no input reads or end operations needed. No invented operations/symbols or callbacks.
+All params/step IDs unique, no shadowing, mutation, free refs, globals or projections. deps is the exact unique set of parameter/local references used anywhere in that step's node; symbol names are not local refs. order is an exact permutation of step IDs; all local dependencies precede uses. No cycles. Each step runs once in order, even if unused; absorbing first failure stops later steps. result evaluated after steps.
+value returns expression type. check requires Bool test, site is any typed Expr, returns Unit; false rejects with code and site's provenance. add/le operands Int64, add returns Int64 (overflow rejects), le returns Bool. eq needs same-type operands and returns Bool. Expressions evaluate recursively left-to-right. Constants preserve exact types.
+compose args exactly match target parameter names/types, only ref or const. dependencies exactly maps directly called symbols to their supplied identities; do not include transitive symbols. Target/call/dependency hashes must agree. Params substitute as expressions, not eager values; repeated uses repeat expression work. Callee locals are hygienic, caller locals invisible except explicit args. No implicit latest version.
+Every region lowers to seq; compose expands to nested seq, preserving order/work/provenance. Returned seq cell spans the entire region, not just its result expression. Canonical identity hashes version/foundation/full definition except identity; key order ignored, array order preserved. Fixed library is immutable; you cannot add or alter it.
+Bounds: 1..32 steps/region, <=8 params and dependencies/definition, <=8 definitions and 128 stored steps/package; expression depth8, representation depth24/8192 values/64KiB, strings<=256, dependency depth16, expansion nesting4 and <=64 nodes including fixed adapter and encode; VM depth16/2048 expression visits. Each seq and noncompose step costs one node; compose replaced by target region/steps; encode one node. Limits and runtime rejection remain observable, not optimized away.
+Interfaces share all rules, objective, library and formats. A returns Definition. B returns exactly four stages:
+1 {"operations":[used op names once],"name":Name,"revision":1,"params":[Param,...],"dependencies":{symbol:Hash,...},"steps":[{"id":Name,"type":Type},...],"result_type":"Int64"}
+2 {"bodies":[{"id":Name,"deps":[Name,...],"node":Node},...]}
+3 {"order":[Name,...]}
+4 {"result":Expr}
+B bodies match signatures exactly once; host joins by ID and copies fields only. Selected operations exactly equal node op set. No missing field inference. Validation after each message; final unchanged wrapper checks type/dependencies/order/pins/bounds. Invalid stage terminal. No manual repair. A also has one attempt. OPTIONAL guidance: use short IDs and compact JSON; no examples are required.

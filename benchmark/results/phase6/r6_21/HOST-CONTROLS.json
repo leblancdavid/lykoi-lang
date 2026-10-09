@@ -1,0 +1,582 @@
+{
+  "passed": 7,
+  "rows": [
+    {
+      "id": "valid_composition_wrong_objective",
+      "expected": "OBJECTIVE_FAILURE",
+      "result": {
+        "json_valid": true,
+        "strict_valid": true,
+        "schema_valid": true,
+        "type_valid": true,
+        "semantic_valid": true,
+        "executable_correct": false,
+        "composition_valid": true,
+        "objective_complete": false,
+        "classification": "OBJECTIVE_FAILURE",
+        "value": {
+          "name": "Control",
+          "revision": 1,
+          "params": [],
+          "dependencies": {},
+          "steps": [
+            {
+              "id": "v",
+              "type": "Int64",
+              "deps": [],
+              "node": {
+                "op": "value",
+                "expr": {
+                  "const": 3
+                }
+              }
+            }
+          ],
+          "order": [
+            "v"
+          ],
+          "result": {
+            "ref": "v"
+          },
+          "result_type": "Int64"
+        },
+        "package": {
+          "version": "typed-composition-1",
+          "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+          "definitions": [
+            {
+              "name": "Echo",
+              "revision": 1,
+              "params": [
+                {
+                  "name": "p",
+                  "type": "Int64"
+                }
+              ],
+              "dependencies": {},
+              "steps": [
+                {
+                  "id": "copy",
+                  "type": "Int64",
+                  "deps": [
+                    "p"
+                  ],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "ref": "p"
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "copy"
+              ],
+              "result": {
+                "ref": "copy"
+              },
+              "result_type": "Int64",
+              "identity": "9529a64dad1c8edecf22a227069f74c6697942b1cb80b64cb34c84b6bbcda295"
+            },
+            {
+              "name": "Relay",
+              "revision": 1,
+              "params": [
+                {
+                  "name": "q",
+                  "type": "Int64"
+                }
+              ],
+              "dependencies": {
+                "Echo": "9529a64dad1c8edecf22a227069f74c6697942b1cb80b64cb34c84b6bbcda295"
+              },
+              "steps": [
+                {
+                  "id": "inner",
+                  "type": "Int64",
+                  "deps": [
+                    "q"
+                  ],
+                  "node": {
+                    "op": "compose",
+                    "symbol": "Echo",
+                    "identity": "9529a64dad1c8edecf22a227069f74c6697942b1cb80b64cb34c84b6bbcda295",
+                    "args": {
+                      "p": {
+                        "ref": "q"
+                      }
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "inner"
+              ],
+              "result": {
+                "ref": "inner"
+              },
+              "result_type": "Int64",
+              "identity": "f58c52f3b5b42aee50ce55e3d1c88c9c70d136f0819235dba4dd87749ce2e1be"
+            },
+            {
+              "name": "Control",
+              "revision": 1,
+              "params": [],
+              "dependencies": {},
+              "steps": [
+                {
+                  "id": "v",
+                  "type": "Int64",
+                  "deps": [],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "const": 3
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "v"
+              ],
+              "result": {
+                "ref": "v"
+              },
+              "result_type": "Int64",
+              "identity": "764c4cac9ce0357006b1658eaba0f5f9c6e7f54bd542df36db3efbba7a217773"
+            }
+          ],
+          "program": {
+            "name": "Runner",
+            "revision": 1,
+            "params": [],
+            "dependencies": {
+              "Control": "764c4cac9ce0357006b1658eaba0f5f9c6e7f54bd542df36db3efbba7a217773"
+            },
+            "steps": [
+              {
+                "id": "called",
+                "type": "Int64",
+                "deps": [],
+                "node": {
+                  "op": "compose",
+                  "symbol": "Control",
+                  "identity": "764c4cac9ce0357006b1658eaba0f5f9c6e7f54bd542df36db3efbba7a217773",
+                  "args": {}
+                }
+              }
+            ],
+            "order": [
+              "called"
+            ],
+            "result": {
+              "ref": "called"
+            },
+            "result_type": "Int64",
+            "identity": "a526c7d7c5a36b4f7e4f00554df2aa774589b10c7e591f02221cc18be13fcc82"
+          }
+        },
+        "expanded_nodes": 4,
+        "envelopes": [
+          {
+            "case": {
+              "args": {},
+              "status": "success",
+              "value": 3,
+              "output": [
+                0,
+                3
+              ],
+              "consumed": 0
+            },
+            "envelope": {
+              "status": "success",
+              "value": 3,
+              "provenance": {
+                "span": [
+                  0,
+                  0
+                ],
+                "origins": []
+              },
+              "consumed": 0,
+              "work": 10,
+              "output": {
+                "bytes_hex": "0003"
+              },
+              "output_spans": [
+                {
+                  "node": "program/a526c7d7c5a36b4f7e4f00554df2aa774589b10c7e591f02221cc18be13fcc82/encode",
+                  "start": 0,
+                  "end": 2
+                }
+              ]
+            },
+            "repeat_equal": true
+          }
+        ],
+        "validation_seconds": 0.0032818999607115984
+      }
+    },
+    {
+      "id": "invalid_json",
+      "expected": "INVALID_JSON",
+      "result": {
+        "json_valid": false,
+        "strict_valid": "NOT_REACHED",
+        "schema_valid": "NOT_REACHED",
+        "type_valid": "NOT_REACHED",
+        "semantic_valid": "NOT_REACHED",
+        "executable_correct": "NOT_REACHED",
+        "composition_valid": false,
+        "objective_complete": false,
+        "classification": "INVALID_JSON",
+        "diagnostic": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+        "validation_seconds": 1.7700018361210823e-05
+      }
+    },
+    {
+      "id": "duplicate_key",
+      "expected": "SERIALIZATION",
+      "result": {
+        "json_valid": true,
+        "strict_valid": "NOT_REACHED",
+        "schema_valid": "NOT_REACHED",
+        "type_valid": "NOT_REACHED",
+        "semantic_valid": "NOT_REACHED",
+        "executable_correct": "NOT_REACHED",
+        "composition_valid": false,
+        "objective_complete": false,
+        "classification": "SERIALIZATION",
+        "diagnostic": {
+          "code": "SERIALIZATION",
+          "path": "$",
+          "detail": "duplicate object key: name"
+        },
+        "validation_seconds": 2.1700048819184303e-05
+      }
+    },
+    {
+      "id": "schema",
+      "expected": "SCHEMA_VIOLATION",
+      "result": {
+        "json_valid": true,
+        "strict_valid": true,
+        "schema_valid": false,
+        "type_valid": "NOT_REACHED",
+        "semantic_valid": "NOT_REACHED",
+        "executable_correct": "NOT_REACHED",
+        "composition_valid": false,
+        "objective_complete": false,
+        "classification": "SCHEMA_VIOLATION",
+        "diagnostic": {
+          "path": [],
+          "message": "'order' is a required property"
+        },
+        "validation_seconds": 7.589999586343765e-05
+      }
+    },
+    {
+      "id": "type",
+      "expected": "TYPE",
+      "result": {
+        "json_valid": true,
+        "strict_valid": true,
+        "schema_valid": true,
+        "type_valid": false,
+        "semantic_valid": "NOT_REACHED",
+        "executable_correct": "NOT_REACHED",
+        "composition_valid": false,
+        "objective_complete": false,
+        "classification": "TYPE",
+        "value": {
+          "name": "Control",
+          "revision": 1,
+          "params": [],
+          "dependencies": {},
+          "steps": [
+            {
+              "id": "v",
+              "type": "Bool",
+              "deps": [],
+              "node": {
+                "op": "value",
+                "expr": {
+                  "const": 3
+                }
+              }
+            }
+          ],
+          "order": [
+            "v"
+          ],
+          "result": {
+            "ref": "v"
+          },
+          "result_type": "Int64"
+        },
+        "diagnostic": {
+          "code": "TYPE",
+          "path": "Control/v",
+          "detail": "declared step type differs"
+        },
+        "validation_seconds": 0.0006576000014320016
+      }
+    },
+    {
+      "id": "deps",
+      "expected": "DEPENDENCY",
+      "result": {
+        "json_valid": true,
+        "strict_valid": true,
+        "schema_valid": true,
+        "type_valid": "NOT_REACHED",
+        "semantic_valid": false,
+        "executable_correct": "NOT_REACHED",
+        "composition_valid": false,
+        "objective_complete": false,
+        "classification": "DEPENDENCY",
+        "value": {
+          "name": "Control",
+          "revision": 1,
+          "params": [],
+          "dependencies": {},
+          "steps": [
+            {
+              "id": "v",
+              "type": "Int64",
+              "deps": [
+                "v"
+              ],
+              "node": {
+                "op": "value",
+                "expr": {
+                  "const": 3
+                }
+              }
+            }
+          ],
+          "order": [
+            "v"
+          ],
+          "result": {
+            "ref": "v"
+          },
+          "result_type": "Int64"
+        },
+        "diagnostic": {
+          "code": "DEPENDENCY",
+          "path": "Control/v",
+          "detail": "dependencies must exactly enumerate expression references"
+        },
+        "validation_seconds": 0.0007385000353679061
+      }
+    },
+    {
+      "id": "encoding",
+      "expected": "OBJECTIVE_FAILURE",
+      "result": {
+        "json_valid": true,
+        "strict_valid": true,
+        "schema_valid": true,
+        "type_valid": true,
+        "semantic_valid": true,
+        "executable_correct": false,
+        "composition_valid": true,
+        "objective_complete": false,
+        "classification": "OBJECTIVE_FAILURE",
+        "value": {
+          "name": "Control",
+          "revision": 1,
+          "params": [],
+          "dependencies": {},
+          "steps": [
+            {
+              "id": "v",
+              "type": "Int64",
+              "deps": [],
+              "node": {
+                "op": "value",
+                "expr": {
+                  "const": 70000
+                }
+              }
+            }
+          ],
+          "order": [
+            "v"
+          ],
+          "result": {
+            "ref": "v"
+          },
+          "result_type": "Int64"
+        },
+        "package": {
+          "version": "typed-composition-1",
+          "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+          "definitions": [
+            {
+              "name": "Echo",
+              "revision": 1,
+              "params": [
+                {
+                  "name": "p",
+                  "type": "Int64"
+                }
+              ],
+              "dependencies": {},
+              "steps": [
+                {
+                  "id": "copy",
+                  "type": "Int64",
+                  "deps": [
+                    "p"
+                  ],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "ref": "p"
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "copy"
+              ],
+              "result": {
+                "ref": "copy"
+              },
+              "result_type": "Int64",
+              "identity": "9529a64dad1c8edecf22a227069f74c6697942b1cb80b64cb34c84b6bbcda295"
+            },
+            {
+              "name": "Relay",
+              "revision": 1,
+              "params": [
+                {
+                  "name": "q",
+                  "type": "Int64"
+                }
+              ],
+              "dependencies": {
+                "Echo": "9529a64dad1c8edecf22a227069f74c6697942b1cb80b64cb34c84b6bbcda295"
+              },
+              "steps": [
+                {
+                  "id": "inner",
+                  "type": "Int64",
+                  "deps": [
+                    "q"
+                  ],
+                  "node": {
+                    "op": "compose",
+                    "symbol": "Echo",
+                    "identity": "9529a64dad1c8edecf22a227069f74c6697942b1cb80b64cb34c84b6bbcda295",
+                    "args": {
+                      "p": {
+                        "ref": "q"
+                      }
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "inner"
+              ],
+              "result": {
+                "ref": "inner"
+              },
+              "result_type": "Int64",
+              "identity": "f58c52f3b5b42aee50ce55e3d1c88c9c70d136f0819235dba4dd87749ce2e1be"
+            },
+            {
+              "name": "Control",
+              "revision": 1,
+              "params": [],
+              "dependencies": {},
+              "steps": [
+                {
+                  "id": "v",
+                  "type": "Int64",
+                  "deps": [],
+                  "node": {
+                    "op": "value",
+                    "expr": {
+                      "const": 70000
+                    }
+                  }
+                }
+              ],
+              "order": [
+                "v"
+              ],
+              "result": {
+                "ref": "v"
+              },
+              "result_type": "Int64",
+              "identity": "88b7c0c9977b9474f1c639baf3dac326d21d5801653afbb4a440d75d822602f6"
+            }
+          ],
+          "program": {
+            "name": "Runner",
+            "revision": 1,
+            "params": [],
+            "dependencies": {
+              "Control": "88b7c0c9977b9474f1c639baf3dac326d21d5801653afbb4a440d75d822602f6"
+            },
+            "steps": [
+              {
+                "id": "called",
+                "type": "Int64",
+                "deps": [],
+                "node": {
+                  "op": "compose",
+                  "symbol": "Control",
+                  "identity": "88b7c0c9977b9474f1c639baf3dac326d21d5801653afbb4a440d75d822602f6",
+                  "args": {}
+                }
+              }
+            ],
+            "order": [
+              "called"
+            ],
+            "result": {
+              "ref": "called"
+            },
+            "result_type": "Int64",
+            "identity": "10c3c6885fb29b5079b7a891600a2436f1bf7eb5ba8b94dfad3426260ce16aa4"
+          }
+        },
+        "expanded_nodes": 4,
+        "envelopes": [
+          {
+            "case": {
+              "args": {},
+              "status": "success",
+              "value": 3,
+              "output": [
+                0,
+                3
+              ],
+              "consumed": 0
+            },
+            "envelope": {
+              "status": "reject",
+              "error": {
+                "code": "ENCODE_RANGE",
+                "offset": null,
+                "node": "program/10c3c6885fb29b5079b7a891600a2436f1bf7eb5ba8b94dfad3426260ce16aa4/encode",
+                "stage": "encode",
+                "path": "value",
+                "expected": []
+              },
+              "work": 8
+            },
+            "repeat_equal": true
+          }
+        ],
+        "validation_seconds": 0.0015447000041604042
+      }
+    }
+  ]
+}
