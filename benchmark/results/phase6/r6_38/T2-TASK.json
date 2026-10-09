@@ -1,0 +1,19 @@
+{
+  "modification": "Create a signature-preserving DoubleQuota successor changing result to x+x+y+y. Retain every original check, order, code and source label. Admit against exact predecessor. Create CallerA successor changing ONLY dependency and compose-call pins, retaining revision1 and all other content. Admit against CallerA predecessor. Record total explicit family migration: original CallerA updated, CallerB null/retain. Retrieve and validate selected CallerA and retained CallerB, execute examples. Preserve executable predecessor behavior.",
+  "requirement": "Construct DoubleQuota(x:Int64,y:Int64,cap:Int64)->Int64. Ordered checks: x<=cap (FIRST_CAP, site x, label g1), then y<=cap (SECOND_CAP, site y, label g2). Return x+x+y using checked signed64 addition. CallerA reads x then y as UInt8 (read_x/read_y), checks end-of-input (input_end) BEFORE computation, composes (call) with cap=170, adds 6 and returns Int64 encoded UInt16BE. CallerB reads x as UInt8 (read_x), checks end-of-input (input_end) BEFORE computation, derives y=x+11, composes (call) with cap=170 and returns unchanged. Admit reusable definition then two dependent callers. Retrieve and validate both, execute representative inputs. All definitions revision1. Stop after base stage. No successor yet.",
+  "task": {
+    "base": "x+x+y",
+    "bias": 6,
+    "checks": "x<=cap (FIRST_CAP, site x, label g1), then y<=cap (SECOND_CAP, site y, label g2)",
+    "constant": 170,
+    "delta": 11,
+    "id": "T2",
+    "order": [
+      "B",
+      "A"
+    ],
+    "param": "cap",
+    "successor": "x+x+y+y",
+    "symbol": "DoubleQuota"
+  }
+}

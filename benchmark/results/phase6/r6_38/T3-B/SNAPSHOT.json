@@ -1,0 +1,362 @@
+{
+  "caller_bindings": {
+    "CallerA": "e5a4f48a00abb6577e123bfbed898f6ee79cf8580ff0c490ac5fa2ed9bc848d0",
+    "CallerB": "51a4e45ddcf7b880f7731d9f94846c8204fd6e4eccbf72cd0d67b3d7cf97aa3e"
+  },
+  "constraints": "Construct FloorWeight(x:Int64,y:Int64,floor:Int64)->Int64. Ordered checks: floor<=x (BELOW_FLOOR, site x, label g1), then x<=y (WEIGHT_ORDER, site y, label g2). Return x+y+y using checked signed64 addition. CallerA reads x then y as UInt8 (read_x/read_y), checks end-of-input (input_end) BEFORE computation, composes (call) with floor=12, adds 2 and returns Int64 encoded UInt16BE. CallerB reads x as UInt8 (read_x), checks end-of-input (input_end) BEFORE computation, derives y=x+9, composes (call) with floor=12 and returns unchanged. Admit reusable definition then two dependent callers. Retrieve and validate both, execute representative inputs. All definitions revision1. Stop after base stage. No successor yet.",
+  "definitions": {
+    "51a4e45ddcf7b880f7731d9f94846c8204fd6e4eccbf72cd0d67b3d7cf97aa3e": {
+      "dependencies": {
+        "FloorWeight": "e09203aca30b984f5e86b27e6ca30ca1d7718526d51759a90c8309440ce72a29"
+      },
+      "identity": "51a4e45ddcf7b880f7731d9f94846c8204fd6e4eccbf72cd0d67b3d7cf97aa3e",
+      "name": "CallerB",
+      "order": [
+        "read_x",
+        "input_end",
+        "derive_y",
+        "call"
+      ],
+      "params": [],
+      "result": {
+        "ref": "call"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "read_x",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "input_end",
+          "node": {
+            "op": "end"
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "read_x"
+          ],
+          "id": "derive_y",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "read_x"
+                },
+                {
+                  "const": 9
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [
+            "read_x",
+            "derive_y"
+          ],
+          "id": "call",
+          "node": {
+            "args": {
+              "floor": {
+                "const": 12
+              },
+              "x": {
+                "ref": "read_x"
+              },
+              "y": {
+                "ref": "derive_y"
+              }
+            },
+            "identity": "e09203aca30b984f5e86b27e6ca30ca1d7718526d51759a90c8309440ce72a29",
+            "op": "compose",
+            "symbol": "FloorWeight"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    "e09203aca30b984f5e86b27e6ca30ca1d7718526d51759a90c8309440ce72a29": {
+      "dependencies": {},
+      "identity": "e09203aca30b984f5e86b27e6ca30ca1d7718526d51759a90c8309440ce72a29",
+      "name": "FloorWeight",
+      "order": [
+        "g1",
+        "g2",
+        "sum"
+      ],
+      "params": [
+        {
+          "name": "x",
+          "type": "Int64"
+        },
+        {
+          "name": "y",
+          "type": "Int64"
+        },
+        {
+          "name": "floor",
+          "type": "Int64"
+        }
+      ],
+      "result": {
+        "ref": "sum"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [
+            "floor",
+            "x"
+          ],
+          "id": "g1",
+          "node": {
+            "code": "BELOW_FLOOR",
+            "op": "check",
+            "site": {
+              "ref": "x"
+            },
+            "test": {
+              "le": [
+                {
+                  "ref": "floor"
+                },
+                {
+                  "ref": "x"
+                }
+              ]
+            }
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "x",
+            "y"
+          ],
+          "id": "g2",
+          "node": {
+            "code": "WEIGHT_ORDER",
+            "op": "check",
+            "site": {
+              "ref": "y"
+            },
+            "test": {
+              "le": [
+                {
+                  "ref": "x"
+                },
+                {
+                  "ref": "y"
+                }
+              ]
+            }
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "x",
+            "y"
+          ],
+          "id": "sum",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "add": [
+                    {
+                      "ref": "x"
+                    },
+                    {
+                      "ref": "y"
+                    }
+                  ]
+                },
+                {
+                  "ref": "y"
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    "e5a4f48a00abb6577e123bfbed898f6ee79cf8580ff0c490ac5fa2ed9bc848d0": {
+      "dependencies": {
+        "FloorWeight": "e09203aca30b984f5e86b27e6ca30ca1d7718526d51759a90c8309440ce72a29"
+      },
+      "identity": "e5a4f48a00abb6577e123bfbed898f6ee79cf8580ff0c490ac5fa2ed9bc848d0",
+      "name": "CallerA",
+      "order": [
+        "read_x",
+        "read_y",
+        "input_end",
+        "call",
+        "answer"
+      ],
+      "params": [],
+      "result": {
+        "ref": "answer"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "read_x",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "read_y",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "input_end",
+          "node": {
+            "op": "end"
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "read_x",
+            "read_y"
+          ],
+          "id": "call",
+          "node": {
+            "args": {
+              "floor": {
+                "const": 12
+              },
+              "x": {
+                "ref": "read_x"
+              },
+              "y": {
+                "ref": "read_y"
+              }
+            },
+            "identity": "e09203aca30b984f5e86b27e6ca30ca1d7718526d51759a90c8309440ce72a29",
+            "op": "compose",
+            "symbol": "FloorWeight"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [
+            "call"
+          ],
+          "id": "answer",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "call"
+                },
+                {
+                  "const": 2
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "51a4e45ddcf7b880f7731d9f94846c8204fd6e4eccbf72cd0d67b3d7cf97aa3e": {
+      "FloorWeight": "e09203aca30b984f5e86b27e6ca30ca1d7718526d51759a90c8309440ce72a29"
+    },
+    "e09203aca30b984f5e86b27e6ca30ca1d7718526d51759a90c8309440ce72a29": {},
+    "e5a4f48a00abb6577e123bfbed898f6ee79cf8580ff0c490ac5fa2ed9bc848d0": {
+      "FloorWeight": "e09203aca30b984f5e86b27e6ca30ca1d7718526d51759a90c8309440ce72a29"
+    }
+  },
+  "generation": 2,
+  "identity": "752491acc93b041fc73fa748bcaf3a0fe8a8731619f4582b67f48bf07c0aff09",
+  "migrations": [],
+  "objective": "Create a signature-preserving FloorWeight successor changing result to x+x+y+y. Retain every original check, order, code and source label. Admit against exact predecessor. Create CallerA successor changing ONLY dependency and compose-call pins, retaining revision1 and all other content. Admit against CallerA predecessor. Record total explicit family migration: original CallerA updated, CallerB null/retain. Retrieve and validate selected CallerA and retained CallerB, execute examples. Preserve executable predecessor behavior.",
+  "registry_token": "1ee2f8a1c628fd1c7fa5291b9a4975b468bb4dfc374ff1d0b224d4e487d335ac",
+  "requirement": "8231d978a164d756b014d8c264697a693ab09800ddf002856a961296c974e877",
+  "retrieval_references": {
+    "51a4e45ddcf7b880f7731d9f94846c8204fd6e4eccbf72cd0d67b3d7cf97aa3e": {
+      "identity": "51a4e45ddcf7b880f7731d9f94846c8204fd6e4eccbf72cd0d67b3d7cf97aa3e",
+      "kind": "definition"
+    },
+    "e09203aca30b984f5e86b27e6ca30ca1d7718526d51759a90c8309440ce72a29": {
+      "identity": "e09203aca30b984f5e86b27e6ca30ca1d7718526d51759a90c8309440ce72a29",
+      "kind": "definition"
+    },
+    "e5a4f48a00abb6577e123bfbed898f6ee79cf8580ff0c490ac5fa2ed9bc848d0": {
+      "identity": "e5a4f48a00abb6577e123bfbed898f6ee79cf8580ff0c490ac5fa2ed9bc848d0",
+      "kind": "definition"
+    }
+  },
+  "signatures": {
+    "51a4e45ddcf7b880f7731d9f94846c8204fd6e4eccbf72cd0d67b3d7cf97aa3e": [
+      [],
+      "Int64"
+    ],
+    "e09203aca30b984f5e86b27e6ca30ca1d7718526d51759a90c8309440ce72a29": [
+      [
+        {
+          "name": "x",
+          "type": "Int64"
+        },
+        {
+          "name": "y",
+          "type": "Int64"
+        },
+        {
+          "name": "floor",
+          "type": "Int64"
+        }
+      ],
+      "Int64"
+    ],
+    "e5a4f48a00abb6577e123bfbed898f6ee79cf8580ff0c490ac5fa2ed9bc848d0": [
+      [],
+      "Int64"
+    ]
+  },
+  "successors": {},
+  "validation": {
+    "51a4e45ddcf7b880f7731d9f94846c8204fd6e4eccbf72cd0d67b3d7cf97aa3e": {
+      "nodes": 9,
+      "plan_identity": "ec4212c01e144a8d04ce0168288b16c462dbc16dd507d2433bdad9cbb904b04a",
+      "program_identity": "51a4e45ddcf7b880f7731d9f94846c8204fd6e4eccbf72cd0d67b3d7cf97aa3e"
+    },
+    "e5a4f48a00abb6577e123bfbed898f6ee79cf8580ff0c490ac5fa2ed9bc848d0": {
+      "nodes": 10,
+      "plan_identity": "7c9caba54601896865721c516d48c6b16312d2cbef7effeac6655a799b755532",
+      "program_identity": "e5a4f48a00abb6577e123bfbed898f6ee79cf8580ff0c490ac5fa2ed9bc848d0"
+    }
+  },
+  "version": "r638-snapshot-1"
+}

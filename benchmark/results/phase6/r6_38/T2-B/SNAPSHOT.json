@@ -1,0 +1,362 @@
+{
+  "caller_bindings": {
+    "CallerA": "5e1bc1014733f517390fc069bec8d8a6c38241fc0c65b8d4a07ad01ed7c9392f",
+    "CallerB": "eda8eba8412538f16b9adf5e8ee886f506dc4cbd7713242b332501fced9baf01"
+  },
+  "constraints": "Construct DoubleQuota(x:Int64,y:Int64,cap:Int64)->Int64. Ordered checks: x<=cap (FIRST_CAP, site x, label g1), then y<=cap (SECOND_CAP, site y, label g2). Return x+x+y using checked signed64 addition. CallerA reads x then y as UInt8 (read_x/read_y), checks end-of-input (input_end) BEFORE computation, composes (call) with cap=170, adds 6 and returns Int64 encoded UInt16BE. CallerB reads x as UInt8 (read_x), checks end-of-input (input_end) BEFORE computation, derives y=x+11, composes (call) with cap=170 and returns unchanged. Admit reusable definition then two dependent callers. Retrieve and validate both, execute representative inputs. All definitions revision1. Stop after base stage. No successor yet.",
+  "definitions": {
+    "09d005a6d6284d20ad76c9995bef26dbaad4126d92723d0e55832222ec00f87e": {
+      "dependencies": {},
+      "identity": "09d005a6d6284d20ad76c9995bef26dbaad4126d92723d0e55832222ec00f87e",
+      "name": "DoubleQuota",
+      "order": [
+        "g1",
+        "g2",
+        "sum"
+      ],
+      "params": [
+        {
+          "name": "x",
+          "type": "Int64"
+        },
+        {
+          "name": "y",
+          "type": "Int64"
+        },
+        {
+          "name": "cap",
+          "type": "Int64"
+        }
+      ],
+      "result": {
+        "ref": "sum"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [
+            "x",
+            "cap"
+          ],
+          "id": "g1",
+          "node": {
+            "code": "FIRST_CAP",
+            "op": "check",
+            "site": {
+              "ref": "x"
+            },
+            "test": {
+              "le": [
+                {
+                  "ref": "x"
+                },
+                {
+                  "ref": "cap"
+                }
+              ]
+            }
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "y",
+            "cap"
+          ],
+          "id": "g2",
+          "node": {
+            "code": "SECOND_CAP",
+            "op": "check",
+            "site": {
+              "ref": "y"
+            },
+            "test": {
+              "le": [
+                {
+                  "ref": "y"
+                },
+                {
+                  "ref": "cap"
+                }
+              ]
+            }
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "x",
+            "y"
+          ],
+          "id": "sum",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "add": [
+                    {
+                      "ref": "x"
+                    },
+                    {
+                      "ref": "x"
+                    }
+                  ]
+                },
+                {
+                  "ref": "y"
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    "5e1bc1014733f517390fc069bec8d8a6c38241fc0c65b8d4a07ad01ed7c9392f": {
+      "dependencies": {
+        "DoubleQuota": "09d005a6d6284d20ad76c9995bef26dbaad4126d92723d0e55832222ec00f87e"
+      },
+      "identity": "5e1bc1014733f517390fc069bec8d8a6c38241fc0c65b8d4a07ad01ed7c9392f",
+      "name": "CallerA",
+      "order": [
+        "read_x",
+        "read_y",
+        "input_end",
+        "call",
+        "plus6"
+      ],
+      "params": [],
+      "result": {
+        "ref": "plus6"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "read_x",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "read_y",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "input_end",
+          "node": {
+            "op": "end"
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "read_x",
+            "read_y"
+          ],
+          "id": "call",
+          "node": {
+            "args": {
+              "cap": {
+                "const": 170
+              },
+              "x": {
+                "ref": "read_x"
+              },
+              "y": {
+                "ref": "read_y"
+              }
+            },
+            "identity": "09d005a6d6284d20ad76c9995bef26dbaad4126d92723d0e55832222ec00f87e",
+            "op": "compose",
+            "symbol": "DoubleQuota"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [
+            "call"
+          ],
+          "id": "plus6",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "call"
+                },
+                {
+                  "const": 6
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    "eda8eba8412538f16b9adf5e8ee886f506dc4cbd7713242b332501fced9baf01": {
+      "dependencies": {
+        "DoubleQuota": "09d005a6d6284d20ad76c9995bef26dbaad4126d92723d0e55832222ec00f87e"
+      },
+      "identity": "eda8eba8412538f16b9adf5e8ee886f506dc4cbd7713242b332501fced9baf01",
+      "name": "CallerB",
+      "order": [
+        "read_x",
+        "input_end",
+        "derive_y",
+        "call"
+      ],
+      "params": [],
+      "result": {
+        "ref": "call"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "read_x",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "input_end",
+          "node": {
+            "op": "end"
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "read_x"
+          ],
+          "id": "derive_y",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "read_x"
+                },
+                {
+                  "const": 11
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [
+            "read_x",
+            "derive_y"
+          ],
+          "id": "call",
+          "node": {
+            "args": {
+              "cap": {
+                "const": 170
+              },
+              "x": {
+                "ref": "read_x"
+              },
+              "y": {
+                "ref": "derive_y"
+              }
+            },
+            "identity": "09d005a6d6284d20ad76c9995bef26dbaad4126d92723d0e55832222ec00f87e",
+            "op": "compose",
+            "symbol": "DoubleQuota"
+          },
+          "type": "Int64"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "09d005a6d6284d20ad76c9995bef26dbaad4126d92723d0e55832222ec00f87e": {},
+    "5e1bc1014733f517390fc069bec8d8a6c38241fc0c65b8d4a07ad01ed7c9392f": {
+      "DoubleQuota": "09d005a6d6284d20ad76c9995bef26dbaad4126d92723d0e55832222ec00f87e"
+    },
+    "eda8eba8412538f16b9adf5e8ee886f506dc4cbd7713242b332501fced9baf01": {
+      "DoubleQuota": "09d005a6d6284d20ad76c9995bef26dbaad4126d92723d0e55832222ec00f87e"
+    }
+  },
+  "generation": 2,
+  "identity": "3c970af7fe22e13a07f944c662e9f68edea51132f344acbde37ab5a6116e3177",
+  "migrations": [],
+  "objective": "Create a signature-preserving DoubleQuota successor changing result to x+x+y+y. Retain every original check, order, code and source label. Admit against exact predecessor. Create CallerA successor changing ONLY dependency and compose-call pins, retaining revision1 and all other content. Admit against CallerA predecessor. Record total explicit family migration: original CallerA updated, CallerB null/retain. Retrieve and validate selected CallerA and retained CallerB, execute examples. Preserve executable predecessor behavior.",
+  "registry_token": "023b171ef3fa1aaa540aea97226a877e97c3009e12ffcae572cb5122d48b235c",
+  "requirement": "127ec19d4ded8b979afdcd557669d47a13e1275a4cdb65114ab30914935566b5",
+  "retrieval_references": {
+    "09d005a6d6284d20ad76c9995bef26dbaad4126d92723d0e55832222ec00f87e": {
+      "identity": "09d005a6d6284d20ad76c9995bef26dbaad4126d92723d0e55832222ec00f87e",
+      "kind": "definition"
+    },
+    "5e1bc1014733f517390fc069bec8d8a6c38241fc0c65b8d4a07ad01ed7c9392f": {
+      "identity": "5e1bc1014733f517390fc069bec8d8a6c38241fc0c65b8d4a07ad01ed7c9392f",
+      "kind": "definition"
+    },
+    "eda8eba8412538f16b9adf5e8ee886f506dc4cbd7713242b332501fced9baf01": {
+      "identity": "eda8eba8412538f16b9adf5e8ee886f506dc4cbd7713242b332501fced9baf01",
+      "kind": "definition"
+    }
+  },
+  "signatures": {
+    "09d005a6d6284d20ad76c9995bef26dbaad4126d92723d0e55832222ec00f87e": [
+      [
+        {
+          "name": "x",
+          "type": "Int64"
+        },
+        {
+          "name": "y",
+          "type": "Int64"
+        },
+        {
+          "name": "cap",
+          "type": "Int64"
+        }
+      ],
+      "Int64"
+    ],
+    "5e1bc1014733f517390fc069bec8d8a6c38241fc0c65b8d4a07ad01ed7c9392f": [
+      [],
+      "Int64"
+    ],
+    "eda8eba8412538f16b9adf5e8ee886f506dc4cbd7713242b332501fced9baf01": [
+      [],
+      "Int64"
+    ]
+  },
+  "successors": {},
+  "validation": {
+    "5e1bc1014733f517390fc069bec8d8a6c38241fc0c65b8d4a07ad01ed7c9392f": {
+      "nodes": 10,
+      "plan_identity": "dcb40d1497c8bb54004ee4d91284701d6c8e8401b7b049de514d8c089792e192",
+      "program_identity": "5e1bc1014733f517390fc069bec8d8a6c38241fc0c65b8d4a07ad01ed7c9392f"
+    },
+    "eda8eba8412538f16b9adf5e8ee886f506dc4cbd7713242b332501fced9baf01": {
+      "nodes": 9,
+      "plan_identity": "c7a74aa001ee89ca95d043e226d05381fde14e494809563ace404edc5de39bbd",
+      "program_identity": "eda8eba8412538f16b9adf5e8ee886f506dc4cbd7713242b332501fced9baf01"
+    }
+  },
+  "version": "r638-snapshot-1"
+}

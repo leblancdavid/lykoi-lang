@@ -1,0 +1,19 @@
+{
+  "modification": "Create a signature-preserving ReserveTotal successor changing result to x+y+5. Retain every original check, order, code and source label. Admit against exact predecessor. Create CallerA successor changing ONLY dependency and compose-call pins, retaining revision1 and all other content. Admit against CallerA predecessor. Record total explicit family migration: original CallerA updated, CallerB null/retain. Retrieve and validate selected CallerA and retained CallerB, execute examples. Preserve executable predecessor behavior.",
+  "requirement": "Construct ReserveTotal(x:Int64,y:Int64,cap:Int64)->Int64. Ordered checks: x<=y (PAIR_ORDER, site x, label g1), then x+y<=cap (RESERVE_CAP, site y, label g2). Return x+y using checked signed64 addition. CallerA reads x then y as UInt8 (read_x/read_y), checks end-of-input (input_end) BEFORE computation, composes (call) with cap=210, adds 4 and returns Int64 encoded UInt16BE. CallerB reads x as UInt8 (read_x), checks end-of-input (input_end) BEFORE computation, derives y=x+7, composes (call) with cap=210 and returns unchanged. Admit reusable definition then two dependent callers. Retrieve and validate both, execute representative inputs. All definitions revision1. Stop after base stage. No successor yet.",
+  "task": {
+    "base": "x+y",
+    "bias": 4,
+    "checks": "x<=y (PAIR_ORDER, site x, label g1), then x+y<=cap (RESERVE_CAP, site y, label g2)",
+    "constant": 210,
+    "delta": 7,
+    "id": "T1",
+    "order": [
+      "A",
+      "B"
+    ],
+    "param": "cap",
+    "successor": "x+y+5",
+    "symbol": "ReserveTotal"
+  }
+}

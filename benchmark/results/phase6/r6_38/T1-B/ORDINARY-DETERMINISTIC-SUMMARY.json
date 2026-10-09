@@ -1,0 +1,265 @@
+{
+  "caller_bindings": {
+    "CallerA": "8074186e992b67e49da09671d46bd16ab8abffa84bb8215588d0373787b58305",
+    "CallerB": "5cff6ed35e3f5a67342f02efed5f8c7dce366e4cc16bc549686be14e40fea730"
+  },
+  "definitions": {
+    "5cff6ed35e3f5a67342f02efed5f8c7dce366e4cc16bc549686be14e40fea730": {
+      "dependencies": {
+        "ReserveTotal": "8f7b502fc3d0f547c36c37185bda332e078ff058fd30627616a3994c2ae5c0b8"
+      },
+      "identity": "5cff6ed35e3f5a67342f02efed5f8c7dce366e4cc16bc549686be14e40fea730",
+      "name": "CallerB",
+      "order": [
+        "read_x",
+        "input_end",
+        "derive_y",
+        "call"
+      ],
+      "params": [],
+      "result": {
+        "ref": "call"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "read_x",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "input_end",
+          "node": {
+            "op": "end"
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "read_x"
+          ],
+          "id": "derive_y",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "read_x"
+                },
+                {
+                  "const": 7
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [
+            "read_x",
+            "derive_y"
+          ],
+          "id": "call",
+          "node": {
+            "args": {
+              "cap": {
+                "const": 210
+              },
+              "x": {
+                "ref": "read_x"
+              },
+              "y": {
+                "ref": "derive_y"
+              }
+            },
+            "identity": "8f7b502fc3d0f547c36c37185bda332e078ff058fd30627616a3994c2ae5c0b8",
+            "op": "compose",
+            "symbol": "ReserveTotal"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    "8074186e992b67e49da09671d46bd16ab8abffa84bb8215588d0373787b58305": {
+      "dependencies": {
+        "ReserveTotal": "8f7b502fc3d0f547c36c37185bda332e078ff058fd30627616a3994c2ae5c0b8"
+      },
+      "identity": "8074186e992b67e49da09671d46bd16ab8abffa84bb8215588d0373787b58305",
+      "name": "CallerA",
+      "order": [
+        "read_x",
+        "read_y",
+        "input_end",
+        "call"
+      ],
+      "params": [],
+      "result": {
+        "add": [
+          {
+            "ref": "call"
+          },
+          {
+            "const": 4
+          }
+        ]
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "read_x",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "read_y",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "input_end",
+          "node": {
+            "op": "end"
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "read_x",
+            "read_y"
+          ],
+          "id": "call",
+          "node": {
+            "args": {
+              "cap": {
+                "const": 210
+              },
+              "x": {
+                "ref": "read_x"
+              },
+              "y": {
+                "ref": "read_y"
+              }
+            },
+            "identity": "8f7b502fc3d0f547c36c37185bda332e078ff058fd30627616a3994c2ae5c0b8",
+            "op": "compose",
+            "symbol": "ReserveTotal"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    "8f7b502fc3d0f547c36c37185bda332e078ff058fd30627616a3994c2ae5c0b8": {
+      "dependencies": {},
+      "identity": "8f7b502fc3d0f547c36c37185bda332e078ff058fd30627616a3994c2ae5c0b8",
+      "name": "ReserveTotal",
+      "order": [
+        "g1",
+        "g2"
+      ],
+      "params": [
+        {
+          "name": "x",
+          "type": "Int64"
+        },
+        {
+          "name": "y",
+          "type": "Int64"
+        },
+        {
+          "name": "cap",
+          "type": "Int64"
+        }
+      ],
+      "result": {
+        "add": [
+          {
+            "ref": "x"
+          },
+          {
+            "ref": "y"
+          }
+        ]
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [
+            "x",
+            "y"
+          ],
+          "id": "g1",
+          "node": {
+            "code": "PAIR_ORDER",
+            "op": "check",
+            "site": {
+              "ref": "x"
+            },
+            "test": {
+              "le": [
+                {
+                  "ref": "x"
+                },
+                {
+                  "ref": "y"
+                }
+              ]
+            }
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "x",
+            "y",
+            "cap"
+          ],
+          "id": "g2",
+          "node": {
+            "code": "RESERVE_CAP",
+            "op": "check",
+            "site": {
+              "ref": "y"
+            },
+            "test": {
+              "le": [
+                {
+                  "add": [
+                    {
+                      "ref": "x"
+                    },
+                    {
+                      "ref": "y"
+                    }
+                  ]
+                },
+                {
+                  "ref": "cap"
+                }
+              ]
+            }
+          },
+          "type": "Unit"
+        }
+      ]
+    }
+  },
+  "modification": "Create a signature-preserving ReserveTotal successor changing result to x+y+5. Retain every original check, order, code and source label. Admit against exact predecessor. Create CallerA successor changing ONLY dependency and compose-call pins, retaining revision1 and all other content. Admit against CallerA predecessor. Record total explicit family migration: original CallerA updated, CallerB null/retain. Retrieve and validate selected CallerA and retained CallerB, execute examples. Preserve executable predecessor behavior.",
+  "requirement": "Construct ReserveTotal(x:Int64,y:Int64,cap:Int64)->Int64. Ordered checks: x<=y (PAIR_ORDER, site x, label g1), then x+y<=cap (RESERVE_CAP, site y, label g2). Return x+y using checked signed64 addition. CallerA reads x then y as UInt8 (read_x/read_y), checks end-of-input (input_end) BEFORE computation, composes (call) with cap=210, adds 4 and returns Int64 encoded UInt16BE. CallerB reads x as UInt8 (read_x), checks end-of-input (input_end) BEFORE computation, derives y=x+7, composes (call) with cap=210 and returns unchanged. Admit reusable definition then two dependent callers. Retrieve and validate both, execute representative inputs. All definitions revision1. Stop after base stage. No successor yet."
+}

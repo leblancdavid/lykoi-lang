@@ -1,0 +1,19 @@
+{
+  "modification": "Create a signature-preserving FloorWeight successor changing result to x+x+y+y. Retain every original check, order, code and source label. Admit against exact predecessor. Create CallerA successor changing ONLY dependency and compose-call pins, retaining revision1 and all other content. Admit against CallerA predecessor. Record total explicit family migration: original CallerA updated, CallerB null/retain. Retrieve and validate selected CallerA and retained CallerB, execute examples. Preserve executable predecessor behavior.",
+  "requirement": "Construct FloorWeight(x:Int64,y:Int64,floor:Int64)->Int64. Ordered checks: floor<=x (BELOW_FLOOR, site x, label g1), then x<=y (WEIGHT_ORDER, site y, label g2). Return x+y+y using checked signed64 addition. CallerA reads x then y as UInt8 (read_x/read_y), checks end-of-input (input_end) BEFORE computation, composes (call) with floor=12, adds 2 and returns Int64 encoded UInt16BE. CallerB reads x as UInt8 (read_x), checks end-of-input (input_end) BEFORE computation, derives y=x+9, composes (call) with floor=12 and returns unchanged. Admit reusable definition then two dependent callers. Retrieve and validate both, execute representative inputs. All definitions revision1. Stop after base stage. No successor yet.",
+  "task": {
+    "base": "x+y+y",
+    "bias": 2,
+    "checks": "floor<=x (BELOW_FLOOR, site x, label g1), then x<=y (WEIGHT_ORDER, site y, label g2)",
+    "constant": 12,
+    "delta": 9,
+    "id": "T3",
+    "order": [
+      "A",
+      "B"
+    ],
+    "param": "floor",
+    "successor": "x+x+y+y",
+    "symbol": "FloorWeight"
+  }
+}
