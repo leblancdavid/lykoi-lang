@@ -1,0 +1,557 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "declare_input",
+      "description": "Create a named definition and its exact typed input signature. Maximum3 definitions/4 inputs.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "definition": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+          },
+          "inputs": {
+            "type": "array",
+            "maxItems": 4,
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+                },
+                "type": {
+                  "enum": [
+                    "Int64",
+                    "Bool",
+                    "Unit"
+                  ]
+                }
+              },
+              "required": [
+                "name",
+                "type"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "definition",
+          "inputs"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "apply_operation",
+      "description": "Append one ordered operation. Expressions are scalar literals, $prior_alias, or [add|le|eq,operand,operand]. Exact dependencies required. Maximum8 steps/definition. compose may call only a completed definition.",
+      "parameters": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "definition": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+              },
+              "alias": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+              },
+              "operation": {
+                "const": "value"
+              },
+              "type": {
+                "enum": [
+                  "Int64",
+                  "Bool",
+                  "Unit"
+                ]
+              },
+              "expression": {
+                "oneOf": [
+                  {
+                    "oneOf": [
+                      {
+                        "type": "integer",
+                        "minimum": -9223372036854775808,
+                        "maximum": 9223372036854775807
+                      },
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "array",
+                    "prefixItems": [
+                      {
+                        "enum": [
+                          "add",
+                          "le",
+                          "eq"
+                        ]
+                      },
+                      {
+                        "oneOf": [
+                          {
+                            "type": "integer",
+                            "minimum": -9223372036854775808,
+                            "maximum": 9223372036854775807
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string",
+                            "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                          }
+                        ]
+                      },
+                      {
+                        "oneOf": [
+                          {
+                            "type": "integer",
+                            "minimum": -9223372036854775808,
+                            "maximum": 9223372036854775807
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string",
+                            "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                          }
+                        ]
+                      }
+                    ],
+                    "items": false,
+                    "minItems": 3,
+                    "maxItems": 3
+                  }
+                ]
+              },
+              "dependencies": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+                },
+                "uniqueItems": true,
+                "maxItems": 8
+              }
+            },
+            "required": [
+              "definition",
+              "alias",
+              "operation",
+              "type",
+              "expression",
+              "dependencies"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "definition": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+              },
+              "alias": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+              },
+              "operation": {
+                "const": "check"
+              },
+              "expression": {
+                "oneOf": [
+                  {
+                    "oneOf": [
+                      {
+                        "type": "integer",
+                        "minimum": -9223372036854775808,
+                        "maximum": 9223372036854775807
+                      },
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "array",
+                    "prefixItems": [
+                      {
+                        "enum": [
+                          "add",
+                          "le",
+                          "eq"
+                        ]
+                      },
+                      {
+                        "oneOf": [
+                          {
+                            "type": "integer",
+                            "minimum": -9223372036854775808,
+                            "maximum": 9223372036854775807
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string",
+                            "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                          }
+                        ]
+                      },
+                      {
+                        "oneOf": [
+                          {
+                            "type": "integer",
+                            "minimum": -9223372036854775808,
+                            "maximum": 9223372036854775807
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string",
+                            "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                          }
+                        ]
+                      }
+                    ],
+                    "items": false,
+                    "minItems": 3,
+                    "maxItems": 3
+                  }
+                ]
+              },
+              "site": {
+                "oneOf": [
+                  {
+                    "oneOf": [
+                      {
+                        "type": "integer",
+                        "minimum": -9223372036854775808,
+                        "maximum": 9223372036854775807
+                      },
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "array",
+                    "prefixItems": [
+                      {
+                        "enum": [
+                          "add",
+                          "le",
+                          "eq"
+                        ]
+                      },
+                      {
+                        "oneOf": [
+                          {
+                            "type": "integer",
+                            "minimum": -9223372036854775808,
+                            "maximum": 9223372036854775807
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string",
+                            "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                          }
+                        ]
+                      },
+                      {
+                        "oneOf": [
+                          {
+                            "type": "integer",
+                            "minimum": -9223372036854775808,
+                            "maximum": 9223372036854775807
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string",
+                            "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                          }
+                        ]
+                      }
+                    ],
+                    "items": false,
+                    "minItems": 3,
+                    "maxItems": 3
+                  }
+                ]
+              },
+              "code": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+              },
+              "dependencies": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+                },
+                "uniqueItems": true,
+                "maxItems": 8
+              }
+            },
+            "required": [
+              "definition",
+              "alias",
+              "operation",
+              "expression",
+              "site",
+              "code",
+              "dependencies"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "definition": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+              },
+              "alias": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+              },
+              "operation": {
+                "const": "compose"
+              },
+              "symbol": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+              },
+              "arguments": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+                },
+                "additionalProperties": {
+                  "oneOf": [
+                    {
+                      "type": "integer",
+                      "minimum": -9223372036854775808,
+                      "maximum": 9223372036854775807
+                    },
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                    }
+                  ]
+                },
+                "maxProperties": 4
+              },
+              "dependencies": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+                },
+                "uniqueItems": true,
+                "maxItems": 8
+              }
+            },
+            "required": [
+              "definition",
+              "alias",
+              "operation",
+              "symbol",
+              "arguments",
+              "dependencies"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "define_result",
+      "description": "Finalize this definition with its result expression and type; no later edits.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "definition": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+          },
+          "result": {
+            "oneOf": [
+              {
+                "oneOf": [
+                  {
+                    "type": "integer",
+                    "minimum": -9223372036854775808,
+                    "maximum": 9223372036854775807
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "string",
+                    "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "enum": [
+                      "add",
+                      "le",
+                      "eq"
+                    ]
+                  },
+                  {
+                    "oneOf": [
+                      {
+                        "type": "integer",
+                        "minimum": -9223372036854775808,
+                        "maximum": 9223372036854775807
+                      },
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                      }
+                    ]
+                  },
+                  {
+                    "oneOf": [
+                      {
+                        "type": "integer",
+                        "minimum": -9223372036854775808,
+                        "maximum": 9223372036854775807
+                      },
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$"
+                      }
+                    ]
+                  }
+                ],
+                "items": false,
+                "minItems": 3,
+                "maxItems": 3
+              }
+            ]
+          },
+          "result_type": {
+            "enum": [
+              "Int64",
+              "Bool",
+              "Unit"
+            ]
+          }
+        },
+        "required": [
+          "definition",
+          "result",
+          "result_type"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "validate_candidate",
+      "description": "Validate and expand the completed registry via frozen adapter/wrapper. Target must return Int64. Finish on success.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$"
+          }
+        },
+        "required": [
+          "target"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+]
