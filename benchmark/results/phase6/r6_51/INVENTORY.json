@@ -1,0 +1,163 @@
+{
+  "bf16_allocation_test": "NOT_RUN",
+  "cuda_tensor_allocation_test": "NOT_RUN: torch absent",
+  "huggingface_cache_model_directories": [
+    "models--facebook--wav2vec2-large-960h",
+    "models--jbetker--tacotron-symbols",
+    "models--jbetker--wav2vec2-large-robust-ft-libritts-voxpopuli"
+  ],
+  "libraries": {
+    "accelerate": {
+      "module_discoverable": false,
+      "training_tested": false,
+      "version": null
+    },
+    "bitsandbytes": {
+      "module_discoverable": false,
+      "training_tested": false,
+      "version": null
+    },
+    "datasets": {
+      "module_discoverable": false,
+      "training_tested": false,
+      "version": null
+    },
+    "jsonschema": {
+      "module_discoverable": true,
+      "training_tested": false,
+      "version": "4.26.0"
+    },
+    "peft": {
+      "module_discoverable": false,
+      "training_tested": false,
+      "version": null
+    },
+    "safetensors": {
+      "module_discoverable": false,
+      "training_tested": false,
+      "version": null
+    },
+    "tokenizers": {
+      "module_discoverable": false,
+      "training_tested": false,
+      "version": null
+    },
+    "torch": {
+      "module_discoverable": false,
+      "training_tested": false,
+      "version": null
+    },
+    "transformers": {
+      "module_discoverable": false,
+      "training_tested": false,
+      "version": null
+    },
+    "trl": {
+      "module_discoverable": false,
+      "training_tested": false,
+      "version": null
+    }
+  },
+  "probes": [
+    {
+      "argv": [
+        "pwsh",
+        "-NoProfile",
+        "-Command",
+        "Get-CimInstance Win32_Processor | Select-Object Name,Architecture,NumberOfCores,NumberOfLogicalProcessors | ConvertTo-Json; Get-CimInstance Win32_ComputerSystem | Select-Object TotalPhysicalMemory | ConvertTo-Json; Get-CimInstance Win32_OperatingSystem | Select-Object Caption,Version,OSArchitecture,FreePhysicalMemory | ConvertTo-Json; Get-CimInstance Win32_LogicalDisk -Filter 'DriveType=3' | Select-Object DeviceID,Size,FreeSpace | ConvertTo-Json"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\r\n  \"Name\": \"AMD Ryzen 7 7700X 8-Core Processor             \",\r\n  \"Architecture\": 9,\r\n  \"NumberOfCores\": 8,\r\n  \"NumberOfLogicalProcessors\": 16\r\n}\r\n{\r\n  \"TotalPhysicalMemory\": 33408004096\r\n}\r\n{\r\n  \"Caption\": \"Microsoft Windows 11 Home\",\r\n  \"Version\": \"10.0.26300\",\r\n  \"OSArchitecture\": \"64-bit\",\r\n  \"FreePhysicalMemory\": 11000676\r\n}\r\n[\r\n  {\r\n    \"DeviceID\": \"C:\",\r\n    \"Size\": 999072722944,\r\n    \"FreeSpace\": 45980368896\r\n  },\r\n  {\r\n    \"DeviceID\": \"D:\",\r\n    \"Size\": 4000475770880,\r\n    \"FreeSpace\": 1724766490624\r\n  }\r\n]"
+    },
+    {
+      "argv": [
+        "nvidia-smi",
+        "--query-gpu=name,memory.total,memory.free,driver_version",
+        "--format=csv"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "name, memory.total [MiB], memory.free [MiB], driver_version\r\nNVIDIA GeForce RTX 4070, 12282 MiB, 9078 MiB, 617.42"
+    },
+    {
+      "argv": [
+        "nvcc",
+        "--version"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "nvcc: NVIDIA (R) Cuda compiler driver\r\nCopyright (c) 2005-2025 NVIDIA Corporation\r\nBuilt on Tue_Dec_16_19:27:18_Pacific_Standard_Time_2025\r\nCuda compilation tools, release 13.1, V13.1.115\r\nBuild cuda_13.1.r13.1/compiler.37061995_0"
+    },
+    {
+      "argv": [
+        "py",
+        "--list"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "-V:3.14[-64] *   Python 3.14.3"
+    },
+    {
+      "argv": [
+        "wsl",
+        "--status"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "Default Version: 2"
+    },
+    {
+      "argv": [
+        "wsl",
+        "--list",
+        "--verbose"
+      ],
+      "returncode": 4294967295,
+      "stderr": "",
+      "stdout": "Windows Subsystem for Linux has no installed distributions.\r\nYou can resolve this by installing a distribution with the instructions below:\r\n\r\nUse 'wsl.exe --list --online' to list available distributions\r\nand 'wsl.exe --install <Distro>' to install."
+    },
+    {
+      "argv": [
+        "ollama",
+        "list"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "NAME                           ID              SIZE      MODIFIED     \nnomic-embed-text:latest        0a109f422b47    274 MB    7 months ago    \nqwen2.5-coder:1.5b-base        02e0f2817a89    986 MB    7 months ago    \nllama3.1-8b-131k:latest        deb69ac6d6bd    4.9 GB    7 months ago    \nllama3.1:8b                    46e0c10c039e    4.9 GB    7 months ago    \nqwen3-8b-131k:latest           8b0bd8bc4f26    5.2 GB    7 months ago    \nqwen3-8b-262k:latest           cacbb07e0dcd    5.2 GB    7 months ago    \nqwen3-coder-30b-131k:latest    8ce1b5914287    18 GB     7 months ago    \nqwen3-coder-30b-262k:latest    e1b819cdf614    18 GB     7 months ago    \ngpt-oss-20b-262k:latest        899e1646c9f9    13 GB     7 months ago    \ngpt-oss-20b-131k:latest        4d2f07cece89    13 GB     7 months ago    \ngpt-oss-20b-32k:latest         65086a4a68ab    13 GB     7 months ago    \ngpt-oss:20b                    17052f91a42e    13 GB     7 months ago    \nqwen3-8b-32k:latest            b3e2287c81ab    5.2 GB    7 months ago    \nqwen3-32k:latest               8a8cf98b3304    18 GB     7 months ago    \nqwen3:8b                       500a1f067a9f    5.2 GB    7 months ago    \nqwen3-vl:8b                    901cae732162    6.1 GB    7 months ago    \ndeepseek-r1:8b                 6995872bfe4c    5.2 GB    7 months ago    \nqwen3-coder:30b                06c1097efce0    18 GB     7 months ago"
+    },
+    {
+      "argv": [
+        "ollama",
+        "--version"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "ollama version is 0.35.0"
+    },
+    {
+      "argv": [
+        "ollama",
+        "show",
+        "qwen2.5-coder:1.5b-base"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "Model\n    architecture        qwen2     \n    parameters          1.5B      \n    context length      32768     \n    embedding length    1536      \n    quantization        Q4_K_M    \n\n  Capabilities\n    completion    \n    insert        \n\n  License\n    Apache License               \n    Version 2.0, January 2004    \n    ..."
+    }
+  ],
+  "python": {
+    "base_prefix": "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64",
+    "executable": "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+    "machine": "AMD64",
+    "prefix": "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64",
+    "version": "3.14.3"
+  },
+  "round": "R6.51",
+  "software_changes": 0,
+  "trainable_candidate_checkpoint_verified_local": false,
+  "training_runs": 0,
+  "utc": "2026-10-10T18:12:45.802023+00:00",
+  "weight_downloads": 0,
+  "weight_inventory_scope": "Ollama list, conventional user HF cache, repository venv search; other external environments and custom weight directories not exhaustively inspected"
+}

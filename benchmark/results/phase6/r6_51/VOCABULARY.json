@@ -1,0 +1,23 @@
+{
+  "stateless": {
+    "profile": "typed-composition-1",
+    "authority": "experiments/typed_composition_r6_18/SEMANTICS-1.md",
+    "package": "version, foundation (frozen VM SHA256), definitions array, program region",
+    "region": "name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity",
+    "types": ["Int64", "Bool", "Unit"],
+    "expressions": "{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}",
+    "nodes": "atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result",
+    "rules": "Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance."
+  },
+  "stateful": {
+    "profile": "R6.16 intent-2, production-backed C lowering",
+    "authority": "experiments/value_added_r6_16/intent-2.schema.json and generate.py",
+    "root": "version=1, storage=records.json, fields object, create object, operations object, invariants array; no other root keys",
+    "fields": "id identifier, created_at timestamp, label string, phase/seal enum; each has type and domain array",
+    "create": "bindings per field: {source:uuid_v4|utc_clock|input|literal,value:null|string}; input creation uses matching field name and value null; nonblank input-name array",
+    "operations": "operation name -> guards [{condition,error}], writes {field:{source:literal|input,value:scalar|input_name}}",
+    "conditions": "typed eq left/right operands {kind:field|parameter|literal,value:string,type,domain}; and/or children arrays (at least two); not child condition",
+    "invariants": "array of condition expressions; invalid_state on violation; enforce against staged image before commit",
+    "rules": "Only declared enum values. Lookup before guards; ordered guards before staged writes and invariants. Existing atomic local storage and normal restart semantics. No Python callbacks. Generate the intent, not generated application Python."
+  }
+}

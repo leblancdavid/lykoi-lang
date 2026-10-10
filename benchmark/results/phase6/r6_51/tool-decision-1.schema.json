@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lykoi:observed-tool-decision:1",
+  "description": "Design only: no genuine semantic-tool decisions available in R6.49; no positive instances fabricated.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["requirement", "available_tools", "construction_state", "decision", "observation"],
+  "properties": {
+    "requirement": {"type": "string", "minLength": 1},
+    "available_tools": {"type": "array", "minItems": 1, "items": {
+      "type": "object", "additionalProperties": false, "required": ["name", "arguments_schema", "contract_identity"],
+      "properties": {"name": {"type": "string", "minLength": 1}, "arguments_schema": {"type": "object"}, "contract_identity": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+    }},
+    "construction_state": {"type": "object"},
+    "decision": {"type": "object", "additionalProperties": false, "required": ["name", "arguments"], "properties": {"name": {"type": "string", "minLength": 1}, "arguments": {"type": "object"}}},
+    "observation": {"type": "object", "additionalProperties": false, "required": ["ai_authored", "capture_path", "capture_sha256", "decision_index", "validated_arguments", "successful_tool_response"], "properties": {
+      "ai_authored": {"const": true}, "capture_path": {"type": "string", "minLength": 1}, "capture_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+      "decision_index": {"type": "integer", "minimum": 0}, "validated_arguments": {"const": true}, "successful_tool_response": {"type": "object"}
+    }}
+  }
+}

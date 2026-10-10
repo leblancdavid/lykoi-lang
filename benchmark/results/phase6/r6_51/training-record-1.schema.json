@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lykoi:sft:1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "mode", "episode_id", "family_id", "component", "split", "prompt", "completion", "provenance"],
+  "properties": {
+    "version": {"const": "lykoi-sft-1"},
+    "mode": {"enum": ["direct", "tool"]},
+    "episode_id": {"type": "string", "minLength": 1},
+    "family_id": {"type": "string", "minLength": 1},
+    "component": {"type": "string", "minLength": 1},
+    "split": {"const": "training_development"},
+    "prompt": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/message"}},
+    "completion": {"type": "array", "minItems": 1, "maxItems": 1, "items": {"$ref": "#/$defs/assistant"}},
+    "provenance": {"type": "object", "required": ["source_refs", "source_provenance", "admission_index_sha256", "limitations", "target_kind", "ai_tool_trajectory", "preparation_only"], "additionalProperties": false, "properties": {
+      "source_refs": {"type": "object", "minProperties": 1, "additionalProperties": {"$ref": "#/$defs/ref"}},
+      "source_provenance": {"type": "object"},
+      "admission_index_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+      "limitations": {"type": "array", "items": {"type": "string"}},
+      "target_kind": {"type": "string"},
+      "ai_tool_trajectory": {"type": "boolean"},
+      "preparation_only": {"const": true}
+    }}
+  },
+  "$defs": {
+    "message": {"type": "object", "additionalProperties": false, "required": ["role", "content"], "properties": {"role": {"enum": ["system", "user", "tool", "assistant"]}, "content": {"type": "string", "minLength": 1}}},
+    "assistant": {"type": "object", "additionalProperties": false, "required": ["role", "content"], "properties": {"role": {"const": "assistant"}, "content": {"type": "string", "minLength": 1}}},
+    "ref": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}}
+  },
+  "allOf": [
+    {"if": {"properties": {"mode": {"const": "direct"}}}, "then": {"properties": {"provenance": {"properties": {"ai_tool_trajectory": {"const": false}, "target_kind": {"enum": ["SYMBOLIC.json", "AI-INTENT.json"]}}}}}},
+    {"if": {"properties": {"mode": {"const": "tool"}}}, "then": {"properties": {"provenance": {"properties": {"ai_tool_trajectory": {"const": true}, "target_kind": {"const": "observed_semantic_tool_decision"}}}}}}
+  ]
+}
