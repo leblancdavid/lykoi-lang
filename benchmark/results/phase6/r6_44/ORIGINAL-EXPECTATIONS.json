@@ -1,0 +1,6648 @@
+[
+  {
+    "group": "retained",
+    "id": "absent-list",
+    "initial": null,
+    "steps": [
+      {
+        "args": {},
+        "expected": {
+          "ok": []
+        },
+        "op": "list",
+        "state": null,
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "blank-label",
+    "initial": null,
+    "steps": [
+      {
+        "args": {
+          "label": " \t ",
+          "load": "ordinary",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_label"
+        },
+        "op": "create",
+        "state": null,
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/ordinary/list",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "ordinary",
+              "phase": "cold",
+              "vent": "open"
+            }
+          ]
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/ordinary/ignite",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/ordinary/cool",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_transition"
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/ordinary/rescue",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "exception_denied"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/ordinary/gate/open",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "open"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/ordinary/gate/closed",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "closed"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/ordinary/gate/bad",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "bad"
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/ordinary/gate/None",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": null
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/ordinary/gate/5",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": 5
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/ordinary/gate/False",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": false
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/ordinary/gate/['closed']",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": [
+            "closed"
+          ]
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/ordinary/gate/__MISSING__",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/emergency/list",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "emergency",
+              "phase": "cold",
+              "vent": "open"
+            }
+          ]
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/emergency/ignite",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "open"
+          }
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/emergency/cool",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_transition"
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/emergency/rescue",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "exception_denied"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/emergency/gate/open",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "open"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/emergency/gate/closed",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "closed"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/emergency/gate/bad",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "bad"
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/emergency/gate/None",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": null
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/emergency/gate/5",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": 5
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/emergency/gate/False",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": false
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/emergency/gate/['closed']",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": [
+            "closed"
+          ]
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/open/emergency/gate/__MISSING__",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/ordinary/list",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "ordinary",
+              "phase": "cold",
+              "vent": "closed"
+            }
+          ]
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/ordinary/ignite",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "gate_required"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/ordinary/cool",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_transition"
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/ordinary/rescue",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "exception_denied"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/ordinary/gate/open",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "open"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/ordinary/gate/closed",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "closed"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/ordinary/gate/bad",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "bad"
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/ordinary/gate/None",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": null
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/ordinary/gate/5",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": 5
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/ordinary/gate/False",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": false
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/ordinary/gate/['closed']",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": [
+            "closed"
+          ]
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/ordinary/gate/__MISSING__",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/emergency/list",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "emergency",
+              "phase": "cold",
+              "vent": "closed"
+            }
+          ]
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "changed",
+    "id": "cold/closed/emergency/ignite",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "gate_required"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/emergency/cool",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_transition"
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/emergency/rescue",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/emergency/gate/open",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "open"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/emergency/gate/closed",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "closed"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/emergency/gate/bad",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "bad"
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/emergency/gate/None",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": null
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/emergency/gate/5",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": 5
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/emergency/gate/False",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": false
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/emergency/gate/['closed']",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": [
+            "closed"
+          ]
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "cold/closed/emergency/gate/__MISSING__",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/ordinary/list",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "ordinary",
+              "phase": "firing",
+              "vent": "open"
+            }
+          ]
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/ordinary/ignite",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_transition"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/ordinary/cool",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/ordinary/rescue",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_transition"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/ordinary/gate/open",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "open"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/ordinary/gate/closed",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "closed"
+        },
+        "expected": {
+          "error": "gate_locked"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/ordinary/gate/bad",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "bad"
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/ordinary/gate/None",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": null
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/ordinary/gate/5",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": 5
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/ordinary/gate/False",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": false
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/ordinary/gate/['closed']",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": [
+            "closed"
+          ]
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/ordinary/gate/__MISSING__",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/emergency/list",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "emergency",
+              "phase": "firing",
+              "vent": "open"
+            }
+          ]
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/emergency/ignite",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_transition"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/emergency/cool",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/emergency/rescue",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_transition"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/emergency/gate/open",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "open"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "open"
+          }
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "changed",
+    "id": "firing/open/emergency/gate/closed",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "closed"
+        },
+        "expected": {
+          "error": "gate_locked"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/emergency/gate/bad",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "bad"
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/emergency/gate/None",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": null
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/emergency/gate/5",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": 5
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/emergency/gate/False",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": false
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/emergency/gate/['closed']",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": [
+            "closed"
+          ]
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/open/emergency/gate/__MISSING__",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/ordinary/list",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {},
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/ordinary/ignite",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/ordinary/cool",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/ordinary/rescue",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/ordinary/gate/open",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/ordinary/gate/closed",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "closed"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/ordinary/gate/bad",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "bad"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/ordinary/gate/None",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": null
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/ordinary/gate/5",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": 5
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/ordinary/gate/False",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": false
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/ordinary/gate/['closed']",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": [
+            "closed"
+          ]
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/ordinary/gate/__MISSING__",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/emergency/list",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "emergency",
+              "phase": "firing",
+              "vent": "closed"
+            }
+          ]
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/emergency/ignite",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_transition"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/emergency/cool",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/emergency/rescue",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_transition"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/emergency/gate/open",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "open"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "open"
+          }
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      }
+    ]
+  },
+  {
+    "group": "changed",
+    "id": "firing/closed/emergency/gate/closed",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "closed"
+        },
+        "expected": {
+          "error": "gate_locked"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/emergency/gate/bad",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "bad"
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/emergency/gate/None",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": null
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/emergency/gate/5",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": 5
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/emergency/gate/False",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": false
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/emergency/gate/['closed']",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": [
+            "closed"
+          ]
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "firing/closed/emergency/gate/__MISSING__",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "invalid_input"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "missing/ignite/closed",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "value": "closed"
+        },
+        "expected": {
+          "error": "not_found"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "missing/ignite/bad",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "value": "bad"
+        },
+        "expected": {
+          "error": "not_found"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "missing/ignite/__MISSING__",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002"
+        },
+        "expected": {
+          "error": "not_found"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "missing/set_gate/closed",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "value": "closed"
+        },
+        "expected": {
+          "error": "not_found"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "missing/set_gate/bad",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "value": "bad"
+        },
+        "expected": {
+          "error": "not_found"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "missing/set_gate/__MISSING__",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002"
+        },
+        "expected": {
+          "error": "not_found"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "missing/cool/closed",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "value": "closed"
+        },
+        "expected": {
+          "error": "not_found"
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "missing/cool/bad",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "value": "bad"
+        },
+        "expected": {
+          "error": "not_found"
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "missing/cool/__MISSING__",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002"
+        },
+        "expected": {
+          "error": "not_found"
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "missing/rescue/closed",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "value": "closed"
+        },
+        "expected": {
+          "error": "not_found"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "missing/rescue/bad",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "value": "bad"
+        },
+        "expected": {
+          "error": "not_found"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "missing/rescue/__MISSING__",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002"
+        },
+        "expected": {
+          "error": "not_found"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/blank/list",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": " ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": " ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/blank/ignite",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": " ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": " ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/blank/set_gate",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": " ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": " ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/blank/cool",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": " ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": " ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/blank/rescue",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": " ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": " ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/blank/create",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": " ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "create",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": " ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/duplicate/list",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      },
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          },
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/duplicate/ignite",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      },
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          },
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/duplicate/set_gate",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      },
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          },
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/duplicate/cool",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      },
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          },
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/duplicate/rescue",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      },
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          },
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/duplicate/create",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      },
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "create",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          },
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/domain/list",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "bad"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "bad"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/domain/ignite",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "bad"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "bad"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/domain/set_gate",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "bad"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "bad"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/domain/cool",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "bad"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "bad"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/domain/rescue",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "bad"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "bad"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/domain/create",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "bad"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "create",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "bad"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/extra/list",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "extra": true,
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "extra": true,
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/extra/ignite",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "extra": true,
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "extra": true,
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/extra/set_gate",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "extra": true,
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "extra": true,
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/extra/cool",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "extra": true,
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "extra": true,
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/extra/rescue",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "extra": true,
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "extra": true,
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/extra/create",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "extra": true,
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "create",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "extra": true,
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/missing-field/list",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/missing-field/ignite",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/missing-field/set_gate",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/missing-field/cool",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/missing-field/rescue",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/missing-field/create",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "create",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/type/list",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": true,
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": true,
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/type/ignite",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": true,
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": true,
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/type/set_gate",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": true,
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": true,
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/type/cool",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": true,
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": true,
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/type/rescue",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": true,
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": true,
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/type/create",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": true,
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "create",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": true,
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/invariant/list",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/invariant/ignite",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/invariant/set_gate",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/invariant/cool",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/invariant/rescue",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "invalid-store/invariant/create",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "firing",
+        "vent": "closed"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000002",
+          "label": " ",
+          "load": "ordinary",
+          "value": "bad",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "invalid_state"
+        },
+        "op": "create",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "create/open/ordinary",
+    "initial": null,
+    "steps": [
+      {
+        "args": {
+          "label": "  Batch A  ",
+          "load": "ordinary",
+          "vent": "open"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        },
+        "op": "create",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      },
+      {
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "ordinary",
+              "phase": "cold",
+              "vent": "open"
+            }
+          ]
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      },
+      {
+        "args": {
+          "label": "  Batch A  ",
+          "load": "ordinary",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "id_collision"
+        },
+        "op": "create",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "create/open/emergency",
+    "initial": null,
+    "steps": [
+      {
+        "args": {
+          "label": "  Batch A  ",
+          "load": "emergency",
+          "vent": "open"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        },
+        "op": "create",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      },
+      {
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "emergency",
+              "phase": "cold",
+              "vent": "open"
+            }
+          ]
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      },
+      {
+        "args": {
+          "label": "  Batch A  ",
+          "load": "emergency",
+          "vent": "open"
+        },
+        "expected": {
+          "error": "id_collision"
+        },
+        "op": "create",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "create/closed/ordinary",
+    "initial": null,
+    "steps": [
+      {
+        "args": {
+          "label": "  Batch A  ",
+          "load": "ordinary",
+          "vent": "closed"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        },
+        "op": "create",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": false
+      },
+      {
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "ordinary",
+              "phase": "cold",
+              "vent": "closed"
+            }
+          ]
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      },
+      {
+        "args": {
+          "label": "  Batch A  ",
+          "load": "ordinary",
+          "vent": "closed"
+        },
+        "expected": {
+          "error": "id_collision"
+        },
+        "op": "create",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "retained",
+    "id": "create/closed/emergency",
+    "initial": null,
+    "steps": [
+      {
+        "args": {
+          "label": "  Batch A  ",
+          "load": "emergency",
+          "vent": "closed"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        },
+        "op": "create",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": false
+      },
+      {
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "emergency",
+              "phase": "cold",
+              "vent": "closed"
+            }
+          ]
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      },
+      {
+        "args": {
+          "label": "  Batch A  ",
+          "load": "emergency",
+          "vent": "closed"
+        },
+        "expected": {
+          "error": "id_collision"
+        },
+        "op": "create",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "interaction",
+    "id": "multi-operation-emergency",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "emergency",
+        "phase": "cold",
+        "vent": "closed"
+      },
+      {
+        "created_at": "2025-12-31T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000002",
+        "label": "Other",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "gate_required"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          },
+          {
+            "created_at": "2025-12-31T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000002",
+            "label": "Other",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      },
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "closed"
+          }
+        },
+        "op": "rescue",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "closed"
+          },
+          {
+            "created_at": "2025-12-31T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000002",
+            "label": "Other",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      },
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "closed"
+        },
+        "expected": {
+          "error": "gate_locked"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "firing",
+            "vent": "closed"
+          },
+          {
+            "created_at": "2025-12-31T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000002",
+            "label": "Other",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      },
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          },
+          {
+            "created_at": "2025-12-31T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000002",
+            "label": "Other",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      },
+      {
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "created_at": "2025-12-31T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "label": "Other",
+              "load": "ordinary",
+              "phase": "cold",
+              "vent": "open"
+            },
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "emergency",
+              "phase": "cold",
+              "vent": "closed"
+            }
+          ]
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "emergency",
+            "phase": "cold",
+            "vent": "closed"
+          },
+          {
+            "created_at": "2025-12-31T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000002",
+            "label": "Other",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  },
+  {
+    "group": "interaction-retained",
+    "id": "ordinary-cycle",
+    "initial": [
+      {
+        "created_at": "2026-01-01T00:00:00Z",
+        "id": "00000000-0000-4000-8000-000000000001",
+        "label": "  Batch A  ",
+        "load": "ordinary",
+        "phase": "cold",
+        "vent": "open"
+      }
+    ],
+    "steps": [
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      },
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "closed"
+        },
+        "expected": {
+          "error": "gate_locked"
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "firing",
+            "vent": "open"
+          }
+        ],
+        "unchanged": true
+      },
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        },
+        "op": "cool",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "open"
+          }
+        ],
+        "unchanged": false
+      },
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001",
+          "value": "closed"
+        },
+        "expected": {
+          "ok": {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        },
+        "op": "set_gate",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": false
+      },
+      {
+        "args": {
+          "id": "00000000-0000-4000-8000-000000000001"
+        },
+        "expected": {
+          "error": "gate_required"
+        },
+        "op": "ignite",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      },
+      {
+        "args": {},
+        "expected": {
+          "ok": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "ordinary",
+              "phase": "cold",
+              "vent": "closed"
+            }
+          ]
+        },
+        "op": "list",
+        "state": [
+          {
+            "created_at": "2026-01-01T00:00:00Z",
+            "id": "00000000-0000-4000-8000-000000000001",
+            "label": "  Batch A  ",
+            "load": "ordinary",
+            "phase": "cold",
+            "vent": "closed"
+          }
+        ],
+        "unchanged": true
+      }
+    ]
+  }
+]

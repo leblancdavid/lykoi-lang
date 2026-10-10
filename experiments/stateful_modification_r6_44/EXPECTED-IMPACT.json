@@ -1,0 +1,10 @@
+{
+  "authority": "Frozen requirements; not production impact traversal or participant code",
+  "policy": "Emergency exemption from open-vent operating restriction",
+  "direct_operations": ["ignite", "set_gate"],
+  "dependent_predicates": ["ignite ordered phase guard retained", "ignite gate eligibility widened", "set_gate firing/closed lock restricted to ordinary load"],
+  "changed_transitions": ["cold/closed/emergency -> firing/closed/emergency by ignite", "firing/open/emergency -> firing/closed/emergency by set_gate", "firing/closed/emergency -> same state by set_gate(closed)"],
+  "unchanged_invariant": "firing implies vent=open or load=emergency",
+  "unaffected_operations": ["create", "list", "cool", "rescue"],
+  "unaffected_behavior": ["whole-store validation", "lookup precedence", "phase precedence", "ordinary gate restrictions", "invalid mutation value rejection", "atomic persistence", "rejection byte identity", "identity/timestamp/label/load preservation", "unselected records", "sorting", "rescue narrower eligibility", "no migration"]
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "R6.16 shared structured intent 1, pre-author schema repair",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "storage", "fields", "create", "operations", "invariants"],
+  "properties": {
+    "version": {"const": 1},
+    "storage": {"const": "records.json"},
+    "fields": {"type": "object", "additionalProperties": {"$ref": "#/$defs/field"}},
+    "create": {
+      "type": "object", "additionalProperties": false,
+      "required": ["bindings", "nonblank"],
+      "properties": {
+        "bindings": {"type": "object", "additionalProperties": {"$ref": "#/$defs/binding"}},
+        "nonblank": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "operations": {"type": "object", "additionalProperties": {"$ref": "#/$defs/operation"}},
+    "invariants": {"type": "array", "items": {"$ref": "#/$defs/expression"}}
+  },
+  "$defs": {
+    "field": {
+      "type": "object", "additionalProperties": false, "required": ["type", "domain"],
+      "properties": {"type": {"enum": ["identifier", "timestamp", "string", "enum"]}, "domain": {"type": "array", "items": {"type": "string"}}}
+    },
+    "binding": {
+      "type": "object", "additionalProperties": false, "required": ["source", "value"],
+      "properties": {"source": {"enum": ["input", "literal", "uuid_v4", "utc_clock"]}, "value": {"type": ["string", "null"]}}
+    },
+    "operand": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "value", "type", "domain"],
+      "properties": {"kind": {"enum": ["field", "parameter", "literal"]}, "value": {"type": "string"}, "type": {"enum": ["identifier", "timestamp", "string", "enum"]}, "domain": {"type": "array", "items": {"type": "string"}}}
+    },
+    "expression": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["op", "left", "right"], "properties": {"op": {"const": "eq"}, "left": {"$ref": "#/$defs/operand"}, "right": {"$ref": "#/$defs/operand"}}},
+        {"type": "object", "additionalProperties": false, "required": ["op", "children"], "properties": {"op": {"enum": ["and", "or"]}, "children": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/expression"}}}},
+        {"type": "object", "additionalProperties": false, "required": ["op", "child"], "properties": {"op": {"const": "not"}, "child": {"$ref": "#/$defs/expression"}}}
+      ]
+    },
+    "operation": {
+      "type": "object", "additionalProperties": false, "required": ["guards", "writes"],
+      "properties": {
+        "guards": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["condition", "error"], "properties": {"condition": {"$ref": "#/$defs/expression"}, "error": {"type": "string"}}}},
+        "writes": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "object", "additionalProperties": false, "required": ["source", "value"], "properties": {"source": {"enum": ["input", "literal"]}, "value": {"type": "string"}}}}
+      }
+    }
+  }
+}

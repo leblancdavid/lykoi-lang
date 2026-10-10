@@ -1,0 +1,98 @@
+{
+  "track": "R6.44 B",
+  "final_authored_path": "C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\B\\final.json",
+  "baseline": {
+    "path": "baseline.json",
+    "preserved": true,
+    "verification": "Original baseline bytes equaled accepted intent.json in both self-test batches; baseline was never written."
+  },
+  "revisions": [
+    {
+      "revision": 1,
+      "candidate": "first.json",
+      "changes": [
+        "ignite second guard accepts vent=open OR load=emergency, retaining the first cold-phase guard and gate_required error.",
+        "set_gate lock guard includes load=ordinary in its firing AND supplied-closed conjunction, retaining guard order and gate_locked error."
+      ],
+      "preservation": "Self-tests structurally restored these two guards and verified equality with the complete baseline intent.",
+      "saved_before_self_testing": true
+    }
+  ],
+  "candidate_repairs": 0,
+  "final": {
+    "path": "final.json",
+    "identical_to_first": true,
+    "generated_python_and_ir_identical_to_first": true
+  },
+  "generation": [
+    {
+      "command": "python build.py first.json build-first",
+      "result": "passed",
+      "validation_lowering_seconds": 0.059343400062061846
+    },
+    {
+      "command": "python build.py final.json build-final",
+      "result": "passed",
+      "validation_lowering_seconds": 0.057417600066401064
+    }
+  ],
+  "self_tests": [
+    {
+      "batch": 1,
+      "duration_seconds": null,
+      "duration_upper_bound_seconds": 60,
+      "duration_note": "Exact duration was not emitted because the inline harness aborted; terminal execution was bounded by a 60-second timeout.",
+      "result": "harness_error",
+      "fresh_process_operations_attempted": 1,
+      "details": "The child process could not print a retained Unicode label using Windows cp1252. No candidate assertion failed before this harness error."
+    },
+    {
+      "batch": 2,
+      "duration_seconds": null,
+      "duration_upper_bound_seconds": 60,
+      "duration_note": "Exact duration was not emitted because the inline harness aborted; terminal execution was bounded by a 60-second timeout, with a 55-second elapsed-time assertion after each successful child process.",
+      "harness_adjustment": "Enabled Python UTF-8 mode for child processes; no intent or generated-code change.",
+      "result": "partial_pass_with_contract_discrepancy",
+      "fresh_process_operations_attempted": 204,
+      "operation_checks_passed": 203,
+      "passed_coverage": [
+        "All eight phase/vent/load combinations across ignite, cool, rescue and list, including invalid firing/closed/ordinary storage.",
+        "set_gate open, closed, omitted, null, non-string, and out-of-domain values across all eight state combinations.",
+        "Missing-ID precedence across all mutations and state combinations.",
+        "Whole-store validation precedence over creation input, phase, lock, mutation input and missing-ID errors for six invalid unrelated-record variants.",
+        "Exact persisted byte preservation for every checked rejection and list operation.",
+        "Identity, timestamp, Unicode label, load, untouched fields and unrelated-record retention on every checked successful mutation.",
+        "Malformed JSON text rejection with invalid_state and byte preservation.",
+        "Baseline preservation, exactly two guard changes, first/final intent equality, and generated Python/IR equality."
+      ],
+      "failure": {
+        "store_bytes": "{}",
+        "operation": "set_gate",
+        "arguments": {"id": "00000000-0000-4000-8000-000000000099"},
+        "expected": {"error": "invalid_state"},
+        "actual": {"error": "migration_required"}
+      },
+      "not_reached_after_abort": [
+        "Remaining malformed top-level payload cases.",
+        "Absent-storage cases, deterministic-provider creation and duplicate-provider-ID cases.",
+        "Dedicated sequential-client emergency ignite/set_gate/cool/rescue scenario. Each completed matrix operation did use a fresh process."
+      ]
+    }
+  ],
+  "unsupported_requirements": [
+    {
+      "requirement": "Every invalid whole-store state returns invalid_state before lookup, guards and input validation.",
+      "observed_limitation": "For the malformed top-level object {}, the unchanged production-generated decode_state returns migration_required. The declarative schema does not expose decoder error selection, and generator/runtime edits are prohibited.",
+      "scope": "Observed for {}; shared-policy changes and invalid unrelated-record precedence passed."
+    }
+  ],
+  "constraints": {
+    "network_used": false,
+    "other_ai_spawned": false,
+    "generated_code_edited": false,
+    "tooling_or_configuration_edited": false,
+    "acceptance_feedback_used": false,
+    "self_test_batches": 2,
+    "self_test_harness_adjustments": 1
+  }
+}

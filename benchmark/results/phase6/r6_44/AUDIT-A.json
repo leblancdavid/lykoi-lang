@@ -1,0 +1,237 @@
+{
+  "first_final_identical": true,
+  "forbidden_input_markers": [],
+  "marker_audit_complete": true,
+  "note": "Marker and visible-input audit only, not OS isolation or proof of hidden-input exclusion",
+  "raw_event_tools": [
+    {
+      "input": {
+        "filePath": "C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\A"
+      },
+      "output": "<path>C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\A</path>\n<type>directory</type>\n<entries>\napplication.py\nbaseline.py\nCONTRACT.md\n\n(3 entries)\n</entries>",
+      "status": "completed",
+      "time": {
+        "end": 1791644678183,
+        "start": 1791644678178
+      },
+      "tool": "read"
+    },
+    {
+      "input": {
+        "filePath": "C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\A\\CONTRACT.md"
+      },
+      "output": "<path>C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\A\\CONTRACT.md</path>\n<type>file</type>\n<content>\n1: # R6.44 kiln shared-policy modification\n2: \n3: ## Starting application\n4: \n5: The exposed R6.16 stage-2 kiln application has create, list, ignite, set_gate,\n6: cool and rescue. Each operation reloads records.json. Missing storage is empty.\n7: Records have exactly id, created_at, label, phase, vent and load. id is a UUID-v4\n8: and created_at a UTC timestamp; both come from supplied deterministic providers.\n9: Label is a nonblank string retained verbatim. phase is cold/firing, vent is\n10: open/closed, load is ordinary/emergency. IDs are unique. Creation starts cold.\n11: Successful writes atomically replace the local store. Rejection preserves exact\n12: store bytes or absence. List returns whole records ordered by created_at then id.\n13: The persisted invariant is firing implies open vent OR emergency load.\n14: No normalization, schema migration, concurrency or external effects are required.\n15: \n16: Starting ignite requires cold (invalid_transition), then open vent\n17: (gate_required); it changes only phase to firing. Starting set_gate rejects a\n18: supplied closed value while firing (gate_locked), then rejects absent/invalid\n19: value (invalid_input); otherwise it changes only vent. cool requires firing\n20: (invalid_transition) and changes only phase to cold. rescue requires cold\n21: (invalid_transition), then closed vent AND emergency load (exception_denied),\n22: and changes only phase to firing. Lookup failure is not_found before guards.\n23: Invalid whole-store state is invalid_state before lookup/guards/input validation.\n24: Blank creation label is invalid_label. Duplicate provider ID is id_collision.\n25: Creation inputs and providers otherwise conform to declared types.\n26: \n27: ## One in-place shared-policy change\n28: \n29: Emergency loads are now exempt from the open-vent operating restriction in\n30: ordinary ignition and subsequent gate changes, as they already are in the\n31: persisted invariant and rescue pathway.\n32: \n33: * ignite still first requires cold (invalid_transition). Its gate policy now\n34:   allows an open vent OR emergency load; otherwise gate_required. Success sets\n35:   only phase=firing, retaining the vent.\n36: * set_gate rejects a supplied closed value while firing ONLY for ordinary loads\n37:   (gate_locked). Emergency firing loads may close or retain a closed vent. The\n38:   guard is before required-value/domain validation; missing or invalid values\n39:   still yield invalid_input for either load.\n40: * No other operation, field, domain, error code, order or invariant changes.\n41:   rescue retains its narrower closed/emergency precondition. cool works on\n42:   ordinary and emergency firing states, including closed emergency states.\n43: \n44: Every operation validates the entire persisted store first; an invalid unrelated\n45: record therefore wins over a missing ID, invalid mutation value or phase error.\n46: Missing ID wins over all mutation guards/invalid values. For ignite, phase wins\n47: over gate policy. For set_gate the lock guard wins when applicable; it does not\n48: match missing, null, non-string or out-of-domain values. These then reject at\n49: input validation. All guards observe original state.\n50: \n51: ## Old-store and retention requirements\n52: \n53: Existing valid cold/closed and firing/closed/emergency records remain valid,\n54: without rewrite on list or rejection. Existing firing/closed/ordinary records\n55: remain invalid and are never repaired. Identity, timestamp, label, load and all\n56: unselected records are unchanged by mutations. Test restart with a fresh process\n57: per operation and sequential clients sharing one store. No new endpoint is a\n58: substitute for changing ignite and set_gate.\n59: \n60: Superseded observations: cold/closed/emergency ignite previously gate_required;\n61: firing/emergency set_gate(closed) previously gate_locked. Every other original\n62: observation must be retained. One trial, no acceptance-feedback repair.\n\n(End of file - total 62 lines)\n</content>",
+      "status": "completed",
+      "time": {
+        "end": 1791644681148,
+        "start": 1791644681141
+      },
+      "tool": "read"
+    },
+    {
+      "input": {
+        "filePath": "C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\A\\application.py"
+      },
+      "output": "<path>C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\A\\application.py</path>\n<type>file</type>\n<content>\n1: \"\"\"Standalone stage-2 kiln firing permits; records.json is relative to the cwd.\"\"\"\n2: \n3: import datetime\n4: import json\n5: import os\n6: import tempfile\n7: import uuid\n8: \n9: \n10: FIELDS = {\"id\", \"created_at\", \"label\", \"phase\", \"vent\", \"load\"}\n11: \n12: \n13: def _utc(value):\n14:     if not isinstance(value, str):\n15:         raise ValueError(\"timestamp must be a string\")\n16:     parsed = datetime.datetime.fromisoformat(\n17:         value[:-1] + \"+00:00\" if value.endswith(\"Z\") else value\n18:     )\n19:     if parsed.tzinfo is None or parsed.utcoffset() != datetime.timedelta(0):\n20:         raise ValueError(\"timestamp must be UTC\")\n21:     return parsed\n22: \n23: \n24: def _valid_id(value):\n25:     if not isinstance(value, str):\n26:         return False\n27:     try:\n28:         parsed = uuid.UUID(value)\n29:     except (ValueError, AttributeError):\n30:         return False\n31:     return parsed.version == 4 and parsed.variant == uuid.RFC_4122\n32: \n33: \n34: def _valid_record(record):\n35:     if not isinstance(record, dict) or set(record) != FIELDS:\n36:         return False\n37:     if not _valid_id(record[\"id\"]):\n38:         return False\n39:     try:\n40:         _utc(record[\"created_at\"])\n41:     except (ValueError, TypeError, OverflowError):\n42:         return False\n43:     return (\n44:         isinstance(record[\"label\"], str)\n45:         and bool(record[\"label\"].strip())\n46:         and isinstance(record[\"phase\"], str)\n47:         and record[\"phase\"] in (\"cold\", \"firing\")\n48:         and isinstance(record[\"vent\"], str)\n49:         and record[\"vent\"] in (\"open\", \"closed\")\n50:         and isinstance(record[\"load\"], str)\n51:         and record[\"load\"] in (\"ordinary\", \"emergency\")\n52:         and (record[\"phase\"] != \"firing\" or record[\"vent\"] == \"open\"\n53:              or (record[\"vent\"] == \"closed\" and record[\"load\"] == \"emergency\"))\n54:     )\n55: \n56: \n57: def _reload():\n58:     try:\n59:         with open(\"records.json\", \"r\", encoding=\"utf-8\") as stream:\n60:             # Duplicate JSON keys are not silently repaired into valid records.\n61:             def unique_object(pairs):\n62:                 result = {}\n63:                 for key, value in pairs:\n64:                     if key in result:\n65:                         raise ValueError(\"duplicate field\")\n66:                     result[key] = value\n67:                 return result\n68: \n69:             records = json.load(stream, object_pairs_hook=unique_object)\n70:     except FileNotFoundError:\n71:         return []\n72:     if not isinstance(records, list) or not all(_valid_record(r) for r in records):\n73:         raise ValueError(\"invalid records\")\n74:     identities = [uuid.UUID(r[\"id\"]) for r in records]\n75:     if len(set(identities)) != len(identities):\n76:         raise ValueError(\"duplicate identity\")\n77:     return records\n78: \n79: \n80: def _commit(records):\n81:     # The temporary file is on the same filesystem as the destination.\n82:     path = os.path.abspath(\"records.json\")\n83:     descriptor, temporary = tempfile.mkstemp(prefix=\".kiln-\", suffix=\".json\", dir=os.path.dirname(path))\n84:     try:\n85:         with os.fdopen(descriptor, \"w\", encoding=\"utf-8\", newline=\"\\n\") as stream:\n86:             json.dump(records, stream, ensure_ascii=True, allow_nan=False)\n87:             stream.write(\"\\n\")\n88:             stream.flush()\n89:             os.fsync(stream.fileno())\n90:         os.replace(temporary, path)\n91:     finally:\n92:         if os.path.exists(temporary):\n93:             os.unlink(temporary)\n94: \n95: \n96: def handle(op, args, providers):\n97:     \"\"\"Return an ok record/list or an error code, reloading for every call.\"\"\"\n98:     try:\n99:         records = _reload()\n100:     except (OSError, ValueError, TypeError, UnicodeError, OverflowError):\n101:         return {\"error\": \"invalid_state\"}\n102: \n103:     if op == \"list\":\n104:         return {\"ok\": sorted(records, key=lambda r: (_utc(r[\"created_at\"]), r[\"id\"]))}\n105:     if not isinstance(args, dict):\n106:         return {\"error\": \"invalid_input\"}\n107:     if op == \"create\":\n108:         label = args.get(\"label\")\n109:         vent = args.get(\"vent\")\n110:         load = args.get(\"load\")\n111:         if isinstance(label, str) and not label.strip():\n112:             return {\"error\": \"invalid_label\"}\n113:         if (not isinstance(label, str) or not label.strip()\n114:                 or not isinstance(vent, str) or vent not in (\"open\", \"closed\")\n115:                 or not isinstance(load, str) or load not in (\"ordinary\", \"emergency\")):\n116:             return {\"error\": \"invalid_input\"}\n117:         identity = providers[\"uuid_v4\"]()\n118:         if not _valid_id(identity):\n119:             return {\"error\": \"invalid_input\"}\n120:         if any(uuid.UUID(r[\"id\"]) == uuid.UUID(identity) for r in records):\n121:             return {\"error\": \"id_collision\"}\n122:         created_at = providers[\"utc_clock\"]()\n123:         record = {\"id\": identity, \"created_at\": created_at, \"label\": label,\n124:                   \"phase\": \"cold\", \"vent\": vent, \"load\": load}\n125:         if not _valid_record(record):\n126:             return {\"error\": \"invalid_input\"}\n127:         updated = records + [record]\n128:     elif op in (\"ignite\", \"set_gate\", \"cool\", \"rescue\"):\n129:         index = next((i for i, r in enumerate(records) if r[\"id\"] == args.get(\"id\")), None)\n130:         if index is None:\n131:             return {\"error\": \"not_found\"}\n132:         original = records[index]\n133:         record = dict(original)\n134:         if op == \"ignite\":\n135:             if original[\"phase\"] != \"cold\":\n136:                 return {\"error\": \"invalid_transition\"}\n137:             if original[\"vent\"] != \"open\":\n138:                 return {\"error\": \"gate_required\"}\n139:             record[\"phase\"] = \"firing\"\n140:         elif op == \"cool\":\n141:             if original[\"phase\"] != \"firing\":\n142:                 return {\"error\": \"invalid_transition\"}\n143:             record[\"phase\"] = \"cold\"\n144:         elif op == \"rescue\":\n145:             if original[\"phase\"] != \"cold\":\n146:                 return {\"error\": \"invalid_transition\"}\n147:             if original[\"vent\"] != \"closed\" or original[\"load\"] != \"emergency\":\n148:                 return {\"error\": \"exception_denied\"}\n149:             record[\"phase\"] = \"firing\"\n150:         else:\n151:             value = args.get(\"value\")\n152:             if original[\"phase\"] == \"firing\" and value == \"closed\":\n153:                 return {\"error\": \"gate_locked\"}\n154:             if not isinstance(value, str) or value not in (\"open\", \"closed\"):\n155:                 return {\"error\": \"invalid_input\"}\n156:             record[\"vent\"] = value\n157:         updated = list(records)\n158:         updated[index] = record\n159:     else:\n160:         return {\"error\": \"invalid_input\"}\n161:     try:\n162:         _commit(updated)\n163:     except OSError:\n164:         return {\"error\": \"invalid_state\"}\n165:     return {\"ok\": record}\n\n(End of file - total 165 lines)\n</content>",
+      "status": "completed",
+      "time": {
+        "end": 1791644687971,
+        "start": 1791644687964
+      },
+      "tool": "read"
+    },
+    {
+      "input": {
+        "todos": [
+          {
+            "content": "Update the two policy guards and save first.py while preserving baseline.py.",
+            "priority": "high",
+            "status": "in_progress"
+          },
+          {
+            "content": "Run bounded self-tests for policy, retention, error precedence, and process restarts.",
+            "priority": "high",
+            "status": "pending"
+          },
+          {
+            "content": "Save final.py and EFFORT.json and submit the authored path.",
+            "priority": "high",
+            "status": "pending"
+          }
+        ]
+      },
+      "output": "[\n  {\n    \"content\": \"Update the two policy guards and save first.py while preserving baseline.py.\",\n    \"status\": \"in_progress\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Run bounded self-tests for policy, retention, error precedence, and process restarts.\",\n    \"status\": \"pending\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Save final.py and EFFORT.json and submit the authored path.\",\n    \"status\": \"pending\",\n    \"priority\": \"high\"\n  }\n]",
+      "status": "completed",
+      "time": {
+        "end": 1791644708040,
+        "start": 1791644708037
+      },
+      "tool": "todowrite"
+    },
+    {
+      "input": {
+        "filePath": "C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\A\\baseline.py"
+      },
+      "output": "<path>C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\A\\baseline.py</path>\n<type>file</type>\n<content>\n1: \"\"\"Standalone stage-2 kiln firing permits; records.json is relative to the cwd.\"\"\"\n2: \n3: import datetime\n4: import json\n5: import os\n6: import tempfile\n7: import uuid\n8: \n9: \n10: FIELDS = {\"id\", \"created_at\", \"label\", \"phase\", \"vent\", \"load\"}\n11: \n12: \n13: def _utc(value):\n14:     if not isinstance(value, str):\n15:         raise ValueError(\"timestamp must be a string\")\n16:     parsed = datetime.datetime.fromisoformat(\n17:         value[:-1] + \"+00:00\" if value.endswith(\"Z\") else value\n18:     )\n19:     if parsed.tzinfo is None or parsed.utcoffset() != datetime.timedelta(0):\n20:         raise ValueError(\"timestamp must be UTC\")\n21:     return parsed\n22: \n23: \n24: def _valid_id(value):\n25:     if not isinstance(value, str):\n26:         return False\n27:     try:\n28:         parsed = uuid.UUID(value)\n29:     except (ValueError, AttributeError):\n30:         return False\n31:     return parsed.version == 4 and parsed.variant == uuid.RFC_4122\n32: \n33: \n34: def _valid_record(record):\n35:     if not isinstance(record, dict) or set(record) != FIELDS:\n36:         return False\n37:     if not _valid_id(record[\"id\"]):\n38:         return False\n39:     try:\n40:         _utc(record[\"created_at\"])\n41:     except (ValueError, TypeError, OverflowError):\n42:         return False\n43:     return (\n44:         isinstance(record[\"label\"], str)\n45:         and bool(record[\"label\"].strip())\n46:         and isinstance(record[\"phase\"], str)\n47:         and record[\"phase\"] in (\"cold\", \"firing\")\n48:         and isinstance(record[\"vent\"], str)\n49:         and record[\"vent\"] in (\"open\", \"closed\")\n50:         and isinstance(record[\"load\"], str)\n51:         and record[\"load\"] in (\"ordinary\", \"emergency\")\n52:         and (record[\"phase\"] != \"firing\" or record[\"vent\"] == \"open\"\n53:              or (record[\"vent\"] == \"closed\" and record[\"load\"] == \"emergency\"))\n54:     )\n55: \n56: \n57: def _reload():\n58:     try:\n59:         with open(\"records.json\", \"r\", encoding=\"utf-8\") as stream:\n60:             # Duplicate JSON keys are not silently repaired into valid records.\n61:             def unique_object(pairs):\n62:                 result = {}\n63:                 for key, value in pairs:\n64:                     if key in result:\n65:                         raise ValueError(\"duplicate field\")\n66:                     result[key] = value\n67:                 return result\n68: \n69:             records = json.load(stream, object_pairs_hook=unique_object)\n70:     except FileNotFoundError:\n71:         return []\n72:     if not isinstance(records, list) or not all(_valid_record(r) for r in records):\n73:         raise ValueError(\"invalid records\")\n74:     identities = [uuid.UUID(r[\"id\"]) for r in records]\n75:     if len(set(identities)) != len(identities):\n76:         raise ValueError(\"duplicate identity\")\n77:     return records\n78: \n79: \n80: def _commit(records):\n81:     # The temporary file is on the same filesystem as the destination.\n82:     path = os.path.abspath(\"records.json\")\n83:     descriptor, temporary = tempfile.mkstemp(prefix=\".kiln-\", suffix=\".json\", dir=os.path.dirname(path))\n84:     try:\n85:         with os.fdopen(descriptor, \"w\", encoding=\"utf-8\", newline=\"\\n\") as stream:\n86:             json.dump(records, stream, ensure_ascii=True, allow_nan=False)\n87:             stream.write(\"\\n\")\n88:             stream.flush()\n89:             os.fsync(stream.fileno())\n90:         os.replace(temporary, path)\n91:     finally:\n92:         if os.path.exists(temporary):\n93:             os.unlink(temporary)\n94: \n95: \n96: def handle(op, args, providers):\n97:     \"\"\"Return an ok record/list or an error code, reloading for every call.\"\"\"\n98:     try:\n99:         records = _reload()\n100:     except (OSError, ValueError, TypeError, UnicodeError, OverflowError):\n101:         return {\"error\": \"invalid_state\"}\n102: \n103:     if op == \"list\":\n104:         return {\"ok\": sorted(records, key=lambda r: (_utc(r[\"created_at\"]), r[\"id\"]))}\n105:     if not isinstance(args, dict):\n106:         return {\"error\": \"invalid_input\"}\n107:     if op == \"create\":\n108:         label = args.get(\"label\")\n109:         vent = args.get(\"vent\")\n110:         load = args.get(\"load\")\n111:         if isinstance(label, str) and not label.strip():\n112:             return {\"error\": \"invalid_label\"}\n113:         if (not isinstance(label, str) or not label.strip()\n114:                 or not isinstance(vent, str) or vent not in (\"open\", \"closed\")\n115:                 or not isinstance(load, str) or load not in (\"ordinary\", \"emergency\")):\n116:             return {\"error\": \"invalid_input\"}\n117:         identity = providers[\"uuid_v4\"]()\n118:         if not _valid_id(identity):\n119:             return {\"error\": \"invalid_input\"}\n120:         if any(uuid.UUID(r[\"id\"]) == uuid.UUID(identity) for r in records):\n121:             return {\"error\": \"id_collision\"}\n122:         created_at = providers[\"utc_clock\"]()\n123:         record = {\"id\": identity, \"created_at\": created_at, \"label\": label,\n124:                   \"phase\": \"cold\", \"vent\": vent, \"load\": load}\n125:         if not _valid_record(record):\n126:             return {\"error\": \"invalid_input\"}\n127:         updated = records + [record]\n128:     elif op in (\"ignite\", \"set_gate\", \"cool\", \"rescue\"):\n129:         index = next((i for i, r in enumerate(records) if r[\"id\"] == args.get(\"id\")), None)\n130:         if index is None:\n131:             return {\"error\": \"not_found\"}\n132:         original = records[index]\n133:         record = dict(original)\n134:         if op == \"ignite\":\n135:             if original[\"phase\"] != \"cold\":\n136:                 return {\"error\": \"invalid_transition\"}\n137:             if original[\"vent\"] != \"open\":\n138:                 return {\"error\": \"gate_required\"}\n139:             record[\"phase\"] = \"firing\"\n140:         elif op == \"cool\":\n141:             if original[\"phase\"] != \"firing\":\n142:                 return {\"error\": \"invalid_transition\"}\n143:             record[\"phase\"] = \"cold\"\n144:         elif op == \"rescue\":\n145:             if original[\"phase\"] != \"cold\":\n146:                 return {\"error\": \"invalid_transition\"}\n147:             if original[\"vent\"] != \"closed\" or original[\"load\"] != \"emergency\":\n148:                 return {\"error\": \"exception_denied\"}\n149:             record[\"phase\"] = \"firing\"\n150:         else:\n151:             value = args.get(\"value\")\n152:             if original[\"phase\"] == \"firing\" and value == \"closed\":\n153:                 return {\"error\": \"gate_locked\"}\n154:             if not isinstance(value, str) or value not in (\"open\", \"closed\"):\n155:                 return {\"error\": \"invalid_input\"}\n156:             record[\"vent\"] = value\n157:         updated = list(records)\n158:         updated[index] = record\n159:     else:\n160:         return {\"error\": \"invalid_input\"}\n161:     try:\n162:         _commit(updated)\n163:     except OSError:\n164:         return {\"error\": \"invalid_state\"}\n165:     return {\"ok\": record}\n\n(End of file - total 165 lines)\n</content>",
+      "status": "completed",
+      "time": {
+        "end": 1791644712226,
+        "start": 1791644712219
+      },
+      "tool": "read"
+    },
+    {
+      "input": {
+        "patchText": "*** Begin Patch\n*** Update File: C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\A\\application.py\n@@\n-            if original[\"vent\"] != \"open\":\n+            if original[\"vent\"] != \"open\" and original[\"load\"] != \"emergency\":\n@@\n-            if original[\"phase\"] == \"firing\" and value == \"closed\":\n+            if (original[\"phase\"] == \"firing\" and value == \"closed\"\n+                    and original[\"load\"] == \"ordinary\"):\n*** Add File: C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\A\\self_test.py\n+\"\"\"Bounded local contract tests; all temporary stores stay in this directory.\"\"\"\n+import copy\n+import importlib.util\n+import itertools\n+import json\n+import os\n+from pathlib import Path\n+import subprocess\n+import sys\n+import tempfile\n+import time\n+\n+ROOT = Path(__file__).resolve().parent\n+ID = \"00000000-0000-4000-8000-000000000001\"\n+OTHER = \"00000000-0000-4000-8000-000000000002\"\n+MISSING = \"00000000-0000-4000-8000-000000000003\"\n+STAMP = \"2026-10-10T00:00:00Z\"\n+PROVIDERS = {\"uuid_v4\": lambda: MISSING, \"utc_clock\": lambda: STAMP}\n+\n+\n+def load(name):\n+    spec = importlib.util.spec_from_file_location(name, ROOT / (name + \".py\"))\n+    module = importlib.util.module_from_spec(spec)\n+    spec.loader.exec_module(module)\n+    return module\n+\n+\n+def record(phase=\"cold\", vent=\"open\", load=\"ordinary\", identity=ID):\n+    return dict(id=identity, created_at=STAMP, label=\"  Kiln\\u2603  \",\n+                phase=phase, vent=vent, load=load)\n+\n+\n+def encoded(records):\n+    return (json.dumps(records, ensure_ascii=False, indent=3) + \" \\n\\n\").encode()\n+\n+\n+def expected(original, op, args, legacy=False):\n+    if args.get(\"id\") != original[\"id\"]:\n+        return {\"error\": \"not_found\"}\n+    changed = dict(original)\n+    phase, vent, load = (original[k] for k in (\"phase\", \"vent\", \"load\"))\n+    if op == \"ignite\":\n+        if phase != \"cold\":\n+            return {\"error\": \"invalid_transition\"}\n+        if vent != \"open\" and (legacy or load != \"emergency\"):\n+            return {\"error\": \"gate_required\"}\n+        changed[\"phase\"] = \"firing\"\n+    elif op == \"cool\":\n+        if phase != \"firing\":\n+            return {\"error\": \"invalid_transition\"}\n+        changed[\"phase\"] = \"cold\"\n+    elif op == \"rescue\":\n+        if phase != \"cold\":\n+            return {\"error\": \"invalid_transition\"}\n+        if vent != \"closed\" or load != \"emergency\":\n+            return {\"error\": \"exception_denied\"}\n+        changed[\"phase\"] = \"firing\"\n+    else:\n+        value = args.get(\"value\")\n+        if phase == \"firing\" and value == \"closed\" and (legacy or load == \"ordinary\"):\n+            return {\"error\": \"gate_locked\"}\n+        if not isinstance(value, str) or value not in (\"open\", \"closed\"):\n+            return {\"error\": \"invalid_input\"}\n+        changed[\"vent\"] = value\n+    return {\"ok\": changed}\n+\n+\n+def main():\n+    started = time.perf_counter()\n+    candidate, baseline = load(\"first\"), load(\"baseline\")\n+    count = 0\n+    original_cwd = Path.cwd()\n+    with tempfile.TemporaryDirectory(prefix=\"self-test-\", dir=ROOT) as directory:\n+        os.chdir(directory)\n+        store = Path(\"records.json\")\n+\n+        def check(module, payload, op, args, want, providers=PROVIDERS):\n+            nonlocal count\n+            if payload is None:\n+                store.unlink(missing_ok=True)\n+            else:\n+                store.write_bytes(payload)\n+            actual = module.handle(op, args, providers)\n+            assert actual == want, (op, args, actual, want)\n+            if \"error\" in want or op == \"list\":\n+                assert (store.read_bytes() if store.exists() else None) == payload\n+            else:\n+                persisted = json.loads(store.read_bytes())\n+                assert all(module._valid_record(r) for r in persisted)\n+                before = json.loads(payload) if payload is not None else []\n+                if op == \"create\":\n+                    assert persisted == before + [want[\"ok\"]]\n+                else:\n+                    assert persisted == [want[\"ok\"] if r[\"id\"] == args[\"id\"] else r\n+                                         for r in before]\n+            count += 1\n+\n+        values = [\"open\", \"closed\", None, 0, False, [], {}, \"CLOSED\", \"\", [\"closed\"]]\n+        mutations = [(op, {}) for op in (\"ignite\", \"cool\", \"rescue\")]\n+        mutations += [(\"set_gate\", {})] + [(\"set_gate\", {\"value\": v}) for v in values]\n+        for phase, vent, load_type in itertools.product(\n+                (\"cold\", \"firing\"), (\"open\", \"closed\"), (\"ordinary\", \"emergency\")):\n+            if phase == \"firing\" and vent == \"closed\" and load_type == \"ordinary\":\n+                continue\n+            selected = record(phase, vent, load_type)\n+            unselected = record(\"firing\", \"closed\", \"emergency\", OTHER)\n+            payload = encoded([unselected, selected])\n+            for op, extra in mutations:\n+                for identity in (ID, MISSING, None):\n+                    args = dict(id=identity, **extra)\n+                    check(candidate, payload, op, args, expected(selected, op, args))\n+                    check(baseline, payload, op, args, expected(selected, op, args, True))\n+            check(candidate, payload, \"list\", None, {\"ok\": [selected, unselected]})\n+\n+        invalid = [b\"not json\", b\"{}\", b\"[null]\", b\"\\xff\", b'[{\"id\":1,\"id\":2}]',\n+                   encoded([record(\"firing\", \"closed\", \"ordinary\")]),\n+                   encoded([record(), record(identity=ID)])]\n+        for key, value in [(\"phase\", \"bad\"), (\"vent\", \"bad\"), (\"load\", \"bad\"),\n+                           (\"label\", \" \"), (\"created_at\", \"2026-10-10\"), (\"id\", \"bad\")]:\n+            bad = record(identity=OTHER)\n+            bad[key] = value\n+            invalid.append(encoded([record(), bad]))\n+        bad = record(identity=OTHER)\n+        bad[\"extra\"] = 1\n+        invalid.append(encoded([record(), bad]))\n+        for payload in invalid:\n+            for op in (\"create\", \"list\", \"ignite\", \"set_gate\", \"cool\", \"rescue\", \"unknown\"):\n+                for args in ({\"id\": ID, \"value\": \"closed\", \"label\": \" \"},\n+                             {\"id\": MISSING, \"value\": None}, None):\n+                    check(candidate, payload, op, args, {\"error\": \"invalid_state\"})\n+\n+        for payload in (None, encoded([])):\n+            check(candidate, payload, \"list\", {}, {\"ok\": []})\n+            for op, extra in mutations:\n+                check(candidate, payload, op, dict(id=ID, **extra), {\"error\": \"not_found\"})\n+            check(candidate, payload, \"create\", {\"label\": \" \"}, {\"error\": \"invalid_label\"})\n+        for vent, load_type in itertools.product((\"open\", \"closed\"), (\"ordinary\", \"emergency\")):\n+            args = {\"label\": \"  Exact\\u2603  \", \"vent\": vent, \"load\": load_type}\n+            want = {\"ok\": dict(record(vent=vent, load=load_type, identity=MISSING), label=args[\"label\"])}\n+            check(candidate, encoded([record()]), \"create\", args, want)\n+            check(baseline, encoded([record()]), \"create\", args, want)\n+        check(candidate, encoded([record()]), \"create\",\n+              {\"label\": \"x\", \"vent\": \"open\", \"load\": \"emergency\"},\n+              {\"error\": \"id_collision\"}, {\"uuid_v4\": lambda: ID, \"utc_clock\": lambda: STAMP})\n+\n+        # Each step starts a fresh Python client, sharing one persistent store.\n+        store.unlink(missing_ok=True)\n+        worker = (\n+            \"import importlib.util,json,sys;\"\n+            \"s=importlib.util.spec_from_file_location('app',sys.argv[1]);\"\n+            \"m=importlib.util.module_from_spec(s);s.loader.exec_module(m);\"\n+            \"p={'uuid_v4':lambda:sys.argv[4],'utc_clock':lambda:sys.argv[5]};\"\n+            \"print(json.dumps(m.handle(sys.argv[2],json.loads(sys.argv[3]),p)))\"\n+        )\n+        sequence = [\n+            (\"create\", {\"label\": \"  retained  \", \"vent\": \"closed\", \"load\": \"emergency\"}, \"ok\"),\n+            (\"ignite\", {\"id\": ID}, \"ok\"),\n+            (\"set_gate\", {\"id\": ID, \"value\": \"closed\"}, \"ok\"),\n+            (\"list\", {}, \"ok\"),\n+            (\"cool\", {\"id\": ID}, \"ok\"),\n+            (\"rescue\", {\"id\": ID}, \"ok\"),\n+            (\"ignite\", {\"id\": ID}, \"invalid_transition\"),\n+            (\"set_gate\", {\"id\": ID}, \"invalid_input\"),\n+            (\"set_gate\", {\"id\": ID, \"value\": \"open\"}, \"ok\"),\n+            (\"set_gate\", {\"id\": ID, \"value\": \"closed\"}, \"ok\"),\n+            (\"cool\", {\"id\": ID}, \"ok\"),\n+            (\"list\", {}, \"ok\"),\n+        ]\n+        for op, args, status in sequence:\n+            before = store.read_bytes() if store.exists() else None\n+            process = subprocess.run(\n+                [sys.executable, \"-B\", \"-c\", worker, str(ROOT / \"first.py\"),\n+                 op, json.dumps(args), ID, STAMP],\n+                capture_output=True, text=True, check=True, timeout=5)\n+            result = json.loads(process.stdout)\n+            assert (\"ok\" in result) if status == \"ok\" else result == {\"error\": status}\n+            if status != \"ok\" or op == \"list\":\n+                assert store.read_bytes() == before\n+            persisted = json.loads(store.read_bytes())\n+            assert len(persisted) == 1 and persisted[0][\"id\"] == ID\n+            assert persisted[0][\"label\"] == \"  retained  \"\n+            assert persisted[0][\"created_at\"] == STAMP and persisted[0][\"load\"] == \"emergency\"\n+            assert candidate._valid_record(persisted[0])\n+            count += 1\n+        assert json.loads(store.read_bytes())[0] == dict(record(vent=\"closed\", load=\"emergency\"), label=\"  retained  \")\n+        os.chdir(original_cwd)\n+    print(json.dumps({\"result\": \"passed\", \"cases\": count,\n+                      \"fresh_process_operations\": len(sequence),\n+                      \"duration_seconds\": round(time.perf_counter() - started, 3)}))\n+\n+\n+if __name__ == \"__main__\":\n+    main()\n*** End Patch"
+      },
+      "output": "Success. Updated the following files:\nM Users/lblan/AppData/Local/Temp/opencode/lykoi-r6-44/A/application.py\nA Users/lblan/AppData/Local/Temp/opencode/lykoi-r6-44/A/self_test.py",
+      "status": "completed",
+      "time": {
+        "end": 1791644777866,
+        "start": 1791644777848
+      },
+      "tool": "apply_patch"
+    },
+    {
+      "input": {
+        "command": "if (-not (Test-Path -LiteralPath \"C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\A\" -PathType Container)) { throw 'Missing participant directory' }; python -B -c 'from pathlib import Path; import shutil,hashlib; p=Path.cwd(); b=(p/\"baseline.py\").read_bytes(); a=(p/\"application.py\").read_bytes(); expected=b.replace(b\"if original[\\\"vent\\\"] != \\\"open\\\":\",b\"if original[\\\"vent\\\"] != \\\"open\\\" and original[\\\"load\\\"] != \\\"emergency\\\":\").replace(b\"if original[\\\"phase\\\"] == \\\"firing\\\" and value == \\\"closed\\\":\",b\"if (original[\\\"phase\\\"] == \\\"firing\\\" and value == \\\"closed\\\"\\n                    and original[\\\"load\\\"] == \\\"ordinary\\\"):\"); assert a.replace(b\"\\r\\n\",b\"\\n\")==expected.replace(b\"\\r\\n\",b\"\\n\"), \"Unexpected baseline differences\"; assert not (p/\"first.py\").exists(); shutil.copyfile(p/\"application.py\",p/\"first.py\"); print(\"First candidate saved before tests; baseline SHA256=\"+hashlib.sha256(b).hexdigest())'",
+        "workdir": "C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\A"
+      },
+      "output": "First candidate saved before tests; baseline SHA256=2fe84fdb08c6a9403c559e6fccf8b5f519897efd42882e841b794ddd67504901\r\n",
+      "status": "completed",
+      "time": {
+        "end": 1791644790734,
+        "start": 1791644789950
+      },
+      "tool": "bash"
+    },
+    {
+      "input": {
+        "todos": [
+          {
+            "content": "Update the two policy guards and save first.py while preserving baseline.py.",
+            "priority": "high",
+            "status": "completed"
+          },
+          {
+            "content": "Run bounded self-tests for policy, retention, error precedence, and process restarts.",
+            "priority": "high",
+            "status": "in_progress"
+          },
+          {
+            "content": "Save final.py and EFFORT.json and submit the authored path.",
+            "priority": "high",
+            "status": "pending"
+          }
+        ]
+      },
+      "output": "[\n  {\n    \"content\": \"Update the two policy guards and save first.py while preserving baseline.py.\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Run bounded self-tests for policy, retention, error precedence, and process restarts.\",\n    \"status\": \"in_progress\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Save final.py and EFFORT.json and submit the authored path.\",\n    \"status\": \"pending\",\n    \"priority\": \"high\"\n  }\n]",
+      "status": "completed",
+      "time": {
+        "end": 1791644794192,
+        "start": 1791644794190
+      },
+      "tool": "todowrite"
+    },
+    {
+      "input": {
+        "command": "python -B self_test.py",
+        "timeout": 60000,
+        "workdir": "C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\A"
+      },
+      "output": "{\"result\": \"passed\", \"cases\": 942, \"fresh_process_operations\": 12, \"duration_seconds\": 1.769}\r\n",
+      "status": "completed",
+      "time": {
+        "end": 1791644800589,
+        "start": 1791644798308
+      },
+      "tool": "bash"
+    },
+    {
+      "input": {
+        "todos": [
+          {
+            "content": "Update the two policy guards and save first.py while preserving baseline.py.",
+            "priority": "high",
+            "status": "completed"
+          },
+          {
+            "content": "Run bounded self-tests for policy, retention, error precedence, and process restarts.",
+            "priority": "high",
+            "status": "completed"
+          },
+          {
+            "content": "Save final.py and EFFORT.json and submit the authored path.",
+            "priority": "high",
+            "status": "in_progress"
+          }
+        ]
+      },
+      "output": "[\n  {\n    \"content\": \"Update the two policy guards and save first.py while preserving baseline.py.\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Run bounded self-tests for policy, retention, error precedence, and process restarts.\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Save final.py and EFFORT.json and submit the authored path.\",\n    \"status\": \"in_progress\",\n    \"priority\": \"high\"\n  }\n]",
+      "status": "completed",
+      "time": {
+        "end": 1791644815068,
+        "start": 1791644815066
+      },
+      "tool": "todowrite"
+    },
+    {
+      "input": {
+        "patchText": "*** Begin Patch\n*** Add File: C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\A\\EFFORT.json\n+{\n+  \"participant\": \"R6.44 Track A\",\n+  \"submission\": \"final.py\",\n+  \"baseline\": {\n+    \"path\": \"baseline.py\",\n+    \"preserved\": true,\n+    \"sha256\": \"2fe84fdb08c6a9403c559e6fccf8b5f519897efd42882e841b794ddd67504901\"\n+  },\n+  \"revisions\": [\n+    {\n+      \"revision\": 1,\n+      \"kind\": \"initial_candidate\",\n+      \"path\": \"first.py\",\n+      \"saved_before_self_testing\": true,\n+      \"changes\": [\n+        \"ignite retains the cold-phase guard, then permits an open vent or emergency load and changes only phase.\",\n+        \"set_gate retains pre-validation guard ordering, but locks supplied closed values while firing only for ordinary loads.\"\n+      ]\n+    }\n+  ],\n+  \"self_directed_repairs\": 0,\n+  \"self_tests\": [\n+    {\n+      \"batch\": 1,\n+      \"command\": \"python -B self_test.py\",\n+      \"candidate\": \"first.py\",\n+      \"duration_seconds\": 1.769,\n+      \"timeout_seconds\": 60,\n+      \"result\": \"passed\",\n+      \"cases\": 942,\n+      \"fresh_process_operations\": 12,\n+      \"coverage\": [\n+        \"All valid phase/vent/load combinations across ignite, set_gate, cool and rescue, compared with independent contract expectations and the preserved baseline.\",\n+        \"Missing IDs and missing, null, non-string and out-of-domain gate values; phase, lookup, gate and whole-store error precedence.\",\n+        \"Malformed stores, invalid unrelated records, duplicate identities and duplicate JSON keys.\",\n+        \"Exact persisted-byte or absence retention on rejection and list; identity, timestamp, label, load and unselected-record retention on successful mutations.\",\n+        \"Creation defaults, all vent/load combinations, blank labels, provider ID collision and ordered list results.\",\n+        \"Sequential clients with a fresh process for every operation, exercising all six endpoints and emergency closed-vent ignition, gate changes, cooling and rescue.\"\n+      ]\n+    }\n+  ],\n+  \"final_matches_first_candidate\": true,\n+  \"unsupported_requirements\": [],\n+  \"external_acceptance_feedback_used\": false,\n+  \"network_used\": false,\n+  \"other_ai_spawned\": false\n+}\n*** End Patch"
+      },
+      "output": "Success. Updated the following files:\nA Users/lblan/AppData/Local/Temp/opencode/lykoi-r6-44/A/EFFORT.json",
+      "status": "completed",
+      "time": {
+        "end": 1791644831018,
+        "start": 1791644831015
+      },
+      "tool": "apply_patch"
+    },
+    {
+      "input": {
+        "command": "if (-not (Test-Path -LiteralPath \"C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\A\" -PathType Container)) { throw 'Missing participant directory' }; python -B -c 'from pathlib import Path; import shutil,hashlib,json; p=Path.cwd(); assert not (p/\"final.py\").exists(); shutil.copyfile(p/\"application.py\",p/\"final.py\"); assert (p/\"final.py\").read_bytes()==(p/\"first.py\").read_bytes()==(p/\"application.py\").read_bytes(); effort=json.loads((p/\"EFFORT.json\").read_text()); assert hashlib.sha256((p/\"baseline.py\").read_bytes()).hexdigest()==effort[\"baseline\"][\"sha256\"]; print(\"Submitted final.py; first/application/final identical; baseline preserved; EFFORT.json valid.\")'",
+        "workdir": "C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-44\\A"
+      },
+      "output": "Submitted final.py; first/application/final identical; baseline preserved; EFFORT.json valid.\r\n",
+      "status": "completed",
+      "time": {
+        "end": 1791644839158,
+        "start": 1791644838436
+      },
+      "tool": "bash"
+    },
+    {
+      "input": {
+        "todos": [
+          {
+            "content": "Update the two policy guards and save first.py while preserving baseline.py.",
+            "priority": "high",
+            "status": "completed"
+          },
+          {
+            "content": "Run bounded self-tests for policy, retention, error precedence, and process restarts.",
+            "priority": "high",
+            "status": "completed"
+          },
+          {
+            "content": "Save final.py and EFFORT.json and submit the authored path.",
+            "priority": "high",
+            "status": "completed"
+          }
+        ]
+      },
+      "output": "[\n  {\n    \"content\": \"Update the two policy guards and save first.py while preserving baseline.py.\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Run bounded self-tests for policy, retention, error precedence, and process restarts.\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Save final.py and EFFORT.json and submit the authored path.\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  }\n]",
+      "status": "completed",
+      "time": {
+        "end": 1791644842825,
+        "start": 1791644842824
+      },
+      "tool": "todowrite"
+    }
+  ],
+  "retained_provider_hidden_context": null,
+  "scope_attestation": false,
+  "starting_baseline_preserved": true,
+  "tool_budget_ok": true,
+  "wall_budget_ok": true
+}

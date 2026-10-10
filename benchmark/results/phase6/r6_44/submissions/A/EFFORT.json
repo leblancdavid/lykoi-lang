@@ -1,0 +1,47 @@
+{
+  "participant": "R6.44 Track A",
+  "submission": "final.py",
+  "baseline": {
+    "path": "baseline.py",
+    "preserved": true,
+    "sha256": "2fe84fdb08c6a9403c559e6fccf8b5f519897efd42882e841b794ddd67504901"
+  },
+  "revisions": [
+    {
+      "revision": 1,
+      "kind": "initial_candidate",
+      "path": "first.py",
+      "saved_before_self_testing": true,
+      "changes": [
+        "ignite retains the cold-phase guard, then permits an open vent or emergency load and changes only phase.",
+        "set_gate retains pre-validation guard ordering, but locks supplied closed values while firing only for ordinary loads."
+      ]
+    }
+  ],
+  "self_directed_repairs": 0,
+  "self_tests": [
+    {
+      "batch": 1,
+      "command": "python -B self_test.py",
+      "candidate": "first.py",
+      "duration_seconds": 1.769,
+      "timeout_seconds": 60,
+      "result": "passed",
+      "cases": 942,
+      "fresh_process_operations": 12,
+      "coverage": [
+        "All valid phase/vent/load combinations across ignite, set_gate, cool and rescue, compared with independent contract expectations and the preserved baseline.",
+        "Missing IDs and missing, null, non-string and out-of-domain gate values; phase, lookup, gate and whole-store error precedence.",
+        "Malformed stores, invalid unrelated records, duplicate identities and duplicate JSON keys.",
+        "Exact persisted-byte or absence retention on rejection and list; identity, timestamp, label, load and unselected-record retention on successful mutations.",
+        "Creation defaults, all vent/load combinations, blank labels, provider ID collision and ordered list results.",
+        "Sequential clients with a fresh process for every operation, exercising all six endpoints and emergency closed-vent ignition, gate changes, cooling and rescue."
+      ]
+    }
+  ],
+  "final_matches_first_candidate": true,
+  "unsupported_requirements": [],
+  "external_acceptance_feedback_used": false,
+  "network_used": false,
+  "other_ai_spawned": false
+}

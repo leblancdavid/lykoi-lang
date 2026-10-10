@@ -1,0 +1,217 @@
+{
+  "initial": [
+    {
+      "created_at": "2026-01-01T00:00:00Z",
+      "id": "00000000-0000-4000-8000-000000000001",
+      "label": "  Batch A  ",
+      "load": "emergency",
+      "phase": "cold",
+      "vent": "closed"
+    },
+    {
+      "created_at": "2025-12-31T00:00:00Z",
+      "id": "00000000-0000-4000-8000-000000000002",
+      "label": "Other",
+      "load": "ordinary",
+      "phase": "cold",
+      "vent": "open"
+    }
+  ],
+  "stages": [
+    {
+      "steps": [
+        {
+          "args": {},
+          "expected": {
+            "ok": [
+              {
+                "created_at": "2025-12-31T00:00:00Z",
+                "id": "00000000-0000-4000-8000-000000000002",
+                "label": "Other",
+                "load": "ordinary",
+                "phase": "cold",
+                "vent": "open"
+              },
+              {
+                "created_at": "2026-01-01T00:00:00Z",
+                "id": "00000000-0000-4000-8000-000000000001",
+                "label": "  Batch A  ",
+                "load": "emergency",
+                "phase": "cold",
+                "vent": "closed"
+              }
+            ]
+          },
+          "op": "list",
+          "state": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "emergency",
+              "phase": "cold",
+              "vent": "closed"
+            },
+            {
+              "created_at": "2025-12-31T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "label": "Other",
+              "load": "ordinary",
+              "phase": "cold",
+              "vent": "open"
+            }
+          ],
+          "unchanged": true
+        },
+        {
+          "args": {
+            "id": "00000000-0000-4000-8000-000000000001"
+          },
+          "expected": {
+            "error": "gate_required"
+          },
+          "op": "ignite",
+          "state": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "emergency",
+              "phase": "cold",
+              "vent": "closed"
+            },
+            {
+              "created_at": "2025-12-31T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "label": "Other",
+              "load": "ordinary",
+              "phase": "cold",
+              "vent": "open"
+            }
+          ],
+          "unchanged": true
+        }
+      ],
+      "version": "baseline"
+    },
+    {
+      "steps": [
+        {
+          "args": {
+            "id": "00000000-0000-4000-8000-000000000001"
+          },
+          "expected": {
+            "ok": {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "emergency",
+              "phase": "firing",
+              "vent": "closed"
+            }
+          },
+          "op": "ignite",
+          "state": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "emergency",
+              "phase": "firing",
+              "vent": "closed"
+            },
+            {
+              "created_at": "2025-12-31T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "label": "Other",
+              "load": "ordinary",
+              "phase": "cold",
+              "vent": "open"
+            }
+          ],
+          "unchanged": false
+        },
+        {
+          "args": {
+            "id": "00000000-0000-4000-8000-000000000001",
+            "value": "closed"
+          },
+          "expected": {
+            "ok": {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "emergency",
+              "phase": "firing",
+              "vent": "closed"
+            }
+          },
+          "op": "set_gate",
+          "state": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "emergency",
+              "phase": "firing",
+              "vent": "closed"
+            },
+            {
+              "created_at": "2025-12-31T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "label": "Other",
+              "load": "ordinary",
+              "phase": "cold",
+              "vent": "open"
+            }
+          ],
+          "unchanged": false
+        },
+        {
+          "args": {},
+          "expected": {
+            "ok": [
+              {
+                "created_at": "2025-12-31T00:00:00Z",
+                "id": "00000000-0000-4000-8000-000000000002",
+                "label": "Other",
+                "load": "ordinary",
+                "phase": "cold",
+                "vent": "open"
+              },
+              {
+                "created_at": "2026-01-01T00:00:00Z",
+                "id": "00000000-0000-4000-8000-000000000001",
+                "label": "  Batch A  ",
+                "load": "emergency",
+                "phase": "firing",
+                "vent": "closed"
+              }
+            ]
+          },
+          "op": "list",
+          "state": [
+            {
+              "created_at": "2026-01-01T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000001",
+              "label": "  Batch A  ",
+              "load": "emergency",
+              "phase": "firing",
+              "vent": "closed"
+            },
+            {
+              "created_at": "2025-12-31T00:00:00Z",
+              "id": "00000000-0000-4000-8000-000000000002",
+              "label": "Other",
+              "load": "ordinary",
+              "phase": "cold",
+              "vent": "open"
+            }
+          ],
+          "unchanged": true
+        }
+      ],
+      "version": "modified"
+    }
+  ]
+}

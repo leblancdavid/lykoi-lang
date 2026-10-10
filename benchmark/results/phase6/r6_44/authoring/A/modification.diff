@@ -1,0 +1,21 @@
+--- accepted-baseline
++++ submitted-final
+@@ -134,7 +134,7 @@
+         if op == "ignite":
+             if original["phase"] != "cold":
+                 return {"error": "invalid_transition"}
+-            if original["vent"] != "open":
++            if original["vent"] != "open" and original["load"] != "emergency":
+                 return {"error": "gate_required"}
+             record["phase"] = "firing"
+         elif op == "cool":
+@@ -149,7 +149,8 @@
+             record["phase"] = "firing"
+         else:
+             value = args.get("value")
+-            if original["phase"] == "firing" and value == "closed":
++            if (original["phase"] == "firing" and value == "closed"
++                    and original["load"] == "ordinary"):
+                 return {"error": "gate_locked"}
+             if not isinstance(value, str) or value not in ("open", "closed"):
+                 return {"error": "invalid_input"}

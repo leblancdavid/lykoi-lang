@@ -1,0 +1,1424 @@
+{
+  "base": {
+    "application": {
+      "id": "application",
+      "name": "scalar_records"
+    },
+    "axiom_version": "0.3",
+    "behaviors": [
+      {
+        "assignments": [
+          {
+            "field": "field:id",
+            "id": "uuid_v4",
+            "source": "capability"
+          },
+          {
+            "field": "field:created_at",
+            "id": "utc_clock",
+            "source": "capability"
+          },
+          {
+            "field": "field:label",
+            "id": "input:create:label",
+            "source": "input"
+          },
+          {
+            "field": "field:phase",
+            "source": "literal",
+            "value": "cold"
+          },
+          {
+            "field": "field:vent",
+            "id": "input:create:vent",
+            "source": "input"
+          },
+          {
+            "field": "field:load",
+            "id": "input:create:load",
+            "source": "input"
+          }
+        ],
+        "conditions": [
+          {
+            "failure": "error:invalid_label",
+            "id": "guard:create:0",
+            "input": "input:create:label",
+            "kind": "nonblank_input"
+          }
+        ],
+        "dependencies": [
+          "state",
+          "store",
+          "utc_clock",
+          "uuid_v4"
+        ],
+        "effects": [
+          "clock_read",
+          "file_read",
+          "file_write",
+          "random_id",
+          "state_read",
+          "state_write"
+        ],
+        "failures": [
+          "error:id_collision",
+          "error:invalid_label",
+          "error:invalid_state",
+          "error:persistence_failure"
+        ],
+        "guarantees": [
+          {
+            "field": "field:phase",
+            "id": "guarantee:create:value",
+            "kind": "result_field_equals",
+            "value": "cold"
+          },
+          {
+            "id": "guarantee:create:stored",
+            "kind": "result_in_state",
+            "state": "state"
+          },
+          {
+            "field": "field:label",
+            "id": "guarantee:create:label",
+            "kind": "result_field_equals_assignment"
+          },
+          {
+            "field": "field:vent",
+            "id": "guarantee:create:vent",
+            "kind": "result_field_equals_assignment"
+          },
+          {
+            "field": "field:load",
+            "id": "guarantee:create:load",
+            "kind": "result_field_equals_assignment"
+          }
+        ],
+        "id": "behavior:create",
+        "inputs": [
+          {
+            "id": "input:create:label",
+            "name": "label",
+            "type": "prim:string"
+          },
+          {
+            "id": "input:create:vent",
+            "name": "vent",
+            "type": "type:vent"
+          },
+          {
+            "id": "input:create:load",
+            "name": "load",
+            "type": "type:load"
+          }
+        ],
+        "kind": "create",
+        "name": "create",
+        "output": "record",
+        "reads": [
+          "state"
+        ],
+        "requires": [
+          "read",
+          "utc_clock",
+          "uuid_v4",
+          "write"
+        ],
+        "state": "state",
+        "writes": [
+          "state"
+        ]
+      },
+      {
+        "assignments": [],
+        "conditions": [],
+        "dependencies": [
+          "state",
+          "store"
+        ],
+        "effects": [
+          "state_read",
+          "file_read"
+        ],
+        "failures": [
+          "error:invalid_state",
+          "error:persistence_failure"
+        ],
+        "guarantees": [
+          {
+            "id": "guarantee:list",
+            "kind": "result_equals_state_sorted",
+            "state": "state"
+          }
+        ],
+        "id": "behavior:list",
+        "inputs": [],
+        "kind": "list",
+        "name": "list",
+        "order_by": [
+          "field:created_at",
+          "field:id"
+        ],
+        "output": "records",
+        "reads": [
+          "state"
+        ],
+        "requires": [
+          "read"
+        ],
+        "state": "state",
+        "writes": []
+      }
+    ],
+    "capabilities": [
+      {
+        "id": "store",
+        "kind": "json_file",
+        "missing_file": "empty_collection",
+        "path": "records.json"
+      },
+      {
+        "action": "read",
+        "id": "read",
+        "kind": "resource_access",
+        "resource": "store"
+      },
+      {
+        "action": "write",
+        "id": "write",
+        "kind": "resource_access",
+        "resource": "store"
+      },
+      {
+        "id": "utc_clock",
+        "kind": "utc_clock"
+      },
+      {
+        "id": "uuid_v4",
+        "kind": "uuid_v4"
+      }
+    ],
+    "commands": [
+      {
+        "arguments": [
+          {
+            "flag": "--label",
+            "input": "input:create:label",
+            "required": true
+          },
+          {
+            "flag": "--vent",
+            "input": "input:create:vent",
+            "required": true
+          },
+          {
+            "flag": "--load",
+            "input": "input:create:load",
+            "required": true
+          }
+        ],
+        "behavior": "behavior:create",
+        "id": "command:create",
+        "token": "create"
+      },
+      {
+        "arguments": [],
+        "behavior": "behavior:list",
+        "id": "command:list",
+        "token": "list"
+      }
+    ],
+    "errors": [
+      {
+        "code": "id_collision",
+        "id": "error:id_collision"
+      },
+      {
+        "code": "invalid_label",
+        "id": "error:invalid_label"
+      },
+      {
+        "code": "invalid_state",
+        "id": "error:invalid_state"
+      },
+      {
+        "code": "persistence_failure",
+        "id": "error:persistence_failure"
+      }
+    ],
+    "invariants": [
+      {
+        "field": "field:id",
+        "id": "unique",
+        "kind": "unique_field",
+        "state": "state"
+      },
+      {
+        "field_rules": [
+          {
+            "field": "field:label",
+            "kind": "nonblank"
+          }
+        ],
+        "id": "valid",
+        "kind": "all_records_valid",
+        "state": "state"
+      }
+    ],
+    "migrations": [],
+    "state": [
+      {
+        "id": "state",
+        "invariants": [
+          "unique",
+          "valid"
+        ],
+        "key_field": "field:id",
+        "name": "records",
+        "schema_version": 1,
+        "storage": "store",
+        "type": "records"
+      }
+    ],
+    "state_machines": [],
+    "transitions": [],
+    "types": [
+      {
+        "id": "type:phase",
+        "kind": "enum",
+        "name": "phase",
+        "values": [
+          "cold",
+          "firing"
+        ]
+      },
+      {
+        "id": "type:vent",
+        "kind": "enum",
+        "name": "vent",
+        "values": [
+          "open",
+          "closed"
+        ]
+      },
+      {
+        "id": "type:load",
+        "kind": "enum",
+        "name": "load",
+        "values": [
+          "ordinary",
+          "emergency"
+        ]
+      },
+      {
+        "fields": [
+          {
+            "id": "field:id",
+            "name": "id",
+            "type": "prim:string"
+          },
+          {
+            "id": "field:created_at",
+            "name": "created_at",
+            "type": "prim:timestamp"
+          },
+          {
+            "id": "field:label",
+            "name": "label",
+            "type": "prim:string"
+          },
+          {
+            "id": "field:phase",
+            "name": "phase",
+            "type": "type:phase"
+          },
+          {
+            "id": "field:vent",
+            "name": "vent",
+            "type": "type:vent"
+          },
+          {
+            "id": "field:load",
+            "name": "load",
+            "type": "type:load"
+          }
+        ],
+        "id": "record",
+        "kind": "record",
+        "name": "Record"
+      },
+      {
+        "id": "records",
+        "item_type": "record",
+        "kind": "list",
+        "name": "Records"
+      }
+    ]
+  },
+  "facts": {
+    "collections": [],
+    "creation_pipelines": [],
+    "mutations": [
+      {
+        "changes": [
+          {
+            "field": "phase",
+            "invalid_error": "invalid_input",
+            "operation": "replace",
+            "pipeline": [],
+            "source": {
+              "kind": "literal",
+              "type": {
+                "domain": [
+                  "cold",
+                  "firing"
+                ],
+                "nullable": false,
+                "type": "enum"
+              },
+              "value": "firing"
+            }
+          }
+        ],
+        "command": "ignite",
+        "effect": {
+          "atomicity": "single_record",
+          "persistence": "atomic",
+          "rejection": "unchanged"
+        },
+        "guards": [
+          {
+            "error": "invalid_transition",
+            "predicate": {
+              "kind": "compare",
+              "left": {
+                "kind": "field",
+                "name": "phase",
+                "type": {
+                  "domain": [
+                    "cold",
+                    "firing"
+                  ],
+                  "nullable": false,
+                  "type": "enum"
+                }
+              },
+              "nulls": "false",
+              "operator": "eq",
+              "policy": {
+                "case": "sensitive",
+                "normalization": "none"
+              },
+              "result_type": "boolean",
+              "right": {
+                "kind": "literal",
+                "type": {
+                  "domain": [
+                    "cold",
+                    "firing"
+                  ],
+                  "nullable": false,
+                  "type": "enum"
+                },
+                "value": "cold"
+              }
+            }
+          },
+          {
+            "error": "gate_required",
+            "predicate": {
+              "children": [
+                {
+                  "kind": "compare",
+                  "left": {
+                    "kind": "field",
+                    "name": "vent",
+                    "type": {
+                      "domain": [
+                        "open",
+                        "closed"
+                      ],
+                      "nullable": false,
+                      "type": "enum"
+                    }
+                  },
+                  "nulls": "false",
+                  "operator": "eq",
+                  "policy": {
+                    "case": "sensitive",
+                    "normalization": "none"
+                  },
+                  "result_type": "boolean",
+                  "right": {
+                    "kind": "literal",
+                    "type": {
+                      "domain": [
+                        "open",
+                        "closed"
+                      ],
+                      "nullable": false,
+                      "type": "enum"
+                    },
+                    "value": "open"
+                  }
+                },
+                {
+                  "kind": "compare",
+                  "left": {
+                    "kind": "field",
+                    "name": "load",
+                    "type": {
+                      "domain": [
+                        "ordinary",
+                        "emergency"
+                      ],
+                      "nullable": false,
+                      "type": "enum"
+                    }
+                  },
+                  "nulls": "false",
+                  "operator": "eq",
+                  "policy": {
+                    "case": "sensitive",
+                    "normalization": "none"
+                  },
+                  "result_type": "boolean",
+                  "right": {
+                    "kind": "literal",
+                    "type": {
+                      "domain": [
+                        "ordinary",
+                        "emergency"
+                      ],
+                      "nullable": false,
+                      "type": "enum"
+                    },
+                    "value": "emergency"
+                  }
+                }
+              ],
+              "kind": "or",
+              "result_type": "boolean"
+            }
+          }
+        ],
+        "lookup": "id",
+        "missing_error": "not_found"
+      },
+      {
+        "changes": [
+          {
+            "field": "vent",
+            "input": "value",
+            "invalid_error": "invalid_input",
+            "missing_error": "invalid_input",
+            "omitted": "reject",
+            "operation": "replace",
+            "pipeline": []
+          }
+        ],
+        "command": "set_gate",
+        "effect": {
+          "atomicity": "single_record",
+          "persistence": "atomic",
+          "rejection": "unchanged"
+        },
+        "guards": [
+          {
+            "error": "gate_locked",
+            "predicate": {
+              "child": {
+                "children": [
+                  {
+                    "kind": "compare",
+                    "left": {
+                      "kind": "field",
+                      "name": "phase",
+                      "type": {
+                        "domain": [
+                          "cold",
+                          "firing"
+                        ],
+                        "nullable": false,
+                        "type": "enum"
+                      }
+                    },
+                    "nulls": "false",
+                    "operator": "eq",
+                    "policy": {
+                      "case": "sensitive",
+                      "normalization": "none"
+                    },
+                    "result_type": "boolean",
+                    "right": {
+                      "kind": "literal",
+                      "type": {
+                        "domain": [
+                          "cold",
+                          "firing"
+                        ],
+                        "nullable": false,
+                        "type": "enum"
+                      },
+                      "value": "firing"
+                    }
+                  },
+                  {
+                    "kind": "compare",
+                    "left": {
+                      "kind": "parameter",
+                      "name": "value",
+                      "type": {
+                        "domain": [
+                          "open",
+                          "closed"
+                        ],
+                        "nullable": false,
+                        "type": "enum"
+                      }
+                    },
+                    "nulls": "false",
+                    "operator": "eq",
+                    "policy": {
+                      "case": "sensitive",
+                      "normalization": "none"
+                    },
+                    "result_type": "boolean",
+                    "right": {
+                      "kind": "literal",
+                      "type": {
+                        "domain": [
+                          "open",
+                          "closed"
+                        ],
+                        "nullable": false,
+                        "type": "enum"
+                      },
+                      "value": "closed"
+                    }
+                  },
+                  {
+                    "kind": "compare",
+                    "left": {
+                      "kind": "field",
+                      "name": "load",
+                      "type": {
+                        "domain": [
+                          "ordinary",
+                          "emergency"
+                        ],
+                        "nullable": false,
+                        "type": "enum"
+                      }
+                    },
+                    "nulls": "false",
+                    "operator": "eq",
+                    "policy": {
+                      "case": "sensitive",
+                      "normalization": "none"
+                    },
+                    "result_type": "boolean",
+                    "right": {
+                      "kind": "literal",
+                      "type": {
+                        "domain": [
+                          "ordinary",
+                          "emergency"
+                        ],
+                        "nullable": false,
+                        "type": "enum"
+                      },
+                      "value": "ordinary"
+                    }
+                  }
+                ],
+                "kind": "and",
+                "result_type": "boolean"
+              },
+              "kind": "not",
+              "result_type": "boolean"
+            }
+          }
+        ],
+        "lookup": "id",
+        "missing_error": "not_found"
+      },
+      {
+        "changes": [
+          {
+            "field": "phase",
+            "invalid_error": "invalid_input",
+            "operation": "replace",
+            "pipeline": [],
+            "source": {
+              "kind": "literal",
+              "type": {
+                "domain": [
+                  "cold",
+                  "firing"
+                ],
+                "nullable": false,
+                "type": "enum"
+              },
+              "value": "cold"
+            }
+          }
+        ],
+        "command": "cool",
+        "effect": {
+          "atomicity": "single_record",
+          "persistence": "atomic",
+          "rejection": "unchanged"
+        },
+        "guards": [
+          {
+            "error": "invalid_transition",
+            "predicate": {
+              "kind": "compare",
+              "left": {
+                "kind": "field",
+                "name": "phase",
+                "type": {
+                  "domain": [
+                    "cold",
+                    "firing"
+                  ],
+                  "nullable": false,
+                  "type": "enum"
+                }
+              },
+              "nulls": "false",
+              "operator": "eq",
+              "policy": {
+                "case": "sensitive",
+                "normalization": "none"
+              },
+              "result_type": "boolean",
+              "right": {
+                "kind": "literal",
+                "type": {
+                  "domain": [
+                    "cold",
+                    "firing"
+                  ],
+                  "nullable": false,
+                  "type": "enum"
+                },
+                "value": "firing"
+              }
+            }
+          }
+        ],
+        "lookup": "id",
+        "missing_error": "not_found"
+      },
+      {
+        "changes": [
+          {
+            "field": "phase",
+            "invalid_error": "invalid_input",
+            "operation": "replace",
+            "pipeline": [],
+            "source": {
+              "kind": "literal",
+              "type": {
+                "domain": [
+                  "cold",
+                  "firing"
+                ],
+                "nullable": false,
+                "type": "enum"
+              },
+              "value": "firing"
+            }
+          }
+        ],
+        "command": "rescue",
+        "effect": {
+          "atomicity": "single_record",
+          "persistence": "atomic",
+          "rejection": "unchanged"
+        },
+        "guards": [
+          {
+            "error": "invalid_transition",
+            "predicate": {
+              "kind": "compare",
+              "left": {
+                "kind": "field",
+                "name": "phase",
+                "type": {
+                  "domain": [
+                    "cold",
+                    "firing"
+                  ],
+                  "nullable": false,
+                  "type": "enum"
+                }
+              },
+              "nulls": "false",
+              "operator": "eq",
+              "policy": {
+                "case": "sensitive",
+                "normalization": "none"
+              },
+              "result_type": "boolean",
+              "right": {
+                "kind": "literal",
+                "type": {
+                  "domain": [
+                    "cold",
+                    "firing"
+                  ],
+                  "nullable": false,
+                  "type": "enum"
+                },
+                "value": "cold"
+              }
+            }
+          },
+          {
+            "error": "exception_denied",
+            "predicate": {
+              "children": [
+                {
+                  "kind": "compare",
+                  "left": {
+                    "kind": "field",
+                    "name": "vent",
+                    "type": {
+                      "domain": [
+                        "open",
+                        "closed"
+                      ],
+                      "nullable": false,
+                      "type": "enum"
+                    }
+                  },
+                  "nulls": "false",
+                  "operator": "eq",
+                  "policy": {
+                    "case": "sensitive",
+                    "normalization": "none"
+                  },
+                  "result_type": "boolean",
+                  "right": {
+                    "kind": "literal",
+                    "type": {
+                      "domain": [
+                        "open",
+                        "closed"
+                      ],
+                      "nullable": false,
+                      "type": "enum"
+                    },
+                    "value": "closed"
+                  }
+                },
+                {
+                  "kind": "compare",
+                  "left": {
+                    "kind": "field",
+                    "name": "load",
+                    "type": {
+                      "domain": [
+                        "ordinary",
+                        "emergency"
+                      ],
+                      "nullable": false,
+                      "type": "enum"
+                    }
+                  },
+                  "nulls": "false",
+                  "operator": "eq",
+                  "policy": {
+                    "case": "sensitive",
+                    "normalization": "none"
+                  },
+                  "result_type": "boolean",
+                  "right": {
+                    "kind": "literal",
+                    "type": {
+                      "domain": [
+                        "ordinary",
+                        "emergency"
+                      ],
+                      "nullable": false,
+                      "type": "enum"
+                    },
+                    "value": "emergency"
+                  }
+                }
+              ],
+              "kind": "and",
+              "result_type": "boolean"
+            }
+          }
+        ],
+        "lookup": "id",
+        "missing_error": "not_found"
+      }
+    ],
+    "predicate_semantics": {
+      "booleans": [],
+      "guards": [],
+      "invariants": [
+        {
+          "error": "invalid_state",
+          "predicate": {
+            "children": [
+              {
+                "child": {
+                  "kind": "compare",
+                  "left": {
+                    "kind": "field",
+                    "name": "phase",
+                    "type": {
+                      "domain": [
+                        "cold",
+                        "firing"
+                      ],
+                      "nullable": false,
+                      "type": "enum"
+                    }
+                  },
+                  "nulls": "false",
+                  "operator": "eq",
+                  "policy": {
+                    "case": "sensitive",
+                    "normalization": "none"
+                  },
+                  "result_type": "boolean",
+                  "right": {
+                    "kind": "literal",
+                    "type": {
+                      "domain": [
+                        "cold",
+                        "firing"
+                      ],
+                      "nullable": false,
+                      "type": "enum"
+                    },
+                    "value": "firing"
+                  }
+                },
+                "kind": "not",
+                "result_type": "boolean"
+              },
+              {
+                "kind": "compare",
+                "left": {
+                  "kind": "field",
+                  "name": "vent",
+                  "type": {
+                    "domain": [
+                      "open",
+                      "closed"
+                    ],
+                    "nullable": false,
+                    "type": "enum"
+                  }
+                },
+                "nulls": "false",
+                "operator": "eq",
+                "policy": {
+                  "case": "sensitive",
+                  "normalization": "none"
+                },
+                "result_type": "boolean",
+                "right": {
+                  "kind": "literal",
+                  "type": {
+                    "domain": [
+                      "open",
+                      "closed"
+                    ],
+                    "nullable": false,
+                    "type": "enum"
+                  },
+                  "value": "open"
+                }
+              },
+              {
+                "children": [
+                  {
+                    "kind": "compare",
+                    "left": {
+                      "kind": "field",
+                      "name": "vent",
+                      "type": {
+                        "domain": [
+                          "open",
+                          "closed"
+                        ],
+                        "nullable": false,
+                        "type": "enum"
+                      }
+                    },
+                    "nulls": "false",
+                    "operator": "eq",
+                    "policy": {
+                      "case": "sensitive",
+                      "normalization": "none"
+                    },
+                    "result_type": "boolean",
+                    "right": {
+                      "kind": "literal",
+                      "type": {
+                        "domain": [
+                          "open",
+                          "closed"
+                        ],
+                        "nullable": false,
+                        "type": "enum"
+                      },
+                      "value": "closed"
+                    }
+                  },
+                  {
+                    "kind": "compare",
+                    "left": {
+                      "kind": "field",
+                      "name": "load",
+                      "type": {
+                        "domain": [
+                          "ordinary",
+                          "emergency"
+                        ],
+                        "nullable": false,
+                        "type": "enum"
+                      }
+                    },
+                    "nulls": "false",
+                    "operator": "eq",
+                    "policy": {
+                      "case": "sensitive",
+                      "normalization": "none"
+                    },
+                    "result_type": "boolean",
+                    "right": {
+                      "kind": "literal",
+                      "type": {
+                        "domain": [
+                          "ordinary",
+                          "emergency"
+                        ],
+                        "nullable": false,
+                        "type": "enum"
+                      },
+                      "value": "emergency"
+                    }
+                  }
+                ],
+                "kind": "and",
+                "result_type": "boolean"
+              }
+            ],
+            "kind": "or",
+            "result_type": "boolean"
+          }
+        }
+      ]
+    }
+  },
+  "model": {
+    "application": {
+      "id": "application",
+      "name": "scalar_records"
+    },
+    "axiom_version": "0.3",
+    "behaviors": [
+      {
+        "assignments": [
+          {
+            "field": "field:id",
+            "id": "uuid_v4",
+            "source": "capability"
+          },
+          {
+            "field": "field:created_at",
+            "id": "utc_clock",
+            "source": "capability"
+          },
+          {
+            "field": "field:label",
+            "id": "input:create:label",
+            "source": "input"
+          },
+          {
+            "field": "field:phase",
+            "source": "literal",
+            "value": "cold"
+          },
+          {
+            "field": "field:vent",
+            "id": "input:create:vent",
+            "source": "input"
+          },
+          {
+            "field": "field:load",
+            "id": "input:create:load",
+            "source": "input"
+          }
+        ],
+        "conditions": [
+          {
+            "failure": "error:invalid_label",
+            "id": "guard:create:0",
+            "input": "input:create:label",
+            "kind": "nonblank_input"
+          }
+        ],
+        "dependencies": [
+          "state",
+          "store",
+          "utc_clock",
+          "uuid_v4"
+        ],
+        "effects": [
+          "clock_read",
+          "file_read",
+          "file_write",
+          "random_id",
+          "state_read",
+          "state_write"
+        ],
+        "failures": [
+          "error:id_collision",
+          "error:invalid_label",
+          "error:invalid_state",
+          "error:persistence_failure"
+        ],
+        "guarantees": [
+          {
+            "field": "field:phase",
+            "id": "guarantee:create:value",
+            "kind": "result_field_equals",
+            "value": "cold"
+          },
+          {
+            "id": "guarantee:create:stored",
+            "kind": "result_in_state",
+            "state": "state"
+          },
+          {
+            "field": "field:label",
+            "id": "guarantee:create:label",
+            "kind": "result_field_equals_assignment"
+          },
+          {
+            "field": "field:vent",
+            "id": "guarantee:create:vent",
+            "kind": "result_field_equals_assignment"
+          },
+          {
+            "field": "field:load",
+            "id": "guarantee:create:load",
+            "kind": "result_field_equals_assignment"
+          }
+        ],
+        "id": "behavior:create",
+        "inputs": [
+          {
+            "id": "input:create:label",
+            "name": "label",
+            "type": "prim:string"
+          },
+          {
+            "id": "input:create:vent",
+            "name": "vent",
+            "type": "type:vent"
+          },
+          {
+            "id": "input:create:load",
+            "name": "load",
+            "type": "type:load"
+          }
+        ],
+        "kind": "create",
+        "name": "create",
+        "output": "record",
+        "reads": [
+          "state"
+        ],
+        "requires": [
+          "read",
+          "utc_clock",
+          "uuid_v4",
+          "write"
+        ],
+        "state": "state",
+        "writes": [
+          "state"
+        ]
+      },
+      {
+        "assignments": [],
+        "conditions": [],
+        "dependencies": [
+          "state",
+          "store"
+        ],
+        "effects": [
+          "state_read",
+          "file_read"
+        ],
+        "failures": [
+          "error:invalid_state",
+          "error:persistence_failure"
+        ],
+        "guarantees": [
+          {
+            "id": "guarantee:list",
+            "kind": "result_equals_state_sorted",
+            "state": "state"
+          }
+        ],
+        "id": "behavior:list",
+        "inputs": [],
+        "kind": "list",
+        "name": "list",
+        "order_by": [
+          "field:created_at",
+          "field:id"
+        ],
+        "output": "records",
+        "reads": [
+          "state"
+        ],
+        "requires": [
+          "read"
+        ],
+        "state": "state",
+        "writes": []
+      }
+    ],
+    "capabilities": [
+      {
+        "id": "store",
+        "kind": "json_file",
+        "missing_file": "empty_collection",
+        "path": "records.json"
+      },
+      {
+        "action": "read",
+        "id": "read",
+        "kind": "resource_access",
+        "resource": "store"
+      },
+      {
+        "action": "write",
+        "id": "write",
+        "kind": "resource_access",
+        "resource": "store"
+      },
+      {
+        "id": "utc_clock",
+        "kind": "utc_clock"
+      },
+      {
+        "id": "uuid_v4",
+        "kind": "uuid_v4"
+      }
+    ],
+    "commands": [
+      {
+        "arguments": [
+          {
+            "flag": "--label",
+            "input": "input:create:label",
+            "required": true
+          },
+          {
+            "flag": "--vent",
+            "input": "input:create:vent",
+            "required": true
+          },
+          {
+            "flag": "--load",
+            "input": "input:create:load",
+            "required": true
+          }
+        ],
+        "behavior": "behavior:create",
+        "id": "command:create",
+        "token": "create"
+      },
+      {
+        "arguments": [],
+        "behavior": "behavior:list",
+        "id": "command:list",
+        "token": "list"
+      }
+    ],
+    "errors": [
+      {
+        "code": "id_collision",
+        "id": "error:id_collision"
+      },
+      {
+        "code": "invalid_label",
+        "id": "error:invalid_label"
+      },
+      {
+        "code": "invalid_state",
+        "id": "error:invalid_state"
+      },
+      {
+        "code": "persistence_failure",
+        "id": "error:persistence_failure"
+      }
+    ],
+    "invariants": [
+      {
+        "field": "field:id",
+        "id": "unique",
+        "kind": "unique_field",
+        "state": "state"
+      },
+      {
+        "field_rules": [
+          {
+            "field": "field:label",
+            "kind": "nonblank"
+          }
+        ],
+        "id": "valid",
+        "kind": "all_records_valid",
+        "state": "state"
+      }
+    ],
+    "migrations": [],
+    "state": [
+      {
+        "id": "state",
+        "invariants": [
+          "unique",
+          "valid"
+        ],
+        "key_field": "field:id",
+        "name": "records",
+        "schema_version": 1,
+        "storage": "store",
+        "type": "records"
+      }
+    ],
+    "state_machines": [],
+    "transitions": [],
+    "types": [
+      {
+        "id": "type:phase",
+        "kind": "enum",
+        "name": "phase",
+        "values": [
+          "cold",
+          "firing"
+        ]
+      },
+      {
+        "id": "type:vent",
+        "kind": "enum",
+        "name": "vent",
+        "values": [
+          "open",
+          "closed"
+        ]
+      },
+      {
+        "id": "type:load",
+        "kind": "enum",
+        "name": "load",
+        "values": [
+          "ordinary",
+          "emergency"
+        ]
+      },
+      {
+        "fields": [
+          {
+            "id": "field:id",
+            "name": "id",
+            "type": "prim:string"
+          },
+          {
+            "id": "field:created_at",
+            "name": "created_at",
+            "type": "prim:timestamp"
+          },
+          {
+            "id": "field:label",
+            "name": "label",
+            "type": "prim:string"
+          },
+          {
+            "id": "field:phase",
+            "name": "phase",
+            "type": "type:phase"
+          },
+          {
+            "id": "field:vent",
+            "name": "vent",
+            "type": "type:vent"
+          },
+          {
+            "id": "field:load",
+            "name": "load",
+            "type": "type:load"
+          }
+        ],
+        "id": "record",
+        "kind": "record",
+        "name": "Record"
+      },
+      {
+        "id": "records",
+        "item_type": "record",
+        "kind": "list",
+        "name": "Records"
+      }
+    ]
+  },
+  "value_types": {
+    "created_at": {
+      "domain": [],
+      "nullable": false,
+      "type": "timestamp"
+    },
+    "id": {
+      "domain": [],
+      "nullable": false,
+      "type": "string"
+    },
+    "label": {
+      "domain": [],
+      "nullable": false,
+      "type": "string"
+    },
+    "load": {
+      "domain": [
+        "ordinary",
+        "emergency"
+      ],
+      "nullable": false,
+      "type": "enum"
+    },
+    "phase": {
+      "domain": [
+        "cold",
+        "firing"
+      ],
+      "nullable": false,
+      "type": "enum"
+    },
+    "vent": {
+      "domain": [
+        "open",
+        "closed"
+      ],
+      "nullable": false,
+      "type": "enum"
+    }
+  },
+  "version": "typed-mutable-values-1"
+}
