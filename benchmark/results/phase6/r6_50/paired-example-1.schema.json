@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:lykoi:paired-example:1",
+  "title": "Lykoi paired-example design version 1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "episode_id", "original_requirement", "formal_requirement_contract", "frozen_acceptance", "lykoi_implementation", "python_implementation", "functional_observations", "validation_evidence", "replay_evidence", "artifact_identities", "semantic_family", "training_authorization", "provenance", "partition", "pair_status", "functional_equivalence", "trajectories"],
+  "properties": {
+    "schema_version": {"const": "lykoi-paired-example-1"},
+    "episode_id": {"type": "string", "minLength": 1},
+    "original_requirement": {"$ref": "#/$defs/artifact"},
+    "formal_requirement_contract": {"$ref": "#/$defs/artifact"},
+    "frozen_acceptance": {"$ref": "#/$defs/artifact"},
+    "lykoi_implementation": {"$ref": "#/$defs/artifact"},
+    "python_implementation": {"$ref": "#/$defs/artifact"},
+    "functional_observations": {
+      "type": "object", "additionalProperties": false,
+      "required": ["evidence", "observer_class", "role_and_input_evidence"],
+      "properties": {
+        "evidence": {"$ref": "#/$defs/artifact"},
+        "observer_class": {"enum": ["independent_qualified", "same_coordinator", "unattested"]},
+        "role_and_input_evidence": {"$ref": "#/$defs/optionalArtifact"}
+      }
+    },
+    "validation_evidence": {"$ref": "#/$defs/artifacts"},
+    "replay_evidence": {"$ref": "#/$defs/artifacts"},
+    "artifact_identities": {"$ref": "#/$defs/artifacts"},
+    "semantic_family": {
+      "type": "object", "additionalProperties": false,
+      "required": ["family_id", "connected_component_id", "behavioral_structure", "foundation", "foundation_identity", "ancestry_evidence", "kernel_coverage_evidence"],
+      "properties": {
+        "family_id": {"type": "string", "minLength": 1},
+        "connected_component_id": {"type": "string", "minLength": 1},
+        "behavioral_structure": {"type": "string", "minLength": 1},
+        "foundation": {"enum": ["production_26", "experimental_pinned"]},
+        "foundation_identity": {"$ref": "#/$defs/artifact"},
+        "ancestry_evidence": {"$ref": "#/$defs/artifact"},
+        "kernel_coverage_evidence": {"$ref": "#/$defs/artifact"}
+      }
+    },
+    "training_authorization": {
+      "type": "object", "additionalProperties": false,
+      "required": ["evidence", "rights_scope", "candidate_preparation_authorized", "training_run_authorized", "redistribution_authorized"],
+      "properties": {
+        "evidence": {"$ref": "#/$defs/artifact"},
+        "rights_scope": {"type": "string", "minLength": 1},
+        "candidate_preparation_authorized": {"type": "boolean"},
+        "training_run_authorized": {"type": "boolean"},
+        "redistribution_authorized": {"type": "boolean"}
+      }
+    },
+    "provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["requirement_origin", "acceptance_review", "python_authorship", "exposure_evidence", "contamination_class", "known_contradictions", "known_evaluation_leakage"],
+      "properties": {
+        "requirement_origin": {"enum": ["human_independent_qualified", "human_unqualified", "ai", "deterministic_template", "hybrid"]},
+        "acceptance_review": {"$ref": "#/$defs/artifact"},
+        "python_authorship": {"enum": ["separate_author_from_contract", "same_coordinator", "unattested"]},
+        "exposure_evidence": {"$ref": "#/$defs/artifact"},
+        "contamination_class": {"enum": ["audited_withheld", "exposed_development", "contaminated", "unknown"]},
+        "known_contradictions": {"type": "array", "items": {"type": "string"}},
+        "known_evaluation_leakage": {"type": "boolean"}
+      }
+    },
+    "partition": {"enum": ["training_development", "development_validation", "evaluation_custodian", "quarantine"]},
+    "pair_status": {"enum": ["pending", "paired_verified", "rejected"]},
+    "functional_equivalence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["contract_identity", "scope", "lykoi_pass", "python_pass", "paired_observations_match", "assessment"],
+      "properties": {
+        "contract_identity": {"$ref": "#/$defs/artifact"},
+        "scope": {"type": "string", "minLength": 1},
+        "lykoi_pass": {"type": "boolean"},
+        "python_pass": {"type": "boolean"},
+        "paired_observations_match": {"type": "boolean"},
+        "assessment": {"$ref": "#/$defs/artifact"}
+      }
+    },
+    "trajectories": {
+      "type": "object", "additionalProperties": false,
+      "required": ["actual_semantic_tools", "actual_editing", "scripted_lowering"],
+      "properties": {
+        "actual_semantic_tools": {"$ref": "#/$defs/optionalArtifact"},
+        "actual_editing": {"$ref": "#/$defs/optionalArtifact"},
+        "scripted_lowering": {"$ref": "#/$defs/optionalArtifact"}
+      }
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifact_id", "path", "sha256", "bytes"],
+      "properties": {
+        "artifact_id": {"type": "string", "minLength": 1},
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "bytes": {"type": "integer", "minimum": 0}
+      }
+    },
+    "optionalArtifact": {"anyOf": [{"$ref": "#/$defs/artifact"}, {"type": "null"}]},
+    "artifacts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/artifact"}}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"pair_status": {"const": "paired_verified"}}},
+      "then": {
+        "properties": {
+          "functional_equivalence": {"properties": {"lykoi_pass": {"const": true}, "python_pass": {"const": true}, "paired_observations_match": {"const": true}}},
+          "functional_observations": {"properties": {"observer_class": {"const": "independent_qualified"}, "role_and_input_evidence": {"$ref": "#/$defs/artifact"}}},
+          "provenance": {"properties": {"known_contradictions": {"maxItems": 0}, "known_evaluation_leakage": {"const": false}}}
+        }
+      }
+    }
+  ]
+}
