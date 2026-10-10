@@ -1,0 +1,350 @@
+{
+  "AI_discovery_seen": false,
+  "authorship": "Coordinator GPT-6.1 Sol, explicitly authorized AI proxy",
+  "billing": null,
+  "coordinator_knows_planned_design": true,
+  "coordinator_tokens": null,
+  "entries": [
+    {
+      "definition": {
+        "dependencies": {},
+        "identity": "56642b075e7d74325b134c01ca848c275e1e91745db7332412fe1aebbcb5af1a",
+        "name": "ProxyInterval",
+        "order": [
+          "lo",
+          "hi"
+        ],
+        "params": [
+          {
+            "name": "x",
+            "type": "Int64"
+          },
+          {
+            "name": "floor",
+            "type": "Int64"
+          },
+          {
+            "name": "ceiling",
+            "type": "Int64"
+          },
+          {
+            "name": "fee",
+            "type": "Int64"
+          }
+        ],
+        "result": {
+          "add": [
+            {
+              "ref": "x"
+            },
+            {
+              "ref": "fee"
+            }
+          ]
+        },
+        "result_type": "Int64",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "floor",
+              "x"
+            ],
+            "id": "lo",
+            "node": {
+              "code": "RANGE_LOW",
+              "op": "check",
+              "site": {
+                "ref": "x"
+              },
+              "test": {
+                "le": [
+                  {
+                    "ref": "floor"
+                  },
+                  {
+                    "ref": "x"
+                  }
+                ]
+              }
+            },
+            "type": "Unit"
+          },
+          {
+            "deps": [
+              "ceiling",
+              "x"
+            ],
+            "id": "hi",
+            "node": {
+              "code": "RANGE_HIGH",
+              "op": "check",
+              "site": {
+                "ref": "x"
+              },
+              "test": {
+                "le": [
+                  {
+                    "ref": "x"
+                  },
+                  {
+                    "ref": "ceiling"
+                  }
+                ]
+              }
+            },
+            "type": "Unit"
+          }
+        ]
+      },
+      "relation": "interval_fee",
+      "semantics": "Accept floor<=x, else RANGE_LOW at site x; then x<=ceiling, else RANGE_HIGH at site x. Return checked x+fee."
+    },
+    {
+      "definition": {
+        "dependencies": {},
+        "identity": "e229be30d3421988a4384d83b710e771afe84103fcc96e0c4514f9f0d876b3aa",
+        "name": "ProxyPair",
+        "order": [
+          "first",
+          "second",
+          "total"
+        ],
+        "params": [
+          {
+            "name": "x",
+            "type": "Int64"
+          },
+          {
+            "name": "y",
+            "type": "Int64"
+          },
+          {
+            "name": "floor",
+            "type": "Int64"
+          },
+          {
+            "name": "cap",
+            "type": "Int64"
+          }
+        ],
+        "result": {
+          "add": [
+            {
+              "ref": "x"
+            },
+            {
+              "ref": "y"
+            }
+          ]
+        },
+        "result_type": "Int64",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "floor",
+              "x"
+            ],
+            "id": "first",
+            "node": {
+              "code": "FIRST_LOW",
+              "op": "check",
+              "site": {
+                "ref": "x"
+              },
+              "test": {
+                "le": [
+                  {
+                    "ref": "floor"
+                  },
+                  {
+                    "ref": "x"
+                  }
+                ]
+              }
+            },
+            "type": "Unit"
+          },
+          {
+            "deps": [
+              "floor",
+              "y"
+            ],
+            "id": "second",
+            "node": {
+              "code": "SECOND_LOW",
+              "op": "check",
+              "site": {
+                "ref": "y"
+              },
+              "test": {
+                "le": [
+                  {
+                    "ref": "floor"
+                  },
+                  {
+                    "ref": "y"
+                  }
+                ]
+              }
+            },
+            "type": "Unit"
+          },
+          {
+            "deps": [
+              "cap",
+              "x",
+              "y"
+            ],
+            "id": "total",
+            "node": {
+              "code": "TOTAL_HIGH",
+              "op": "check",
+              "site": {
+                "ref": "y"
+              },
+              "test": {
+                "le": [
+                  {
+                    "add": [
+                      {
+                        "ref": "x"
+                      },
+                      {
+                        "ref": "y"
+                      }
+                    ]
+                  },
+                  {
+                    "ref": "cap"
+                  }
+                ]
+              }
+            },
+            "type": "Unit"
+          }
+        ]
+      },
+      "relation": "pair_envelope",
+      "semantics": "Check floor<=x (FIRST_LOW, site x), then floor<=y (SECOND_LOW, site y), then x+y<=cap (TOTAL_HIGH, site y). Return checked x+y."
+    },
+    {
+      "definition": {
+        "dependencies": {},
+        "identity": "d4278dd3d17c3dfab22892eb5325f11ca3574dffe3c9613cff2f10d3f4eb07d5",
+        "name": "ProxyEcho",
+        "order": [
+          "key",
+          "load"
+        ],
+        "params": [
+          {
+            "name": "x",
+            "type": "Int64"
+          },
+          {
+            "name": "y",
+            "type": "Int64"
+          },
+          {
+            "name": "expected",
+            "type": "Int64"
+          },
+          {
+            "name": "limit",
+            "type": "Int64"
+          },
+          {
+            "name": "bias",
+            "type": "Int64"
+          }
+        ],
+        "result": {
+          "add": [
+            {
+              "add": [
+                {
+                  "add": [
+                    {
+                      "ref": "x"
+                    },
+                    {
+                      "ref": "y"
+                    }
+                  ]
+                },
+                {
+                  "ref": "y"
+                }
+              ]
+            },
+            {
+              "ref": "bias"
+            }
+          ]
+        },
+        "result_type": "Int64",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "expected",
+              "x"
+            ],
+            "id": "key",
+            "node": {
+              "code": "KEY_MISMATCH",
+              "op": "check",
+              "site": {
+                "ref": "x"
+              },
+              "test": {
+                "eq": [
+                  {
+                    "ref": "x"
+                  },
+                  {
+                    "ref": "expected"
+                  }
+                ]
+              }
+            },
+            "type": "Unit"
+          },
+          {
+            "deps": [
+              "limit",
+              "y"
+            ],
+            "id": "load",
+            "node": {
+              "code": "LOAD_HIGH",
+              "op": "check",
+              "site": {
+                "ref": "y"
+              },
+              "test": {
+                "le": [
+                  {
+                    "ref": "y"
+                  },
+                  {
+                    "ref": "limit"
+                  }
+                ]
+              }
+            },
+            "type": "Unit"
+          }
+        ]
+      },
+      "relation": "echo_charge",
+      "semantics": "Check x==expected (KEY_MISMATCH, site x), then y<=limit (LOAD_HIGH, site y). Return checked ((x+y)+y)+bias."
+    }
+  ],
+  "evaluation_files_imported": false,
+  "evaluation_results_seen": false,
+  "human_authored": false,
+  "timing_seconds": 0.32840990007389337
+}

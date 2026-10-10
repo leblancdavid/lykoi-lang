@@ -1,0 +1,138 @@
+{
+  "definition": {
+    "dependencies": {},
+    "identity": "6a1e9b08f0a487c2f9e92a8f9b10efb105e51fc447bf04d06f01eed5ee4058a5",
+    "name": "pair_envelope",
+    "order": [
+      "first_low",
+      "second_low",
+      "total",
+      "total_high"
+    ],
+    "params": [
+      {
+        "name": "x",
+        "type": "Int64"
+      },
+      {
+        "name": "y",
+        "type": "Int64"
+      },
+      {
+        "name": "floor",
+        "type": "Int64"
+      },
+      {
+        "name": "cap",
+        "type": "Int64"
+      }
+    ],
+    "result": {
+      "ref": "total"
+    },
+    "result_type": "Int64",
+    "revision": 1,
+    "steps": [
+      {
+        "deps": [
+          "floor",
+          "x"
+        ],
+        "id": "first_low",
+        "node": {
+          "code": "FIRST_LOW",
+          "op": "check",
+          "site": {
+            "ref": "x"
+          },
+          "test": {
+            "le": [
+              {
+                "ref": "floor"
+              },
+              {
+                "ref": "x"
+              }
+            ]
+          }
+        },
+        "type": "Unit"
+      },
+      {
+        "deps": [
+          "floor",
+          "y"
+        ],
+        "id": "second_low",
+        "node": {
+          "code": "SECOND_LOW",
+          "op": "check",
+          "site": {
+            "ref": "y"
+          },
+          "test": {
+            "le": [
+              {
+                "ref": "floor"
+              },
+              {
+                "ref": "y"
+              }
+            ]
+          }
+        },
+        "type": "Unit"
+      },
+      {
+        "deps": [
+          "x",
+          "y"
+        ],
+        "id": "total",
+        "node": {
+          "expr": {
+            "add": [
+              {
+                "ref": "x"
+              },
+              {
+                "ref": "y"
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Int64"
+      },
+      {
+        "deps": [
+          "total",
+          "cap",
+          "y"
+        ],
+        "id": "total_high",
+        "node": {
+          "code": "TOTAL_HIGH",
+          "op": "check",
+          "site": {
+            "ref": "y"
+          },
+          "test": {
+            "le": [
+              {
+                "ref": "total"
+              },
+              {
+                "ref": "cap"
+              }
+            ]
+          }
+        },
+        "type": "Unit"
+      }
+    ]
+  },
+  "non_applicability": "Not applicable when only the combined sum must lie between 2*floor and cap, without requiring each input to meet floor: for x=-1, y=5, floor=0, cap=10, the sum 4 meets that combined bound, but this composition fails with FIRST_LOW at site -1.",
+  "relation": "pair_envelope",
+  "semantics": "For Int64 parameters in the exact order x, y, floor, cap: first check floor <= x, failing with FIRST_LOW at site x if false; then check floor <= y, failing with SECOND_LOW at site y if false. After both checks pass, evaluate x + y using the existing checked Int64 add semantics. Check that this sum <= cap, failing with TOTAL_HIGH at site y if false. Return the sum only after that check passes. The stated check order determines failure precedence; the cap constrains the combined sum, not either input individually."
+}

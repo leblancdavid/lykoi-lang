@@ -1,0 +1,118 @@
+{
+  "condition": "discovery",
+  "library": [
+    {
+      "definition": {
+        "dependencies": {},
+        "identity": "cb2f1d3c16e5e8a960cb08d0d3921773f1739b41c31f2e14efe24c3b4d313b9c",
+        "name": "interval_fee",
+        "order": [
+          "low",
+          "high",
+          "total"
+        ],
+        "params": [
+          {
+            "name": "x",
+            "type": "Int64"
+          },
+          {
+            "name": "floor",
+            "type": "Int64"
+          },
+          {
+            "name": "ceiling",
+            "type": "Int64"
+          },
+          {
+            "name": "fee",
+            "type": "Int64"
+          }
+        ],
+        "result": {
+          "ref": "total"
+        },
+        "result_type": "Int64",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "floor",
+              "x"
+            ],
+            "id": "low",
+            "node": {
+              "code": "RANGE_LOW",
+              "op": "check",
+              "site": {
+                "ref": "x"
+              },
+              "test": {
+                "le": [
+                  {
+                    "ref": "floor"
+                  },
+                  {
+                    "ref": "x"
+                  }
+                ]
+              }
+            },
+            "type": "Unit"
+          },
+          {
+            "deps": [
+              "x",
+              "ceiling"
+            ],
+            "id": "high",
+            "node": {
+              "code": "RANGE_HIGH",
+              "op": "check",
+              "site": {
+                "ref": "x"
+              },
+              "test": {
+                "le": [
+                  {
+                    "ref": "x"
+                  },
+                  {
+                    "ref": "ceiling"
+                  }
+                ]
+              }
+            },
+            "type": "Unit"
+          },
+          {
+            "deps": [
+              "x",
+              "fee"
+            ],
+            "id": "total",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "x"
+                  },
+                  {
+                    "ref": "fee"
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ]
+      },
+      "non_applicability": "Not applicable when the interval must constrain the fee-adjusted result instead of the original x: with x=10, floor=0, ceiling=10, fee=1, this composition returns 11, while a requirement to keep x+fee within [0,10] would reject it.",
+      "relation": "interval_fee",
+      "semantics": "For Int64 parameters in the exact order x, floor, ceiling, fee: first check floor <= x, failing with RANGE_LOW at site x if false; next check x <= ceiling, failing with RANGE_HIGH at site x if false; only after both checks pass, evaluate the checked Int64 addition x + fee and return it. Both checks refer to the original x, not the fee-adjusted result. If both range conditions are false, RANGE_LOW takes precedence. Addition uses the existing add expression and its existing checked arithmetic semantics."
+    }
+  ],
+  "phase": "discovery",
+  "relation": "pair_envelope"
+}

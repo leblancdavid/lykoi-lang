@@ -1,0 +1,36 @@
+[
+  {
+    "id": "D1",
+    "params": [
+      "x",
+      "floor",
+      "ceiling",
+      "fee"
+    ],
+    "relation": "interval_fee",
+    "requirement": "Accept floor<=x, else RANGE_LOW at site x; then x<=ceiling, else RANGE_HIGH at site x. Return checked x+fee."
+  },
+  {
+    "id": "D2",
+    "params": [
+      "x",
+      "y",
+      "floor",
+      "cap"
+    ],
+    "relation": "pair_envelope",
+    "requirement": "Check floor<=x (FIRST_LOW, site x), then floor<=y (SECOND_LOW, site y), then x+y<=cap (TOTAL_HIGH, site y). Return checked x+y."
+  },
+  {
+    "id": "D3",
+    "params": [
+      "x",
+      "y",
+      "expected",
+      "limit",
+      "bias"
+    ],
+    "relation": "echo_charge",
+    "requirement": "Check x==expected (KEY_MISMATCH, site x), then y<=limit (LOAD_HIGH, site y). Return checked ((x+y)+y)+bias."
+  }
+]

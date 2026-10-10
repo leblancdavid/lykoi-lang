@@ -1,0 +1,130 @@
+{
+  "definition": {
+    "dependencies": {},
+    "identity": "330bfb7385b5d3a422f1a26a29fe1f2704c9bd6fbbce6121ab913583fad6b0be",
+    "name": "echo_charge",
+    "order": [
+      "key_check",
+      "load_check",
+      "total"
+    ],
+    "params": [
+      {
+        "name": "x",
+        "type": "Int64"
+      },
+      {
+        "name": "y",
+        "type": "Int64"
+      },
+      {
+        "name": "expected",
+        "type": "Int64"
+      },
+      {
+        "name": "limit",
+        "type": "Int64"
+      },
+      {
+        "name": "bias",
+        "type": "Int64"
+      }
+    ],
+    "result": {
+      "ref": "total"
+    },
+    "result_type": "Int64",
+    "revision": 1,
+    "steps": [
+      {
+        "deps": [
+          "x",
+          "expected"
+        ],
+        "id": "key_check",
+        "node": {
+          "code": "KEY_MISMATCH",
+          "op": "check",
+          "site": {
+            "ref": "x"
+          },
+          "test": {
+            "eq": [
+              {
+                "ref": "x"
+              },
+              {
+                "ref": "expected"
+              }
+            ]
+          }
+        },
+        "type": "Unit"
+      },
+      {
+        "deps": [
+          "y",
+          "limit"
+        ],
+        "id": "load_check",
+        "node": {
+          "code": "LOAD_HIGH",
+          "op": "check",
+          "site": {
+            "ref": "y"
+          },
+          "test": {
+            "le": [
+              {
+                "ref": "y"
+              },
+              {
+                "ref": "limit"
+              }
+            ]
+          }
+        },
+        "type": "Unit"
+      },
+      {
+        "deps": [
+          "x",
+          "y",
+          "bias"
+        ],
+        "id": "total",
+        "node": {
+          "expr": {
+            "add": [
+              {
+                "add": [
+                  {
+                    "add": [
+                      {
+                        "ref": "x"
+                      },
+                      {
+                        "ref": "y"
+                      }
+                    ]
+                  },
+                  {
+                    "ref": "y"
+                  }
+                ]
+              },
+              {
+                "ref": "bias"
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Int64"
+      }
+    ]
+  },
+  "non_applicability": "Not applicable when limit constrains the doubled load rather than the original y: x=3, y=4, expected=3, limit=5, bias=1 passes this composition and returns 12, whereas a requirement that y+y <= limit would reject it.",
+  "relation": "echo_charge",
+  "semantics": "For Int64 parameters in exact order x, y, expected, limit, bias: first check x == expected, failing with KEY_MISMATCH at site x if false; then check y <= limit, failing with LOAD_HIGH at site y if false. Only after both checks pass, compute and return ((x + y) + y) + bias, with each addition using existing checked Int64 add semantics in that exact left-associated order. KEY_MISMATCH takes precedence when both checks would fail. The limit constrains the original y, not the doubled load or final result; bias is applied only in the final addition."
+}

@@ -1,0 +1,65 @@
+{
+  "billing": null,
+  "bounds": {
+    "MCP": 36,
+    "VM_work": 100000,
+    "completions": 24,
+    "execute_calls": 12,
+    "expanded_nodes": 64,
+    "processed_input_plus_output": 48000,
+    "proposals": 3,
+    "seconds": 360,
+    "submissions": 3
+  },
+  "built_in_plugins_eligible": true,
+  "child_route": "R6.36 environment, default plugins eligible",
+  "config": {
+    "$schema": "https://opencode.ai/config.json",
+    "agent": {
+      "r640-author": {
+        "description": "Bounded symbolic discovery participant",
+        "mode": "primary",
+        "model": "openai/gpt-6.1-sol",
+        "permission": {
+          "*": "deny",
+          "r640_lykoi_*": "allow"
+        },
+        "prompt": "Use only supplied Lykoi MCP tools and requirements. No file or other tools. Never invent semantics. No other candidate access. Stop after the requested stage. Keep failed calls.",
+        "steps": 24,
+        "variant": "high"
+      }
+    },
+    "autoupdate": false,
+    "default_agent": "r640-author",
+    "mcp": {
+      "r640": {
+        "command": [
+          "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+          "-B",
+          "D:\\Dev\\axiom\\experiments\\adaptive_discovery_r6_40\\tools.py"
+        ],
+        "enabled": true,
+        "environment": {
+          "R640_RUN": "qualification"
+        },
+        "type": "local"
+      }
+    },
+    "permission": {
+      "*": "deny",
+      "r640_lykoi_*": "allow"
+    },
+    "share": "disabled",
+    "snapshot": false
+  },
+  "coordinator_model_tokens": null,
+  "credential_store_read": false,
+  "effective_authentication": null,
+  "effective_reasoning": null,
+  "exposure_risks": [
+    "Coordinator authored tasks/oracles/proxy and knows both partitions; participant hidden-context exclusion unattested",
+    "Narrow capability-tailored synthetic tasks; new exact contracts, related historical arithmetic skeletons"
+  ],
+  "model": "openai/gpt-6.1-sol",
+  "requested_variant": "high"
+}

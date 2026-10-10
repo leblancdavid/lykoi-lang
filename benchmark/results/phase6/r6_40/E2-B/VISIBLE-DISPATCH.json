@@ -1,0 +1,216 @@
+{
+  "exact_provider_serialization": false,
+  "identity": "d2e55a1c118ae6cc72c4802acd381393af4125726c15f85d49f86e6ad883574c",
+  "instructions": "Use only supplied Lykoi MCP tools and requirements. No file or other tools. Never invent semantics. No other candidate access. Stop after the requested stage. Keep failed calls.",
+  "prompt": "Definition fields exactly: name,revision=1,params:[{name,type}],dependencies:\nsymbol->pin,steps:[{id,type,deps,node}],order:[step IDs],result:expression,result_type.\nOmit identity only on admission; use tool-returned immutable pins afterward.\nTypes Int64/Bool/Unit. Expressions {ref:name},{const:int/bool/null},{add:[e,e]},\n{le:[e,e]},{eq:[e,e]}. Nodes {op:value,expr:e}, {op:check,test:e,site:e,code:CODE},\n{op:atom,codec:uint8},{op:end},{op:compose,symbol:name,identity:pin,args:{param:ref/const}}.\ndeps exactly enumerate all referenced local IDs/parameters, including check site.\nCheck/end return Unit; atom returns Int64; value/compose types follow expressions.\nOrder is an exact dependency-respecting permutation; no shadowing or cycles.\nRoot params[] and result_type Int64; final root encoded UInt16BE. Max32 steps,\n8 definitions/closure,64 expanded nodes,depth4. Admission does static validation,\nnot functional acceptance. Retrieval provides closed definitions and dependency\nimpact. Validate/execute take admitted closed-root identity; execute also input_hex.\nUse actual MCP tools. No host JSON-action broker exists in this round.\n\nRequirement: Read x then y UInt8, check input end before computation. Check 17<=x (FIRST_LOW at x), then 17<=y (SECOND_LOW at y), then x+y<=271 (TOTAL_HIGH at y). Return (x+y)+9.\nAll additions are checked Int64. Construct Entry()->Int64 and emit UInt16BE. Use assigned library only if appropriate. Task-local definitions are permitted but never enter reusable vocabulary. Read-only assigned library index: [{\"identity\": \"56642b075e7d74325b134c01ca848c275e1e91745db7332412fe1aebbcb5af1a\", \"name\": \"ProxyInterval\", \"non_applicability\": \"Different domain/order/error codes/formula require a different composition\", \"params\": [{\"name\": \"x\", \"type\": \"Int64\"}, {\"name\": \"floor\", \"type\": \"Int64\"}, {\"name\": \"ceiling\", \"type\": \"Int64\"}, {\"name\": \"fee\", \"type\": \"Int64\"}], \"relation\": \"interval_fee\", \"result_type\": \"Int64\", \"semantics\": \"Accept floor<=x, else RANGE_LOW at site x; then x<=ceiling, else RANGE_HIGH at site x. Return checked x+fee.\"}, {\"identity\": \"e229be30d3421988a4384d83b710e771afe84103fcc96e0c4514f9f0d876b3aa\", \"name\": \"ProxyPair\", \"non_applicability\": \"Different domain/order/error codes/formula require a different composition\", \"params\": [{\"name\": \"x\", \"type\": \"Int64\"}, {\"name\": \"y\", \"type\": \"Int64\"}, {\"name\": \"floor\", \"type\": \"Int64\"}, {\"name\": \"cap\", \"type\": \"Int64\"}], \"relation\": \"pair_envelope\", \"result_type\": \"Int64\", \"semantics\": \"Check floor<=x (FIRST_LOW, site x), then floor<=y (SECOND_LOW, site y), then x+y<=cap (TOTAL_HIGH, site y). Return checked x+y.\"}, {\"identity\": \"d4278dd3d17c3dfab22892eb5325f11ca3574dffe3c9613cff2f10d3f4eb07d5\", \"name\": \"ProxyEcho\", \"non_applicability\": \"Different domain/order/error codes/formula require a different composition\", \"params\": [{\"name\": \"x\", \"type\": \"Int64\"}, {\"name\": \"y\", \"type\": \"Int64\"}, {\"name\": \"expected\", \"type\": \"Int64\"}, {\"name\": \"limit\", \"type\": \"Int64\"}, {\"name\": \"bias\", \"type\": \"Int64\"}], \"relation\": \"echo_charge\", \"result_type\": \"Int64\", \"semantics\": \"Check x==expected (KEY_MISMATCH, site x), then y<=limit (LOAD_HIGH, site y). Return checked ((x+y)+y)+bias.\"}]\nFetch full assigned definitions/templates using lykoi_library(relation). A has an empty reusable library. Expanded templates provide underlying primitive steps for inlining; they have no reusable pins. Use actual admission/validation tools; selftest only author-chosen inputs (max12). Seal first complete candidate with lykoi_submit. You may self-correct and seal up to two more submissions. No acceptance feedback will be given. Stop after final submission.",
+  "schemas": [
+    {
+      "description": "Persist immutable typed definitions, or record explicit total caller migration. Admission mechanically seals omitted identities, validates with unchanged R6.32/R6.18 contracts, and returns pins. A successor preserves exact name and signature. Migration changes only selected caller dependency pins; null means retain.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "admit"
+                  },
+                  "definitions": {
+                    "items": {
+                      "type": "object"
+                    },
+                    "maxItems": 8,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "predecessor": {
+                    "anyOf": [
+                      {
+                        "pattern": "^[0-9a-f]{64}$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "action",
+                  "definitions",
+                  "predecessor"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "migrate"
+                  },
+                  "decisions": {
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "pattern": "^[0-9a-f]{64}$",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "type": "object"
+                  },
+                  "predecessor": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  "successor": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action",
+                  "predecessor",
+                  "successor",
+                  "decisions"
+                ],
+                "type": "object"
+              }
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_admit"
+    },
+    {
+      "description": "Read exact admitted immutable definition closure and dependency impact by pin. Returns registry token and successor/migration records; does not rewrite any binding.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "identity": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identity"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_retrieve"
+    },
+    {
+      "description": "Read admitted closed root, expand via unchanged R6.18 and validate frozen VM plan. Returns structured validation identity, node count and provenance map. No execution.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "identity": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identity"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_validate"
+    },
+    {
+      "description": "Read, validate and execute admitted closed root on exact input bytes through unchanged R6.10 VM. Returns structured values, errors, spans, trace and logical work.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "identity": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "input_hex": {
+            "pattern": "^(?:[0-9a-f]{2})*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identity",
+          "input_hex"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_execute"
+    },
+    {
+      "description": "Read only the assigned frozen library or expanded templates. Index or exact relation fetch. No other condition accessible.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "relation": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "relation"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_library"
+    },
+    {
+      "description": "Development only. Propose a reusable typed definition implementing one frozen development relation. Semantics and non-applicability must be explicit. Only identities are mechanically sealed; finite development checks precede reusable admission.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "definition": {
+            "type": "object"
+          },
+          "non_applicability": {
+            "type": "string"
+          },
+          "relation": {
+            "type": "string"
+          },
+          "semantics": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "relation",
+          "semantics",
+          "non_applicability",
+          "definition"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_propose"
+    },
+    {
+      "description": "Evaluation only. Seal complete Entry artifact by immutable pin. First and final submissions preserved. No acceptance feedback. At most three submissions.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "identity": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identity"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_submit"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "E1",
+    "kind": "direct",
+    "order": [
+      "A",
+      "B",
+      "C",
+      "X"
+    ],
+    "requirement": "Read a then b UInt8, check input end before computation. Let x=a+b. Check 31<=x (RANGE_LOW at x), then x<=177 (RANGE_HIGH at x). Return (x+14)+7.",
+    "width": 2
+  },
+  {
+    "id": "E2",
+    "kind": "direct",
+    "order": [
+      "B",
+      "C",
+      "X",
+      "A"
+    ],
+    "requirement": "Read x then y UInt8, check input end before computation. Check 17<=x (FIRST_LOW at x), then 17<=y (SECOND_LOW at y), then x+y<=271 (TOTAL_HIGH at y). Return (x+y)+9.",
+    "width": 2
+  },
+  {
+    "id": "E3",
+    "kind": "combination",
+    "order": [
+      "C",
+      "X",
+      "A",
+      "B"
+    ],
+    "requirement": "Read x then y UInt8, check input end before computation. First check 9<=x (RANGE_LOW at x), x<=163 (RANGE_HIGH at x), then let u=x+4. Next check 9<=y (RANGE_LOW at y), y<=163 (RANGE_HIGH at y), then let v=y+4. Next check 13<=u (FIRST_LOW at u), 13<=v (SECOND_LOW at v), u+v<=245 (TOTAL_HIGH at v). Return (u+v)+1. Preserve this order.",
+    "width": 2
+  },
+  {
+    "id": "E4",
+    "kind": "combination",
+    "order": [
+      "X",
+      "A",
+      "B",
+      "C"
+    ],
+    "requirement": "Read x then y UInt8, check input end before computation. Check x==77 (KEY_MISMATCH at x), then y<=189 (LOAD_HIGH at y). Let t=((x+y)+y)+6. Check 200<=t (RANGE_LOW at t), then t<=403 (RANGE_HIGH at t). Return t+5.",
+    "width": 2
+  },
+  {
+    "id": "E5",
+    "kind": "negative",
+    "order": [
+      "A",
+      "C",
+      "B",
+      "X"
+    ],
+    "requirement": "Read x UInt8, check input end before computation. Check x<=176 (RANGE_HIGH at x) BEFORE 32<=x (RANGE_LOW at x). These bounds are exclusive relative to 31 and177: reject x=31 and x=177. Return (x+x)+14. No interval_fee relation has these semantics unchanged.",
+    "width": 1
+  },
+  {
+    "id": "E6",
+    "kind": "negative",
+    "order": [
+      "X",
+      "B",
+      "C",
+      "A"
+    ],
+    "requirement": "Read x then y UInt8, check input end before computation. Check y<=189 (LOAD_HIGH at y) BEFORE x<=77 (KEY_HIGH at x). All x from0 through77 are allowed; equality is not required. Return (x+y)+6, counting y only once. No echo_charge relation has these semantics unchanged.",
+    "width": 2
+  }
+]
