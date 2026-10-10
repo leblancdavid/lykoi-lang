@@ -1,0 +1,297 @@
+"""One-shot model worker. Frozen before any R6.56 model output/update."""
+import json
+import os
+import sys
+import threading
+import time
+import traceback
+from common import ARTIFACTS, OUT, ROOT, STORE, canonical, file_manifest, frozen_check, identity, q52, read, rows, score, sha, write
+
+os.environ['HF_HUB_OFFLINE'] = '1'
+os.environ['HF_HUB_DISABLE_TELEMETRY'] = '1'
+
+
+def tensor_record(tensor):
+    import torch
+    import hashlib
+    cpu = tensor.detach().cpu().contiguous()
+    return {'shape': list(cpu.shape), 'dtype': str(cpu.dtype),
+            'sha256': hashlib.sha256(cpu.reshape(-1).view(torch.uint8).numpy().tobytes()).hexdigest()}
+
+
+def base_manifest(model):
+    result = {n: tensor_record(p) for n, p in model.named_parameters() if 'lora_' not in n}
+    for n, b in model.named_buffers():
+        result['buffer:' + n] = tensor_record(b)
+    for n, p in model.named_parameters():
+        state = getattr(p, 'quant_state', None)
+        if state is not None:
+            packed = state.as_dict(packed=True)
+            result['quant_state:' + n] = {k: tensor_record(v) if hasattr(v, 'detach') else str(v) for k, v in packed.items()}
+    return result
+
+
+def adapter_manifest(model):
+    return {n: tensor_record(p) for n, p in model.named_parameters() if 'lora_' in n}
+
+
+def prepare_base():
+    from peft import prepare_model_for_kbit_training
+    base, quant = q52.load_base()
+    return prepare_model_for_kbit_training(base, use_gradient_checkpointing=True,
+               gradient_checkpointing_kwargs={'use_reentrant': False}), quant
+
+
+def load_trained(trainable=False):
+    from peft import PeftModel
+    base, quant = prepare_base()
+    model = PeftModel.from_pretrained(base, ARTIFACTS / 'step20/adapter', is_trainable=trainable,
+                                    local_files_only=True)
+    return model, quant
+
+
+def reference(model):
+    import torch
+    model.eval()
+    with torch.no_grad():
+        logits = model(input_ids=torch.tensor([[1, 2, 3, 4]], device='cuda')).logits.float().cpu()
+    assert torch.isfinite(logits).all().item()
+    return logits
+
+
+def memory():
+    import torch
+    free, total = torch.cuda.mem_get_info()
+    values = {'allocated_bytes': torch.cuda.memory_allocated(), 'reserved_bytes': torch.cuda.memory_reserved(),
+              'peak_allocated_bytes': torch.cuda.max_memory_allocated(),
+              'peak_reserved_bytes': torch.cuda.max_memory_reserved(), 'device_free_bytes': free, 'device_total_bytes': total}
+    limits = read(OUT / 'TRAINING-CONFIGURATION.json')['configuration']['limits']
+    assert values['peak_reserved_bytes'] <= limits['cuda_reserved_bytes'], 'CUDA_RESERVED_LIMIT'
+    assert free >= limits['minimum_device_free_bytes'], 'DEVICE_FREE_LIMIT'
+    return values
+
+
+def train():
+    import torch
+    from peft import LoraConfig, get_peft_model
+    from transformers import AutoTokenizer
+    from transformers.optimization import get_linear_schedule_with_warmup
+    frozen_check()
+    # Exclusive claim prevents accidental invocation of a second run, even after a failure.
+    with (OUT / 'TRAINING-RUN-CLAIM.json').open('x', encoding='utf-8') as stream:
+        stream.write(json.dumps({'round': 'R6.56', 'run_number': 1, 'pid': os.getpid()}) + '\n')
+    q52.seed()
+    started = time.perf_counter()
+    torch.cuda.reset_peak_memory_stats()
+    base, quant = prepare_base()
+    lora = LoraConfig(r=8, lora_alpha=16, lora_dropout=0.05, target_modules=['q_proj', 'v_proj'],
+                      bias='none', task_type='CAUSAL_LM', base_model_name_or_path=q52.REPO, revision=q52.REVISION)
+    model = get_peft_model(base, lora)
+    model.peft_config['default'].base_model_name_or_path = q52.REPO
+    model.peft_config['default'].revision = q52.REVISION
+    initial = adapter_manifest(model)
+    assert initial == read(ROOT / 'benchmark/results/phase6/r6_52/BACKWARD.json')['adapter_tensor_manifest']
+    assert len(initial) == 112
+    params = [p for p in model.parameters() if p.requires_grad]
+    assert sum(p.numel() for p in params) == 1089536
+    assert all('lora_' in n for n, p in model.named_parameters() if p.requires_grad)
+    base_before = base_manifest(model)
+    write('INITIAL-PARAMETERS.json', {'adapter': initial, 'base': base_before, 'base_identity': identity(base_before)})
+    config = read(OUT / 'TRAINING-CONFIGURATION.json')['configuration']
+    kwargs = dict(config['optimizer_configuration']['kwargs'])
+    kwargs['betas'] = tuple(kwargs['betas'])
+    optimizer = torch.optim.AdamW(params, **kwargs)
+    expected_defaults = dict(config['optimizer_configuration']['kwargs'], decoupled_weight_decay=True)
+    assert canonical(optimizer.defaults) == canonical(expected_defaults)
+    scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=2, num_training_steps=20)
+    schedule = read(ROOT / 'benchmark/results/phase6/r6_54/LEARNING-RATE-SCHEDULE.json')['sequence']
+    assert scheduler.last_epoch == 0 and optimizer.param_groups[0]['lr'] == 0
+    tokenizer = AutoTokenizer.from_pretrained(STORE / 'checkpoint', local_files_only=True, trust_remote_code=False)
+    samples = {r['episode_id']: (r, *q52.encoded(r, tokenizer)) for r in rows()}
+    sequence = read(OUT / 'SAMPLING.json')['sequence']
+    records_seen = []
+    micro_losses = []
+    steps = []
+    supervised_total = 0
+    input_total = 0
+    minimum_free = memory()['device_free_bytes']
+    stop_monitor = threading.Event()
+    monitor_errors = []
+    def monitor():
+        nonlocal minimum_free
+        while not stop_monitor.wait(0.1):
+            try:
+                values = memory()
+                minimum_free = min(minimum_free, values['device_free_bytes'])
+            except BaseException as exc:
+                monitor_errors.append(str(exc))
+                write('RESOURCE-ABORT.json', {'error': str(exc), 'completed_steps': len(steps), 'presentations': len(records_seen)})
+                os._exit(71)
+    thread = threading.Thread(target=monitor, daemon=True)
+    thread.start()
+    training_started = time.perf_counter()
+    try:
+        model.train()
+        optimizer.zero_grad(set_to_none=True)
+        for step in range(1, 21):
+            losses = []
+            for micro in range(4):
+                position = (step - 1) * 4 + micro
+                eid = sequence[position]['episode_id']
+                row, ids, labels, measure = samples[eid]
+                assert len(ids) <= 2048
+                x = torch.tensor([ids], device='cuda')
+                y = torch.tensor([labels], device='cuda')
+                output = model(input_ids=x, attention_mask=torch.ones_like(x), labels=y, use_cache=False)
+                loss = output.loss
+                if not torch.isfinite(loss).item():
+                    raise RuntimeError('NONFINITE_LOSS')
+                raw_loss = loss.item()
+                (loss / 4).backward()
+                losses.append(raw_loss)
+                records_seen.append(eid)
+                supervised_total += measure['supervised_tokens_including_eos']
+                input_total += len(ids)
+                micro_losses.append({'presentation': position + 1, 'step': step, 'episode_id': eid,
+                                     'mean_record_loss': raw_loss, 'backward_multiplier': 0.25,
+                                     'supervised_tokens': measure['supervised_tokens_including_eos']})
+                del output, loss, x, y
+                torch.cuda.synchronize()
+                values = memory()
+                minimum_free = min(minimum_free, values['device_free_bytes'])
+                write('MICROSTEPS.json', {'completed_presentations': len(records_seen), 'records': micro_losses})
+            for name, param in model.named_parameters():
+                if param.requires_grad:
+                    assert param.grad is not None and torch.isfinite(param.grad).all().item(), 'INVALID_GRADIENT:' + name
+                else:
+                    assert param.grad is None, 'UNEXPECTED_BASE_GRADIENT:' + name
+            norm = torch.nn.utils.clip_grad_norm_(params, max_norm=1, norm_type=2, error_if_nonfinite=True, foreach=None)
+            assert torch.isfinite(norm).item()
+            used_lr = optimizer.param_groups[0]['lr']
+            assert used_lr == schedule[step - 1]['lr_used_by_update']
+            optimizer.step()
+            # A completed optimizer call precedes exactly one scheduler tick.
+            scheduler.step()
+            assert scheduler.last_epoch == step
+            assert optimizer.param_groups[0]['lr'] == schedule[step - 1]['lr_after_scheduler_step']
+            assert all(int(state['step'].item()) == step for state in optimizer.state.values())
+            assert all(torch.isfinite(p).all().item() for p in params)
+            assert base_manifest(model) == base_before, 'UNEXPECTED_BASE_WEIGHT_CHANGE'
+            optimizer.zero_grad(set_to_none=True)
+            torch.cuda.synchronize()
+            values = memory()
+            steps.append({'step': step, 'mean_record_loss': sum(losses) / 4, 'record_losses': losses,
+                          'lr_used': used_lr, 'lr_after_scheduler': optimizer.param_groups[0]['lr'],
+                          'preclip_gradient_norm': norm.item(), 'presentations': len(records_seen),
+                          'cumulative_supervised_tokens': supervised_total, 'cumulative_sequence_tokens': input_total,
+                          'base_tensor_identity_unchanged': True, 'optimizer_update_count': step,
+                          'scheduler_update_count': scheduler.last_epoch, 'seconds_since_training_start': time.perf_counter() - training_started,
+                          **values})
+            write('TRAINING-STEPS.json', {'steps': steps})
+            print(f'step={step} loss={steps[-1]["mean_record_loss"]:.6f} lr={used_lr:.12g} grad={norm.item():.6f}', flush=True)
+            if step in (10, 20):
+                folder = ARTIFACTS / f'step{step}'
+                folder.mkdir(parents=True, exist_ok=False)
+                model.save_pretrained(folder / 'adapter', safe_serialization=True)
+                tokenizer.save_pretrained(folder / 'tokenizer')
+                torch.save({'optimizer': optimizer.state_dict(), 'scheduler': scheduler.state_dict(),
+                            'torch_rng': torch.get_rng_state(), 'cuda_rng': torch.cuda.get_rng_state_all(),
+                            'python_rng': __import__('random').getstate()}, folder / 'training-state.pt')
+                (folder / 'provenance.json').write_bytes(canonical({'configuration_identity': frozen_check()['training_configuration_identity'],
+                    'step': step, 'presentations': len(records_seen), 'base_checkpoint_revision': q52.REVISION}) + b'\n')
+                write(f'CHECKPOINT-{step}.json', {'files': file_manifest(folder), 'directory': str(folder), 'step': step})
+        training_seconds = time.perf_counter() - training_started
+        trained = adapter_manifest(model)
+        changed = [name for name in trained if trained[name] != initial[name]]
+        assert changed and len(steps) == 20 and len(records_seen) == 80
+        model.zero_grad(set_to_none=True)
+        torch.save(reference(model), ARTIFACTS / 'trained-reference.pt')
+        saved = file_manifest(ARTIFACTS / 'step20/adapter')
+        write('TRAINING-RESULT.json', {'status': 'PASS', 'successful_optimizer_steps': 20, 'scheduler_updates': 20,
+              'presentations': 80, 'record_counts': {r['episode_id']: records_seen.count(r['episode_id']) for r in rows()},
+              'effective_sequence': records_seen, 'supervised_tokens': supervised_total, 'sequence_tokens': input_total,
+              'trained_adapter_tensors': trained, 'changed_adapter_tensors': changed, 'changed_tensor_count': len(changed),
+              'adapter_files': saved, 'adapter_content_identity': identity(saved), 'base_tensor_identity': identity(base_before),
+              'base_unchanged': True, 'training_wall_seconds': training_seconds,
+              'worker_wall_seconds_including_load_save_reference': time.perf_counter() - started,
+              'minimum_sampled_device_free_bytes': minimum_free, 'quantization': quant,
+              'cuda_errors': [], 'numerical_errors': [], 'resource_monitor_interval_seconds': 0.1,
+              **memory()})
+    except BaseException as exc:
+        write('TRAINING-FAILURE.json', {'error': str(exc), 'traceback': traceback.format_exc(),
+              'recorded_successful_steps': len(steps), 'recorded_presentations': len(records_seen),
+              'unrecorded_boundary_update_possible': True, 'restart_permitted': False})
+        raise
+    finally:
+        stop_monitor.set()
+        thread.join(timeout=2)
+
+
+def reload():
+    import torch
+    frozen_check()
+    q52.seed()
+    model, quant = load_trained()
+    result = read(OUT / 'TRAINING-RESULT.json')
+    tensors = adapter_manifest(model)
+    assert tensors == result['trained_adapter_tensors']
+    assert base_manifest(model) == read(OUT / 'INITIAL-PARAMETERS.json')['base']
+    logits = reference(model)
+    original = torch.load(ARTIFACTS / 'trained-reference.pt', weights_only=True)
+    assert torch.equal(logits, original)
+    assert file_manifest(ARTIFACTS / 'step20/adapter') == result['adapter_files']
+    write('ADAPTER-RELOAD.json', {'status': 'PASS', 'pid': os.getpid(), 'fresh_process': True,
+          'adapter_tensors_match_trained': True, 'changed_adapter_tensors': result['changed_tensor_count'],
+          'base_tensors_match': True, 'finite_logits': True, 'reference_logits_bitwise_equal': True,
+          'maximum_logit_difference': float((logits - original).abs().max()),
+          'adapter_content_identity': result['adapter_content_identity'], 'quantization': quant})
+    print('PASS fresh-process trained adapter reload and bitwise reference logits', flush=True)
+
+
+def diagnostic(track, index):
+    import torch
+    from transformers import AutoTokenizer, GenerationConfig
+    frozen_check()
+    q52.seed()
+    started = time.perf_counter()
+    model, quant = load_trained() if track == 'adapter' else prepare_base()
+    model.eval()
+    tokenizer = AutoTokenizer.from_pretrained(STORE / 'checkpoint', local_files_only=True, trust_remote_code=False)
+    row = rows()[index]
+    prompt = tokenizer.apply_chat_template(row['prompt'], tokenize=False, add_generation_prompt=True)
+    x = tokenizer(prompt, add_special_tokens=False, return_tensors='pt').to('cuda')
+    protocol = read(OUT / 'DIAGNOSTIC-PROTOCOL.json')
+    assert x.input_ids.shape[1] + 1400 <= 2048
+    generation = GenerationConfig.from_dict(protocol['resolved_generation_configuration'])
+    torch.cuda.synchronize()
+    inference_start = time.perf_counter()
+    with torch.inference_mode():
+        generated = model.generate(**x, generation_config=generation, use_cache=False)
+    torch.cuda.synchronize()
+    inference_seconds = time.perf_counter() - inference_start
+    output_ids = generated[0, x.input_ids.shape[1]:].cpu().tolist()
+    content_ids = output_ids[:-1] if output_ids and output_ids[-1] in generation.eos_token_id else output_ids
+    text = tokenizer.decode(content_ids, skip_special_tokens=False)
+    scoring_start = time.perf_counter()
+    scores = score(text, row)
+    write(f'DIAGNOSTIC-{track.upper()}-E{index+1:02d}.json', {'status': 'COMPLETED', 'track': track,
+          'episode_id': row['episode_id'], 'prompt_sha256': identity(row['prompt']), 'output': text,
+          'output_token_ids': output_ids, 'input_tokens': x.input_ids.shape[1], 'output_tokens': len(output_ids),
+          'eos_terminated': bool(output_ids and output_ids[-1] in generation.eos_token_id),
+          'inference_seconds': inference_seconds, 'worker_seconds': time.perf_counter() - started,
+          'scoring_seconds': time.perf_counter() - scoring_start, 'scores': scores,
+          'quantization': quant, 'peak_allocated_bytes': torch.cuda.max_memory_allocated(),
+          'peak_reserved_bytes': torch.cuda.max_memory_reserved(), 'fresh_process': True})
+    print(json.dumps({'track': track, 'episode': index + 1, 'output_tokens': len(output_ids),
+                      'seconds': inference_seconds, 'semantic_valid': scores['semantic_valid']}), flush=True)
+
+
+if __name__ == '__main__':
+    if sys.argv[1] == 'train':
+        train()
+    elif sys.argv[1] == 'reload':
+        reload()
+    elif sys.argv[1] == 'diagnostic':
+        diagnostic(sys.argv[2], int(sys.argv[3]))
+    else:
+        raise ValueError('unknown worker mode')

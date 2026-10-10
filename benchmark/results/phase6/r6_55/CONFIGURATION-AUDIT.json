@@ -1,0 +1,41 @@
+{
+  "diagnostic_protocol": "R6.51 six resubstitution prompts and decoding proposal; concrete scoring/prompt manifest not qualified or executed after configuration halt",
+  "optimizer_defaults_do_not_resolve_these_fields": true,
+  "round": "R6.55",
+  "scope": "configuration audit; no new sampler, reduction or training loop chosen",
+  "sources": {
+    "benchmark/results/phase6/R6_52-REPORT.md": "ef9bb00e7d9fff48818a92f80085cca283a9c8892de796f013d22ab653315aed",
+    "benchmark/results/phase6/r6_51/SMOKE-AND-EVALUATION.md": "58305225fe67286e1c549b78782f4c17a16f2327bfc431da67c8261f7dd7ef48",
+    "benchmark/results/phase6/r6_52/REPRODUCIBILITY.md": "fc7d7fef72e6e66a2146075769249d7b2d7fe77515dcdf4c1849aeaa15b7ad38",
+    "benchmark/results/phase6/r6_53/TRAINING-CONFIGURATION.json": "ab95acf288d0888a3432b19d98ffaebd4c87def53f4af92a15f1eb24869f0eac",
+    "benchmark/results/phase6/r6_54/TRAINING-CONFIGURATION.json": "f3e712c7a95b5ebf05dc2ade437d44341570d5e032bb02003b400a6877e4ffa9",
+    "docs/decisions-r6.51.md": "b072df08925e75485f255f6543e92c00ebe9a25dd0af360550f8cb3244ccb30d",
+    "docs/decisions-r6.52.md": "5ad1643da71ab15fb3cc2bef6e2a57178f0dce0167e521350176d1f5c7c09390",
+    "docs/decisions-r6.53.md": "19fc106a2673035fd980b295b74c673f52a66e14deec652cb7a007eb935e688c",
+    "docs/decisions-r6.54.md": "615ffa4b558884150598d756d1b3ddfe340a695c04bcb6bff136a7988a2e5e31",
+    "docs/project-overview-r6.51.md": "81e410ffdda5784a759b6bfb356b62f237be855f2cb305490901d12f56f280d0",
+    "docs/project-overview-r6.52.md": "3e4b3fd471605c7f38b0ad756b9f607891d2fcd63ebcae2e51ab57ac7f2819e8",
+    "docs/project-overview-r6.53.md": "9225569efadaef41d90c03eb7e955b3dc758be507f651fdd4e28392f5717adff",
+    "docs/project-overview-r6.54.md": "f95c43b06233f9f79775e1dd8ebe94f11a6d4f931099383f552810e60e392dcd",
+    "docs/research-log-r6.51.md": "5cd3038a8e03ed22c08061102b2806ee6520a4eb5b8796c5564e5b8c0ffc32c6",
+    "docs/research-log-r6.52.md": "91ac087853529df22e642f7733864fc1fe50e7e696ffe97fd55214a9007a8e09",
+    "docs/research-log-r6.53.md": "6422cf9968ba674267430658dd2ac390083a4d836c220d86d95c4d096b3f9a5a",
+    "docs/research-log-r6.54.md": "9fa6350226f3dc09ac7f7662713c723e2c0093297317c6dcaa6daa0d46234eec",
+    "experiments/training_setup_r6_52/qualify.py": "21f91837217a206485138fd44bb7d3dae25b7a7a7cf5667a6e7201a168790342"
+  },
+  "status": "HALT",
+  "unresolved_training_critical_fields": [
+    {
+      "field": "training_record_sampling_order",
+      "missing": "fixed E01-E06 cycling versus seeded reshuffle, permutation algorithm and epoch boundary behavior",
+      "published": "cycling six examples; seed/data_seed651; workers0",
+      "why_critical": "Different four-record update groups and record counts across80 presentations change gradients; a seed does not choose a sampler."
+    },
+    {
+      "field": "gradient_accumulation_loss_normalization",
+      "missing": "equal mean per-record loss divided by4 versus pooled supervised-token mean over the four microbatches",
+      "published": "completion token cross-entropy; microbatch1; accumulation4",
+      "why_critical": "Supervised token lengths329,370,425,461,331,410 differ; these reductions weight the records differently. R6.52 only probes single-record backward."
+    }
+  ]
+}
