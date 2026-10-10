@@ -1,0 +1,187 @@
+{
+  "decode": {
+    "id": "flat/Entry",
+    "op": "seq",
+    "result": {
+      "ref": "b_34ebb80f2935dffd4e3160fc7a45fafeccd042a1265eb495d4d607e804ea1d23"
+    },
+    "steps": [
+      {
+        "bind": "b_8651992cfab6b9ff08a29094ae445da90bdb77ff0b3963ef5055346165f9136c",
+        "node": {
+          "codec": "uint8",
+          "id": "flat/Entry/x",
+          "op": "atom"
+        }
+      },
+      {
+        "bind": "b_3dfc51e9a2846256bfd2bfcd066bc9a6eabf3908cae987c2d33e6df510931de1",
+        "node": {
+          "codec": "uint8",
+          "id": "flat/Entry/y",
+          "op": "atom"
+        }
+      },
+      {
+        "bind": "b_6d86e44aa0a5159b3300f8ba0c48fed0ad7ff61f421e5c555b7f26c0aa6f2911",
+        "node": {
+          "id": "flat/Entry/end",
+          "op": "end"
+        }
+      },
+      {
+        "bind": "b_93138179dac6ad1b09268b086293b5c775b95676da9c49eca75a528699915082",
+        "node": {
+          "code": "INNER",
+          "id": "flat/Entry/left_guard",
+          "op": "check",
+          "site": {
+            "ref": "b_8651992cfab6b9ff08a29094ae445da90bdb77ff0b3963ef5055346165f9136c"
+          },
+          "test": {
+            "le": [
+              {
+                "ref": "b_8651992cfab6b9ff08a29094ae445da90bdb77ff0b3963ef5055346165f9136c"
+              },
+              {
+                "const": 3
+              }
+            ]
+          }
+        }
+      },
+      {
+        "bind": "b_d354dba14d01bcd43b9a5323f64ae665616485b1f5a4cb30c6986f16c0314fe6",
+        "node": {
+          "expr": {
+            "add": [
+              {
+                "ref": "b_8651992cfab6b9ff08a29094ae445da90bdb77ff0b3963ef5055346165f9136c"
+              },
+              {
+                "const": 1
+              }
+            ]
+          },
+          "id": "flat/Entry/left",
+          "op": "value"
+        }
+      },
+      {
+        "bind": "b_3714e17ede5dd90def0127e248ecd513b513f561c0309d9f466bf6f0686fa6a3",
+        "node": {
+          "code": "INNER",
+          "id": "flat/Entry/right_guard",
+          "op": "check",
+          "site": {
+            "ref": "b_3dfc51e9a2846256bfd2bfcd066bc9a6eabf3908cae987c2d33e6df510931de1"
+          },
+          "test": {
+            "le": [
+              {
+                "ref": "b_3dfc51e9a2846256bfd2bfcd066bc9a6eabf3908cae987c2d33e6df510931de1"
+              },
+              {
+                "const": 3
+              }
+            ]
+          }
+        }
+      },
+      {
+        "bind": "b_8a0c3623a27b58826b0d203dbeaa3fa76e3cdda2d88cf94c72635b6d87ad6d08",
+        "node": {
+          "expr": {
+            "add": [
+              {
+                "ref": "b_3dfc51e9a2846256bfd2bfcd066bc9a6eabf3908cae987c2d33e6df510931de1"
+              },
+              {
+                "const": 1
+              }
+            ]
+          },
+          "id": "flat/Entry/right",
+          "op": "value"
+        }
+      },
+      {
+        "bind": "b_cf1f2e5ad2e9e298fff6ade50b11fcc55350355a811b87a5408ba358339c744d",
+        "node": {
+          "code": "POST_LOW",
+          "id": "flat/Entry/post_low",
+          "op": "check",
+          "site": {
+            "ref": "b_d354dba14d01bcd43b9a5323f64ae665616485b1f5a4cb30c6986f16c0314fe6"
+          },
+          "test": {
+            "le": [
+              {
+                "const": 3
+              },
+              {
+                "ref": "b_d354dba14d01bcd43b9a5323f64ae665616485b1f5a4cb30c6986f16c0314fe6"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "bind": "b_c2ca295e4f7475024b67d5cf307400cecacd04338a0ad44d1ed653cc1fba5141",
+        "node": {
+          "code": "POST_HIGH",
+          "id": "flat/Entry/post_high",
+          "op": "check",
+          "site": {
+            "ref": "b_8a0c3623a27b58826b0d203dbeaa3fa76e3cdda2d88cf94c72635b6d87ad6d08"
+          },
+          "test": {
+            "le": [
+              {
+                "add": [
+                  {
+                    "ref": "b_d354dba14d01bcd43b9a5323f64ae665616485b1f5a4cb30c6986f16c0314fe6"
+                  },
+                  {
+                    "ref": "b_8a0c3623a27b58826b0d203dbeaa3fa76e3cdda2d88cf94c72635b6d87ad6d08"
+                  }
+                ]
+              },
+              {
+                "const": 6
+              }
+            ]
+          }
+        }
+      },
+      {
+        "bind": "b_34ebb80f2935dffd4e3160fc7a45fafeccd042a1265eb495d4d607e804ea1d23",
+        "node": {
+          "expr": {
+            "add": [
+              {
+                "ref": "b_d354dba14d01bcd43b9a5323f64ae665616485b1f5a4cb30c6986f16c0314fe6"
+              },
+              {
+                "ref": "b_8a0c3623a27b58826b0d203dbeaa3fa76e3cdda2d88cf94c72635b6d87ad6d08"
+              }
+            ]
+          },
+          "id": "flat/Entry/total",
+          "op": "value"
+        }
+      }
+    ]
+  },
+  "encode": {
+    "codec": "uint16be",
+    "expr": {
+      "ref": "root"
+    },
+    "id": "flat/Entry/encode",
+    "op": "emit"
+  },
+  "rules": {},
+  "text": false,
+  "version": "semantic-plan-1"
+}

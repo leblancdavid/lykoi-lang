@@ -1,0 +1,288 @@
+{
+  "historical_registry_access": false,
+  "receipt": {
+    "nodes": [
+      5,
+      6,
+      17
+    ],
+    "pins": [
+      "82b75ef56718e0e23818bbfd09e96374119b0bf41782b9b9b2211eec7ef0b3ce",
+      "b30a05328bf5df32631a1118930619a3b8a5ebf38e8cc37f9634b2d38f3bdc70",
+      "40ee1a764a89bfc784daa42ed1d331fef34c5cd6f2cdac11acb188c5a24bd9c2"
+    ],
+    "status": "accepted",
+    "token": "98952650dc626b2824ce49754526ad1768a91914ac63b19d98147dae0472d0c4"
+  },
+  "registry_semantics_unchanged": true,
+  "retrieved_closure": [
+    {
+      "dependencies": {
+        "Nested": "b30a05328bf5df32631a1118930619a3b8a5ebf38e8cc37f9634b2d38f3bdc70"
+      },
+      "identity": "40ee1a764a89bfc784daa42ed1d331fef34c5cd6f2cdac11acb188c5a24bd9c2",
+      "name": "Entry",
+      "order": [
+        "x",
+        "y",
+        "end",
+        "left",
+        "right",
+        "post_low",
+        "post_high",
+        "total"
+      ],
+      "params": [],
+      "result": {
+        "ref": "total"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "x",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "y",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "end",
+          "node": {
+            "op": "end"
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "x"
+          ],
+          "id": "left",
+          "node": {
+            "args": {
+              "x": {
+                "ref": "x"
+              }
+            },
+            "identity": "b30a05328bf5df32631a1118930619a3b8a5ebf38e8cc37f9634b2d38f3bdc70",
+            "op": "compose",
+            "symbol": "Nested"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [
+            "y"
+          ],
+          "id": "right",
+          "node": {
+            "args": {
+              "x": {
+                "ref": "y"
+              }
+            },
+            "identity": "b30a05328bf5df32631a1118930619a3b8a5ebf38e8cc37f9634b2d38f3bdc70",
+            "op": "compose",
+            "symbol": "Nested"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [
+            "left"
+          ],
+          "id": "post_low",
+          "node": {
+            "code": "POST_LOW",
+            "op": "check",
+            "site": {
+              "ref": "left"
+            },
+            "test": {
+              "le": [
+                {
+                  "const": 3
+                },
+                {
+                  "ref": "left"
+                }
+              ]
+            }
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "left",
+            "right"
+          ],
+          "id": "post_high",
+          "node": {
+            "code": "POST_HIGH",
+            "op": "check",
+            "site": {
+              "ref": "right"
+            },
+            "test": {
+              "le": [
+                {
+                  "add": [
+                    {
+                      "ref": "left"
+                    },
+                    {
+                      "ref": "right"
+                    }
+                  ]
+                },
+                {
+                  "const": 6
+                }
+              ]
+            }
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "left",
+            "right"
+          ],
+          "id": "total",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "left"
+                },
+                {
+                  "ref": "right"
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    {
+      "dependencies": {},
+      "identity": "82b75ef56718e0e23818bbfd09e96374119b0bf41782b9b9b2211eec7ef0b3ce",
+      "name": "Guarded",
+      "order": [
+        "guard",
+        "sum"
+      ],
+      "params": [
+        {
+          "name": "x",
+          "type": "Int64"
+        }
+      ],
+      "result": {
+        "ref": "sum"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [
+            "x"
+          ],
+          "id": "guard",
+          "node": {
+            "code": "INNER",
+            "op": "check",
+            "site": {
+              "ref": "x"
+            },
+            "test": {
+              "le": [
+                {
+                  "ref": "x"
+                },
+                {
+                  "const": 3
+                }
+              ]
+            }
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "x"
+          ],
+          "id": "sum",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "x"
+                },
+                {
+                  "const": 1
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    {
+      "dependencies": {
+        "Guarded": "82b75ef56718e0e23818bbfd09e96374119b0bf41782b9b9b2211eec7ef0b3ce"
+      },
+      "identity": "b30a05328bf5df32631a1118930619a3b8a5ebf38e8cc37f9634b2d38f3bdc70",
+      "name": "Nested",
+      "order": [
+        "inner"
+      ],
+      "params": [
+        {
+          "name": "x",
+          "type": "Int64"
+        }
+      ],
+      "result": {
+        "ref": "inner"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [
+            "x"
+          ],
+          "id": "inner",
+          "node": {
+            "args": {
+              "x": {
+                "ref": "x"
+              }
+            },
+            "identity": "82b75ef56718e0e23818bbfd09e96374119b0bf41782b9b9b2211eec7ef0b3ce",
+            "op": "compose",
+            "symbol": "Guarded"
+          },
+          "type": "Int64"
+        }
+      ]
+    }
+  ]
+}
