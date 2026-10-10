@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "storage": "records.json",
+  "fields": {
+    "id": {"type": "identifier", "domain": []},
+    "created_at": {"type": "timestamp", "domain": []},
+    "label": {"type": "string", "domain": []},
+    "phase": {"type": "enum", "domain": ["queued", "ready", "released"]},
+    "seal": {"type": "enum", "domain": ["open", "closed"]}
+  },
+  "create": {
+    "bindings": {
+      "id": {"source": "uuid_v4", "value": null},
+      "created_at": {"source": "utc_clock", "value": null},
+      "label": {"source": "input", "value": null},
+      "phase": {"source": "literal", "value": "queued"},
+      "seal": {"source": "literal", "value": "open"}
+    },
+    "nonblank": ["label"]
+  },
+  "operations": {
+    "ready": {
+      "guards": [{"condition": {"op": "eq", "left": {"kind": "field", "value": "phase", "type": "enum", "domain": ["queued", "ready", "released"]}, "right": {"kind": "literal", "value": "queued", "type": "enum", "domain": ["queued", "ready", "released"]}}, "error": "wrong_phase"}],
+      "writes": {"phase": {"source": "literal", "value": "ready"}}
+    },
+    "release": {
+      "guards": [
+        {"condition": {"op": "eq", "left": {"kind": "field", "value": "phase", "type": "enum", "domain": ["queued", "ready", "released"]}, "right": {"kind": "literal", "value": "ready", "type": "enum", "domain": ["queued", "ready", "released"]}}, "error": "wrong_phase"},
+        {"condition": {"op": "eq", "left": {"kind": "field", "value": "seal", "type": "enum", "domain": ["open", "closed"]}, "right": {"kind": "literal", "value": "closed", "type": "enum", "domain": ["open", "closed"]}}, "error": "unsealed"}
+      ],
+      "writes": {"phase": {"source": "literal", "value": "released"}}
+    },
+    "set_seal": {
+      "guards": [],
+      "writes": {"seal": {"source": "input", "value": "value"}}
+    }
+  },
+  "invariants": [{"op": "or", "children": [
+    {"op": "not", "child": {"op": "eq", "left": {"kind": "field", "value": "phase", "type": "enum", "domain": ["queued", "ready", "released"]}, "right": {"kind": "literal", "value": "released", "type": "enum", "domain": ["queued", "ready", "released"]}}},
+    {"op": "eq", "left": {"kind": "field", "value": "seal", "type": "enum", "domain": ["open", "closed"]}, "right": {"kind": "literal", "value": "closed", "type": "enum", "domain": ["open", "closed"]}}
+  ]}]
+}
