@@ -1,0 +1,377 @@
+{
+  "caller_bindings": {
+    "CallerA": "f6b7ed83bd91c4df42845080632d0bcbfb77ffff3b1fd8e10144b31960e16c25",
+    "CallerB": "72e9cbd74598fb3a7f052661f1c0ea06da4848a38d63831221604d523bc26b03"
+  },
+  "constraints": "Construct WindowCharge(x:Int64,y:Int64,limit:Int64)->Int64. Ordered checks: x<=y (WINDOW_ORDER, site x, g1), then y<=limit (WINDOW_LIMIT, site y, g2). Return x+y+y with checked signed64 addition. CallerA reads x then y UInt8 (read_x/read_y); input_end checks end BEFORE computation; compose step call uses limit=190, then adds 8 and emits UInt16BE. CallerB reads x UInt8 (read_x), checks input_end BEFORE computation, derives y=x+17; compose step call uses limit=190, returns result and emits UInt16BE. Each caller has no parameters and Int64 result. Preserve semantic rejection source sites. Admit one shared definition and two dependent callers, revision1. Retrieve/validate both; execute representative cases. Stop after original application, no successor.",
+  "definitions": {
+    "72e9cbd74598fb3a7f052661f1c0ea06da4848a38d63831221604d523bc26b03": {
+      "dependencies": {
+        "WindowCharge": "a8ad3e2a9f8c540162d3a17824e4b24c1d42a753ea9fd55d0104809bb2f52cca"
+      },
+      "identity": "72e9cbd74598fb3a7f052661f1c0ea06da4848a38d63831221604d523bc26b03",
+      "name": "CallerB",
+      "order": [
+        "read_x",
+        "input_end",
+        "derive_y",
+        "call"
+      ],
+      "params": [],
+      "result": {
+        "ref": "call"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "read_x",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "input_end",
+          "node": {
+            "op": "end"
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "read_x"
+          ],
+          "id": "derive_y",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "read_x"
+                },
+                {
+                  "const": 17
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [
+            "read_x",
+            "derive_y"
+          ],
+          "id": "call",
+          "node": {
+            "args": {
+              "limit": {
+                "const": 190
+              },
+              "x": {
+                "ref": "read_x"
+              },
+              "y": {
+                "ref": "derive_y"
+              }
+            },
+            "identity": "a8ad3e2a9f8c540162d3a17824e4b24c1d42a753ea9fd55d0104809bb2f52cca",
+            "op": "compose",
+            "symbol": "WindowCharge"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    "a8ad3e2a9f8c540162d3a17824e4b24c1d42a753ea9fd55d0104809bb2f52cca": {
+      "dependencies": {},
+      "identity": "a8ad3e2a9f8c540162d3a17824e4b24c1d42a753ea9fd55d0104809bb2f52cca",
+      "name": "WindowCharge",
+      "order": [
+        "g1",
+        "g2",
+        "sum_xy",
+        "sum_xyy"
+      ],
+      "params": [
+        {
+          "name": "x",
+          "type": "Int64"
+        },
+        {
+          "name": "y",
+          "type": "Int64"
+        },
+        {
+          "name": "limit",
+          "type": "Int64"
+        }
+      ],
+      "result": {
+        "ref": "sum_xyy"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [
+            "x",
+            "y"
+          ],
+          "id": "g1",
+          "node": {
+            "code": "WINDOW_ORDER",
+            "op": "check",
+            "site": {
+              "ref": "x"
+            },
+            "test": {
+              "le": [
+                {
+                  "ref": "x"
+                },
+                {
+                  "ref": "y"
+                }
+              ]
+            }
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "y",
+            "limit"
+          ],
+          "id": "g2",
+          "node": {
+            "code": "WINDOW_LIMIT",
+            "op": "check",
+            "site": {
+              "ref": "y"
+            },
+            "test": {
+              "le": [
+                {
+                  "ref": "y"
+                },
+                {
+                  "ref": "limit"
+                }
+              ]
+            }
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "x",
+            "y"
+          ],
+          "id": "sum_xy",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "x"
+                },
+                {
+                  "ref": "y"
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [
+            "sum_xy",
+            "y"
+          ],
+          "id": "sum_xyy",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "sum_xy"
+                },
+                {
+                  "ref": "y"
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    "f6b7ed83bd91c4df42845080632d0bcbfb77ffff3b1fd8e10144b31960e16c25": {
+      "dependencies": {
+        "WindowCharge": "a8ad3e2a9f8c540162d3a17824e4b24c1d42a753ea9fd55d0104809bb2f52cca"
+      },
+      "identity": "f6b7ed83bd91c4df42845080632d0bcbfb77ffff3b1fd8e10144b31960e16c25",
+      "name": "CallerA",
+      "order": [
+        "read_x",
+        "read_y",
+        "input_end",
+        "call",
+        "add_8"
+      ],
+      "params": [],
+      "result": {
+        "ref": "add_8"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "read_x",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "read_y",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "input_end",
+          "node": {
+            "op": "end"
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "read_x",
+            "read_y"
+          ],
+          "id": "call",
+          "node": {
+            "args": {
+              "limit": {
+                "const": 190
+              },
+              "x": {
+                "ref": "read_x"
+              },
+              "y": {
+                "ref": "read_y"
+              }
+            },
+            "identity": "a8ad3e2a9f8c540162d3a17824e4b24c1d42a753ea9fd55d0104809bb2f52cca",
+            "op": "compose",
+            "symbol": "WindowCharge"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [
+            "call"
+          ],
+          "id": "add_8",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "call"
+                },
+                {
+                  "const": 8
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "72e9cbd74598fb3a7f052661f1c0ea06da4848a38d63831221604d523bc26b03": {
+      "WindowCharge": "a8ad3e2a9f8c540162d3a17824e4b24c1d42a753ea9fd55d0104809bb2f52cca"
+    },
+    "a8ad3e2a9f8c540162d3a17824e4b24c1d42a753ea9fd55d0104809bb2f52cca": {},
+    "f6b7ed83bd91c4df42845080632d0bcbfb77ffff3b1fd8e10144b31960e16c25": {
+      "WindowCharge": "a8ad3e2a9f8c540162d3a17824e4b24c1d42a753ea9fd55d0104809bb2f52cca"
+    }
+  },
+  "generation": 2,
+  "identity": "2b89f7273aebde853675bc6bb34a12a414f9cec7896db42a63f7ddcbbbe84201",
+  "migrations": [],
+  "objective": "Modify existing WindowCharge by admitting a signature-preserving successor with result x+x+y. Reverse the two ordered checks: g2 first, g1 second. Retain each code, site and label. Admit against exact predecessor. Create CallerA successor changing ONLY the dependency pin and compose-call identity, retain revision1 and all other structure. Record total explicit family migration: CallerA updated, CallerB null/retain. CallerB must keep original behavior and pin. All predecessors remain immutable and executable. Retrieve/validate active CallerA and retained CallerB and execute examples. This replaces active CallerA behavior, not an additive-only endpoint.",
+  "registry_token": "c9210b04faa6c59f04db581ea3c7bf51e2c1ed008e5694295dff804ea6e6c242",
+  "requirement": "ef4ac3c52851c473dd71987733d5a9423792df9207423ba35dde974b8f36b667",
+  "retrieval_references": {
+    "72e9cbd74598fb3a7f052661f1c0ea06da4848a38d63831221604d523bc26b03": {
+      "identity": "72e9cbd74598fb3a7f052661f1c0ea06da4848a38d63831221604d523bc26b03",
+      "kind": "definition"
+    },
+    "a8ad3e2a9f8c540162d3a17824e4b24c1d42a753ea9fd55d0104809bb2f52cca": {
+      "identity": "a8ad3e2a9f8c540162d3a17824e4b24c1d42a753ea9fd55d0104809bb2f52cca",
+      "kind": "definition"
+    },
+    "f6b7ed83bd91c4df42845080632d0bcbfb77ffff3b1fd8e10144b31960e16c25": {
+      "identity": "f6b7ed83bd91c4df42845080632d0bcbfb77ffff3b1fd8e10144b31960e16c25",
+      "kind": "definition"
+    }
+  },
+  "signatures": {
+    "72e9cbd74598fb3a7f052661f1c0ea06da4848a38d63831221604d523bc26b03": [
+      [],
+      "Int64"
+    ],
+    "a8ad3e2a9f8c540162d3a17824e4b24c1d42a753ea9fd55d0104809bb2f52cca": [
+      [
+        {
+          "name": "x",
+          "type": "Int64"
+        },
+        {
+          "name": "y",
+          "type": "Int64"
+        },
+        {
+          "name": "limit",
+          "type": "Int64"
+        }
+      ],
+      "Int64"
+    ],
+    "f6b7ed83bd91c4df42845080632d0bcbfb77ffff3b1fd8e10144b31960e16c25": [
+      [],
+      "Int64"
+    ]
+  },
+  "successors": {},
+  "validation": {
+    "72e9cbd74598fb3a7f052661f1c0ea06da4848a38d63831221604d523bc26b03": {
+      "nodes": 10,
+      "plan_identity": "9da8c3212b3396c93e7d58a240c3fe9010a715216e6496df1777e84f848a8838",
+      "program_identity": "72e9cbd74598fb3a7f052661f1c0ea06da4848a38d63831221604d523bc26b03"
+    },
+    "f6b7ed83bd91c4df42845080632d0bcbfb77ffff3b1fd8e10144b31960e16c25": {
+      "nodes": 11,
+      "plan_identity": "8caf5797fe15cf2d0ba74bf281362e7be583dac598f8fe7bea750913c79455b8",
+      "program_identity": "f6b7ed83bd91c4df42845080632d0bcbfb77ffff3b1fd8e10144b31960e16c25"
+    }
+  },
+  "version": "r638-snapshot-1"
+}

@@ -1,0 +1,204 @@
+{
+  "exact_provider_serialization": false,
+  "instructions": "Use actual Lykoi MCP calls for the supplied stage. No files or other tools. Never invent operations. Admission only mechanically seals identities. Stop at the requested stage. Preserve failed calls.",
+  "instructions_identity": "5f45673d51e532fcb5d4372f1927318f5f49ebc9752f5fbe2f96237087a7511c",
+  "prompt": "Definition fields exactly: name,revision=1,params:[{name,type}],dependencies:\nsymbol->pin,steps:[{id,type,deps,node}],order:[step IDs],result:expression,result_type.\nOmit identity only on admission; use tool-returned immutable pins afterward.\nTypes Int64/Bool/Unit. Expressions {ref:name},{const:int/bool/null},{add:[e,e]},\n{le:[e,e]},{eq:[e,e]}. Nodes {op:value,expr:e}, {op:check,test:e,site:e,code:CODE},\n{op:atom,codec:uint8},{op:end},{op:compose,symbol:name,identity:pin,args:{param:ref/const}}.\ndeps exactly enumerate all referenced local IDs/parameters, including check site.\nCheck/end return Unit; atom returns Int64; value/compose types follow expressions.\nOrder is an exact dependency-respecting permutation; no shadowing or cycles.\nRoot params[] and result_type Int64; final root encoded UInt16BE. Max32 steps,\n8 definitions/closure,64 expanded nodes,depth4. Admission does static validation,\nnot functional acceptance. Retrieval provides closed definitions and dependency\nimpact. Validate/execute take admitted closed-root identity; execute also input_hex.\nUse actual MCP tools. No host JSON-action broker exists in this round.\n\nConstruct BatchFee(x:Int64,y:Int64,limit:Int64)->Int64. Ordered checks: x<=limit (ITEM_LIMIT, site x, g1), then x+y<=limit (BATCH_LIMIT, site y, g2). Return x+y with checked signed64 addition. CallerA reads x then y UInt8 (read_x/read_y); input_end checks end BEFORE computation; compose step call uses limit=180, then adds 3 and emits UInt16BE. CallerB reads x UInt8 (read_x), checks input_end BEFORE computation, derives y=x+19; compose step call uses limit=180, returns result and emits UInt16BE. Each caller has no parameters and Int64 result. Preserve semantic rejection source sites. Admit one shared definition and two dependent callers, revision1. Retrieve/validate both; execute representative cases. Stop after original application, no successor.",
+  "prompt_identity": "6f29decdee549ac368e7b3c35ce8c2136b27bea8eaa5950628e3f3f43dbaf5a0",
+  "schema_identity": "377c4986a53b063de1dcf7f2a0c154d9229e9e66ff7ec32f5d9c70a6f48be801",
+  "schemas": [
+    {
+      "description": "Persist immutable typed definitions, or record explicit total caller migration. Admission mechanically seals omitted identities, validates with unchanged R6.32/R6.18 contracts, and returns pins. A successor preserves exact name and signature. Migration changes only selected caller dependency pins; null means retain.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "admit"
+                  },
+                  "definitions": {
+                    "items": {
+                      "type": "object"
+                    },
+                    "maxItems": 8,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "predecessor": {
+                    "anyOf": [
+                      {
+                        "pattern": "^[0-9a-f]{64}$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "action",
+                  "definitions",
+                  "predecessor"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "migrate"
+                  },
+                  "decisions": {
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "pattern": "^[0-9a-f]{64}$",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "type": "object"
+                  },
+                  "predecessor": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  "successor": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action",
+                  "predecessor",
+                  "successor",
+                  "decisions"
+                ],
+                "type": "object"
+              }
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_admit"
+    },
+    {
+      "description": "Read exact admitted immutable definition closure and dependency impact by pin. Returns registry token and successor/migration records; does not rewrite any binding.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "identity": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identity"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_retrieve"
+    },
+    {
+      "description": "Read admitted closed root, expand via unchanged R6.18 and validate frozen VM plan. Returns structured validation identity, node count and provenance map. No execution.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "identity": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identity"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_validate"
+    },
+    {
+      "description": "Read, validate and execute admitted closed root on exact input bytes through unchanged R6.10 VM. Returns structured values, errors, spans, trace and logical work.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "identity": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "input_hex": {
+            "pattern": "^(?:[0-9a-f]{2})*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identity",
+          "input_hex"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_execute"
+    },
+    {
+      "description": "Bounded read-only exact registry retrieval. No execution or binding changes.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "identity": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "definition",
+              "dependencies",
+              "validation",
+              "history",
+              "identity"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "identity",
+          "kind"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_detail"
+    },
+    {
+      "description": "Read frozen full original construction history, deterministic ordinary summary, or symbolic snapshot. Same read-only access for every condition; no acceptance expectations.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "enum": [
+              "history",
+              "summary",
+              "snapshot"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_context"
+    }
+  ],
+  "tokenizer": null
+}

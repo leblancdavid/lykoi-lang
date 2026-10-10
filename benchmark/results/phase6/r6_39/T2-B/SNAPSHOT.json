@@ -1,0 +1,334 @@
+{
+  "caller_bindings": {
+    "CallerA": "9abbae6cac110f83cf401095c9260d11115ea69fe61749a42d1aa1e95c2fc684",
+    "CallerB": "92de6c33a4a4033c81eeccfbd652ae626c76f412abb3d566dc3b7f7fc89838fc"
+  },
+  "constraints": "Construct BatchFee(x:Int64,y:Int64,limit:Int64)->Int64. Ordered checks: x<=limit (ITEM_LIMIT, site x, g1), then x+y<=limit (BATCH_LIMIT, site y, g2). Return x+y with checked signed64 addition. CallerA reads x then y UInt8 (read_x/read_y); input_end checks end BEFORE computation; compose step call uses limit=180, then adds 3 and emits UInt16BE. CallerB reads x UInt8 (read_x), checks input_end BEFORE computation, derives y=x+19; compose step call uses limit=180, returns result and emits UInt16BE. Each caller has no parameters and Int64 result. Preserve semantic rejection source sites. Admit one shared definition and two dependent callers, revision1. Retrieve/validate both; execute representative cases. Stop after original application, no successor.",
+  "definitions": {
+    "92de6c33a4a4033c81eeccfbd652ae626c76f412abb3d566dc3b7f7fc89838fc": {
+      "dependencies": {
+        "BatchFee": "ac50c44a6dfaf4fb911ea2ab7ddaa4c86f5830d8a74c24f4f122806d08bc312b"
+      },
+      "identity": "92de6c33a4a4033c81eeccfbd652ae626c76f412abb3d566dc3b7f7fc89838fc",
+      "name": "CallerB",
+      "order": [
+        "read_x",
+        "input_end",
+        "derive_y",
+        "call"
+      ],
+      "params": [],
+      "result": {
+        "ref": "call"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "read_x",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "input_end",
+          "node": {
+            "op": "end"
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "read_x"
+          ],
+          "id": "derive_y",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "read_x"
+                },
+                {
+                  "const": 19
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [
+            "read_x",
+            "derive_y"
+          ],
+          "id": "call",
+          "node": {
+            "args": {
+              "limit": {
+                "const": 180
+              },
+              "x": {
+                "ref": "read_x"
+              },
+              "y": {
+                "ref": "derive_y"
+              }
+            },
+            "identity": "ac50c44a6dfaf4fb911ea2ab7ddaa4c86f5830d8a74c24f4f122806d08bc312b",
+            "op": "compose",
+            "symbol": "BatchFee"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    "9abbae6cac110f83cf401095c9260d11115ea69fe61749a42d1aa1e95c2fc684": {
+      "dependencies": {
+        "BatchFee": "ac50c44a6dfaf4fb911ea2ab7ddaa4c86f5830d8a74c24f4f122806d08bc312b"
+      },
+      "identity": "9abbae6cac110f83cf401095c9260d11115ea69fe61749a42d1aa1e95c2fc684",
+      "name": "CallerA",
+      "order": [
+        "read_x",
+        "read_y",
+        "input_end",
+        "call"
+      ],
+      "params": [],
+      "result": {
+        "add": [
+          {
+            "ref": "call"
+          },
+          {
+            "const": 3
+          }
+        ]
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "read_x",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "read_y",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "input_end",
+          "node": {
+            "op": "end"
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "read_x",
+            "read_y"
+          ],
+          "id": "call",
+          "node": {
+            "args": {
+              "limit": {
+                "const": 180
+              },
+              "x": {
+                "ref": "read_x"
+              },
+              "y": {
+                "ref": "read_y"
+              }
+            },
+            "identity": "ac50c44a6dfaf4fb911ea2ab7ddaa4c86f5830d8a74c24f4f122806d08bc312b",
+            "op": "compose",
+            "symbol": "BatchFee"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    "ac50c44a6dfaf4fb911ea2ab7ddaa4c86f5830d8a74c24f4f122806d08bc312b": {
+      "dependencies": {},
+      "identity": "ac50c44a6dfaf4fb911ea2ab7ddaa4c86f5830d8a74c24f4f122806d08bc312b",
+      "name": "BatchFee",
+      "order": [
+        "g1",
+        "g2"
+      ],
+      "params": [
+        {
+          "name": "x",
+          "type": "Int64"
+        },
+        {
+          "name": "y",
+          "type": "Int64"
+        },
+        {
+          "name": "limit",
+          "type": "Int64"
+        }
+      ],
+      "result": {
+        "add": [
+          {
+            "ref": "x"
+          },
+          {
+            "ref": "y"
+          }
+        ]
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [
+            "x",
+            "limit"
+          ],
+          "id": "g1",
+          "node": {
+            "code": "ITEM_LIMIT",
+            "op": "check",
+            "site": {
+              "ref": "x"
+            },
+            "test": {
+              "le": [
+                {
+                  "ref": "x"
+                },
+                {
+                  "ref": "limit"
+                }
+              ]
+            }
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "x",
+            "y",
+            "limit"
+          ],
+          "id": "g2",
+          "node": {
+            "code": "BATCH_LIMIT",
+            "op": "check",
+            "site": {
+              "ref": "y"
+            },
+            "test": {
+              "le": [
+                {
+                  "add": [
+                    {
+                      "ref": "x"
+                    },
+                    {
+                      "ref": "y"
+                    }
+                  ]
+                },
+                {
+                  "ref": "limit"
+                }
+              ]
+            }
+          },
+          "type": "Unit"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "92de6c33a4a4033c81eeccfbd652ae626c76f412abb3d566dc3b7f7fc89838fc": {
+      "BatchFee": "ac50c44a6dfaf4fb911ea2ab7ddaa4c86f5830d8a74c24f4f122806d08bc312b"
+    },
+    "9abbae6cac110f83cf401095c9260d11115ea69fe61749a42d1aa1e95c2fc684": {
+      "BatchFee": "ac50c44a6dfaf4fb911ea2ab7ddaa4c86f5830d8a74c24f4f122806d08bc312b"
+    },
+    "ac50c44a6dfaf4fb911ea2ab7ddaa4c86f5830d8a74c24f4f122806d08bc312b": {}
+  },
+  "generation": 2,
+  "identity": "f64d31a5b984944f333e288ef2582e0a4a431a427e45f0232506049e5e51c6d8",
+  "migrations": [],
+  "objective": "Modify existing BatchFee by admitting a signature-preserving successor with result x+y+9. Preserve both original ordered checks exactly; the extra 9 is charged after checks. Admit against exact predecessor. Create CallerA successor changing ONLY the dependency pin and compose-call identity, retain revision1 and all other structure. Record total explicit family migration: CallerA updated, CallerB null/retain. CallerB must keep original behavior and pin. All predecessors remain immutable and executable. Retrieve/validate active CallerA and retained CallerB and execute examples. This replaces active CallerA behavior, not an additive-only endpoint.",
+  "registry_token": "e074bcab8b8678d0ce79195856fe0a86c641de5c45e7f272f6e86f7e356d9d90",
+  "requirement": "020aa9d8a2969e8be6756ca62a795dfee39a6397fc8a2002476f266312a7867b",
+  "retrieval_references": {
+    "92de6c33a4a4033c81eeccfbd652ae626c76f412abb3d566dc3b7f7fc89838fc": {
+      "identity": "92de6c33a4a4033c81eeccfbd652ae626c76f412abb3d566dc3b7f7fc89838fc",
+      "kind": "definition"
+    },
+    "9abbae6cac110f83cf401095c9260d11115ea69fe61749a42d1aa1e95c2fc684": {
+      "identity": "9abbae6cac110f83cf401095c9260d11115ea69fe61749a42d1aa1e95c2fc684",
+      "kind": "definition"
+    },
+    "ac50c44a6dfaf4fb911ea2ab7ddaa4c86f5830d8a74c24f4f122806d08bc312b": {
+      "identity": "ac50c44a6dfaf4fb911ea2ab7ddaa4c86f5830d8a74c24f4f122806d08bc312b",
+      "kind": "definition"
+    }
+  },
+  "signatures": {
+    "92de6c33a4a4033c81eeccfbd652ae626c76f412abb3d566dc3b7f7fc89838fc": [
+      [],
+      "Int64"
+    ],
+    "9abbae6cac110f83cf401095c9260d11115ea69fe61749a42d1aa1e95c2fc684": [
+      [],
+      "Int64"
+    ],
+    "ac50c44a6dfaf4fb911ea2ab7ddaa4c86f5830d8a74c24f4f122806d08bc312b": [
+      [
+        {
+          "name": "x",
+          "type": "Int64"
+        },
+        {
+          "name": "y",
+          "type": "Int64"
+        },
+        {
+          "name": "limit",
+          "type": "Int64"
+        }
+      ],
+      "Int64"
+    ]
+  },
+  "successors": {},
+  "validation": {
+    "92de6c33a4a4033c81eeccfbd652ae626c76f412abb3d566dc3b7f7fc89838fc": {
+      "nodes": 8,
+      "plan_identity": "38073bc09dca44765320bf9b756e7cf399f238a448aa93dbe616c89efd0f251a",
+      "program_identity": "92de6c33a4a4033c81eeccfbd652ae626c76f412abb3d566dc3b7f7fc89838fc"
+    },
+    "9abbae6cac110f83cf401095c9260d11115ea69fe61749a42d1aa1e95c2fc684": {
+      "nodes": 8,
+      "plan_identity": "afc5858a271eb4e5dd9f907887841cd544ad7d9696548f52cd5372174fa614d7",
+      "program_identity": "9abbae6cac110f83cf401095c9260d11115ea69fe61749a42d1aa1e95c2fc684"
+    }
+  },
+  "version": "r638-snapshot-1"
+}

@@ -1,0 +1,53 @@
+{
+  "behavior": "Construct MinimumLoad(x:Int64,y:Int64,floor:Int64)->Int64. Ordered checks: floor<=x (FIRST_MINIMUM, site x, g1), then floor<=y (SECOND_MINIMUM, site y, g2). Return x+x+y with checked signed64 addition. CallerA reads x then y UInt8 (read_x/read_y); input_end checks end BEFORE computation; compose step call uses floor=21, then adds 5 and emits UInt16BE. CallerB reads x UInt8 (read_x), checks input_end BEFORE computation, derives y=x+23; compose step call uses floor=21, returns result and emits UInt16BE. Each caller has no parameters and Int64 result. Preserve semantic rejection source sites. Admit one shared definition and two dependent callers, revision1. Retrieve/validate both; execute representative cases. Stop after original application, no successor.",
+  "caller_bindings": {
+    "CallerA": "d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4",
+    "CallerB": "5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490"
+  },
+  "components": [
+    {
+      "dependencies": {},
+      "identity": "d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49",
+      "name": "MinimumLoad",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "Int64"
+        },
+        {
+          "name": "y",
+          "type": "Int64"
+        },
+        {
+          "name": "floor",
+          "type": "Int64"
+        }
+      ],
+      "result": "Int64"
+    },
+    {
+      "dependencies": {
+        "MinimumLoad": "d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49"
+      },
+      "identity": "d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4",
+      "name": "CallerA",
+      "parameters": [],
+      "result": "Int64"
+    },
+    {
+      "dependencies": {
+        "MinimumLoad": "d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49"
+      },
+      "identity": "5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490",
+      "name": "CallerB",
+      "parameters": [],
+      "result": "Int64"
+    }
+  ],
+  "known_constraints": "Checked Int64, UInt8 input, UInt16BE output, input_end before computation; immutable predecessors",
+  "migrations": [],
+  "objective": "Modify existing MinimumLoad by admitting a signature-preserving successor with result x+y+y+3. Preserve both original ordered checks exactly. Admit against exact predecessor. Create CallerA successor changing ONLY the dependency pin and compose-call identity, retain revision1 and all other structure. Record total explicit family migration: CallerA updated, CallerB null/retain. CallerB must keep original behavior and pin. All predecessors remain immutable and executable. Retrieve/validate active CallerA and retained CallerB and execute examples. This replaces active CallerA behavior, not an additive-only endpoint.",
+  "retrieval": "lykoi_retrieve(identity) for exact definition/body/impact; lykoi_context for all context documents",
+  "successors": {},
+  "version": "r639-mechanical-summary-1"
+}

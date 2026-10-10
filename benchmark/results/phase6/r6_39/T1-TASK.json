@@ -1,0 +1,21 @@
+{
+  "modification": "Modify existing WindowCharge by admitting a signature-preserving successor with result x+x+y. Reverse the two ordered checks: g2 first, g1 second. Retain each code, site and label. Admit against exact predecessor. Create CallerA successor changing ONLY the dependency pin and compose-call identity, retain revision1 and all other structure. Record total explicit family migration: CallerA updated, CallerB null/retain. CallerB must keep original behavior and pin. All predecessors remain immutable and executable. Retrieve/validate active CallerA and retained CallerB and execute examples. This replaces active CallerA behavior, not an additive-only endpoint.",
+  "requirement": "Construct WindowCharge(x:Int64,y:Int64,limit:Int64)->Int64. Ordered checks: x<=y (WINDOW_ORDER, site x, g1), then y<=limit (WINDOW_LIMIT, site y, g2). Return x+y+y with checked signed64 addition. CallerA reads x then y UInt8 (read_x/read_y); input_end checks end BEFORE computation; compose step call uses limit=190, then adds 8 and emits UInt16BE. CallerB reads x UInt8 (read_x), checks input_end BEFORE computation, derives y=x+17; compose step call uses limit=190, returns result and emits UInt16BE. Each caller has no parameters and Int64 result. Preserve semantic rejection source sites. Admit one shared definition and two dependent callers, revision1. Retrieve/validate both; execute representative cases. Stop after original application, no successor.",
+  "task": {
+    "base": "x+y+y",
+    "bias": 8,
+    "change": "Reverse the two ordered checks: g2 first, g1 second. Retain each code, site and label.",
+    "checks": "x<=y (WINDOW_ORDER, site x, g1), then y<=limit (WINDOW_LIMIT, site y, g2)",
+    "constant": 190,
+    "delta": 17,
+    "id": "T1",
+    "order": [
+      "A",
+      "B",
+      "C"
+    ],
+    "param": "limit",
+    "successor": "x+x+y",
+    "symbol": "WindowCharge"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "behavior": "Construct WindowCharge(x:Int64,y:Int64,limit:Int64)->Int64. Ordered checks: x<=y (WINDOW_ORDER, site x, g1), then y<=limit (WINDOW_LIMIT, site y, g2). Return x+y+y with checked signed64 addition. CallerA reads x then y UInt8 (read_x/read_y); input_end checks end BEFORE computation; compose step call uses limit=190, then adds 8 and emits UInt16BE. CallerB reads x UInt8 (read_x), checks input_end BEFORE computation, derives y=x+17; compose step call uses limit=190, returns result and emits UInt16BE. Each caller has no parameters and Int64 result. Preserve semantic rejection source sites. Admit one shared definition and two dependent callers, revision1. Retrieve/validate both; execute representative cases. Stop after original application, no successor.",
+  "caller_bindings": {
+    "CallerA": "f6b7ed83bd91c4df42845080632d0bcbfb77ffff3b1fd8e10144b31960e16c25",
+    "CallerB": "72e9cbd74598fb3a7f052661f1c0ea06da4848a38d63831221604d523bc26b03"
+  },
+  "components": [
+    {
+      "dependencies": {},
+      "identity": "a8ad3e2a9f8c540162d3a17824e4b24c1d42a753ea9fd55d0104809bb2f52cca",
+      "name": "WindowCharge",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "Int64"
+        },
+        {
+          "name": "y",
+          "type": "Int64"
+        },
+        {
+          "name": "limit",
+          "type": "Int64"
+        }
+      ],
+      "result": "Int64"
+    },
+    {
+      "dependencies": {
+        "WindowCharge": "a8ad3e2a9f8c540162d3a17824e4b24c1d42a753ea9fd55d0104809bb2f52cca"
+      },
+      "identity": "f6b7ed83bd91c4df42845080632d0bcbfb77ffff3b1fd8e10144b31960e16c25",
+      "name": "CallerA",
+      "parameters": [],
+      "result": "Int64"
+    },
+    {
+      "dependencies": {
+        "WindowCharge": "a8ad3e2a9f8c540162d3a17824e4b24c1d42a753ea9fd55d0104809bb2f52cca"
+      },
+      "identity": "72e9cbd74598fb3a7f052661f1c0ea06da4848a38d63831221604d523bc26b03",
+      "name": "CallerB",
+      "parameters": [],
+      "result": "Int64"
+    }
+  ],
+  "known_constraints": "Checked Int64, UInt8 input, UInt16BE output, input_end before computation; immutable predecessors",
+  "migrations": [],
+  "objective": "Modify existing WindowCharge by admitting a signature-preserving successor with result x+x+y. Reverse the two ordered checks: g2 first, g1 second. Retain each code, site and label. Admit against exact predecessor. Create CallerA successor changing ONLY the dependency pin and compose-call identity, retain revision1 and all other structure. Record total explicit family migration: CallerA updated, CallerB null/retain. CallerB must keep original behavior and pin. All predecessors remain immutable and executable. Retrieve/validate active CallerA and retained CallerB and execute examples. This replaces active CallerA behavior, not an additive-only endpoint.",
+  "retrieval": "lykoi_retrieve(identity) for exact definition/body/impact; lykoi_context for all context documents",
+  "successors": {},
+  "version": "r639-mechanical-summary-1"
+}

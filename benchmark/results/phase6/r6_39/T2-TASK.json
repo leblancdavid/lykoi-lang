@@ -1,0 +1,21 @@
+{
+  "modification": "Modify existing BatchFee by admitting a signature-preserving successor with result x+y+9. Preserve both original ordered checks exactly; the extra 9 is charged after checks. Admit against exact predecessor. Create CallerA successor changing ONLY the dependency pin and compose-call identity, retain revision1 and all other structure. Record total explicit family migration: CallerA updated, CallerB null/retain. CallerB must keep original behavior and pin. All predecessors remain immutable and executable. Retrieve/validate active CallerA and retained CallerB and execute examples. This replaces active CallerA behavior, not an additive-only endpoint.",
+  "requirement": "Construct BatchFee(x:Int64,y:Int64,limit:Int64)->Int64. Ordered checks: x<=limit (ITEM_LIMIT, site x, g1), then x+y<=limit (BATCH_LIMIT, site y, g2). Return x+y with checked signed64 addition. CallerA reads x then y UInt8 (read_x/read_y); input_end checks end BEFORE computation; compose step call uses limit=180, then adds 3 and emits UInt16BE. CallerB reads x UInt8 (read_x), checks input_end BEFORE computation, derives y=x+19; compose step call uses limit=180, returns result and emits UInt16BE. Each caller has no parameters and Int64 result. Preserve semantic rejection source sites. Admit one shared definition and two dependent callers, revision1. Retrieve/validate both; execute representative cases. Stop after original application, no successor.",
+  "task": {
+    "base": "x+y",
+    "bias": 3,
+    "change": "Preserve both original ordered checks exactly; the extra 9 is charged after checks.",
+    "checks": "x<=limit (ITEM_LIMIT, site x, g1), then x+y<=limit (BATCH_LIMIT, site y, g2)",
+    "constant": 180,
+    "delta": 19,
+    "id": "T2",
+    "order": [
+      "B",
+      "C",
+      "A"
+    ],
+    "param": "limit",
+    "successor": "x+y+9",
+    "symbol": "BatchFee"
+  }
+}

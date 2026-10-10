@@ -1,0 +1,204 @@
+{
+  "exact_provider_serialization": false,
+  "instructions": "Use actual Lykoi MCP calls for the supplied stage. No files or other tools. Never invent operations. Admission only mechanically seals identities. Stop at the requested stage. Preserve failed calls.",
+  "instructions_identity": "5f45673d51e532fcb5d4372f1927318f5f49ebc9752f5fbe2f96237087a7511c",
+  "prompt": "Definition fields exactly: name,revision=1,params:[{name,type}],dependencies:\nsymbol->pin,steps:[{id,type,deps,node}],order:[step IDs],result:expression,result_type.\nOmit identity only on admission; use tool-returned immutable pins afterward.\nTypes Int64/Bool/Unit. Expressions {ref:name},{const:int/bool/null},{add:[e,e]},\n{le:[e,e]},{eq:[e,e]}. Nodes {op:value,expr:e}, {op:check,test:e,site:e,code:CODE},\n{op:atom,codec:uint8},{op:end},{op:compose,symbol:name,identity:pin,args:{param:ref/const}}.\ndeps exactly enumerate all referenced local IDs/parameters, including check site.\nCheck/end return Unit; atom returns Int64; value/compose types follow expressions.\nOrder is an exact dependency-respecting permutation; no shadowing or cycles.\nRoot params[] and result_type Int64; final root encoded UInt16BE. Max32 steps,\n8 definitions/closure,64 expanded nodes,depth4. Admission does static validation,\nnot functional acceptance. Retrieval provides closed definitions and dependency\nimpact. Validate/execute take admitted closed-root identity; execute also input_hex.\nUse actual MCP tools. No host JSON-action broker exists in this round.\n\nExisting software context:\n{\"caller_bindings\": {\"CallerA\": \"d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4\", \"CallerB\": \"5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490\"}, \"constraints\": \"Construct MinimumLoad(x:Int64,y:Int64,floor:Int64)->Int64. Ordered checks: floor<=x (FIRST_MINIMUM, site x, g1), then floor<=y (SECOND_MINIMUM, site y, g2). Return x+x+y with checked signed64 addition. CallerA reads x then y UInt8 (read_x/read_y); input_end checks end BEFORE computation; compose step call uses floor=21, then adds 5 and emits UInt16BE. CallerB reads x UInt8 (read_x), checks input_end BEFORE computation, derives y=x+23; compose step call uses floor=21, returns result and emits UInt16BE. Each caller has no parameters and Int64 result. Preserve semantic rejection source sites. Admit one shared definition and two dependent callers, revision1. Retrieve/validate both; execute representative cases. Stop after original application, no successor.\", \"definitions\": {\"5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490\": {\"dependencies\": {\"MinimumLoad\": \"d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49\"}, \"identity\": \"5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490\", \"name\": \"CallerB\", \"order\": [\"read_x\", \"input_end\", \"derive_y\", \"call\"], \"params\": [], \"result\": {\"ref\": \"call\"}, \"result_type\": \"Int64\", \"revision\": 1, \"steps\": [{\"deps\": [], \"id\": \"read_x\", \"node\": {\"codec\": \"uint8\", \"op\": \"atom\"}, \"type\": \"Int64\"}, {\"deps\": [], \"id\": \"input_end\", \"node\": {\"op\": \"end\"}, \"type\": \"Unit\"}, {\"deps\": [\"read_x\"], \"id\": \"derive_y\", \"node\": {\"expr\": {\"add\": [{\"ref\": \"read_x\"}, {\"const\": 23}]}, \"op\": \"value\"}, \"type\": \"Int64\"}, {\"deps\": [\"read_x\", \"derive_y\"], \"id\": \"call\", \"node\": {\"args\": {\"floor\": {\"const\": 21}, \"x\": {\"ref\": \"read_x\"}, \"y\": {\"ref\": \"derive_y\"}}, \"identity\": \"d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49\", \"op\": \"compose\", \"symbol\": \"MinimumLoad\"}, \"type\": \"Int64\"}]}, \"d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49\": {\"dependencies\": {}, \"identity\": \"d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49\", \"name\": \"MinimumLoad\", \"order\": [\"g1\", \"g2\", \"twice_x\", \"total\"], \"params\": [{\"name\": \"x\", \"type\": \"Int64\"}, {\"name\": \"y\", \"type\": \"Int64\"}, {\"name\": \"floor\", \"type\": \"Int64\"}], \"result\": {\"ref\": \"total\"}, \"result_type\": \"Int64\", \"revision\": 1, \"steps\": [{\"deps\": [\"floor\", \"x\"], \"id\": \"g1\", \"node\": {\"code\": \"FIRST_MINIMUM\", \"op\": \"check\", \"site\": {\"ref\": \"x\"}, \"test\": {\"le\": [{\"ref\": \"floor\"}, {\"ref\": \"x\"}]}}, \"type\": \"Unit\"}, {\"deps\": [\"floor\", \"y\"], \"id\": \"g2\", \"node\": {\"code\": \"SECOND_MINIMUM\", \"op\": \"check\", \"site\": {\"ref\": \"y\"}, \"test\": {\"le\": [{\"ref\": \"floor\"}, {\"ref\": \"y\"}]}}, \"type\": \"Unit\"}, {\"deps\": [\"x\"], \"id\": \"twice_x\", \"node\": {\"expr\": {\"add\": [{\"ref\": \"x\"}, {\"ref\": \"x\"}]}, \"op\": \"value\"}, \"type\": \"Int64\"}, {\"deps\": [\"twice_x\", \"y\"], \"id\": \"total\", \"node\": {\"expr\": {\"add\": [{\"ref\": \"twice_x\"}, {\"ref\": \"y\"}]}, \"op\": \"value\"}, \"type\": \"Int64\"}]}, \"d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4\": {\"dependencies\": {\"MinimumLoad\": \"d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49\"}, \"identity\": \"d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4\", \"name\": \"CallerA\", \"order\": [\"read_x\", \"read_y\", \"input_end\", \"call\", \"output\"], \"params\": [], \"result\": {\"ref\": \"output\"}, \"result_type\": \"Int64\", \"revision\": 1, \"steps\": [{\"deps\": [], \"id\": \"read_x\", \"node\": {\"codec\": \"uint8\", \"op\": \"atom\"}, \"type\": \"Int64\"}, {\"deps\": [], \"id\": \"read_y\", \"node\": {\"codec\": \"uint8\", \"op\": \"atom\"}, \"type\": \"Int64\"}, {\"deps\": [], \"id\": \"input_end\", \"node\": {\"op\": \"end\"}, \"type\": \"Unit\"}, {\"deps\": [\"read_x\", \"read_y\"], \"id\": \"call\", \"node\": {\"args\": {\"floor\": {\"const\": 21}, \"x\": {\"ref\": \"read_x\"}, \"y\": {\"ref\": \"read_y\"}}, \"identity\": \"d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49\", \"op\": \"compose\", \"symbol\": \"MinimumLoad\"}, \"type\": \"Int64\"}, {\"deps\": [\"call\"], \"id\": \"output\", \"node\": {\"expr\": {\"add\": [{\"ref\": \"call\"}, {\"const\": 5}]}, \"op\": \"value\"}, \"type\": \"Int64\"}]}}, \"dependencies\": {\"5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490\": {\"MinimumLoad\": \"d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49\"}, \"d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49\": {}, \"d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4\": {\"MinimumLoad\": \"d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49\"}}, \"generation\": 2, \"identity\": \"863b50f18e21bc851c4adc4baba6b6090be8af85fb4f26c00570eb8901711983\", \"migrations\": [], \"objective\": \"Modify existing MinimumLoad by admitting a signature-preserving successor with result x+y+y+3. Preserve both original ordered checks exactly. Admit against exact predecessor. Create CallerA successor changing ONLY the dependency pin and compose-call identity, retain revision1 and all other structure. Record total explicit family migration: CallerA updated, CallerB null/retain. CallerB must keep original behavior and pin. All predecessors remain immutable and executable. Retrieve/validate active CallerA and retained CallerB and execute examples. This replaces active CallerA behavior, not an additive-only endpoint.\", \"registry_token\": \"13aea1e24fe6a5d2df907ddc86794be9d866e6fe7a58344325fa9ab98f149898\", \"requirement\": \"c9454c351a5e23f34e77ffc2d80117e6b6dbc7f57fb7f74530ad5eabf82cb62a\", \"retrieval_references\": {\"5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490\": {\"identity\": \"5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490\", \"kind\": \"definition\"}, \"d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49\": {\"identity\": \"d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49\", \"kind\": \"definition\"}, \"d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4\": {\"identity\": \"d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4\", \"kind\": \"definition\"}}, \"signatures\": {\"5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490\": [[], \"Int64\"], \"d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49\": [[{\"name\": \"x\", \"type\": \"Int64\"}, {\"name\": \"y\", \"type\": \"Int64\"}, {\"name\": \"floor\", \"type\": \"Int64\"}], \"Int64\"], \"d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4\": [[], \"Int64\"]}, \"successors\": {}, \"validation\": {\"5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490\": {\"nodes\": 10, \"plan_identity\": \"b2a161295278c1ee871fb7645fa3da594e7d58fb498f3af84fa83de116dced66\", \"program_identity\": \"5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490\"}, \"d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4\": {\"nodes\": 11, \"plan_identity\": \"84bc42e8dbb65cb1afbfb83dda0cf8759863c6fc58e8f16c89671dfc1be623fd\", \"program_identity\": \"d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4\"}}, \"version\": \"r638-snapshot-1\"}\nModify existing MinimumLoad by admitting a signature-preserving successor with result x+y+y+3. Preserve both original ordered checks exactly. Admit against exact predecessor. Create CallerA successor changing ONLY the dependency pin and compose-call identity, retain revision1 and all other structure. Record total explicit family migration: CallerA updated, CallerB null/retain. CallerB must keep original behavior and pin. All predecessors remain immutable and executable. Retrieve/validate active CallerA and retained CallerB and execute examples. This replaces active CallerA behavior, not an additive-only endpoint.\nOriginal acceptance passed. Same bounded retrieval of exact registry facts and all context documents is available.",
+  "prompt_identity": "64e750769da8266aa34378fc67909e09df2cff4874960ea821cd7bc152339348",
+  "schema_identity": "377c4986a53b063de1dcf7f2a0c154d9229e9e66ff7ec32f5d9c70a6f48be801",
+  "schemas": [
+    {
+      "description": "Persist immutable typed definitions, or record explicit total caller migration. Admission mechanically seals omitted identities, validates with unchanged R6.32/R6.18 contracts, and returns pins. A successor preserves exact name and signature. Migration changes only selected caller dependency pins; null means retain.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "admit"
+                  },
+                  "definitions": {
+                    "items": {
+                      "type": "object"
+                    },
+                    "maxItems": 8,
+                    "minItems": 1,
+                    "type": "array"
+                  },
+                  "predecessor": {
+                    "anyOf": [
+                      {
+                        "pattern": "^[0-9a-f]{64}$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "action",
+                  "definitions",
+                  "predecessor"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "migrate"
+                  },
+                  "decisions": {
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "pattern": "^[0-9a-f]{64}$",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "type": "object"
+                  },
+                  "predecessor": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  },
+                  "successor": {
+                    "pattern": "^[0-9a-f]{64}$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action",
+                  "predecessor",
+                  "successor",
+                  "decisions"
+                ],
+                "type": "object"
+              }
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_admit"
+    },
+    {
+      "description": "Read exact admitted immutable definition closure and dependency impact by pin. Returns registry token and successor/migration records; does not rewrite any binding.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "identity": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identity"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_retrieve"
+    },
+    {
+      "description": "Read admitted closed root, expand via unchanged R6.18 and validate frozen VM plan. Returns structured validation identity, node count and provenance map. No execution.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "identity": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identity"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_validate"
+    },
+    {
+      "description": "Read, validate and execute admitted closed root on exact input bytes through unchanged R6.10 VM. Returns structured values, errors, spans, trace and logical work.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "identity": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "input_hex": {
+            "pattern": "^(?:[0-9a-f]{2})*$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identity",
+          "input_hex"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_execute"
+    },
+    {
+      "description": "Bounded read-only exact registry retrieval. No execution or binding changes.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "identity": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "definition",
+              "dependencies",
+              "validation",
+              "history",
+              "identity"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "identity",
+          "kind"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_detail"
+    },
+    {
+      "description": "Read frozen full original construction history, deterministic ordinary summary, or symbolic snapshot. Same read-only access for every condition; no acceptance expectations.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "enum": [
+              "history",
+              "summary",
+              "snapshot"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "type": "object"
+      },
+      "name": "lykoi_context"
+    }
+  ],
+  "tokenizer": null
+}

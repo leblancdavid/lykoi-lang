@@ -1,0 +1,53 @@
+{
+  "billing": null,
+  "budgets": {
+    "MCP_calls_per_stage": 40,
+    "completions_per_stage": 20,
+    "corrections": 2,
+    "seconds_per_stage": 600
+  },
+  "config": {
+    "$schema": "https://opencode.ai/config.json",
+    "agent": {
+      "r639-author": {
+        "description": "Bounded three-condition participant",
+        "mode": "primary",
+        "model": "openai/gpt-6.1-sol",
+        "permission": {
+          "*": "deny",
+          "r638_lykoi_*": "allow"
+        },
+        "prompt": "Use actual Lykoi MCP calls for the supplied stage. No files or other tools. Never invent operations. Admission only mechanically seals identities. Stop at the requested stage. Preserve failed calls.",
+        "variant": "high"
+      }
+    },
+    "autoupdate": false,
+    "default_agent": "r639-author",
+    "mcp": {
+      "r638": {
+        "command": [
+          "C:\\Users\\lblan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+          "-B",
+          "D:\\Dev\\axiom\\experiments\\context_comparison_r6_39\\tools.py"
+        ],
+        "enabled": true,
+        "environment": {
+          "R638_RUN": "qualification"
+        },
+        "type": "local"
+      }
+    },
+    "permission": {
+      "*": "deny",
+      "r638_lykoi_*": "allow"
+    },
+    "share": "disabled",
+    "snapshot": false
+  },
+  "effective_authentication": null,
+  "effective_reasoning": null,
+  "inherited_route": "R6.36 qualified child environment; OPENCODE_PURE=1, default plugins eligible",
+  "model": "openai/gpt-6.1-sol",
+  "requested_variant": "high",
+  "tokenizer": null
+}

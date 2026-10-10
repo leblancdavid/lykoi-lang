@@ -1,0 +1,376 @@
+{
+  "caller_bindings": {
+    "CallerA": "d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4",
+    "CallerB": "5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490"
+  },
+  "constraints": "Construct MinimumLoad(x:Int64,y:Int64,floor:Int64)->Int64. Ordered checks: floor<=x (FIRST_MINIMUM, site x, g1), then floor<=y (SECOND_MINIMUM, site y, g2). Return x+x+y with checked signed64 addition. CallerA reads x then y UInt8 (read_x/read_y); input_end checks end BEFORE computation; compose step call uses floor=21, then adds 5 and emits UInt16BE. CallerB reads x UInt8 (read_x), checks input_end BEFORE computation, derives y=x+23; compose step call uses floor=21, returns result and emits UInt16BE. Each caller has no parameters and Int64 result. Preserve semantic rejection source sites. Admit one shared definition and two dependent callers, revision1. Retrieve/validate both; execute representative cases. Stop after original application, no successor.",
+  "definitions": {
+    "5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490": {
+      "dependencies": {
+        "MinimumLoad": "d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49"
+      },
+      "identity": "5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490",
+      "name": "CallerB",
+      "order": [
+        "read_x",
+        "input_end",
+        "derive_y",
+        "call"
+      ],
+      "params": [],
+      "result": {
+        "ref": "call"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "read_x",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "input_end",
+          "node": {
+            "op": "end"
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "read_x"
+          ],
+          "id": "derive_y",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "read_x"
+                },
+                {
+                  "const": 23
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [
+            "read_x",
+            "derive_y"
+          ],
+          "id": "call",
+          "node": {
+            "args": {
+              "floor": {
+                "const": 21
+              },
+              "x": {
+                "ref": "read_x"
+              },
+              "y": {
+                "ref": "derive_y"
+              }
+            },
+            "identity": "d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49",
+            "op": "compose",
+            "symbol": "MinimumLoad"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    "d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49": {
+      "dependencies": {},
+      "identity": "d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49",
+      "name": "MinimumLoad",
+      "order": [
+        "g1",
+        "g2",
+        "twice_x",
+        "total"
+      ],
+      "params": [
+        {
+          "name": "x",
+          "type": "Int64"
+        },
+        {
+          "name": "y",
+          "type": "Int64"
+        },
+        {
+          "name": "floor",
+          "type": "Int64"
+        }
+      ],
+      "result": {
+        "ref": "total"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [
+            "floor",
+            "x"
+          ],
+          "id": "g1",
+          "node": {
+            "code": "FIRST_MINIMUM",
+            "op": "check",
+            "site": {
+              "ref": "x"
+            },
+            "test": {
+              "le": [
+                {
+                  "ref": "floor"
+                },
+                {
+                  "ref": "x"
+                }
+              ]
+            }
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "floor",
+            "y"
+          ],
+          "id": "g2",
+          "node": {
+            "code": "SECOND_MINIMUM",
+            "op": "check",
+            "site": {
+              "ref": "y"
+            },
+            "test": {
+              "le": [
+                {
+                  "ref": "floor"
+                },
+                {
+                  "ref": "y"
+                }
+              ]
+            }
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "x"
+          ],
+          "id": "twice_x",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "x"
+                },
+                {
+                  "ref": "x"
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [
+            "twice_x",
+            "y"
+          ],
+          "id": "total",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "twice_x"
+                },
+                {
+                  "ref": "y"
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    "d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4": {
+      "dependencies": {
+        "MinimumLoad": "d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49"
+      },
+      "identity": "d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4",
+      "name": "CallerA",
+      "order": [
+        "read_x",
+        "read_y",
+        "input_end",
+        "call",
+        "output"
+      ],
+      "params": [],
+      "result": {
+        "ref": "output"
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "read_x",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "read_y",
+          "node": {
+            "codec": "uint8",
+            "op": "atom"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [],
+          "id": "input_end",
+          "node": {
+            "op": "end"
+          },
+          "type": "Unit"
+        },
+        {
+          "deps": [
+            "read_x",
+            "read_y"
+          ],
+          "id": "call",
+          "node": {
+            "args": {
+              "floor": {
+                "const": 21
+              },
+              "x": {
+                "ref": "read_x"
+              },
+              "y": {
+                "ref": "read_y"
+              }
+            },
+            "identity": "d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49",
+            "op": "compose",
+            "symbol": "MinimumLoad"
+          },
+          "type": "Int64"
+        },
+        {
+          "deps": [
+            "call"
+          ],
+          "id": "output",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "call"
+                },
+                {
+                  "const": 5
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490": {
+      "MinimumLoad": "d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49"
+    },
+    "d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49": {},
+    "d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4": {
+      "MinimumLoad": "d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49"
+    }
+  },
+  "generation": 2,
+  "identity": "863b50f18e21bc851c4adc4baba6b6090be8af85fb4f26c00570eb8901711983",
+  "migrations": [],
+  "objective": "Modify existing MinimumLoad by admitting a signature-preserving successor with result x+y+y+3. Preserve both original ordered checks exactly. Admit against exact predecessor. Create CallerA successor changing ONLY the dependency pin and compose-call identity, retain revision1 and all other structure. Record total explicit family migration: CallerA updated, CallerB null/retain. CallerB must keep original behavior and pin. All predecessors remain immutable and executable. Retrieve/validate active CallerA and retained CallerB and execute examples. This replaces active CallerA behavior, not an additive-only endpoint.",
+  "registry_token": "13aea1e24fe6a5d2df907ddc86794be9d866e6fe7a58344325fa9ab98f149898",
+  "requirement": "c9454c351a5e23f34e77ffc2d80117e6b6dbc7f57fb7f74530ad5eabf82cb62a",
+  "retrieval_references": {
+    "5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490": {
+      "identity": "5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490",
+      "kind": "definition"
+    },
+    "d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49": {
+      "identity": "d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49",
+      "kind": "definition"
+    },
+    "d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4": {
+      "identity": "d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4",
+      "kind": "definition"
+    }
+  },
+  "signatures": {
+    "5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490": [
+      [],
+      "Int64"
+    ],
+    "d357f298d9ba18ac40c428d3f493203c2888bcc72bac6f9df9aba095445f6b49": [
+      [
+        {
+          "name": "x",
+          "type": "Int64"
+        },
+        {
+          "name": "y",
+          "type": "Int64"
+        },
+        {
+          "name": "floor",
+          "type": "Int64"
+        }
+      ],
+      "Int64"
+    ],
+    "d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4": [
+      [],
+      "Int64"
+    ]
+  },
+  "successors": {},
+  "validation": {
+    "5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490": {
+      "nodes": 10,
+      "plan_identity": "b2a161295278c1ee871fb7645fa3da594e7d58fb498f3af84fa83de116dced66",
+      "program_identity": "5e09e67aee298422d290ac9bf214a1938103fd60a2fc016f9d7e35066bfbd490"
+    },
+    "d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4": {
+      "nodes": 11,
+      "plan_identity": "84bc42e8dbb65cb1afbfb83dda0cf8759863c6fc58e8f16c89671dfc1be623fd",
+      "program_identity": "d9e241100b16eb55842a1099f7c0e8250ca0b6d3e1d6276593160433bcfc8fc4"
+    }
+  },
+  "version": "r638-snapshot-1"
+}

@@ -1,0 +1,21 @@
+{
+  "modification": "Modify existing MinimumLoad by admitting a signature-preserving successor with result x+y+y+3. Preserve both original ordered checks exactly. Admit against exact predecessor. Create CallerA successor changing ONLY the dependency pin and compose-call identity, retain revision1 and all other structure. Record total explicit family migration: CallerA updated, CallerB null/retain. CallerB must keep original behavior and pin. All predecessors remain immutable and executable. Retrieve/validate active CallerA and retained CallerB and execute examples. This replaces active CallerA behavior, not an additive-only endpoint.",
+  "requirement": "Construct MinimumLoad(x:Int64,y:Int64,floor:Int64)->Int64. Ordered checks: floor<=x (FIRST_MINIMUM, site x, g1), then floor<=y (SECOND_MINIMUM, site y, g2). Return x+x+y with checked signed64 addition. CallerA reads x then y UInt8 (read_x/read_y); input_end checks end BEFORE computation; compose step call uses floor=21, then adds 5 and emits UInt16BE. CallerB reads x UInt8 (read_x), checks input_end BEFORE computation, derives y=x+23; compose step call uses floor=21, returns result and emits UInt16BE. Each caller has no parameters and Int64 result. Preserve semantic rejection source sites. Admit one shared definition and two dependent callers, revision1. Retrieve/validate both; execute representative cases. Stop after original application, no successor.",
+  "task": {
+    "base": "x+x+y",
+    "bias": 5,
+    "change": "Preserve both original ordered checks exactly.",
+    "checks": "floor<=x (FIRST_MINIMUM, site x, g1), then floor<=y (SECOND_MINIMUM, site y, g2)",
+    "constant": 21,
+    "delta": 23,
+    "id": "T3",
+    "order": [
+      "C",
+      "A",
+      "B"
+    ],
+    "param": "floor",
+    "successor": "x+y+y+3",
+    "symbol": "MinimumLoad"
+  }
+}
