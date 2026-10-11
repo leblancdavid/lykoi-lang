@@ -1,0 +1,25 @@
+{
+  "accumulated_equal_record_mean": 0.7600901946425438,
+  "accumulated_gradient": 0.35399167984724045,
+  "gradient_tolerance": 1e-06,
+  "independent_equal_record_mean": 0.7600901268588703,
+  "independent_gradient": 0.35399171247704597,
+  "loss_helper_module_sha256": "32aed0a8faf1b1b618300a51d1e4fc3564a06a9f4f4ec1130b27f1fa0e4f565b",
+  "loss_helper_source": "def ForCausalLMLoss(\n    logits,\n    labels,\n    vocab_size: int,\n    num_items_in_batch: Optional[torch.Tensor] = None,\n    ignore_index: int = -100,\n    shift_labels: Optional[torch.Tensor] = None,\n    **kwargs,\n) -> torch.Tensor:\n    # Upcast to float if we need to compute the loss to avoid potential precision issues\n    logits = logits.float()\n\n    if shift_labels is None:\n        # Shift so that tokens < n predict n\n        labels = nn.functional.pad(labels, (0, 1), value=ignore_index)\n        shift_labels = labels[..., 1:].contiguous()\n\n    # Flatten the tokens\n    logits = logits.view(-1, vocab_size)\n    shift_labels = shift_labels.view(-1)\n    # Enable model parallelism\n    shift_labels = shift_labels.to(logits.device)\n    loss = fixed_cross_entropy(logits, shift_labels, num_items_in_batch, ignore_index, **kwargs)\n    return loss\n",
+  "model_optimizer_steps": 0,
+  "pooled_token_mean_negative_control": 0.8340901268588704,
+  "record_mean_losses": [
+    0.3900901675224304,
+    1.1300902366638184,
+    0.39009013772010803,
+    1.1300902366638184
+  ],
+  "record_supervised_counts": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "specification": "Per record causal-shifted completion+EOS cross-entropy mean, ignored labels -100; backward loss/4; no num_items_in_batch; four backward calls per clipped optimizer update.",
+  "status": "PASS"
+}
