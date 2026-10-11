@@ -1,0 +1,281 @@
+"""Bounded neutral qualification; no diagnostic inference or semantic rescoring."""
+import ast
+import copy
+import importlib.util
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import time
+import traceback
+
+ROOT = Path(__file__).resolve().parents[2]
+HERE = Path(__file__).resolve().parent
+spec=importlib.util.spec_from_file_location('r669_inherited',ROOT/'experiments/structured_generation_r6_68/run.py')
+h=importlib.util.module_from_spec(spec)
+spec.loader.exec_module(h)
+f=h.f
+OUT=ROOT/'benchmark/results/phase6/r6_69'
+from verifier import compare, compare_adapter, normalize, IdentityError
+
+
+def write(name,value):
+    (OUT/name).write_text(json.dumps(value,indent=2,sort_keys=True,allow_nan=False)+'\n',encoding='utf-8',newline='\n')
+
+
+def baseline():
+    h.check_freeze()
+    result=h.audit()
+    result['r6_68_publication']=f.publication('r6_68')
+    assert f.read(h.OUT/'ASSESSMENT.json')['classification']=='R6_68_PROTOCOL_HALT'
+    result['frozen_inputs']={name:f.sha(h.OUT/name) for name in ('DIAGNOSTICS.json','GENERATION-CONFIGURATIONS.json','SOURCE-FREEZE.json','HALT.json')}
+    result['decoder_sha256']=f.sha(ROOT/'experiments/structured_generation_r6_68/decoder.py')
+    assert f.read(h.OUT/'DIAGNOSTICS.json')['identities']==[f.identity(r) for r in f.read(h.OUT/'DIAGNOSTICS.json')['records']]
+    # Read/verify identities only: no diagnostic prompt, requirement or answer goes to a probe.
+    config=f.read(h.OUT/'GENERATION-CONFIGURATIONS.json')
+    assert all(f.identity(p['messages'])==p['identity'] for group in config['prompts'].values() for p in group)
+    assert len(config['prompts']['A'])==len(config['prompts']['B'])==len(config['prompts']['C'])==9
+    assert f.successor.DIMENSIONS and callable(f.score)
+    return result
+
+
+def cpu_controls():
+    reference=f.read(ROOT/'benchmark/results/phase6/r6_67/INITIAL-PARAMETERS.json')['base']
+    normalized,_=normalize(reference,True)
+    controls=[dict(name='legitimate_wrapper_names',result=compare(normalized,reference,False))]
+    first=next(k for k,v in normalized.items() if type(v) is dict and 'sha256' in v)
+    for label,mutator in (
+        ('missing_tensor',lambda x:x.pop(first)),
+        ('incorrect_shape',lambda x:x[first].update(shape=[999])),
+        ('incorrect_dtype',lambda x:x[first].update(dtype='torch.float64')),
+        ('changed_tensor_values',lambda x:x[first].update(sha256='0'*64)),
+        ('unexpected_base_mutation',lambda x:x[first].update(sha256='f'*64))):
+        bad=copy.deepcopy(normalized)
+        mutator(bad)
+        try: compare(bad,reference,False)
+        except IdentityError as exc: controls.append(dict(name=label,rejected=True,error=str(exc)))
+        else: raise AssertionError(label)
+    collisions=list(reference.items())
+    qname=next(k for k in reference if '.q_proj.base_layer.' in k and not k.startswith(('quant_state:','buffer:')))
+    collisions.append((qname.replace('.base_layer.','.'),reference[qname]))
+    for label,bad in [('duplicate_normalized_names',collisions),('duplicate_source_name',list(reference.items())+[(qname,reference[qname])]),
+                      ('unjustified_wrapper',[(k.replace('base_model.model.','other_wrapper.'),v) for k,v in reference.items()])]:
+        try: compare(bad,reference,True)
+        except IdentityError as exc: controls.append(dict(name=label,rejected=True,error=str(exc)))
+        else: raise AssertionError(label)
+    expected=f.read(ROOT/'benchmark/results/phase6/r6_67/TRAINING-RESULT.json')['trained_adapter_tensors']
+    assert compare_adapter(expected,expected)['passed']
+    wrong=copy.deepcopy(expected)
+    wrong[next(iter(wrong))]['sha256']='0'*64
+    try: compare_adapter(wrong,expected)
+    except IdentityError as exc: controls.append(dict(name='incorrect_adapter_identity',rejected=True,error=str(exc)))
+    else: raise AssertionError('adapter negative')
+    write('ADVERSARIAL-VERIFIER.json',dict(passed=True,controls=controls,invalid_controls=sum(x.get('rejected',False) for x in controls),
+          live_model_mutation=False,method='Mutate detached manifest copies only, never checkpoint/model tensors'))
+
+
+def freeze():
+    assert not OUT.exists()
+    receipt=baseline()
+    OUT.mkdir()
+    write('PREFLIGHT.json',receipt)
+    cpu_controls()
+    write('QUALIFICATION-CONFIGURATION.json',dict(round='R6.69',tracks=['base','adapter'],
+          neutral_prompt=[dict(role='system',content='Return a single compact raw JSON incremental value action. No Markdown or explanation.'),
+                          dict(role='user',content='This is a neutral infrastructure probe. Choose freely among add, le, and eq and Int64 or Bool. Supply id selected, type, deps, and node with op value and expr containing two ref or const operands. No application task is being solved.')],
+          neutral_action=dict(id='selected',type='Bool',deps=['probe'],node=dict(op='value',expr={'add':[{'const':True},{'ref':'probe'}]})),
+          probes=['unseeded_128','neutral_suffix_continuation','complete_action_eos','one_token_budget'],
+          max_generation_calls=8,per_generation_seconds=120,process_seconds=1800,
+          max_reserved_bytes=8589934592,minimum_free_bytes=1610612736,
+          model_answers_scored=False,diagnostic_solutions_exposed_to_model=False,
+          failures='Preserve every failed control. Runtime/integrity failure ends qualification without model retry; classify partial/gap/halt according to reached evidence.'))
+    write('SOURCE-FREEZE.json',dict(files={p.relative_to(ROOT).as_posix():f.sha(p) for p in list(HERE.glob('*.py'))+[ROOT/'benchmark/results/phase6/R6_69-PROTOCOL.md']},
+          inputs={p.name:f.sha(p) for p in OUT.glob('*.json')}))
+    print('PASS R6.69 baseline and adversarial CPU controls; neutral probe configuration frozen')
+
+
+def check_freeze():
+    seal=f.read(OUT/'SOURCE-FREEZE.json')
+    for path,digest in seal['files'].items(): assert f.sha(ROOT/path)==digest,path
+    for name,digest in seal['inputs'].items(): assert f.sha(OUT/name)==digest,name
+
+
+def worker(track):
+    check_freeze()
+    import torch
+    from transformers import AutoTokenizer,GenerationConfig,LogitsProcessorList,StoppingCriteria,StoppingCriteriaList
+    from peft import prepare_model_for_kbit_training,PeftModel
+    decoder_spec=importlib.util.spec_from_file_location('r669_frozen_decoder',ROOT/'experiments/structured_generation_r6_68/decoder.py')
+    decoder=importlib.util.module_from_spec(decoder_spec)
+    decoder_spec.loader.exec_module(decoder)
+    config=f.read(OUT/'QUALIFICATION-CONFIGURATION.json')
+    precision=f.read(ROOT/'benchmark/results/phase6/r6_66/TRAINING-CONFIGURATION.json')['configuration']['precision_runtime']
+    torch.backends.cuda.matmul.allow_tf32=precision['allow_tf32_matmul']
+    torch.backends.cudnn.allow_tf32=precision['allow_tf32_cudnn']
+    torch.set_float32_matmul_precision(precision['float32_matmul_precision'])
+    torch.use_deterministic_algorithms(precision['deterministic_algorithms'])
+    f.q52.seed()
+    source=(ROOT/'benchmark/results/phase6/r6_66/EFFECTIVE-WORKER.py.txt').read_text(encoding='utf-8')
+    nodes=[n for n in ast.parse(source).body if isinstance(n,ast.FunctionDef) and n.name in ('tensor_record','base_manifest','adapter_manifest')]
+    ns={}
+    exec(compile(ast.Module(body=nodes,type_ignores=[]),'frozen-readonly-manifest','exec'),ns)
+    model,quant=f.q52.load_base()
+    model=prepare_model_for_kbit_training(model,use_gradient_checkpointing=True,gradient_checkpointing_kwargs={'use_reentrant':False})
+    unwrapped=ns['base_manifest'](model)
+    historical=f.read(ROOT/'benchmark/results/phase6/r6_67/INITIAL-PARAMETERS.json')['base']
+    mapping=compare(unwrapped,historical,False)
+    write(track.upper()+'-UNWRAPPED-MAPPING.json',dict(mapping,actual_manifest=unwrapped,actual_identity=f.identity(unwrapped)))
+    if track=='adapter':
+        model=PeftModel.from_pretrained(model,f.ARTIFACTS/'step20/adapter',is_trainable=False,local_files_only=True)
+        wrapped=ns['base_manifest'](model)
+        mapping=compare(wrapped,historical,True)
+        compare(wrapped,unwrapped,True,False)
+        write('ADAPTER-WRAPPED-MAPPING.json',dict(mapping,actual_manifest=wrapped,actual_identity=f.identity(wrapped),
+              unwrapped_wrapped_value_identity=True))
+        adapter_before=ns['adapter_manifest'](model)
+        adapter_check=compare_adapter(adapter_before,f.read(ROOT/'benchmark/results/phase6/r6_67/TRAINING-RESULT.json')['trained_adapter_tensors'])
+        write('ADAPTER-TENSORS.json',dict(adapter_check,actual_manifest=adapter_before,actual_identity=f.identity(adapter_before)))
+    else:
+        adapter_before={}
+    model.eval()
+    for p in model.parameters(): p.requires_grad_(False)
+    before=ns['base_manifest'](model)
+    tokenizer=AutoTokenizer.from_pretrained(f.STORE/'checkpoint',local_files_only=True,trust_remote_code=False)
+    def validate(text): f.successor.validate_action(f.successor.c.load(text))
+    mask=decoder.StructuralMask(tokenizer,0,validate)
+    # Exhaust every admitted ASCII token after two ASCII contexts, including multichar tokens.
+    token_checks=[]
+    for prefix in ('', '{"id":"selected","type":"Bool","deps":["'):
+        prefix_ids=tokenizer(prefix,add_special_tokens=False)['input_ids']
+        mismatches=[]
+        for token,piece in mask.pieces:
+            if tokenizer.decode(prefix_ids+[token],skip_special_tokens=False)!=prefix+piece:
+                mismatches.append(token)
+        assert not mismatches,'TOKEN_TEXT_CORRESPONDENCE'
+        token_checks.append(dict(prefix=prefix,admitted_tokens=len(mask.pieces),mismatches=mismatches))
+    structural=[]
+    for op in ('add','le','eq'):
+        for typ in ('Int64','Bool'):
+            action=copy.deepcopy(config['neutral_action'])
+            action['type']=typ
+            action['node']['expr']={op:[{'const':True},{'ref':'arbitrary_out_of_scope'}]}
+            text=json.dumps(action,separators=(',',':'))
+            assert mask.accepts(text)==(True,True)
+            structural.append(dict(operation=op,type=typ,semantically_unrestricted=True,complete=True))
+    neutral=json.dumps(config['neutral_action'],separators=(',',':'))
+    malformed=[]
+    mutations=[('missing_required',lambda a:a.pop('id')),('incorrect_type',lambda a:a.update(type='Unit')),
+               ('deps_type',lambda a:a.update(deps=1)),('missing_node_field',lambda a:a['node'].pop('op')),
+               ('wrong_operation',lambda a:a['node'].update(expr={'sub':[{'const':1},{'const':2}]})),
+               ('wrong_operand_type',lambda a:a['node'].update(expr={'eq':[{'ref':1},{'const':True}]})),
+               ('duplicate_deps',lambda a:a.update(deps=['probe','probe'])),
+               ('overflow_literal',lambda a:a['node'].update(expr={'add':[{'const':9223372036854775808},{'const':1}]}))]
+    for label,mutator in mutations:
+        bad=copy.deepcopy(config['neutral_action']); mutator(bad)
+        assert not mask.accepts(json.dumps(bad,separators=(',',':')))[0]
+        malformed.append(dict(name=label,rejected=True))
+    for text in ('{}','```json\n'+neutral+'\n```',neutral+'garbage'):
+        assert not mask.accepts(text)[0]
+        malformed.append(dict(name='invalid_structure_or_serialization',input=text,rejected=True))
+    vocab=model.config.vocab_size
+    mask_controls=[]
+    prefixes=['', '{"id":"selected","type":"',neutral[:-1],neutral]
+    for prefix in prefixes:
+        ids=torch.tensor([tokenizer(prefix,add_special_tokens=False)['input_ids']],device='cuda',dtype=torch.long)
+        logits=torch.zeros((1,vocab),device='cuda')
+        masked=mask(ids,logits)
+        allowed=torch.isfinite(masked[0]).nonzero().flatten().cpu().tolist()
+        expected=[mask.eos] if prefix==neutral else [i for i,p in mask.pieces if mask.accepts(prefix+p)[0]]
+        assert set(allowed)==set(expected)
+        assert all(masked[0,i].item()==0 for i in allowed)
+        assert (mask.eos in allowed)==(prefix==neutral)
+        mask_controls.append(dict(prefix=prefix,allowed=len(allowed),forbidden=vocab-len(allowed),eos_allowed=mask.eos in allowed))
+    try:
+        bad=torch.tensor([tokenizer('not JSON',add_special_tokens=False)['input_ids']],device='cuda')
+        mask(bad,torch.zeros((1,vocab),device='cuda'))
+    except AssertionError as exc: invalid_prefix=dict(rejected=True,error=str(exc))
+    else: raise AssertionError('INVALID_PREFIX_ACCEPTED')
+    write(track.upper()+'-DECODER-CONTROLS.json',dict(token_correspondence=token_checks,
+          multichar_tokens=sum(len(p)>1 for _,p in mask.pieces),structural_alternatives=structural,
+          invalid_structures=malformed,mask_controls=mask_controls,invalid_prefix=invalid_prefix,
+          grammar_sha256=f.sha(ROOT/'experiments/structured_generation_r6_68/decoder.py'),task_specific_selection=False))
+    prompt=tokenizer.apply_chat_template(config['neutral_prompt'],tokenize=False,add_generation_prompt=True)
+    prompt_ids=tokenizer(prompt,add_special_tokens=False)['input_ids']
+    generation=GenerationConfig.from_dict(f.read(h.OUT/'GENERATION-CONFIGURATIONS.json')['inherited']['resolved_generation_configuration'])
+    probes=[]
+    class Limit(StoppingCriteria):
+        def __init__(self,start): self.start=start
+        def __call__(self,input_ids,scores,**kwargs):
+            free,_=torch.cuda.mem_get_info()
+            assert time.perf_counter()-self.start<=120,'GENERATION_TIMEOUT'
+            assert torch.cuda.max_memory_reserved()<=8589934592 and free>=1610612736,'VRAM_LIMIT'
+            return False
+    for name,seed,budget in [('unseeded_128','',128),('neutral_suffix_continuation',neutral[:-1],4),('complete_action_eos',neutral,1),('one_token_budget','',1)]:
+        seed_ids=tokenizer(seed,add_special_tokens=False)['input_ids']
+        x=torch.tensor([prompt_ids+seed_ids],device='cuda')
+        local_mask=decoder.StructuralMask(tokenizer,len(prompt_ids),validate)
+        applied=[]
+        class AuditedMask(type(local_mask)):
+            def __call__(self,input_ids,scores):
+                raw=scores.clone()
+                result=super().__call__(input_ids,scores)
+                finite=torch.isfinite(result[0])
+                assert torch.equal(result[0,finite],raw[0,finite])
+                selected=int(result[0].argmax())
+                assert bool(finite[selected])
+                applied.append(dict(allowed=int(finite.sum()),selected=selected,forbidden_masked=True,allowed_scores_unchanged=True))
+                return result
+        local_mask.__class__=AuditedMask
+        torch.cuda.empty_cache(); torch.cuda.reset_peak_memory_stats(); torch.cuda.synchronize()
+        start=time.perf_counter()
+        with torch.inference_mode():
+            output=model.generate(input_ids=x,attention_mask=torch.ones_like(x),generation_config=generation,use_cache=False,
+                max_new_tokens=budget,logits_processor=LogitsProcessorList([local_mask]),stopping_criteria=StoppingCriteriaList([Limit(start)]))
+        torch.cuda.synchronize()
+        new=output[0,x.shape[1]:].cpu().tolist()
+        complete_ids=seed_ids+new
+        eos=bool(new and new[-1]==tokenizer.eos_token_id)
+        text=tokenizer.decode(complete_ids[:-1] if eos else complete_ids,skip_special_tokens=False)
+        viable,complete=local_mask.accepts(text)
+        assert viable and len(applied)==len(new),'MODEL_MASK_APPLICATION'
+        if name=='neutral_suffix_continuation': assert complete and eos
+        if name=='complete_action_eos': assert new==[tokenizer.eos_token_id] and complete
+        if name=='one_token_budget': assert len(new)==1 and not eos and not complete
+        probes.append(dict(name=name,seed=seed,raw_output=text,new_token_ids=new,generated_tokens=len(new),
+              eos=eos,grammar_complete=complete,prefix_viable=viable,budget_exhausted=len(new)==budget and not eos,
+              mask_application=applied,seconds=time.perf_counter()-start,mask_seconds=local_mask.seconds,
+              peak_allocated_bytes=torch.cuda.max_memory_allocated(),peak_reserved_bytes=torch.cuda.max_memory_reserved(),
+              minimum_end_free_bytes=torch.cuda.mem_get_info()[0],scored=False))
+        write(track.upper()+'-PROBES.json',dict(records=probes))
+        print(track,name,len(new),complete,eos,flush=True)
+        del output,x
+    compare(ns['base_manifest'](model),before,track=='adapter',track=='adapter')
+    if track=='adapter': compare_adapter(ns['adapter_manifest'](model),adapter_before)
+    write(track.upper()+'-RESULT.json',dict(passed=True,base_parameters_unchanged=True,adapter_parameters_unchanged=True,
+          quantization=quant,neutral_generation_calls=len(probes),training_calls=0))
+
+
+def execute():
+    check_freeze()
+    with (OUT/'DISPATCH-CLAIM.json').open('x',encoding='utf-8') as stream: json.dump(dict(attempts=1,neutral_calls_max=8),stream)
+    env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',HF_HUB_OFFLINE='1',HF_HUB_DISABLE_TELEMETRY='1',TOKENIZERS_PARALLELISM='false',HF_HOME=str(f.STORE/'hf-cache'))
+    env.pop('CUDA_VISIBLE_DEVICES',None)
+    try:
+        for track in ('base','adapter'):
+            args=[str(f.PYTHON),'-B',str(Path(__file__).resolve()),'worker',track]
+            start=time.perf_counter()
+            proc=subprocess.run(args,cwd=ROOT,env=env,capture_output=True,text=True,timeout=1800)
+            write(track.upper()+'-PROCESS.json',dict(argv=args,returncode=proc.returncode,stdout=proc.stdout,stderr=proc.stderr,seconds=time.perf_counter()-start))
+            print(proc.stdout,flush=True)
+            assert proc.returncode==0,proc.stderr
+    except BaseException as exc:
+        write('HALT.json',dict(error=str(exc),traceback=traceback.format_exc(),retry=False))
+        raise
+
+
+if __name__=='__main__':
+    if sys.argv[1]=='freeze': freeze()
+    elif sys.argv[1]=='execute': execute()
+    elif sys.argv[1]=='worker': worker(sys.argv[2])
+    else: raise ValueError(sys.argv[1])

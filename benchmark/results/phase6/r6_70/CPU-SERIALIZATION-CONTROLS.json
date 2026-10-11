@@ -1,0 +1,112 @@
+{
+  "alternatives": [
+    {
+      "all_prefixes_viable": true,
+      "operation": "add",
+      "text": "{\"id\":\"selected\",\"type\":\"Int64\",\"deps\":[\"probe\"],\"node\":{\"op\":\"value\",\"expr\":{\"add\":[{\"const\":true},{\"ref\":\"arbitrary_out_of_scope\"}]}}}",
+      "type": "Int64"
+    },
+    {
+      "all_prefixes_viable": true,
+      "operation": "add",
+      "text": "{\"id\":\"selected\",\"type\":\"Bool\",\"deps\":[\"probe\"],\"node\":{\"op\":\"value\",\"expr\":{\"add\":[{\"const\":true},{\"ref\":\"arbitrary_out_of_scope\"}]}}}",
+      "type": "Bool"
+    },
+    {
+      "all_prefixes_viable": true,
+      "operation": "le",
+      "text": "{\"id\":\"selected\",\"type\":\"Int64\",\"deps\":[\"probe\"],\"node\":{\"op\":\"value\",\"expr\":{\"le\":[{\"const\":true},{\"ref\":\"arbitrary_out_of_scope\"}]}}}",
+      "type": "Int64"
+    },
+    {
+      "all_prefixes_viable": true,
+      "operation": "le",
+      "text": "{\"id\":\"selected\",\"type\":\"Bool\",\"deps\":[\"probe\"],\"node\":{\"op\":\"value\",\"expr\":{\"le\":[{\"const\":true},{\"ref\":\"arbitrary_out_of_scope\"}]}}}",
+      "type": "Bool"
+    },
+    {
+      "all_prefixes_viable": true,
+      "operation": "eq",
+      "text": "{\"id\":\"selected\",\"type\":\"Int64\",\"deps\":[\"probe\"],\"node\":{\"op\":\"value\",\"expr\":{\"eq\":[{\"const\":true},{\"ref\":\"arbitrary_out_of_scope\"}]}}}",
+      "type": "Int64"
+    },
+    {
+      "all_prefixes_viable": true,
+      "operation": "eq",
+      "text": "{\"id\":\"selected\",\"type\":\"Bool\",\"deps\":[\"probe\"],\"node\":{\"op\":\"value\",\"expr\":{\"eq\":[{\"const\":true},{\"ref\":\"arbitrary_out_of_scope\"}]}}}",
+      "type": "Bool"
+    }
+  ],
+  "corrected_text": "{\"id\":\"selected\",\"type\":\"Bool\",\"deps\":[\"probe\"],\"node\":{\"op\":\"value\",\"expr\":{\"add\":[{\"const\":true},{\"ref\":\"probe\"}]}}}",
+  "cpu_only": true,
+  "grammar_sha256": "f93b261933487a9a95f8fc07339cfb9e902374a5421e4037f009ccf06cc9a01f",
+  "identical_bytes": true,
+  "invalid_controls": [
+    {
+      "name": "outer_order",
+      "raw_text": "{\"deps\":[\"probe\"],\"id\":\"selected\",\"node\":{\"op\":\"value\",\"expr\":{\"add\":[{\"const\":true},{\"ref\":\"probe\"}]}},\"type\":\"Bool\"}",
+      "rejected": true
+    },
+    {
+      "name": "nested_order",
+      "raw_text": "{\"id\":\"selected\",\"type\":\"Bool\",\"deps\":[\"probe\"],\"node\":{\"expr\":{\"add\":[{\"const\":true},{\"ref\":\"probe\"}]},\"op\":\"value\"}}",
+      "rejected": true
+    },
+    {
+      "name": "missing_field",
+      "raw_text": "{\"id\":\"selected\",\"type\":\"Bool\",\"node\":{\"op\":\"value\",\"expr\":{\"add\":[{\"const\":true},{\"ref\":\"probe\"}]}}}",
+      "rejected": true
+    },
+    {
+      "name": "extra_field",
+      "raw_text": "{\"id\":\"selected\",\"type\":\"Bool\",\"deps\":[\"probe\"],\"node\":{\"op\":\"value\",\"expr\":{\"add\":[{\"const\":true},{\"ref\":\"probe\"}]}},\"extra\":0}",
+      "rejected": true
+    },
+    {
+      "name": "extra_nested_field",
+      "raw_text": "{\"id\":\"selected\",\"type\":\"Bool\",\"deps\":[\"probe\"],\"node\":{\"op\":\"value\",\"expr\":{\"add\":[{\"const\":true},{\"ref\":\"probe\"}]},\"extra\":0}}",
+      "rejected": true
+    },
+    {
+      "name": "invalid_type",
+      "raw_text": "{\"id\":\"selected\",\"type\":1,\"deps\":[\"probe\"],\"node\":{\"op\":\"value\",\"expr\":{\"add\":[{\"const\":true},{\"ref\":\"probe\"}]}}}",
+      "rejected": true
+    },
+    {
+      "name": "invalid_deps_type",
+      "raw_text": "{\"id\":\"selected\",\"type\":\"Bool\",\"deps\":false,\"node\":{\"op\":\"value\",\"expr\":{\"add\":[{\"const\":true},{\"ref\":\"probe\"}]}}}",
+      "rejected": true
+    },
+    {
+      "name": "invalid_operation",
+      "raw_text": "{\"id\":\"selected\",\"type\":\"Bool\",\"deps\":[\"probe\"],\"node\":{\"op\":\"value\",\"expr\":{\"sub\":[{\"const\":1},{\"const\":2}]}}}",
+      "rejected": true
+    },
+    {
+      "name": "invalid_node_operation",
+      "raw_text": "{\"id\":\"selected\",\"type\":\"Bool\",\"deps\":[\"probe\"],\"node\":{\"op\":\"other\",\"expr\":{\"add\":[{\"const\":true},{\"ref\":\"probe\"}]}}}",
+      "rejected": true
+    },
+    {
+      "name": "invalid_operand_type",
+      "raw_text": "{\"id\":\"selected\",\"type\":\"Bool\",\"deps\":[\"probe\"],\"node\":{\"op\":\"value\",\"expr\":{\"eq\":[{\"ref\":1},{\"const\":true}]}}}",
+      "rejected": true
+    }
+  ],
+  "model_loads": 0,
+  "nested_order": [
+    "op",
+    "expr"
+  ],
+  "original_text": "{\"deps\":[\"probe\"],\"id\":\"selected\",\"node\":{\"expr\":{\"add\":[{\"const\":true},{\"ref\":\"probe\"}]},\"op\":\"value\"},\"type\":\"Bool\"}",
+  "outer_order": [
+    "id",
+    "type",
+    "deps",
+    "node"
+  ],
+  "passed": true,
+  "repeat_count": 100,
+  "same_semantic_content": true,
+  "serialization_sha256": "b491a313eef85595fe6fe2707f5e6e9255d79128110c53ca7c724cf74328afef"
+}

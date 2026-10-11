@@ -1,0 +1,52 @@
+{
+  "diagnostic_solutions_exposed_to_model": false,
+  "failures": "Preserve every failed control. Runtime/integrity failure ends qualification without model retry; classify partial/gap/halt according to reached evidence.",
+  "max_generation_calls": 10,
+  "max_reserved_bytes": 8589934592,
+  "minimum_free_bytes": 1610612736,
+  "model_answers_scored": false,
+  "neutral_action": {
+    "deps": [
+      "probe"
+    ],
+    "id": "selected",
+    "node": {
+      "expr": {
+        "add": [
+          {
+            "const": true
+          },
+          {
+            "ref": "probe"
+          }
+        ]
+      },
+      "op": "value"
+    },
+    "type": "Bool"
+  },
+  "neutral_prompt": [
+    {
+      "content": "Return a single compact raw JSON incremental value action. No Markdown or explanation.",
+      "role": "system"
+    },
+    {
+      "content": "This is a neutral infrastructure probe. Choose freely among add, le, and eq and Int64 or Bool. Supply id selected, type, deps, and node with op value and expr containing two ref or const operands. No application task is being solved.",
+      "role": "user"
+    }
+  ],
+  "per_generation_seconds": 120,
+  "probes": [
+    "unseeded_128",
+    "neutral_suffix_continuation",
+    "neutral_suffix_repeat",
+    "complete_action_eos",
+    "one_token_budget"
+  ],
+  "process_seconds": 1800,
+  "round": "R6.70",
+  "tracks": [
+    "base",
+    "adapter"
+  ]
+}
