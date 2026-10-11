@@ -1,0 +1,2428 @@
+{
+  "dependencies": "Explicit sorted unique direct references; no transitive closure inference",
+  "expected_values_source": "Literal manual arithmetic/logic, never reconstructed candidate output",
+  "ordering": "Explicit left/right even for commutative operations",
+  "records": [
+    {
+      "cases": [
+        {
+          "arguments": {
+            "limit": 5,
+            "spare": 9,
+            "used": 2
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 7
+          }
+        },
+        {
+          "arguments": {
+            "limit": 2,
+            "spare": -4,
+            "used": 5
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 7
+          }
+        },
+        {
+          "arguments": {
+            "limit": 3,
+            "spare": 0,
+            "used": 3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 6
+          }
+        }
+      ],
+      "contrast_id": "F01-add-le-C1",
+      "family": "F01-add-le",
+      "id": "F01-add-le-P1",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "limit",
+              "used"
+            ],
+            "left": {
+              "ref": "used"
+            },
+            "op": "le",
+            "right": {
+              "ref": "limit"
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Requirement selects a different relation/result obligation."
+        },
+        {
+          "decision": {
+            "deps": [
+              "limit",
+              "used"
+            ],
+            "left": {
+              "ref": "spare"
+            },
+            "op": "add",
+            "right": {
+              "ref": "limit"
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Wrong reference and stale declared dependencies."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Total used followed by limit; spare is unrelated.",
+      "requirement_identity": "5e3e9fbc4ad2c18e9f7fdbfea8c12ab3cf6719a6a3f3b368a453b2a1bb43325a",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033",
+        "literals": [],
+        "name": "ContrastF01addle1",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "used",
+            "type": "Int64"
+          },
+          {
+            "name": "limit",
+            "type": "Int64"
+          },
+          {
+            "name": "spare",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033",
+      "target": {
+        "deps": [
+          "limit",
+          "used"
+        ],
+        "left": {
+          "ref": "used"
+        },
+        "op": "add",
+        "right": {
+          "ref": "limit"
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "limit": 5,
+            "spare": 9,
+            "used": 2
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "limit": 2,
+            "spare": -4,
+            "used": 5
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "limit": 3,
+            "spare": 0,
+            "used": 3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        }
+      ],
+      "contrast_id": "F01-add-le-C1",
+      "family": "F01-add-le",
+      "id": "F01-add-le-P2",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "limit",
+              "used"
+            ],
+            "left": {
+              "ref": "used"
+            },
+            "op": "eq",
+            "right": {
+              "ref": "limit"
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Requirement selects a different relation/result obligation."
+        },
+        {
+          "decision": {
+            "deps": [
+              "limit",
+              "used"
+            ],
+            "left": {
+              "ref": "spare"
+            },
+            "op": "le",
+            "right": {
+              "ref": "limit"
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Wrong reference and stale declared dependencies."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Is used at most limit, including equality? Use used then limit.",
+      "requirement_identity": "1e1b0e337eb2408ed6eed6712d506f43f086766b61163cfaff00b60b01f0fefb",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "ca638561592e46626e7beb4eaa7dbed2120d628dcd296ada060bff4d7d07b54e",
+        "literals": [],
+        "name": "ContrastF01addle2",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "used",
+            "type": "Int64"
+          },
+          {
+            "name": "limit",
+            "type": "Int64"
+          },
+          {
+            "name": "spare",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "ca638561592e46626e7beb4eaa7dbed2120d628dcd296ada060bff4d7d07b54e",
+      "target": {
+        "deps": [
+          "limit",
+          "used"
+        ],
+        "left": {
+          "ref": "used"
+        },
+        "op": "le",
+        "right": {
+          "ref": "limit"
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "limit": 5,
+            "spare": 9,
+            "used": 2
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "limit": 2,
+            "spare": -4,
+            "used": 5
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "limit": 3,
+            "spare": 0,
+            "used": 3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        }
+      ],
+      "contrast_id": "F02-le-eq-C1",
+      "family": "F02-le-eq",
+      "id": "F02-le-eq-P1",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "limit",
+              "used"
+            ],
+            "left": {
+              "ref": "used"
+            },
+            "op": "eq",
+            "right": {
+              "ref": "limit"
+            }
+          },
+          "expected_category": "valid_but_wrong",
+          "reason": "Requirement selects a different relation/result obligation."
+        },
+        {
+          "decision": {
+            "deps": [
+              "limit",
+              "used"
+            ],
+            "left": {
+              "ref": "spare"
+            },
+            "op": "le",
+            "right": {
+              "ref": "limit"
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Wrong reference and stale declared dependencies."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Is used at most limit, including equality? Use used then limit.",
+      "requirement_identity": "1e1b0e337eb2408ed6eed6712d506f43f086766b61163cfaff00b60b01f0fefb",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "ca96f3ba9a77ffe778892c0fe03b83aae851ae5b0ebcc435c164db763662456c",
+        "literals": [],
+        "name": "ContrastF02leeq1",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "used",
+            "type": "Int64"
+          },
+          {
+            "name": "limit",
+            "type": "Int64"
+          },
+          {
+            "name": "spare",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "ca96f3ba9a77ffe778892c0fe03b83aae851ae5b0ebcc435c164db763662456c",
+      "target": {
+        "deps": [
+          "limit",
+          "used"
+        ],
+        "left": {
+          "ref": "used"
+        },
+        "op": "le",
+        "right": {
+          "ref": "limit"
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "limit": 5,
+            "spare": 9,
+            "used": 2
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "limit": 2,
+            "spare": -4,
+            "used": 5
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "limit": 3,
+            "spare": 0,
+            "used": 3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        }
+      ],
+      "contrast_id": "F02-le-eq-C1",
+      "family": "F02-le-eq",
+      "id": "F02-le-eq-P2",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "limit",
+              "used"
+            ],
+            "left": {
+              "ref": "used"
+            },
+            "op": "le",
+            "right": {
+              "ref": "limit"
+            }
+          },
+          "expected_category": "valid_but_wrong",
+          "reason": "Requirement selects a different relation/result obligation."
+        },
+        {
+          "decision": {
+            "deps": [
+              "limit",
+              "used"
+            ],
+            "left": {
+              "ref": "spare"
+            },
+            "op": "eq",
+            "right": {
+              "ref": "limit"
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Wrong reference and stale declared dependencies."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Do used and limit match exactly? Use used then limit.",
+      "requirement_identity": "18b50613a06a6d782d60c7cad531389d30f4911b35bd1d5919db5bf1fae64f35",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "76ec5988d14ef662253f636d052dd43be7691bdae2a80a6a6954c207d8f0c5a6",
+        "literals": [],
+        "name": "ContrastF02leeq2",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "used",
+            "type": "Int64"
+          },
+          {
+            "name": "limit",
+            "type": "Int64"
+          },
+          {
+            "name": "spare",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "76ec5988d14ef662253f636d052dd43be7691bdae2a80a6a6954c207d8f0c5a6",
+      "target": {
+        "deps": [
+          "limit",
+          "used"
+        ],
+        "left": {
+          "ref": "used"
+        },
+        "op": "eq",
+        "right": {
+          "ref": "limit"
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "limit": 5,
+            "spare": 9,
+            "used": 2
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "limit": 2,
+            "spare": -4,
+            "used": 5
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "limit": 3,
+            "spare": 0,
+            "used": 3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        }
+      ],
+      "contrast_id": "F03-order-C1",
+      "family": "F03-order",
+      "id": "F03-order-P1",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "limit",
+              "used"
+            ],
+            "left": {
+              "ref": "limit"
+            },
+            "op": "le",
+            "right": {
+              "ref": "used"
+            }
+          },
+          "expected_category": "valid_but_wrong",
+          "reason": "Inclusive comparison direction is reversed."
+        },
+        {
+          "decision": {
+            "deps": [
+              "limit",
+              "used"
+            ],
+            "left": {
+              "ref": "used"
+            },
+            "op": "eq",
+            "right": {
+              "ref": "limit"
+            }
+          },
+          "expected_category": "valid_but_wrong",
+          "reason": "Equality omits strictly-less cases."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Is used no greater than limit? Keep that operand order.",
+      "requirement_identity": "a09bca74fc17cf97da899b021805d244b3f30f6d49d5c0bcae3793b8f4848c83",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "0af8d53beb1ab9c35e4b3912b35fde8956c5e706e96219eab3588e3a26fa9bc2",
+        "literals": [],
+        "name": "ContrastF03order1",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "used",
+            "type": "Int64"
+          },
+          {
+            "name": "limit",
+            "type": "Int64"
+          },
+          {
+            "name": "spare",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "0af8d53beb1ab9c35e4b3912b35fde8956c5e706e96219eab3588e3a26fa9bc2",
+      "target": {
+        "deps": [
+          "limit",
+          "used"
+        ],
+        "left": {
+          "ref": "used"
+        },
+        "op": "le",
+        "right": {
+          "ref": "limit"
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "limit": 5,
+            "spare": 9,
+            "used": 2
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "limit": 2,
+            "spare": -4,
+            "used": 5
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "limit": 3,
+            "spare": 0,
+            "used": 3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        }
+      ],
+      "contrast_id": "F03-order-C1",
+      "family": "F03-order",
+      "id": "F03-order-P2",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "limit",
+              "used"
+            ],
+            "left": {
+              "ref": "used"
+            },
+            "op": "le",
+            "right": {
+              "ref": "limit"
+            }
+          },
+          "expected_category": "valid_but_wrong",
+          "reason": "Inclusive comparison direction is reversed."
+        },
+        {
+          "decision": {
+            "deps": [
+              "limit",
+              "used"
+            ],
+            "left": {
+              "ref": "limit"
+            },
+            "op": "eq",
+            "right": {
+              "ref": "used"
+            }
+          },
+          "expected_category": "valid_but_wrong",
+          "reason": "Equality omits strictly-less cases."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Is limit no greater than used? Keep that operand order.",
+      "requirement_identity": "6389a6ec7d1d3a6359b6241ff2f549082dc82303d654c68142052d818f8bb67b",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "42a505c69988bb9cfdfa4926e8a36d3f2053347cd1d5cc79b5308984be6a11f3",
+        "literals": [],
+        "name": "ContrastF03order2",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "used",
+            "type": "Int64"
+          },
+          {
+            "name": "limit",
+            "type": "Int64"
+          },
+          {
+            "name": "spare",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "42a505c69988bb9cfdfa4926e8a36d3f2053347cd1d5cc79b5308984be6a11f3",
+      "target": {
+        "deps": [
+          "limit",
+          "used"
+        ],
+        "left": {
+          "ref": "limit"
+        },
+        "op": "le",
+        "right": {
+          "ref": "used"
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "limit": 5,
+            "spare": 9,
+            "used": 2
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 2
+          }
+        },
+        {
+          "arguments": {
+            "limit": 2,
+            "spare": -4,
+            "used": 5
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 5
+          }
+        },
+        {
+          "arguments": {
+            "limit": 3,
+            "spare": 0,
+            "used": 3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 3
+          }
+        }
+      ],
+      "contrast_id": "F04-distractor-C1",
+      "family": "F04-distractor",
+      "id": "F04-distractor-P1",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "spare"
+            ],
+            "left": {
+              "ref": "spare"
+            },
+            "op": "add",
+            "right": {
+              "literal": {
+                "type": "Int64",
+                "value": 0
+              }
+            }
+          },
+          "expected_category": "valid_but_wrong",
+          "reason": "Requirement names the other stored quantity."
+        },
+        {
+          "decision": {
+            "deps": [],
+            "left": {
+              "ref": "used"
+            },
+            "op": "add",
+            "right": {
+              "literal": {
+                "type": "Int64",
+                "value": 0
+              }
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Selected reference must remain an explicit direct dependency."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Return the total of used and literal zero; other fields are distractors.",
+      "requirement_identity": "23728282d6a9be3fbb9c4cefd057e8d08ad8e7de7a04e33820c98fd3ee2e1680",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "ccefe66377868e196e7fc305dda3054549051ded593d8e06b72a8b46ea9bff02",
+        "literals": [
+          0
+        ],
+        "name": "ContrastF04distractor1",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "used",
+            "type": "Int64"
+          },
+          {
+            "name": "limit",
+            "type": "Int64"
+          },
+          {
+            "name": "spare",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "ccefe66377868e196e7fc305dda3054549051ded593d8e06b72a8b46ea9bff02",
+      "target": {
+        "deps": [
+          "used"
+        ],
+        "left": {
+          "ref": "used"
+        },
+        "op": "add",
+        "right": {
+          "literal": {
+            "type": "Int64",
+            "value": 0
+          }
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "limit": 5,
+            "spare": 9,
+            "used": 2
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 9
+          }
+        },
+        {
+          "arguments": {
+            "limit": 2,
+            "spare": -4,
+            "used": 5
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": -4
+          }
+        },
+        {
+          "arguments": {
+            "limit": 3,
+            "spare": 0,
+            "used": 3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 0
+          }
+        }
+      ],
+      "contrast_id": "F04-distractor-C1",
+      "family": "F04-distractor",
+      "id": "F04-distractor-P2",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "used"
+            ],
+            "left": {
+              "ref": "used"
+            },
+            "op": "add",
+            "right": {
+              "literal": {
+                "type": "Int64",
+                "value": 0
+              }
+            }
+          },
+          "expected_category": "valid_but_wrong",
+          "reason": "Requirement names the other stored quantity."
+        },
+        {
+          "decision": {
+            "deps": [],
+            "left": {
+              "ref": "spare"
+            },
+            "op": "add",
+            "right": {
+              "literal": {
+                "type": "Int64",
+                "value": 0
+              }
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Selected reference must remain an explicit direct dependency."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Return the total of spare and literal zero; other fields are distractors.",
+      "requirement_identity": "36825db61dee90462a15698ba88259215eb69b291121c402c2d1c25e5aa71362",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "b4a5e6abadbe47ec51cf8ab5840985bcc5caf66a2242d9a4cb4d9faebba0e0ed",
+        "literals": [
+          0
+        ],
+        "name": "ContrastF04distractor2",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "used",
+            "type": "Int64"
+          },
+          {
+            "name": "limit",
+            "type": "Int64"
+          },
+          {
+            "name": "spare",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "b4a5e6abadbe47ec51cf8ab5840985bcc5caf66a2242d9a4cb4d9faebba0e0ed",
+      "target": {
+        "deps": [
+          "spare"
+        ],
+        "left": {
+          "ref": "spare"
+        },
+        "op": "add",
+        "right": {
+          "literal": {
+            "type": "Int64",
+            "value": 0
+          }
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "baseline": 4,
+            "reading": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "baseline": 0,
+            "reading": 4
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "baseline": -2,
+            "reading": -2
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        }
+      ],
+      "contrast_id": "F05-literal-ref-C1",
+      "family": "F05-literal-ref",
+      "id": "F05-literal-ref-P1",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "baseline",
+              "reading"
+            ],
+            "left": {
+              "ref": "reading"
+            },
+            "op": "eq",
+            "right": {
+              "ref": "baseline"
+            }
+          },
+          "expected_category": "valid_but_wrong",
+          "reason": "Literal and stored baseline can differ."
+        },
+        {
+          "decision": {
+            "deps": [
+              "reading"
+            ],
+            "left": {
+              "ref": "reading"
+            },
+            "op": "eq",
+            "right": {
+              "literal": {
+                "type": "Bool",
+                "value": false
+              }
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Boolean false is not integer zero."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Compare reading exactly with literal zero, not stored baseline.",
+      "requirement_identity": "64a647d2ec22c5a0b8644e14a6a9f39e46247c45d0103e7aa3f818fad02b78e5",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "9275cb6b235fdf4a48ee64f036d1a367e606b9d6e4e54eb7ee6f99a272bd5050",
+        "literals": [
+          0,
+          false
+        ],
+        "name": "ContrastF05literalref1",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "reading",
+            "type": "Int64"
+          },
+          {
+            "name": "baseline",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "9275cb6b235fdf4a48ee64f036d1a367e606b9d6e4e54eb7ee6f99a272bd5050",
+      "target": {
+        "deps": [
+          "reading"
+        ],
+        "left": {
+          "ref": "reading"
+        },
+        "op": "eq",
+        "right": {
+          "literal": {
+            "type": "Int64",
+            "value": 0
+          }
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "baseline": 4,
+            "reading": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "baseline": 0,
+            "reading": 4
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "baseline": -2,
+            "reading": -2
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        }
+      ],
+      "contrast_id": "F05-literal-ref-C1",
+      "family": "F05-literal-ref",
+      "id": "F05-literal-ref-P2",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "reading"
+            ],
+            "left": {
+              "ref": "reading"
+            },
+            "op": "eq",
+            "right": {
+              "literal": {
+                "type": "Int64",
+                "value": 0
+              }
+            }
+          },
+          "expected_category": "valid_but_wrong",
+          "reason": "Literal and stored baseline can differ."
+        },
+        {
+          "decision": {
+            "deps": [
+              "baseline",
+              "reading"
+            ],
+            "left": {
+              "ref": "reading"
+            },
+            "op": "eq",
+            "right": {
+              "literal": {
+                "type": "Bool",
+                "value": false
+              }
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Boolean false is not integer zero."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Compare reading exactly with stored baseline, not literal zero.",
+      "requirement_identity": "8030b09252cbbe9c226ab6c14f5b2310910403202cde7e256d3685cda0a56c47",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "45a8db132ebe0c02cabff0307ff4b03edc9b28a3d5f4f5d03720c4a3493938fa",
+        "literals": [
+          0,
+          false
+        ],
+        "name": "ContrastF05literalref2",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "reading",
+            "type": "Int64"
+          },
+          {
+            "name": "baseline",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "45a8db132ebe0c02cabff0307ff4b03edc9b28a3d5f4f5d03720c4a3493938fa",
+      "target": {
+        "deps": [
+          "baseline",
+          "reading"
+        ],
+        "left": {
+          "ref": "reading"
+        },
+        "op": "eq",
+        "right": {
+          "ref": "baseline"
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "noise": 10,
+            "raw": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 2
+          }
+        },
+        {
+          "arguments": {
+            "noise": -2,
+            "raw": 4
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 6
+          }
+        },
+        {
+          "arguments": {
+            "noise": 1,
+            "raw": -3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": -1
+          }
+        }
+      ],
+      "contrast_id": "F06-dependencies-C1",
+      "family": "F06-dependencies",
+      "id": "F06-dependencies-P1",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "raw"
+            ],
+            "left": {
+              "ref": "adjusted"
+            },
+            "op": "add",
+            "right": {
+              "literal": {
+                "type": "Int64",
+                "value": 1
+              }
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Indirect source is not the selected direct dependency."
+        },
+        {
+          "decision": {
+            "deps": [],
+            "left": {
+              "ref": "adjusted"
+            },
+            "op": "add",
+            "right": {
+              "literal": {
+                "type": "Int64",
+                "value": 1
+              }
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Direct prior result dependencies cannot be omitted."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Total adjusted then literal one. Declare only distinct direct operands, excluding their indirect raw source.",
+      "requirement_identity": "ac47d4c46703df1938f39863eeb2ebec342a2055958a0bcdc8305af70686fbec",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "9b7aecba99850223a0007de0e3d149c00098dc9f28b75304e144a27ab8bf1dd8",
+        "literals": [
+          1
+        ],
+        "name": "ContrastF06dependencies1",
+        "order": [
+          "adjusted",
+          "echo"
+        ],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "raw",
+            "type": "Int64"
+          },
+          {
+            "name": "noise",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [
+          {
+            "deps": [
+              "raw"
+            ],
+            "id": "adjusted",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "raw"
+                  },
+                  {
+                    "const": 1
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          },
+          {
+            "deps": [
+              "raw"
+            ],
+            "id": "echo",
+            "node": {
+              "expr": {
+                "ref": "raw"
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "9b7aecba99850223a0007de0e3d149c00098dc9f28b75304e144a27ab8bf1dd8",
+      "target": {
+        "deps": [
+          "adjusted"
+        ],
+        "left": {
+          "ref": "adjusted"
+        },
+        "op": "add",
+        "right": {
+          "literal": {
+            "type": "Int64",
+            "value": 1
+          }
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "noise": 10,
+            "raw": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 1
+          }
+        },
+        {
+          "arguments": {
+            "noise": -2,
+            "raw": 4
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 9
+          }
+        },
+        {
+          "arguments": {
+            "noise": 1,
+            "raw": -3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": -5
+          }
+        }
+      ],
+      "contrast_id": "F06-dependencies-C1",
+      "family": "F06-dependencies",
+      "id": "F06-dependencies-P2",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "raw"
+            ],
+            "left": {
+              "ref": "adjusted"
+            },
+            "op": "add",
+            "right": {
+              "ref": "echo"
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Indirect source is not the selected direct dependency."
+        },
+        {
+          "decision": {
+            "deps": [],
+            "left": {
+              "ref": "adjusted"
+            },
+            "op": "add",
+            "right": {
+              "ref": "echo"
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Direct prior result dependencies cannot be omitted."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Total adjusted then echo. Declare only distinct direct operands, excluding their indirect raw source.",
+      "requirement_identity": "ef82c38526842ddc341a2a27d1fe302355064393bbe625df3121b9627fd537e6",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "6c8cf965c58b0d3c57837e075024f3df4bc296a996d9f069d06e03b256e28b66",
+        "literals": [
+          1
+        ],
+        "name": "ContrastF06dependencies2",
+        "order": [
+          "adjusted",
+          "echo"
+        ],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "raw",
+            "type": "Int64"
+          },
+          {
+            "name": "noise",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [
+          {
+            "deps": [
+              "raw"
+            ],
+            "id": "adjusted",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "raw"
+                  },
+                  {
+                    "const": 1
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          },
+          {
+            "deps": [
+              "raw"
+            ],
+            "id": "echo",
+            "node": {
+              "expr": {
+                "ref": "raw"
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "6c8cf965c58b0d3c57837e075024f3df4bc296a996d9f069d06e03b256e28b66",
+      "target": {
+        "deps": [
+          "adjusted",
+          "echo"
+        ],
+        "left": {
+          "ref": "adjusted"
+        },
+        "op": "add",
+        "right": {
+          "ref": "echo"
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "active": true,
+            "count": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "active": false,
+            "count": 1
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "active": false,
+            "count": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        }
+      ],
+      "contrast_id": "F07-typed-C1",
+      "family": "F07-typed",
+      "id": "F07-typed-P1",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "count"
+            ],
+            "left": {
+              "ref": "count"
+            },
+            "op": "eq",
+            "right": {
+              "literal": {
+                "type": "Bool",
+                "value": false
+              }
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Equality requires equal authoritative operand types."
+        },
+        {
+          "decision": {
+            "deps": [
+              "count"
+            ],
+            "left": {
+              "ref": "count"
+            },
+            "op": "eq",
+            "right": {
+              "literal": {
+                "type": "Int64",
+                "value": false
+              }
+            }
+          },
+          "expected_category": "schema_rejection",
+          "reason": "False cannot inhabit an Int64 typed literal."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Check count exactly against integer zero.",
+      "requirement_identity": "3cbb778d33370f24c1c7bb972c1bfb28feadc63a8ce88316615f6710b3c6477c",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "130be0f6f93401e6e9a7748e15d42f1b1df3570444459ed382eb5972b5913bc5",
+        "literals": [
+          0,
+          false
+        ],
+        "name": "ContrastF07typed1",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "count",
+            "type": "Int64"
+          },
+          {
+            "name": "active",
+            "type": "Bool"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "130be0f6f93401e6e9a7748e15d42f1b1df3570444459ed382eb5972b5913bc5",
+      "target": {
+        "deps": [
+          "count"
+        ],
+        "left": {
+          "ref": "count"
+        },
+        "op": "eq",
+        "right": {
+          "literal": {
+            "type": "Int64",
+            "value": 0
+          }
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "active": true,
+            "count": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "active": false,
+            "count": 1
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "active": false,
+            "count": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        }
+      ],
+      "contrast_id": "F07-typed-C1",
+      "family": "F07-typed",
+      "id": "F07-typed-P2",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "active"
+            ],
+            "left": {
+              "ref": "active"
+            },
+            "op": "eq",
+            "right": {
+              "literal": {
+                "type": "Int64",
+                "value": 0
+              }
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Equality requires equal authoritative operand types."
+        },
+        {
+          "decision": {
+            "deps": [
+              "active"
+            ],
+            "left": {
+              "ref": "active"
+            },
+            "op": "eq",
+            "right": {
+              "literal": {
+                "type": "Int64",
+                "value": false
+              }
+            }
+          },
+          "expected_category": "schema_rejection",
+          "reason": "False cannot inhabit an Int64 typed literal."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Check active exactly against Boolean false.",
+      "requirement_identity": "56cc2361a8fff4928ab9f5f289c4ed46fdaea4bcb4c40411af6916ccb2e6f21b",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "4c0685aaae20fb1beb3d11762d338686b1442ad123b0841e7bff7ac6d52ed457",
+        "literals": [
+          0,
+          false
+        ],
+        "name": "ContrastF07typed2",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "count",
+            "type": "Int64"
+          },
+          {
+            "name": "active",
+            "type": "Bool"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "4c0685aaae20fb1beb3d11762d338686b1442ad123b0841e7bff7ac6d52ed457",
+      "target": {
+        "deps": [
+          "active"
+        ],
+        "left": {
+          "ref": "active"
+        },
+        "op": "eq",
+        "right": {
+          "literal": {
+            "type": "Bool",
+            "value": false
+          }
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "noise": 10,
+            "raw": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 2
+          }
+        },
+        {
+          "arguments": {
+            "noise": -2,
+            "raw": 4
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 10
+          }
+        },
+        {
+          "arguments": {
+            "noise": 1,
+            "raw": -3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": -4
+          }
+        }
+      ],
+      "contrast_id": "F08-repeated-C1",
+      "family": "F08-repeated",
+      "id": "F08-repeated-P1",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "adjusted",
+              "adjusted"
+            ],
+            "left": {
+              "ref": "adjusted"
+            },
+            "op": "add",
+            "right": {
+              "ref": "adjusted"
+            }
+          },
+          "expected_category": "schema_rejection",
+          "reason": "Repeated operands do not authorize duplicate dependencies."
+        },
+        {
+          "decision": {
+            "deps": [
+              "adjusted",
+              "echo"
+            ],
+            "left": {
+              "ref": "adjusted"
+            },
+            "op": "add",
+            "right": {
+              "ref": "echo"
+            }
+          },
+          "expected_category": "valid_but_wrong",
+          "reason": "Echo differs from adjusted by one; repeated identity is required."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Total adjusted with adjusted. Repeat the reference in both operand slots; list its dependency once.",
+      "requirement_identity": "a595b8509a366428085654b19e4bd054030b8d73affff1efa614bc2372263d76",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "9e955670ec2b78a34bcee921e1a19b10803b705491ed5fe4e1d870f7f859abae",
+        "literals": [
+          1
+        ],
+        "name": "ContrastF08repeated1",
+        "order": [
+          "adjusted",
+          "echo"
+        ],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "raw",
+            "type": "Int64"
+          },
+          {
+            "name": "noise",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [
+          {
+            "deps": [
+              "raw"
+            ],
+            "id": "adjusted",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "raw"
+                  },
+                  {
+                    "const": 1
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          },
+          {
+            "deps": [
+              "raw"
+            ],
+            "id": "echo",
+            "node": {
+              "expr": {
+                "ref": "raw"
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "9e955670ec2b78a34bcee921e1a19b10803b705491ed5fe4e1d870f7f859abae",
+      "target": {
+        "deps": [
+          "adjusted"
+        ],
+        "left": {
+          "ref": "adjusted"
+        },
+        "op": "add",
+        "right": {
+          "ref": "adjusted"
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "noise": 10,
+            "raw": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "noise": -2,
+            "raw": 4
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "noise": 1,
+            "raw": -3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        }
+      ],
+      "contrast_id": "F08-repeated-C1",
+      "family": "F08-repeated",
+      "id": "F08-repeated-P2",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "adjusted",
+              "adjusted"
+            ],
+            "left": {
+              "ref": "adjusted"
+            },
+            "op": "eq",
+            "right": {
+              "ref": "adjusted"
+            }
+          },
+          "expected_category": "schema_rejection",
+          "reason": "Repeated operands do not authorize duplicate dependencies."
+        },
+        {
+          "decision": {
+            "deps": [
+              "adjusted",
+              "echo"
+            ],
+            "left": {
+              "ref": "adjusted"
+            },
+            "op": "eq",
+            "right": {
+              "ref": "echo"
+            }
+          },
+          "expected_category": "valid_but_wrong",
+          "reason": "Echo differs from adjusted by one; repeated identity is required."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Test equality of adjusted with adjusted. Repeat the reference in both operand slots; list its dependency once.",
+      "requirement_identity": "348637e13757a5a5d4563ec2397bb6ccef93b88d0a0d319fe97436b184401e92",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "73e70b74d87c7aed3c4323d8b34af4e7ab37a2aaa7c0cf711e716e2d64ca01d8",
+        "literals": [
+          1
+        ],
+        "name": "ContrastF08repeated2",
+        "order": [
+          "adjusted",
+          "echo"
+        ],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "raw",
+            "type": "Int64"
+          },
+          {
+            "name": "noise",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [
+          {
+            "deps": [
+              "raw"
+            ],
+            "id": "adjusted",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "raw"
+                  },
+                  {
+                    "const": 1
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          },
+          {
+            "deps": [
+              "raw"
+            ],
+            "id": "echo",
+            "node": {
+              "expr": {
+                "ref": "raw"
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "73e70b74d87c7aed3c4323d8b34af4e7ab37a2aaa7c0cf711e716e2d64ca01d8",
+      "target": {
+        "deps": [
+          "adjusted"
+        ],
+        "left": {
+          "ref": "adjusted"
+        },
+        "op": "eq",
+        "right": {
+          "ref": "adjusted"
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "noise": 10,
+            "raw": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "noise": -2,
+            "raw": 4
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "noise": 1,
+            "raw": -3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        }
+      ],
+      "contrast_id": "F09-shared-C1",
+      "family": "F09-shared",
+      "id": "F09-shared-P1",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "adjusted",
+              "echo"
+            ],
+            "left": {
+              "ref": "adjusted"
+            },
+            "op": "eq",
+            "right": {
+              "ref": "echo"
+            }
+          },
+          "expected_category": "valid_but_wrong",
+          "reason": "Requirement selects a distinct operation even though this prefix masks the behavioral difference."
+        },
+        {
+          "decision": {
+            "deps": [
+              "raw"
+            ],
+            "left": {
+              "ref": "adjusted"
+            },
+            "op": "le",
+            "right": {
+              "ref": "echo"
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Shared transitive raw source is not the pair of direct identities."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Is adjusted at most echo? Use adjusted first, echo second, and their shared direct dependency structure.",
+      "requirement_identity": "fb801064d2086cb9c671e53def05fa370e1610bfa5f7dd1782f9336d85465388",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "9fe231eb343ecf0766a985970cea027385e9f5e9d8c1fc14a765ba7139da5c6f",
+        "literals": [
+          1
+        ],
+        "name": "ContrastF09shared1",
+        "order": [
+          "adjusted",
+          "echo"
+        ],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "raw",
+            "type": "Int64"
+          },
+          {
+            "name": "noise",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [
+          {
+            "deps": [
+              "raw"
+            ],
+            "id": "adjusted",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "raw"
+                  },
+                  {
+                    "const": 1
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          },
+          {
+            "deps": [
+              "raw"
+            ],
+            "id": "echo",
+            "node": {
+              "expr": {
+                "ref": "raw"
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "9fe231eb343ecf0766a985970cea027385e9f5e9d8c1fc14a765ba7139da5c6f",
+      "target": {
+        "deps": [
+          "adjusted",
+          "echo"
+        ],
+        "left": {
+          "ref": "adjusted"
+        },
+        "op": "le",
+        "right": {
+          "ref": "echo"
+        }
+      }
+    },
+    {
+      "cases": [
+        {
+          "arguments": {
+            "noise": 10,
+            "raw": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "noise": -2,
+            "raw": 4
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "noise": 1,
+            "raw": -3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        }
+      ],
+      "contrast_id": "F09-shared-C1",
+      "family": "F09-shared",
+      "id": "F09-shared-P2",
+      "negatives": [
+        {
+          "decision": {
+            "deps": [
+              "adjusted",
+              "echo"
+            ],
+            "left": {
+              "ref": "adjusted"
+            },
+            "op": "le",
+            "right": {
+              "ref": "echo"
+            }
+          },
+          "expected_category": "valid_but_wrong",
+          "reason": "Requirement selects a distinct operation even though this prefix masks the behavioral difference."
+        },
+        {
+          "decision": {
+            "deps": [
+              "raw"
+            ],
+            "left": {
+              "ref": "adjusted"
+            },
+            "op": "eq",
+            "right": {
+              "ref": "echo"
+            }
+          },
+          "expected_category": "semantic_rejection",
+          "reason": "Shared transitive raw source is not the pair of direct identities."
+        }
+      ],
+      "partition": "training",
+      "provenance": "COORDINATOR_AUTHORED_SYNTHETIC",
+      "requirement": "Does adjusted exactly equal echo? Use adjusted first, echo second, and their shared direct dependency structure.",
+      "requirement_identity": "e32bfee2ed0bea76c263ccbcb4df8d1b0fa65ded3faa9596f80b690792ffd7a8",
+      "review": "COORDINATOR_ONLY",
+      "scope": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "583340ebb04de3fee3b44b7c86bb2c6365c3034dcd0e55133a32595af580a809",
+        "literals": [
+          1
+        ],
+        "name": "ContrastF09shared2",
+        "order": [
+          "adjusted",
+          "echo"
+        ],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "raw",
+            "type": "Int64"
+          },
+          {
+            "name": "noise",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [
+          {
+            "deps": [
+              "raw"
+            ],
+            "id": "adjusted",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "raw"
+                  },
+                  {
+                    "const": 1
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          },
+          {
+            "deps": [
+              "raw"
+            ],
+            "id": "echo",
+            "node": {
+              "expr": {
+                "ref": "raw"
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ],
+        "version": "r6.63-state-1"
+      },
+      "scope_identity": "583340ebb04de3fee3b44b7c86bb2c6365c3034dcd0e55133a32595af580a809",
+      "target": {
+        "deps": [
+          "adjusted",
+          "echo"
+        ],
+        "left": {
+          "ref": "adjusted"
+        },
+        "op": "eq",
+        "right": {
+          "ref": "echo"
+        }
+      }
+    }
+  ],
+  "review": "COORDINATOR_ONLY; no independent reviewer available or delegated",
+  "version": "r6.73-expectations-1"
+}
