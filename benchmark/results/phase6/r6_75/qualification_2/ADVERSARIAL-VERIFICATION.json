@@ -1,0 +1,562 @@
+{
+  "counts": {
+    "accepted": 2,
+    "schema_rejection": 16,
+    "semantic_rejection": 7,
+    "valid_but_wrong": 1
+  },
+  "passed": true,
+  "records": [
+    {
+      "expected_category": "schema_rejection",
+      "input": "{\"op\":\"multiply\",\"left\":{\"ref\":\"used\"},\"right\":{\"ref\":\"limit\"},\"deps\":[\"limit\",\"used\"]}",
+      "name": "unknown_operation",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "schema_rejection",
+        "code": "OPERATION",
+        "detail": "unknown operation",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "schema_rejection",
+      "input": "{\"deps\":[\"limit\",\"used\"],\"left\":{\"ref\":\"used\"},\"op\":\"add\"}",
+      "name": "missing_operand",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "schema_rejection",
+        "code": "FIELDS",
+        "detail": "decision: exact fields required",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "schema_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"used\"},\"right\":{\"literal\":{\"type\":\"Int64\",\"value\":false}},\"deps\":[\"limit\",\"used\"]}",
+      "name": "bool_as_int",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "schema_rejection",
+        "code": "LITERAL_TYPE",
+        "detail": "value does not inhabit declared literal type",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "schema_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"used\"},\"right\":{\"literal\":{\"type\":\"Int64\",\"value\":1.0}},\"deps\":[\"limit\",\"used\"]}",
+      "name": "float_as_int",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "schema_rejection",
+        "code": "SERIALIZATION",
+        "detail": "{'code': 'SERIALIZATION', 'path': '$', 'detail': 'noninteger JSON number'}",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "schema_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"used\"},\"right\":{\"literal\":{\"type\":\"Int64\",\"value\":9223372036854775808}},\"deps\":[\"limit\",\"used\"]}",
+      "name": "int64_overflow",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "schema_rejection",
+        "code": "SERIALIZATION",
+        "detail": "{'code': 'TYPE', 'path': '$', 'detail': 'signed64 integer domain'}",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "schema_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"used\"},\"right\":{\"literal\":{\"type\":\"Int64\",\"value\":\"1\"}},\"deps\":[\"limit\",\"used\"]}",
+      "name": "string_as_int",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "schema_rejection",
+        "code": "LITERAL_TYPE",
+        "detail": "value does not inhabit declared literal type",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "schema_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"used\"},\"right\":{\"literal\":{\"type\":\"Float\",\"value\":1}},\"deps\":[\"limit\",\"used\"]}",
+      "name": "unknown_literal_type",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "schema_rejection",
+        "code": "LITERAL_TYPE",
+        "detail": "unknown literal type",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "semantic_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"missing\"},\"right\":{\"ref\":\"limit\"},\"deps\":[\"limit\",\"used\"]}",
+      "name": "unknown_reference",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "semantic_rejection",
+        "code": "UNKNOWN_REFERENCE",
+        "detail": "{'code': 'UNKNOWN_REFERENCE', 'path': '$/compact-decision/0', 'detail': 'missing'}",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "semantic_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"used\"},\"right\":{\"ref\":\"limit\"},\"deps\":[]}",
+      "name": "missing_dependencies",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "semantic_rejection",
+        "code": "DEPENDENCY",
+        "detail": "explicit dependencies must equal selected direct reference set",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "semantic_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"used\"},\"right\":{\"ref\":\"limit\"},\"deps\":[\"spare\",\"used\"]}",
+      "name": "wrong_dependencies",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "semantic_rejection",
+        "code": "DEPENDENCY",
+        "detail": "explicit dependencies must equal selected direct reference set",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "schema_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"used\"},\"right\":{\"ref\":\"limit\"},\"deps\":[\"used\",\"used\"]}",
+      "name": "duplicate_dependencies",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "schema_rejection",
+        "code": "DEPENDENCIES",
+        "detail": "zero to two sorted distinct identities required",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "schema_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"used\"},\"right\":{\"ref\":\"limit\"},\"deps\":[\"used\",\"limit\"]}",
+      "name": "unsorted_dependencies",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "schema_rejection",
+        "code": "DEPENDENCIES",
+        "detail": "zero to two sorted distinct identities required",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "schema_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"used\",\"literal\":{\"type\":\"Int64\",\"value\":0}},\"right\":{\"ref\":\"limit\"},\"deps\":[\"limit\",\"used\"]}",
+      "name": "ambiguous_operand_tags",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "schema_rejection",
+        "code": "OPERAND",
+        "detail": "exact reference or typed literal required",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "schema_rejection",
+      "input": "{\"op\":\"add\",\"left\":[\"used\"],\"right\":{\"ref\":\"limit\"},\"deps\":[\"limit\",\"used\"]}",
+      "name": "operand_list_instead_of_object",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "schema_rejection",
+        "code": "OPERAND",
+        "detail": "exact reference or typed literal required",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "semantic_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"used\"},\"right\":{\"literal\":{\"type\":\"Bool\",\"value\":false}},\"deps\":[\"limit\",\"used\"]}",
+      "name": "type_incompatible_add",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "semantic_rejection",
+        "code": "TYPE",
+        "detail": "{'code': 'TYPE', 'path': '$/compact-decision', 'detail': 'exact compatible operands required'}",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "semantic_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"used\"},\"right\":{\"literal\":{\"type\":\"Int64\",\"value\":100}},\"deps\":[\"limit\",\"used\"]}",
+      "name": "literal_absent_from_scope",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "semantic_rejection",
+        "code": "DEPENDENCY",
+        "detail": "explicit dependencies must equal selected direct reference set",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "schema_rejection",
+      "input": "{\"deps\":[\"limit\",\"used\"],\"left\":{\"ref\":\"used\"},\"op\":\"add\",\"right\":{\"ref\":\"limit\"},\"result_type\":\"Int64\"}",
+      "name": "unexpected_field",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "schema_rejection",
+        "code": "FIELDS",
+        "detail": "decision: exact fields required",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "schema_rejection",
+      "input": "{",
+      "name": "malformed_json",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "schema_rejection",
+        "code": "SERIALIZATION",
+        "detail": "{'code': 'SERIALIZATION', 'path': '$', 'detail': 'JSONDecodeError'}",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "schema_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"used\"},\"right\":{\"ref\":\"limit\"},\"deps\":[\"limit\",\"used\"]}x",
+      "name": "trailing_text",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "schema_rejection",
+        "code": "SERIALIZATION",
+        "detail": "{'code': 'SERIALIZATION', 'path': '$', 'detail': 'JSONDecodeError'}",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "schema_rejection",
+      "input": "{\"op\":\"add\",\"op\":\"le\",\"left\":{\"ref\":\"used\"},\"right\":{\"ref\":\"limit\"},\"deps\":[\"limit\",\"used\"]}",
+      "name": "duplicate_json_key",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "schema_rejection",
+        "code": "SERIALIZATION",
+        "detail": "{'code': 'SERIALIZATION', 'path': '$', 'detail': 'duplicate object key: op'}",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "schema_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"used\"},\"right\":{\"literal\":{\"type\":\"Int64\",\"value\":NaN}},\"deps\":[\"limit\",\"used\"]}",
+      "name": "nan_serialization",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "schema_rejection",
+        "code": "SERIALIZATION",
+        "detail": "{'code': 'SERIALIZATION', 'path': '$', 'detail': 'noninteger JSON number'}",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "b13190c9ab30f291b1cea1618accffd5b3babcccc40473d6260b8c5664aac033"
+    },
+    {
+      "expected_category": "semantic_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"used\"},\"right\":{\"ref\":\"limit\"},\"deps\":[\"limit\",\"used\"]}",
+      "name": "duplicate_scope_identity",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "semantic_rejection",
+        "code": "CAPTURE",
+        "detail": "{'code': 'CAPTURE', 'path': 'ContrastF01addle1', 'detail': 'used'}",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "2b35f4dc46732d6fb525efc6370608e0ae780287f389718400417d64c7a5d715"
+    },
+    {
+      "expected_category": "semantic_rejection",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"adjusted\"},\"right\":{\"literal\":{\"type\":\"Int64\",\"value\":1}},\"deps\":[\"adjusted\"]}",
+      "name": "parameter_prior_identity_collision",
+      "passed": true,
+      "result": {
+        "behavioral_acceptance": "NOT_REACHED",
+        "category": "semantic_rejection",
+        "code": "CAPTURE",
+        "detail": "{'code': 'CAPTURE', 'path': 'ContrastF06dependencies1', 'detail': 'adjusted'}",
+        "reconstructed_action_identity": null
+      },
+      "scope_identity": "e22a9373f03d6ed3ceae1a865faf68eece8eb1e91ee284884c3162abc355500d"
+    },
+    {
+      "expected_category": "valid_but_wrong",
+      "input": "{\"op\":\"le\",\"left\":{\"ref\":\"limit\"},\"right\":{\"ref\":\"used\"},\"deps\":[\"limit\",\"used\"]}",
+      "name": "wrong_order_valid_semantics",
+      "passed": true,
+      "result": {
+        "after_identity": "97443b17a0873b89cad0ad617d064721aaa585c7feeb7abcccab5bcb9eff7aa7",
+        "behavioral_acceptance": false,
+        "category": "valid_but_wrong",
+        "deterministic": true,
+        "exact_decision": false,
+        "observations": [
+          {
+            "actual": {
+              "status": "success",
+              "type": "Bool",
+              "value": false,
+              "work": 6
+            },
+            "expected": {
+              "status": "success",
+              "type": "Bool",
+              "value": true
+            },
+            "passed": false
+          },
+          {
+            "actual": {
+              "status": "success",
+              "type": "Bool",
+              "value": true,
+              "work": 6
+            },
+            "expected": {
+              "status": "success",
+              "type": "Bool",
+              "value": false
+            },
+            "passed": false
+          },
+          {
+            "actual": {
+              "status": "success",
+              "type": "Bool",
+              "value": true,
+              "work": 6
+            },
+            "expected": {
+              "status": "success",
+              "type": "Bool",
+              "value": true
+            },
+            "passed": true
+          }
+        ],
+        "reconstructed_action": {
+          "deps": [
+            "limit",
+            "used"
+          ],
+          "id": "selected",
+          "node": {
+            "expr": {
+              "le": [
+                {
+                  "ref": "limit"
+                },
+                {
+                  "ref": "used"
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Bool"
+        },
+        "reconstructed_action_identity": "96afe8ffdf2d2e8a173d2bb55783bc53b8e6c7b0fe07bde92317cb96680c7089",
+        "validation": {
+          "definitions": 1,
+          "status": "valid",
+          "stored_steps": 2
+        }
+      },
+      "scope_identity": "0af8d53beb1ab9c35e4b3912b35fde8956c5e706e96219eab3588e3a26fa9bc2"
+    },
+    {
+      "expected_category": "accepted",
+      "input": "{\"op\":\"add\",\"left\":{\"ref\":\"adjusted\"},\"right\":{\"ref\":\"adjusted\"},\"deps\":[\"adjusted\"]}",
+      "name": "repeated_operands_legal",
+      "passed": true,
+      "result": {
+        "after_identity": "8ffa8384eebbca1ecbc86f41d3f546d0ac8178a7658ad88bb0c22fcf25cf05b1",
+        "behavioral_acceptance": true,
+        "category": "accepted",
+        "deterministic": true,
+        "exact_decision": true,
+        "observations": [
+          {
+            "actual": {
+              "status": "success",
+              "type": "Int64",
+              "value": 2,
+              "work": 12
+            },
+            "expected": {
+              "status": "success",
+              "type": "Int64",
+              "value": 2
+            },
+            "passed": true
+          },
+          {
+            "actual": {
+              "status": "success",
+              "type": "Int64",
+              "value": 10,
+              "work": 12
+            },
+            "expected": {
+              "status": "success",
+              "type": "Int64",
+              "value": 10
+            },
+            "passed": true
+          },
+          {
+            "actual": {
+              "status": "success",
+              "type": "Int64",
+              "value": -4,
+              "work": 12
+            },
+            "expected": {
+              "status": "success",
+              "type": "Int64",
+              "value": -4
+            },
+            "passed": true
+          }
+        ],
+        "reconstructed_action": {
+          "deps": [
+            "adjusted"
+          ],
+          "id": "selected",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "ref": "adjusted"
+                },
+                {
+                  "ref": "adjusted"
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        },
+        "reconstructed_action_identity": "f63d48a3f57143852572af85d979003fc7ff4f4a0b5a8ff59b1e69b54015d2cf",
+        "validation": {
+          "definitions": 1,
+          "status": "valid",
+          "stored_steps": 4
+        }
+      },
+      "scope_identity": "9e955670ec2b78a34bcee921e1a19b10803b705491ed5fe4e1d870f7f859abae"
+    },
+    {
+      "expected_category": "accepted",
+      "input": "{\"op\":\"add\",\"left\":{\"literal\":{\"type\":\"Int64\",\"value\":9223372036854775807}},\"right\":{\"literal\":{\"type\":\"Int64\",\"value\":1}},\"deps\":[]}",
+      "name": "native_add_overflow",
+      "passed": true,
+      "result": {
+        "after_identity": "4e1a00b358e2a30a9fcf76f3832378974ac852a39ff7202f1fb3555154b3abde",
+        "behavioral_acceptance": true,
+        "category": "accepted",
+        "deterministic": true,
+        "exact_decision": true,
+        "observations": [
+          {
+            "actual": {
+              "code": "OVERFLOW",
+              "error": {
+                "code": "OVERFLOW",
+                "expected": [],
+                "node": "program/4f6d625894fed153a3ad947f3b69d5ab425efbabcd0c5f96cda868c1e5a1d248/invoke/ca49dfa8b0f08c893a030fe0fc19526323c555e0d2db90bcd57e09ba2de34732/selected",
+                "offset": 0,
+                "path": null,
+                "stage": "structure"
+              },
+              "status": "reject",
+              "work": 5
+            },
+            "expected": {
+              "code": "OVERFLOW",
+              "status": "reject"
+            },
+            "passed": true
+          }
+        ],
+        "reconstructed_action": {
+          "deps": [],
+          "id": "selected",
+          "node": {
+            "expr": {
+              "add": [
+                {
+                  "const": 9223372036854775807
+                },
+                {
+                  "const": 1
+                }
+              ]
+            },
+            "op": "value"
+          },
+          "type": "Int64"
+        },
+        "reconstructed_action_identity": "966ded85f8ced98355c1972e6933cf12cb7daabfcd8b2bad99037f8030b7fde6",
+        "validation": {
+          "definitions": 1,
+          "status": "valid",
+          "stored_steps": 2
+        }
+      },
+      "scope_identity": "5340b9df5f3ba4f052ebc232309aad079fb7f6b49d433252a62e375060a1aef0"
+    }
+  ]
+}
