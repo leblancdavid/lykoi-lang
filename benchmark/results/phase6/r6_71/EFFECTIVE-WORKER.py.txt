@@ -1,0 +1,122 @@
+def worker(track):
+    check_freeze()
+    import torch
+    from transformers import AutoTokenizer,GenerationConfig,LogitsProcessorList,StoppingCriteria,StoppingCriteriaList
+    from decoder import StructuralMask
+    precision=f.read(ROOT/'benchmark/results/phase6/r6_66/TRAINING-CONFIGURATION.json')['configuration']['precision_runtime']
+    torch.backends.cuda.matmul.allow_tf32=precision['allow_tf32_matmul']
+    torch.backends.cudnn.allow_tf32=precision['allow_tf32_cudnn']
+    torch.set_float32_matmul_precision(precision['float32_matmul_precision'])
+    torch.use_deterministic_algorithms(precision['deterministic_algorithms'])
+    f.q52.seed()
+    from peft import prepare_model_for_kbit_training,PeftModel
+    started=time.perf_counter()
+    source=(ROOT/'benchmark/results/phase6/r6_66/EFFECTIVE-WORKER.py.txt').read_text(encoding='utf-8')
+    nodes=[n for n in ast.parse(source).body if isinstance(n,ast.FunctionDef) and n.name in ('tensor_record','base_manifest','adapter_manifest')]
+    ns={}
+    exec(compile(ast.Module(body=nodes,type_ignores=[]),'frozen-readonly-manifest','exec'),ns)
+    model,quant=f.q52.load_base()
+    model=prepare_model_for_kbit_training(model,use_gradient_checkpointing=True,gradient_checkpointing_kwargs={'use_reentrant':False})
+    unwrapped=ns['base_manifest'](model)
+    historical=f.read(ROOT/'benchmark/results/phase6/r6_67/INITIAL-PARAMETERS.json')['base']
+    mapping=compare(unwrapped,historical,False)
+    write(track.upper()+'-UNWRAPPED-MAPPING.json',dict(mapping,actual_manifest=unwrapped,actual_identity=f.identity(unwrapped)))
+    if track=='adapter':
+        model=PeftModel.from_pretrained(model,f.ARTIFACTS/'step20/adapter',is_trainable=False,local_files_only=True)
+        wrapped=ns['base_manifest'](model)
+        mapping=compare(wrapped,historical,True)
+        compare(wrapped,unwrapped,True,False)
+        write('ADAPTER-WRAPPED-MAPPING.json',dict(mapping,actual_manifest=wrapped,actual_identity=f.identity(wrapped),
+              unwrapped_wrapped_value_identity=True))
+        adapter_before=ns['adapter_manifest'](model)
+        adapter_check=compare_adapter(adapter_before,f.read(ROOT/'benchmark/results/phase6/r6_67/TRAINING-RESULT.json')['trained_adapter_tensors'])
+        write('ADAPTER-TENSORS.json',dict(adapter_check,actual_manifest=adapter_before,actual_identity=f.identity(adapter_before)))
+    else:
+        adapter_before={}
+    model.eval()
+    for p in model.parameters(): p.requires_grad_(False)
+    before=ns['base_manifest'](model)
+    write(track.upper()+'-INITIALIZATION.json',dict(inference_only=True,all_parameters_frozen=all(not p.requires_grad for p in model.parameters()),base_identity=f.identity(before),adapter_identity=f.identity(adapter_before)))
+    load_seconds=time.perf_counter()-started
+    tokenizer=AutoTokenizer.from_pretrained(f.STORE/'checkpoint',local_files_only=True,trust_remote_code=False)
+    configuration=f.read(OUT/'GENERATION-CONFIGURATIONS.json')
+    generation=GenerationConfig.from_dict(configuration['inherited']['resolved_generation_configuration'])
+    rows=f.read(OUT/'DIAGNOSTICS.json')['records']
+    entries=[]
+    class Limit(StoppingCriteria):
+        def __init__(self,start): self.start=start
+        def __call__(self,input_ids,scores,**kwargs):
+            free,_=torch.cuda.mem_get_info()
+            assert time.perf_counter()-self.start<=120,'GENERATION_TIMEOUT'
+            assert torch.cuda.max_memory_reserved()<=8589934592 and free>=1610612736,'VRAM_LIMIT'
+            progress['token_ids']=input_ids[0,progress['prompt_length']:].cpu().tolist()
+            return False
+    for condition in 'ABC':
+        for row,prompt in zip(rows,configuration['prompts'][condition]):
+            x=tokenizer(tokenizer.apply_chat_template(prompt['messages'],tokenize=False,add_generation_prompt=True),add_special_tokens=False,return_tensors='pt').to('cuda')
+            assert x.input_ids.shape[1]==prompt['input_tokens']
+            mask=StructuralMask(tokenizer,x.input_ids.shape[1],lambda text:f.successor.validate_action(f.successor.c.load(text))) if condition=='C' else None
+            torch.cuda.empty_cache()
+            torch.cuda.reset_peak_memory_stats()
+            torch.cuda.synchronize()
+            begin=time.perf_counter()
+            forward=[0.0,0]
+            def pre(module,args):
+                torch.cuda.synchronize()
+                forward[1]=time.perf_counter()
+            def post(module,args,output):
+                torch.cuda.synchronize()
+                forward[0]+=time.perf_counter()-forward[1]
+            h1=model.register_forward_pre_hook(pre)
+            h2=model.register_forward_hook(post)
+            progress=dict(token_ids=[],prompt_length=x.input_ids.shape[1])
+            write(f'{track.upper()}-{condition}-{row["episode_id"]}-ATTEMPT.json',dict(track=track,condition=condition,episode_id=row['episode_id'],prompt_identity=prompt['identity'],attempt=1))
+            try:
+                with torch.inference_mode():
+                    generated=model.generate(**x,generation_config=generation,use_cache=False,
+                        logits_processor=LogitsProcessorList([mask] if mask else []),
+                        stopping_criteria=StoppingCriteriaList([Limit(begin)]))
+                torch.cuda.synchronize()
+                seconds=time.perf_counter()-begin
+                ids=generated[0,x.input_ids.shape[1]:].cpu().tolist()
+                eos=bool(ids and ids[-1] in generation.eos_token_id)
+                text=tokenizer.decode(ids[:-1] if eos else ids,skip_special_tokens=False)
+                write(f'{track.upper()}-{condition}-{row["episode_id"]}-RAW.json',dict(output=text,output_token_ids=ids,eos_terminated=eos))
+                if mask: assert mask.accepts(text)[0]
+                scoring_begin=time.perf_counter()
+                scores=f.score(text,row)
+                scoring_seconds=time.perf_counter()-scoring_begin
+                entry=dict(track=track,condition=condition,episode_id=row['episode_id'],prompt_identity=prompt['identity'],
+                    output=text,output_token_ids=ids,output_tokens=len(ids),eos_terminated=eos,truncated=not eos and len(ids)==128,
+                    inference_seconds=seconds,model_forward_seconds=forward[0],
+                    constraint_seconds=mask.seconds if mask else 0,decoder_setup_seconds=mask.setup_seconds if mask else 0,
+                    generation_other_seconds=seconds-forward[0]-(mask.seconds if mask else 0),
+                    constraint_calls=mask.calls if mask else 0,allowed_counts=mask.allowed_counts if mask else [],
+                    peak_allocated_bytes=torch.cuda.max_memory_allocated(),peak_reserved_bytes=torch.cuda.max_memory_reserved(),
+                    scores=scores,scoring_seconds=scoring_seconds,runtime_error=None)
+                if scores['schema_valid']:
+                    a=f.successor.c.load(text)
+                    t=time.perf_counter()
+                    try:
+                        f.successor.validate_action(a)
+                        entry['validation_seconds']=time.perf_counter()-t
+                        t=time.perf_counter()
+                        f.successor.assembly.apply(row['before'],a)
+                        entry['assembly_seconds']=time.perf_counter()-t
+                    except Exception as exc:
+                        entry['assembly_seconds']=time.perf_counter()-t
+                        entry['timing_diagnostic']=str(exc)
+                entries.append(entry)
+                write(f'{track.upper()}-{condition}-{row["episode_id"]}.json',entry)
+                print(track,condition,row['episode_id'],scores['schema_valid'],scores['accepted'],flush=True)
+                del generated
+            except BaseException as exc:
+                write(f'{track.upper()}-{condition}-{row["episode_id"]}-FAILURE.json',dict(runtime_error=str(exc),traceback=traceback.format_exc(),partial_token_ids=progress['token_ids'],partial_output=tokenizer.decode(progress['token_ids'],skip_special_tokens=False),retry=False))
+                raise
+            finally:
+                h1.remove(); h2.remove()
+                del x
+    assert ns['base_manifest'](model)==before
+    assert ns['adapter_manifest'](model)==adapter_before
+    write(track.upper()+'-RESULTS.json',dict(status='PASS',records=entries,model_load_seconds=load_seconds,quantization=quant,
+          base_tensor_identity=f.identity(before),adapter_tensor_identity=f.identity(adapter_before),parameters_unchanged=True))
