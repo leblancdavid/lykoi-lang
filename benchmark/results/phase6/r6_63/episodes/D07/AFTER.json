@@ -1,0 +1,101 @@
+{
+  "action_identity": "85dd10d9221c0d2901bb233d6fa28edd7b57b2bef7290383d6655a967ddd803e",
+  "identity": "fb17f018324ee8b0ea464a1e48dfb846727bea3f8d48a311231d39bd84c48074",
+  "package": {
+    "definitions": [
+      {
+        "dependencies": {},
+        "identity": "ab55ce56d340857dd5ef502b83ddeeae1fcbf6de98aadf594f1a27a3018f8676",
+        "name": "Fits",
+        "order": [
+          "selected"
+        ],
+        "params": [
+          {
+            "name": "requested",
+            "type": "Int64"
+          },
+          {
+            "name": "available",
+            "type": "Int64"
+          },
+          {
+            "name": "noise",
+            "type": "Bool"
+          }
+        ],
+        "result": {
+          "ref": "selected"
+        },
+        "result_type": "Bool",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "available",
+              "requested"
+            ],
+            "id": "selected",
+            "node": {
+              "expr": {
+                "le": [
+                  {
+                    "ref": "requested"
+                  },
+                  {
+                    "ref": "available"
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Bool"
+          }
+        ]
+      }
+    ],
+    "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+    "program": {
+      "dependencies": {
+        "Fits": "ab55ce56d340857dd5ef502b83ddeeae1fcbf6de98aadf594f1a27a3018f8676"
+      },
+      "identity": "467b89e4a37be2dd832a3eb130afeef545b44815b36d3e1ae465d2d932548c70",
+      "name": "HostEntry",
+      "order": [
+        "invoke"
+      ],
+      "params": [],
+      "result": {
+        "const": 0
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "invoke",
+          "node": {
+            "args": {
+              "available": {
+                "const": 0
+              },
+              "noise": {
+                "const": false
+              },
+              "requested": {
+                "const": 0
+              }
+            },
+            "identity": "ab55ce56d340857dd5ef502b83ddeeae1fcbf6de98aadf594f1a27a3018f8676",
+            "op": "compose",
+            "symbol": "Fits"
+          },
+          "type": "Bool"
+        }
+      ]
+    },
+    "version": "typed-composition-1"
+  },
+  "parent_identity": "1a9b7446fed86f9747e81cd90df8f117942c4b32d537319ba60bf0755f59026c",
+  "version": "r6.63-after-1"
+}

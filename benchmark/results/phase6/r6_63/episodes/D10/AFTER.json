@@ -1,0 +1,93 @@
+{
+  "action_identity": "c79a6ffe2d73a748440113c4d10e45257b72ef454d268c6b683134585f94d507",
+  "identity": "000313831a3c18448c0635a044b0849f8122a5a3528ec6a730443d623117f98e",
+  "package": {
+    "definitions": [
+      {
+        "dependencies": {},
+        "identity": "2045f5895788efc81e5f6eec4041e7ceee1f7432416f36b3f93d2074a03a10d7",
+        "name": "EnabledMatch",
+        "order": [
+          "selected"
+        ],
+        "params": [
+          {
+            "name": "enabled",
+            "type": "Bool"
+          },
+          {
+            "name": "override",
+            "type": "Bool"
+          }
+        ],
+        "result": {
+          "ref": "selected"
+        },
+        "result_type": "Bool",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "enabled"
+            ],
+            "id": "selected",
+            "node": {
+              "expr": {
+                "eq": [
+                  {
+                    "ref": "enabled"
+                  },
+                  {
+                    "const": true
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Bool"
+          }
+        ]
+      }
+    ],
+    "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+    "program": {
+      "dependencies": {
+        "EnabledMatch": "2045f5895788efc81e5f6eec4041e7ceee1f7432416f36b3f93d2074a03a10d7"
+      },
+      "identity": "a456d4e01d191d32beb395c637fa3dd1748e2b9feb3e5613881abac5b68550d5",
+      "name": "HostEntry",
+      "order": [
+        "invoke"
+      ],
+      "params": [],
+      "result": {
+        "const": 0
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "invoke",
+          "node": {
+            "args": {
+              "enabled": {
+                "const": false
+              },
+              "override": {
+                "const": false
+              }
+            },
+            "identity": "2045f5895788efc81e5f6eec4041e7ceee1f7432416f36b3f93d2074a03a10d7",
+            "op": "compose",
+            "symbol": "EnabledMatch"
+          },
+          "type": "Bool"
+        }
+      ]
+    },
+    "version": "typed-composition-1"
+  },
+  "parent_identity": "64b3e14c97b03976cf8e94764b4fe4a5975b661a530a0f45389cfcd31a388cbf",
+  "version": "r6.63-after-1"
+}

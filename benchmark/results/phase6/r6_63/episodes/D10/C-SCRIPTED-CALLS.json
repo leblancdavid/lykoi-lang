@@ -1,0 +1,161 @@
+{
+  "calls": [
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "definition": "EnabledMatch",
+            "inputs": [
+              {
+                "name": "enabled",
+                "type": "Bool"
+              },
+              {
+                "name": "override",
+                "type": "Bool"
+              }
+            ]
+          },
+          "name": "declare_input"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "EnabledMatch",
+          "finalized": false,
+          "ok": true
+        },
+        "seconds": 8.869997691363096e-05,
+        "success": true,
+        "syntax_valid": true
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "EnabledMatch",
+            "dependencies": [
+              "enabled"
+            ],
+            "expression": [
+              "eq",
+              "$enabled",
+              true
+            ],
+            "operation": "value",
+            "type": "Bool"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "EnabledMatch",
+          "finalized": false,
+          "ok": true
+        },
+        "seconds": 0.0001879000337794423,
+        "success": true,
+        "syntax_valid": true
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "definition": "EnabledMatch",
+            "result": "$selected",
+            "result_type": "Bool"
+          },
+          "name": "define_result"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "EnabledMatch",
+          "finalized": true,
+          "ok": true
+        },
+        "seconds": 8.320005144923925e-05,
+        "success": true,
+        "syntax_valid": true
+      }
+    }
+  ],
+  "observations": [
+    {
+      "actual": {
+        "status": "success",
+        "type": "Bool",
+        "value": false,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Bool",
+        "value": false
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Bool",
+        "value": true,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Bool",
+        "value": true
+      }
+    },
+    {
+      "actual": {
+        "code": "ARGUMENT_TYPE",
+        "status": "reject",
+        "work": 0
+      },
+      "expected": {
+        "code": "ARGUMENT_TYPE",
+        "status": "reject"
+      }
+    },
+    {
+      "actual": {
+        "code": "ARGUMENT_SHAPE",
+        "status": "reject",
+        "work": 0
+      },
+      "expected": {
+        "code": "ARGUMENT_SHAPE",
+        "status": "reject"
+      }
+    }
+  ],
+  "provenance": "scripted_interface_qualification_not_observed_ai",
+  "remote_mcp_transport_invocations": 0,
+  "selected_operation_call": {
+    "function": {
+      "arguments": {
+        "alias": "selected",
+        "definition": "EnabledMatch",
+        "dependencies": [
+          "enabled"
+        ],
+        "expression": [
+          "eq",
+          "$enabled",
+          true
+        ],
+        "operation": "value",
+        "type": "Bool"
+      },
+      "name": "apply_operation"
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+  "identity": "034582c9826051506bcdaf281adcf89d2970b6270ccb76caabdd692270ee8467",
+  "literals": [],
+  "name": "SubtotalReuse",
+  "order": [
+    "subtotal",
+    "mirror"
+  ],
+  "output_id": "selected",
+  "params": [
+    {
+      "name": "base",
+      "type": "Int64"
+    },
+    {
+      "name": "delta",
+      "type": "Int64"
+    },
+    {
+      "name": "adjustment",
+      "type": "Int64"
+    }
+  ],
+  "result_type": "Int64",
+  "steps": [
+    {
+      "deps": [
+        "base",
+        "delta"
+      ],
+      "id": "subtotal",
+      "node": {
+        "expr": {
+          "add": [
+            {
+              "ref": "base"
+            },
+            {
+              "ref": "delta"
+            }
+          ]
+        },
+        "op": "value"
+      },
+      "type": "Int64"
+    },
+    {
+      "deps": [
+        "base"
+      ],
+      "id": "mirror",
+      "node": {
+        "expr": {
+          "ref": "base"
+        },
+        "op": "value"
+      },
+      "type": "Int64"
+    }
+  ],
+  "version": "r6.63-state-1"
+}

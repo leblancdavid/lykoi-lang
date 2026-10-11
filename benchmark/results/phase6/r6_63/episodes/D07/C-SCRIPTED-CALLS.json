@@ -1,0 +1,184 @@
+{
+  "calls": [
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "definition": "Fits",
+            "inputs": [
+              {
+                "name": "requested",
+                "type": "Int64"
+              },
+              {
+                "name": "available",
+                "type": "Int64"
+              },
+              {
+                "name": "noise",
+                "type": "Bool"
+              }
+            ]
+          },
+          "name": "declare_input"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "Fits",
+          "finalized": false,
+          "ok": true
+        },
+        "seconds": 9.700004011392593e-05,
+        "success": true,
+        "syntax_valid": true
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "Fits",
+            "dependencies": [
+              "available",
+              "requested"
+            ],
+            "expression": [
+              "le",
+              "$requested",
+              "$available"
+            ],
+            "operation": "value",
+            "type": "Bool"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "Fits",
+          "finalized": false,
+          "ok": true
+        },
+        "seconds": 0.00018079997971653938,
+        "success": true,
+        "syntax_valid": true
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "definition": "Fits",
+            "result": "$selected",
+            "result_type": "Bool"
+          },
+          "name": "define_result"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "Fits",
+          "finalized": true,
+          "ok": true
+        },
+        "seconds": 8.17000400274992e-05,
+        "success": true,
+        "syntax_valid": true
+      }
+    }
+  ],
+  "observations": [
+    {
+      "actual": {
+        "status": "success",
+        "type": "Bool",
+        "value": true,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Bool",
+        "value": true
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Bool",
+        "value": false,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Bool",
+        "value": false
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Bool",
+        "value": true,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Bool",
+        "value": true
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Bool",
+        "value": true,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Bool",
+        "value": true
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Bool",
+        "value": false,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Bool",
+        "value": false
+      }
+    }
+  ],
+  "provenance": "scripted_interface_qualification_not_observed_ai",
+  "remote_mcp_transport_invocations": 0,
+  "selected_operation_call": {
+    "function": {
+      "arguments": {
+        "alias": "selected",
+        "definition": "Fits",
+        "dependencies": [
+          "available",
+          "requested"
+        ],
+        "expression": [
+          "le",
+          "$requested",
+          "$available"
+        ],
+        "operation": "value",
+        "type": "Bool"
+      },
+      "name": "apply_operation"
+    }
+  }
+}

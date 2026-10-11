@@ -1,0 +1,244 @@
+{
+  "calls": [
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "definition": "SubtotalReuse",
+            "inputs": [
+              {
+                "name": "base",
+                "type": "Int64"
+              },
+              {
+                "name": "delta",
+                "type": "Int64"
+              },
+              {
+                "name": "adjustment",
+                "type": "Int64"
+              }
+            ]
+          },
+          "name": "declare_input"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "SubtotalReuse",
+          "finalized": false,
+          "ok": true
+        },
+        "seconds": 0.00010409997776150703,
+        "success": true,
+        "syntax_valid": true
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "alias": "subtotal",
+            "definition": "SubtotalReuse",
+            "dependencies": [
+              "base",
+              "delta"
+            ],
+            "expression": [
+              "add",
+              "$base",
+              "$delta"
+            ],
+            "operation": "value",
+            "type": "Int64"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "SubtotalReuse",
+          "finalized": false,
+          "ok": true
+        },
+        "seconds": 0.00018970004748553038,
+        "success": true,
+        "syntax_valid": true
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "alias": "mirror",
+            "definition": "SubtotalReuse",
+            "dependencies": [
+              "base"
+            ],
+            "expression": "$base",
+            "operation": "value",
+            "type": "Int64"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "SubtotalReuse",
+          "finalized": false,
+          "ok": true
+        },
+        "seconds": 0.00010870001278817654,
+        "success": true,
+        "syntax_valid": true
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "SubtotalReuse",
+            "dependencies": [
+              "adjustment",
+              "subtotal"
+            ],
+            "expression": [
+              "add",
+              "$subtotal",
+              "$adjustment"
+            ],
+            "operation": "value",
+            "type": "Int64"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "SubtotalReuse",
+          "finalized": false,
+          "ok": true
+        },
+        "seconds": 0.0001669999910518527,
+        "success": true,
+        "syntax_valid": true
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "definition": "SubtotalReuse",
+            "result": "$selected",
+            "result_type": "Int64"
+          },
+          "name": "define_result"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "SubtotalReuse",
+          "finalized": true,
+          "ok": true
+        },
+        "seconds": 8.450006134808064e-05,
+        "success": true,
+        "syntax_valid": true
+      }
+    }
+  ],
+  "observations": [
+    {
+      "actual": {
+        "status": "success",
+        "type": "Int64",
+        "value": 9,
+        "work": 12
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": 9
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Int64",
+        "value": 0,
+        "work": 12
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": 0
+      }
+    },
+    {
+      "actual": {
+        "code": "OVERFLOW",
+        "error": {
+          "code": "OVERFLOW",
+          "expected": [],
+          "node": "program/72de1beac20ff18a52ad068cf51b71c0192c171f3f5fb50bb75249a37609e981/invoke/b29656819586c8d8d5b56cc2355757ce3e9938cd264023e4498c5252b7431f97/s003",
+          "offset": 0,
+          "path": null,
+          "stage": "structure"
+        },
+        "status": "reject",
+        "work": 11
+      },
+      "expected": {
+        "code": "OVERFLOW",
+        "status": "reject"
+      }
+    },
+    {
+      "actual": {
+        "code": "OVERFLOW",
+        "error": {
+          "code": "OVERFLOW",
+          "expected": [],
+          "node": "program/170c3a76aed8ce6415caf79f1de1c5540e4c0f37567616ef7159884a8d39f7a9/invoke/b29656819586c8d8d5b56cc2355757ce3e9938cd264023e4498c5252b7431f97/s001",
+          "offset": 0,
+          "path": null,
+          "stage": "structure"
+        },
+        "status": "reject",
+        "work": 5
+      },
+      "expected": {
+        "code": "OVERFLOW",
+        "status": "reject"
+      }
+    }
+  ],
+  "provenance": "scripted_interface_qualification_not_observed_ai",
+  "remote_mcp_transport_invocations": 0,
+  "selected_operation_call": {
+    "function": {
+      "arguments": {
+        "alias": "selected",
+        "definition": "SubtotalReuse",
+        "dependencies": [
+          "adjustment",
+          "subtotal"
+        ],
+        "expression": [
+          "add",
+          "$subtotal",
+          "$adjustment"
+        ],
+        "operation": "value",
+        "type": "Int64"
+      },
+      "name": "apply_operation"
+    }
+  }
+}

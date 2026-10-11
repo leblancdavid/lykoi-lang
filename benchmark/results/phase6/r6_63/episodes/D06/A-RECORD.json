@@ -1,0 +1,88 @@
+{
+  "context": {
+    "interface": {
+      "path": "experiments/typed_composition_r6_18/typed-composition-1.schema.json",
+      "sha256": "269dbd2e0c2c758afb8a1288a8e8ed6626001973e1ed69121904c3217638536b"
+    },
+    "messages": [
+      {
+        "content": "{\"before_state\":{\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"identity\":\"e882d8a2cd549ba8cbe6adc1b81ea45bb28027ded8b47429753cdf4993bf12e5\",\"literals\":[5,0],\"name\":\"LowerBound\",\"order\":[],\"output_id\":\"selected\",\"params\":[{\"name\":\"stock\",\"type\":\"Int64\"},{\"name\":\"spare\",\"type\":\"Int64\"}],\"result_type\":\"Bool\",\"steps\":[],\"version\":\"r6.63-state-1\"},\"instruction\":\"Select one native value step: add/le/eq, two direct refs or available literals, exact sorted deps. A returns the complete sealed package; B returns the selected step. Mechanical HostEntry calls task with typed defaults and returns Int64 zero.\",\"requirement\":\"Report whether five is no greater than the stored stock. Ignore the spare stock.\"}",
+        "role": "user"
+      }
+    ],
+    "state": null
+  },
+  "evidence": {
+    "acceptance": {
+      "path": "benchmark/results/phase6/r6_63/episodes/D06/ACCEPTANCE.json",
+      "sha256": "a4a7586ae90b4cace044b745bdbbe96d661252715282594581f879770de6e8cd"
+    },
+    "admission": {
+      "path": "benchmark/results/phase6/r6_63/episodes/D06/ADMISSION.json",
+      "sha256": "e06e7add12887666a435eae235d769dbade0fe523be82acacc68f798141016dd"
+    },
+    "observations": {
+      "path": "benchmark/results/phase6/r6_63/episodes/D06/OBSERVATIONS.json",
+      "sha256": "f06173e0054acf51569113bea4ab08fc36c10e5e633e01f8cb19207e67dd586b"
+    },
+    "status": "QUALIFIED",
+    "target_source": {
+      "path": "benchmark/results/phase6/r6_63/episodes/D06/ACTION.json",
+      "sha256": "fd027e6b4ed3361c2c533f2841f0ed9a3d61f1c04ef49453bdf4fe4c76ca72d8"
+    },
+    "validation": {
+      "path": "benchmark/results/phase6/r6_63/episodes/D06/VALIDATION.json",
+      "sha256": "2345f7ec62ac36b16a92bfadef2225262cdf9ba670263c616840675f5758b6a9"
+    }
+  },
+  "partition": {
+    "export": "training_allowed",
+    "ledger": {
+      "path": "benchmark/results/phase6/r6_63/PARTITIONS.json",
+      "sha256": "1fb3702a0798aff80150a3f05f070b79b9313b8ebeb2418489756deb3dc1fd88"
+    },
+    "split": "training_development"
+  },
+  "profile": {
+    "contract": {
+      "path": "benchmark/results/phase6/r6_63/SKILL-1.md",
+      "sha256": "69235fea192114c6018247374b3cd8a698895b4d3f2e1a811d756810c6d21648"
+    },
+    "foundation": {
+      "path": "experiments/semantic_interpreter/interpreter.py",
+      "sha256": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3"
+    },
+    "name": "r6.63-one-value-step"
+  },
+  "provenance": {
+    "class": "deterministic_expert_demonstration",
+    "limitations": [
+      "Same coordinator source/FRC/oracle/expert; capability-aware synthetic development data.",
+      "No observed AI semantic tool trajectory, invented reasoning, independent human review or Tier E qualification.",
+      "Finite acceptance and description-only future evaluation reservation."
+    ],
+    "trace": null
+  },
+  "requirement": {
+    "component": "R663_FIXED_TYPED_STEP",
+    "episode": "D06",
+    "family": "LOWER_BOUND",
+    "frc": {
+      "path": "benchmark/results/phase6/r6_63/episodes/D06/FRC.json",
+      "sha256": "acc01976df08e829c46727017bbff92686e476ea06f73d8ab949d344bd4f6542"
+    },
+    "source": {
+      "path": "benchmark/results/phase6/r6_63/episodes/D06/SOURCE.json",
+      "sha256": "c233726af0c7bef9782368c88bce271b57677c1ad6d7f2efe9d78208a3f75fec"
+    }
+  },
+  "target": {
+    "format": "complete_symbolic_package",
+    "schema": {
+      "path": "experiments/typed_composition_r6_18/typed-composition-1.schema.json",
+      "sha256": "269dbd2e0c2c758afb8a1288a8e8ed6626001973e1ed69121904c3217638536b"
+    },
+    "text": "{\"definitions\":[{\"dependencies\":{},\"identity\":\"e03c21255f926f8b0d670c326852d0fe8fa64142992c26b85a7f3543a38eddf4\",\"name\":\"LowerBound\",\"order\":[\"selected\"],\"params\":[{\"name\":\"stock\",\"type\":\"Int64\"},{\"name\":\"spare\",\"type\":\"Int64\"}],\"result\":{\"ref\":\"selected\"},\"result_type\":\"Bool\",\"revision\":1,\"steps\":[{\"deps\":[\"stock\"],\"id\":\"selected\",\"node\":{\"expr\":{\"le\":[{\"const\":5},{\"ref\":\"stock\"}]},\"op\":\"value\"},\"type\":\"Bool\"}]}],\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"program\":{\"dependencies\":{\"LowerBound\":\"e03c21255f926f8b0d670c326852d0fe8fa64142992c26b85a7f3543a38eddf4\"},\"identity\":\"367caa1afe55f2598269caa24a271c495eb4ba7b4588f2d007e00c566032120f\",\"name\":\"HostEntry\",\"order\":[\"invoke\"],\"params\":[],\"result\":{\"const\":0},\"result_type\":\"Int64\",\"revision\":1,\"steps\":[{\"deps\":[],\"id\":\"invoke\",\"node\":{\"args\":{\"spare\":{\"const\":0},\"stock\":{\"const\":0}},\"identity\":\"e03c21255f926f8b0d670c326852d0fe8fa64142992c26b85a7f3543a38eddf4\",\"op\":\"compose\",\"symbol\":\"LowerBound\"},\"type\":\"Bool\"}]},\"version\":\"typed-composition-1\"}"
+  },
+  "version": "lykoi-supervision-A-1"
+}

@@ -1,0 +1,207 @@
+{
+  "calls": [
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "definition": "PairSum",
+            "inputs": [
+              {
+                "name": "arrivals",
+                "type": "Int64"
+              },
+              {
+                "name": "reserve",
+                "type": "Int64"
+              },
+              {
+                "name": "decoy",
+                "type": "Bool"
+              }
+            ]
+          },
+          "name": "declare_input"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "PairSum",
+          "finalized": false,
+          "ok": true
+        },
+        "seconds": 0.00026400003116577864,
+        "success": true,
+        "syntax_valid": true
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "PairSum",
+            "dependencies": [
+              "arrivals",
+              "reserve"
+            ],
+            "expression": [
+              "add",
+              "$arrivals",
+              "$reserve"
+            ],
+            "operation": "value",
+            "type": "Int64"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "PairSum",
+          "finalized": false,
+          "ok": true
+        },
+        "seconds": 0.00033850001636892557,
+        "success": true,
+        "syntax_valid": true
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "definition": "PairSum",
+            "result": "$selected",
+            "result_type": "Int64"
+          },
+          "name": "define_result"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "PairSum",
+          "finalized": true,
+          "ok": true
+        },
+        "seconds": 0.00010200007818639278,
+        "success": true,
+        "syntax_valid": true
+      }
+    }
+  ],
+  "observations": [
+    {
+      "actual": {
+        "status": "success",
+        "type": "Int64",
+        "value": 5,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": 5
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Int64",
+        "value": 9223372036854775807,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": 9223372036854775807
+      }
+    },
+    {
+      "actual": {
+        "code": "OVERFLOW",
+        "error": {
+          "code": "OVERFLOW",
+          "expected": [],
+          "node": "program/c1e05a622a4deda3a3cb77159cc263d454fabbdaaa76d7cf2cba5cb94c44e885/invoke/1d33aff84d2b4f4ac66ae872c2a54240e9043906216854be2b44b6023f453052/s001",
+          "offset": 0,
+          "path": null,
+          "stage": "structure"
+        },
+        "status": "reject",
+        "work": 5
+      },
+      "expected": {
+        "code": "OVERFLOW",
+        "status": "reject"
+      }
+    },
+    {
+      "actual": {
+        "code": "OVERFLOW",
+        "error": {
+          "code": "OVERFLOW",
+          "expected": [],
+          "node": "program/f2807e28936bc918d5a90d04c0e2fbed0710f1f39a3f08266e26e2e2745c059a/invoke/1d33aff84d2b4f4ac66ae872c2a54240e9043906216854be2b44b6023f453052/s001",
+          "offset": 0,
+          "path": null,
+          "stage": "structure"
+        },
+        "status": "reject",
+        "work": 5
+      },
+      "expected": {
+        "code": "OVERFLOW",
+        "status": "reject"
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Int64",
+        "value": -9223372036854775807,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": -9223372036854775807
+      }
+    },
+    {
+      "actual": {
+        "code": "ARGUMENT_TYPE",
+        "status": "reject",
+        "work": 0
+      },
+      "expected": {
+        "code": "ARGUMENT_TYPE",
+        "status": "reject"
+      }
+    }
+  ],
+  "provenance": "scripted_interface_qualification_not_observed_ai",
+  "remote_mcp_transport_invocations": 0,
+  "selected_operation_call": {
+    "function": {
+      "arguments": {
+        "alias": "selected",
+        "definition": "PairSum",
+        "dependencies": [
+          "arrivals",
+          "reserve"
+        ],
+        "expression": [
+          "add",
+          "$arrivals",
+          "$reserve"
+        ],
+        "operation": "value",
+        "type": "Int64"
+      },
+      "name": "apply_operation"
+    }
+  }
+}

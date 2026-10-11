@@ -1,0 +1,137 @@
+{
+  "action_identity": "000607243c35d22f81011297b6122ce5158b99142f85d22ad10b13bf40d7d0a0",
+  "identity": "a4fc5479e39b8f7dc2b82eecbf6bbd126bd2421e2998be1918732810daa0a58f",
+  "package": {
+    "definitions": [
+      {
+        "dependencies": {},
+        "identity": "7d3b049fd9f94e79554be0be327db5c93710cfafb3d8ca25712fd60c3c9a0b53",
+        "name": "SubtotalReuse",
+        "order": [
+          "subtotal",
+          "mirror",
+          "selected"
+        ],
+        "params": [
+          {
+            "name": "base",
+            "type": "Int64"
+          },
+          {
+            "name": "delta",
+            "type": "Int64"
+          },
+          {
+            "name": "adjustment",
+            "type": "Int64"
+          }
+        ],
+        "result": {
+          "ref": "selected"
+        },
+        "result_type": "Int64",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "base",
+              "delta"
+            ],
+            "id": "subtotal",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "base"
+                  },
+                  {
+                    "ref": "delta"
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          },
+          {
+            "deps": [
+              "base"
+            ],
+            "id": "mirror",
+            "node": {
+              "expr": {
+                "ref": "base"
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          },
+          {
+            "deps": [
+              "adjustment",
+              "subtotal"
+            ],
+            "id": "selected",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "subtotal"
+                  },
+                  {
+                    "ref": "adjustment"
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ]
+      }
+    ],
+    "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+    "program": {
+      "dependencies": {
+        "SubtotalReuse": "7d3b049fd9f94e79554be0be327db5c93710cfafb3d8ca25712fd60c3c9a0b53"
+      },
+      "identity": "e2e47b96b9066ba05ac180bbe61da832f89a7e3ccc8de4f0d7f2de6202fd6ae0",
+      "name": "HostEntry",
+      "order": [
+        "invoke"
+      ],
+      "params": [],
+      "result": {
+        "const": 0
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "invoke",
+          "node": {
+            "args": {
+              "adjustment": {
+                "const": 0
+              },
+              "base": {
+                "const": 0
+              },
+              "delta": {
+                "const": 0
+              }
+            },
+            "identity": "7d3b049fd9f94e79554be0be327db5c93710cfafb3d8ca25712fd60c3c9a0b53",
+            "op": "compose",
+            "symbol": "SubtotalReuse"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    "version": "typed-composition-1"
+  },
+  "parent_identity": "034582c9826051506bcdaf281adcf89d2970b6270ccb76caabdd692270ee8467",
+  "version": "r6.63-after-1"
+}

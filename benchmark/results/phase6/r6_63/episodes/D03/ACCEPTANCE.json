@@ -1,0 +1,59 @@
+{
+  "cases": [
+    {
+      "arguments": {
+        "batch": 0,
+        "other": 99
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": 0
+      }
+    },
+    {
+      "arguments": {
+        "batch": -3,
+        "other": 3
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": -6
+      }
+    },
+    {
+      "arguments": {
+        "batch": 4611686018427387903,
+        "other": 0
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": 9223372036854775806
+      }
+    },
+    {
+      "arguments": {
+        "batch": 4611686018427387904,
+        "other": 0
+      },
+      "expected": {
+        "code": "OVERFLOW",
+        "status": "reject"
+      }
+    },
+    {
+      "arguments": {
+        "batch": -4611686018427387904,
+        "other": 1
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": -9223372036854775808
+      }
+    }
+  ],
+  "expected_origin": "literal source fixtures frozen before expert action"
+}

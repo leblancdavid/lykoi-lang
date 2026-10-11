@@ -1,0 +1,88 @@
+{
+  "context": {
+    "interface": {
+      "path": "experiments/typed_composition_r6_18/typed-composition-1.schema.json",
+      "sha256": "269dbd2e0c2c758afb8a1288a8e8ed6626001973e1ed69121904c3217638536b"
+    },
+    "messages": [
+      {
+        "content": "{\"before_state\":{\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"identity\":\"034582c9826051506bcdaf281adcf89d2970b6270ccb76caabdd692270ee8467\",\"literals\":[],\"name\":\"SubtotalReuse\",\"order\":[\"subtotal\",\"mirror\"],\"output_id\":\"selected\",\"params\":[{\"name\":\"base\",\"type\":\"Int64\"},{\"name\":\"delta\",\"type\":\"Int64\"},{\"name\":\"adjustment\",\"type\":\"Int64\"}],\"result_type\":\"Int64\",\"steps\":[{\"deps\":[\"base\",\"delta\"],\"id\":\"subtotal\",\"node\":{\"expr\":{\"add\":[{\"ref\":\"base\"},{\"ref\":\"delta\"}]},\"op\":\"value\"},\"type\":\"Int64\"},{\"deps\":[\"base\"],\"id\":\"mirror\",\"node\":{\"expr\":{\"ref\":\"base\"},\"op\":\"value\"},\"type\":\"Int64\"}],\"version\":\"r6.63-state-1\"},\"instruction\":\"Select one native value step: add/le/eq, two direct refs or available literals, exact sorted deps. A returns the complete sealed package; B returns the selected step. Mechanical HostEntry calls task with typed defaults and returns Int64 zero.\",\"requirement\":\"Add the stored adjustment to the already constructed subtotal. Use subtotal, not the original base or the unused mirror.\"}",
+        "role": "user"
+      }
+    ],
+    "state": null
+  },
+  "evidence": {
+    "acceptance": {
+      "path": "benchmark/results/phase6/r6_63/episodes/D04/ACCEPTANCE.json",
+      "sha256": "f83abe8fa605076e4d9d978e771003f411d3be7d1d429b0706c9ed6f968d33b2"
+    },
+    "admission": {
+      "path": "benchmark/results/phase6/r6_63/episodes/D04/ADMISSION.json",
+      "sha256": "e06e7add12887666a435eae235d769dbade0fe523be82acacc68f798141016dd"
+    },
+    "observations": {
+      "path": "benchmark/results/phase6/r6_63/episodes/D04/OBSERVATIONS.json",
+      "sha256": "915110d5ef26a1ed1d35b7ad3b96f44153047e13123af4c09f789c7c6fbb99f2"
+    },
+    "status": "QUALIFIED",
+    "target_source": {
+      "path": "benchmark/results/phase6/r6_63/episodes/D04/ACTION.json",
+      "sha256": "2ec08239a69fd2e6dae6fc348dbda7c84dced4d100d9f7423f9a42a30091e8cc"
+    },
+    "validation": {
+      "path": "benchmark/results/phase6/r6_63/episodes/D04/VALIDATION.json",
+      "sha256": "d49b17e78b865a196cc496ce99dc51d5fe831b65cf1e0231aae3309cbfe4b77a"
+    }
+  },
+  "partition": {
+    "export": "training_allowed",
+    "ledger": {
+      "path": "benchmark/results/phase6/r6_63/PARTITIONS.json",
+      "sha256": "1fb3702a0798aff80150a3f05f070b79b9313b8ebeb2418489756deb3dc1fd88"
+    },
+    "split": "training_development"
+  },
+  "profile": {
+    "contract": {
+      "path": "benchmark/results/phase6/r6_63/SKILL-1.md",
+      "sha256": "69235fea192114c6018247374b3cd8a698895b4d3f2e1a811d756810c6d21648"
+    },
+    "foundation": {
+      "path": "experiments/semantic_interpreter/interpreter.py",
+      "sha256": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3"
+    },
+    "name": "r6.63-one-value-step"
+  },
+  "provenance": {
+    "class": "deterministic_expert_demonstration",
+    "limitations": [
+      "Same coordinator source/FRC/oracle/expert; capability-aware synthetic development data.",
+      "No observed AI semantic tool trajectory, invented reasoning, independent human review or Tier E qualification.",
+      "Finite acceptance and description-only future evaluation reservation."
+    ],
+    "trace": null
+  },
+  "requirement": {
+    "component": "R663_FIXED_TYPED_STEP",
+    "episode": "D04",
+    "family": "SUBTOTAL_REUSE",
+    "frc": {
+      "path": "benchmark/results/phase6/r6_63/episodes/D04/FRC.json",
+      "sha256": "c9f64ba6028ee3eb9fa4773345ee97bb4ccdce1292f284bde2210732e3e027ca"
+    },
+    "source": {
+      "path": "benchmark/results/phase6/r6_63/episodes/D04/SOURCE.json",
+      "sha256": "56a47019a70162cc8948a9b3b960ebe90a4ed7676eea73b261dd055c6af880f8"
+    }
+  },
+  "target": {
+    "format": "complete_symbolic_package",
+    "schema": {
+      "path": "experiments/typed_composition_r6_18/typed-composition-1.schema.json",
+      "sha256": "269dbd2e0c2c758afb8a1288a8e8ed6626001973e1ed69121904c3217638536b"
+    },
+    "text": "{\"definitions\":[{\"dependencies\":{},\"identity\":\"7d3b049fd9f94e79554be0be327db5c93710cfafb3d8ca25712fd60c3c9a0b53\",\"name\":\"SubtotalReuse\",\"order\":[\"subtotal\",\"mirror\",\"selected\"],\"params\":[{\"name\":\"base\",\"type\":\"Int64\"},{\"name\":\"delta\",\"type\":\"Int64\"},{\"name\":\"adjustment\",\"type\":\"Int64\"}],\"result\":{\"ref\":\"selected\"},\"result_type\":\"Int64\",\"revision\":1,\"steps\":[{\"deps\":[\"base\",\"delta\"],\"id\":\"subtotal\",\"node\":{\"expr\":{\"add\":[{\"ref\":\"base\"},{\"ref\":\"delta\"}]},\"op\":\"value\"},\"type\":\"Int64\"},{\"deps\":[\"base\"],\"id\":\"mirror\",\"node\":{\"expr\":{\"ref\":\"base\"},\"op\":\"value\"},\"type\":\"Int64\"},{\"deps\":[\"adjustment\",\"subtotal\"],\"id\":\"selected\",\"node\":{\"expr\":{\"add\":[{\"ref\":\"subtotal\"},{\"ref\":\"adjustment\"}]},\"op\":\"value\"},\"type\":\"Int64\"}]}],\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"program\":{\"dependencies\":{\"SubtotalReuse\":\"7d3b049fd9f94e79554be0be327db5c93710cfafb3d8ca25712fd60c3c9a0b53\"},\"identity\":\"e2e47b96b9066ba05ac180bbe61da832f89a7e3ccc8de4f0d7f2de6202fd6ae0\",\"name\":\"HostEntry\",\"order\":[\"invoke\"],\"params\":[],\"result\":{\"const\":0},\"result_type\":\"Int64\",\"revision\":1,\"steps\":[{\"deps\":[],\"id\":\"invoke\",\"node\":{\"args\":{\"adjustment\":{\"const\":0},\"base\":{\"const\":0},\"delta\":{\"const\":0}},\"identity\":\"7d3b049fd9f94e79554be0be327db5c93710cfafb3d8ca25712fd60c3c9a0b53\",\"op\":\"compose\",\"symbol\":\"SubtotalReuse\"},\"type\":\"Int64\"}]},\"version\":\"typed-composition-1\"}"
+  },
+  "version": "lykoi-supervision-A-1"
+}

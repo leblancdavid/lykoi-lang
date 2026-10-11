@@ -1,0 +1,184 @@
+{
+  "calls": [
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "definition": "ReadingMatch",
+            "inputs": [
+              {
+                "name": "recorded",
+                "type": "Int64"
+              },
+              {
+                "name": "reference",
+                "type": "Int64"
+              },
+              {
+                "name": "unused",
+                "type": "Int64"
+              }
+            ]
+          },
+          "name": "declare_input"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "ReadingMatch",
+          "finalized": false,
+          "ok": true
+        },
+        "seconds": 0.0001086000120267272,
+        "success": true,
+        "syntax_valid": true
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "ReadingMatch",
+            "dependencies": [
+              "recorded",
+              "reference"
+            ],
+            "expression": [
+              "eq",
+              "$recorded",
+              "$reference"
+            ],
+            "operation": "value",
+            "type": "Bool"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "ReadingMatch",
+          "finalized": false,
+          "ok": true
+        },
+        "seconds": 0.0001922999508678913,
+        "success": true,
+        "syntax_valid": true
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "definition": "ReadingMatch",
+            "result": "$selected",
+            "result_type": "Bool"
+          },
+          "name": "define_result"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "ReadingMatch",
+          "finalized": true,
+          "ok": true
+        },
+        "seconds": 8.859997615218163e-05,
+        "success": true,
+        "syntax_valid": true
+      }
+    }
+  ],
+  "observations": [
+    {
+      "actual": {
+        "status": "success",
+        "type": "Bool",
+        "value": true,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Bool",
+        "value": true
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Bool",
+        "value": false,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Bool",
+        "value": false
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Bool",
+        "value": false,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Bool",
+        "value": false
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Bool",
+        "value": true,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Bool",
+        "value": true
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Bool",
+        "value": false,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Bool",
+        "value": false
+      }
+    }
+  ],
+  "provenance": "scripted_interface_qualification_not_observed_ai",
+  "remote_mcp_transport_invocations": 0,
+  "selected_operation_call": {
+    "function": {
+      "arguments": {
+        "alias": "selected",
+        "definition": "ReadingMatch",
+        "dependencies": [
+          "recorded",
+          "reference"
+        ],
+        "expression": [
+          "eq",
+          "$recorded",
+          "$reference"
+        ],
+        "operation": "value",
+        "type": "Bool"
+      },
+      "name": "apply_operation"
+    }
+  }
+}

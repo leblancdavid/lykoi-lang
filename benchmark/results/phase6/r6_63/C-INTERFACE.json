@@ -1,0 +1,409 @@
+{
+  "actual_ai_semantic_trajectories": 0,
+  "availability": "Existing historical semantic MCP dispatcher supports this step schema; it is not exposed as a Lykoi tool in this active harness.",
+  "endpoint_gap": "Existing validate_candidate requires Int64 target. Bool apply_operation/define_result works, but full Bool endpoint finalization is not claimed.",
+  "entries": [
+    {
+      "calls": 3,
+      "episode": "D01",
+      "operation_selection_compatible": true,
+      "selected_call": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "PairSum",
+            "dependencies": [
+              "arrivals",
+              "reserve"
+            ],
+            "expression": [
+              "add",
+              "$arrivals",
+              "$reserve"
+            ],
+            "operation": "value",
+            "type": "Int64"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "target_result_type": "Int64",
+      "typed_operation_success": true
+    },
+    {
+      "calls": 3,
+      "episode": "D02",
+      "operation_selection_compatible": true,
+      "selected_call": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "SpareFirst",
+            "dependencies": [
+              "count"
+            ],
+            "expression": [
+              "add",
+              1,
+              "$count"
+            ],
+            "operation": "value",
+            "type": "Int64"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "target_result_type": "Int64",
+      "typed_operation_success": true
+    },
+    {
+      "calls": 3,
+      "episode": "D03",
+      "operation_selection_compatible": true,
+      "selected_call": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "DoubleBatch",
+            "dependencies": [
+              "batch"
+            ],
+            "expression": [
+              "add",
+              "$batch",
+              "$batch"
+            ],
+            "operation": "value",
+            "type": "Int64"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "target_result_type": "Int64",
+      "typed_operation_success": true
+    },
+    {
+      "calls": 5,
+      "episode": "D04",
+      "operation_selection_compatible": true,
+      "selected_call": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "SubtotalReuse",
+            "dependencies": [
+              "adjustment",
+              "subtotal"
+            ],
+            "expression": [
+              "add",
+              "$subtotal",
+              "$adjustment"
+            ],
+            "operation": "value",
+            "type": "Int64"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "target_result_type": "Int64",
+      "typed_operation_success": true
+    },
+    {
+      "calls": 3,
+      "episode": "D05",
+      "operation_selection_compatible": true,
+      "selected_call": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "UpperBound",
+            "dependencies": [
+              "load"
+            ],
+            "expression": [
+              "le",
+              "$load",
+              5
+            ],
+            "operation": "value",
+            "type": "Bool"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "target_result_type": "Bool",
+      "typed_operation_success": true
+    },
+    {
+      "calls": 3,
+      "episode": "D06",
+      "operation_selection_compatible": true,
+      "selected_call": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "LowerBound",
+            "dependencies": [
+              "stock"
+            ],
+            "expression": [
+              "le",
+              5,
+              "$stock"
+            ],
+            "operation": "value",
+            "type": "Bool"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "target_result_type": "Bool",
+      "typed_operation_success": true
+    },
+    {
+      "calls": 3,
+      "episode": "D07",
+      "operation_selection_compatible": true,
+      "selected_call": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "Fits",
+            "dependencies": [
+              "available",
+              "requested"
+            ],
+            "expression": [
+              "le",
+              "$requested",
+              "$available"
+            ],
+            "operation": "value",
+            "type": "Bool"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "target_result_type": "Bool",
+      "typed_operation_success": true
+    },
+    {
+      "calls": 3,
+      "episode": "D08",
+      "operation_selection_compatible": true,
+      "selected_call": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "ReadingMatch",
+            "dependencies": [
+              "recorded",
+              "reference"
+            ],
+            "expression": [
+              "eq",
+              "$recorded",
+              "$reference"
+            ],
+            "operation": "value",
+            "type": "Bool"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "target_result_type": "Bool",
+      "typed_operation_success": true
+    },
+    {
+      "calls": 3,
+      "episode": "D09",
+      "operation_selection_compatible": true,
+      "selected_call": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "Acknowledgments",
+            "dependencies": [
+              "first",
+              "second"
+            ],
+            "expression": [
+              "eq",
+              "$first",
+              "$second"
+            ],
+            "operation": "value",
+            "type": "Bool"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "target_result_type": "Bool",
+      "typed_operation_success": true
+    },
+    {
+      "calls": 3,
+      "episode": "D10",
+      "operation_selection_compatible": true,
+      "selected_call": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "EnabledMatch",
+            "dependencies": [
+              "enabled"
+            ],
+            "expression": [
+              "eq",
+              "$enabled",
+              true
+            ],
+            "operation": "value",
+            "type": "Bool"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "target_result_type": "Bool",
+      "typed_operation_success": true
+    }
+  ],
+  "live_transport_tested": false,
+  "new_mcp_capabilities": 0,
+  "schema_source": {
+    "path": "benchmark/results/phase6/r6_25/TOOLS.json",
+    "sha256": "10518cd45428ae96495ee01474d373d0eefb4f9909182335aa6fdf48222c6b5e"
+  },
+  "scripted_operation_calls": 12,
+  "selected_calls": 10,
+  "status": "BOUNDED_OPERATION_SELECTION_COMPATIBLE",
+  "tool_call_schema": {
+    "function": {
+      "description": "Append one ordered operation. Expressions are scalar literals, $prior_alias, or [add|le|eq,operand,operand]. Exact dependencies required. Maximum8 steps/definition. compose may call only a completed definition.",
+      "name": "apply_operation",
+      "parameters": {
+        "oneOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "alias": {
+                "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$",
+                "type": "string"
+              },
+              "definition": {
+                "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$",
+                "type": "string"
+              },
+              "dependencies": {
+                "items": {
+                  "pattern": "^[A-Za-z][A-Za-z0-9_]{0,31}$",
+                  "type": "string"
+                },
+                "maxItems": 8,
+                "type": "array",
+                "uniqueItems": true
+              },
+              "expression": {
+                "oneOf": [
+                  {
+                    "oneOf": [
+                      {
+                        "maximum": 9223372036854775807,
+                        "minimum": -9223372036854775808,
+                        "type": "integer"
+                      },
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  {
+                    "items": false,
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "prefixItems": [
+                      {
+                        "enum": [
+                          "add",
+                          "le",
+                          "eq"
+                        ]
+                      },
+                      {
+                        "oneOf": [
+                          {
+                            "maximum": 9223372036854775807,
+                            "minimum": -9223372036854775808,
+                            "type": "integer"
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$",
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      {
+                        "oneOf": [
+                          {
+                            "maximum": 9223372036854775807,
+                            "minimum": -9223372036854775808,
+                            "type": "integer"
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "pattern": "^\\$[A-Za-z][A-Za-z0-9_]{0,31}$",
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    ],
+                    "type": "array"
+                  }
+                ]
+              },
+              "operation": {
+                "const": "value"
+              },
+              "type": {
+                "enum": [
+                  "Int64",
+                  "Bool",
+                  "Unit"
+                ]
+              }
+            },
+            "required": [
+              "definition",
+              "alias",
+              "operation",
+              "type",
+              "expression",
+              "dependencies"
+            ],
+            "type": "object"
+          }
+        ]
+      }
+    },
+    "type": "function"
+  }
+}

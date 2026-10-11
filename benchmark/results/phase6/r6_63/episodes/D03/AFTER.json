@@ -1,0 +1,93 @@
+{
+  "action_identity": "91071445c2d5a7eedf868dde3fa09280f8eafb61f6dc88ec53bc8d3eedf9405a",
+  "identity": "311b9ce0e94e37813c4ea5946813bf4f32ea8d9e2d30cf4bad41066f69691e8b",
+  "package": {
+    "definitions": [
+      {
+        "dependencies": {},
+        "identity": "d998d84de1cb9dd121d6d527b8a9599ada83e3f2a2ea33f57ae342c9875e5cef",
+        "name": "DoubleBatch",
+        "order": [
+          "selected"
+        ],
+        "params": [
+          {
+            "name": "batch",
+            "type": "Int64"
+          },
+          {
+            "name": "other",
+            "type": "Int64"
+          }
+        ],
+        "result": {
+          "ref": "selected"
+        },
+        "result_type": "Int64",
+        "revision": 1,
+        "steps": [
+          {
+            "deps": [
+              "batch"
+            ],
+            "id": "selected",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "batch"
+                  },
+                  {
+                    "ref": "batch"
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ]
+      }
+    ],
+    "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+    "program": {
+      "dependencies": {
+        "DoubleBatch": "d998d84de1cb9dd121d6d527b8a9599ada83e3f2a2ea33f57ae342c9875e5cef"
+      },
+      "identity": "00e5a395c446d362ca540345489f8cef327b7a98af4b805ee20c557fd4fc3488",
+      "name": "HostEntry",
+      "order": [
+        "invoke"
+      ],
+      "params": [],
+      "result": {
+        "const": 0
+      },
+      "result_type": "Int64",
+      "revision": 1,
+      "steps": [
+        {
+          "deps": [],
+          "id": "invoke",
+          "node": {
+            "args": {
+              "batch": {
+                "const": 0
+              },
+              "other": {
+                "const": 0
+              }
+            },
+            "identity": "d998d84de1cb9dd121d6d527b8a9599ada83e3f2a2ea33f57ae342c9875e5cef",
+            "op": "compose",
+            "symbol": "DoubleBatch"
+          },
+          "type": "Int64"
+        }
+      ]
+    },
+    "version": "typed-composition-1"
+  },
+  "parent_identity": "a7f40f372afaa64513a5a8e0ab742d3102f3d0b449b5815d45a3df11f0ddfafb",
+  "version": "r6.63-after-1"
+}

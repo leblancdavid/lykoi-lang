@@ -1,0 +1,48 @@
+{
+  "cases": [
+    {
+      "arguments": {
+        "bonus": 7,
+        "count": 0
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": 1
+      }
+    },
+    {
+      "arguments": {
+        "bonus": 0,
+        "count": 9223372036854775807
+      },
+      "expected": {
+        "code": "OVERFLOW",
+        "status": "reject"
+      }
+    },
+    {
+      "arguments": {
+        "bonus": 9,
+        "count": -9223372036854775808
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": -9223372036854775807
+      }
+    },
+    {
+      "arguments": {
+        "bonus": 1,
+        "count": -1
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": 0
+      }
+    }
+  ],
+  "expected_origin": "literal source fixtures frozen before expert action"
+}

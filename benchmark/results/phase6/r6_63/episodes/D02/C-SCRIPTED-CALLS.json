@@ -1,0 +1,171 @@
+{
+  "calls": [
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "definition": "SpareFirst",
+            "inputs": [
+              {
+                "name": "count",
+                "type": "Int64"
+              },
+              {
+                "name": "bonus",
+                "type": "Int64"
+              }
+            ]
+          },
+          "name": "declare_input"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "SpareFirst",
+          "finalized": false,
+          "ok": true
+        },
+        "seconds": 9.980006143450737e-05,
+        "success": true,
+        "syntax_valid": true
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "SpareFirst",
+            "dependencies": [
+              "count"
+            ],
+            "expression": [
+              "add",
+              1,
+              "$count"
+            ],
+            "operation": "value",
+            "type": "Int64"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "SpareFirst",
+          "finalized": false,
+          "ok": true
+        },
+        "seconds": 0.00020589993800967932,
+        "success": true,
+        "syntax_valid": true
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "definition": "SpareFirst",
+            "result": "$selected",
+            "result_type": "Int64"
+          },
+          "name": "define_result"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "SpareFirst",
+          "finalized": true,
+          "ok": true
+        },
+        "seconds": 8.340005297213793e-05,
+        "success": true,
+        "syntax_valid": true
+      }
+    }
+  ],
+  "observations": [
+    {
+      "actual": {
+        "status": "success",
+        "type": "Int64",
+        "value": 1,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": 1
+      }
+    },
+    {
+      "actual": {
+        "code": "OVERFLOW",
+        "error": {
+          "code": "OVERFLOW",
+          "expected": [],
+          "node": "program/17e6dafd7f3bc23a284a573437e06a30c0d176cf8da850c7098186e6b950d7d4/invoke/43f761fb0c763117d6754d465adc87aa66a292a671b6949429025a59cc0709cd/s001",
+          "offset": 0,
+          "path": null,
+          "stage": "structure"
+        },
+        "status": "reject",
+        "work": 5
+      },
+      "expected": {
+        "code": "OVERFLOW",
+        "status": "reject"
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Int64",
+        "value": -9223372036854775807,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": -9223372036854775807
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Int64",
+        "value": 0,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": 0
+      }
+    }
+  ],
+  "provenance": "scripted_interface_qualification_not_observed_ai",
+  "remote_mcp_transport_invocations": 0,
+  "selected_operation_call": {
+    "function": {
+      "arguments": {
+        "alias": "selected",
+        "definition": "SpareFirst",
+        "dependencies": [
+          "count"
+        ],
+        "expression": [
+          "add",
+          1,
+          "$count"
+        ],
+        "operation": "value",
+        "type": "Int64"
+      },
+      "name": "apply_operation"
+    }
+  }
+}

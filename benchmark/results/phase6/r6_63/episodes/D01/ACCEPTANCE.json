@@ -1,0 +1,74 @@
+{
+  "cases": [
+    {
+      "arguments": {
+        "arrivals": 2,
+        "decoy": true,
+        "reserve": 3
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": 5
+      }
+    },
+    {
+      "arguments": {
+        "arrivals": 9223372036854775807,
+        "decoy": false,
+        "reserve": 0
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": 9223372036854775807
+      }
+    },
+    {
+      "arguments": {
+        "arrivals": 9223372036854775807,
+        "decoy": false,
+        "reserve": 1
+      },
+      "expected": {
+        "code": "OVERFLOW",
+        "status": "reject"
+      }
+    },
+    {
+      "arguments": {
+        "arrivals": -9223372036854775808,
+        "decoy": true,
+        "reserve": -1
+      },
+      "expected": {
+        "code": "OVERFLOW",
+        "status": "reject"
+      }
+    },
+    {
+      "arguments": {
+        "arrivals": -9223372036854775808,
+        "decoy": false,
+        "reserve": 1
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": -9223372036854775807
+      }
+    },
+    {
+      "arguments": {
+        "arrivals": true,
+        "decoy": false,
+        "reserve": 1
+      },
+      "expected": {
+        "code": "ARGUMENT_TYPE",
+        "status": "reject"
+      }
+    }
+  ],
+  "expected_origin": "literal source fixtures frozen before expert action"
+}

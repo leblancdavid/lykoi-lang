@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object", "additionalProperties": false,
+  "required": ["id", "type", "deps", "node"],
+  "properties": {
+    "id": {"const": "selected"},
+    "type": {"enum": ["Int64", "Bool"]},
+    "deps": {"type": "array", "uniqueItems": true, "maxItems": 2, "items": {"type": "string"}},
+    "node": {"type": "object", "additionalProperties": false, "required": ["op", "expr"],
+      "properties": {"op": {"const": "value"}, "expr": {"type": "object", "minProperties": 1, "maxProperties": 1,
+        "additionalProperties": false, "properties": {
+          "add": {"$ref": "#/$defs/pair"}, "le": {"$ref": "#/$defs/pair"}, "eq": {"$ref": "#/$defs/pair"}
+        }}}}
+  },
+  "$defs": {
+    "operand": {"oneOf": [
+      {"type": "object", "additionalProperties": false, "required": ["ref"], "properties": {"ref": {"type": "string"}}},
+      {"type": "object", "additionalProperties": false, "required": ["const"], "properties": {"const": {"oneOf": [
+        {"type": "integer", "minimum": -9223372036854775808, "maximum": 9223372036854775807}, {"type": "boolean"}, {"type": "null"}
+      ]}}}
+    ]},
+    "pair": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/operand"}}
+  }
+}

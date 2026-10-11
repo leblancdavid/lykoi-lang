@@ -1,0 +1,184 @@
+{
+  "calls": [
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "definition": "DoubleBatch",
+            "inputs": [
+              {
+                "name": "batch",
+                "type": "Int64"
+              },
+              {
+                "name": "other",
+                "type": "Int64"
+              }
+            ]
+          },
+          "name": "declare_input"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "DoubleBatch",
+          "finalized": false,
+          "ok": true
+        },
+        "seconds": 9.600003249943256e-05,
+        "success": true,
+        "syntax_valid": true
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "alias": "selected",
+            "definition": "DoubleBatch",
+            "dependencies": [
+              "batch"
+            ],
+            "expression": [
+              "add",
+              "$batch",
+              "$batch"
+            ],
+            "operation": "value",
+            "type": "Int64"
+          },
+          "name": "apply_operation"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "DoubleBatch",
+          "finalized": false,
+          "ok": true
+        },
+        "seconds": 0.00018750003073364496,
+        "success": true,
+        "syntax_valid": true
+      }
+    },
+    {
+      "request": {
+        "function": {
+          "arguments": {
+            "definition": "DoubleBatch",
+            "result": "$selected",
+            "result_type": "Int64"
+          },
+          "name": "define_result"
+        }
+      },
+      "response": {
+        "arguments_valid": true,
+        "response": {
+          "definition": "DoubleBatch",
+          "finalized": true,
+          "ok": true
+        },
+        "seconds": 8.369993884116411e-05,
+        "success": true,
+        "syntax_valid": true
+      }
+    }
+  ],
+  "observations": [
+    {
+      "actual": {
+        "status": "success",
+        "type": "Int64",
+        "value": 0,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": 0
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Int64",
+        "value": -6,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": -6
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Int64",
+        "value": 9223372036854775806,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": 9223372036854775806
+      }
+    },
+    {
+      "actual": {
+        "code": "OVERFLOW",
+        "error": {
+          "code": "OVERFLOW",
+          "expected": [],
+          "node": "program/334796ef9a86b9e92d1645fd0c34314d319ef544441ff96719f474d6066e7994/invoke/55471ff13e01639dc34d523354ae6eeb329ab4df92cefbdc83a51c67d71983d4/s001",
+          "offset": 0,
+          "path": null,
+          "stage": "structure"
+        },
+        "status": "reject",
+        "work": 5
+      },
+      "expected": {
+        "code": "OVERFLOW",
+        "status": "reject"
+      }
+    },
+    {
+      "actual": {
+        "status": "success",
+        "type": "Int64",
+        "value": -9223372036854775808,
+        "work": 6
+      },
+      "expected": {
+        "status": "success",
+        "type": "Int64",
+        "value": -9223372036854775808
+      }
+    }
+  ],
+  "provenance": "scripted_interface_qualification_not_observed_ai",
+  "remote_mcp_transport_invocations": 0,
+  "selected_operation_call": {
+    "function": {
+      "arguments": {
+        "alias": "selected",
+        "definition": "DoubleBatch",
+        "dependencies": [
+          "batch"
+        ],
+        "expression": [
+          "add",
+          "$batch",
+          "$batch"
+        ],
+        "operation": "value",
+        "type": "Int64"
+      },
+      "name": "apply_operation"
+    }
+  }
+}
