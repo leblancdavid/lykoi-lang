@@ -1,0 +1,353 @@
+{
+  "chat_template": "{%- if tools %}\n    {{- '<|im_start|>system\\n' }}\n    {%- if messages[0]['role'] == 'system' %}\n        {{- messages[0]['content'] }}\n    {%- else %}\n        {{- 'You are Qwen, created by Alibaba Cloud. You are a helpful assistant.' }}\n    {%- endif %}\n    {{- \"\\n\\n# Tools\\n\\nYou may call one or more functions to assist with the user query.\\n\\nYou are provided with function signatures within <tools></tools> XML tags:\\n<tools>\" }}\n    {%- for tool in tools %}\n        {{- \"\\n\" }}\n        {{- tool | tojson }}\n    {%- endfor %}\n    {{- \"\\n</tools>\\n\\nFor each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\\n<tool_call>\\n{\\\"name\\\": <function-name>, \\\"arguments\\\": <args-json-object>}\\n</tool_call><|im_end|>\\n\" }}\n{%- else %}\n    {%- if messages[0]['role'] == 'system' %}\n        {{- '<|im_start|>system\\n' + messages[0]['content'] + '<|im_end|>\\n' }}\n    {%- else %}\n        {{- '<|im_start|>system\\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\\n' }}\n    {%- endif %}\n{%- endif %}\n{%- for message in messages %}\n    {%- if (message.role == \"user\") or (message.role == \"system\" and not loop.first) or (message.role == \"assistant\" and not message.tool_calls) %}\n        {{- '<|im_start|>' + message.role + '\\n' + message.content + '<|im_end|>' + '\\n' }}\n    {%- elif message.role == \"assistant\" %}\n        {{- '<|im_start|>' + message.role }}\n        {%- if message.content %}\n            {{- '\\n' + message.content }}\n        {%- endif %}\n        {%- for tool_call in message.tool_calls %}\n            {%- if tool_call.function is defined %}\n                {%- set tool_call = tool_call.function %}\n            {%- endif %}\n            {{- '\\n<tool_call>\\n{\"name\": \"' }}\n            {{- tool_call.name }}\n            {{- '\", \"arguments\": ' }}\n            {{- tool_call.arguments | tojson }}\n            {{- '}\\n</tool_call>' }}\n        {%- endfor %}\n        {{- '<|im_end|>\\n' }}\n    {%- elif message.role == \"tool\" %}\n        {%- if (loop.index0 == 0) or (messages[loop.index0 - 1].role != \"tool\") %}\n            {{- '<|im_start|>user' }}\n        {%- endif %}\n        {{- '\\n<tool_response>\\n' }}\n        {{- message.content }}\n        {{- '\\n</tool_response>' }}\n        {%- if loop.last or (messages[loop.index0 + 1].role != \"tool\") %}\n            {{- '<|im_end|>\\n' }}\n        {%- endif %}\n    {%- endif %}\n{%- endfor %}\n{%- if add_generation_prompt %}\n    {{- '<|im_start|>assistant\\n' }}\n{%- endif %}\n",
+  "chat_template_sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+  "decoding_note": "greedy repetition_penalty 1.1 alters logits during generation; loss measures unpenalized gold-prefix likelihood",
+  "diagnostic_protocol": {
+    "canonical_sha256": "209ce313ce397d6e8a28fbdaf0c4a54ae3b9c81ea9de75d07c25f69f85eb6de3",
+    "classification": "training-record resubstitution",
+    "comparison_checkpoint": "final step20 only; no selection on diagnostic results",
+    "independent_or_unseen": false,
+    "items": [
+      {
+        "acceptance_path": "benchmark/results/phase6/r6_48/episodes/E01/ACCEPTANCE.json",
+        "acceptance_sha256": "926f9328368df52c88f954fd088db70f63afa592e514daab9eb1b9c7854cf9b1",
+        "episode_id": "R6.48/E01",
+        "prompt": [
+          {
+            "content": "Construct the declared Lykoi research representation using only the supplied vocabulary.",
+            "role": "system"
+          },
+          {
+            "content": "{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"At the parcel intake, read exactly two unsigned byte weights. Return their sum as a two-byte big-endian integer. Reject totals above 120 as CAPACITY at the first weight. Read both weights before checking capacity, and check capacity before rejecting trailing data.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}",
+            "role": "user"
+          }
+        ],
+        "prompt_identity": "7c0302890b4702eea3f98bf84c0d7f761313aee960f2e4c3c17e8dbc4df20822",
+        "target_identity": "a10d8150cbd5612adcf4f613a9a731ef50e6c965e30b7377f3a75e354bcfcaa1"
+      },
+      {
+        "acceptance_path": "benchmark/results/phase6/r6_48/episodes/E02/ACCEPTANCE.json",
+        "acceptance_sha256": "20f3e8974f7428bac8e1bb6f3b5e5e88c8c123160f39b130a8d7d8a2cdcfab15",
+        "episode_id": "R6.48/E02",
+        "prompt": [
+          {
+            "content": "Construct the declared Lykoi research representation using only the supplied vocabulary.",
+            "role": "system"
+          },
+          {
+            "content": "{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"The route quote reads two unsigned bytes: fragile weight and ordinary weight. Charge twice the fragile weight plus ordinary weight. Return a two-byte big-endian quote. Reject quotes above 600 as QUOTE at the fragile weight, after reading both bytes but before trailing-data rejection. Exactly two bytes are required.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}",
+            "role": "user"
+          }
+        ],
+        "prompt_identity": "4d78c4c5031a87204eeec66997a049204c7c699a330e85855c32ea2b1d59a676",
+        "target_identity": "48f58f1213c6bccbff0bb5f9c6adf6e4dbf98a093d1cb70ec48d8564439212fe"
+      },
+      {
+        "acceptance_path": "benchmark/results/phase6/r6_48/episodes/E03/ACCEPTANCE.json",
+        "acceptance_sha256": "5ef7c6dc6b54029d0b3215cf6956beff1f51947ed43e43b547bb61a93affc1c1",
+        "episode_id": "R6.48/E03",
+        "prompt": [
+          {
+            "content": "Construct the declared Lykoi research representation using only the supplied vocabulary.",
+            "role": "system"
+          },
+          {
+            "content": "{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"Read exactly two byte flags for redundant safety sensors. Each flag must be 0 or 1. Validate the first flag before reading the second; validate the second next, then require the two flags to agree. Use FLAG_A, FLAG_B and DISAGREE respectively, located at the relevant flag (DISAGREE at the first). Return the first flag as UInt16BE. Perform trailing-data rejection last.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}",
+            "role": "user"
+          }
+        ],
+        "prompt_identity": "3721388bcce0ea2ab95c022e1b0cee6c9dd8828ade93353b1b9515a6cfdf455d",
+        "target_identity": "d40b277fa01c79edcfff262d6a43d8735539a7cea2941fcec7cf9b2dd0f17be5"
+      },
+      {
+        "acceptance_path": "benchmark/results/phase6/r6_48/episodes/E04/ACCEPTANCE.json",
+        "acceptance_sha256": "c756e6dba10333e79b95590c0becc308323ecc395aad78d2dc1e0270ffc2770d",
+        "episode_id": "R6.48/E04",
+        "prompt": [
+          {
+            "content": "Construct the declared Lykoi research representation using only the supplied vocabulary.",
+            "role": "system"
+          },
+          {
+            "content": "{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"Read exactly two byte flags for a transfer interlock. First read both bytes, then reject invalid first or second flags (values over 1) in that order as FLAG_A or FLAG_B. Require exactly one flag to be set; reject equal flags as INTERLOCK at the first byte. Return the sum as UInt16BE, and check trailing data after all constraints.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}",
+            "role": "user"
+          }
+        ],
+        "prompt_identity": "2b5bc220caef9c7886f433e9aababbc954baba1152609776480080a6b5c5b874",
+        "target_identity": "bc953dd138dc65bd81d1f9405d6b1050073db34934cffb1765f939b1d6b6b0bb"
+      },
+      {
+        "acceptance_path": "benchmark/results/phase6/r6_48/episodes/E05/ACCEPTANCE.json",
+        "acceptance_sha256": "af4a37b7ec6a2973468856a1d46c0bfbfd079a093d68ea62ddea94e1d05a2505",
+        "episode_id": "R6.48/E05",
+        "prompt": [
+          {
+            "content": "Construct the declared Lykoi research representation using only the supplied vocabulary.",
+            "role": "system"
+          },
+          {
+            "content": "{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"A gauge frame begins with byte version 7 and then a byte count at most 12. Reject a wrong version immediately as VERSION at byte 0, before attempting to read count. Reject excessive counts as COUNT at byte 1 before checking for trailing data. Require exactly two bytes and return count as UInt16BE.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}",
+            "role": "user"
+          }
+        ],
+        "prompt_identity": "fe36cdb930eec36b4af2395b19d5becab287c38bb574e0ced6efe2fb3c5c8de9",
+        "target_identity": "6db85fbb1067883b3c5a5b71a63738ba9c4d3e8f76f0473d822cf30203f1f0df"
+      },
+      {
+        "acceptance_path": "benchmark/results/phase6/r6_48/episodes/E06/ACCEPTANCE.json",
+        "acceptance_sha256": "8b0a2231e08d5e729be93a0232e9a08b6ebf115aca9bc5284cb8a6e92cd8b1e7",
+        "episode_id": "R6.48/E06",
+        "prompt": [
+          {
+            "content": "Construct the declared Lykoi research representation using only the supplied vocabulary.",
+            "role": "system"
+          },
+          {
+            "content": "{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"Read exactly three bytes: low, high and reading. Read all three before any check. Reject low greater than high as WINDOW at low; otherwise reject reading below low as BELOW at reading, then reject reading above high as ABOVE at reading. Perform trailing-data rejection last. Return reading as UInt16BE.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}",
+            "role": "user"
+          }
+        ],
+        "prompt_identity": "b3981f3ffc1eb9e3f6bc1da5e1ce31bd437c3d66d2561afb57b10e95a84e2210",
+        "target_identity": "5257141e4af07b9dcb512c94f7e7249a4ea79d6adb773548dec363b3f03599dd"
+      }
+    ],
+    "max_total_tokens": 2048,
+    "per_call_timeout_seconds": 120,
+    "raw_output_only": true,
+    "repair_calls": 0,
+    "resolved_generation_configuration": {
+      "_from_model_config": false,
+      "assistant_confidence_threshold": 0.4,
+      "assistant_early_exit": null,
+      "assistant_lookbehind": 10,
+      "bad_words_ids": null,
+      "begin_suppress_tokens": null,
+      "bos_token_id": 151643,
+      "cache_config": null,
+      "cache_implementation": null,
+      "constraints": null,
+      "decoder_start_token_id": null,
+      "disable_compile": false,
+      "diversity_penalty": 0.0,
+      "do_sample": false,
+      "dola_layers": null,
+      "early_stopping": false,
+      "encoder_no_repeat_ngram_size": 0,
+      "encoder_repetition_penalty": 1.0,
+      "eos_token_id": [
+        151645,
+        151643
+      ],
+      "epsilon_cutoff": 0.0,
+      "eta_cutoff": 0.0,
+      "exponential_decay_length_penalty": null,
+      "force_words_ids": null,
+      "forced_bos_token_id": null,
+      "forced_eos_token_id": null,
+      "guidance_scale": null,
+      "is_assistant": false,
+      "length_penalty": 1.0,
+      "low_memory": null,
+      "max_length": 20,
+      "max_matching_ngram_size": null,
+      "max_new_tokens": 1400,
+      "max_time": null,
+      "min_length": 0,
+      "min_new_tokens": null,
+      "min_p": null,
+      "no_repeat_ngram_size": 0,
+      "num_assistant_tokens": 20,
+      "num_assistant_tokens_schedule": "constant",
+      "num_beam_groups": 1,
+      "num_beams": 1,
+      "num_return_sequences": 1,
+      "output_attentions": false,
+      "output_hidden_states": false,
+      "output_logits": null,
+      "output_scores": false,
+      "pad_token_id": 151643,
+      "penalty_alpha": null,
+      "prefill_chunk_size": null,
+      "prompt_lookup_num_tokens": null,
+      "remove_invalid_values": false,
+      "renormalize_logits": false,
+      "repetition_penalty": 1.1,
+      "return_dict_in_generate": false,
+      "return_legacy_cache": null,
+      "sequence_bias": null,
+      "stop_strings": null,
+      "suppress_tokens": null,
+      "target_lookbehind": 10,
+      "temperature": 0.7,
+      "token_healing": false,
+      "top_k": 20,
+      "top_p": 0.8,
+      "transformers_version": "4.55.4",
+      "typical_p": 1.0,
+      "use_cache": true,
+      "watermarking_config": null
+    },
+    "round": "R6.56",
+    "schema_path": "experiments/typed_composition_r6_18/typed-composition-1.schema.json",
+    "schema_sha256": "269dbd2e0c2c758afb8a1288a8e8ed6626001973e1ed69121904c3217638536b",
+    "seal_tool_calls": 0,
+    "source_protocol_sha256": "58305225fe67286e1c549b78782f4c17a16f2327bfc431da67c8261f7dd7ef48",
+    "timeout_includes_process_load": true,
+    "type_reporting": "True on native validation pass or final identity-content mismatch after all closed-program type checks; False on TYPE; otherwise NOT_REACHED",
+    "use_cache": false
+  },
+  "mismatches": [],
+  "observed_distribution_gap": "teacher-forced gold package prefixes versus free-running fenced answer snippets",
+  "records": [
+    {
+      "assistant_generation_prefix": "<|im_start|>assistant\n",
+      "base_adapter_output_identical": true,
+      "developer_messages": [],
+      "eos_supervised": true,
+      "episode_id": "E01",
+      "messages": [
+        {
+          "content": "Construct the declared Lykoi research representation using only the supplied vocabulary.",
+          "role": "system"
+        },
+        {
+          "content": "{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"At the parcel intake, read exactly two unsigned byte weights. Return their sum as a two-byte big-endian integer. Reject totals above 120 as CAPACITY at the first weight. Read both weights before checking capacity, and check capacity before rejecting trailing data.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}",
+          "role": "user"
+        }
+      ],
+      "post_eos_newline_supervised": false,
+      "prompt_sha256": "a7abc4deaefca584c481a19421729ff9c8959aaccf6f6084a82f618c7f091323",
+      "prompts_exactly_match_historical_calls": true,
+      "rendered_evaluation_prompt": "<|im_start|>system\nConstruct the declared Lykoi research representation using only the supplied vocabulary.<|im_end|>\n<|im_start|>user\n{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"At the parcel intake, read exactly two unsigned byte weights. Return their sum as a two-byte big-endian integer. Reject totals above 120 as CAPACITY at the first weight. Read both weights before checking capacity, and check capacity before rejecting trailing data.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}<|im_end|>\n<|im_start|>assistant\n",
+      "rendered_training_prompt": "<|im_start|>system\nConstruct the declared Lykoi research representation using only the supplied vocabulary.<|im_end|>\n<|im_start|>user\n{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"At the parcel intake, read exactly two unsigned byte weights. Return their sum as a two-byte big-endian integer. Reject totals above 120 as CAPACITY at the first weight. Read both weights before checking capacity, and check capacity before rejecting trailing data.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}<|im_end|>\n<|im_start|>assistant\n",
+      "target": "{\"definitions\":[],\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"program\":{\"dependencies\":{},\"identity\":\"d7ed6697973ab881b80e0ca22072de5976aaa8f574a8db948dd02601e555ab61\",\"name\":\"pilot_E01\",\"order\":[\"a\",\"b\",\"total\",\"capacity\",\"complete\"],\"params\":[],\"result\":{\"ref\":\"total\"},\"result_type\":\"Int64\",\"revision\":1,\"steps\":[{\"deps\":[],\"id\":\"a\",\"node\":{\"codec\":\"uint8\",\"op\":\"atom\"},\"type\":\"Int64\"},{\"deps\":[],\"id\":\"b\",\"node\":{\"codec\":\"uint8\",\"op\":\"atom\"},\"type\":\"Int64\"},{\"deps\":[\"a\",\"b\"],\"id\":\"total\",\"node\":{\"expr\":{\"add\":[{\"ref\":\"a\"},{\"ref\":\"b\"}]},\"op\":\"value\"},\"type\":\"Int64\"},{\"deps\":[\"total\",\"a\"],\"id\":\"capacity\",\"node\":{\"code\":\"CAPACITY\",\"op\":\"check\",\"site\":{\"ref\":\"a\"},\"test\":{\"le\":[{\"ref\":\"total\"},{\"const\":120}]}},\"type\":\"Unit\"},{\"deps\":[],\"id\":\"complete\",\"node\":{\"op\":\"end\"},\"type\":\"Unit\"}]},\"version\":\"typed-composition-1\"}",
+      "target_raw_json_no_fences": true,
+      "training_suffix": "<|im_end|>\n"
+    },
+    {
+      "assistant_generation_prefix": "<|im_start|>assistant\n",
+      "base_adapter_output_identical": false,
+      "developer_messages": [],
+      "eos_supervised": true,
+      "episode_id": "E02",
+      "messages": [
+        {
+          "content": "Construct the declared Lykoi research representation using only the supplied vocabulary.",
+          "role": "system"
+        },
+        {
+          "content": "{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"The route quote reads two unsigned bytes: fragile weight and ordinary weight. Charge twice the fragile weight plus ordinary weight. Return a two-byte big-endian quote. Reject quotes above 600 as QUOTE at the fragile weight, after reading both bytes but before trailing-data rejection. Exactly two bytes are required.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}",
+          "role": "user"
+        }
+      ],
+      "post_eos_newline_supervised": false,
+      "prompt_sha256": "6378444225f82cbf2d29c7e81c0f79fa5a43ef8e25d602ec993702504a1137fd",
+      "prompts_exactly_match_historical_calls": true,
+      "rendered_evaluation_prompt": "<|im_start|>system\nConstruct the declared Lykoi research representation using only the supplied vocabulary.<|im_end|>\n<|im_start|>user\n{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"The route quote reads two unsigned bytes: fragile weight and ordinary weight. Charge twice the fragile weight plus ordinary weight. Return a two-byte big-endian quote. Reject quotes above 600 as QUOTE at the fragile weight, after reading both bytes but before trailing-data rejection. Exactly two bytes are required.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}<|im_end|>\n<|im_start|>assistant\n",
+      "rendered_training_prompt": "<|im_start|>system\nConstruct the declared Lykoi research representation using only the supplied vocabulary.<|im_end|>\n<|im_start|>user\n{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"The route quote reads two unsigned bytes: fragile weight and ordinary weight. Charge twice the fragile weight plus ordinary weight. Return a two-byte big-endian quote. Reject quotes above 600 as QUOTE at the fragile weight, after reading both bytes but before trailing-data rejection. Exactly two bytes are required.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}<|im_end|>\n<|im_start|>assistant\n",
+      "target": "{\"definitions\":[],\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"program\":{\"dependencies\":{},\"identity\":\"d966a87aea0c0367c0fdbb4a25e693e29ee7558a9a9250784408ca887ab6c642\",\"name\":\"pilot_E02\",\"order\":[\"a\",\"b\",\"twice\",\"total\",\"capacity\",\"complete\"],\"params\":[],\"result\":{\"ref\":\"total\"},\"result_type\":\"Int64\",\"revision\":1,\"steps\":[{\"deps\":[],\"id\":\"a\",\"node\":{\"codec\":\"uint8\",\"op\":\"atom\"},\"type\":\"Int64\"},{\"deps\":[],\"id\":\"b\",\"node\":{\"codec\":\"uint8\",\"op\":\"atom\"},\"type\":\"Int64\"},{\"deps\":[\"a\"],\"id\":\"twice\",\"node\":{\"expr\":{\"add\":[{\"ref\":\"a\"},{\"ref\":\"a\"}]},\"op\":\"value\"},\"type\":\"Int64\"},{\"deps\":[\"twice\",\"b\"],\"id\":\"total\",\"node\":{\"expr\":{\"add\":[{\"ref\":\"twice\"},{\"ref\":\"b\"}]},\"op\":\"value\"},\"type\":\"Int64\"},{\"deps\":[\"total\",\"a\"],\"id\":\"capacity\",\"node\":{\"code\":\"QUOTE\",\"op\":\"check\",\"site\":{\"ref\":\"a\"},\"test\":{\"le\":[{\"ref\":\"total\"},{\"const\":600}]}},\"type\":\"Unit\"},{\"deps\":[],\"id\":\"complete\",\"node\":{\"op\":\"end\"},\"type\":\"Unit\"}]},\"version\":\"typed-composition-1\"}",
+      "target_raw_json_no_fences": true,
+      "training_suffix": "<|im_end|>\n"
+    },
+    {
+      "assistant_generation_prefix": "<|im_start|>assistant\n",
+      "base_adapter_output_identical": true,
+      "developer_messages": [],
+      "eos_supervised": true,
+      "episode_id": "E03",
+      "messages": [
+        {
+          "content": "Construct the declared Lykoi research representation using only the supplied vocabulary.",
+          "role": "system"
+        },
+        {
+          "content": "{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"Read exactly two byte flags for redundant safety sensors. Each flag must be 0 or 1. Validate the first flag before reading the second; validate the second next, then require the two flags to agree. Use FLAG_A, FLAG_B and DISAGREE respectively, located at the relevant flag (DISAGREE at the first). Return the first flag as UInt16BE. Perform trailing-data rejection last.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}",
+          "role": "user"
+        }
+      ],
+      "post_eos_newline_supervised": false,
+      "prompt_sha256": "865420ce2d62fbd056c58950a6901a38aa74e6eae7da9a99c18a555980bd63e9",
+      "prompts_exactly_match_historical_calls": true,
+      "rendered_evaluation_prompt": "<|im_start|>system\nConstruct the declared Lykoi research representation using only the supplied vocabulary.<|im_end|>\n<|im_start|>user\n{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"Read exactly two byte flags for redundant safety sensors. Each flag must be 0 or 1. Validate the first flag before reading the second; validate the second next, then require the two flags to agree. Use FLAG_A, FLAG_B and DISAGREE respectively, located at the relevant flag (DISAGREE at the first). Return the first flag as UInt16BE. Perform trailing-data rejection last.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}<|im_end|>\n<|im_start|>assistant\n",
+      "rendered_training_prompt": "<|im_start|>system\nConstruct the declared Lykoi research representation using only the supplied vocabulary.<|im_end|>\n<|im_start|>user\n{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"Read exactly two byte flags for redundant safety sensors. Each flag must be 0 or 1. Validate the first flag before reading the second; validate the second next, then require the two flags to agree. Use FLAG_A, FLAG_B and DISAGREE respectively, located at the relevant flag (DISAGREE at the first). Return the first flag as UInt16BE. Perform trailing-data rejection last.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}<|im_end|>\n<|im_start|>assistant\n",
+      "target": "{\"definitions\":[],\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"program\":{\"dependencies\":{},\"identity\":\"bf89009901e9d1c8f7a118a9587ea04dc8f8da53954b59dce967cf44d28b62c7\",\"name\":\"pilot_E03\",\"order\":[\"a\",\"flag_a\",\"b\",\"flag_b\",\"same\",\"agreement\",\"complete\"],\"params\":[],\"result\":{\"ref\":\"a\"},\"result_type\":\"Int64\",\"revision\":1,\"steps\":[{\"deps\":[],\"id\":\"a\",\"node\":{\"codec\":\"uint8\",\"op\":\"atom\"},\"type\":\"Int64\"},{\"deps\":[\"a\"],\"id\":\"flag_a\",\"node\":{\"code\":\"FLAG_A\",\"op\":\"check\",\"site\":{\"ref\":\"a\"},\"test\":{\"le\":[{\"ref\":\"a\"},{\"const\":1}]}},\"type\":\"Unit\"},{\"deps\":[],\"id\":\"b\",\"node\":{\"codec\":\"uint8\",\"op\":\"atom\"},\"type\":\"Int64\"},{\"deps\":[\"b\"],\"id\":\"flag_b\",\"node\":{\"code\":\"FLAG_B\",\"op\":\"check\",\"site\":{\"ref\":\"b\"},\"test\":{\"le\":[{\"ref\":\"b\"},{\"const\":1}]}},\"type\":\"Unit\"},{\"deps\":[\"a\",\"b\"],\"id\":\"same\",\"node\":{\"expr\":{\"eq\":[{\"ref\":\"a\"},{\"ref\":\"b\"}]},\"op\":\"value\"},\"type\":\"Bool\"},{\"deps\":[\"same\",\"a\"],\"id\":\"agreement\",\"node\":{\"code\":\"DISAGREE\",\"op\":\"check\",\"site\":{\"ref\":\"a\"},\"test\":{\"eq\":[{\"ref\":\"same\"},{\"const\":true}]}},\"type\":\"Unit\"},{\"deps\":[],\"id\":\"complete\",\"node\":{\"op\":\"end\"},\"type\":\"Unit\"}]},\"version\":\"typed-composition-1\"}",
+      "target_raw_json_no_fences": true,
+      "training_suffix": "<|im_end|>\n"
+    },
+    {
+      "assistant_generation_prefix": "<|im_start|>assistant\n",
+      "base_adapter_output_identical": true,
+      "developer_messages": [],
+      "eos_supervised": true,
+      "episode_id": "E04",
+      "messages": [
+        {
+          "content": "Construct the declared Lykoi research representation using only the supplied vocabulary.",
+          "role": "system"
+        },
+        {
+          "content": "{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"Read exactly two byte flags for a transfer interlock. First read both bytes, then reject invalid first or second flags (values over 1) in that order as FLAG_A or FLAG_B. Require exactly one flag to be set; reject equal flags as INTERLOCK at the first byte. Return the sum as UInt16BE, and check trailing data after all constraints.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}",
+          "role": "user"
+        }
+      ],
+      "post_eos_newline_supervised": false,
+      "prompt_sha256": "09bf535078339302bc4646635c3c83cb79b4993b3e47c06a8073d7092956cf3a",
+      "prompts_exactly_match_historical_calls": true,
+      "rendered_evaluation_prompt": "<|im_start|>system\nConstruct the declared Lykoi research representation using only the supplied vocabulary.<|im_end|>\n<|im_start|>user\n{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"Read exactly two byte flags for a transfer interlock. First read both bytes, then reject invalid first or second flags (values over 1) in that order as FLAG_A or FLAG_B. Require exactly one flag to be set; reject equal flags as INTERLOCK at the first byte. Return the sum as UInt16BE, and check trailing data after all constraints.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}<|im_end|>\n<|im_start|>assistant\n",
+      "rendered_training_prompt": "<|im_start|>system\nConstruct the declared Lykoi research representation using only the supplied vocabulary.<|im_end|>\n<|im_start|>user\n{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"Read exactly two byte flags for a transfer interlock. First read both bytes, then reject invalid first or second flags (values over 1) in that order as FLAG_A or FLAG_B. Require exactly one flag to be set; reject equal flags as INTERLOCK at the first byte. Return the sum as UInt16BE, and check trailing data after all constraints.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}<|im_end|>\n<|im_start|>assistant\n",
+      "target": "{\"definitions\":[],\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"program\":{\"dependencies\":{},\"identity\":\"ba7d4cfeb432ab8df36e34ceb3b292ac3dd2addcc78e5918e083a454ee8483a3\",\"name\":\"pilot_E04\",\"order\":[\"a\",\"b\",\"flag_a\",\"flag_b\",\"total\",\"exactly_one\",\"agreement\",\"complete\"],\"params\":[],\"result\":{\"ref\":\"total\"},\"result_type\":\"Int64\",\"revision\":1,\"steps\":[{\"deps\":[],\"id\":\"a\",\"node\":{\"codec\":\"uint8\",\"op\":\"atom\"},\"type\":\"Int64\"},{\"deps\":[],\"id\":\"b\",\"node\":{\"codec\":\"uint8\",\"op\":\"atom\"},\"type\":\"Int64\"},{\"deps\":[\"a\"],\"id\":\"flag_a\",\"node\":{\"code\":\"FLAG_A\",\"op\":\"check\",\"site\":{\"ref\":\"a\"},\"test\":{\"le\":[{\"ref\":\"a\"},{\"const\":1}]}},\"type\":\"Unit\"},{\"deps\":[\"b\"],\"id\":\"flag_b\",\"node\":{\"code\":\"FLAG_B\",\"op\":\"check\",\"site\":{\"ref\":\"b\"},\"test\":{\"le\":[{\"ref\":\"b\"},{\"const\":1}]}},\"type\":\"Unit\"},{\"deps\":[\"a\",\"b\"],\"id\":\"total\",\"node\":{\"expr\":{\"add\":[{\"ref\":\"a\"},{\"ref\":\"b\"}]},\"op\":\"value\"},\"type\":\"Int64\"},{\"deps\":[\"total\"],\"id\":\"exactly_one\",\"node\":{\"expr\":{\"eq\":[{\"ref\":\"total\"},{\"const\":1}]},\"op\":\"value\"},\"type\":\"Bool\"},{\"deps\":[\"exactly_one\",\"a\"],\"id\":\"agreement\",\"node\":{\"code\":\"INTERLOCK\",\"op\":\"check\",\"site\":{\"ref\":\"a\"},\"test\":{\"eq\":[{\"ref\":\"exactly_one\"},{\"const\":true}]}},\"type\":\"Unit\"},{\"deps\":[],\"id\":\"complete\",\"node\":{\"op\":\"end\"},\"type\":\"Unit\"}]},\"version\":\"typed-composition-1\"}",
+      "target_raw_json_no_fences": true,
+      "training_suffix": "<|im_end|>\n"
+    },
+    {
+      "assistant_generation_prefix": "<|im_start|>assistant\n",
+      "base_adapter_output_identical": true,
+      "developer_messages": [],
+      "eos_supervised": true,
+      "episode_id": "E05",
+      "messages": [
+        {
+          "content": "Construct the declared Lykoi research representation using only the supplied vocabulary.",
+          "role": "system"
+        },
+        {
+          "content": "{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"A gauge frame begins with byte version 7 and then a byte count at most 12. Reject a wrong version immediately as VERSION at byte 0, before attempting to read count. Reject excessive counts as COUNT at byte 1 before checking for trailing data. Require exactly two bytes and return count as UInt16BE.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}",
+          "role": "user"
+        }
+      ],
+      "post_eos_newline_supervised": false,
+      "prompt_sha256": "dcf45b1f21fd30b6149bfb6f99186952b1b031b3aab20ba807bc9426db0b97f2",
+      "prompts_exactly_match_historical_calls": true,
+      "rendered_evaluation_prompt": "<|im_start|>system\nConstruct the declared Lykoi research representation using only the supplied vocabulary.<|im_end|>\n<|im_start|>user\n{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"A gauge frame begins with byte version 7 and then a byte count at most 12. Reject a wrong version immediately as VERSION at byte 0, before attempting to read count. Reject excessive counts as COUNT at byte 1 before checking for trailing data. Require exactly two bytes and return count as UInt16BE.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}<|im_end|>\n<|im_start|>assistant\n",
+      "rendered_training_prompt": "<|im_start|>system\nConstruct the declared Lykoi research representation using only the supplied vocabulary.<|im_end|>\n<|im_start|>user\n{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"A gauge frame begins with byte version 7 and then a byte count at most 12. Reject a wrong version immediately as VERSION at byte 0, before attempting to read count. Reject excessive counts as COUNT at byte 1 before checking for trailing data. Require exactly two bytes and return count as UInt16BE.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}<|im_end|>\n<|im_start|>assistant\n",
+      "target": "{\"definitions\":[],\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"program\":{\"dependencies\":{},\"identity\":\"b105b3e9bb839e7353a970c51c5088ce2ac4d2ebc42627799aaafd336d8ccc57\",\"name\":\"pilot_E05\",\"order\":[\"a\",\"version\",\"b\",\"count\",\"complete\"],\"params\":[],\"result\":{\"ref\":\"b\"},\"result_type\":\"Int64\",\"revision\":1,\"steps\":[{\"deps\":[],\"id\":\"a\",\"node\":{\"codec\":\"uint8\",\"op\":\"atom\"},\"type\":\"Int64\"},{\"deps\":[\"a\"],\"id\":\"version\",\"node\":{\"code\":\"VERSION\",\"op\":\"check\",\"site\":{\"ref\":\"a\"},\"test\":{\"eq\":[{\"ref\":\"a\"},{\"const\":7}]}},\"type\":\"Unit\"},{\"deps\":[],\"id\":\"b\",\"node\":{\"codec\":\"uint8\",\"op\":\"atom\"},\"type\":\"Int64\"},{\"deps\":[\"b\"],\"id\":\"count\",\"node\":{\"code\":\"COUNT\",\"op\":\"check\",\"site\":{\"ref\":\"b\"},\"test\":{\"le\":[{\"ref\":\"b\"},{\"const\":12}]}},\"type\":\"Unit\"},{\"deps\":[],\"id\":\"complete\",\"node\":{\"op\":\"end\"},\"type\":\"Unit\"}]},\"version\":\"typed-composition-1\"}",
+      "target_raw_json_no_fences": true,
+      "training_suffix": "<|im_end|>\n"
+    },
+    {
+      "assistant_generation_prefix": "<|im_start|>assistant\n",
+      "base_adapter_output_identical": true,
+      "developer_messages": [],
+      "eos_supervised": true,
+      "episode_id": "E06",
+      "messages": [
+        {
+          "content": "Construct the declared Lykoi research representation using only the supplied vocabulary.",
+          "role": "system"
+        },
+        {
+          "content": "{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"Read exactly three bytes: low, high and reading. Read all three before any check. Reject low greater than high as WINDOW at low; otherwise reject reading below low as BELOW at reading, then reject reading above high as ABOVE at reading. Perform trailing-data rejection last. Return reading as UInt16BE.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}",
+          "role": "user"
+        }
+      ],
+      "post_eos_newline_supervised": false,
+      "prompt_sha256": "8450f400c52a7f44cd4a5733df7ff1de5c27225d4e9ee8a7e0b6f57e75188257",
+      "prompts_exactly_match_historical_calls": true,
+      "rendered_evaluation_prompt": "<|im_start|>system\nConstruct the declared Lykoi research representation using only the supplied vocabulary.<|im_end|>\n<|im_start|>user\n{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"Read exactly three bytes: low, high and reading. Read all three before any check. Reject low greater than high as WINDOW at low; otherwise reject reading below low as BELOW at reading, then reject reading above high as ABOVE at reading. Perform trailing-data rejection last. Return reading as UInt16BE.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}<|im_end|>\n<|im_start|>assistant\n",
+      "rendered_training_prompt": "<|im_start|>system\nConstruct the declared Lykoi research representation using only the supplied vocabulary.<|im_end|>\n<|im_start|>user\n{\"required_output\":\"SYMBOLIC.json: one complete JSON object; no markdown or Python\",\"requirement\":\"Read exactly three bytes: low, high and reading. Read all three before any check. Reject low greater than high as WINDOW at low; otherwise reject reading below low as BELOW at reading, then reject reading above high as ABOVE at reading. Perform trailing-data rejection last. Return reading as UInt16BE.\",\"semantic_vocabulary\":{\"authority\":\"experiments/typed_composition_r6_18/SEMANTICS-1.md\",\"expressions\":\"{ref:local_or_parameter}, {const:integer_or_boolean}, {add:[Int64,Int64]}, {le:[Int64,Int64]}, {eq:[same_type,same_type]}\",\"nodes\":\"atom codec uint8 -> Int64; value expr -> inferred type; check test Bool/site ref/code string -> Unit; end -> Unit; compose symbol/identity/args -> pinned definition result\",\"package\":\"version, foundation (frozen VM SHA256), definitions array, program region\",\"profile\":\"typed-composition-1\",\"region\":\"name, revision, params [{name,type}], dependencies {family:identity}, steps [{id,type,deps,node}], order [step IDs], result expression, result_type, identity\",\"rules\":\"Exact deps include all referenced locals/parameters. Explicit order is authoritative; dependencies must precede uses. No shadowing or cycles. Compose args are refs/scalar constants. All definitions included. Identity uses unchanged content seal; no invented execution operations. Root Int64 emits UInt16BE after ordered execution. Absorbing failure preserves first error and provenance.\",\"types\":[\"Int64\",\"Bool\",\"Unit\"]}}<|im_end|>\n<|im_start|>assistant\n",
+      "target": "{\"definitions\":[],\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"program\":{\"dependencies\":{},\"identity\":\"41eec2ab523bbebbbf01e6c10de13b43af7805e1481192e043fc9e146309080c\",\"name\":\"pilot_E06\",\"order\":[\"a\",\"b\",\"c\",\"window\",\"below\",\"above\",\"complete\"],\"params\":[],\"result\":{\"ref\":\"c\"},\"result_type\":\"Int64\",\"revision\":1,\"steps\":[{\"deps\":[],\"id\":\"a\",\"node\":{\"codec\":\"uint8\",\"op\":\"atom\"},\"type\":\"Int64\"},{\"deps\":[],\"id\":\"b\",\"node\":{\"codec\":\"uint8\",\"op\":\"atom\"},\"type\":\"Int64\"},{\"deps\":[],\"id\":\"c\",\"node\":{\"codec\":\"uint8\",\"op\":\"atom\"},\"type\":\"Int64\"},{\"deps\":[\"a\",\"b\"],\"id\":\"window\",\"node\":{\"code\":\"WINDOW\",\"op\":\"check\",\"site\":{\"ref\":\"a\"},\"test\":{\"le\":[{\"ref\":\"a\"},{\"ref\":\"b\"}]}},\"type\":\"Unit\"},{\"deps\":[\"a\",\"c\"],\"id\":\"below\",\"node\":{\"code\":\"BELOW\",\"op\":\"check\",\"site\":{\"ref\":\"c\"},\"test\":{\"le\":[{\"ref\":\"a\"},{\"ref\":\"c\"}]}},\"type\":\"Unit\"},{\"deps\":[\"c\",\"b\"],\"id\":\"above\",\"node\":{\"code\":\"ABOVE\",\"op\":\"check\",\"site\":{\"ref\":\"c\"},\"test\":{\"le\":[{\"ref\":\"c\"},{\"ref\":\"b\"}]}},\"type\":\"Unit\"},{\"deps\":[],\"id\":\"complete\",\"node\":{\"op\":\"end\"},\"type\":\"Unit\"}]},\"version\":\"typed-composition-1\"}",
+      "target_raw_json_no_fences": true,
+      "training_suffix": "<|im_end|>\n"
+    }
+  ]
+}
