@@ -1,0 +1,1166 @@
+{
+  "baseline": {
+    "executable_identities": {
+      "python_dll_sha256": "fd313724c33a3d0d44ea0acb65da52bf07f515d8d5be126925d18ea10da328c8",
+      "python_executable_sha256": "3754872ea8a1bb902aa1faddfdd48c0f60dc3977f579c4e3476ac4294e527fb3",
+      "requirements_lock_sha256": "e06ef587c26be496b254ec316aa4b7a316fd55d9a1b10dbb001d94addac23a84",
+      "uv_executable_sha256": "d8d1494355d68435959cd297cecb0fa02a44c7ad60acad02eb82135dbbd4fa64",
+      "venv_executable_sha256": "029a267ad77f51e532876f0ebe6fd6e98893647a2499f33521bc7bcc5bfc0625"
+    },
+    "historical_halt_preserved": true,
+    "inherited_audit": {
+      "argv": [
+        "C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-52\\venv\\Scripts\\python.exe",
+        "D:\\Dev\\axiom\\experiments\\incremental_data_r6_63\\publish.py",
+        "baseline-check"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "PASS preserved R6.62/R6.59/policy/schema/foundation baseline\n"
+    },
+    "kernel_basis": "preserved accounting and implementation; not a new recount",
+    "kernel_constructs": 26,
+    "rounds": {
+      "r6_59": {
+        "files": 59,
+        "manifest_sha256": "3ac86b15910adbfb847c9aa8c4fd200a0d46f8ca35482b55e0f069b177af0985"
+      },
+      "r6_63": {
+        "files": 183,
+        "manifest_sha256": "261d679b21c42500d46eb0fd6c73766d30fabb0a39cd3bb091e5fe77d4ab01e9"
+      },
+      "r6_64": {
+        "files": 13,
+        "manifest_sha256": "7c49a46cc01c3cd62d1a67ae1ee12c862c7e18fda0360856668befa16a51110d"
+      },
+      "r6_65": {
+        "files": 13,
+        "manifest_sha256": "e2c7f2c5729c9098159fd507a5fa642e6a05625ef8ccb07d0176b3cab17df683"
+      }
+    }
+  },
+  "canonical_identities": {
+    "DATASET.json": "75b78ccf27a6043af05cb197fc4c36d73aebbfd244b6fcbc55087d635746daf9",
+    "SAMPLING.json": "554dc5e8d15b2371088c10ed0c211fd570a58e1f586c1a58795dfb144015a38f"
+  },
+  "configuration_identity": "b7f02ba671c78baf243148a4ed49b8e143775538bb5cbd82369ee2294d096ca5",
+  "diagnostics": [
+    {
+      "acceptance_dimensions": [
+        "strict_serialization",
+        "schema_valid",
+        "operation_correct",
+        "operands_correct",
+        "result_type_correct",
+        "dependencies_correct",
+        "deterministic_assembly",
+        "behavioral_acceptance"
+      ],
+      "action_identity": "e40b3fa8c3d4e706e05ed77c5385d7f8012b7f10477b12b6fc29c0300ecab3b5",
+      "assembled_after_identity": "7a0dcb000078e18d519ea1cc64ed5bf7c950b2c0647ab22b40b93fa4e34e64ee",
+      "assembly_behavior": "unchanged R6.63 assembly.apply; exact pinned after and native validation",
+      "decoding_protocol": "DIAGNOSTIC-PROTOCOL.json",
+      "dependencies": [
+        "arrivals",
+        "reserve"
+      ],
+      "episode_id": "R6.63/D01",
+      "functional_acceptance": [
+        {
+          "arguments": {
+            "arrivals": 2,
+            "decoy": true,
+            "reserve": 3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 5
+          }
+        },
+        {
+          "arguments": {
+            "arrivals": 9223372036854775807,
+            "decoy": false,
+            "reserve": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 9223372036854775807
+          }
+        },
+        {
+          "arguments": {
+            "arrivals": 9223372036854775807,
+            "decoy": false,
+            "reserve": 1
+          },
+          "expected": {
+            "code": "OVERFLOW",
+            "status": "reject"
+          }
+        },
+        {
+          "arguments": {
+            "arrivals": -9223372036854775808,
+            "decoy": true,
+            "reserve": -1
+          },
+          "expected": {
+            "code": "OVERFLOW",
+            "status": "reject"
+          }
+        },
+        {
+          "arguments": {
+            "arrivals": -9223372036854775808,
+            "decoy": false,
+            "reserve": 1
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": -9223372036854775807
+          }
+        },
+        {
+          "arguments": {
+            "arrivals": true,
+            "decoy": false,
+            "reserve": 1
+          },
+          "expected": {
+            "code": "ARGUMENT_TYPE",
+            "status": "reject"
+          }
+        }
+      ],
+      "group": "training_record",
+      "native_validation_identity": "51f5f4d35646c719f5d0c2a398099cb52f5552cd3e503175dbc7fa35a729dd45",
+      "operands": [
+        {
+          "ref": "arrivals"
+        },
+        {
+          "ref": "reserve"
+        }
+      ],
+      "operation": "add",
+      "output_limit_tokens": 128,
+      "prompt_identity": "efe7cbe2bb3579e43912020ee5d2516f47735786308f6bcdb186b2ed316837f4",
+      "result_type": "Int64"
+    },
+    {
+      "acceptance_dimensions": [
+        "strict_serialization",
+        "schema_valid",
+        "operation_correct",
+        "operands_correct",
+        "result_type_correct",
+        "dependencies_correct",
+        "deterministic_assembly",
+        "behavioral_acceptance"
+      ],
+      "action_identity": "f7f2205a021d91879ebf5d69266910f01bc98ef8678921818715ff4e294cf6aa",
+      "assembled_after_identity": "62c8459aa02217c6a6bc07d42a95789286b8e015362afaa24835947d71e943de",
+      "assembly_behavior": "unchanged R6.63 assembly.apply; exact pinned after and native validation",
+      "decoding_protocol": "DIAGNOSTIC-PROTOCOL.json",
+      "dependencies": [
+        "count"
+      ],
+      "episode_id": "R6.63/D02",
+      "functional_acceptance": [
+        {
+          "arguments": {
+            "bonus": 7,
+            "count": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 1
+          }
+        },
+        {
+          "arguments": {
+            "bonus": 0,
+            "count": 9223372036854775807
+          },
+          "expected": {
+            "code": "OVERFLOW",
+            "status": "reject"
+          }
+        },
+        {
+          "arguments": {
+            "bonus": 9,
+            "count": -9223372036854775808
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": -9223372036854775807
+          }
+        },
+        {
+          "arguments": {
+            "bonus": 1,
+            "count": -1
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 0
+          }
+        }
+      ],
+      "group": "training_record",
+      "native_validation_identity": "51f5f4d35646c719f5d0c2a398099cb52f5552cd3e503175dbc7fa35a729dd45",
+      "operands": [
+        {
+          "const": 1
+        },
+        {
+          "ref": "count"
+        }
+      ],
+      "operation": "add",
+      "output_limit_tokens": 128,
+      "prompt_identity": "0b51e207a591f1cc4c7807e0d669ff0ad556b329a14725822ff4695ee6662caf",
+      "result_type": "Int64"
+    },
+    {
+      "acceptance_dimensions": [
+        "strict_serialization",
+        "schema_valid",
+        "operation_correct",
+        "operands_correct",
+        "result_type_correct",
+        "dependencies_correct",
+        "deterministic_assembly",
+        "behavioral_acceptance"
+      ],
+      "action_identity": "91071445c2d5a7eedf868dde3fa09280f8eafb61f6dc88ec53bc8d3eedf9405a",
+      "assembled_after_identity": "f9cd29c28adaf65c620e3605f0b0dec242d0527f5ed1f6784f8fb4cc18175bd1",
+      "assembly_behavior": "unchanged R6.63 assembly.apply; exact pinned after and native validation",
+      "decoding_protocol": "DIAGNOSTIC-PROTOCOL.json",
+      "dependencies": [
+        "batch"
+      ],
+      "episode_id": "R6.63/D03",
+      "functional_acceptance": [
+        {
+          "arguments": {
+            "batch": 0,
+            "other": 99
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 0
+          }
+        },
+        {
+          "arguments": {
+            "batch": -3,
+            "other": 3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": -6
+          }
+        },
+        {
+          "arguments": {
+            "batch": 4611686018427387903,
+            "other": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 9223372036854775806
+          }
+        },
+        {
+          "arguments": {
+            "batch": 4611686018427387904,
+            "other": 0
+          },
+          "expected": {
+            "code": "OVERFLOW",
+            "status": "reject"
+          }
+        },
+        {
+          "arguments": {
+            "batch": -4611686018427387904,
+            "other": 1
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": -9223372036854775808
+          }
+        }
+      ],
+      "group": "training_record",
+      "native_validation_identity": "51f5f4d35646c719f5d0c2a398099cb52f5552cd3e503175dbc7fa35a729dd45",
+      "operands": [
+        {
+          "ref": "batch"
+        },
+        {
+          "ref": "batch"
+        }
+      ],
+      "operation": "add",
+      "output_limit_tokens": 128,
+      "prompt_identity": "ecbdfeee6ee6a8d5e798a45447e61c990fd9d737ffc5e363d89f85a352899fe1",
+      "result_type": "Int64"
+    },
+    {
+      "acceptance_dimensions": [
+        "strict_serialization",
+        "schema_valid",
+        "operation_correct",
+        "operands_correct",
+        "result_type_correct",
+        "dependencies_correct",
+        "deterministic_assembly",
+        "behavioral_acceptance"
+      ],
+      "action_identity": "000607243c35d22f81011297b6122ce5158b99142f85d22ad10b13bf40d7d0a0",
+      "assembled_after_identity": "db6f3f7b4347178057c7612634f9ee04cc32495bed6e007e1734295fea5983dd",
+      "assembly_behavior": "unchanged R6.63 assembly.apply; exact pinned after and native validation",
+      "decoding_protocol": "DIAGNOSTIC-PROTOCOL.json",
+      "dependencies": [
+        "adjustment",
+        "subtotal"
+      ],
+      "episode_id": "R6.63/D04",
+      "functional_acceptance": [
+        {
+          "arguments": {
+            "adjustment": 4,
+            "base": 2,
+            "delta": 3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 9
+          }
+        },
+        {
+          "arguments": {
+            "adjustment": 1,
+            "base": -2,
+            "delta": 1
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 0
+          }
+        },
+        {
+          "arguments": {
+            "adjustment": 1,
+            "base": 9223372036854775807,
+            "delta": 0
+          },
+          "expected": {
+            "code": "OVERFLOW",
+            "status": "reject"
+          }
+        },
+        {
+          "arguments": {
+            "adjustment": -1,
+            "base": 9223372036854775807,
+            "delta": 1
+          },
+          "expected": {
+            "code": "OVERFLOW",
+            "status": "reject"
+          }
+        }
+      ],
+      "group": "training_record",
+      "native_validation_identity": "8df8cc9a5aad111e95b5992d9a620e39dbac6c01e0d44d9d32613deaceee84ea",
+      "operands": [
+        {
+          "ref": "subtotal"
+        },
+        {
+          "ref": "adjustment"
+        }
+      ],
+      "operation": "add",
+      "output_limit_tokens": 128,
+      "prompt_identity": "5f61bc997b34356fee0f40eaa5b20c9ae299b3ce44e8de638d6b69e5b417eaba",
+      "result_type": "Int64"
+    },
+    {
+      "acceptance_dimensions": [
+        "strict_serialization",
+        "schema_valid",
+        "operation_correct",
+        "operands_correct",
+        "result_type_correct",
+        "dependencies_correct",
+        "deterministic_assembly",
+        "behavioral_acceptance"
+      ],
+      "action_identity": "66be622eb8b59f04eebc13dea2c0160d004e504d2b86d533b1956447e43d52b3",
+      "assembled_after_identity": "b1f109cdc85f5092a0ddc24541ccc194572dd7c1df2e2de483e66cedc9bf83e6",
+      "assembly_behavior": "unchanged R6.63 assembly.apply; exact pinned after and native validation",
+      "decoding_protocol": "DIAGNOSTIC-PROTOCOL.json",
+      "dependencies": [
+        "load"
+      ],
+      "episode_id": "R6.63/D05",
+      "functional_acceptance": [
+        {
+          "arguments": {
+            "cap": 0,
+            "load": 4
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "cap": 0,
+            "load": 5
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "cap": 99,
+            "load": 6
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "cap": 0,
+            "load": -9223372036854775808
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "cap": 0,
+            "load": 9223372036854775807
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        }
+      ],
+      "group": "training_record",
+      "native_validation_identity": "51f5f4d35646c719f5d0c2a398099cb52f5552cd3e503175dbc7fa35a729dd45",
+      "operands": [
+        {
+          "ref": "load"
+        },
+        {
+          "const": 5
+        }
+      ],
+      "operation": "le",
+      "output_limit_tokens": 128,
+      "prompt_identity": "ff27c9c270ae5b7fc07889c6c40df30321e27d00f00450e7ee33903f6aa69e78",
+      "result_type": "Bool"
+    },
+    {
+      "acceptance_dimensions": [
+        "strict_serialization",
+        "schema_valid",
+        "operation_correct",
+        "operands_correct",
+        "result_type_correct",
+        "dependencies_correct",
+        "deterministic_assembly",
+        "behavioral_acceptance"
+      ],
+      "action_identity": "149c8e0ae21c92d6f18f45aa14dcec8bf0143265915fa353c4aa2aa76ff39e22",
+      "assembled_after_identity": "2f7f6efc43d3c6202226523ef56cac4ad8964baa76bd315ba37ada9dc543dc3d",
+      "assembly_behavior": "unchanged R6.63 assembly.apply; exact pinned after and native validation",
+      "decoding_protocol": "DIAGNOSTIC-PROTOCOL.json",
+      "dependencies": [
+        "stock"
+      ],
+      "episode_id": "R6.63/D06",
+      "functional_acceptance": [
+        {
+          "arguments": {
+            "spare": 99,
+            "stock": 4
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "spare": 0,
+            "stock": 5
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "spare": 0,
+            "stock": 6
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "spare": 0,
+            "stock": -9223372036854775808
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "spare": 0,
+            "stock": 9223372036854775807
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        }
+      ],
+      "group": "training_record",
+      "native_validation_identity": "51f5f4d35646c719f5d0c2a398099cb52f5552cd3e503175dbc7fa35a729dd45",
+      "operands": [
+        {
+          "const": 5
+        },
+        {
+          "ref": "stock"
+        }
+      ],
+      "operation": "le",
+      "output_limit_tokens": 128,
+      "prompt_identity": "ca36fcbbc95c7ed0f98c85ddc28bc21f44c8aec9780d7068305c62d974e8c4b3",
+      "result_type": "Bool"
+    },
+    {
+      "acceptance_dimensions": [
+        "strict_serialization",
+        "schema_valid",
+        "operation_correct",
+        "operands_correct",
+        "result_type_correct",
+        "dependencies_correct",
+        "deterministic_assembly",
+        "behavioral_acceptance"
+      ],
+      "action_identity": "85dd10d9221c0d2901bb233d6fa28edd7b57b2bef7290383d6655a967ddd803e",
+      "assembled_after_identity": "cf54646b40088d2e23b10e67828eee2e4bfe0069ee306125c4f06ad422e53cae",
+      "assembly_behavior": "unchanged R6.63 assembly.apply; exact pinned after and native validation",
+      "decoding_protocol": "DIAGNOSTIC-PROTOCOL.json",
+      "dependencies": [
+        "available",
+        "requested"
+      ],
+      "episode_id": "R6.63/D07",
+      "functional_acceptance": [
+        {
+          "arguments": {
+            "available": 2,
+            "noise": true,
+            "requested": 1
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "available": 1,
+            "noise": false,
+            "requested": 2
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "available": 9223372036854775807,
+            "noise": false,
+            "requested": 9223372036854775807
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "available": 9223372036854775807,
+            "noise": true,
+            "requested": -9223372036854775808
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "available": -9223372036854775808,
+            "noise": true,
+            "requested": 9223372036854775807
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        }
+      ],
+      "group": "training_record",
+      "native_validation_identity": "51f5f4d35646c719f5d0c2a398099cb52f5552cd3e503175dbc7fa35a729dd45",
+      "operands": [
+        {
+          "ref": "requested"
+        },
+        {
+          "ref": "available"
+        }
+      ],
+      "operation": "le",
+      "output_limit_tokens": 128,
+      "prompt_identity": "f03bc0435c00648ff54f2c9d5ae526606048d4aa573dd425204c145655c1cab0",
+      "result_type": "Bool"
+    },
+    {
+      "acceptance_dimensions": [
+        "strict_serialization",
+        "schema_valid",
+        "operation_correct",
+        "operands_correct",
+        "result_type_correct",
+        "dependencies_correct",
+        "deterministic_assembly",
+        "behavioral_acceptance"
+      ],
+      "action_identity": "edd8a8281a07b61678d278b97fda20ebcaf74b6da4418e4f18a07d2c0b8e9f27",
+      "assembled_after_identity": "d7e4e59a182f7ed611f4b321099c28d3670111794136f03d4e32389cb232747a",
+      "assembly_behavior": "unchanged R6.63 assembly.apply; exact pinned after and native validation",
+      "decoding_protocol": "DIAGNOSTIC-PROTOCOL.json",
+      "dependencies": [
+        "recorded",
+        "reference"
+      ],
+      "episode_id": "R6.63/D08",
+      "functional_acceptance": [
+        {
+          "arguments": {
+            "recorded": 2,
+            "reference": 2,
+            "unused": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "recorded": 1,
+            "reference": 2,
+            "unused": 1
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "recorded": 2,
+            "reference": 1,
+            "unused": 2
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "recorded": -9223372036854775808,
+            "reference": -9223372036854775808,
+            "unused": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "recorded": 9223372036854775807,
+            "reference": -9223372036854775808,
+            "unused": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        }
+      ],
+      "group": "training_record",
+      "native_validation_identity": "51f5f4d35646c719f5d0c2a398099cb52f5552cd3e503175dbc7fa35a729dd45",
+      "operands": [
+        {
+          "ref": "recorded"
+        },
+        {
+          "ref": "reference"
+        }
+      ],
+      "operation": "eq",
+      "output_limit_tokens": 128,
+      "prompt_identity": "2d41505dffe65dd1aceeccbb8886d1853497a54fced5453d041473c9d8acb9da",
+      "result_type": "Bool"
+    },
+    {
+      "acceptance_dimensions": [
+        "strict_serialization",
+        "schema_valid",
+        "operation_correct",
+        "operands_correct",
+        "result_type_correct",
+        "dependencies_correct",
+        "deterministic_assembly",
+        "behavioral_acceptance"
+      ],
+      "action_identity": "3f2f71ec23acfd9342460dbb4c3f6640504dbb9454803bb3f1f2671eb87a42fb",
+      "assembled_after_identity": "50050f245cb45521703134985b00ac7c9456ddf2be43acc44517f2c5820e8f54",
+      "assembly_behavior": "unchanged R6.63 assembly.apply; exact pinned after and native validation",
+      "decoding_protocol": "DIAGNOSTIC-PROTOCOL.json",
+      "dependencies": [
+        "first",
+        "second"
+      ],
+      "episode_id": "R6.63/D09",
+      "functional_acceptance": [
+        {
+          "arguments": {
+            "decoy": 1,
+            "first": false,
+            "second": false
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "decoy": 0,
+            "first": false,
+            "second": true
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "decoy": 0,
+            "first": true,
+            "second": false
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "decoy": 0,
+            "first": true,
+            "second": true
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "decoy": 0,
+            "first": 1,
+            "second": true
+          },
+          "expected": {
+            "code": "ARGUMENT_TYPE",
+            "status": "reject"
+          }
+        }
+      ],
+      "group": "training_record",
+      "native_validation_identity": "51f5f4d35646c719f5d0c2a398099cb52f5552cd3e503175dbc7fa35a729dd45",
+      "operands": [
+        {
+          "ref": "first"
+        },
+        {
+          "ref": "second"
+        }
+      ],
+      "operation": "eq",
+      "output_limit_tokens": 128,
+      "prompt_identity": "c0ecf19c5deae6ac3fe8b1825da4c346957773a8f4d0a9a5b8ed73ac802cc391",
+      "result_type": "Bool"
+    },
+    {
+      "acceptance_dimensions": [
+        "strict_serialization",
+        "schema_valid",
+        "operation_correct",
+        "operands_correct",
+        "result_type_correct",
+        "dependencies_correct",
+        "deterministic_assembly",
+        "behavioral_acceptance"
+      ],
+      "action_identity": "c79a6ffe2d73a748440113c4d10e45257b72ef454d268c6b683134585f94d507",
+      "assembled_after_identity": "d1f8f216dbc5de981ebaa3202685fc2920bf52135ab7a9d1eb0627c842bd5f05",
+      "assembly_behavior": "unchanged R6.63 assembly.apply; exact pinned after and native validation",
+      "decoding_protocol": "DIAGNOSTIC-PROTOCOL.json",
+      "dependencies": [
+        "enabled"
+      ],
+      "episode_id": "R6.63/D10",
+      "functional_acceptance": [
+        {
+          "arguments": {
+            "enabled": false,
+            "override": true
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "enabled": true,
+            "override": false
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "enabled": 0,
+            "override": true
+          },
+          "expected": {
+            "code": "ARGUMENT_TYPE",
+            "status": "reject"
+          }
+        },
+        {
+          "arguments": {
+            "enabled": true
+          },
+          "expected": {
+            "code": "ARGUMENT_SHAPE",
+            "status": "reject"
+          }
+        }
+      ],
+      "group": "training_record",
+      "native_validation_identity": "51f5f4d35646c719f5d0c2a398099cb52f5552cd3e503175dbc7fa35a729dd45",
+      "operands": [
+        {
+          "ref": "enabled"
+        },
+        {
+          "const": true
+        }
+      ],
+      "operation": "eq",
+      "output_limit_tokens": 128,
+      "prompt_identity": "0190447fd9bc06b04da82b8c8ee04515d3fb2a01a8ff5b24b0342bc2db6eab68",
+      "result_type": "Bool"
+    },
+    {
+      "acceptance_dimensions": [
+        "strict_serialization",
+        "schema_valid",
+        "operation_correct",
+        "operands_correct",
+        "result_type_correct",
+        "dependencies_correct",
+        "deterministic_assembly",
+        "behavioral_acceptance"
+      ],
+      "action_identity": "7954b1ec1119c5686451335e9fe97005b5facc937fcbe3997de490a89a05f09f",
+      "assembled_after_identity": "9e97bd792cdb6a1aaf04df96a02981e109fa6e0c4b9f5e51ffc1d4217626793b",
+      "assembly_behavior": "unchanged R6.63 assembly.apply; exact pinned after and native validation",
+      "decoding_protocol": "DIAGNOSTIC-PROTOCOL.json",
+      "dependencies": [],
+      "episode_id": "V01",
+      "functional_acceptance": [
+        {
+          "arguments": {
+            "unused": false
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": -1
+          }
+        },
+        {
+          "arguments": {
+            "unused": true
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": -1
+          }
+        }
+      ],
+      "group": "structurally_varied",
+      "native_validation_identity": "51f5f4d35646c719f5d0c2a398099cb52f5552cd3e503175dbc7fa35a729dd45",
+      "operands": [
+        {
+          "const": 2
+        },
+        {
+          "const": -3
+        }
+      ],
+      "operation": "add",
+      "output_limit_tokens": 128,
+      "prompt_identity": "1cfde290399d1cd5cf680ce5b206d31333408d920361052ac1b73a839b3ef2b8",
+      "result_type": "Int64"
+    },
+    {
+      "acceptance_dimensions": [
+        "strict_serialization",
+        "schema_valid",
+        "operation_correct",
+        "operands_correct",
+        "result_type_correct",
+        "dependencies_correct",
+        "deterministic_assembly",
+        "behavioral_acceptance"
+      ],
+      "action_identity": "dcd996318d6d08b01bd771710ab50c22c5c1a3643769f784f6a48ae872cda526",
+      "assembled_after_identity": "17bce2919f3887d56746b3a1c818e30a4e7d9e5041734bfe7ecb9f734eff58ee",
+      "assembly_behavior": "unchanged R6.63 assembly.apply; exact pinned after and native validation",
+      "decoding_protocol": "DIAGNOSTIC-PROTOCOL.json",
+      "dependencies": [
+        "quantity"
+      ],
+      "episode_id": "V02",
+      "functional_acceptance": [
+        {
+          "arguments": {
+            "decoy": 20,
+            "quantity": -9
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "decoy": -1,
+            "quantity": 9223372036854775807
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        }
+      ],
+      "group": "structurally_varied",
+      "native_validation_identity": "51f5f4d35646c719f5d0c2a398099cb52f5552cd3e503175dbc7fa35a729dd45",
+      "operands": [
+        {
+          "ref": "quantity"
+        },
+        {
+          "ref": "quantity"
+        }
+      ],
+      "operation": "le",
+      "output_limit_tokens": 128,
+      "prompt_identity": "603060fbaecb57883f8e66c787f8e69aed4d78f11ecaef08b8f9b04fcc1bd6e2",
+      "result_type": "Bool"
+    },
+    {
+      "acceptance_dimensions": [
+        "strict_serialization",
+        "schema_valid",
+        "operation_correct",
+        "operands_correct",
+        "result_type_correct",
+        "dependencies_correct",
+        "deterministic_assembly",
+        "behavioral_acceptance"
+      ],
+      "action_identity": "476622885172dc3074bddcb2c307ec53ed3824b70aeb14497c1a7b1afede9cb2",
+      "assembled_after_identity": "3d7ff4e8802cc1056a03be4c53bed522f1e59ab1f358b7f69bf8f3fc0d95a56c",
+      "assembly_behavior": "unchanged R6.63 assembly.apply; exact pinned after and native validation",
+      "decoding_protocol": "DIAGNOSTIC-PROTOCOL.json",
+      "dependencies": [
+        "cached"
+      ],
+      "episode_id": "V03",
+      "functional_acceptance": [
+        {
+          "arguments": {
+            "flag": false,
+            "noise": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "flag": true,
+            "noise": 1
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        }
+      ],
+      "group": "structurally_varied",
+      "native_validation_identity": "02554ea878c5f70d86099b6b455e113f99fe97e8b9a723f289e228e2df1bfe57",
+      "operands": [
+        {
+          "const": false
+        },
+        {
+          "ref": "cached"
+        }
+      ],
+      "operation": "eq",
+      "output_limit_tokens": 128,
+      "prompt_identity": "91a3f0aa84bbe8c6c1045321931860983d3a809dcab3b682e48992a918fb7c64",
+      "result_type": "Bool"
+    }
+  ],
+  "execution": "Exact frozen worker; read-only R6.66 inputs; additive R6.67 telemetry routing; frozen external checkpoint paths unchanged",
+  "kernel_constructs": 26,
+  "model_calls": 0,
+  "publication": {
+    "files": 28,
+    "manifest_sha256": "40f39ff45784042fe46d7079cb4048d664589b58e68d90618a776ffd7e22f8ff"
+  },
+  "readiness": {
+    "blockers": [],
+    "classification": "R6_66_INCREMENTAL_TRAINING_READY",
+    "components": {
+      "baseline": "QUALIFIED",
+      "configuration": "QUALIFIED",
+      "dataset_conversion": "QUALIFIED",
+      "diagnostics": "QUALIFIED",
+      "effective_worker": "QUALIFIED",
+      "loss_masks": "QUALIFIED",
+      "output_paths": "QUALIFIED",
+      "sampling": "QUALIFIED",
+      "scheduler_simulation": "QUALIFIED",
+      "scorer_gold": "QUALIFIED",
+      "scorer_integration": "QUALIFIED",
+      "scorer_negative": "QUALIFIED",
+      "tokenization": "QUALIFIED"
+    },
+    "cpu_replay_evidence": "CPU-REPLAY.json",
+    "cpu_replay_process_evidence": "CPU-REPLAY-PROCESS.json",
+    "dataset_identity": "75b78ccf27a6043af05cb197fc4c36d73aebbfd244b6fcbc55087d635746daf9",
+    "diagnostic_manifest_sha256": "69300bc5d11b8972c3fe9c42f0a55f4432d292135a15e1c56403cc355ece018e",
+    "dispatch_authorized": false,
+    "fresh_20_step_attempt_justified": true,
+    "fresh_process_qualification_complete": true,
+    "ready": true,
+    "sampling_identity": "554dc5e8d15b2371088c10ed0c211fd570a58e1f586c1a58795dfb144015a38f",
+    "scope": "CPU preflight readiness only; no GPU training success or model learning claim",
+    "scorer_integrated": true,
+    "training_configuration_identity": "b7f02ba671c78baf243148a4ed49b8e143775538bb5cbd82369ee2294d096ca5"
+  },
+  "status": "PASS",
+  "worker_sha256": "b648490af821996ddbb80a9362bce1c471ed036fe0cf17e5bf4612c8e3e63a89"
+}
