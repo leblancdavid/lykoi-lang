@@ -1,0 +1,459 @@
+{
+  "counts": {
+    "add": 4,
+    "eq": 4,
+    "le": 4
+  },
+  "exact_training_reuse": false,
+  "records": [
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "ef6a940f85c202e630bc563ab1328d21988a0af983e253816037c3857bc88a88",
+        "literals": [
+          -9,
+          14,
+          false
+        ],
+        "name": "BindingLiteralPair",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "backup",
+            "type": "Int64"
+          },
+          {
+            "name": "ok",
+            "type": "Bool"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode_id": "S01",
+      "requirement": "Combine fixed negative nine with fixed fourteen, in that order, to obtain their total. Neither stored field contributes."
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "e25bb6e1cbd0c00a9abd69b63e34458d31fec8e67ae840079d3c1f3cc5afc6d9",
+        "literals": [
+          8,
+          true
+        ],
+        "name": "BindingSpare",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "ready",
+            "type": "Bool"
+          },
+          {
+            "name": "credit",
+            "type": "Int64"
+          },
+          {
+            "name": "spares",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode_id": "S02",
+      "requirement": "The total consists of eight fixed units followed by stored credit. spares is an unrelated stock; ready is not a number."
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "1fa108c2cbffb89f62c3d447fd379e7a0fed0d5f09cc76d3b28b38faf4ff94da",
+        "literals": [
+          -3
+        ],
+        "name": "BindingRepeated",
+        "order": [
+          "adjusted",
+          "echo"
+        ],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "shadow",
+            "type": "Int64"
+          },
+          {
+            "name": "raw",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [
+          {
+            "deps": [
+              "raw"
+            ],
+            "id": "adjusted",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "raw"
+                  },
+                  {
+                    "const": -3
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          },
+          {
+            "deps": [
+              "raw"
+            ],
+            "id": "echo",
+            "node": {
+              "expr": {
+                "ref": "raw"
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ],
+        "version": "r6.63-state-1"
+      },
+      "episode_id": "S03",
+      "requirement": "Total two copies of the previously adjusted quantity. Use adjusted for both slots, not echo, raw or shadow. Declare each direct dependency only once."
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "e1080f7d1bb07df701b955a1c704b9b5ff9be7a7409741aaf2f1742555a24b86",
+        "literals": [
+          true,
+          8
+        ],
+        "name": "BindingSpareReworded",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "spares",
+            "type": "Int64"
+          },
+          {
+            "name": "credit",
+            "type": "Int64"
+          },
+          {
+            "name": "ready",
+            "type": "Bool"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode_id": "S04",
+      "requirement": "Compute the sum with literal eight as its first operand and credit as its second. Disregard ready and spares."
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "4bb4b25a30367b4bea83c31f066d40c34a491aac7dfed7899610f99634c230f7",
+        "literals": [],
+        "name": "BindingReversed",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "ceiling",
+            "type": "Int64"
+          },
+          {
+            "name": "observed",
+            "type": "Int64"
+          },
+          {
+            "name": "enabled",
+            "type": "Bool"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode_id": "S05",
+      "requirement": "Is the ceiling not greater than the observed quantity? Return that inclusive comparison with ceiling first and observed second; enabled is irrelevant."
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "b374d8807e72552a1afd13293139320eaee9dc2a299f7c07325913470ec540bd",
+        "literals": [
+          -6,
+          0
+        ],
+        "name": "BindingLowerLiteral",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "decoy",
+            "type": "Int64"
+          },
+          {
+            "name": "reading",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode_id": "S06",
+      "requirement": "The reading must be at least negative six. Encode the test as negative six on the left and reading on the right; do not test decoy."
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "57355043dd50cd56c25323f6d7e19a2ce3620de32e9908b8e1f75a4d08747381",
+        "literals": [
+          -3
+        ],
+        "name": "BindingPriorBound",
+        "order": [
+          "adjusted",
+          "echo"
+        ],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "raw",
+            "type": "Int64"
+          },
+          {
+            "name": "shadow",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [
+          {
+            "deps": [
+              "raw"
+            ],
+            "id": "adjusted",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "raw"
+                  },
+                  {
+                    "const": -3
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          },
+          {
+            "deps": [
+              "raw"
+            ],
+            "id": "echo",
+            "node": {
+              "expr": {
+                "ref": "raw"
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ],
+        "version": "r6.63-state-1"
+      },
+      "episode_id": "S07",
+      "requirement": "Check that echo is at most adjusted, in that order. Only the two prior-result identities are direct operands; the source raw is indirect."
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "9f1185f54f90c39539b5e0d18f411904c3a561cd0ceb55fc38826c3a4ec2da74",
+        "literals": [],
+        "name": "BindingReversedReworded",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "enabled",
+            "type": "Bool"
+          },
+          {
+            "name": "observed",
+            "type": "Int64"
+          },
+          {
+            "name": "ceiling",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode_id": "S08",
+      "requirement": "Determine whether observed is at least ceiling. Express this using ceiling as the first operand and observed as the second, including equality."
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "1cf0b68f2d9525bd234b7d9b1ce5973f16b7b9b187d8a58fe5997cff18c0c43a",
+        "literals": [
+          0,
+          false
+        ],
+        "name": "BindingFalseEquality",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "count",
+            "type": "Int64"
+          },
+          {
+            "name": "active",
+            "type": "Bool"
+          },
+          {
+            "name": "override",
+            "type": "Bool"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode_id": "S09",
+      "requirement": "Check whether active equals the Boolean literal false. active is first. Do not use integer zero, count or override."
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "7a26eaad20e70deb0d18837b93f6ae5f2c84427e087c0c0807cf8ec676d8197a",
+        "literals": [
+          false,
+          0
+        ],
+        "name": "BindingTypedEquality",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "flag",
+            "type": "Bool"
+          },
+          {
+            "name": "code",
+            "type": "Int64"
+          },
+          {
+            "name": "alias",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode_id": "S10",
+      "requirement": "Does integer zero exactly match code? Use the literal integer first, not Boolean false; neither alias nor flag participates."
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "ebe5a72e5a4df7395e12865006fd7057c32aee0b98a992bf2dcc9a9c8f99e8fc",
+        "literals": [],
+        "name": "BindingSelfEquality",
+        "order": [
+          "snapshot"
+        ],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "origin",
+            "type": "Bool"
+          },
+          {
+            "name": "noise",
+            "type": "Bool"
+          },
+          {
+            "name": "n",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [
+          {
+            "deps": [
+              "origin"
+            ],
+            "id": "snapshot",
+            "node": {
+              "expr": {
+                "ref": "origin"
+              },
+              "op": "value"
+            },
+            "type": "Bool"
+          }
+        ],
+        "version": "r6.63-state-1"
+      },
+      "episode_id": "S11",
+      "requirement": "Determine equality of snapshot with snapshot, naming that prior result in both operand positions. Only its distinct direct identity belongs in dependencies."
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "ab20d18e743978073a78dbb5d86bac97c003d73fbe487df2d435244b3cde4224",
+        "literals": [],
+        "name": "BindingAgreement",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "noise",
+            "type": "Bool"
+          },
+          {
+            "name": "right",
+            "type": "Bool"
+          },
+          {
+            "name": "left",
+            "type": "Bool"
+          },
+          {
+            "name": "count",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode_id": "S12",
+      "requirement": "Do the left and right Boolean decisions agree exactly? Keep left then right. noise and count are unrelated."
+    }
+  ]
+}

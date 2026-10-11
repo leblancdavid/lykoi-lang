@@ -1,0 +1,237 @@
+{
+  "passed": true,
+  "records": [
+    {
+      "action": {
+        "deps": [
+          "credit"
+        ],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "add": [
+              {
+                "const": 8
+              },
+              {
+                "ref": "ready"
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Int64"
+      },
+      "error": {
+        "code": "TYPE",
+        "detail": "exact compatible operands required",
+        "path": "$/action"
+      },
+      "name": "Bool_as_Int64",
+      "rejected": true
+    },
+    {
+      "action": {
+        "deps": [
+          "code"
+        ],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "eq": [
+              {
+                "const": false
+              },
+              {
+                "ref": "code"
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Bool"
+      },
+      "error": {
+        "code": "TYPE",
+        "detail": "exact compatible operands required",
+        "path": "$/action"
+      },
+      "name": "mixed_eq_types",
+      "rejected": true
+    },
+    {
+      "action": {
+        "deps": [],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "add": [
+              {
+                "ref": "missing"
+              },
+              {
+                "const": 14
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Int64"
+      },
+      "error": {
+        "code": "UNKNOWN_REFERENCE",
+        "detail": "missing",
+        "path": "$/action/0"
+      },
+      "name": "unknown_reference",
+      "rejected": true
+    },
+    {
+      "action": {
+        "deps": [],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "add": [
+              {
+                "const": 99
+              },
+              {
+                "const": 14
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Int64"
+      },
+      "error": {
+        "code": "LITERAL",
+        "detail": "literal absent from frozen scope",
+        "path": "$/action"
+      },
+      "name": "unavailable_literal",
+      "rejected": true
+    },
+    {
+      "action": {
+        "deps": [
+          "adjusted",
+          "raw"
+        ],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "add": [
+              {
+                "ref": "adjusted"
+              },
+              {
+                "ref": "adjusted"
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Int64"
+      },
+      "error": {
+        "code": "DEPENDENCY",
+        "detail": "exact sorted distinct direct refs required",
+        "path": "$/action"
+      },
+      "name": "indirect_dependency",
+      "rejected": true
+    },
+    {
+      "action": {
+        "deps": [
+          "adjusted"
+        ],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "le": [
+              {
+                "ref": "echo"
+              },
+              {
+                "ref": "adjusted"
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Bool"
+      },
+      "error": {
+        "code": "DEPENDENCY",
+        "detail": "exact sorted distinct direct refs required",
+        "path": "$/action"
+      },
+      "name": "missing_dependency",
+      "rejected": true
+    },
+    {
+      "action": {
+        "deps": [
+          "snapshot",
+          "snapshot"
+        ],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "eq": [
+              {
+                "ref": "snapshot"
+              },
+              {
+                "ref": "snapshot"
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Bool"
+      },
+      "error": {
+        "code": "DEPENDENCY",
+        "detail": "exact sorted distinct direct refs required",
+        "path": "$/action"
+      },
+      "name": "duplicate_dependency",
+      "rejected": true
+    },
+    {
+      "action": {
+        "deps": [
+          "ceiling",
+          "observed"
+        ],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "le": [
+              {
+                "ref": "ceiling"
+              },
+              {
+                "ref": "observed"
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Int64"
+      },
+      "error": {
+        "code": "TYPE",
+        "detail": "result obligation/type mismatch",
+        "path": "$/action"
+      },
+      "name": "wrong_result_type",
+      "rejected": true
+    }
+  ],
+  "semantics_unchanged": true
+}

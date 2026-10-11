@@ -1,0 +1,626 @@
+{
+  "dataset_expansion": 0,
+  "historical_rescoring": false,
+  "operation_counts": {
+    "add": 4,
+    "eq": 3,
+    "le": 3
+  },
+  "records": [
+    {
+      "action": {
+        "deps": [
+          "arrivals",
+          "reserve"
+        ],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "add": [
+              {
+                "ref": "arrivals"
+              },
+              {
+                "ref": "reserve"
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Int64"
+      },
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "bf2819a6ae6dd2eb91e8ebca7718817e01f571ce253dce3b7a5b4b7f16e6666d",
+        "literals": [],
+        "name": "PairSum",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "arrivals",
+            "type": "Int64"
+          },
+          {
+            "name": "reserve",
+            "type": "Int64"
+          },
+          {
+            "name": "decoy",
+            "type": "Bool"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode": "D01",
+      "source": {
+        "acceptance_scope": "finite declared fixtures",
+        "component": "R663_FIXED_TYPED_STEP",
+        "episode": "D01",
+        "expected_result_type": "Int64",
+        "family": "PAIR_SUM",
+        "provenance": "coordinator_authored_synthetic_expert_fixture",
+        "requirement": "Combine the stored arrival count and stored reserve count. Ignore the decoy flag.",
+        "rights": "owner-authorized research data qualification; actual training requires new authorization"
+      }
+    },
+    {
+      "action": {
+        "deps": [
+          "count"
+        ],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "add": [
+              {
+                "const": 1
+              },
+              {
+                "ref": "count"
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Int64"
+      },
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "de985bf33beea5e3055eb0ef73e424713e4eda8815a56162d6dab8e9808e0eb4",
+        "literals": [
+          1,
+          7
+        ],
+        "name": "SpareFirst",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "count",
+            "type": "Int64"
+          },
+          {
+            "name": "bonus",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode": "D02",
+      "source": {
+        "acceptance_scope": "finite declared fixtures",
+        "component": "R663_FIXED_TYPED_STEP",
+        "episode": "D02",
+        "expected_result_type": "Int64",
+        "family": "LITERAL_INCREMENT",
+        "provenance": "coordinator_authored_synthetic_expert_fixture",
+        "requirement": "Add one fixed spare unit to the stored count; the spare is the left operand. Ignore the stored bonus.",
+        "rights": "owner-authorized research data qualification; actual training requires new authorization"
+      }
+    },
+    {
+      "action": {
+        "deps": [
+          "batch"
+        ],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "add": [
+              {
+                "ref": "batch"
+              },
+              {
+                "ref": "batch"
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Int64"
+      },
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "a7f40f372afaa64513a5a8e0ab742d3102f3d0b449b5815d45a3df11f0ddfafb",
+        "literals": [],
+        "name": "DoubleBatch",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "batch",
+            "type": "Int64"
+          },
+          {
+            "name": "other",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode": "D03",
+      "source": {
+        "acceptance_scope": "finite declared fixtures",
+        "component": "R663_FIXED_TYPED_STEP",
+        "episode": "D03",
+        "expected_result_type": "Int64",
+        "family": "REPEATED_REFERENCE",
+        "provenance": "coordinator_authored_synthetic_expert_fixture",
+        "requirement": "Count the same stored batch twice. Do not use the independent distractor batch.",
+        "rights": "owner-authorized research data qualification; actual training requires new authorization"
+      }
+    },
+    {
+      "action": {
+        "deps": [
+          "adjustment",
+          "subtotal"
+        ],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "add": [
+              {
+                "ref": "subtotal"
+              },
+              {
+                "ref": "adjustment"
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Int64"
+      },
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "034582c9826051506bcdaf281adcf89d2970b6270ccb76caabdd692270ee8467",
+        "literals": [],
+        "name": "SubtotalReuse",
+        "order": [
+          "subtotal",
+          "mirror"
+        ],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "base",
+            "type": "Int64"
+          },
+          {
+            "name": "delta",
+            "type": "Int64"
+          },
+          {
+            "name": "adjustment",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [
+          {
+            "deps": [
+              "base",
+              "delta"
+            ],
+            "id": "subtotal",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "base"
+                  },
+                  {
+                    "ref": "delta"
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          },
+          {
+            "deps": [
+              "base"
+            ],
+            "id": "mirror",
+            "node": {
+              "expr": {
+                "ref": "base"
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ],
+        "version": "r6.63-state-1"
+      },
+      "episode": "D04",
+      "source": {
+        "acceptance_scope": "finite declared fixtures",
+        "component": "R663_FIXED_TYPED_STEP",
+        "episode": "D04",
+        "expected_result_type": "Int64",
+        "family": "SUBTOTAL_REUSE",
+        "provenance": "coordinator_authored_synthetic_expert_fixture",
+        "requirement": "Add the stored adjustment to the already constructed subtotal. Use subtotal, not the original base or the unused mirror.",
+        "rights": "owner-authorized research data qualification; actual training requires new authorization"
+      }
+    },
+    {
+      "action": {
+        "deps": [
+          "load"
+        ],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "le": [
+              {
+                "ref": "load"
+              },
+              {
+                "const": 5
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Bool"
+      },
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "55f5704db6a4bbccaaee9a54bc0981504789ec548459f357308758d02786903a",
+        "literals": [
+          5,
+          0
+        ],
+        "name": "UpperBound",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "load",
+            "type": "Int64"
+          },
+          {
+            "name": "cap",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode": "D05",
+      "source": {
+        "acceptance_scope": "finite declared fixtures",
+        "component": "R663_FIXED_TYPED_STEP",
+        "episode": "D05",
+        "expected_result_type": "Bool",
+        "family": "UPPER_BOUND",
+        "provenance": "coordinator_authored_synthetic_expert_fixture",
+        "requirement": "Report whether the stored load is no greater than five. The unrelated cap is a distractor.",
+        "rights": "owner-authorized research data qualification; actual training requires new authorization"
+      }
+    },
+    {
+      "action": {
+        "deps": [
+          "stock"
+        ],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "le": [
+              {
+                "const": 5
+              },
+              {
+                "ref": "stock"
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Bool"
+      },
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "e882d8a2cd549ba8cbe6adc1b81ea45bb28027ded8b47429753cdf4993bf12e5",
+        "literals": [
+          5,
+          0
+        ],
+        "name": "LowerBound",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "stock",
+            "type": "Int64"
+          },
+          {
+            "name": "spare",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode": "D06",
+      "source": {
+        "acceptance_scope": "finite declared fixtures",
+        "component": "R663_FIXED_TYPED_STEP",
+        "episode": "D06",
+        "expected_result_type": "Bool",
+        "family": "LOWER_BOUND",
+        "provenance": "coordinator_authored_synthetic_expert_fixture",
+        "requirement": "Report whether five is no greater than the stored stock. Ignore the spare stock.",
+        "rights": "owner-authorized research data qualification; actual training requires new authorization"
+      }
+    },
+    {
+      "action": {
+        "deps": [
+          "available",
+          "requested"
+        ],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "le": [
+              {
+                "ref": "requested"
+              },
+              {
+                "ref": "available"
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Bool"
+      },
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "1a9b7446fed86f9747e81cd90df8f117942c4b32d537319ba60bf0755f59026c",
+        "literals": [],
+        "name": "Fits",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "requested",
+            "type": "Int64"
+          },
+          {
+            "name": "available",
+            "type": "Int64"
+          },
+          {
+            "name": "noise",
+            "type": "Bool"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode": "D07",
+      "source": {
+        "acceptance_scope": "finite declared fixtures",
+        "component": "R663_FIXED_TYPED_STEP",
+        "episode": "D07",
+        "expected_result_type": "Bool",
+        "family": "ORDERED_REFERENCE_LIMIT",
+        "provenance": "coordinator_authored_synthetic_expert_fixture",
+        "requirement": "Report whether requested units fit within available units. Preserve requested then available operand order.",
+        "rights": "owner-authorized research data qualification; actual training requires new authorization"
+      }
+    },
+    {
+      "action": {
+        "deps": [
+          "recorded",
+          "reference"
+        ],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "eq": [
+              {
+                "ref": "recorded"
+              },
+              {
+                "ref": "reference"
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Bool"
+      },
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "aa2e0eeba509ea93846faea6f224adb8c639aef0f718cc79f4200d8292386281",
+        "literals": [],
+        "name": "ReadingMatch",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "recorded",
+            "type": "Int64"
+          },
+          {
+            "name": "reference",
+            "type": "Int64"
+          },
+          {
+            "name": "unused",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode": "D08",
+      "source": {
+        "acceptance_scope": "finite declared fixtures",
+        "component": "R663_FIXED_TYPED_STEP",
+        "episode": "D08",
+        "expected_result_type": "Bool",
+        "family": "INTEGER_AGREEMENT",
+        "provenance": "coordinator_authored_synthetic_expert_fixture",
+        "requirement": "Report whether the recorded reading exactly matches the reference reading; ordering alone is insufficient.",
+        "rights": "owner-authorized research data qualification; actual training requires new authorization"
+      }
+    },
+    {
+      "action": {
+        "deps": [
+          "first",
+          "second"
+        ],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "eq": [
+              {
+                "ref": "first"
+              },
+              {
+                "ref": "second"
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Bool"
+      },
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "d0764429cda75470d9012bdcaad0dc58797b60eaba4786bb8d0a01e2ee9c68a1",
+        "literals": [],
+        "name": "Acknowledgments",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "first",
+            "type": "Bool"
+          },
+          {
+            "name": "second",
+            "type": "Bool"
+          },
+          {
+            "name": "decoy",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode": "D09",
+      "source": {
+        "acceptance_scope": "finite declared fixtures",
+        "component": "R663_FIXED_TYPED_STEP",
+        "episode": "D09",
+        "expected_result_type": "Bool",
+        "family": "BOOLEAN_AGREEMENT",
+        "provenance": "coordinator_authored_synthetic_expert_fixture",
+        "requirement": "Report whether the two Boolean acknowledgments agree. Never convert them to integers.",
+        "rights": "owner-authorized research data qualification; actual training requires new authorization"
+      }
+    },
+    {
+      "action": {
+        "deps": [
+          "enabled"
+        ],
+        "id": "selected",
+        "node": {
+          "expr": {
+            "eq": [
+              {
+                "ref": "enabled"
+              },
+              {
+                "const": true
+              }
+            ]
+          },
+          "op": "value"
+        },
+        "type": "Bool"
+      },
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "64b3e14c97b03976cf8e94764b4fe4a5975b661a530a0f45389cfcd31a388cbf",
+        "literals": [
+          true,
+          false
+        ],
+        "name": "EnabledMatch",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "enabled",
+            "type": "Bool"
+          },
+          {
+            "name": "override",
+            "type": "Bool"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "episode": "D10",
+      "source": {
+        "acceptance_scope": "finite declared fixtures",
+        "component": "R663_FIXED_TYPED_STEP",
+        "episode": "D10",
+        "expected_result_type": "Bool",
+        "family": "BOOLEAN_LITERAL_MATCH",
+        "provenance": "coordinator_authored_synthetic_expert_fixture",
+        "requirement": "Report whether the stored enabled flag equals literal true, ignoring the override flag.",
+        "rights": "owner-authorized research data qualification; actual training requires new authorization"
+      }
+    }
+  ]
+}
