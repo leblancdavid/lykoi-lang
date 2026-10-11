@@ -1,0 +1,24 @@
+The following generation flags are not valid and may be ignored: ['temperature', 'top_p', 'top_k']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+Traceback (most recent call last):
+  File "D:\Dev\axiom\experiments\base_evaluation_r6_78\run78.py", line 200, in <module>
+    worker(int(sys.argv[2]), sys.argv[3], sys.argv[4])
+  File "D:\Dev\axiom\experiments\base_evaluation_r6_78\run78.py", line 143, in worker
+    namespace['diagnostic']('base')
+  File "r678-frozen-diagnostic-instrumented", line 46, in diagnostic
+  File "D:\Dev\axiom\experiments\base_evaluation_r6_78\run78.py", line 102, in tracked_generate
+    output = generate(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lblan\AppData\Local\Temp\opencode\lykoi-r6-52\venv\Lib\site-packages\torch\utils\_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lblan\AppData\Local\Temp\opencode\lykoi-r6-52\venv\Lib\site-packages\transformers\generation\utils.py", line 2617, in generate
+    result = self._sample(
+             ^^^^^^^^^^^^^
+  File "C:\Users\lblan\AppData\Local\Temp\opencode\lykoi-r6-52\venv\Lib\site-packages\transformers\generation\utils.py", line 3617, in _sample
+    next_token_scores = logits_processor(input_ids, next_token_logits)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lblan\AppData\Local\Temp\opencode\lykoi-r6-52\venv\Lib\site-packages\transformers\generation\logits_process.py", line 93, in __call__
+    scores = processor(input_ids, scores)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "r678-frozen-diagnostic-instrumented", line 31, in __call__
+AssertionError: GENERATION_TIMEOUT
