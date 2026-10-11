@@ -1,0 +1,32 @@
+{
+  "round": "R6.64",
+  "classification": "R6_64_RESOURCE_OR_STACK_GAP",
+  "stage": "GOLD_DIAGNOSTIC_SCHEMA_PREFLIGHT",
+  "process": {
+    "argv": [
+      "C:\\Users\\lblan\\AppData\\Local\\Temp\\opencode\\lykoi-r6-52\\venv\\Scripts\\python.exe",
+      "experiments/incremental_training_r6_64/run.py",
+      "freeze"
+    ],
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"D:\\Dev\\axiom\\experiments\\incremental_training_r6_64\\run.py\", line 229, in <module>\n    if sys.argv[1]=='freeze': freeze()\n                              ^^^^^^^^\n  File \"D:\\Dev\\axiom\\experiments\\incremental_training_r6_64\\run.py\", line 151, in freeze\n    assert all(scores[k] for k in ('strict_serialization','schema_valid','operation_correct','operands_correct',\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+    "capture_provenance": "transcribed exact terminal tool output; not an automated subprocess capture"
+  },
+  "read_only_diagnosis": {
+    "command": "pinned private Python -c import run; print(run.score(run.rows()[0]['completion'][0]['content'],run.rows()[0]))",
+    "exit_code": 0,
+    "raw_stdout": "{'strict_serialization': True, 'schema_valid': False, 'operation_correct': False, 'operands_correct': False, 'result_type_correct': False, 'dependencies_correct': False, 'deterministic_assembly': False, 'behavioral_acceptance': False, 'exact_target_reproduction': False, 'repair_count': 0, 'observations': [], 'error': \"No module named 'jsonschema'\"}\n",
+    "model_calls": 0,
+    "note": "One read-only scorer inspection of D01, not another freeze/training attempt. False defaults after the exception are unmeasured downstream checks, not a model or expert semantic failure."
+  },
+  "cause": "New R6.64 scoring code imports jsonschema inside the pinned training interpreter, which has no such installed module. R6.63 schema qualification used a separate interpreter; its schema evidence does not qualify this integrated worker.",
+  "training_attempts_dispatched": 0,
+  "optimizer_updates": 0,
+  "scheduler_updates": 0,
+  "model_inference": 0,
+  "retry": false,
+  "complete_preflight_freeze": "NOT_REACHED",
+  "base_diagnostics": "NOT_REACHED",
+  "adapter_save_reload": "NOT_REACHED"
+}

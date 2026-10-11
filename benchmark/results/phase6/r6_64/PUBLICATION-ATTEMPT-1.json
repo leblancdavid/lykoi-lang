@@ -1,0 +1,18 @@
+{
+  "command": "pinned private Python experiments/incremental_training_r6_64/publish.py seal",
+  "exit_code": 1,
+  "error": "RecursionError: maximum recursion depth exceeded",
+  "stage": "publication baseline verification, before seal or verification receipt writes",
+  "cause": "Publication imported R6.64 as module run. Historical R6.60 baseline imports historical module run but resolved the already-loaded R6.64 namespace, creating an identity-audit recursion.",
+  "traceback_summary": [
+    "incremental_training_r6_64/publish.py verify -> r.baseline()",
+    "incremental_training_r6_64/run.py baseline -> data.baseline()",
+    "incremental_data_r6_63/freeze.py -> curriculum_design_r6_62/audit.py -> first_token_r6_61/diagnose.py -> learned_distribution_r6_60/diagnose.py",
+    "learned_distribution_r6_60/diagnose.py prior.baseline() resolved to incremental_training_r6_64/run.py, repeating until RecursionError"
+  ],
+  "raw_terminal_output_location": "C:\\Users\\lblan\\.local\\share\\opencode\\tool-output\\tool_128b6cc21001EGJ7d1b6I1Xlty",
+  "capture_limit": "Summary retained in repository; full repeated traceback remains in external harness output, not made durable by this record.",
+  "publication_only_correction": "Run unchanged historical baseline-check in a fresh private-Python subprocess, verify its receipt and hash identities separately. No change to attempted run.py, worker.py, protocol, dataset or failed scoring path.",
+  "model_calls": 0,
+  "training_attempts": 0
+}

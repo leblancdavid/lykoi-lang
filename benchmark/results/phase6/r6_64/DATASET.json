@@ -1,0 +1,1048 @@
+{
+  "context_convention": "full pinned skill/schema plus requirement and immutable before state",
+  "records": [
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "bf2819a6ae6dd2eb91e8ebca7718817e01f571ce253dce3b7a5b4b7f16e6666d",
+        "literals": [],
+        "name": "PairSum",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "arrivals",
+            "type": "Int64"
+          },
+          {
+            "name": "reserve",
+            "type": "Int64"
+          },
+          {
+            "name": "decoy",
+            "type": "Bool"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "cases": [
+        {
+          "arguments": {
+            "arrivals": 2,
+            "decoy": true,
+            "reserve": 3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 5
+          }
+        },
+        {
+          "arguments": {
+            "arrivals": 9223372036854775807,
+            "decoy": false,
+            "reserve": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 9223372036854775807
+          }
+        },
+        {
+          "arguments": {
+            "arrivals": 9223372036854775807,
+            "decoy": false,
+            "reserve": 1
+          },
+          "expected": {
+            "code": "OVERFLOW",
+            "status": "reject"
+          }
+        },
+        {
+          "arguments": {
+            "arrivals": -9223372036854775808,
+            "decoy": true,
+            "reserve": -1
+          },
+          "expected": {
+            "code": "OVERFLOW",
+            "status": "reject"
+          }
+        },
+        {
+          "arguments": {
+            "arrivals": -9223372036854775808,
+            "decoy": false,
+            "reserve": 1
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": -9223372036854775807
+          }
+        },
+        {
+          "arguments": {
+            "arrivals": true,
+            "decoy": false,
+            "reserve": 1
+          },
+          "expected": {
+            "code": "ARGUMENT_TYPE",
+            "status": "reject"
+          }
+        }
+      ],
+      "completion": [
+        {
+          "content": "{\"deps\":[\"arrivals\",\"reserve\"],\"id\":\"selected\",\"node\":{\"expr\":{\"add\":[{\"ref\":\"arrivals\"},{\"ref\":\"reserve\"}]},\"op\":\"value\"},\"type\":\"Int64\"}",
+          "role": "assistant"
+        }
+      ],
+      "episode_id": "R6.63/D01",
+      "group": "training_record",
+      "prompt": [
+        {
+          "content": "Return exactly one B incremental action as a JSON object, without markdown or explanation. Use the following fixed skill and schema. Only the selected step is requested.\n# Frozen construction skill 1\n\nInput: human-style requirement, immutable typed definition prefix, available scalar\nliterals, mechanical output id `selected`, required result type, foundation identity.\nChoose exactly one existing binary `add`, `le` or `eq`; bind two operands, each a\ndirect immutable ref or declared literal. Output one native R6.18 value-step object\nwith id/type/deps/node. Dependencies enumerate exactly the distinct direct refs;\nlexically sorted serialization is required by this experiment (no execution change).\nNo nested selected expressions, new operations or inferred repair are admitted.\n\nExisting meanings: R6.18 expression typing admits add/le on Int64 and eq on two\noperands of the same Int64/Bool/Unit type. Int64 is signed 64-bit; Bool is not Int64.\nR6.10 add rejects overflow; le is inclusive and ordered; eq preserves exact types.\nThe selected subset includes Int64 add/le/eq and Bool eq. Unit equality is reserved.\n\nState includes version/foundation, name, typed params, frozen native prior value\nsteps and order, available literals, mechanical output id/type, and SHA256 of its\ncanonical body. After-state contains parent pin, action pin, complete sealed package\nand its canonical body identity. Prefix byte-equivalence and parameter identities\nare checked. Rejects produce no after-state and leave input identities unchanged.\n\nA emits the complete package, including identities and the mechanical HostEntry\nwhich calls the selected definition with type-correct zero/false/null defaults and\nreturns Int64 zero. B emits only the selected step. Both have one new semantic\nrelation selection, two ordered operand bindings, result type and exact dependency\ndeclaration; copying prior steps/ids is additional A structure, not extra task choice.\nHostEntry is validation scaffolding, never behavioral acceptance of the requirement.\n\nFor each behavioral fixture: check supplied scalar argument types with unchanged\nexpression typing; instantiate HostEntry with those constants, expand unchanged,\nextract the generated task seq into the existing VM decode slot and call execute\nwith assemble=False. This observes the actual Int64/Bool task result and runtime\nrejections without the unrelated UInt16 output restriction. No new evaluator is\nimplemented. Positive records refer to separately frozen literal expected outcomes.\n\nBounds: ten expert demonstrations, at most four params and two prefix steps,\none selected step, two deterministic acceptance passes, finite mutation controls.\nOnly locally synthesized training-candidate preparation is authorized.\n\n{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\", \"additionalProperties\": false,\n  \"required\": [\"id\", \"type\", \"deps\", \"node\"],\n  \"properties\": {\n    \"id\": {\"const\": \"selected\"},\n    \"type\": {\"enum\": [\"Int64\", \"Bool\"]},\n    \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"maxItems\": 2, \"items\": {\"type\": \"string\"}},\n    \"node\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"],\n      \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1,\n        \"additionalProperties\": false, \"properties\": {\n          \"add\": {\"$ref\": \"#/$defs/pair\"}, \"le\": {\"$ref\": \"#/$defs/pair\"}, \"eq\": {\"$ref\": \"#/$defs/pair\"}\n        }}}}\n  },\n  \"$defs\": {\n    \"operand\": {\"oneOf\": [\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"type\": \"string\"}}},\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [\n        {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}, {\"type\": \"boolean\"}, {\"type\": \"null\"}\n      ]}}}\n    ]},\n    \"pair\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/operand\"}}\n  }\n}\n",
+          "role": "system"
+        },
+        {
+          "content": "{\"before_state\":{\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"identity\":\"bf2819a6ae6dd2eb91e8ebca7718817e01f571ce253dce3b7a5b4b7f16e6666d\",\"literals\":[],\"name\":\"PairSum\",\"order\":[],\"output_id\":\"selected\",\"params\":[{\"name\":\"arrivals\",\"type\":\"Int64\"},{\"name\":\"reserve\",\"type\":\"Int64\"},{\"name\":\"decoy\",\"type\":\"Bool\"}],\"result_type\":\"Int64\",\"steps\":[],\"version\":\"r6.63-state-1\"},\"instruction\":\"Select one add/le/eq value step with two ordered direct references or available literals, correct type and exact sorted distinct direct dependencies.\",\"requirement\":\"Combine the stored arrival count and stored reserve count. Ignore the decoy flag.\"}",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "de985bf33beea5e3055eb0ef73e424713e4eda8815a56162d6dab8e9808e0eb4",
+        "literals": [
+          1,
+          7
+        ],
+        "name": "SpareFirst",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "count",
+            "type": "Int64"
+          },
+          {
+            "name": "bonus",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "cases": [
+        {
+          "arguments": {
+            "bonus": 7,
+            "count": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 1
+          }
+        },
+        {
+          "arguments": {
+            "bonus": 0,
+            "count": 9223372036854775807
+          },
+          "expected": {
+            "code": "OVERFLOW",
+            "status": "reject"
+          }
+        },
+        {
+          "arguments": {
+            "bonus": 9,
+            "count": -9223372036854775808
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": -9223372036854775807
+          }
+        },
+        {
+          "arguments": {
+            "bonus": 1,
+            "count": -1
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 0
+          }
+        }
+      ],
+      "completion": [
+        {
+          "content": "{\"deps\":[\"count\"],\"id\":\"selected\",\"node\":{\"expr\":{\"add\":[{\"const\":1},{\"ref\":\"count\"}]},\"op\":\"value\"},\"type\":\"Int64\"}",
+          "role": "assistant"
+        }
+      ],
+      "episode_id": "R6.63/D02",
+      "group": "training_record",
+      "prompt": [
+        {
+          "content": "Return exactly one B incremental action as a JSON object, without markdown or explanation. Use the following fixed skill and schema. Only the selected step is requested.\n# Frozen construction skill 1\n\nInput: human-style requirement, immutable typed definition prefix, available scalar\nliterals, mechanical output id `selected`, required result type, foundation identity.\nChoose exactly one existing binary `add`, `le` or `eq`; bind two operands, each a\ndirect immutable ref or declared literal. Output one native R6.18 value-step object\nwith id/type/deps/node. Dependencies enumerate exactly the distinct direct refs;\nlexically sorted serialization is required by this experiment (no execution change).\nNo nested selected expressions, new operations or inferred repair are admitted.\n\nExisting meanings: R6.18 expression typing admits add/le on Int64 and eq on two\noperands of the same Int64/Bool/Unit type. Int64 is signed 64-bit; Bool is not Int64.\nR6.10 add rejects overflow; le is inclusive and ordered; eq preserves exact types.\nThe selected subset includes Int64 add/le/eq and Bool eq. Unit equality is reserved.\n\nState includes version/foundation, name, typed params, frozen native prior value\nsteps and order, available literals, mechanical output id/type, and SHA256 of its\ncanonical body. After-state contains parent pin, action pin, complete sealed package\nand its canonical body identity. Prefix byte-equivalence and parameter identities\nare checked. Rejects produce no after-state and leave input identities unchanged.\n\nA emits the complete package, including identities and the mechanical HostEntry\nwhich calls the selected definition with type-correct zero/false/null defaults and\nreturns Int64 zero. B emits only the selected step. Both have one new semantic\nrelation selection, two ordered operand bindings, result type and exact dependency\ndeclaration; copying prior steps/ids is additional A structure, not extra task choice.\nHostEntry is validation scaffolding, never behavioral acceptance of the requirement.\n\nFor each behavioral fixture: check supplied scalar argument types with unchanged\nexpression typing; instantiate HostEntry with those constants, expand unchanged,\nextract the generated task seq into the existing VM decode slot and call execute\nwith assemble=False. This observes the actual Int64/Bool task result and runtime\nrejections without the unrelated UInt16 output restriction. No new evaluator is\nimplemented. Positive records refer to separately frozen literal expected outcomes.\n\nBounds: ten expert demonstrations, at most four params and two prefix steps,\none selected step, two deterministic acceptance passes, finite mutation controls.\nOnly locally synthesized training-candidate preparation is authorized.\n\n{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\", \"additionalProperties\": false,\n  \"required\": [\"id\", \"type\", \"deps\", \"node\"],\n  \"properties\": {\n    \"id\": {\"const\": \"selected\"},\n    \"type\": {\"enum\": [\"Int64\", \"Bool\"]},\n    \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"maxItems\": 2, \"items\": {\"type\": \"string\"}},\n    \"node\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"],\n      \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1,\n        \"additionalProperties\": false, \"properties\": {\n          \"add\": {\"$ref\": \"#/$defs/pair\"}, \"le\": {\"$ref\": \"#/$defs/pair\"}, \"eq\": {\"$ref\": \"#/$defs/pair\"}\n        }}}}\n  },\n  \"$defs\": {\n    \"operand\": {\"oneOf\": [\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"type\": \"string\"}}},\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [\n        {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}, {\"type\": \"boolean\"}, {\"type\": \"null\"}\n      ]}}}\n    ]},\n    \"pair\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/operand\"}}\n  }\n}\n",
+          "role": "system"
+        },
+        {
+          "content": "{\"before_state\":{\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"identity\":\"de985bf33beea5e3055eb0ef73e424713e4eda8815a56162d6dab8e9808e0eb4\",\"literals\":[1,7],\"name\":\"SpareFirst\",\"order\":[],\"output_id\":\"selected\",\"params\":[{\"name\":\"count\",\"type\":\"Int64\"},{\"name\":\"bonus\",\"type\":\"Int64\"}],\"result_type\":\"Int64\",\"steps\":[],\"version\":\"r6.63-state-1\"},\"instruction\":\"Select one add/le/eq value step with two ordered direct references or available literals, correct type and exact sorted distinct direct dependencies.\",\"requirement\":\"Add one fixed spare unit to the stored count; the spare is the left operand. Ignore the stored bonus.\"}",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "a7f40f372afaa64513a5a8e0ab742d3102f3d0b449b5815d45a3df11f0ddfafb",
+        "literals": [],
+        "name": "DoubleBatch",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "batch",
+            "type": "Int64"
+          },
+          {
+            "name": "other",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "cases": [
+        {
+          "arguments": {
+            "batch": 0,
+            "other": 99
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 0
+          }
+        },
+        {
+          "arguments": {
+            "batch": -3,
+            "other": 3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": -6
+          }
+        },
+        {
+          "arguments": {
+            "batch": 4611686018427387903,
+            "other": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 9223372036854775806
+          }
+        },
+        {
+          "arguments": {
+            "batch": 4611686018427387904,
+            "other": 0
+          },
+          "expected": {
+            "code": "OVERFLOW",
+            "status": "reject"
+          }
+        },
+        {
+          "arguments": {
+            "batch": -4611686018427387904,
+            "other": 1
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": -9223372036854775808
+          }
+        }
+      ],
+      "completion": [
+        {
+          "content": "{\"deps\":[\"batch\"],\"id\":\"selected\",\"node\":{\"expr\":{\"add\":[{\"ref\":\"batch\"},{\"ref\":\"batch\"}]},\"op\":\"value\"},\"type\":\"Int64\"}",
+          "role": "assistant"
+        }
+      ],
+      "episode_id": "R6.63/D03",
+      "group": "training_record",
+      "prompt": [
+        {
+          "content": "Return exactly one B incremental action as a JSON object, without markdown or explanation. Use the following fixed skill and schema. Only the selected step is requested.\n# Frozen construction skill 1\n\nInput: human-style requirement, immutable typed definition prefix, available scalar\nliterals, mechanical output id `selected`, required result type, foundation identity.\nChoose exactly one existing binary `add`, `le` or `eq`; bind two operands, each a\ndirect immutable ref or declared literal. Output one native R6.18 value-step object\nwith id/type/deps/node. Dependencies enumerate exactly the distinct direct refs;\nlexically sorted serialization is required by this experiment (no execution change).\nNo nested selected expressions, new operations or inferred repair are admitted.\n\nExisting meanings: R6.18 expression typing admits add/le on Int64 and eq on two\noperands of the same Int64/Bool/Unit type. Int64 is signed 64-bit; Bool is not Int64.\nR6.10 add rejects overflow; le is inclusive and ordered; eq preserves exact types.\nThe selected subset includes Int64 add/le/eq and Bool eq. Unit equality is reserved.\n\nState includes version/foundation, name, typed params, frozen native prior value\nsteps and order, available literals, mechanical output id/type, and SHA256 of its\ncanonical body. After-state contains parent pin, action pin, complete sealed package\nand its canonical body identity. Prefix byte-equivalence and parameter identities\nare checked. Rejects produce no after-state and leave input identities unchanged.\n\nA emits the complete package, including identities and the mechanical HostEntry\nwhich calls the selected definition with type-correct zero/false/null defaults and\nreturns Int64 zero. B emits only the selected step. Both have one new semantic\nrelation selection, two ordered operand bindings, result type and exact dependency\ndeclaration; copying prior steps/ids is additional A structure, not extra task choice.\nHostEntry is validation scaffolding, never behavioral acceptance of the requirement.\n\nFor each behavioral fixture: check supplied scalar argument types with unchanged\nexpression typing; instantiate HostEntry with those constants, expand unchanged,\nextract the generated task seq into the existing VM decode slot and call execute\nwith assemble=False. This observes the actual Int64/Bool task result and runtime\nrejections without the unrelated UInt16 output restriction. No new evaluator is\nimplemented. Positive records refer to separately frozen literal expected outcomes.\n\nBounds: ten expert demonstrations, at most four params and two prefix steps,\none selected step, two deterministic acceptance passes, finite mutation controls.\nOnly locally synthesized training-candidate preparation is authorized.\n\n{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\", \"additionalProperties\": false,\n  \"required\": [\"id\", \"type\", \"deps\", \"node\"],\n  \"properties\": {\n    \"id\": {\"const\": \"selected\"},\n    \"type\": {\"enum\": [\"Int64\", \"Bool\"]},\n    \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"maxItems\": 2, \"items\": {\"type\": \"string\"}},\n    \"node\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"],\n      \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1,\n        \"additionalProperties\": false, \"properties\": {\n          \"add\": {\"$ref\": \"#/$defs/pair\"}, \"le\": {\"$ref\": \"#/$defs/pair\"}, \"eq\": {\"$ref\": \"#/$defs/pair\"}\n        }}}}\n  },\n  \"$defs\": {\n    \"operand\": {\"oneOf\": [\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"type\": \"string\"}}},\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [\n        {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}, {\"type\": \"boolean\"}, {\"type\": \"null\"}\n      ]}}}\n    ]},\n    \"pair\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/operand\"}}\n  }\n}\n",
+          "role": "system"
+        },
+        {
+          "content": "{\"before_state\":{\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"identity\":\"a7f40f372afaa64513a5a8e0ab742d3102f3d0b449b5815d45a3df11f0ddfafb\",\"literals\":[],\"name\":\"DoubleBatch\",\"order\":[],\"output_id\":\"selected\",\"params\":[{\"name\":\"batch\",\"type\":\"Int64\"},{\"name\":\"other\",\"type\":\"Int64\"}],\"result_type\":\"Int64\",\"steps\":[],\"version\":\"r6.63-state-1\"},\"instruction\":\"Select one add/le/eq value step with two ordered direct references or available literals, correct type and exact sorted distinct direct dependencies.\",\"requirement\":\"Count the same stored batch twice. Do not use the independent distractor batch.\"}",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "034582c9826051506bcdaf281adcf89d2970b6270ccb76caabdd692270ee8467",
+        "literals": [],
+        "name": "SubtotalReuse",
+        "order": [
+          "subtotal",
+          "mirror"
+        ],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "base",
+            "type": "Int64"
+          },
+          {
+            "name": "delta",
+            "type": "Int64"
+          },
+          {
+            "name": "adjustment",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Int64",
+        "steps": [
+          {
+            "deps": [
+              "base",
+              "delta"
+            ],
+            "id": "subtotal",
+            "node": {
+              "expr": {
+                "add": [
+                  {
+                    "ref": "base"
+                  },
+                  {
+                    "ref": "delta"
+                  }
+                ]
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          },
+          {
+            "deps": [
+              "base"
+            ],
+            "id": "mirror",
+            "node": {
+              "expr": {
+                "ref": "base"
+              },
+              "op": "value"
+            },
+            "type": "Int64"
+          }
+        ],
+        "version": "r6.63-state-1"
+      },
+      "cases": [
+        {
+          "arguments": {
+            "adjustment": 4,
+            "base": 2,
+            "delta": 3
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 9
+          }
+        },
+        {
+          "arguments": {
+            "adjustment": 1,
+            "base": -2,
+            "delta": 1
+          },
+          "expected": {
+            "status": "success",
+            "type": "Int64",
+            "value": 0
+          }
+        },
+        {
+          "arguments": {
+            "adjustment": 1,
+            "base": 9223372036854775807,
+            "delta": 0
+          },
+          "expected": {
+            "code": "OVERFLOW",
+            "status": "reject"
+          }
+        },
+        {
+          "arguments": {
+            "adjustment": -1,
+            "base": 9223372036854775807,
+            "delta": 1
+          },
+          "expected": {
+            "code": "OVERFLOW",
+            "status": "reject"
+          }
+        }
+      ],
+      "completion": [
+        {
+          "content": "{\"deps\":[\"adjustment\",\"subtotal\"],\"id\":\"selected\",\"node\":{\"expr\":{\"add\":[{\"ref\":\"subtotal\"},{\"ref\":\"adjustment\"}]},\"op\":\"value\"},\"type\":\"Int64\"}",
+          "role": "assistant"
+        }
+      ],
+      "episode_id": "R6.63/D04",
+      "group": "training_record",
+      "prompt": [
+        {
+          "content": "Return exactly one B incremental action as a JSON object, without markdown or explanation. Use the following fixed skill and schema. Only the selected step is requested.\n# Frozen construction skill 1\n\nInput: human-style requirement, immutable typed definition prefix, available scalar\nliterals, mechanical output id `selected`, required result type, foundation identity.\nChoose exactly one existing binary `add`, `le` or `eq`; bind two operands, each a\ndirect immutable ref or declared literal. Output one native R6.18 value-step object\nwith id/type/deps/node. Dependencies enumerate exactly the distinct direct refs;\nlexically sorted serialization is required by this experiment (no execution change).\nNo nested selected expressions, new operations or inferred repair are admitted.\n\nExisting meanings: R6.18 expression typing admits add/le on Int64 and eq on two\noperands of the same Int64/Bool/Unit type. Int64 is signed 64-bit; Bool is not Int64.\nR6.10 add rejects overflow; le is inclusive and ordered; eq preserves exact types.\nThe selected subset includes Int64 add/le/eq and Bool eq. Unit equality is reserved.\n\nState includes version/foundation, name, typed params, frozen native prior value\nsteps and order, available literals, mechanical output id/type, and SHA256 of its\ncanonical body. After-state contains parent pin, action pin, complete sealed package\nand its canonical body identity. Prefix byte-equivalence and parameter identities\nare checked. Rejects produce no after-state and leave input identities unchanged.\n\nA emits the complete package, including identities and the mechanical HostEntry\nwhich calls the selected definition with type-correct zero/false/null defaults and\nreturns Int64 zero. B emits only the selected step. Both have one new semantic\nrelation selection, two ordered operand bindings, result type and exact dependency\ndeclaration; copying prior steps/ids is additional A structure, not extra task choice.\nHostEntry is validation scaffolding, never behavioral acceptance of the requirement.\n\nFor each behavioral fixture: check supplied scalar argument types with unchanged\nexpression typing; instantiate HostEntry with those constants, expand unchanged,\nextract the generated task seq into the existing VM decode slot and call execute\nwith assemble=False. This observes the actual Int64/Bool task result and runtime\nrejections without the unrelated UInt16 output restriction. No new evaluator is\nimplemented. Positive records refer to separately frozen literal expected outcomes.\n\nBounds: ten expert demonstrations, at most four params and two prefix steps,\none selected step, two deterministic acceptance passes, finite mutation controls.\nOnly locally synthesized training-candidate preparation is authorized.\n\n{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\", \"additionalProperties\": false,\n  \"required\": [\"id\", \"type\", \"deps\", \"node\"],\n  \"properties\": {\n    \"id\": {\"const\": \"selected\"},\n    \"type\": {\"enum\": [\"Int64\", \"Bool\"]},\n    \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"maxItems\": 2, \"items\": {\"type\": \"string\"}},\n    \"node\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"],\n      \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1,\n        \"additionalProperties\": false, \"properties\": {\n          \"add\": {\"$ref\": \"#/$defs/pair\"}, \"le\": {\"$ref\": \"#/$defs/pair\"}, \"eq\": {\"$ref\": \"#/$defs/pair\"}\n        }}}}\n  },\n  \"$defs\": {\n    \"operand\": {\"oneOf\": [\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"type\": \"string\"}}},\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [\n        {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}, {\"type\": \"boolean\"}, {\"type\": \"null\"}\n      ]}}}\n    ]},\n    \"pair\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/operand\"}}\n  }\n}\n",
+          "role": "system"
+        },
+        {
+          "content": "{\"before_state\":{\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"identity\":\"034582c9826051506bcdaf281adcf89d2970b6270ccb76caabdd692270ee8467\",\"literals\":[],\"name\":\"SubtotalReuse\",\"order\":[\"subtotal\",\"mirror\"],\"output_id\":\"selected\",\"params\":[{\"name\":\"base\",\"type\":\"Int64\"},{\"name\":\"delta\",\"type\":\"Int64\"},{\"name\":\"adjustment\",\"type\":\"Int64\"}],\"result_type\":\"Int64\",\"steps\":[{\"deps\":[\"base\",\"delta\"],\"id\":\"subtotal\",\"node\":{\"expr\":{\"add\":[{\"ref\":\"base\"},{\"ref\":\"delta\"}]},\"op\":\"value\"},\"type\":\"Int64\"},{\"deps\":[\"base\"],\"id\":\"mirror\",\"node\":{\"expr\":{\"ref\":\"base\"},\"op\":\"value\"},\"type\":\"Int64\"}],\"version\":\"r6.63-state-1\"},\"instruction\":\"Select one add/le/eq value step with two ordered direct references or available literals, correct type and exact sorted distinct direct dependencies.\",\"requirement\":\"Add the stored adjustment to the already constructed subtotal. Use subtotal, not the original base or the unused mirror.\"}",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "55f5704db6a4bbccaaee9a54bc0981504789ec548459f357308758d02786903a",
+        "literals": [
+          5,
+          0
+        ],
+        "name": "UpperBound",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "load",
+            "type": "Int64"
+          },
+          {
+            "name": "cap",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "cases": [
+        {
+          "arguments": {
+            "cap": 0,
+            "load": 4
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "cap": 0,
+            "load": 5
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "cap": 99,
+            "load": 6
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "cap": 0,
+            "load": -9223372036854775808
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "cap": 0,
+            "load": 9223372036854775807
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        }
+      ],
+      "completion": [
+        {
+          "content": "{\"deps\":[\"load\"],\"id\":\"selected\",\"node\":{\"expr\":{\"le\":[{\"ref\":\"load\"},{\"const\":5}]},\"op\":\"value\"},\"type\":\"Bool\"}",
+          "role": "assistant"
+        }
+      ],
+      "episode_id": "R6.63/D05",
+      "group": "training_record",
+      "prompt": [
+        {
+          "content": "Return exactly one B incremental action as a JSON object, without markdown or explanation. Use the following fixed skill and schema. Only the selected step is requested.\n# Frozen construction skill 1\n\nInput: human-style requirement, immutable typed definition prefix, available scalar\nliterals, mechanical output id `selected`, required result type, foundation identity.\nChoose exactly one existing binary `add`, `le` or `eq`; bind two operands, each a\ndirect immutable ref or declared literal. Output one native R6.18 value-step object\nwith id/type/deps/node. Dependencies enumerate exactly the distinct direct refs;\nlexically sorted serialization is required by this experiment (no execution change).\nNo nested selected expressions, new operations or inferred repair are admitted.\n\nExisting meanings: R6.18 expression typing admits add/le on Int64 and eq on two\noperands of the same Int64/Bool/Unit type. Int64 is signed 64-bit; Bool is not Int64.\nR6.10 add rejects overflow; le is inclusive and ordered; eq preserves exact types.\nThe selected subset includes Int64 add/le/eq and Bool eq. Unit equality is reserved.\n\nState includes version/foundation, name, typed params, frozen native prior value\nsteps and order, available literals, mechanical output id/type, and SHA256 of its\ncanonical body. After-state contains parent pin, action pin, complete sealed package\nand its canonical body identity. Prefix byte-equivalence and parameter identities\nare checked. Rejects produce no after-state and leave input identities unchanged.\n\nA emits the complete package, including identities and the mechanical HostEntry\nwhich calls the selected definition with type-correct zero/false/null defaults and\nreturns Int64 zero. B emits only the selected step. Both have one new semantic\nrelation selection, two ordered operand bindings, result type and exact dependency\ndeclaration; copying prior steps/ids is additional A structure, not extra task choice.\nHostEntry is validation scaffolding, never behavioral acceptance of the requirement.\n\nFor each behavioral fixture: check supplied scalar argument types with unchanged\nexpression typing; instantiate HostEntry with those constants, expand unchanged,\nextract the generated task seq into the existing VM decode slot and call execute\nwith assemble=False. This observes the actual Int64/Bool task result and runtime\nrejections without the unrelated UInt16 output restriction. No new evaluator is\nimplemented. Positive records refer to separately frozen literal expected outcomes.\n\nBounds: ten expert demonstrations, at most four params and two prefix steps,\none selected step, two deterministic acceptance passes, finite mutation controls.\nOnly locally synthesized training-candidate preparation is authorized.\n\n{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\", \"additionalProperties\": false,\n  \"required\": [\"id\", \"type\", \"deps\", \"node\"],\n  \"properties\": {\n    \"id\": {\"const\": \"selected\"},\n    \"type\": {\"enum\": [\"Int64\", \"Bool\"]},\n    \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"maxItems\": 2, \"items\": {\"type\": \"string\"}},\n    \"node\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"],\n      \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1,\n        \"additionalProperties\": false, \"properties\": {\n          \"add\": {\"$ref\": \"#/$defs/pair\"}, \"le\": {\"$ref\": \"#/$defs/pair\"}, \"eq\": {\"$ref\": \"#/$defs/pair\"}\n        }}}}\n  },\n  \"$defs\": {\n    \"operand\": {\"oneOf\": [\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"type\": \"string\"}}},\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [\n        {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}, {\"type\": \"boolean\"}, {\"type\": \"null\"}\n      ]}}}\n    ]},\n    \"pair\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/operand\"}}\n  }\n}\n",
+          "role": "system"
+        },
+        {
+          "content": "{\"before_state\":{\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"identity\":\"55f5704db6a4bbccaaee9a54bc0981504789ec548459f357308758d02786903a\",\"literals\":[5,0],\"name\":\"UpperBound\",\"order\":[],\"output_id\":\"selected\",\"params\":[{\"name\":\"load\",\"type\":\"Int64\"},{\"name\":\"cap\",\"type\":\"Int64\"}],\"result_type\":\"Bool\",\"steps\":[],\"version\":\"r6.63-state-1\"},\"instruction\":\"Select one add/le/eq value step with two ordered direct references or available literals, correct type and exact sorted distinct direct dependencies.\",\"requirement\":\"Report whether the stored load is no greater than five. The unrelated cap is a distractor.\"}",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "e882d8a2cd549ba8cbe6adc1b81ea45bb28027ded8b47429753cdf4993bf12e5",
+        "literals": [
+          5,
+          0
+        ],
+        "name": "LowerBound",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "stock",
+            "type": "Int64"
+          },
+          {
+            "name": "spare",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "cases": [
+        {
+          "arguments": {
+            "spare": 99,
+            "stock": 4
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "spare": 0,
+            "stock": 5
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "spare": 0,
+            "stock": 6
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "spare": 0,
+            "stock": -9223372036854775808
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "spare": 0,
+            "stock": 9223372036854775807
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        }
+      ],
+      "completion": [
+        {
+          "content": "{\"deps\":[\"stock\"],\"id\":\"selected\",\"node\":{\"expr\":{\"le\":[{\"const\":5},{\"ref\":\"stock\"}]},\"op\":\"value\"},\"type\":\"Bool\"}",
+          "role": "assistant"
+        }
+      ],
+      "episode_id": "R6.63/D06",
+      "group": "training_record",
+      "prompt": [
+        {
+          "content": "Return exactly one B incremental action as a JSON object, without markdown or explanation. Use the following fixed skill and schema. Only the selected step is requested.\n# Frozen construction skill 1\n\nInput: human-style requirement, immutable typed definition prefix, available scalar\nliterals, mechanical output id `selected`, required result type, foundation identity.\nChoose exactly one existing binary `add`, `le` or `eq`; bind two operands, each a\ndirect immutable ref or declared literal. Output one native R6.18 value-step object\nwith id/type/deps/node. Dependencies enumerate exactly the distinct direct refs;\nlexically sorted serialization is required by this experiment (no execution change).\nNo nested selected expressions, new operations or inferred repair are admitted.\n\nExisting meanings: R6.18 expression typing admits add/le on Int64 and eq on two\noperands of the same Int64/Bool/Unit type. Int64 is signed 64-bit; Bool is not Int64.\nR6.10 add rejects overflow; le is inclusive and ordered; eq preserves exact types.\nThe selected subset includes Int64 add/le/eq and Bool eq. Unit equality is reserved.\n\nState includes version/foundation, name, typed params, frozen native prior value\nsteps and order, available literals, mechanical output id/type, and SHA256 of its\ncanonical body. After-state contains parent pin, action pin, complete sealed package\nand its canonical body identity. Prefix byte-equivalence and parameter identities\nare checked. Rejects produce no after-state and leave input identities unchanged.\n\nA emits the complete package, including identities and the mechanical HostEntry\nwhich calls the selected definition with type-correct zero/false/null defaults and\nreturns Int64 zero. B emits only the selected step. Both have one new semantic\nrelation selection, two ordered operand bindings, result type and exact dependency\ndeclaration; copying prior steps/ids is additional A structure, not extra task choice.\nHostEntry is validation scaffolding, never behavioral acceptance of the requirement.\n\nFor each behavioral fixture: check supplied scalar argument types with unchanged\nexpression typing; instantiate HostEntry with those constants, expand unchanged,\nextract the generated task seq into the existing VM decode slot and call execute\nwith assemble=False. This observes the actual Int64/Bool task result and runtime\nrejections without the unrelated UInt16 output restriction. No new evaluator is\nimplemented. Positive records refer to separately frozen literal expected outcomes.\n\nBounds: ten expert demonstrations, at most four params and two prefix steps,\none selected step, two deterministic acceptance passes, finite mutation controls.\nOnly locally synthesized training-candidate preparation is authorized.\n\n{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\", \"additionalProperties\": false,\n  \"required\": [\"id\", \"type\", \"deps\", \"node\"],\n  \"properties\": {\n    \"id\": {\"const\": \"selected\"},\n    \"type\": {\"enum\": [\"Int64\", \"Bool\"]},\n    \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"maxItems\": 2, \"items\": {\"type\": \"string\"}},\n    \"node\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"],\n      \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1,\n        \"additionalProperties\": false, \"properties\": {\n          \"add\": {\"$ref\": \"#/$defs/pair\"}, \"le\": {\"$ref\": \"#/$defs/pair\"}, \"eq\": {\"$ref\": \"#/$defs/pair\"}\n        }}}}\n  },\n  \"$defs\": {\n    \"operand\": {\"oneOf\": [\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"type\": \"string\"}}},\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [\n        {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}, {\"type\": \"boolean\"}, {\"type\": \"null\"}\n      ]}}}\n    ]},\n    \"pair\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/operand\"}}\n  }\n}\n",
+          "role": "system"
+        },
+        {
+          "content": "{\"before_state\":{\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"identity\":\"e882d8a2cd549ba8cbe6adc1b81ea45bb28027ded8b47429753cdf4993bf12e5\",\"literals\":[5,0],\"name\":\"LowerBound\",\"order\":[],\"output_id\":\"selected\",\"params\":[{\"name\":\"stock\",\"type\":\"Int64\"},{\"name\":\"spare\",\"type\":\"Int64\"}],\"result_type\":\"Bool\",\"steps\":[],\"version\":\"r6.63-state-1\"},\"instruction\":\"Select one add/le/eq value step with two ordered direct references or available literals, correct type and exact sorted distinct direct dependencies.\",\"requirement\":\"Report whether five is no greater than the stored stock. Ignore the spare stock.\"}",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "1a9b7446fed86f9747e81cd90df8f117942c4b32d537319ba60bf0755f59026c",
+        "literals": [],
+        "name": "Fits",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "requested",
+            "type": "Int64"
+          },
+          {
+            "name": "available",
+            "type": "Int64"
+          },
+          {
+            "name": "noise",
+            "type": "Bool"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "cases": [
+        {
+          "arguments": {
+            "available": 2,
+            "noise": true,
+            "requested": 1
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "available": 1,
+            "noise": false,
+            "requested": 2
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "available": 9223372036854775807,
+            "noise": false,
+            "requested": 9223372036854775807
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "available": 9223372036854775807,
+            "noise": true,
+            "requested": -9223372036854775808
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "available": -9223372036854775808,
+            "noise": true,
+            "requested": 9223372036854775807
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        }
+      ],
+      "completion": [
+        {
+          "content": "{\"deps\":[\"available\",\"requested\"],\"id\":\"selected\",\"node\":{\"expr\":{\"le\":[{\"ref\":\"requested\"},{\"ref\":\"available\"}]},\"op\":\"value\"},\"type\":\"Bool\"}",
+          "role": "assistant"
+        }
+      ],
+      "episode_id": "R6.63/D07",
+      "group": "training_record",
+      "prompt": [
+        {
+          "content": "Return exactly one B incremental action as a JSON object, without markdown or explanation. Use the following fixed skill and schema. Only the selected step is requested.\n# Frozen construction skill 1\n\nInput: human-style requirement, immutable typed definition prefix, available scalar\nliterals, mechanical output id `selected`, required result type, foundation identity.\nChoose exactly one existing binary `add`, `le` or `eq`; bind two operands, each a\ndirect immutable ref or declared literal. Output one native R6.18 value-step object\nwith id/type/deps/node. Dependencies enumerate exactly the distinct direct refs;\nlexically sorted serialization is required by this experiment (no execution change).\nNo nested selected expressions, new operations or inferred repair are admitted.\n\nExisting meanings: R6.18 expression typing admits add/le on Int64 and eq on two\noperands of the same Int64/Bool/Unit type. Int64 is signed 64-bit; Bool is not Int64.\nR6.10 add rejects overflow; le is inclusive and ordered; eq preserves exact types.\nThe selected subset includes Int64 add/le/eq and Bool eq. Unit equality is reserved.\n\nState includes version/foundation, name, typed params, frozen native prior value\nsteps and order, available literals, mechanical output id/type, and SHA256 of its\ncanonical body. After-state contains parent pin, action pin, complete sealed package\nand its canonical body identity. Prefix byte-equivalence and parameter identities\nare checked. Rejects produce no after-state and leave input identities unchanged.\n\nA emits the complete package, including identities and the mechanical HostEntry\nwhich calls the selected definition with type-correct zero/false/null defaults and\nreturns Int64 zero. B emits only the selected step. Both have one new semantic\nrelation selection, two ordered operand bindings, result type and exact dependency\ndeclaration; copying prior steps/ids is additional A structure, not extra task choice.\nHostEntry is validation scaffolding, never behavioral acceptance of the requirement.\n\nFor each behavioral fixture: check supplied scalar argument types with unchanged\nexpression typing; instantiate HostEntry with those constants, expand unchanged,\nextract the generated task seq into the existing VM decode slot and call execute\nwith assemble=False. This observes the actual Int64/Bool task result and runtime\nrejections without the unrelated UInt16 output restriction. No new evaluator is\nimplemented. Positive records refer to separately frozen literal expected outcomes.\n\nBounds: ten expert demonstrations, at most four params and two prefix steps,\none selected step, two deterministic acceptance passes, finite mutation controls.\nOnly locally synthesized training-candidate preparation is authorized.\n\n{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\", \"additionalProperties\": false,\n  \"required\": [\"id\", \"type\", \"deps\", \"node\"],\n  \"properties\": {\n    \"id\": {\"const\": \"selected\"},\n    \"type\": {\"enum\": [\"Int64\", \"Bool\"]},\n    \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"maxItems\": 2, \"items\": {\"type\": \"string\"}},\n    \"node\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"],\n      \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1,\n        \"additionalProperties\": false, \"properties\": {\n          \"add\": {\"$ref\": \"#/$defs/pair\"}, \"le\": {\"$ref\": \"#/$defs/pair\"}, \"eq\": {\"$ref\": \"#/$defs/pair\"}\n        }}}}\n  },\n  \"$defs\": {\n    \"operand\": {\"oneOf\": [\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"type\": \"string\"}}},\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [\n        {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}, {\"type\": \"boolean\"}, {\"type\": \"null\"}\n      ]}}}\n    ]},\n    \"pair\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/operand\"}}\n  }\n}\n",
+          "role": "system"
+        },
+        {
+          "content": "{\"before_state\":{\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"identity\":\"1a9b7446fed86f9747e81cd90df8f117942c4b32d537319ba60bf0755f59026c\",\"literals\":[],\"name\":\"Fits\",\"order\":[],\"output_id\":\"selected\",\"params\":[{\"name\":\"requested\",\"type\":\"Int64\"},{\"name\":\"available\",\"type\":\"Int64\"},{\"name\":\"noise\",\"type\":\"Bool\"}],\"result_type\":\"Bool\",\"steps\":[],\"version\":\"r6.63-state-1\"},\"instruction\":\"Select one add/le/eq value step with two ordered direct references or available literals, correct type and exact sorted distinct direct dependencies.\",\"requirement\":\"Report whether requested units fit within available units. Preserve requested then available operand order.\"}",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "aa2e0eeba509ea93846faea6f224adb8c639aef0f718cc79f4200d8292386281",
+        "literals": [],
+        "name": "ReadingMatch",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "recorded",
+            "type": "Int64"
+          },
+          {
+            "name": "reference",
+            "type": "Int64"
+          },
+          {
+            "name": "unused",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "cases": [
+        {
+          "arguments": {
+            "recorded": 2,
+            "reference": 2,
+            "unused": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "recorded": 1,
+            "reference": 2,
+            "unused": 1
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "recorded": 2,
+            "reference": 1,
+            "unused": 2
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "recorded": -9223372036854775808,
+            "reference": -9223372036854775808,
+            "unused": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "recorded": 9223372036854775807,
+            "reference": -9223372036854775808,
+            "unused": 0
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        }
+      ],
+      "completion": [
+        {
+          "content": "{\"deps\":[\"recorded\",\"reference\"],\"id\":\"selected\",\"node\":{\"expr\":{\"eq\":[{\"ref\":\"recorded\"},{\"ref\":\"reference\"}]},\"op\":\"value\"},\"type\":\"Bool\"}",
+          "role": "assistant"
+        }
+      ],
+      "episode_id": "R6.63/D08",
+      "group": "training_record",
+      "prompt": [
+        {
+          "content": "Return exactly one B incremental action as a JSON object, without markdown or explanation. Use the following fixed skill and schema. Only the selected step is requested.\n# Frozen construction skill 1\n\nInput: human-style requirement, immutable typed definition prefix, available scalar\nliterals, mechanical output id `selected`, required result type, foundation identity.\nChoose exactly one existing binary `add`, `le` or `eq`; bind two operands, each a\ndirect immutable ref or declared literal. Output one native R6.18 value-step object\nwith id/type/deps/node. Dependencies enumerate exactly the distinct direct refs;\nlexically sorted serialization is required by this experiment (no execution change).\nNo nested selected expressions, new operations or inferred repair are admitted.\n\nExisting meanings: R6.18 expression typing admits add/le on Int64 and eq on two\noperands of the same Int64/Bool/Unit type. Int64 is signed 64-bit; Bool is not Int64.\nR6.10 add rejects overflow; le is inclusive and ordered; eq preserves exact types.\nThe selected subset includes Int64 add/le/eq and Bool eq. Unit equality is reserved.\n\nState includes version/foundation, name, typed params, frozen native prior value\nsteps and order, available literals, mechanical output id/type, and SHA256 of its\ncanonical body. After-state contains parent pin, action pin, complete sealed package\nand its canonical body identity. Prefix byte-equivalence and parameter identities\nare checked. Rejects produce no after-state and leave input identities unchanged.\n\nA emits the complete package, including identities and the mechanical HostEntry\nwhich calls the selected definition with type-correct zero/false/null defaults and\nreturns Int64 zero. B emits only the selected step. Both have one new semantic\nrelation selection, two ordered operand bindings, result type and exact dependency\ndeclaration; copying prior steps/ids is additional A structure, not extra task choice.\nHostEntry is validation scaffolding, never behavioral acceptance of the requirement.\n\nFor each behavioral fixture: check supplied scalar argument types with unchanged\nexpression typing; instantiate HostEntry with those constants, expand unchanged,\nextract the generated task seq into the existing VM decode slot and call execute\nwith assemble=False. This observes the actual Int64/Bool task result and runtime\nrejections without the unrelated UInt16 output restriction. No new evaluator is\nimplemented. Positive records refer to separately frozen literal expected outcomes.\n\nBounds: ten expert demonstrations, at most four params and two prefix steps,\none selected step, two deterministic acceptance passes, finite mutation controls.\nOnly locally synthesized training-candidate preparation is authorized.\n\n{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\", \"additionalProperties\": false,\n  \"required\": [\"id\", \"type\", \"deps\", \"node\"],\n  \"properties\": {\n    \"id\": {\"const\": \"selected\"},\n    \"type\": {\"enum\": [\"Int64\", \"Bool\"]},\n    \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"maxItems\": 2, \"items\": {\"type\": \"string\"}},\n    \"node\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"],\n      \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1,\n        \"additionalProperties\": false, \"properties\": {\n          \"add\": {\"$ref\": \"#/$defs/pair\"}, \"le\": {\"$ref\": \"#/$defs/pair\"}, \"eq\": {\"$ref\": \"#/$defs/pair\"}\n        }}}}\n  },\n  \"$defs\": {\n    \"operand\": {\"oneOf\": [\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"type\": \"string\"}}},\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [\n        {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}, {\"type\": \"boolean\"}, {\"type\": \"null\"}\n      ]}}}\n    ]},\n    \"pair\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/operand\"}}\n  }\n}\n",
+          "role": "system"
+        },
+        {
+          "content": "{\"before_state\":{\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"identity\":\"aa2e0eeba509ea93846faea6f224adb8c639aef0f718cc79f4200d8292386281\",\"literals\":[],\"name\":\"ReadingMatch\",\"order\":[],\"output_id\":\"selected\",\"params\":[{\"name\":\"recorded\",\"type\":\"Int64\"},{\"name\":\"reference\",\"type\":\"Int64\"},{\"name\":\"unused\",\"type\":\"Int64\"}],\"result_type\":\"Bool\",\"steps\":[],\"version\":\"r6.63-state-1\"},\"instruction\":\"Select one add/le/eq value step with two ordered direct references or available literals, correct type and exact sorted distinct direct dependencies.\",\"requirement\":\"Report whether the recorded reading exactly matches the reference reading; ordering alone is insufficient.\"}",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "d0764429cda75470d9012bdcaad0dc58797b60eaba4786bb8d0a01e2ee9c68a1",
+        "literals": [],
+        "name": "Acknowledgments",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "first",
+            "type": "Bool"
+          },
+          {
+            "name": "second",
+            "type": "Bool"
+          },
+          {
+            "name": "decoy",
+            "type": "Int64"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "cases": [
+        {
+          "arguments": {
+            "decoy": 1,
+            "first": false,
+            "second": false
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "decoy": 0,
+            "first": false,
+            "second": true
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "decoy": 0,
+            "first": true,
+            "second": false
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "decoy": 0,
+            "first": true,
+            "second": true
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "decoy": 0,
+            "first": 1,
+            "second": true
+          },
+          "expected": {
+            "code": "ARGUMENT_TYPE",
+            "status": "reject"
+          }
+        }
+      ],
+      "completion": [
+        {
+          "content": "{\"deps\":[\"first\",\"second\"],\"id\":\"selected\",\"node\":{\"expr\":{\"eq\":[{\"ref\":\"first\"},{\"ref\":\"second\"}]},\"op\":\"value\"},\"type\":\"Bool\"}",
+          "role": "assistant"
+        }
+      ],
+      "episode_id": "R6.63/D09",
+      "group": "training_record",
+      "prompt": [
+        {
+          "content": "Return exactly one B incremental action as a JSON object, without markdown or explanation. Use the following fixed skill and schema. Only the selected step is requested.\n# Frozen construction skill 1\n\nInput: human-style requirement, immutable typed definition prefix, available scalar\nliterals, mechanical output id `selected`, required result type, foundation identity.\nChoose exactly one existing binary `add`, `le` or `eq`; bind two operands, each a\ndirect immutable ref or declared literal. Output one native R6.18 value-step object\nwith id/type/deps/node. Dependencies enumerate exactly the distinct direct refs;\nlexically sorted serialization is required by this experiment (no execution change).\nNo nested selected expressions, new operations or inferred repair are admitted.\n\nExisting meanings: R6.18 expression typing admits add/le on Int64 and eq on two\noperands of the same Int64/Bool/Unit type. Int64 is signed 64-bit; Bool is not Int64.\nR6.10 add rejects overflow; le is inclusive and ordered; eq preserves exact types.\nThe selected subset includes Int64 add/le/eq and Bool eq. Unit equality is reserved.\n\nState includes version/foundation, name, typed params, frozen native prior value\nsteps and order, available literals, mechanical output id/type, and SHA256 of its\ncanonical body. After-state contains parent pin, action pin, complete sealed package\nand its canonical body identity. Prefix byte-equivalence and parameter identities\nare checked. Rejects produce no after-state and leave input identities unchanged.\n\nA emits the complete package, including identities and the mechanical HostEntry\nwhich calls the selected definition with type-correct zero/false/null defaults and\nreturns Int64 zero. B emits only the selected step. Both have one new semantic\nrelation selection, two ordered operand bindings, result type and exact dependency\ndeclaration; copying prior steps/ids is additional A structure, not extra task choice.\nHostEntry is validation scaffolding, never behavioral acceptance of the requirement.\n\nFor each behavioral fixture: check supplied scalar argument types with unchanged\nexpression typing; instantiate HostEntry with those constants, expand unchanged,\nextract the generated task seq into the existing VM decode slot and call execute\nwith assemble=False. This observes the actual Int64/Bool task result and runtime\nrejections without the unrelated UInt16 output restriction. No new evaluator is\nimplemented. Positive records refer to separately frozen literal expected outcomes.\n\nBounds: ten expert demonstrations, at most four params and two prefix steps,\none selected step, two deterministic acceptance passes, finite mutation controls.\nOnly locally synthesized training-candidate preparation is authorized.\n\n{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\", \"additionalProperties\": false,\n  \"required\": [\"id\", \"type\", \"deps\", \"node\"],\n  \"properties\": {\n    \"id\": {\"const\": \"selected\"},\n    \"type\": {\"enum\": [\"Int64\", \"Bool\"]},\n    \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"maxItems\": 2, \"items\": {\"type\": \"string\"}},\n    \"node\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"],\n      \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1,\n        \"additionalProperties\": false, \"properties\": {\n          \"add\": {\"$ref\": \"#/$defs/pair\"}, \"le\": {\"$ref\": \"#/$defs/pair\"}, \"eq\": {\"$ref\": \"#/$defs/pair\"}\n        }}}}\n  },\n  \"$defs\": {\n    \"operand\": {\"oneOf\": [\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"type\": \"string\"}}},\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [\n        {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}, {\"type\": \"boolean\"}, {\"type\": \"null\"}\n      ]}}}\n    ]},\n    \"pair\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/operand\"}}\n  }\n}\n",
+          "role": "system"
+        },
+        {
+          "content": "{\"before_state\":{\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"identity\":\"d0764429cda75470d9012bdcaad0dc58797b60eaba4786bb8d0a01e2ee9c68a1\",\"literals\":[],\"name\":\"Acknowledgments\",\"order\":[],\"output_id\":\"selected\",\"params\":[{\"name\":\"first\",\"type\":\"Bool\"},{\"name\":\"second\",\"type\":\"Bool\"},{\"name\":\"decoy\",\"type\":\"Int64\"}],\"result_type\":\"Bool\",\"steps\":[],\"version\":\"r6.63-state-1\"},\"instruction\":\"Select one add/le/eq value step with two ordered direct references or available literals, correct type and exact sorted distinct direct dependencies.\",\"requirement\":\"Report whether the two Boolean acknowledgments agree. Never convert them to integers.\"}",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "before": {
+        "foundation": "bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3",
+        "identity": "64b3e14c97b03976cf8e94764b4fe4a5975b661a530a0f45389cfcd31a388cbf",
+        "literals": [
+          true,
+          false
+        ],
+        "name": "EnabledMatch",
+        "order": [],
+        "output_id": "selected",
+        "params": [
+          {
+            "name": "enabled",
+            "type": "Bool"
+          },
+          {
+            "name": "override",
+            "type": "Bool"
+          }
+        ],
+        "result_type": "Bool",
+        "steps": [],
+        "version": "r6.63-state-1"
+      },
+      "cases": [
+        {
+          "arguments": {
+            "enabled": false,
+            "override": true
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": false
+          }
+        },
+        {
+          "arguments": {
+            "enabled": true,
+            "override": false
+          },
+          "expected": {
+            "status": "success",
+            "type": "Bool",
+            "value": true
+          }
+        },
+        {
+          "arguments": {
+            "enabled": 0,
+            "override": true
+          },
+          "expected": {
+            "code": "ARGUMENT_TYPE",
+            "status": "reject"
+          }
+        },
+        {
+          "arguments": {
+            "enabled": true
+          },
+          "expected": {
+            "code": "ARGUMENT_SHAPE",
+            "status": "reject"
+          }
+        }
+      ],
+      "completion": [
+        {
+          "content": "{\"deps\":[\"enabled\"],\"id\":\"selected\",\"node\":{\"expr\":{\"eq\":[{\"ref\":\"enabled\"},{\"const\":true}]},\"op\":\"value\"},\"type\":\"Bool\"}",
+          "role": "assistant"
+        }
+      ],
+      "episode_id": "R6.63/D10",
+      "group": "training_record",
+      "prompt": [
+        {
+          "content": "Return exactly one B incremental action as a JSON object, without markdown or explanation. Use the following fixed skill and schema. Only the selected step is requested.\n# Frozen construction skill 1\n\nInput: human-style requirement, immutable typed definition prefix, available scalar\nliterals, mechanical output id `selected`, required result type, foundation identity.\nChoose exactly one existing binary `add`, `le` or `eq`; bind two operands, each a\ndirect immutable ref or declared literal. Output one native R6.18 value-step object\nwith id/type/deps/node. Dependencies enumerate exactly the distinct direct refs;\nlexically sorted serialization is required by this experiment (no execution change).\nNo nested selected expressions, new operations or inferred repair are admitted.\n\nExisting meanings: R6.18 expression typing admits add/le on Int64 and eq on two\noperands of the same Int64/Bool/Unit type. Int64 is signed 64-bit; Bool is not Int64.\nR6.10 add rejects overflow; le is inclusive and ordered; eq preserves exact types.\nThe selected subset includes Int64 add/le/eq and Bool eq. Unit equality is reserved.\n\nState includes version/foundation, name, typed params, frozen native prior value\nsteps and order, available literals, mechanical output id/type, and SHA256 of its\ncanonical body. After-state contains parent pin, action pin, complete sealed package\nand its canonical body identity. Prefix byte-equivalence and parameter identities\nare checked. Rejects produce no after-state and leave input identities unchanged.\n\nA emits the complete package, including identities and the mechanical HostEntry\nwhich calls the selected definition with type-correct zero/false/null defaults and\nreturns Int64 zero. B emits only the selected step. Both have one new semantic\nrelation selection, two ordered operand bindings, result type and exact dependency\ndeclaration; copying prior steps/ids is additional A structure, not extra task choice.\nHostEntry is validation scaffolding, never behavioral acceptance of the requirement.\n\nFor each behavioral fixture: check supplied scalar argument types with unchanged\nexpression typing; instantiate HostEntry with those constants, expand unchanged,\nextract the generated task seq into the existing VM decode slot and call execute\nwith assemble=False. This observes the actual Int64/Bool task result and runtime\nrejections without the unrelated UInt16 output restriction. No new evaluator is\nimplemented. Positive records refer to separately frozen literal expected outcomes.\n\nBounds: ten expert demonstrations, at most four params and two prefix steps,\none selected step, two deterministic acceptance passes, finite mutation controls.\nOnly locally synthesized training-candidate preparation is authorized.\n\n{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\", \"additionalProperties\": false,\n  \"required\": [\"id\", \"type\", \"deps\", \"node\"],\n  \"properties\": {\n    \"id\": {\"const\": \"selected\"},\n    \"type\": {\"enum\": [\"Int64\", \"Bool\"]},\n    \"deps\": {\"type\": \"array\", \"uniqueItems\": true, \"maxItems\": 2, \"items\": {\"type\": \"string\"}},\n    \"node\": {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"op\", \"expr\"],\n      \"properties\": {\"op\": {\"const\": \"value\"}, \"expr\": {\"type\": \"object\", \"minProperties\": 1, \"maxProperties\": 1,\n        \"additionalProperties\": false, \"properties\": {\n          \"add\": {\"$ref\": \"#/$defs/pair\"}, \"le\": {\"$ref\": \"#/$defs/pair\"}, \"eq\": {\"$ref\": \"#/$defs/pair\"}\n        }}}}\n  },\n  \"$defs\": {\n    \"operand\": {\"oneOf\": [\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"ref\"], \"properties\": {\"ref\": {\"type\": \"string\"}}},\n      {\"type\": \"object\", \"additionalProperties\": false, \"required\": [\"const\"], \"properties\": {\"const\": {\"oneOf\": [\n        {\"type\": \"integer\", \"minimum\": -9223372036854775808, \"maximum\": 9223372036854775807}, {\"type\": \"boolean\"}, {\"type\": \"null\"}\n      ]}}}\n    ]},\n    \"pair\": {\"type\": \"array\", \"minItems\": 2, \"maxItems\": 2, \"items\": {\"$ref\": \"#/$defs/operand\"}}\n  }\n}\n",
+          "role": "system"
+        },
+        {
+          "content": "{\"before_state\":{\"foundation\":\"bf5dbfb96d6d50124d109c35804c81e5a27bf4038b7f65b1a909ad4f0cc13fa3\",\"identity\":\"64b3e14c97b03976cf8e94764b4fe4a5975b661a530a0f45389cfcd31a388cbf\",\"literals\":[true,false],\"name\":\"EnabledMatch\",\"order\":[],\"output_id\":\"selected\",\"params\":[{\"name\":\"enabled\",\"type\":\"Bool\"},{\"name\":\"override\",\"type\":\"Bool\"}],\"result_type\":\"Bool\",\"steps\":[],\"version\":\"r6.63-state-1\"},\"instruction\":\"Select one add/le/eq value step with two ordered direct references or available literals, correct type and exact sorted distinct direct dependencies.\",\"requirement\":\"Report whether the stored enabled flag equals literal true, ignoring the override flag.\"}",
+          "role": "user"
+        }
+      ]
+    }
+  ],
+  "targets": "exact R6.63 ACTION bytes in canonical serialization"
+}
