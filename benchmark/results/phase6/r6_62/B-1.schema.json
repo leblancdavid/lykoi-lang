@@ -1,0 +1,16 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"urn:lykoi:r6.62:B:1",
+  "type":"object","additionalProperties":false,
+  "required":["version","requirement","profile","context","target","evidence","provenance","partition"],
+  "properties":{
+    "version":{"const":"lykoi-supervision-B-1"},
+    "requirement":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/identity"},
+    "profile":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/profile"},
+    "context":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/context","properties":{"state":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/artifact"}}},
+    "target":{"type":"object","additionalProperties":false,"required":["format","text","schema","ordinal","after"],"properties":{"format":{"const":"bounded_structured_update"},"text":{"type":"string","minLength":1},"schema":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/artifact"},"ordinal":{"type":"integer","minimum":0},"after":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/artifact"}}},
+    "evidence":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/evidence"},
+    "provenance":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/provenance","properties":{"class":{"enum":["deterministic_expert_demonstration","observed_ai_trajectory"]},"trace":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/artifact"}}},
+    "partition":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/partition"}
+  }
+}

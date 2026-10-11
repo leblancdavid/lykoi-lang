@@ -1,0 +1,16 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"urn:lykoi:r6.62:C:1",
+  "type":"object","additionalProperties":false,
+  "required":["version","requirement","profile","context","target","evidence","provenance","partition"],
+  "properties":{
+    "version":{"const":"lykoi-supervision-C-1"},
+    "requirement":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/identity"},
+    "profile":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/profile"},
+    "context":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/context","properties":{"state":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/artifact"}}},
+    "target":{"type":"object","additionalProperties":false,"required":["format","text","tool","arguments","arguments_schema","ordinal","response","after"],"properties":{"format":{"const":"typed_semantic_call"},"text":{"type":"string","minLength":1},"tool":{"type":"string","minLength":1},"arguments":{"type":"object"},"arguments_schema":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/artifact"},"ordinal":{"type":"integer","minimum":0},"response":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/artifact"},"after":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/artifact"}}},
+    "evidence":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/evidence"},
+    "provenance":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/provenance","properties":{"class":{"enum":["deterministic_expert_demonstration","observed_ai_trajectory"]},"trace":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/artifact"}}},
+    "partition":{"$ref":"urn:lykoi:r6.62:common:1#/$defs/partition"}
+  }
+}
