@@ -1,0 +1,79 @@
+"""Prospective execution context; imported only under later explicit dispatch."""
+import json
+import os
+import time
+from integration import ROOT, STORE, ARTIFACTS, canonical, file_manifest, frozen_check, identity, q52, rows, score, sha, c
+import integration
+
+OUT = integration.OUT/'execution'
+
+
+def read(path):
+    if not path.exists() and path.parent == OUT:
+        path = integration.OUT/path.name
+    return integration.read(path)
+
+
+def write(name,value):
+    path = OUT/name
+    temporary = path.with_suffix(path.suffix+'.pending')
+    temporary.write_text(json.dumps(value,indent=2,sort_keys=True,allow_nan=False)+'\n',encoding='utf-8',newline='\n')
+    temporary.replace(path)
+
+
+def diagnostic(track):
+    import torch
+    from transformers import AutoTokenizer, LogitsProcessor
+    from peft import PeftModel
+    from integration import CompletionLanguage, serialize
+    frozen_check()
+    q52.seed()
+    cfg = read(OUT/'TRAINING-CONFIGURATION.json')['configuration']
+    precision = cfg['precision_runtime']
+    torch.backends.cuda.matmul.allow_tf32 = precision['allow_tf32_matmul']
+    torch.backends.cudnn.allow_tf32 = precision['allow_tf32_cudnn']
+    torch.set_float32_matmul_precision(precision['float32_matmul_precision'])
+    torch.use_deterministic_algorithms(precision['deterministic_algorithms'])
+    model, _ = q52.load_base()
+    if track == 'adapter':
+        assert read(OUT/'TRAINING-RESULT.json')['successful_optimizer_steps'] == 54
+        model = PeftModel.from_pretrained(model, ARTIFACTS/'step54/adapter',local_files_only=True,is_trainable=False)
+    tokenizer = AutoTokenizer.from_pretrained(STORE/'checkpoint',local_files_only=True,trust_remote_code=False)
+    model.eval()
+    records = []
+    for row in read(OUT/'EVALUATION.json')['records']:
+        prompt = tokenizer.apply_chat_template(row['prompt'],tokenize=True,add_generation_prompt=True)
+        language = CompletionLanguage(row['scope'])
+        transitions = []
+        started = time.perf_counter()
+
+        class Mask(LogitsProcessor):
+            def __call__(self,input_ids,scores):
+                assert time.perf_counter()-started <= 120, 'GENERATION_TIMEOUT'
+                free, _ = torch.cuda.mem_get_info()
+                assert free >= cfg['limits']['minimum_device_free_bytes'], 'DEVICE_FREE_LIMIT'
+                assert torch.cuda.max_memory_reserved() <= cfg['limits']['cuda_reserved_bytes'], 'CUDA_RESERVED_LIMIT'
+                ids = input_ids[0,len(prompt):].tolist()
+                assert len(ids) < 64, 'GENERATION_BUDGET'
+                allowed = language.allowed(tokenizer,ids,range(len(tokenizer)))
+                assert allowed, 'COMPACT_DEAD_END'
+                transitions.append(dict(ids=ids,allowed_count=len(allowed),allowed_identity=identity(allowed)))
+                filtered = torch.full_like(scores,float('-inf'))
+                filtered[:,allowed] = scores[:,allowed]
+                return filtered
+
+        x = torch.tensor([prompt],device='cuda')
+        with torch.no_grad():
+            output = model.generate(input_ids=x,attention_mask=torch.ones_like(x),logits_processor=[Mask()],
+                **{k:v for k,v in cfg['decoding_settings'].items() if k not in ('seed','per_generation_timeout_seconds')})
+        ids = output[0,len(prompt):].tolist()
+        eos = bool(ids and ids[-1] == tokenizer.eos_token_id)
+        raw = tokenizer.decode(ids[:-1] if eos else ids,skip_special_tokens=False)
+        result = score(raw,row) if eos else dict(category='BUDGET_HALT',accepted=False,downstream='NOT_REACHED')
+        records.append(dict(id=row['id'],prompt_identity=identity(row['prompt']),generated_ids=ids,raw=raw,
+            eos=eos,transitions=transitions,scores=result,seconds=time.perf_counter()-started))
+        write(track.upper()+'-DIAGNOSTIC-PARTIAL.json',dict(records=records))
+        if not eos:
+            raise RuntimeError('GENERATION_BUDGET_HALT')
+    write(track.upper()+'-DIAGNOSTIC.json',dict(records=records,sealed=True,checkpoint=54 if track=='adapter' else 'base',
+        evaluation_sha256=sha(integration.OUT/'EVALUATION.json'),configuration_identity=frozen_check()['training_configuration_identity']))
